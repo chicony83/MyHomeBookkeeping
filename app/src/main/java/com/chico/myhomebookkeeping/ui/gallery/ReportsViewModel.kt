@@ -1,13 +1,13 @@
-package com.chico.myhomebookkeeping.ui.slideshow
+package com.chico.myhomebookkeeping.ui.gallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class ReportsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "This is reports Fragment"
     }
     val text: LiveData<String> = _text
 }

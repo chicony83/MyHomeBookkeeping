@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.chico.myhomebookkeeping.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_reports"
+        android:name="com.chico.myhomebookkeeping.ui.gallery.ReportsFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_reports" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.chico.myhomebookkeeping.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:id="@+id/nav_categories"
+        android:name="com.chico.myhomebookkeeping.ui.slideshow.CategoriesFragment"
+        android:label="@string/menu_categories"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
