@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.slideshow
+package com.chico.myhomebookkeeping.ui.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class CategoriesFragment : Fragment() {
     ): View? {
         slideshowViewModel =
                 ViewModelProvider(this).get(CategoriesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
+        val root = inflater.inflate(R.layout.fragment_categories, container, false)
         val textView: TextView = root.findViewById(R.id.text_slideshow)
         slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

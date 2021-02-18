@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_reports"
-        android:name="com.chico.myhomebookkeeping.ui.gallery.ReportsFragment"
+        android:name="com.chico.myhomebookkeeping.ui.Reports.ReportsFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_reports" />
 
     <fragment
         android:id="@+id/nav_categories"
-        android:name="com.chico.myhomebookkeeping.ui.slideshow.CategoriesFragment"
+        android:name="com.chico.myhomebookkeeping.ui.categories.CategoriesFragment"
         android:label="@string/menu_categories"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_categories" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.slideshow
+package com.chico.myhomebookkeeping.ui.categories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
