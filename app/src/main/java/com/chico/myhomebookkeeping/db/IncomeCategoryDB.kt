@@ -12,7 +12,7 @@ abstract class IncomeCategoryDB : RoomDatabase() {
     abstract fun incomeDao(): IncomeDao
 }
 
-object incomeMoneyDB {
+object incomeCategoryDB {
     fun getMoneyDB(ctx: Context) =
         Room.databaseBuilder(
             ctx,

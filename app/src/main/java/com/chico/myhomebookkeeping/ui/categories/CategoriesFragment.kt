@@ -4,28 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 
 class CategoriesFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: CategoriesViewModel
+    private lateinit var categoriesViewModel: CategoriesViewModel
+
+    private var _binding: FragmentCategoriesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        slideshowViewModel =
-                ViewModelProvider(this).get(CategoriesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_categories, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = binding.root
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
+        categoriesViewModel.text.observe(viewLifecycleOwner, Observer {
+            binding.textCategories.text = it
         })
-        return root
+
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

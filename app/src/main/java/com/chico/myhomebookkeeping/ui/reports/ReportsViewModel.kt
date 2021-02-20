@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.Reports
+package com.chico.myhomebookkeeping.ui.reports
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
