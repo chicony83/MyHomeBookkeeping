@@ -13,7 +13,7 @@ abstract class IncomeCategoryDB : RoomDatabase() {
 }
 
 object incomeCategoryDB {
-    fun getMoneyDB(ctx: Context) =
+    fun getCategoryDB(ctx: Context) =
         Room.databaseBuilder(
             ctx,
             IncomeCategoryDB::class.java,

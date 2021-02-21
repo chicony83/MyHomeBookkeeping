@@ -7,10 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.categories.CategoriesFragment">
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
         <TextView
             android:id="@+id/text_categories"
             android:layout_width="match_parent"
@@ -25,8 +21,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include layout="@layout/layout_category"/>
+        <LinearLayout
+            android:id="@+id/incomeCategoryHoled"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical">
+        </LinearLayout>
 
-<!--    </ScrollView>-->
+        <Button
+            android:id="@+id/addIncomeCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="add income money category" />
 
 </LinearLayout>
