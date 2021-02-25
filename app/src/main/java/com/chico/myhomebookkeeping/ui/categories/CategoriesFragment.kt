@@ -9,11 +9,15 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
+import com.chico.myhomebookkeeping.databinding.FragmentHomeBinding
 import com.chico.myhomebookkeeping.db.IncomeCategoryDB
 import com.chico.myhomebookkeeping.db.dao.IncomeDao
 import com.chico.myhomebookkeeping.db.entity.Income
 import com.chico.myhomebookkeeping.db.incomeCategoryDB
+import com.chico.myhomebookkeeping.recyclerView.IncomingCategoryAdapter
 import com.chico.myhomebookkeeping.ui.alertdialog.AddCategoryFragment
 import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -36,34 +40,40 @@ class CategoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
+
         categoriesViewModel.text.observe(viewLifecycleOwner, Observer {
             binding.textCategories.text = it
         })
-        var db:IncomeDao = incomeCategoryDB.getCategoryDB(requireContext()).incomeDao()
+        var db: IncomeDao = incomeCategoryDB.getCategoryDB(requireContext()).incomeDao()
         launchIo {
             launchForResult {
-                val result:List<Income> = db.getAllIncomeMoneyCategory()
+                val result: List<Income> = db.getAllIncomeMoneyCategory()
 
                 launchUi {
+
+                    binding.incomeCategoryHolder.adapter = IncomingCategoryAdapter(result)
+
+//                    recyclerViewHolder.adapter =
+//                        IncomingCategoryAdapter(incomeCategoryList = result)
                     binding.textCategories.text = result.toString()
                 }
             }
         }
 
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.addIncomeCategory.setOnClickListener {
             val addCategoryFragment = AddCategoryFragment()
             val manager = childFragmentManager
 
-           addCategoryFragment.show(manager,"add category")
+            addCategoryFragment.show(manager, "add category")
         }
 
     }
