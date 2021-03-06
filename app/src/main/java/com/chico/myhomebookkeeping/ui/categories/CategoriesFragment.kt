@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
@@ -30,8 +31,9 @@ class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var editText: EditText
+    private lateinit var db: IncomeDao
 
+    private lateinit var editText: EditText
 
 
     override fun onCreateView(
@@ -39,6 +41,7 @@ class CategoriesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        db = incomeCategoryDB.getCategoryDB(requireContext()).incomeDao()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
@@ -46,21 +49,14 @@ class CategoriesFragment : Fragment() {
         categoriesViewModel.text.observe(viewLifecycleOwner, Observer {
             binding.textCategories.text = it
         })
-        var db: IncomeDao = incomeCategoryDB.getCategoryDB(requireContext()).incomeDao()
-        launchIo {
-            launchForResult {
-                val result: List<Income> = db.getAllIncomeMoneyCategory()
 
-                launchUi {
 
-                    binding.incomeCategoryHolder.adapter = IncomingCategoryAdapter(result)
+        categoriesViewModel.incomeCategoryList.observe(viewLifecycleOwner, {
+            binding.incomeCategoryHolder.adapter = IncomingCategoryAdapter(it)
 
-//                    recyclerViewHolder.adapter =
-//                        IncomingCategoryAdapter(incomeCategoryList = result)
-                    binding.textCategories.text = result.toString()
-                }
-            }
-        }
+            categoriesViewModel.loadCategories()
+
+        })
 
         val view = binding.root
         return view
