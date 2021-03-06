@@ -27,14 +27,10 @@ import com.chico.myhomebookkeeping.utils.launchUi
 class CategoriesFragment : Fragment() {
 
     private lateinit var categoriesViewModel: CategoriesViewModel
-    private lateinit var addIncomeCategoryButton: Button
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var db: IncomeDao
-
-    private lateinit var editText: EditText
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,11 +41,6 @@ class CategoriesFragment : Fragment() {
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
-
-        categoriesViewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textCategories.text = it
-        })
-
 
         categoriesViewModel.incomeCategoryList.observe(viewLifecycleOwner, {
             binding.incomeCategoryHolder.adapter = IncomingCategoryAdapter(it)

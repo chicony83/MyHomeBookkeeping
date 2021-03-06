@@ -25,11 +25,6 @@ class   CategoriesViewModel(
         }
     }
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is categories and places Fragment"
-    }
-    val text: LiveData<String> = _text
-
     private val _incomeCategoryList = MutableLiveData<List<Income>>()
     val incomeCategoryList:LiveData<List<Income>>
     get() = _incomeCategoryList

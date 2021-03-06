@@ -13,8 +13,8 @@ class IncomingCategoryAdapter(private val incomeCategoryList: List<Income>) :
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ): ViewHolder {
-    val binding = RecyclerViewItemBinding
-        .inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = RecyclerViewItemBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -22,20 +22,17 @@ class IncomingCategoryAdapter(private val incomeCategoryList: List<Income>) :
         holder: ViewHolder, position: Int
     ) {
         holder.bind(incomeCategoryList[position])
-//        val currentItem = incomeCategoryList[position].incomeCategory
-//        holder.bind(currentItem)
     }
 
     override fun getItemCount() = incomeCategoryList.size
 
     class ViewHolder(private val binding: RecyclerViewItemBinding) :
-        RecyclerView.ViewHolder( binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(incone: Income) {
-            with(binding){
+            with(binding) {
                 incomingCategoryCardViewText.text = incone.incomeCategory
-                
+
             }
-//            Log.i("TAG"," text = $text")
         }
 
     }

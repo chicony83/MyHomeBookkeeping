@@ -21,5 +21,4 @@ suspend fun <R> launchForResult(task: suspend () -> R):R?{
     return CoroutineScope(Dispatchers.IO).async {
         task()
     }.await()
-
 }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.chico.myhomebookkeeping.db.IncomeCategoryDB
 import com.chico.myhomebookkeeping.db.dao.IncomeDao
 import com.chico.myhomebookkeeping.db.entity.Income
 import com.chico.myhomebookkeeping.db.incomeCategoryDB
