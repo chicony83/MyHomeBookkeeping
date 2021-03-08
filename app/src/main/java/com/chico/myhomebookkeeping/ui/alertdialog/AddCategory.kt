@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.db.dao.IncomeDao
 import com.chico.myhomebookkeeping.db.entity.Income
-import com.chico.myhomebookkeeping.db.incomeCategoryDB
+import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class AddCategoryFragment() : DialogFragment() {
@@ -45,7 +45,7 @@ class AddCategoryFragment() : DialogFragment() {
             val text: String = input.text.toString()
 
             val income = Income(text)
-            val db: IncomeDao = incomeCategoryDB.getCategoryDB(requireContext()).incomeDao()
+            val db: IncomeDao = dataBase.getDataBase(requireContext()).incomeDao()
             launchIo {
                 db.addIncomingMoneyCategory(income)
             }

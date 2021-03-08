@@ -1,14 +1,12 @@
 package com.chico.myhomebookkeeping.ui.categories
 
 import android.app.Application
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.chico.myhomebookkeeping.db.dao.IncomeDao
 import com.chico.myhomebookkeeping.db.entity.Income
-import com.chico.myhomebookkeeping.db.incomeCategoryDB
+import com.chico.myhomebookkeeping.db.dataBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +15,7 @@ class   CategoriesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val db: IncomeDao = incomeCategoryDB.getCategoryDB(app.applicationContext).incomeDao()
+    private val db: IncomeDao = dataBase.getDataBase(app.applicationContext).incomeDao()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {

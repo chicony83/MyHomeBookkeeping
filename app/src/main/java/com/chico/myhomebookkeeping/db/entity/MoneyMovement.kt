@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "money_moving_table")
-data class Money(
+data class MoneyMovement(
     @ColumnInfo(name = "event_time")
     val time: Long,
     @ColumnInfo(name = "is_income")
