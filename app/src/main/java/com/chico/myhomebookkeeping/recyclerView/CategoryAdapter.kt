@@ -1,14 +1,13 @@
 package com.chico.myhomebookkeeping.recyclerView
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemBinding
-import com.chico.myhomebookkeeping.db.entity.Income
+import com.chico.myhomebookkeeping.db.entity.Category
 
-class IncomingCategoryAdapter(private val incomeCategoryList: List<Income>) :
-    RecyclerView.Adapter<IncomingCategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val categoryList: List<Category>) :
+    RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -21,16 +20,16 @@ class IncomingCategoryAdapter(private val incomeCategoryList: List<Income>) :
     override fun onBindViewHolder(
         holder: ViewHolder, position: Int
     ) {
-        holder.bind(incomeCategoryList[position])
+        holder.bind(categoryList[position])
     }
 
-    override fun getItemCount() = incomeCategoryList.size
+    override fun getItemCount() = categoryList.size
 
     class ViewHolder(private val binding: RecyclerViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(incone: Income) {
+        fun bind(category: Category) {
             with(binding) {
-                incomingCategoryCardViewText.text = incone.incomeCategory
+                incomingCategoryCardViewText.text = category.categoryName
 
             }
         }

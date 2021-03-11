@@ -6,18 +6,18 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "money_moving_table")
 data class MoneyMovement(
-    @ColumnInfo(name = "event_time")
-    val time: Long,
-    @ColumnInfo(name = "is_income")
-    val isIncome: Boolean,
-    @ColumnInfo(name = "is_spending")
-    val isSpending: Boolean,
+    @ColumnInfo(name = "time_stamp")
+    val timeStamp: Long,
+    @ColumnInfo(name = "bank_account")
+    val bankAccount: Int,
+    @ColumnInfo(name = "currency")
+    val currency:Int,
     @ColumnInfo(name = "income_category")
-    val incomeCategory: Float,
+    val incomeCategory: Int,
     @ColumnInfo(name = "spending_category")
-    val spendingCategory: Float,
-    @ColumnInfo(name = "sum_of_money")
-    val sumOfMoney: String,
+    val spendingCategory: Int,
+    @ColumnInfo(name = "amount")
+    val amount: Double,
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "place")

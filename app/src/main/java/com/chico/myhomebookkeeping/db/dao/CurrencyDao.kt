@@ -3,10 +3,11 @@ package com.chico.myhomebookkeeping.db.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import java.util.*
+import com.chico.myhomebookkeeping.db.entity.Currency
 
 @Dao
 interface CurrencyDao {
+
     @Insert
     suspend fun addCurrency(currency: Currency)
 

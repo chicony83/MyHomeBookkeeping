@@ -11,7 +11,7 @@ data class BankAccount(
     @ColumnInfo(name = "is_cash")
     val isCash: Boolean,
     @ColumnInfo(name = "bank_account_number")
-    val bankAccountNumber: Int
+    val bankAccountNumber: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

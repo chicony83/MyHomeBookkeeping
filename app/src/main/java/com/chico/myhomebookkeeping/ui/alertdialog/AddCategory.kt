@@ -3,11 +3,12 @@ package com.chico.myhomebookkeeping.ui.alertdialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.chico.myhomebookkeeping.db.dao.IncomeDao
-import com.chico.myhomebookkeeping.db.entity.Income
+import com.chico.myhomebookkeeping.db.dao.CategoryDao
+import com.chico.myhomebookkeeping.db.entity.Category
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.utils.launchIo
 
@@ -27,7 +28,7 @@ class AddCategoryFragment() : DialogFragment() {
             }
             builder.setTitle("ALERT")
 
-                .setMessage("WTF")
+                .setMessage("category")
 
                 .setView(input)
                 .setPositiveButton(
@@ -44,8 +45,8 @@ class AddCategoryFragment() : DialogFragment() {
         if (input.text.isNotEmpty()){
             val text: String = input.text.toString()
 
-            val income = Income(text)
-            val db: IncomeDao = dataBase.getDataBase(requireContext()).incomeDao()
+            val income = Category(categoryName = text, isIncome = false, isSpending = false)
+            val db: CategoryDao = dataBase.getDataBase(requireContext()).incomeDao()
             launchIo {
                 db.addIncomingMoneyCategory(income)
             }

@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
-import com.chico.myhomebookkeeping.db.dao.IncomeDao
+import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.recyclerView.IncomingCategoryAdapter
+import com.chico.myhomebookkeeping.recyclerView.CategoryAdapter
 import com.chico.myhomebookkeeping.ui.alertdialog.AddCategoryFragment
 
 class CategoriesFragment : Fragment() {
@@ -18,7 +18,7 @@ class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: IncomeDao
+    private lateinit var db: CategoryDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,8 +30,8 @@ class CategoriesFragment : Fragment() {
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-        categoriesViewModel.incomeCategoryList.observe(viewLifecycleOwner, {
-            binding.incomeCategoryHolder.adapter = IncomingCategoryAdapter(it)
+        categoriesViewModel.categoryCategoryList.observe(viewLifecycleOwner, {
+            binding.incomeCategoryHolder.adapter = CategoryAdapter(it)
 
             categoriesViewModel.loadCategories()
 
