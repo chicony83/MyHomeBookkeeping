@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Category
 import com.chico.myhomebookkeeping.recyclerView.CategoryAdapter
-import com.chico.myhomebookkeeping.ui.alertdialog.AddCategoryFragment
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class CategoriesFragment : Fragment() {
 
@@ -45,10 +47,36 @@ class CategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addIncomeCategory.setOnClickListener {
-            val addCategoryFragment = AddCategoryFragment()
-            val manager = childFragmentManager
 
-            addCategoryFragment.show(manager, "add category")
+            if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
+                binding.addNewCategoryFragment.visibility = View.GONE
+            } else binding.addNewCategoryFragment.visibility = View.VISIBLE
+
+        }
+        binding.addNewCategoryButton.setOnClickListener {
+            if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
+                if (binding.newCategoryName.text.isNotEmpty()
+                    and
+                    (binding.newCategoryIncoming.isChecked
+                            or
+                            binding.newCategorySpending.isChecked
+                            )
+                ) {
+                    val category = binding.newCategoryName.text.toString()
+                    var isIncoming = false
+                    var isSpending = false
+                    if (binding.newCategoryIncoming.isChecked) isIncoming = true
+                    if (binding.newCategorySpending.isChecked) isSpending = true
+                    val addingCategory = Category(categoryName = category,isIncome = isIncoming, isSpending = isSpending)
+                    val db:CategoryDao = dataBase.getDataBase(requireContext()).incomeDao()
+                    launchIo {
+                        db.addIncomingMoneyCategory(addingCategory)
+                    }
+                    Toast.makeText(context, "категория добавлена", Toast.LENGTH_SHORT).show()
+                    binding.addNewCategoryFragment.visibility = View.GONE
+                }
+
+            }
         }
 
     }
