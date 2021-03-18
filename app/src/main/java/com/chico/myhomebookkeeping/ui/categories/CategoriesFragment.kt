@@ -11,8 +11,8 @@ import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Category
+import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.recyclerView.CategoryAdapter
-import com.chico.myhomebookkeeping.utils.launchIo
 
 class CategoriesFragment : Fragment() {
 
@@ -45,7 +45,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val categoriesUseCase = CategoriesUseCase()
         binding.addIncomeCategory.setOnClickListener {
 
             if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
@@ -68,10 +68,7 @@ class CategoriesFragment : Fragment() {
                     if (binding.newCategoryIncoming.isChecked) isIncoming = true
                     if (binding.newCategorySpending.isChecked) isSpending = true
                     val addingCategory = Category(categoryName = category,isIncome = isIncoming, isSpending = isSpending)
-                    val db:CategoryDao = dataBase.getDataBase(requireContext()).incomeDao()
-                    launchIo {
-                        db.addIncomingMoneyCategory(addingCategory)
-                    }
+                    categoriesUseCase.addNewCategory(db,addingCategory)
                     Toast.makeText(context, "категория добавлена", Toast.LENGTH_SHORT).show()
                     binding.addNewCategoryFragment.visibility = View.GONE
                 }

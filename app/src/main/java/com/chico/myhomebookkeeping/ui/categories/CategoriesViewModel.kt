@@ -11,23 +11,21 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class   CategoriesViewModel(
+class CategoriesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
     private val db: CategoryDao = dataBase.getDataBase(app.applicationContext).incomeDao()
 
     init {
-        CoroutineScope(Dispatchers.IO).launch {
-            _incomeCategoryList.postValue(db.getAllIncomeMoneyCategory())
-        }
+        loadCategories()
     }
 
     private val _incomeCategoryList = MutableLiveData<List<Category>>()
-    val categoryCategoryList:LiveData<List<Category>>
-    get() = _incomeCategoryList
+    val categoryCategoryList: LiveData<List<Category>>
+        get() = _incomeCategoryList
 
-    fun loadCategories(){
+    fun loadCategories() {
         CoroutineScope(Dispatchers.IO).launch {
             _incomeCategoryList.postValue(db.getAllIncomeMoneyCategory())
         }
