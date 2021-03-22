@@ -30,7 +30,6 @@ class CurrenciesAdapter(private val currenciesList: List<Currencies>) :
         fun bind(currencies: Currencies) {
             with(binding) {
                 nameCurrency.text = currencies.currencyName
-                Log.i("TAG","${nameCurrency.text.toString()}")
             }
         }
     }
