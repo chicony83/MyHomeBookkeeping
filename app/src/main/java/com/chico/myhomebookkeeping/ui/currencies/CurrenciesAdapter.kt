@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,14 +24,13 @@ class CurrenciesAdapter(private val currenciesList: List<Currencies>) :
 
     override fun getItemCount() = currenciesList.size
 
-
     class ViewHolder(
         private val binding: CurrenciesRecyclerViewItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
         fun bind(currencies: Currencies) {
             with(binding) {
-                shortNameCurrency.text = currencies.currencyShortName
-                fullNameCurrency.text = currencies.currencyLongName
+                nameCurrency.text = currencies.currencyName
+                Log.i("TAG","${nameCurrency.text.toString()}")
             }
         }
     }

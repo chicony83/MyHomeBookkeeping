@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.Categorise
+import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.utils.showHideFragment
 
 class CategoriesFragment : Fragment() {
 
@@ -27,7 +26,7 @@ class CategoriesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = dataBase.getDataBase(requireContext()).incomeDao()
+        db = dataBase.getDataBase(requireContext()).categoryDao()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
@@ -66,7 +65,7 @@ class CategoriesFragment : Fragment() {
                     var isSpending = false
                     if (binding.newCategoryIncoming.isChecked) isIncoming = true
                     if (binding.newCategorySpending.isChecked) isSpending = true
-                    val addingCategory = Categorise(
+                    val addingCategory = Categories(
                         categoryName = category,
                         isIncome = isIncoming,
                         isSpending = isSpending

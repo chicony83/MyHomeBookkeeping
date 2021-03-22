@@ -6,10 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "currency_table")
 data class Currencies(
-    @ColumnInfo(name = "currency_long_name")
-    val currencyLongName: String,
-    @ColumnInfo(name = "currency_short_name")
-    val currencyShortName: String
+    @ColumnInfo(name = "currency_name")
+    val currencyName: String
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int? = null

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 
 class CurrenciesFragment:Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
@@ -38,11 +40,21 @@ class CurrenciesFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val currenciesUseCase = CurrenciesUseCase()
         binding.showHideAddCurrencyFragment.setOnClickListener{
             if (binding.addNewCurrencyFragment.visibility == View.VISIBLE){
                 binding.addNewCurrencyFragment.visibility = View.GONE
-            }else binding.addNewCurrencyFragment.visibility = View.GONE
+            }else binding.addNewCurrencyFragment.visibility = View.VISIBLE
+        }
+        binding.addNewCurrencyButton.setOnClickListener {
+            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE){
+                if (binding.newCurrencyEditText.text.isNotEmpty())
+                {
+                    val nameCurrency: String = binding.newCurrencyEditText.text.toString()
+                    val addingCurrency = Currencies(currencyName = nameCurrency)
+                    currenciesUseCase.addNewCurrency(db,addingCurrency)
+                }
+            }
         }
     }
 

@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.CategoriesRecyclerViewItemBinding
-import com.chico.myhomebookkeeping.db.entity.Categorise
+import com.chico.myhomebookkeeping.db.entity.Categories
 
-class CategoriesAdapter(private val categoriesList: List<Categorise>) :
+class CategoriesAdapter(private val categoriesList: List<Categories>) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -29,7 +29,7 @@ class CategoriesAdapter(private val categoriesList: List<Categorise>) :
         private val binding: CategoriesRecyclerViewItemBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(categories: Categorise) {
+        fun bind(categories: Categories) {
             with(binding) {
                 incomingCategoryCardViewText.text = categories.categoryName
 

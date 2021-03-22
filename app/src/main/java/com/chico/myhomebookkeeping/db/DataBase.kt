@@ -10,13 +10,13 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.entity.BankAccount
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.db.entity.Categorise
+import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 
 @Database(
     entities = [
         BankAccount::class,
-        Categorise::class,
+        Categories::class,
         Currencies::class,
         MoneyMovement::class
     ],
@@ -24,7 +24,7 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 )
 abstract class DataBase : RoomDatabase() {
     abstract fun bankAccountDao():BankAccountDao
-    abstract fun incomeDao(): CategoryDao
+    abstract fun categoryDao(): CategoryDao
     abstract fun currenciesDao(): CurrenciesDao
     abstract fun moneyMovementDao(): MoneyMovementDao
 }
