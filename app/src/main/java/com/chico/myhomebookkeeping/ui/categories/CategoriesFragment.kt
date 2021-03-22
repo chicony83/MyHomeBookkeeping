@@ -32,7 +32,7 @@ class CategoriesFragment : Fragment() {
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
         categoriesViewModel.categoriesList.observe(viewLifecycleOwner, {
-            binding.incomeCategoryHolder.adapter = CategoriesAdapter(it)
+            binding.categoryHolder.adapter = CategoriesAdapter(it)
 
             categoriesViewModel.loadCategories()
 
@@ -48,8 +48,7 @@ class CategoriesFragment : Fragment() {
 
             if (binding.addNewCategoryFragment.visibility == View.GONE) {
                 binding.addNewCategoryFragment.visibility = View.VISIBLE
-            }
-            else binding.addNewCategoryFragment.visibility = View.GONE
+            } else binding.addNewCategoryFragment.visibility = View.GONE
         }
         binding.addNewCategoryButton.setOnClickListener {
             if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
@@ -65,16 +64,15 @@ class CategoriesFragment : Fragment() {
                     var isSpending = false
                     if (binding.newCategoryIncoming.isChecked) isIncoming = true
                     if (binding.newCategorySpending.isChecked) isSpending = true
-                    val addingCategory = Categories(
+                    val newCategory = Categories(
                         categoryName = category,
                         isIncome = isIncoming,
                         isSpending = isSpending
                     )
-                    categoriesUseCase.addNewCategory(db, addingCategory)
+                    categoriesUseCase.addNewCategory(db, newCategory)
                     Toast.makeText(context, "категория добавлена", Toast.LENGTH_SHORT).show()
                     binding.addNewCategoryFragment.visibility = View.GONE
                 }
-
             }
         }
 

@@ -31,7 +31,7 @@ class CategoriesAdapter(private val categoriesList: List<Categories>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(categories: Categories) {
             with(binding) {
-                incomingCategoryCardViewText.text = categories.categoryName
+                categoryCardViewText.text = categories.categoryName
 
             }
         }

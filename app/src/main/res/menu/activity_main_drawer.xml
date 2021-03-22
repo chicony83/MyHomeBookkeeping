@@ -18,7 +18,9 @@
             android:title="@string/menu_categories" />
         <item
             android:id="@+id/nav_currencies"
-            android:title="currencies"
-            />
+            android:title="currencies" />
+        <item
+            android:id="@+id/nav_cash_account"
+            android:title="cash/bank accounts"/>
     </group>
 </menu>

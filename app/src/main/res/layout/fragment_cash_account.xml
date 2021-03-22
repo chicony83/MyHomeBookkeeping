@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ui.cashaccount.CashAccountFragment">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="счета"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cashAccountHolder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/showHideAddCashAccountFragment"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <Button
+        android:id="@+id/showHideAddCashAccountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="добавить счет"
+        app:layout_constraintBottom_toTopOf="@id/addNewCashAccountFragment" />
+
+    <LinearLayout
+        android:id="@+id/addNewCashAccountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="название счета" />
+
+        <EditText
+            android:id="@+id/cashAccountName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="номер карты (последние 4 цыфры)" />
+
+        <EditText
+            android:id="@+id/cashAccountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="только последние 4 цыфры" />
+        <Button
+            android:id="@+id/addNewCashAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="добавить счет"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
