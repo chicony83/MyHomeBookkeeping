@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.Category
+import com.chico.myhomebookkeeping.db.entity.Categorise
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.recyclerView.CategoryAdapter
+import com.chico.myhomebookkeeping.utils.showHideFragment
 
 class CategoriesFragment : Fragment() {
 
@@ -32,26 +32,25 @@ class CategoriesFragment : Fragment() {
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-        categoriesViewModel.categoryCategoryList.observe(viewLifecycleOwner, {
-            binding.incomeCategoryHolder.adapter = CategoryAdapter(it)
+        categoriesViewModel.categoriesList.observe(viewLifecycleOwner, {
+            binding.incomeCategoryHolder.adapter = CategoriesAdapter(it)
 
             categoriesViewModel.loadCategories()
 
         })
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val categoriesUseCase = CategoriesUseCase()
-        binding.addIncomeCategory.setOnClickListener {
+        binding.showHideAddCategoryFragment.setOnClickListener {
 
-            if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
-                binding.addNewCategoryFragment.visibility = View.GONE
-            } else binding.addNewCategoryFragment.visibility = View.VISIBLE
-
+            if (binding.addNewCategoryFragment.visibility == View.GONE) {
+                binding.addNewCategoryFragment.visibility = View.VISIBLE
+            }
+            else binding.addNewCategoryFragment.visibility = View.GONE
         }
         binding.addNewCategoryButton.setOnClickListener {
             if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
@@ -67,8 +66,12 @@ class CategoriesFragment : Fragment() {
                     var isSpending = false
                     if (binding.newCategoryIncoming.isChecked) isIncoming = true
                     if (binding.newCategorySpending.isChecked) isSpending = true
-                    val addingCategory = Category(categoryName = category,isIncome = isIncoming, isSpending = isSpending)
-                    categoriesUseCase.addNewCategory(db,addingCategory)
+                    val addingCategory = Categorise(
+                        categoryName = category,
+                        isIncome = isIncoming,
+                        isSpending = isSpending
+                    )
+                    categoriesUseCase.addNewCategory(db, addingCategory)
                     Toast.makeText(context, "категория добавлена", Toast.LENGTH_SHORT).show()
                     binding.addNewCategoryFragment.visibility = View.GONE
                 }

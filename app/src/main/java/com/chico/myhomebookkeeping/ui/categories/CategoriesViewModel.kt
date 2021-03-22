@@ -5,11 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
-import com.chico.myhomebookkeeping.db.entity.Category
+import com.chico.myhomebookkeeping.db.entity.Categorise
 import com.chico.myhomebookkeeping.db.dataBase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class CategoriesViewModel(
     val app: Application
@@ -21,13 +19,13 @@ class CategoriesViewModel(
         loadCategories()
     }
 
-    private val _incomeCategoryList = MutableLiveData<List<Category>>()
-    val categoryCategoryList: LiveData<List<Category>>
-        get() = _incomeCategoryList
+    private val _categoriesList = MutableLiveData<List<Categorise>>()
+    val categoriesList: LiveData<List<Categorise>>
+        get() = _categoriesList
 
     fun loadCategories() {
-        CoroutineScope(Dispatchers.IO).launch {
-            _incomeCategoryList.postValue(db.getAllIncomeMoneyCategory())
+        launchIo {
+            _categoriesList.postValue(db.getAllIncomeMoneyCategory())
         }
     }
 }

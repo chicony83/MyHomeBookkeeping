@@ -5,19 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.chico.myhomebookkeeping.db.dao.BankAccountDao
-import com.chico.myhomebookkeeping.db.dao.CurrencyDao
+import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.entity.BankAccount
-import com.chico.myhomebookkeeping.db.entity.Currency
-import com.chico.myhomebookkeeping.db.entity.Category
+import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.Categorise
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 
 @Database(
     entities = [
         BankAccount::class,
-        Category::class,
-        Currency::class,
+        Categorise::class,
+        Currencies::class,
         MoneyMovement::class
     ],
     version = 1
@@ -25,7 +25,7 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 abstract class DataBase : RoomDatabase() {
     abstract fun bankAccountDao():BankAccountDao
     abstract fun incomeDao(): CategoryDao
-    abstract fun currencyDao(): CurrencyDao
+    abstract fun currenciesDao(): CurrenciesDao
     abstract fun moneyMovementDao(): MoneyMovementDao
 }
 

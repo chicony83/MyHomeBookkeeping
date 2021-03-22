@@ -16,5 +16,9 @@
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_menu_category"
             android:title="@string/menu_categories" />
+        <item
+            android:id="@+id/nav_currencies"
+            android:title="currencies"
+            />
     </group>
 </menu>
