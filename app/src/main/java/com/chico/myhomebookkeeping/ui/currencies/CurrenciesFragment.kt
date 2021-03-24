@@ -12,12 +12,12 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 
-class CurrenciesFragment:Fragment() {
+class CurrenciesFragment : Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
-    private var _binding: FragmentCurrenciesBinding?= null
+    private var _binding: FragmentCurrenciesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db:CurrenciesDao
+    private lateinit var db: CurrenciesDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,11 +25,11 @@ class CurrenciesFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         db = dataBase.getDataBase(requireContext()).currenciesDao()
-        _binding = FragmentCurrenciesBinding.inflate(inflater,container,false)
+        _binding = FragmentCurrenciesBinding.inflate(inflater, container, false)
 
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
-        currenciesViewModel.currenciesList.observe(viewLifecycleOwner,{
+        currenciesViewModel.currenciesList.observe(viewLifecycleOwner, {
             binding.currenciesHolder.adapter = CurrenciesAdapter(it)
 
             currenciesViewModel.loadCurrencies()
@@ -41,18 +41,17 @@ class CurrenciesFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val currenciesUseCase = CurrenciesUseCase()
-        binding.showHideAddCurrencyFragment.setOnClickListener{
-            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE){
+        binding.showHideAddCurrencyFragment.setOnClickListener {
+            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
                 binding.addNewCurrencyFragment.visibility = View.GONE
-            }else binding.addNewCurrencyFragment.visibility = View.VISIBLE
+            } else binding.addNewCurrencyFragment.visibility = View.VISIBLE
         }
         binding.addNewCurrencyButton.setOnClickListener {
-            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE){
-                if (binding.newCurrencyEditText.text.isNotEmpty())
-                {
+            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
+                if (binding.newCurrencyEditText.text.isNotEmpty()) {
                     val nameCurrency: String = binding.newCurrencyEditText.text.toString()
                     val addingCurrency = Currencies(currencyName = nameCurrency)
-                    currenciesUseCase.addNewCurrency(db,addingCurrency)
+                    currenciesUseCase.addNewCurrency(db, addingCurrency)
                 }
             }
         }

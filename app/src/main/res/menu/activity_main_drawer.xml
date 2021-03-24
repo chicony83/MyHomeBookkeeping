@@ -9,6 +9,9 @@
             android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_new_money_moving"
+            android:title="добавить приход расход"/>
+        <item
             android:id="@+id/nav_reports"
             android:icon="@drawable/ic_menu_reports"
             android:title="@string/menu_gallery" />

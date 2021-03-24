@@ -22,15 +22,20 @@
         android:name="com.chico.myhomebookkeeping.ui.categories.CategoriesFragment"
         android:label="@string/menu_categories"
         tools:layout="@layout/fragment_categories" />
-
     <fragment
         android:id="@+id/nav_currencies"
         android:name="com.chico.myhomebookkeeping.ui.currencies.CurrenciesFragment"
         android:label="currencies"
-        tools:layout="@layout/fragment_currencies"/>
+        tools:layout="@layout/fragment_currencies" />
     <fragment
         android:id="@+id/nav_cash_account"
-        android:name="com.chico.myhomebookkeeping.ui.cashaccount.CashAccountFragment"
+        android:name="com.chico.myhomebookkeeping.ui.cashAccount.CashAccountFragment"
         android:label="cash_accounts"
-        tools:layout="@layout/fragment_cash_account"/>
+        tools:layout="@layout/fragment_cash_account" />
+    <fragment
+        android:id="@+id/nav_new_money_moving"
+        android:name="com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment"
+        android:label="new_money_moving"
+        tools:layout="@layout/fragment_new_money_moving" />
+
 </navigation>

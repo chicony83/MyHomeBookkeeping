@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.cashaccount
+package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

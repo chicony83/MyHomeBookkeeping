@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.cashaccount
+package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

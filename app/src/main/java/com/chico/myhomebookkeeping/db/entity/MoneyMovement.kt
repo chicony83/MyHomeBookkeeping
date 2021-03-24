@@ -12,10 +12,6 @@ data class MoneyMovement(
     val bankAccount: Int,
     @ColumnInfo(name = "currency")
     val currency:Int,
-    @ColumnInfo(name = "income_category")
-    val incomeCategory: Int,
-    @ColumnInfo(name = "spending_category")
-    val spendingCategory: Int,
     @ColumnInfo(name = "amount")
     val amount: Double,
     @ColumnInfo(name = "description")
