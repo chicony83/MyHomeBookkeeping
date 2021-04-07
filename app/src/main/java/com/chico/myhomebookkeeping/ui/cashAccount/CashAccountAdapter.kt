@@ -45,6 +45,7 @@ class CashAccountAdapter(
 //                }
 //            }
 //        }
+
         fun bind(cashAccount: CashAccount) {
             with(binding) {
                 nameCashAccount.text = cashAccount.accountName
@@ -53,10 +54,8 @@ class CashAccountAdapter(
                 cashAccountItem.setOnClickListener {
                      Log.i("TAG","---text---")
                 }
-
             }
         }
-
     }
     interface OnCashAccountListener {
         fun onClick()
