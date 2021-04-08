@@ -49,7 +49,13 @@ class CashAccountAdapter(
         fun bind(cashAccount: CashAccount) {
             with(binding) {
                 nameCashAccount.text = cashAccount.accountName
-                numberCashAccount.text = cashAccount.bankAccountNumber.toString()
+
+                if (cashAccount.bankAccountNumber.toString().isBlank()){
+                    numberCashAccount.text = ""
+                }
+                else{
+                    numberCashAccount.text = cashAccount.bankAccountNumber.toString()
+                }
 
                 cashAccountItem.setOnClickListener {
                      Log.i("TAG","---text---")
