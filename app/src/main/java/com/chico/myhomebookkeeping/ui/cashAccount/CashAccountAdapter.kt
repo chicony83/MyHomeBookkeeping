@@ -2,7 +2,6 @@ package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.CashAccountRecyclerViewItemBinding
@@ -10,12 +9,10 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 
 class CashAccountAdapter(
     private var cashAccountList: List<CashAccount>,
-    cashAccountViewModel: CashAccountViewModel,
+    val listener: OnCashAccountListener
 
-//    val listener: OnCashAccountListener
 ) :
     RecyclerView.Adapter<CashAccountAdapter.ViewHolder>() {
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,8 +25,7 @@ class CashAccountAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = cashAccountList[position]
-        holder.bind(item)
-
+        holder.bind(item,position)
     }
 
     override fun getItemCount() = cashAccountList.size
@@ -46,7 +42,7 @@ class CashAccountAdapter(
 //            }
 //        }
 
-        fun bind(cashAccount: CashAccount) {
+        fun bind(cashAccount: CashAccount, id: Int) {
             with(binding) {
                 nameCashAccount.text = cashAccount.accountName
 
@@ -56,15 +52,15 @@ class CashAccountAdapter(
                 else{
                     numberCashAccount.text = cashAccount.bankAccountNumber.toString()
                 }
-
                 cashAccountItem.setOnClickListener {
-                     Log.i("TAG","---text---")
+//                    Log.i("TAG","---click---")
+                    cashAccount.id?.let { it1 -> listener.onClick(it1) }
                 }
             }
         }
     }
     interface OnCashAccountListener {
-        fun onClick()
+        fun onClick(selectedId: Int)
     }
 
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context="ui.cashAccount.CashAccountFragment">
 
     <TextView
@@ -21,6 +21,28 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/showHideAddCashAccountFragment"
         app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <LinearLayout
+        android:id="@+id/selectCashAccountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/showHideAddCashAccountFragment">
+
+        <Button
+            android:id="@+id/selectCashAccountButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="выбрать" />
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="сброс" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/showHideAddCashAccountFragment"
@@ -57,11 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="только последние 4 цыфры" />
+
         <Button
             android:id="@+id/addNewCashAccountButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="добавить счет"/>
+            android:text="добавить счет" />
 
     </LinearLayout>
 
