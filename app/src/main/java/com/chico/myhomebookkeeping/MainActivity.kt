@@ -2,6 +2,7 @@ package com.chico.myhomebookkeeping
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -45,17 +47,35 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        fab.setOnClickListener {
-            navController.navigate(R.id.nav_new_money_moving)
-//                view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-        }
+
+        fabSetOnClickListener(fab, navController)
+
+        hideFab(navController, fab)
 
     }
 
+    private fun hideFab(
+        navController: NavController,
+        fab: FloatingActionButton
+    ) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.nav_new_money_moving -> fab.visibility = View.GONE
+                else -> fab.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun fabSetOnClickListener(
+        fab: FloatingActionButton,
+        navController: NavController
+    ) {
+        fab.setOnClickListener {
+            navController.navigate(R.id.nav_new_money_moving)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
