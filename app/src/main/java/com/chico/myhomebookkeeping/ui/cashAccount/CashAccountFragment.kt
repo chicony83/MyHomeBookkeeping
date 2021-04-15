@@ -44,9 +44,9 @@ class CashAccountFragment : Fragment() {
 
         cashAccountViewModel.cashAccountList.observe(viewLifecycleOwner, {
             binding.cashAccountHolder.adapter =
+
                 CashAccountAdapter(it, object : CashAccountAdapter.OnCashAccountListener {
                     override fun onClick(selectedId: Int) {
-
                         showHideUIElements(selectedId)
                         selectedCashAccountId = selectedId
                         Toast.makeText(
@@ -93,9 +93,15 @@ class CashAccountFragment : Fragment() {
                         number = binding.cashAccountNumber.text.toString().toInt()
                     }
                     val newCashAccount = CashAccount(name, number)
-                    cashAccountsUseCase.addNewCashAccount(db, newCashAccount)
+
+
+//                    cashAccountsUseCase.addNewCashAccount(db, newCashAccount)
+
+                //                    cashAccountsUseCase.addNewCashAccount(db, newCashAccount)
+                    cashAccountsUseCase.addCashRunBlocking(db, newCashAccount,cashAccountViewModel)
                 }
             }
+//            cashAccountViewModel.loadCashAccounts()
         }
         binding.selectCashAccountButton.setOnClickListener {
             if (selectedCashAccountId > 0) {

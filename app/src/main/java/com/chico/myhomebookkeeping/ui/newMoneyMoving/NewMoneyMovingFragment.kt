@@ -57,7 +57,7 @@ class NewMoneyMovingFragment : Fragment() {
         if (cashAccountId != null) {
             launchUi {
                 val text = cashAccountsUseCase
-                    .getCashAccount(
+                    .getOneCashAccount(
                         dataBase
                             .getDataBase(
                                 requireContext()

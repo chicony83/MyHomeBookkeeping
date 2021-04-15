@@ -10,14 +10,14 @@ fun launchIo(task: suspend () -> Unit) {
         task()
     }
 }
-fun launchUi(task: suspend () -> Unit){
+
+fun launchUi(task: suspend () -> Unit) {
     CoroutineScope(Dispatchers.Main).async {
         task()
     }
 }
 
-suspend fun <R> launchForResult(task: suspend () -> R):R?{
-
+suspend fun <R> launchForResult(task: suspend () -> R): R? {
     return CoroutineScope(Dispatchers.IO).async {
         task()
     }.await()
