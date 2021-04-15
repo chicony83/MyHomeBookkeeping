@@ -10,7 +10,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="счета"
+        android:text="@string/header_cash_accounts"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,20 +35,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="выбрать" />
+            android:text="@string/select" />
 
         <Button
             android:id="@+id/reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="сброс" />
+            android:text="@string/cancel" />
     </LinearLayout>
 
     <Button
         android:id="@+id/showHideAddCashAccountFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="добавить счет"
+        android:text="@string/new_cash_account"
         app:layout_constraintBottom_toTopOf="@id/addNewCashAccountFragment" />
 
     <LinearLayout
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="название счета" />
+            android:text="@string/account_name" />
 
         <EditText
             android:id="@+id/cashAccountName"
@@ -72,19 +72,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="номер карты (последние 4 цыфры)" />
+            android:text="@string/last_4_digits_of_card" />
 
         <EditText
             android:id="@+id/cashAccountNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="только последние 4 цыфры" />
+            android:hint="@string/only_last_4_digits" />
 
         <Button
             android:id="@+id/addNewCashAccountButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="добавить счет" />
+            android:text="@string/add_button" />
 
     </LinearLayout>
 

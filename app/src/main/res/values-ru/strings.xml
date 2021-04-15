@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Настройки</string>
+    <string name="menu_home">Главная</string>
+    <string name="menu_gallery">Отчеты</string>
+    <string name="menu_categories">Категоии и места</string>
+    <string name="header_cash_accounts">Названия счетов</string>
+    <string name="select">выбрать</string>
+    <string name="cancel">отменить</string>
+    <string name="new_cash_account">новыйс счёт</string>
+    <string name="account_name">название счёта</string>
+    <string name="last_4_digits_of_card">последних 4 цифры карты</string>
+    <string name="only_last_4_digits">только последние 4 цыфры</string>
+    <string name="add_button">добавить</string>
+</resources>
