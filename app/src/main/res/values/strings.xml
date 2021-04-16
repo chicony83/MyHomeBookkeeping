@@ -21,4 +21,6 @@
     <string name="last_4_digits_of_card">last 4 digits of the card</string>
     <string name="only_last_4_digits">only last 4 digits</string>
     <string name="add_button">add</string>
+    <string name="new_currency">new currency</string>
+    <string name="currency">currency</string>
 </resources>

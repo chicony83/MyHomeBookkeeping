@@ -26,11 +26,11 @@
         android:id="@+id/showHideAddCurrencyFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="добавить валюту"
+        android:text="@string/new_currency"
         app:layout_constraintBottom_toTopOf="@+id/addNewCurrencyFragment" />
 
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/addNewCurrencyFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,9 +40,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="валюта" />
+            android:text="@string/currency" />
 
         <EditText
+            android:maxLines="1"
+            android:maxLength="16"
             android:id="@+id/newCurrencyEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -51,6 +53,6 @@
             android:id="@+id/addNewCurrencyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="добавить" />
+            android:text="@string/add_button" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,4 +12,5 @@
     <string name="last_4_digits_of_card">последних 4 цифры карты</string>
     <string name="only_last_4_digits">только последние 4 цыфры</string>
     <string name="add_button">добавить</string>
+    <string name="new_currency">новая валюта</string>
 </resources>

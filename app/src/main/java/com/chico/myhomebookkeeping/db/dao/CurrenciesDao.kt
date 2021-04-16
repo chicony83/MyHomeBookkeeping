@@ -13,4 +13,7 @@ interface CurrenciesDao {
 
     @Query("SELECT * FROM currency_table")
     suspend fun getAllCurrency():List<Currencies>
+
+    @Query("SELECT * FROM currency_table WHERE id = :id")
+    suspend fun getOneCurrency(id:Int):List<Currencies>
 }

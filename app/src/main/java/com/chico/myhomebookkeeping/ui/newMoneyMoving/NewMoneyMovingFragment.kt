@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
+import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.ui.currencies.CurrenciesViewModel
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
@@ -26,9 +27,10 @@ class NewMoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentDateTimeMillis: Long = Calendar.getInstance().timeInMillis
     private lateinit var currenciesViewModel: CurrenciesViewModel
-    private val argsCashAccount = Constants.CASH_ACCOUNT_KEY
+    private val argsCashAccountKey = Constants.CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.CURRENCY_KEY
 
-    private val cashAccountsUseCase = CashAccountsUseCase()
+//    private val cashAccountsUseCase = CashAccountsUseCase()
 
 
     override fun onCreateView(
@@ -45,7 +47,7 @@ class NewMoneyMovingFragment : Fragment() {
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val cashAccountId: Int? = arguments?.getInt(argsCashAccount)
+        val db = dataBase.getDataBase(requireContext())
 
         val control = activity?.findNavController(R.id.nav_host_fragment)
 
@@ -54,23 +56,28 @@ class NewMoneyMovingFragment : Fragment() {
         binding.selectCashAccountButton.setOnClickListener {
             control?.navigate(R.id.nav_cash_account)
         }
+        binding.selectCurrenciesButton.setOnClickListener {
+            control?.navigate(R.id.nav_currencies)
+        }
+        val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
         if (cashAccountId != null) {
             launchUi {
-                val text = cashAccountsUseCase
-                    .getOneCashAccount(
-                        dataBase
-                            .getDataBase(
-                                requireContext()
-                            )
-                            .cashAccountDao(), cashAccountId
-                    )
-                binding.selectCashAccountButton.text = text
+                binding.selectCashAccountButton.text = CashAccountsUseCase.getOneCashAccount(
+                    db.cashAccountDao(), cashAccountId
+                )
             }
-
-            Toast.makeText(context, "$cashAccountId", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "$cashAccountId", Toast.LENGTH_SHORT).show()
         }
-        binding.addNewMoneyMovingButton.setOnClickListener {
+        val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
+        if (currenciesId != null) {
+            launchUi {
+                binding.selectCurrenciesButton.text = CurrenciesUseCase.getOneCurrency(
+                    db.currenciesDao(), currenciesId
+                )
+            }
+        }
 
+        binding.addNewMoneyMovingButton.setOnClickListener {
             control?.popBackStack()
         }
         super.onViewCreated(view, savedInstanceState)

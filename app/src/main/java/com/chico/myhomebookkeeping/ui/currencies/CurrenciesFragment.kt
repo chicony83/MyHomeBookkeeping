@@ -32,7 +32,6 @@ class CurrenciesFragment : Fragment() {
         currenciesViewModel.currenciesList.observe(viewLifecycleOwner, {
             binding.currenciesHolder.adapter = CurrenciesAdapter(it)
 
-            currenciesViewModel.loadCurrencies()
         })
 
         return binding.root
@@ -40,7 +39,7 @@ class CurrenciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val currenciesUseCase = CurrenciesUseCase()
+//        val currenciesUseCase = CurrenciesUseCase()
         binding.showHideAddCurrencyFragment.setOnClickListener {
             if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
                 binding.addNewCurrencyFragment.visibility = View.GONE
@@ -51,7 +50,7 @@ class CurrenciesFragment : Fragment() {
                 if (binding.newCurrencyEditText.text.isNotEmpty()) {
                     val nameCurrency: String = binding.newCurrencyEditText.text.toString()
                     val addingCurrency = Currencies(currencyName = nameCurrency)
-                    currenciesUseCase.addNewCurrency(db, addingCurrency)
+                    CurrenciesUseCase.addNewCurrency(db, addingCurrency)
                 }
             }
         }

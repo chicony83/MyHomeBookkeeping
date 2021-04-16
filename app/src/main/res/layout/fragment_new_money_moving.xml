@@ -34,19 +34,15 @@
 
         <Button
             android:id="@+id/selectCashAccountButton"
-            android:text="выберите счет"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="валюта" />
+            android:text="выберите счет" />
 
-        <Spinner
-            android:id="@+id/currentCurrency"
+        <Button
+            android:id="@+id/selectCurrenciesButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="выберите валюту" />
 
         <TextView
             android:layout_width="match_parent"

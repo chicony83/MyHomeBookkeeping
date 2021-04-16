@@ -76,7 +76,7 @@ class CashAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cashAccountsUseCase = CashAccountsUseCase()
+//        val cashAccountsUseCase = CashAccountsUseCase()
         val control = activity?.findNavController(R.id.nav_host_fragment)
 
         binding.showHideAddCashAccountFragment.setOnClickListener {
@@ -98,7 +98,7 @@ class CashAccountFragment : Fragment() {
 //                    cashAccountsUseCase.addNewCashAccount(db, newCashAccount)
 
                 //                    cashAccountsUseCase.addNewCashAccount(db, newCashAccount)
-                    cashAccountsUseCase.addCashRunBlocking(db, newCashAccount,cashAccountViewModel)
+                    CashAccountsUseCase.addCashRunBlocking(db, newCashAccount,cashAccountViewModel)
                 }
             }
 //            cashAccountViewModel.loadCashAccounts()

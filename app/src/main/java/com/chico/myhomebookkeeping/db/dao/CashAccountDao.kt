@@ -14,5 +14,5 @@ interface CashAccountDao {
     suspend fun getAllCashAccounts():List<CashAccount>
 
     @Query("SELECT * FROM cash_account_table WHERE id = :id")
-    suspend fun getCashAccount(id: Int):List<CashAccount>
+    suspend fun getOneCashAccount(id: Int):List<CashAccount>
 }
