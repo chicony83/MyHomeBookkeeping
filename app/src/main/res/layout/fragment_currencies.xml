@@ -21,7 +21,27 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/showHideAddCurrencyFragment"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+<LinearLayout
+    android:id="@+id/layoutConfirmation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    app:layout_constraintBottom_toTopOf="@+id/showHideAddCurrencyFragment">
 
+    <Button
+        android:id="@+id/selectButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/select"/>
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"/>
+
+</LinearLayout>
     <Button
         android:id="@+id/showHideAddCurrencyFragment"
         android:layout_width="match_parent"

@@ -1,16 +1,15 @@
 package com.chico.myhomebookkeeping.ui.cashAccount
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.CashAccountRecyclerViewItemBinding
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 
 class CashAccountAdapter(
     private var cashAccountList: List<CashAccount>,
-    val listener: OnCashAccountListener
-
+    val listener: OnItemViewClickListener
 ) :
     RecyclerView.Adapter<CashAccountAdapter.ViewHolder>() {
 
@@ -53,16 +52,11 @@ class CashAccountAdapter(
                     numberCashAccount.text = cashAccount.bankAccountNumber.toString()
                 }
                 cashAccountItem.setOnClickListener {
-//                    Log.i("TAG","---click---")
                     cashAccount.id?.let { it1 -> listener.onClick(it1) }
                 }
             }
         }
     }
-    interface OnCashAccountListener {
-        fun onClick(selectedId: Int)
-    }
-
 }
 
 

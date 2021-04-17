@@ -53,7 +53,7 @@ class NewMoneyMovingFragment : Fragment() {
 
         binding.dateTimeTimeStamp.setText(currentDateTimeMillis.parseTimeFromMillis())
 
-        binding.selectCashAccountButton.setOnClickListener {
+        binding.selectButton.setOnClickListener {
             control?.navigate(R.id.nav_cash_account)
         }
         binding.selectCurrenciesButton.setOnClickListener {
@@ -62,7 +62,7 @@ class NewMoneyMovingFragment : Fragment() {
         val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
         if (cashAccountId != null) {
             launchUi {
-                binding.selectCashAccountButton.text = CashAccountsUseCase.getOneCashAccount(
+                binding.selectButton.text = CashAccountsUseCase.getOneCashAccount(
                     db.cashAccountDao(), cashAccountId
                 )
             }
