@@ -68,7 +68,7 @@ class CurrenciesFragment : Fragment() {
                 if (binding.newCurrencyEditText.text.isNotEmpty()) {
                     val nameCurrency: String = binding.newCurrencyEditText.text.toString()
                     val addingCurrency = Currencies(currencyName = nameCurrency)
-                    CurrenciesUseCase.addNewCurrency(db, addingCurrency)
+                    CurrenciesUseCase.addNewCurrencyRunBlocking(db, addingCurrency,currenciesViewModel)
                 }
             }
         }

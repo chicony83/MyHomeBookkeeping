@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
@@ -83,7 +81,7 @@ class CashAccountFragment : Fragment() {
                     }
                     val newCashAccount = CashAccount(name, number)
 
-                    CashAccountsUseCase.addCashRunBlocking(db, newCashAccount,cashAccountViewModel)
+                    CashAccountsUseCase.addNewCashAccountRunBlocking(db, newCashAccount,cashAccountViewModel)
                 }
             }
         }

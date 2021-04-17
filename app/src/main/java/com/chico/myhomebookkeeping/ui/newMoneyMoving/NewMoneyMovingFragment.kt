@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -62,7 +61,7 @@ class NewMoneyMovingFragment : Fragment() {
         val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
         if (cashAccountId != null) {
             launchUi {
-                binding.selectButton.text = CashAccountsUseCase.getOneCashAccount(
+                binding.selectButton.text = CashAccountsUseCase.getOneCashAccountName(
                     db.cashAccountDao(), cashAccountId
                 )
             }
@@ -71,7 +70,7 @@ class NewMoneyMovingFragment : Fragment() {
         val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
         if (currenciesId != null) {
             launchUi {
-                binding.selectCurrenciesButton.text = CurrenciesUseCase.getOneCurrency(
+                binding.selectCurrenciesButton.text = CurrenciesUseCase.getOneCurrencyName(
                     db.currenciesDao(), currenciesId
                 )
             }
