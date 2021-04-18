@@ -33,7 +33,7 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/selectButton"
+            android:id="@+id/selectCashAccountButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="выберите счет" />
@@ -43,6 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="выберите валюту" />
+
+        <Button
+            android:id="@+id/selectCategoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="выберите категорию"/>
 
         <TextView
             android:layout_width="match_parent"

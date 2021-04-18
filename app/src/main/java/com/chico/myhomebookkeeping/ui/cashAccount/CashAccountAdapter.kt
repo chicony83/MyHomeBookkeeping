@@ -23,8 +23,8 @@ class CashAccountAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = cashAccountList[position]
-        holder.bind(item,position)
+//        val item = cashAccountList[position]
+        holder.bind(cashAccountList[position])
     }
 
     override fun getItemCount() = cashAccountList.size
@@ -33,15 +33,8 @@ class CashAccountAdapter(
         private val binding: CashAccountRecyclerViewItemBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-//        init {
-//            with(itemView){
-//                setOnClickListener {
-//                    Log.i("TAG","---text---")
-//                }
-//            }
-//        }
 
-        fun bind(cashAccount: CashAccount, id: Int) {
+        fun bind(cashAccount: CashAccount) {
             with(binding) {
                 nameCashAccount.text = cashAccount.accountName
 

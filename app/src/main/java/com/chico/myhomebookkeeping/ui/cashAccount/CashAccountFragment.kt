@@ -29,7 +29,7 @@ class CashAccountFragment : Fragment() {
 
     private var selectedCashAccountId = 0
 
-    private val argsName = Constants.CASH_ACCOUNT_KEY
+    private val argsName: String by lazy { Constants.CASH_ACCOUNT_KEY }
     private val uiHelper = UiHelper()
 
     override fun onCreateView(
@@ -48,13 +48,11 @@ class CashAccountFragment : Fragment() {
 
                 CashAccountAdapter(it, object : OnItemViewClickListener {
                     override fun onClick(selectedId: Int) {
-                        uiHelper.showHideUIElements(selectedId,binding.layoutConfirmation)
+                        uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
                         selectedCashAccountId = selectedId
                     }
-                }
-                )
+                })
         })
-
         return binding.root
     }
 
@@ -65,45 +63,49 @@ class CashAccountFragment : Fragment() {
 
 //        val cashAccountsUseCase = CashAccountsUseCase()
 //        val control = activity?.findNavController(R.id.nav_host_fragment)
+        with(binding) {
 
-        binding.showHideAddCashAccountFragment.setOnClickListener {
-            if (binding.addNewCashAccountFragment.visibility == View.GONE) {
-                binding.addNewCashAccountFragment.visibility = View.VISIBLE
-            } else binding.addNewCashAccountFragment.visibility = View.GONE
-        }
-        binding.addNewCashAccountButton.setOnClickListener {
-            if (binding.addNewCashAccountFragment.visibility == View.VISIBLE) {
-                if (binding.cashAccountName.text.isNotEmpty()) {
-                    val name = binding.cashAccountName.text.toString()
-                    var number: Int? = null
-                    if (binding.cashAccountNumber.text.isNotEmpty()) {
-                        number = binding.cashAccountNumber.text.toString().toInt()
+            showHideAddCashAccountFragment.setOnClickListener {
+                if (binding.addNewCashAccountFragment.visibility == View.GONE) {
+                    binding.addNewCashAccountFragment.visibility = View.VISIBLE
+                } else binding.addNewCashAccountFragment.visibility = View.GONE
+            }
+            addNewCashAccountButton.setOnClickListener {
+                if (binding.addNewCashAccountFragment.visibility == View.VISIBLE) {
+                    if (binding.cashAccountName.text.isNotEmpty()) {
+                        val name = binding.cashAccountName.text.toString()
+                        var number: Int? = null
+                        if (binding.cashAccountNumber.text.isNotEmpty()) {
+                            number = binding.cashAccountNumber.text.toString().toInt()
+                        }
+                        val newCashAccount = CashAccount(name, number)
+
+                        CashAccountsUseCase.addNewCashAccountRunBlocking(
+                            db,
+                            newCashAccount,
+                            cashAccountViewModel
+                        )
                     }
-                    val newCashAccount = CashAccount(name, number)
+                }
+            }
+            selectButton.setOnClickListener {
+                if (selectedCashAccountId > 0) {
+                    val bundle = Bundle()
+                    bundle.putInt(argsName, selectedCashAccountId)
 
-                    CashAccountsUseCase.addNewCashAccountRunBlocking(db, newCashAccount,cashAccountViewModel)
+                    findNavController().navigate(
+                        R.id.nav_new_money_moving,
+                        bundle
+                    )
+                }
+            }
+            cancel.setOnClickListener {
+                if (selectedCashAccountId > 0) {
+                    selectedCashAccountId = 0
+                    binding.layoutConfirmation.visibility = View.GONE
                 }
             }
         }
-        binding.selectButton.setOnClickListener {
-            if (selectedCashAccountId > 0) {
-                val bundle = Bundle()
-                bundle.putInt(argsName, selectedCashAccountId)
-
-                findNavController().navigate(
-                    R.id.nav_new_money_moving,
-                    bundle
-                )
-            }
-        }
-        binding.cancel.setOnClickListener {
-            if (selectedCashAccountId > 0) {
-                selectedCashAccountId = 0
-                binding.layoutConfirmation.visibility = View.GONE
-            }
-        }
-        Toast.makeText(context, "cash Account names", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onDestroyView() {

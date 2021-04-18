@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
+import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.ui.currencies.CurrenciesViewModel
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -28,9 +30,9 @@ class NewMoneyMovingFragment : Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
     private val argsCashAccountKey = Constants.CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.CURRENCY_KEY
+    private val argsCategoryKey = Constants.CATEGORY_KEY
 
-//    private val cashAccountsUseCase = CashAccountsUseCase()
-
+    private lateinit var control:NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,24 +50,30 @@ class NewMoneyMovingFragment : Fragment() {
 
         val db = dataBase.getDataBase(requireContext())
 
-        val control = activity?.findNavController(R.id.nav_host_fragment)
-
-        binding.dateTimeTimeStamp.setText(currentDateTimeMillis.parseTimeFromMillis())
-
-        binding.selectButton.setOnClickListener {
-            control?.navigate(R.id.nav_cash_account)
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+        with(binding) {
+            dateTimeTimeStamp.setText(currentDateTimeMillis.parseTimeFromMillis())
+            selectCashAccountButton.setOnClickListener {
+                navigateTo(R.id.nav_cash_account)
+            }
+            selectCurrenciesButton.setOnClickListener {
+                navigateTo(R.id.nav_currencies)
+            }
+            selectCategoryButton.setOnClickListener {
+                navigateTo(R.id.nav_categories)
+            }
+            addNewMoneyMovingButton.setOnClickListener {
+                control.popBackStack()
+            }
         }
-        binding.selectCurrenciesButton.setOnClickListener {
-            control?.navigate(R.id.nav_currencies)
-        }
+
         val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
         if (cashAccountId != null) {
             launchUi {
-                binding.selectButton.text = CashAccountsUseCase.getOneCashAccountName(
+                binding.selectCashAccountButton.text = CashAccountsUseCase.getOneCashAccountName(
                     db.cashAccountDao(), cashAccountId
                 )
             }
-//            Toast.makeText(context, "$cashAccountId", Toast.LENGTH_SHORT).show()
         }
         val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
         if (currenciesId != null) {
@@ -75,11 +83,20 @@ class NewMoneyMovingFragment : Fragment() {
                 )
             }
         }
-
-        binding.addNewMoneyMovingButton.setOnClickListener {
-            control?.popBackStack()
+        val categoryId: Int? = arguments?.getInt(argsCategoryKey)
+        if (categoryId != null) {
+            launchUi {
+                binding.selectCategoryButton.text = CategoriesUseCase.getOneCategory(
+                    db.categoryDao(), categoryId
+                )
+            }
         }
+
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun navigateTo(nav: Int) {
+        control.navigate(nav)
     }
 
     override fun onDestroyView() {
