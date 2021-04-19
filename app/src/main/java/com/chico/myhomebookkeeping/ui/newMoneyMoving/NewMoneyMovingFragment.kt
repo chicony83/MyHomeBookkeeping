@@ -13,9 +13,12 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
 
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
@@ -68,30 +71,28 @@ class NewMoneyMovingFragment : Fragment() {
                 control.popBackStack()
             }
         }
-
+        with(newMoneyMovingViewModel){
+            selectedCashAccount.observe(viewLifecycleOwner,{
+                binding.selectCashAccountButton.text = it.first().accountName
+            })
+            selectedCategory.observe(viewLifecycleOwner,{
+                binding.selectCategoryButton.text = it.first().categoryName
+            })
+            selectedCurrency.observe(viewLifecycleOwner,{
+                binding.selectCurrenciesButton
+            })
+        }
         val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
         if (cashAccountId != null) {
-            launchUi {
-                binding.selectCashAccountButton.text = CashAccountsUseCase.getOneCashAccountName(
-                    db.cashAccountDao(), cashAccountId
-                )
+            launchIo {
+                    newMoneyMovingViewModel.loadCashAccount(cashAccountId)
             }
         }
         val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
         if (currenciesId != null) {
-            launchUi {
-                binding.selectCurrenciesButton.text = CurrenciesUseCase.getOneCurrencyName(
-                    db.currenciesDao(), currenciesId
-                )
-            }
         }
         val categoryId: Int? = arguments?.getInt(argsCategoryKey)
         if (categoryId != null) {
-            launchUi {
-                binding.selectCategoryButton.text = CategoriesUseCase.getOneCategory(
-                    db.categoryDao(), categoryId
-                )
-            }
         }
 
         super.onViewCreated(view, savedInstanceState)
