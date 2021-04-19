@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.db.NewMoneyMovement
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
@@ -46,6 +47,17 @@ class NewMoneyMovingViewModel(
                         )
                     )
                 }
+                NewMoneyMovement.cashAccountValue = cashAccountId
+            }
+        }
+        if (NewMoneyMovement.cashAccountValue > 0) {
+            launchIo {
+                _selectedCashAccount.postValue(
+                    CashAccountsUseCase.getOneCashAccount(
+                        dbCashAccount,
+                        NewMoneyMovement.cashAccountValue
+                    )
+                )
             }
         }
         val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
@@ -59,6 +71,7 @@ class NewMoneyMovingViewModel(
                         )
                     )
                 }
+                NewMoneyMovement.currencyValue = currenciesId
             }
         }
         val categoryId: Int? = arguments?.getInt(argsCategoryKey)
@@ -72,6 +85,7 @@ class NewMoneyMovingViewModel(
                         )
                     )
                 }
+                NewMoneyMovement.categoryValue = categoryId
             }
         }
 
