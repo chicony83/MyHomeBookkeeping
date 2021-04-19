@@ -7,10 +7,10 @@ import com.chico.myhomebookkeeping.utils.launchForResult
 import kotlinx.coroutines.runBlocking
 
 object CategoriesUseCase {
-    suspend fun getOneCategory(db: CategoryDao, id: Int):String {
+    suspend fun getOneCategory(db: CategoryDao, id: Int): List<Categories>? {
         return launchForResult {
-            db.getOneCategory(id).first().categoryName
-        }.toString()
+            db.getOneCategory(id)
+        }
     }
 
     fun addNewCategoryRunBlocking(

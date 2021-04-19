@@ -12,15 +12,8 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
-import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
 
-import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import java.util.*
 
@@ -32,9 +25,6 @@ class NewMoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentDateTimeMillis: Long = Calendar.getInstance().timeInMillis
 
-    private val argsCashAccountKey = Constants.CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.CURRENCY_KEY
-    private val argsCategoryKey = Constants.CATEGORY_KEY
 
     private lateinit var control: NavController
 
@@ -52,8 +42,6 @@ class NewMoneyMovingFragment : Fragment() {
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val db = dataBase.getDataBase(requireContext())
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         with(binding) {
@@ -75,25 +63,15 @@ class NewMoneyMovingFragment : Fragment() {
             selectedCashAccount.observe(viewLifecycleOwner,{
                 binding.selectCashAccountButton.text = it.first().accountName
             })
+            selectedCurrency.observe(viewLifecycleOwner,{
+                binding.selectCurrenciesButton.text = it.first().currencyName
+            })
             selectedCategory.observe(viewLifecycleOwner,{
                 binding.selectCategoryButton.text = it.first().categoryName
             })
-            selectedCurrency.observe(viewLifecycleOwner,{
-                binding.selectCurrenciesButton
-            })
         }
-        val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
-        if (cashAccountId != null) {
-            launchIo {
-                    newMoneyMovingViewModel.loadCashAccount(cashAccountId)
-            }
-        }
-        val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
-        if (currenciesId != null) {
-        }
-        val categoryId: Int? = arguments?.getInt(argsCategoryKey)
-        if (categoryId != null) {
-        }
+
+        newMoneyMovingViewModel.checkArguments(arguments)
 
         super.onViewCreated(view, savedInstanceState)
     }

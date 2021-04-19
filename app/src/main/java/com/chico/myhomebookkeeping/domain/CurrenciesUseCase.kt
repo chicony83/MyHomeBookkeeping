@@ -9,10 +9,10 @@ import kotlinx.coroutines.runBlocking
 
 object CurrenciesUseCase {
 
-    suspend fun getOneCurrencyName(db: CurrenciesDao, id: Int): String {
+    suspend fun getOneCurrency(db: CurrenciesDao, id: Int): List<Currencies>? {
         return launchForResult {
-            db.getOneCurrency(id).first().currencyName
-        }.toString()
+            db.getOneCurrency(id)
+        }
     }
 
     fun addNewCurrencyRunBlocking(

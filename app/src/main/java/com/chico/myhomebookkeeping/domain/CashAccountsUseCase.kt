@@ -13,11 +13,13 @@ object CashAccountsUseCase {
             db.getOneCashAccount(id).first().accountName
         }.toString()
     }
-    suspend fun getOneCashAccount(db: CashAccountDao,id: Int): List<CashAccount>? {
+
+    suspend fun getOneCashAccount(db: CashAccountDao, id: Int): List<CashAccount>? {
         return launchForResult {
             db.getOneCashAccount(id)
         }
     }
+
     fun addNewCashAccountRunBlocking(
         db: CashAccountDao,
         newCashAccount: CashAccount,
