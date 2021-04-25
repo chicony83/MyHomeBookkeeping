@@ -25,7 +25,6 @@ class NewMoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentDateTimeMillis: Long = Calendar.getInstance().timeInMillis
 
-
     private lateinit var control: NavController
 
     override fun onCreateView(
@@ -47,33 +46,38 @@ class NewMoneyMovingFragment : Fragment() {
         with(binding) {
             dateTimeTimeStamp.setText(currentDateTimeMillis.parseTimeFromMillis())
             selectCashAccountButton.setOnClickListener {
-                navigateTo(R.id.nav_cash_account)
+                pressSelectButton(R.id.nav_cash_account)
             }
             selectCurrenciesButton.setOnClickListener {
-                navigateTo(R.id.nav_currencies)
+                pressSelectButton(R.id.nav_currencies)
             }
             selectCategoryButton.setOnClickListener {
-                navigateTo(R.id.nav_categories)
+                pressSelectButton(R.id.nav_categories)
             }
             addNewMoneyMovingButton.setOnClickListener {
-                control.popBackStack()
+//                control.popBackStack()
             }
         }
         with(newMoneyMovingViewModel){
             selectedCashAccount.observe(viewLifecycleOwner,{
-                binding.selectCashAccountButton.text = it.first().accountName
+                binding.selectCashAccountButton.text = it.accountName
             })
             selectedCurrency.observe(viewLifecycleOwner,{
-                binding.selectCurrenciesButton.text = it.first().currencyName
+                binding.selectCurrenciesButton.text = it.currencyName
             })
             selectedCategory.observe(viewLifecycleOwner,{
-                binding.selectCategoryButton.text = it.first().categoryName
+                binding.selectCategoryButton.text = it.categoryName
             })
         }
 
         newMoneyMovingViewModel.checkArguments(arguments)
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun pressSelectButton(nav: Int) {
+        newMoneyMovingViewModel.saveData()
+        navigateTo(nav)
     }
 
     private fun navigateTo(nav: Int) {

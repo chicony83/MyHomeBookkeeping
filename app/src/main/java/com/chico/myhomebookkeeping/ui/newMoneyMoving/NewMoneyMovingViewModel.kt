@@ -1,12 +1,13 @@
 package com.chico.myhomebookkeeping.ui.newMoneyMoving
 
 import android.app.Application
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.db.NewMoneyMovement
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
@@ -17,7 +18,6 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.domain.NewMoneyMovingUseCase
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class NewMoneyMovingViewModel(
@@ -26,6 +26,7 @@ class NewMoneyMovingViewModel(
     private val argsCashAccountKey = Constants.CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.CURRENCY_KEY
     private val argsCategoryKey = Constants.CATEGORY_KEY
+    private val spName = Constants.SP_NAME
 
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
@@ -34,72 +35,108 @@ class NewMoneyMovingViewModel(
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
 
+    private val sharedPreferences: SharedPreferences =
+        app.getSharedPreferences(spName, MODE_PRIVATE)
+    private val spEditor = sharedPreferences.edit()
 
-    fun checkArguments(arguments: Bundle?) {
-        val cashAccountId: Int? = arguments?.getInt(argsCashAccountKey)
-        if (cashAccountId != null) {
-            if (cashAccountId > 0) {
-                launchIo {
-                    _selectedCashAccount.postValue(
-                        CashAccountsUseCase.getOneCashAccount(
-                            dbCashAccount,
-                            cashAccountId
-                        )
-                    )
-                }
-                NewMoneyMovement.cashAccountValue = cashAccountId
-            }
-        }
-        if (NewMoneyMovement.cashAccountValue > 0) {
-            launchIo {
-                _selectedCashAccount.postValue(
-                    CashAccountsUseCase.getOneCashAccount(
-                        dbCashAccount,
-                        NewMoneyMovement.cashAccountValue
-                    )
-                )
-            }
-        }
-        val currenciesId: Int? = arguments?.getInt(argsCurrencyKey)
-        if (currenciesId != null) {
-            if (currenciesId > 0) {
-                launchIo {
-                    _selectedCurrency.postValue(
-                        CurrenciesUseCase.getOneCurrency(
-                            dbCurrencies,
-                            currenciesId
-                        )
-                    )
-                }
-                NewMoneyMovement.currencyValue = currenciesId
-            }
-        }
-        val categoryId: Int? = arguments?.getInt(argsCategoryKey)
-        if (categoryId != null) {
-            if (categoryId > 0) {
-                launchIo {
-                    _selectedCategory.postValue(
-                        CategoriesUseCase.getOneCategory(
-                            dbCategory,
-                            categoryId
-                        )
-                    )
-                }
-                NewMoneyMovement.categoryValue = categoryId
-            }
-        }
-
-    }
-
-    private val _selectedCurrency = MutableLiveData<List<Currencies>>()
-    val selectedCurrency: LiveData<List<Currencies>>
+    private val _selectedCurrency = MutableLiveData<Currencies>()
+    val selectedCurrency: LiveData<Currencies>
         get() = _selectedCurrency
 
-    private val _selectedCashAccount = MutableLiveData<List<CashAccount>>()
-    val selectedCashAccount: LiveData<List<CashAccount>>
+    private val _selectedCashAccount = MutableLiveData<CashAccount>()
+    val selectedCashAccount: LiveData<CashAccount>
         get() = _selectedCashAccount
 
-    private val _selectedCategory = MutableLiveData<List<Categories>>()
-    val selectedCategory: LiveData<List<Categories>>
+    private val _selectedCategory = MutableLiveData<Categories>()
+    val selectedCategory: LiveData<Categories>
         get() = _selectedCategory
+
+    var cashAccountSP = -1
+    var currencySP = -1
+    var categorySP = -1
+
+    var cashAccountIdBundle: Int = -1
+    var currenciesIdBundle: Int = -1
+    var categoryIdBundle: Int = -1
+
+    fun checkArguments(arguments: Bundle?) {
+        getValuesSP()
+        getValuesBundle(arguments)
+        setValuesViewModel()
+    }
+
+    private fun getValuesBundle(arguments: Bundle?) {
+        cashAccountIdBundle = arguments?.getInt(argsCashAccountKey) ?: -1
+        currenciesIdBundle = arguments?.getInt(argsCurrencyKey) ?: -1
+        categoryIdBundle = arguments?.getInt(argsCategoryKey) ?: -1
+    }
+
+    private fun setValuesViewModel() {
+        launchIo {
+            if (checkPositiveValue(cashAccountSP) and !checkPositiveValue(cashAccountIdBundle)) {
+                postCashAccount(cashAccountSP)
+            }
+            if (checkPositiveValue(cashAccountIdBundle)) {
+                postCashAccount(cashAccountIdBundle)
+            }
+        }
+        launchIo {
+            if (checkPositiveValue(currencySP) and !checkPositiveValue(currenciesIdBundle)) {
+                postCurrency(currencySP)
+            }
+            if (checkPositiveValue(currenciesIdBundle)) {
+                postCurrency(currenciesIdBundle)
+            }
+        }
+        launchIo {
+            if (checkPositiveValue(categorySP) and !checkPositiveValue(cashAccountIdBundle)) {
+                postCategory(categorySP)
+            }
+            if (checkPositiveValue(categoryIdBundle)) {
+                postCategory(categoryIdBundle)
+            }
+        }
+    }
+
+    private suspend fun postCategory(idNum: Int) {
+        _selectedCategory.postValue(
+            CategoriesUseCase.getOneCategory(dbCategory, idNum)
+        )
+    }
+
+    private suspend fun postCurrency(idNum: Int) {
+        _selectedCurrency.postValue(
+            CurrenciesUseCase.getOneCurrency(dbCurrencies, idNum)
+        )
+    }
+
+    private suspend fun postCashAccount(idNum: Int) {
+        _selectedCashAccount.postValue(
+            CashAccountsUseCase.getOneCashAccount(dbCashAccount, idNum)
+        )
+    }
+
+    private fun getValuesSP() {
+        cashAccountSP = checkOneSP(argsCashAccountKey)
+        currencySP = checkOneSP(argsCurrencyKey)
+        categorySP = checkOneSP(argsCategoryKey)
+    }
+
+    private fun checkPositiveValue(checkTemp: Int): Boolean {
+        return checkTemp > 0
+    }
+
+    private fun checkOneSP(argsKey: String): Int {
+        return sharedPreferences.getInt(argsKey, -1)
+    }
+
+    fun saveData() {
+        spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.id ?: -1)
+        spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.id ?: -1)
+        spEditor.putInt(argsCategoryKey, _selectedCategory.value?.id ?: -1)
+
+        spEditor.commit()
+    }
+
+
 }

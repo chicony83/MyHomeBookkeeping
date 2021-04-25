@@ -7,7 +7,7 @@ import com.chico.myhomebookkeeping.utils.launchForResult
 import kotlinx.coroutines.runBlocking
 
 object CategoriesUseCase {
-    suspend fun getOneCategory(db: CategoryDao, id: Int): List<Categories>? {
+    suspend fun getOneCategory(db: CategoryDao, id: Int): Categories? {
         return launchForResult {
             db.getOneCategory(id)
         }

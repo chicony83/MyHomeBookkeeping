@@ -8,13 +8,13 @@ import kotlinx.coroutines.runBlocking
 
 object CashAccountsUseCase {
 
-    suspend fun getOneCashAccountName(db: CashAccountDao, id: Int): String {
-        return launchForResult {
-            db.getOneCashAccount(id).first().accountName
-        }.toString()
-    }
+//    suspend fun getOneCashAccountName(db: CashAccountDao, id: Int): String {
+//        return launchForResult {
+//            db.getOneCashAccount(id).first().accountName
+//        }.toString()
+//    }
 
-    suspend fun getOneCashAccount(db: CashAccountDao, id: Int): List<CashAccount>? {
+    suspend fun getOneCashAccount(db: CashAccountDao, id: Int): CashAccount? {
         return launchForResult {
             db.getOneCashAccount(id)
         }

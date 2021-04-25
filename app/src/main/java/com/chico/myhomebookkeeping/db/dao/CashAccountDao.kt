@@ -8,11 +8,11 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 @Dao
 interface CashAccountDao {
     @Insert
-    suspend fun addCashAccount(bankAccount: CashAccount)
+    suspend fun addCashAccount(cashAccount: CashAccount)
 
     @Query ("SELECT * FROM cash_account_table")
     suspend fun getAllCashAccounts():List<CashAccount>
 
     @Query("SELECT * FROM cash_account_table WHERE id = :id")
-    suspend fun getOneCashAccount(id: Int):List<CashAccount>
+    suspend fun getOneCashAccount(id: Int):CashAccount
 }
