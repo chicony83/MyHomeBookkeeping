@@ -11,13 +11,16 @@ import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
+import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.domain.NewMoneyMovingUseCase
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class NewMoneyMovingViewModel(
@@ -34,6 +37,8 @@ class NewMoneyMovingViewModel(
         dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
+    private val dbMoneyMovement: MoneyMovementDao =
+        dataBase.getDataBase(app.applicationContext).moneyMovementDao()
 
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
@@ -138,5 +143,19 @@ class NewMoneyMovingViewModel(
         spEditor.commit()
     }
 
-
+    fun addingNewMoneyMovingInDB(dataTime: Long, amount: Double, description: String) {
+        val cashAccountValue: Int = _selectedCashAccount.value?.id ?: 0
+        val categoryValue = _selectedCategory.value?.id ?: 0
+        val currencyValue = _selectedCurrency.value?.id ?: 0
+        val moneyMovement = MoneyMovement(
+            timeStamp = dataTime,
+            amount = amount,
+            cashAccount = cashAccountValue,
+            category = categoryValue,
+            currency = currencyValue,
+            description = description
+        )
+        val newMoneyMovingUseCase = NewMoneyMovingUseCase()
+        newMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+    }
 }

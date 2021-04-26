@@ -16,14 +16,14 @@ class CashAccountViewModel(
 
     private val db: CashAccountDao = dataBase.getDataBase(app.applicationContext).cashAccountDao()
 
-    init {
-        loadCashAccounts()
-    }
-
     private val _cashAccountsList = MutableLiveData<List<CashAccount>>()
 
     val cashAccountList: LiveData<List<CashAccount>>
         get() = _cashAccountsList
+
+    init {
+        loadCashAccounts()
+    }
 
     fun loadCashAccounts() {
         launchIo {

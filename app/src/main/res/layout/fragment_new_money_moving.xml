@@ -30,7 +30,8 @@
         <EditText
             android:id="@+id/dateTimeTimeStamp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="datetime" />
 
         <Button
             android:id="@+id/selectCashAccountButton"
@@ -48,7 +49,7 @@
             android:id="@+id/selectCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="выберите категорию"/>
+            android:text="выберите категорию" />
 
         <TextView
             android:layout_width="match_parent"
@@ -67,20 +68,11 @@
             android:text="описание" />
 
         <EditText
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ваше описание"
             android:minLines="2" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="место" />
-
-        <Spinner
-            android:id="@+id/currentPlace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

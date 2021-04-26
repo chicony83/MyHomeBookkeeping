@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
-import com.chico.myhomebookkeeping.utils.launchIo
 
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import java.util.*
@@ -55,17 +53,18 @@ class NewMoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_categories)
             }
             addNewMoneyMovingButton.setOnClickListener {
+                pressAddButton()
 //                control.popBackStack()
             }
         }
-        with(newMoneyMovingViewModel){
-            selectedCashAccount.observe(viewLifecycleOwner,{
+        with(newMoneyMovingViewModel) {
+            selectedCashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccountButton.text = it.accountName
             })
-            selectedCurrency.observe(viewLifecycleOwner,{
+            selectedCurrency.observe(viewLifecycleOwner, {
                 binding.selectCurrenciesButton.text = it.currencyName
             })
-            selectedCategory.observe(viewLifecycleOwner,{
+            selectedCategory.observe(viewLifecycleOwner, {
                 binding.selectCategoryButton.text = it.categoryName
             })
         }
@@ -73,6 +72,13 @@ class NewMoneyMovingFragment : Fragment() {
         newMoneyMovingViewModel.checkArguments(arguments)
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun pressAddButton() {
+        val dataTime = currentDateTimeMillis
+        val amount:Double = binding.amount.text.toString().toDouble()
+        val description:String = binding.description.toString()
+        newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime,amount,description)
     }
 
     private fun pressSelectButton(nav: Int) {

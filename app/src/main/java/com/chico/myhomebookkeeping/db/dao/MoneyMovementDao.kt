@@ -9,7 +9,7 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 interface MoneyMovementDao {
 
     @Insert
-    suspend fun addMovingMoney(money:MoneyMovement)
+    suspend fun addMovingMoney(moneyMovement:MoneyMovement):Long
 
     @Query("SELECT * FROM money_moving_table")
     suspend fun getAllMovingMoney():List<MoneyMovement>
