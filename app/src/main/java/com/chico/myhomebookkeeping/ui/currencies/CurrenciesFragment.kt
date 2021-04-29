@@ -1,6 +1,5 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,53 +41,57 @@ class CurrenciesFragment : Fragment() {
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
         currenciesViewModel.currenciesList.observe(viewLifecycleOwner, {
-            binding.currenciesHolder.adapter = CurrenciesAdapter(it, object:OnItemViewClickListener{
-                override fun onClick(selectedId: Int) {
-                    uiHelper.showHideUIElements(selectedId,binding.layoutConfirmation)
-                    selectedCurrencyId = selectedId
-                    Log.i("TAG","---2WTF---")
-                }
-
-            })
-
+            binding.currenciesHolder.adapter =
+                CurrenciesAdapter(it, object : OnItemViewClickListener {
+                    override fun onClick(selectedId: Int) {
+                        uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                        selectedCurrencyId = selectedId
+                        Log.i("TAG", "---2WTF---")
+                    }
+                })
         })
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val currenciesUseCase = CurrenciesUseCase()
-        binding.showHideAddCurrencyFragment.setOnClickListener {
-            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
-                binding.addNewCurrencyFragment.visibility = View.GONE
-            } else binding.addNewCurrencyFragment.visibility = View.VISIBLE
-        }
-        binding.addNewCurrencyButton.setOnClickListener {
-            if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
-                if (binding.newCurrencyEditText.text.isNotEmpty()) {
-                    val nameCurrency: String = binding.newCurrencyEditText.text.toString()
-                    val addingCurrency = Currencies(currencyName = nameCurrency)
-                    CurrenciesUseCase.addNewCurrencyRunBlocking(db, addingCurrency,currenciesViewModel)
+        with(binding) {
+            showHideAddCurrencyFragment.setOnClickListener {
+                if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
+                    uiHelper.hideUiElement(binding.addNewCurrencyFragment)
+                } else uiHelper.showUiElement(binding.addNewCurrencyFragment)
+            }
+            addNewCurrencyButton.setOnClickListener {
+                if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
+                    if (binding.currencyName.text.isNotEmpty()) {
+                        val nameCurrency: String = binding.currencyName.text.toString()
+                        val addingCurrency = Currencies(currencyName = nameCurrency)
+                        CurrenciesUseCase.addNewCurrencyRunBlocking(
+                            db,
+                            addingCurrency,
+                            currenciesViewModel
+                        )
+                        uiHelper.clearUiElement(binding.currencyName)
+                        uiHelper.hideUiElement(binding.addNewCurrencyFragment)
+                    }
+                }
+            }
+            selectButton.setOnClickListener {
+                if (selectedCurrencyId > 0) {
+                    val bundle = Bundle()
+                    bundle.putInt(argsName, selectedCurrencyId)
+                    findNavController().navigate(
+                        R.id.nav_new_money_moving, bundle
+                    )
+                }
+            }
+            cancel.setOnClickListener {
+                if (selectedCurrencyId > 0) {
+                    selectedCurrencyId = 0
+                    uiHelper.hideUiElement(binding.layoutConfirmation)
                 }
             }
         }
-        binding.selectButton.setOnClickListener {
-            if (selectedCurrencyId>0){
-                val bundle = Bundle()
-                bundle.putInt(argsName,selectedCurrencyId)
-                findNavController().navigate(
-                    R.id.nav_new_money_moving,bundle
-                )
-            }
-        }
-        binding.cancel.setOnClickListener {
-            if (selectedCurrencyId>0){
-                selectedCurrencyId = 0
-                binding.layoutConfirmation.visibility = View.GONE
-            }
-        }
-
     }
 
     override fun onDestroy() {

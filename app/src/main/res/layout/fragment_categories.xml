@@ -54,7 +54,7 @@
         android:id="@+id/showHideAddCategoryFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="add income money category"
+        android:text="@string/add_money_category"
         app:layout_constraintBottom_toTopOf="@+id/addNewCategoryFragment"
         tools:layout_editor_absoluteX="16dp" />
 
@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
-            android:id="@+id/new_category_name"
+            android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="название категории" />
@@ -77,13 +77,13 @@
             android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/new_category_incoming"
+                android:id="@+id/category_incoming_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="доходы" />
 
             <RadioButton
-                android:id="@+id/new_category_spending"
+                android:id="@+id/category_spending_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="расходы" />
@@ -93,6 +93,6 @@
             android:id="@+id/addNewCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="add" />
+            android:text="@string/add_button" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

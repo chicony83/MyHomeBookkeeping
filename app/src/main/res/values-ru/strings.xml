@@ -3,7 +3,7 @@
     <string name="action_settings">Настройки</string>
     <string name="menu_home">Главная</string>
     <string name="menu_gallery">Отчеты</string>
-    <string name="menu_categories">Категоии и места</string>
+    <string name="menu_categories">Категоии</string>
     <string name="header_cash_accounts">Названия счетов</string>
     <string name="select">выбрать</string>
     <string name="cancel">отменить</string>
@@ -14,4 +14,5 @@
     <string name="add_button">добавить</string>
     <string name="new_currency">новая валюта</string>
     <string name="currency">валюта</string>
+    <string name="add_money_category">новая категория</string>
 </resources>

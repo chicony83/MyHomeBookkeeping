@@ -55,16 +55,14 @@ class CashAccountFragment : Fragment() {
         return binding.root
     }
 
-
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-
             showHideAddCashAccountFragment.setOnClickListener {
                 if (binding.addNewCashAccountFragment.visibility == View.GONE) {
-                    binding.addNewCashAccountFragment.visibility = View.VISIBLE
-                } else binding.addNewCashAccountFragment.visibility = View.GONE
+                    uiHelper.showUiElement(binding.addNewCashAccountFragment)
+                } else uiHelper.hideUiElement(binding.addNewCashAccountFragment)
             }
             addNewCashAccountButton.setOnClickListener {
                 if (binding.addNewCashAccountFragment.visibility == View.VISIBLE) {
@@ -81,8 +79,8 @@ class CashAccountFragment : Fragment() {
                             newCashAccount,
                             cashAccountViewModel
                         )
-                        uiHelper.clearEditText(binding.cashAccountName)
-                        uiHelper.clearEditText(binding.cashAccountNumber)
+                        uiHelper.clearUiElement(binding.cashAccountName)
+                        uiHelper.clearUiElement(binding.cashAccountNumber)
                         uiHelper.hideUiElement(binding.addNewCashAccountFragment)
                     }
                 }
@@ -101,19 +99,13 @@ class CashAccountFragment : Fragment() {
             cancel.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     selectedCashAccountId = 0
-                    binding.layoutConfirmation.visibility = View.GONE
+                    uiHelper.hideUiElement(binding.layoutConfirmation)
                 }
             }
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
-//    override fun onClick() {
-//        Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
-//    }
 }

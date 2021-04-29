@@ -65,7 +65,7 @@
         <EditText
             android:maxLines="1"
             android:maxLength="16"
-            android:id="@+id/newCurrencyEditText"
+            android:id="@+id/currency_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -56,33 +56,38 @@ class CategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             showHideAddCategoryFragment.setOnClickListener {
-
                 if (binding.addNewCategoryFragment.visibility == View.GONE) {
-                    binding.addNewCategoryFragment.visibility = View.VISIBLE
-                } else binding.addNewCategoryFragment.visibility = View.GONE
+                    uiHelper.showUiElement(binding.addNewCategoryFragment)
+                } else uiHelper.hideUiElement(binding.addNewCategoryFragment)
             }
             addNewCategoryButton.setOnClickListener {
                 if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
-                    if (binding.newCategoryName.text.isNotEmpty()
+                    if (binding.categoryName.text.isNotEmpty()
                         and
-                        (binding.newCategoryIncoming.isChecked
+                        (binding.categoryIncomingRadioButton.isChecked
                                 or
-                                binding.newCategorySpending.isChecked
+                                binding.categorySpendingRadioButton.isChecked
                                 )
                     ) {
-                        val category = binding.newCategoryName.text.toString()
+                        val category = binding.categoryName.text.toString()
                         var isIncoming = false
                         var isSpending = false
-                        if (binding.newCategoryIncoming.isChecked) isIncoming = true
-                        if (binding.newCategorySpending.isChecked) isSpending = true
+                        if (binding.categoryIncomingRadioButton.isChecked) isIncoming = true
+                        if (binding.categorySpendingRadioButton.isChecked) isSpending = true
                         val newCategory = Categories(
                             categoryName = category,
                             isIncome = isIncoming,
                             isSpending = isSpending
                         )
-                        CategoriesUseCase.addNewCategoryRunBlocking(db, newCategory,categoriesViewModel)
-//                        Toast.makeText(context, "категория добавлена", Toast.LENGTH_SHORT).show()
-                        binding.addNewCategoryFragment.visibility = View.GONE
+                        CategoriesUseCase.addNewCategoryRunBlocking(
+                            db,
+                            newCategory,
+                            categoriesViewModel
+                        )
+                        uiHelper.clearUiElement(binding.categoryName)
+                        uiHelper.clearUiElement(binding.categoryIncomingRadioButton)
+                        uiHelper.clearUiElement(binding.categorySpendingRadioButton)
+                        uiHelper.hideUiElement(binding.addNewCategoryFragment)
                     }
                 }
             }
@@ -99,11 +104,10 @@ class CategoriesFragment : Fragment() {
             cancel.setOnClickListener {
                 if (selectedCategoryId > 0) {
                     selectedCategoryId = 0
-                    binding.layoutConfirmation.visibility = View.GONE
+                    uiHelper.hideUiElement(binding.layoutConfirmation)
                 }
             }
         }
-
     }
 
     override fun onDestroyView() {
