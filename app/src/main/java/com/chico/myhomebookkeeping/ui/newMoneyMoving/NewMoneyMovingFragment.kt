@@ -77,7 +77,7 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressAddButton() {
         val dataTime = currentDateTimeMillis
         val amount:Double = binding.amount.text.toString().toDouble()
-        val description:String = binding.description.toString()
+        val description:String = binding.description.text.toString()
         newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime,amount,description)
     }
 

@@ -144,9 +144,9 @@ class NewMoneyMovingViewModel(
     }
 
     fun addingNewMoneyMovingInDB(dataTime: Long, amount: Double, description: String) {
-        val cashAccountValue: Int = _selectedCashAccount.value?.id ?: 0
-        val categoryValue = _selectedCategory.value?.id ?: 0
-        val currencyValue = _selectedCurrency.value?.id ?: 0
+        val cashAccountValue: String = _selectedCashAccount.value?.accountName.toString()
+        val categoryValue:String = _selectedCategory.value?.categoryName.toString()
+        val currencyValue:String = _selectedCurrency.value?.currencyName.toString()
         val moneyMovement = MoneyMovement(
             timeStamp = dataTime,
             amount = amount,

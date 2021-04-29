@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey
 data class MoneyMovement(
     @ColumnInfo(name = "time_stamp")
     val timeStamp: Long,
-    @ColumnInfo(name = "bank_account")
-    val cashAccount: Int,
+    @ColumnInfo(name = "cash_account")
+    val cashAccount: String,
     @ColumnInfo(name = "currency")
-    val currency:Int,
+    val currency:String,
     @ColumnInfo(name = "category")
-    val category:Int,
+    val category:String,
     @ColumnInfo(name = "amount")
     val amount: Double,
     @ColumnInfo(name = "description")
