@@ -1,10 +1,12 @@
 package com.chico.myhomebookkeeping.ui.MoneyMoving
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.MoneyMovingRecyclerViewItemBinding
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
+import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 
 class MoneyMovingAdapter(
     private val moneyMovementList: List<MoneyMovement>
@@ -26,15 +28,16 @@ class MoneyMovingAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(moneyMovement: MoneyMovement) {
             with(binding){
-                dataTime.text = moneyMovement.timeStamp.toString()
-                cashAccountName.text = moneyMovement.cashAccount.toString()
-                currencyName.text = moneyMovement.currency.toString()
-                categoryName.text = moneyMovement.category.toString()
+                dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
+                cashAccountName.text = moneyMovement.cashAccount
+                currencyName.text = moneyMovement.currency
+                categoryName.text = moneyMovement.category
                 amount.text = moneyMovement.amount.toString()
-                description.text = moneyMovement.description.toString()
+                if (moneyMovement.description.isNotEmpty()){
+                    description.visibility = View.VISIBLE
+                    description.text = moneyMovement.description
+                }
             }
         }
-
     }
-
 }
