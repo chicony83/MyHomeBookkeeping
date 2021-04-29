@@ -143,7 +143,7 @@ class NewMoneyMovingViewModel(
         spEditor.commit()
     }
 
-    fun addingNewMoneyMovingInDB(dataTime: Long, amount: Double, description: String) {
+    suspend fun addingNewMoneyMovingInDB(dataTime: Long, amount: Double, description: String): Long {
         val cashAccountValue: String = _selectedCashAccount.value?.accountName.toString()
         val categoryValue:String = _selectedCategory.value?.categoryName.toString()
         val currencyValue:String = _selectedCurrency.value?.currencyName.toString()
@@ -156,6 +156,6 @@ class NewMoneyMovingViewModel(
             description = description
         )
         val newMoneyMovingUseCase = NewMoneyMovingUseCase()
-        newMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+        return newMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
     }
 }

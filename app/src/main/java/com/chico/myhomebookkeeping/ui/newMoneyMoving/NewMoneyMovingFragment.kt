@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -13,6 +14,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
@@ -79,7 +81,10 @@ class NewMoneyMovingFragment : Fragment() {
         val amount:Double = binding.amount.text.toString().toDouble()
         val description:String = binding.description.text.toString()
         newMoneyMovingViewModel.saveData()
-        newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime,amount,description)
+        runBlocking {
+            val result = newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime,amount,description)
+            Toast.makeText(context,"запись добавлена",Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun pressSelectButton(nav: Int) {
