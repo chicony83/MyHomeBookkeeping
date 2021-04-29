@@ -78,29 +78,28 @@ class NewMoneyMovingViewModel(
 
     private fun setValuesViewModel() {
         launchIo {
-            if (checkPositiveValue(cashAccountSP) and !checkPositiveValue(cashAccountIdBundle)) {
-                postCashAccount(cashAccountSP)
-            }
-            if (checkPositiveValue(cashAccountIdBundle)) {
-                postCashAccount(cashAccountIdBundle)
-            }
+            if (doubleCheck(cashAccountSP, cashAccountIdBundle)) postCashAccount(cashAccountSP)
+
+            if (isPositiveValue(cashAccountIdBundle)) postCashAccount(cashAccountIdBundle)
+
         }
         launchIo {
-            if (checkPositiveValue(currencySP) and !checkPositiveValue(currenciesIdBundle)) {
-                postCurrency(currencySP)
-            }
-            if (checkPositiveValue(currenciesIdBundle)) {
-                postCurrency(currenciesIdBundle)
-            }
+            if (doubleCheck(currencySP, currenciesIdBundle)) postCurrency(currencySP)
+
+            if (isPositiveValue(currenciesIdBundle)) postCurrency(currenciesIdBundle)
+
         }
         launchIo {
-            if (checkPositiveValue(categorySP) and !checkPositiveValue(cashAccountIdBundle)) {
-                postCategory(categorySP)
-            }
-            if (checkPositiveValue(categoryIdBundle)) {
-                postCategory(categoryIdBundle)
-            }
+            if (doubleCheck(categorySP, cashAccountIdBundle)) postCategory(categorySP)
+
+            if (isPositiveValue(categoryIdBundle)) postCategory(categoryIdBundle)
+
         }
+    }
+
+
+    private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
+        return isPositiveValue(checkOne) and !isPositiveValue(checkTwo)
     }
 
     private suspend fun postCategory(idNum: Int) {
@@ -127,7 +126,7 @@ class NewMoneyMovingViewModel(
         categorySP = checkOneSP(argsCategoryKey)
     }
 
-    private fun checkPositiveValue(checkTemp: Int): Boolean {
+    private fun isPositiveValue(checkTemp: Int): Boolean {
         return checkTemp > 0
     }
 
@@ -143,10 +142,14 @@ class NewMoneyMovingViewModel(
         spEditor.commit()
     }
 
-    suspend fun addingNewMoneyMovingInDB(dataTime: Long, amount: Double, description: String): Long {
+    suspend fun addingNewMoneyMovingInDB(
+        dataTime: Long,
+        amount: Double,
+        description: String
+    ): Long {
         val cashAccountValue: String = _selectedCashAccount.value?.accountName.toString()
-        val categoryValue:String = _selectedCategory.value?.categoryName.toString()
-        val currencyValue:String = _selectedCurrency.value?.currencyName.toString()
+        val categoryValue: String = _selectedCategory.value?.categoryName.toString()
+        val currencyValue: String = _selectedCurrency.value?.currencyName.toString()
         val moneyMovement = MoneyMovement(
             timeStamp = dataTime,
             amount = amount,
