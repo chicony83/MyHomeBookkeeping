@@ -7,10 +7,11 @@
     <string name="header_cash_accounts">Названия счетов</string>
     <string name="select">выбрать</string>
     <string name="cancel">отменить</string>
-    <string name="new_cash_account">новыйс счёт</string>
+    <string name="new_cash_account">новый счёт</string>
     <string name="account_name">название счёта</string>
     <string name="last_4_digits_of_card">последних 4 цифры карты</string>
     <string name="only_last_4_digits">только последние 4 цыфры</string>
     <string name="add_button">добавить</string>
     <string name="new_currency">новая валюта</string>
+    <string name="currency">валюта</string>
 </resources>

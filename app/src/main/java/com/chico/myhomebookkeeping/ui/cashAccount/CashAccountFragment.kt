@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -60,9 +59,6 @@ class CashAccountFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        val cashAccountsUseCase = CashAccountsUseCase()
-//        val control = activity?.findNavController(R.id.nav_host_fragment)
         with(binding) {
 
             showHideAddCashAccountFragment.setOnClickListener {
@@ -85,6 +81,9 @@ class CashAccountFragment : Fragment() {
                             newCashAccount,
                             cashAccountViewModel
                         )
+                        uiHelper.clearEditText(binding.cashAccountName)
+                        uiHelper.clearEditText(binding.cashAccountNumber)
+                        uiHelper.hideUiElement(binding.addNewCashAccountFragment)
                     }
                 }
             }
