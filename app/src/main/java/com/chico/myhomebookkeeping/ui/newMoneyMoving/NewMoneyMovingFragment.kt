@@ -12,8 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.utils.launchUi
 
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -26,6 +28,10 @@ class NewMoneyMovingFragment : Fragment() {
     private var currentDateTimeMillis: Long = Calendar.getInstance().timeInMillis
 
     private lateinit var control: NavController
+
+    private var firstPress: Long = 0L
+    private var secondPress: Long = 0L
+    private var click = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,13 +83,34 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressAddButton() {
-        val dataTime = currentDateTimeMillis
-        val amount:Double = binding.amount.text.toString().toDouble()
-        val description:String = binding.description.text.toString()
-        newMoneyMovingViewModel.saveData()
-        runBlocking {
-            val result = newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime,amount,description)
-            Toast.makeText(context,"запись добавлена",Toast.LENGTH_LONG).show()
+//        firstPress = System.currentTimeMillis()
+//        if (firstPress > secondPress) {
+        click++
+//        }
+
+        if (click == 1) {
+            val dataTime = currentDateTimeMillis
+            val amount: Double = binding.amount.text.toString().toDouble()
+            val description: String = binding.description.text.toString()
+            newMoneyMovingViewModel.saveData()
+            runBlocking {
+                val result =
+                    newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime, amount, description)
+                Toast.makeText(context, "запись добавлена", Toast.LENGTH_LONG).show()
+            }
+        }
+        if (click >= 2) {
+            binding.addNewMoneyMovingButton.isEnabled = false
+            binding.addNewMoneyMovingButton.text = "слишком много нажатий"
+            Toast.makeText(context, "запись добавляется или уже добавлена", Toast.LENGTH_LONG)
+                .show()
+            launchUi {
+                Toast.makeText(context, "кнопка временно заблокирована", Toast.LENGTH_LONG).show()
+                delay(5000)
+                binding.addNewMoneyMovingButton.text = "можно добавить еще одну запись"
+                binding.addNewMoneyMovingButton.isEnabled = true
+                click = 0
+            }
         }
     }
 
