@@ -1,10 +1,13 @@
 package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -60,13 +63,11 @@ class CashAccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             showHideAddCashAccountFragment.setOnClickListener {
-                if (binding.addNewCashAccountFragment.visibility == View.GONE) {
-                    uiHelper.showUiElement(binding.addNewCashAccountFragment)
-                } else uiHelper.hideUiElement(binding.addNewCashAccountFragment)
+                uiHelper.setShowHideOnLayout(binding.addNewCashAccountFragment)
             }
             addNewCashAccountButton.setOnClickListener {
-                if (binding.addNewCashAccountFragment.visibility == View.VISIBLE) {
-                    if (binding.cashAccountName.text.isNotEmpty()) {
+                if (uiHelper.isVisibleLayout(binding.addNewCashAccountFragment)) {
+                    if (uiHelper.isLengthStringMoThan(binding.cashAccountName.text)) {
                         val name = binding.cashAccountName.text.toString()
                         var number: Int? = null
                         if (binding.cashAccountNumber.text.isNotEmpty()) {
@@ -82,7 +83,9 @@ class CashAccountFragment : Fragment() {
                         uiHelper.clearUiElement(binding.cashAccountName)
                         uiHelper.clearUiElement(binding.cashAccountNumber)
                         uiHelper.hideUiElement(binding.addNewCashAccountFragment)
+                        view.hideKeyboard()
                     }
+                    else showMessage("слишком короткое название")
                 }
             }
             selectButton.setOnClickListener {
@@ -104,8 +107,17 @@ class CashAccountFragment : Fragment() {
             }
         }
     }
+
+    private fun showMessage(s: String) {
+        Toast.makeText(context,s,Toast.LENGTH_LONG).show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun View.hideKeyboard(){
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken,0)
     }
 }

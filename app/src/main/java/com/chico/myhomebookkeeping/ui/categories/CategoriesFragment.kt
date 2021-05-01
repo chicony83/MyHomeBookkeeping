@@ -56,17 +56,15 @@ class CategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             showHideAddCategoryFragment.setOnClickListener {
-                if (binding.addNewCategoryFragment.visibility == View.GONE) {
-                    uiHelper.showUiElement(binding.addNewCategoryFragment)
-                } else uiHelper.hideUiElement(binding.addNewCategoryFragment)
+                uiHelper.setShowHideOnLayout(binding.addNewCategoryFragment)
             }
             addNewCategoryButton.setOnClickListener {
-                if (binding.addNewCategoryFragment.visibility == View.VISIBLE) {
-                    if (binding.categoryName.text.isNotEmpty()
+                if (uiHelper.isVisibleLayout(binding.addNewCategoryFragment)) {
+                    if (uiHelper.isLengthStringMoThan(binding.categoryName.text)
                         and
-                        (binding.categoryIncomingRadioButton.isChecked
+                        (uiHelper.isCheckedRadioButton(binding.categoryIncomingRadioButton)
                                 or
-                                binding.categorySpendingRadioButton.isChecked
+                                uiHelper.isCheckedRadioButton(binding.categorySpendingRadioButton)
                                 )
                     ) {
                         val category = binding.categoryName.text.toString()

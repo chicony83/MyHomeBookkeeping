@@ -57,13 +57,11 @@ class CurrenciesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             showHideAddCurrencyFragment.setOnClickListener {
-                if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
-                    uiHelper.hideUiElement(binding.addNewCurrencyFragment)
-                } else uiHelper.showUiElement(binding.addNewCurrencyFragment)
+                uiHelper.setShowHideOnLayout(binding.addNewCurrencyFragment)
             }
             addNewCurrencyButton.setOnClickListener {
-                if (binding.addNewCurrencyFragment.visibility == View.VISIBLE) {
-                    if (binding.currencyName.text.isNotEmpty()) {
+                if (uiHelper.isVisibleLayout(binding.addNewCurrencyFragment)) {
+                    if (uiHelper.isLengthStringMoThan(binding.currencyName.text)) {
                         val nameCurrency: String = binding.currencyName.text.toString()
                         val addingCurrency = Currencies(currencyName = nameCurrency)
                         CurrenciesUseCase.addNewCurrencyRunBlocking(
