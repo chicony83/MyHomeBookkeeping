@@ -85,7 +85,7 @@ class CashAccountFragment : Fragment() {
                         uiHelper.hideUiElement(binding.addNewCashAccountFragment)
                         view.hideKeyboard()
                     }
-                    else showMessage("слишком короткое название")
+                    else showMessage(getString(R.string.too_short_name))
                 }
             }
             selectButton.setOnClickListener {
