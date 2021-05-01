@@ -15,11 +15,14 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import com.chico.myhomebookkeeping.ui.UiHelper
 import com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    val uiHelper = UiHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +63,10 @@ class MainActivity : AppCompatActivity() {
     ) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.nav_new_money_moving -> fab.visibility = View.GONE
+                R.id.nav_new_money_moving -> uiHelper.hideUiElement(fab)
+                R.id.nav_currencies -> uiHelper.hideUiElement(fab)
+                R.id.nav_categories -> uiHelper.hideUiElement(fab)
+                R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
                 else -> fab.visibility = View.VISIBLE
             }
         }

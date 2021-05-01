@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper {
     fun showHideUIElements(selectedId: Int, showHideLayout: LinearLayout) {
@@ -14,9 +15,11 @@ class UiHelper {
             showHideLayout.visibility = View.GONE
         }
     }
+
     fun clearUiElement(editText: EditText) {
         editText.text.clear()
     }
+
     fun clearUiElement(radioButton: RadioButton) {
         radioButton.isChecked = false
     }
@@ -24,15 +27,18 @@ class UiHelper {
     fun hideUiElement(element: LinearLayout) {
         element.visibility = View.GONE
     }
-    fun showUiElement(element:LinearLayout){
+
+    fun showUiElement(element: LinearLayout) {
         element.visibility = View.VISIBLE
     }
-    fun isLengthStringMoThan(text: Editable):Boolean{
-        if (text.length>3){
+
+    fun isLengthStringMoThan(text: Editable): Boolean {
+        if (text.length > 3) {
             return true
         }
         return false
     }
+
     fun isCheckedRadioButton(radioButton: RadioButton): Boolean {
         return radioButton.isChecked
     }
@@ -45,6 +51,10 @@ class UiHelper {
         if (!isVisibleLayout(layout)) {
             showUiElement(layout)
         } else hideUiElement(layout)
+    }
+
+    fun hideUiElement(fab: FloatingActionButton) {
+        fab.visibility = View.GONE
     }
 //    fun showMessage(text: String) {
 //        Toast.makeText(con, text, Toast.LENGTH_LONG).show()
