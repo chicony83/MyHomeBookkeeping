@@ -27,6 +27,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <style name="WrapContent_WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
     <style name="EnterNameEditText" parent="MatchParent_WrapContent">
         <item name="android:maxLines">1</item>
@@ -44,4 +48,11 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:visibility">gone</item>
     </style>
+    <style name="RecyclerViewItem" parent="MatchParent_WrapContent">
+        <item name="android:layout_margin">@dimen/margin_normal</item>
+    </style>
+    <style name="MoneyMovingItemTextView" parent="WrapContent_WrapContent">
+
+    </style>
+
 </resources>
