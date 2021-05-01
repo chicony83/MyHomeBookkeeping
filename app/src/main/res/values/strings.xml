@@ -8,12 +8,12 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Reports</string>
-    <string name="menu_categories">Categories</string>
+    <string name="home_title">Home</string>
+    <string name="reports_title">Reports</string>
+    <string name="categories_title">Categories</string>
 
 
-    <string name="header_cash_accounts">account names</string>
+    <string name="header_cash_accounts">account</string>
     <string name="select">select</string>
     <string name="cancel">cancel</string>
     <string name="new_cash_account">new cash account</string>
@@ -25,4 +25,8 @@
     <string name="currency">currency</string>
     <string name="add_money_category">add money category</string>
     <string name="enterName">enter name</string>
+    <string name="cash_account_title">accounts</string>
+    <string name="currencies_title">currencies</string>
+    <string name="new_money_movement">новое движение денег</string>
+    <string name="add_income_or_expense">add income or expense </string>
 </resources>

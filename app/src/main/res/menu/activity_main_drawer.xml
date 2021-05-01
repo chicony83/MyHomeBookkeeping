@@ -7,23 +7,23 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_home"
-            android:title="@string/menu_home" />
+            android:title="@string/home_title" />
         <item
             android:id="@+id/nav_new_money_moving"
-            android:title="добавить приход расход"/>
+            android:title="@string/add_income_or_expense"/>
         <item
             android:id="@+id/nav_reports"
             android:icon="@drawable/ic_menu_reports"
-            android:title="@string/menu_gallery" />
+            android:title="@string/reports_title" />
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_menu_category"
-            android:title="@string/menu_categories" />
+            android:title="@string/categories_title" />
         <item
             android:id="@+id/nav_currencies"
-            android:title="currencies" />
+            android:title="@string/currencies_title" />
         <item
             android:id="@+id/nav_cash_account"
-            android:title="cash/bank accounts"/>
+            android:title="@string/cash_account_title"/>
     </group>
 </menu>
