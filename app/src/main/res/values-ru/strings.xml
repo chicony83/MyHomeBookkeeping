@@ -18,6 +18,6 @@
     <string name="enterName">введите название</string>
     <string name="cash_account_title">счета</string>
     <string name="currencies_title">валюты</string>
-    <string name="new_money_movement">новые доходы/расходы</string>
-    <string name="add_income_or_expense">добавить доход расход</string>
+    <string name="new_money_movement">новый доходы/расходы</string>
+    <string name="add_income_or_expense">добавить доход/расход</string>
 </resources>
