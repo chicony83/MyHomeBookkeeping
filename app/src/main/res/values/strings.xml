@@ -24,4 +24,5 @@
     <string name="new_currency">new currency</string>
     <string name="currency">currency</string>
     <string name="add_money_category">add money category</string>
+    <string name="enterName">enter name</string>
 </resources>

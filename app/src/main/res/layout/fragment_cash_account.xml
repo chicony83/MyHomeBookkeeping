@@ -24,10 +24,7 @@
 
     <LinearLayout
         android:id="@+id/layoutConfirmation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
+        style="@style/ConfirmationLayout"
         app:layout_constraintBottom_toTopOf="@+id/showHideAddCashAccountFragment">
 
         <Button
@@ -53,10 +50,7 @@
 
     <LinearLayout
         android:id="@+id/addNewCashAccountFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
+        style="@style/EnterNameLayout"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
@@ -66,8 +60,7 @@
 
         <EditText
             android:id="@+id/cashAccountName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/EnterNameEditText" />
 
         <TextView
             android:layout_width="match_parent"
@@ -78,7 +71,10 @@
             android:id="@+id/cashAccountNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/only_last_4_digits" />
+            android:hint="@string/only_last_4_digits"
+            android:inputType="number"
+            android:maxLength="4"
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/addNewCashAccountButton"

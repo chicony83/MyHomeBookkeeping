@@ -30,10 +30,7 @@
 
     <LinearLayout
         android:id="@+id/layoutConfirmation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
+        style="@style/ConfirmationLayout"
         app:layout_constraintBottom_toTopOf="@id/showHideAddCategoryFragment">
 
         <Button
@@ -60,17 +57,12 @@
 
     <LinearLayout
         android:id="@+id/addNewCategoryFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
+        style="@style/EnterNameLayout"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
             android:id="@+id/category_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="название категории" />
+            style="@style/EnterNameEditText" />
 
         <RadioGroup
             android:layout_width="match_parent"
