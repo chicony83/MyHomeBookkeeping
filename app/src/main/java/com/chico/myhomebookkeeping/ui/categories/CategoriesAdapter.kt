@@ -1,8 +1,10 @@
 package com.chico.myhomebookkeeping.ui.categories
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.CategoriesRecyclerViewItemBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
@@ -38,6 +40,17 @@ class CategoriesAdapter(
                 categoryCardViewText.text = categories.categoryName
                 categoriesItem.setOnClickListener {
                     categories.id?.let { it1->listener.onClick(it1) }
+                }
+                if(categories.isIncome){
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        categoryItemCardView.setBackgroundColor(itemView.resources.getColor(R.color.income,null))
+                    }
+                }
+                if (categories.isSpending){
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        categoryItemCardView.setBackgroundColor(itemView.resources.getColor(R.color.spending,null))
+                    }
                 }
 
             }
