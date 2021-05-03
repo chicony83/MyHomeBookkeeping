@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.ui.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 
@@ -33,6 +34,7 @@ class NewMoneyMovingFragment : Fragment() {
     private var firstPress: Long = 0L
     private var secondPress: Long = 0L
     private var click = 0
+    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,7 +99,14 @@ class NewMoneyMovingFragment : Fragment() {
             runBlocking {
                 val result =
                     newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime, amount, description)
-                Toast.makeText(context, "запись добавлена", Toast.LENGTH_LONG).show()
+                if (result > 0) {
+                    uiHelper.clearUiListEditText(
+                        listOf(
+                            binding.amount, binding.description
+                        )
+                    )
+                    Toast.makeText(context, "запись добавлена", Toast.LENGTH_LONG).show()
+                }
             }
         }
         if (click >= 2) {
