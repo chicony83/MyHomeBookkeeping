@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -80,8 +81,12 @@ class CashAccountFragment : Fragment() {
                             newCashAccount,
                             cashAccountViewModel
                         )
-                        uiHelper.clearUiElement(binding.cashAccountName)
-                        uiHelper.clearUiElement(binding.cashAccountNumber)
+                        uiHelper.clearUiListEditText(
+                            listOf(
+                                binding.cashAccountName,
+                                binding.cashAccountNumber
+                            )
+                        )
                         uiHelper.hideUiElement(binding.addNewCashAccountFragment)
                         view.hideKeyboard()
                     }

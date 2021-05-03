@@ -18,6 +18,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.ui.UiHelper
+import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class CurrenciesFragment : Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
@@ -72,6 +73,7 @@ class CurrenciesFragment : Fragment() {
                         )
                         uiHelper.clearUiElement(binding.currencyName)
                         uiHelper.hideUiElement(binding.addNewCurrencyFragment)
+                        view.hideKeyboard()
                     }
                     else showMessage(getString(R.string.too_short_name))
                 }

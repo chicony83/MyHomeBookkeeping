@@ -1,10 +1,13 @@
 package com.chico.myhomebookkeeping.ui
 
+import android.content.Context
 import android.text.Editable
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper {
@@ -56,7 +59,16 @@ class UiHelper {
     fun hideUiElement(fab: FloatingActionButton) {
         fab.visibility = View.GONE
     }
-//    fun showMessage(text: String) {
-//        Toast.makeText(con, text, Toast.LENGTH_LONG).show()
-//    }
+
+    fun clearUiListRadioButton(listOf: List<RadioButton>) {
+        for (i in 0..listOf.size){
+            clearUiElement(listOf[i])
+        }
+    }
+
+    fun clearUiListEditText(listOf: List<EditText>) {
+        for (i in 0..listOf.size){
+            clearUiElement(listOf[i])
+        }
+    }
 }

@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +20,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.ui.UiHelper
+import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class CategoriesFragment : Fragment() {
 
@@ -83,12 +87,16 @@ class CategoriesFragment : Fragment() {
                             newCategory,
                             categoriesViewModel
                         )
+                        uiHelper.clearUiListRadioButton(
+                            listOf(
+                                binding.categoryIncomingRadioButton,
+                                binding.categorySpendingRadioButton
+                            )
+                        )
                         uiHelper.clearUiElement(binding.categoryName)
-                        uiHelper.clearUiElement(binding.categoryIncomingRadioButton)
-                        uiHelper.clearUiElement(binding.categorySpendingRadioButton)
                         uiHelper.hideUiElement(binding.addNewCategoryFragment)
-                    }
-                    else showMessage(getString(R.string.too_short_name))
+                        view.hideKeyboard()
+                    } else showMessage(getString(R.string.too_short_name))
                 }
             }
             selectButton.setOnClickListener {
@@ -109,9 +117,11 @@ class CategoriesFragment : Fragment() {
             }
         }
     }
+
     private fun showMessage(s: String) {
-        Toast.makeText(context,s, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
