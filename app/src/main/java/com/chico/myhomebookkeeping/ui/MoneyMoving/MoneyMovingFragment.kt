@@ -10,6 +10,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentHomeBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
+import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 
@@ -44,6 +45,7 @@ class MoneyMovingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
         moneyMovingViewModel.loadMoneyMovement()
     }
 

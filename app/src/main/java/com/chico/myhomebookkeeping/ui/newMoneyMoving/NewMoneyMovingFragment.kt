@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
@@ -47,7 +48,7 @@ class NewMoneyMovingFragment : Fragment() {
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         with(binding) {
             dateTimeTimeStamp.setText(currentDateTimeMillis.parseTimeFromMillis())

@@ -62,6 +62,7 @@ class CashAccountFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
         with(binding) {
             showHideAddCashAccountFragment.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCashAccountFragment)

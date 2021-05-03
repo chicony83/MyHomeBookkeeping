@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class ReportsFragment : Fragment() {
 
@@ -27,5 +28,10 @@ class ReportsFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
     }
 }

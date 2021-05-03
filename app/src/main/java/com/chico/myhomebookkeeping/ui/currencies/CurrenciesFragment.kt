@@ -57,6 +57,7 @@ class CurrenciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
         with(binding) {
             showHideAddCurrencyFragment.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCurrencyFragment)
