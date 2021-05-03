@@ -29,9 +29,9 @@ class MoneyMovingAdapter(
         fun bind(moneyMovement: MoneyMovement) {
             with(binding){
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
-                cashAccountName.text = moneyMovement.cashAccount
-                currencyName.text = moneyMovement.currency
-                categoryName.text = moneyMovement.category
+                cashAccountName.text = moneyMovement.cashAccount.toString()
+                currencyName.text = moneyMovement.currency.toString()
+                categoryName.text = moneyMovement.category.toString()
                 amount.text = moneyMovement.amount.toString()
                 if (moneyMovement.description.isNotEmpty()){
                     description.visibility = View.VISIBLE

@@ -61,14 +61,14 @@ class UiHelper {
     }
 
     fun clearUiListRadioButton(listOf: List<RadioButton>) {
-        for (i in 0..listOf.size){
-            clearUiElement(listOf[i])
+        for (element in listOf){
+            clearUiElement(element)
         }
     }
 
     fun clearUiListEditText(listOf: List<EditText>) {
-        for (i in 0..listOf.size){
-            clearUiElement(listOf[i])
+        for (element in listOf){
+            clearUiElement(element)
         }
     }
 }

@@ -147,9 +147,9 @@ class NewMoneyMovingViewModel(
         amount: Double,
         description: String
     ): Long {
-        val cashAccountValue: String = _selectedCashAccount.value?.accountName.toString()
-        val categoryValue: String = _selectedCategory.value?.categoryName.toString()
-        val currencyValue: String = _selectedCurrency.value?.currencyName.toString()
+        val cashAccountValue: Int = _selectedCashAccount.value?.id?: 0
+        val categoryValue: Int = _selectedCategory.value?.id?: 0
+        val currencyValue: Int = _selectedCurrency.value?.id?: 0
         val moneyMovement = MoneyMovement(
             timeStamp = dataTime,
             amount = amount,

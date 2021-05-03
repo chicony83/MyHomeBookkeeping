@@ -9,11 +9,11 @@ data class MoneyMovement(
     @ColumnInfo(name = "time_stamp")
     val timeStamp: Long,
     @ColumnInfo(name = "cash_account")
-    val cashAccount: String,
+    val cashAccount: Int,
     @ColumnInfo(name = "currency")
-    val currency:String,
+    val currency:Int,
     @ColumnInfo(name = "category")
-    val category:String,
+    val category:Int,
     @ColumnInfo(name = "amount")
     val amount: Double,
     @ColumnInfo(name = "description")
