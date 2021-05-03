@@ -11,10 +11,10 @@
         <item
             android:id="@+id/nav_new_money_moving"
             android:title="@string/add_income_or_expense"/>
-        <item
-            android:id="@+id/nav_reports"
-            android:icon="@drawable/ic_menu_reports"
-            android:title="@string/reports_title" />
+<!--        <item-->
+<!--            android:id="@+id/nav_reports"-->
+<!--            android:icon="@drawable/ic_menu_reports"-->
+<!--            android:title="@string/reports_title" />-->
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_menu_category"

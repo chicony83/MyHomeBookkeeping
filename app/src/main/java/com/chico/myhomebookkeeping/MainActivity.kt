@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
-                R.id.nav_reports,
+//                R.id.nav_reports,
                 R.id.nav_categories,
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
