@@ -54,6 +54,7 @@ class NewMoneyMovingFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         with(binding) {
             dateTimeTimeStamp.setText(currentDateTimeMillis.parseTimeFromMillis())
+            dateTimeTimeStamp.isEnabled = false
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
