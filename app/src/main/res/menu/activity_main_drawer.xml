@@ -10,6 +10,7 @@
             android:title="@string/home_title" />
         <item
             android:id="@+id/nav_new_money_moving"
+            android:icon="@drawable/ic_add_box"
             android:title="@string/add_income_or_expense"/>
 <!--        <item-->
 <!--            android:id="@+id/nav_reports"-->
@@ -21,9 +22,11 @@
             android:title="@string/categories_title" />
         <item
             android:id="@+id/nav_currencies"
+            android:icon="@drawable/ic_attach_money"
             android:title="@string/currencies_title" />
         <item
             android:id="@+id/nav_cash_account"
+            android:icon="@drawable/ic_credit_card"
             android:title="@string/cash_account_title"/>
-    </group>
+    </group>)
 </menu>
