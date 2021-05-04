@@ -10,17 +10,14 @@ class NewMoneyMovingUseCase {
 
     suspend fun addInDataBase(db: MoneyMovementDao, moneyMovement: MoneyMovement): Long {
 
-//        val result: Long
-        return adding(db, moneyMovement)
-//        Log.i("TAG", "---result inserting--- $result")
-//        return result
-
+        return db.addMovingMoney(moneyMovement)
+//        return adding(db, moneyMovement)
     }
 
-    private suspend fun adding(db: MoneyMovementDao, moneyMovement: MoneyMovement): Long {
-
-            return db.addMovingMoney(moneyMovement)
-
-    }
+//    private suspend fun adding(db: MoneyMovementDao, moneyMovement: MoneyMovement): Long {
+//
+//            return db.addMovingMoney(moneyMovement)
+//
+//    }
 
 }

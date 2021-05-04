@@ -10,4 +10,7 @@
 
     <color name="income">#4000FF00</color>
     <color name="spending">#40FF0000</color>
+
+    <color name="warning">#40FF0000</color>
+
 </resources>

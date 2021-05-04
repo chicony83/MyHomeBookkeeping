@@ -1,10 +1,12 @@
 package com.chico.myhomebookkeeping.ui.newMoneyMoving
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -87,41 +89,67 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressAddButton() {
-//        firstPress = System.currentTimeMillis()
-//        if (firstPress > secondPress) {
         click++
-//        }
 
         if (click == 1) {
             val dataTime = currentDateTimeMillis
-            val amount: Double = binding.amount.text.toString().toDouble()
-            val description: String = binding.description.text.toString()
-            newMoneyMovingViewModel.saveData()
-            runBlocking {
-                val result =
-                    newMoneyMovingViewModel.addingNewMoneyMovingInDB(dataTime, amount, description)
-                if (result > 0) {
-                    uiHelper.clearUiListEditText(
-                        listOf(
-                            binding.amount, binding.description
+
+            if (CheckNewMoneyMoving.isEntered(binding.amount.text)) {
+                val amount: Double = binding.amount.text.toString().toDouble()
+                val description: String = binding.description.text.toString()
+                newMoneyMovingViewModel.saveData()
+                runBlocking {
+                    val result: Long =
+                        newMoneyMovingViewModel.addNewMoneyMoving(dataTime, amount, description)
+                    if (result > 0) {
+                        uiHelper.clearUiListEditText(
+                            listOf(
+                                binding.amount, binding.description
+                            )
                         )
-                    )
-                    Toast.makeText(context, "запись добавлена", Toast.LENGTH_LONG).show()
+                        setBackgroundDefaultColor(binding.amount)
+                        view?.hideKeyboard()
+                        message("запись добавлена")
+                    }
                 }
+            } else {
+                setBackgroundWarningColor(binding.amount)
+                message("введите сумму")
+                clickIsZero()
             }
         }
         if (click >= 2) {
             binding.addNewMoneyMovingButton.isEnabled = false
             binding.addNewMoneyMovingButton.text = "слишком много нажатий"
-            Toast.makeText(context, "запись добавляется или уже добавлена", Toast.LENGTH_LONG)
-                .show()
+            message("запись добавляется или уже добавлена")
             launchUi {
-                Toast.makeText(context, "кнопка временно заблокирована", Toast.LENGTH_LONG).show()
+                message("кнопка временно заблокирована")
                 delay(5000)
                 binding.addNewMoneyMovingButton.text = "можно добавить еще одну запись"
                 binding.addNewMoneyMovingButton.isEnabled = true
-                click = 0
+                clickIsZero()
             }
+        }
+    }
+
+    private fun clickIsZero() {
+        click = 0
+    }
+
+    private fun setBackgroundWarningColor(editText: EditText) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            editText.setBackgroundColor(resources.getColor(R.color.warning, null))
+        }
+    }
+
+    private fun setBackgroundDefaultColor(editText: EditText) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            editText.setBackgroundColor(
+                resources.getColor(
+                    R.color.design_default_color_background,
+                    null
+                )
+            )
         }
     }
 
@@ -137,5 +165,9 @@ class NewMoneyMovingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun message(text: String) {
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 }

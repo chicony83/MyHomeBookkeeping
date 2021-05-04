@@ -142,14 +142,14 @@ class NewMoneyMovingViewModel(
         spEditor.commit()
     }
 
-    suspend fun addingNewMoneyMovingInDB(
+    suspend fun addNewMoneyMoving(
         dataTime: Long,
         amount: Double,
         description: String
     ): Long {
-        val cashAccountValue: Int = _selectedCashAccount.value?.id?: 0
-        val categoryValue: Int = _selectedCategory.value?.id?: 0
-        val currencyValue: Int = _selectedCurrency.value?.id?: 0
+        val cashAccountValue: Int = _selectedCashAccount.value?.id ?: 0
+        val categoryValue: Int = _selectedCategory.value?.id ?: 0
+        val currencyValue: Int = _selectedCurrency.value?.id ?: 0
         val moneyMovement = MoneyMovement(
             timeStamp = dataTime,
             amount = amount,
