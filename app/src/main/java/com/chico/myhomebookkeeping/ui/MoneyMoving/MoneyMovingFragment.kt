@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.chico.myhomebookkeeping.databinding.FragmentHomeBinding
+import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
@@ -19,7 +19,7 @@ class MoneyMovingFragment : Fragment() {
     private lateinit var db: MoneyMovementDao
 
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -29,11 +29,8 @@ class MoneyMovingFragment : Fragment() {
     ): View {
 
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
 
-//        launchUi {
-//            binding.text.text = MoneyMovingUseCase.getMoneyMovement(db)?.size.toString()
-//        }
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         moneyMovingViewModel.moneyMovementList.observe(viewLifecycleOwner, {
