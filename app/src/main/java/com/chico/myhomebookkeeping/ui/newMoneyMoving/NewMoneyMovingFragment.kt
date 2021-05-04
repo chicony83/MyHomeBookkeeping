@@ -33,8 +33,6 @@ class NewMoneyMovingFragment : Fragment() {
 
     private lateinit var control: NavController
 
-    private var firstPress: Long = 0L
-    private var secondPress: Long = 0L
     private var click = 0
     private val uiHelper = UiHelper()
 
@@ -68,7 +66,6 @@ class NewMoneyMovingFragment : Fragment() {
             }
             addNewMoneyMovingButton.setOnClickListener {
                 pressAddButton()
-//                control.popBackStack()
             }
         }
         with(newMoneyMovingViewModel) {

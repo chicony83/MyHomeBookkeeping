@@ -158,7 +158,6 @@ class NewMoneyMovingViewModel(
             currency = currencyValue,
             description = description
         )
-        val newMoneyMovingUseCase = NewMoneyMovingUseCase()
-        return newMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+        return NewMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
     }
 }
