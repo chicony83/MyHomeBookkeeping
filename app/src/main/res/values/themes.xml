@@ -49,7 +49,7 @@
         <item name="android:visibility">gone</item>
     </style>
     <style name="RecyclerViewItem" parent="MatchParent_WrapContent">
-        <item name="android:layout_margin">@dimen/margin_normal</item>
+        <item name="android:padding">@dimen/margin_normal</item>
     </style>
     <style name="MoneyMovingItemTextView" parent="WrapContent_WrapContent">
 

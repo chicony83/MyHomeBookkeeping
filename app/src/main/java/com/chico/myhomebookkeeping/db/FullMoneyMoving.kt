@@ -16,6 +16,9 @@ class FullMoneyMoving (
     val currencyNameValue:String,
 
     @ColumnInfo(name = "category_name_value")
-    val categoryNameValue:String
+    val categoryNameValue:String,
+
+    @ColumnInfo(name = "is_income")
+    val isIncome:Boolean
 
 )

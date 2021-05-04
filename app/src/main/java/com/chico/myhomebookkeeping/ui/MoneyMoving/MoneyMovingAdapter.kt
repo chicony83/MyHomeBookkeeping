@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.MoneyMovingRecyclerViewItemBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
@@ -35,6 +36,17 @@ class MoneyMovingAdapter(
 //                cashAccountName.text = moneyMovement.cashAccount.toString()
                 currencyName.text = moneyMovement.currencyNameValue
                 categoryName.text = moneyMovement.categoryNameValue
+
+                if (moneyMovement.isIncome){
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        moneyMovingItem.setBackgroundColor(itemView.resources.getColor(R.color.income,null))
+                    }
+                }
+                if (!moneyMovement.isIncome){
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        moneyMovingItem.setBackgroundColor(itemView.resources.getColor(R.color.spending,null))
+                    }
+                }
 //                categoryName.text = moneyMovement.category.toString()
 //                amount.text = moneyMovement.amount.toString()
 //                if (moneyMovement.description.isNotEmpty()){
