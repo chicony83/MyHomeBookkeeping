@@ -33,7 +33,7 @@ class MoneyMovingAdapter(
                 amount.text = moneyMovement.amount.toString()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
 //                cashAccountName.text = moneyMovement.cashAccount.toString()
-//                currencyName.text = moneyMovement.currency.toString()
+                currencyName.text = moneyMovement.currencyNameValue
 //                categoryName.text = moneyMovement.category.toString()
 //                amount.text = moneyMovement.amount.toString()
 //                if (moneyMovement.description.isNotEmpty()){

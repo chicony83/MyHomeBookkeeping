@@ -1,6 +1,5 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,7 @@ class CurrenciesAdapter(
             with(binding) {
                 nameCurrency.text = currencies.currencyName
                 currenciesItem.setOnClickListener {
-                    currencies.id?.let { it1 -> listener.onClick(it1)}
+                    currencies.currencyId?.let { it1 -> listener.onClick(it1)}
                 }
             }
         }

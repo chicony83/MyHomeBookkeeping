@@ -10,6 +10,9 @@ class FullMoneyMoving (
     val amount: Double,
 
     @ColumnInfo(name = "cash_account_name_value")
-    val cashAccountNameValue: String
+    val cashAccountNameValue: String,
+
+    @ColumnInfo(name = "currency_name_value")
+    val currencyNameValue:String
 
 )

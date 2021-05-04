@@ -10,5 +10,5 @@ data class Currencies(
     val currencyName: String
 ){
     @PrimaryKey(autoGenerate = true)
-    var id:Int? = null
+    var currencyId:Int? = null
 }
