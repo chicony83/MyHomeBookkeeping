@@ -14,5 +14,5 @@ data class Categories(
     val isSpending:Boolean
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var categoriesId: Int? = null
 }

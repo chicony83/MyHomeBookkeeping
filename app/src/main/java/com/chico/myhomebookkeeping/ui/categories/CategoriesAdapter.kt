@@ -1,6 +1,5 @@
 package com.chico.myhomebookkeeping.ui.categories
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -39,7 +38,7 @@ class CategoriesAdapter(
             with(binding) {
                 categoryCardViewText.text = categories.categoryName
                 categoriesItem.setOnClickListener {
-                    categories.id?.let { it1->listener.onClick(it1) }
+                    categories.categoriesId?.let { it1->listener.onClick(it1) }
                 }
                 if(categories.isIncome){
 

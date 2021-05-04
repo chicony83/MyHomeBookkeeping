@@ -14,6 +14,6 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table")
     suspend fun getAllCategory(): List<Categories>
 
-    @Query("SELECT * FROM category_table WHERE id = :id")
+    @Query("SELECT * FROM category_table WHERE categoriesId = :id")
     suspend fun getOneCategory(id:Int):Categories
 }

@@ -13,6 +13,9 @@ class FullMoneyMoving (
     val cashAccountNameValue: String,
 
     @ColumnInfo(name = "currency_name_value")
-    val currencyNameValue:String
+    val currencyNameValue:String,
+
+    @ColumnInfo(name = "category_name_value")
+    val categoryNameValue:String
 
 )

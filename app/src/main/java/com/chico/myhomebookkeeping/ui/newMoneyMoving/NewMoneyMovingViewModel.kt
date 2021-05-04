@@ -137,7 +137,7 @@ class NewMoneyMovingViewModel(
     fun saveData() {
         spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
         spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.cashAccountId ?: -1)
-        spEditor.putInt(argsCategoryKey, _selectedCategory.value?.id ?: -1)
+        spEditor.putInt(argsCategoryKey, _selectedCategory.value?.categoriesId ?: -1)
 
         spEditor.commit()
     }
@@ -148,7 +148,7 @@ class NewMoneyMovingViewModel(
         description: String
     ): Long {
         val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
-        val categoryValue: Int = _selectedCategory.value?.id ?: 0
+        val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
         val moneyMovement = MoneyMovement(
             timeStamp = dataTime,
