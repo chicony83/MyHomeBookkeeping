@@ -45,7 +45,7 @@ class CashAccountAdapter(
                     numberCashAccount.text = cashAccount.bankAccountNumber.toString()
                 }
                 cashAccountItem.setOnClickListener {
-                    cashAccount.id?.let { it1 -> listener.onClick(it1) }
+                    cashAccount.cashAccountId?.let { it1 -> listener.onClick(it1) }
                 }
             }
         }

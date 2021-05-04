@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
@@ -21,8 +22,8 @@ class MoneyMovingViewModel(
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
 
-    private val _moneyMovementList = MutableLiveData<List<MoneyMovement>>()
-    val moneyMovementList: LiveData<List<MoneyMovement>>
+    private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>>()
+    val moneyMovementList: LiveData<List<FullMoneyMoving>>
         get() = _moneyMovementList
 
     init {
@@ -31,11 +32,7 @@ class MoneyMovingViewModel(
 
     fun loadMoneyMovement() {
         runBlocking {
-
-            val list: List<MoneyMovement>? = MoneyMovingUseCase.getMoneyMovement(db)
-            Log.i("TAG", "---List size = ${list?.size}")
-            _moneyMovementList.postValue(db.getAllMovingMoney())
-            Log.i("TAG", "---size---${_moneyMovementList.value?.first()?.amount}---")
+            _moneyMovementList.postValue(MoneyMovingUseCase.getFullMoneyMovement(db))
         }
     }
 

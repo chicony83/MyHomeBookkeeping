@@ -12,5 +12,5 @@ data class CashAccount(
     val bankAccountNumber: Int?
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var cashAccountId: Int? = null
 }

@@ -13,6 +13,6 @@ interface CashAccountDao {
     @Query ("SELECT * FROM cash_account_table")
     suspend fun getAllCashAccounts():List<CashAccount>
 
-    @Query("SELECT * FROM cash_account_table WHERE id = :id")
+    @Query("SELECT * FROM cash_account_table WHERE cashAccountId = :id")
     suspend fun getOneCashAccount(id: Int):CashAccount
 }

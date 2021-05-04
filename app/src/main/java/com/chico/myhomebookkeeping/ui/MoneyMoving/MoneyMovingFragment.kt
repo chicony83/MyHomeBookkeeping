@@ -31,9 +31,9 @@ class MoneyMovingFragment : Fragment() {
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        launchUi {
-            binding.text.text = MoneyMovingUseCase.getMoneyMovement(db)?.size.toString()
-        }
+//        launchUi {
+//            binding.text.text = MoneyMovingUseCase.getMoneyMovement(db)?.size.toString()
+//        }
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         moneyMovingViewModel.moneyMovementList.observe(viewLifecycleOwner, {

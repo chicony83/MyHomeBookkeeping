@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.MoneyMovingRecyclerViewItemBinding
+import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 
 class MoneyMovingAdapter(
-    private val moneyMovementList: List<MoneyMovement>
+    private val moneyMovementList: List<FullMoneyMoving>
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,17 +27,19 @@ class MoneyMovingAdapter(
 
     inner class ViewHolder(private val binding: MoneyMovingRecyclerViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(moneyMovement: MoneyMovement) {
+        fun bind(moneyMovement: FullMoneyMoving) {
             with(binding){
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
-                cashAccountName.text = moneyMovement.cashAccount.toString()
-                currencyName.text = moneyMovement.currency.toString()
-                categoryName.text = moneyMovement.category.toString()
                 amount.text = moneyMovement.amount.toString()
-                if (moneyMovement.description.isNotEmpty()){
-                    description.visibility = View.VISIBLE
-                    description.text = moneyMovement.description
-                }
+                cashAccountName.text = moneyMovement.cashAccountNameValue
+//                cashAccountName.text = moneyMovement.cashAccount.toString()
+//                currencyName.text = moneyMovement.currency.toString()
+//                categoryName.text = moneyMovement.category.toString()
+//                amount.text = moneyMovement.amount.toString()
+//                if (moneyMovement.description.isNotEmpty()){
+//                    description.visibility = View.VISIBLE
+//                    description.text = moneyMovement.description
+//                }
             }
         }
     }
