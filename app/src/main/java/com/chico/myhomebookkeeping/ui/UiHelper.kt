@@ -8,9 +8,12 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
+import com.chico.myhomebookkeeping.constants.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class UiHelper {
+class UiHelper(
+    val minLength: Int = Constants.MIN_LENGTH_NAME
+) {
     fun showHideUIElements(selectedId: Int, showHideLayout: LinearLayout) {
         if (selectedId > 0) {
             showHideLayout.visibility = View.VISIBLE
@@ -36,7 +39,7 @@ class UiHelper {
     }
 
     fun isLengthStringMoThan(text: Editable): Boolean {
-        if (text.length > 3) {
+        if (text.length > minLength) {
             return true
         }
         return false

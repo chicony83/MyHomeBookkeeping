@@ -7,4 +7,6 @@ object Constants {
     const val IS_FIRST_LAUNCH = "isFirstLaunch"
 
     const val SP_NAME = "SPNewMoneyMoving"
+
+    const val MIN_LENGTH_NAME = 3
 }

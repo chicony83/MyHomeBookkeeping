@@ -41,12 +41,11 @@ class CategoriesAdapter(
                     categories.categoriesId?.let { it1->listener.onClick(it1) }
                 }
                 if(categories.isIncome){
-
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoryItemCardView.setBackgroundColor(itemView.resources.getColor(R.color.income,null))
                     }
                 }
-                if (categories.isSpending){
+                if (!categories.isIncome){
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoryItemCardView.setBackgroundColor(itemView.resources.getColor(R.color.spending,null))
                     }

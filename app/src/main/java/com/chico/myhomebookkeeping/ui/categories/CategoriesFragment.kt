@@ -74,14 +74,11 @@ class CategoriesFragment : Fragment() {
                                 )
                     ) {
                         val category = binding.categoryName.text.toString()
-                        var isIncoming = false
-                        var isSpending = false
-                        if (binding.categoryIncomingRadioButton.isChecked) isIncoming = true
-                        if (binding.categorySpendingRadioButton.isChecked) isSpending = true
+                        var isIncoming = true
+                        if (binding.categorySpendingRadioButton.isChecked) isIncoming = false
                         val newCategory = Categories(
                             categoryName = category,
-                            isIncome = isIncoming,
-                            isSpending = isSpending
+                            isIncome = isIncoming
                         )
                         CategoriesUseCase.addNewCategoryRunBlocking(
                             db,
