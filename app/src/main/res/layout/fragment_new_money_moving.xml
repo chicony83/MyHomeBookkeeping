@@ -6,26 +6,19 @@
     android:layout_height="match_parent"
     tools:context="ui.newMoneyMoving.NewMoneyMovingFragment">
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="добавление доходов/расходов"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/header">
-
+        app:layout_constraintBottom_toTopOf="@+id/addNewMoneyMovingButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="дата/время" />
+            style="@style/DescriptionsNewMoneyMoving"
+            android:text="@string/date_time_textDescription" />
 
         <EditText
             android:id="@+id/dateTimeTimeStamp"
@@ -33,28 +26,36 @@
             android:layout_height="wrap_content"
             android:inputType="datetime" />
 
+        <TextView
+            style="@style/DescriptionsNewMoneyMoving"
+            android:text="@string/cashAccountTextDescription" />
+
         <Button
             android:id="@+id/selectCashAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="выберите счет" />
+            style="@style/ButtonsMatchParent_WrapContent"
+            android:text="@string/selectCashAccount" />
+
+        <TextView
+            style="@style/DescriptionsNewMoneyMoving"
+            android:text="@string/currencyTextDescription" />
 
         <Button
             android:id="@+id/selectCurrenciesButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="выберите валюту" />
+            style="@style/ButtonsMatchParent_WrapContent"
+            android:text="@string/selectCurrency" />
+
+        <TextView
+            style="@style/DescriptionsNewMoneyMoving"
+            android:text="@string/categoryTextDescription" />
 
         <Button
             android:id="@+id/selectCategoryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="выберите категорию" />
+            style="@style/ButtonsMatchParent_WrapContent"
+            android:text="@string/selectCategory" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="сумма" />
+            style="@style/DescriptionsNewMoneyMoving"
+            android:text="@string/amountTextDescription" />
 
         <EditText
             android:id="@+id/amount"
@@ -63,34 +64,25 @@
             android:inputType="numberDecimal" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="описание" />
+            style="@style/DescriptionsNewMoneyMoving"
+            android:text="@string/descriptionTextDescription" />
 
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ваше описание"
+            android:hint="@string/youDescriptionText"
             android:minLines="2" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/addNewMoneyMovingButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
     <Button
         android:id="@+id/addNewMoneyMovingButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/ButtonsMatchParent_WrapContent"
         android:gravity="center"
-        android:text="добавить"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:text="@string/add_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

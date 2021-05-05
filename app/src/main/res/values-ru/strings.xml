@@ -18,7 +18,17 @@
     <string name="enterName">введите название</string>
     <string name="cash_account_title">счета</string>
     <string name="currencies_title">валюты</string>
-    <string name="new_money_movement">новый доходы/расходы</string>
+    <string name="new_money_movement">новыe доходы/расходы</string>
     <string name="add_income_or_expense">добавить доход/расход</string>
     <string name="too_short_name">слишком короткое название</string>
+    <string name="cashAccountTextDescription">счёт</string>
+    <string name="currencyTextDescription">валюта</string>
+    <string name="categoryTextDescription">категория</string>
+    <string name="youDescriptionText">ваше описание</string>
+    <string name="date_time_textDescription">дата/время</string>
+    <string name="selectCashAccount">выберите счёт</string>
+    <string name="selectCurrency">выберите валюту</string>
+    <string name="selectCategory">выберите категорию</string>
+    <string name="amountTextDescription">сумма</string>
+    <string name="descriptionTextDescription">описание</string>
 </resources>

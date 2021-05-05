@@ -30,4 +30,14 @@
     <string name="new_money_movement">новое движение денег</string>
     <string name="add_income_or_expense">add income or expense </string>
     <string name="too_short_name">too short name</string>
+    <string name="cashAccountTextDescription">cash account</string>
+    <string name="currencyTextDescription">currency</string>
+    <string name="categoryTextDescription">category</string>
+    <string name="youDescriptionText">you description</string>
+    <string name="date_time_textDescription">date/time</string>
+    <string name="selectCashAccount">select cash account</string>
+    <string name="selectCurrency">select currency</string>
+    <string name="selectCategory">select category</string>
+    <string name="amountTextDescription">amount</string>
+    <string name="descriptionTextDescription">description</string>
 </resources>
