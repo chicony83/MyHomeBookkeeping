@@ -26,9 +26,9 @@ import com.chico.myhomebookkeeping.utils.launchIo
 class NewMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val argsCashAccountKey = Constants.CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.CURRENCY_KEY
-    private val argsCategoryKey = Constants.CATEGORY_KEY
+    private val argsCashAccountKey = Constants.NEW_CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.NEW_CURRENCY_KEY
+    private val argsCategoryKey = Constants.NEW_CATEGORY_KEY
     private val spName = Constants.SP_NAME
 
     private val dbCashAccount: CashAccountDao =

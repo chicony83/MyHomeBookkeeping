@@ -29,7 +29,7 @@ class CurrenciesFragment : Fragment() {
 
     private var selectedCurrencyId = 0
 
-    private val argsName = Constants.CURRENCY_KEY
+    private val argsName = Constants.NEW_CURRENCY_KEY
     private val uiHelper = UiHelper()
 
     override fun onCreateView(

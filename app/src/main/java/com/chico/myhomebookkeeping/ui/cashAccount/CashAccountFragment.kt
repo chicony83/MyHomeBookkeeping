@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -32,7 +31,7 @@ class CashAccountFragment : Fragment() {
 
     private var selectedCashAccountId = 0
 
-    private val argsName: String by lazy { Constants.CASH_ACCOUNT_KEY }
+    private val argsName: String by lazy { Constants.NEW_CASH_ACCOUNT_KEY }
     private val uiHelper = UiHelper()
 
     override fun onCreateView(
