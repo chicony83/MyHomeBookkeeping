@@ -31,7 +31,8 @@ class CashAccountFragment : Fragment() {
 
     private var selectedCashAccountId = 0
 
-    private val argsName: String by lazy { Constants.NEW_CASH_ACCOUNT_KEY }
+    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CASH_ACCOUNT_KEY }
+    private val argsNameForQuery:String by lazy { Constants.FOR_QUERY_CASH_ACCOUNT_KEY }
     private val uiHelper = UiHelper()
 
     override fun onCreateView(
@@ -96,7 +97,11 @@ class CashAccountFragment : Fragment() {
             selectButton.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     val bundle = Bundle()
-                    bundle.putInt(argsName, selectedCashAccountId)
+                    when(findNavController().previousBackStackEntry?.destination?.id){
+                        R.id.nav_new_money_moving -> bundle.putInt(argsNameForSelect, selectedCashAccountId)
+                        R.id.nav_money_moving -> bundle.putInt(argsNameForQuery,selectedCashAccountId)
+                    }
+//                    bundle.putInt(argsNameForSelect, selectedCashAccountId)
 
                     findNavController().navigate(
                         R.id.nav_new_money_moving,

@@ -1,12 +1,15 @@
 package com.chico.myhomebookkeeping.constants
 
 object Constants {
-    const val NEW_CASH_ACCOUNT_KEY = "cashAccount"
-    const val NEW_CURRENCY_KEY = "currency"
-    const val NEW_CATEGORY_KEY = "category"
-    const val QUERY_CASH_ACCOUNT_KEY = "cashAccount"
-    const val QUERY_CURRENCY_KEY = "currency"
-    const val QUERY_CATEGORY_KEY = "category"
+
+    const val FOR_SELECT_CASH_ACCOUNT_KEY = "selectCashAccount"
+    const val FOR_SELECT_CURRENCY_KEY = "selectCurrency"
+    const val FOR_SELECT_CATEGORY_KEY = "selectCategory"
+
+    const val FOR_QUERY_CASH_ACCOUNT_KEY = "queryCashAccount"
+    const val FOR_QUERY_CURRENCY_KEY = "queryCurrency"
+    const val FOR_QUERY_CATEGORY_KEY = "queryCategory"
+
     const val IS_FIRST_LAUNCH = "isFirstLaunch"
 
     const val SP_NAME = "SPNewMoneyMoving"

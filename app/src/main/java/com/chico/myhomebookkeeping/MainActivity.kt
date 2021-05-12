@@ -1,12 +1,9 @@
 package com.chico.myhomebookkeeping
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.ui.UiHelper
-import com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,
+                R.id.nav_money_moving,
 //                R.id.nav_reports,
                 R.id.nav_categories,
                 R.id.nav_currencies,

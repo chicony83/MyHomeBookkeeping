@@ -29,7 +29,8 @@ class CurrenciesFragment : Fragment() {
 
     private var selectedCurrencyId = 0
 
-    private val argsName = Constants.NEW_CURRENCY_KEY
+    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CURRENCY_KEY }
+    private val argsNameForQuery:String by lazy { Constants.FOR_QUERY_CURRENCY_KEY }
     private val uiHelper = UiHelper()
 
     override fun onCreateView(
@@ -75,17 +76,22 @@ class CurrenciesFragment : Fragment() {
                         uiHelper.clearUiElement(binding.currencyName)
                         uiHelper.hideUiElement(binding.addNewCurrencyFragment)
                         view.hideKeyboard()
-                    }
-                    else showMessage(getString(R.string.too_short_name))
+                    } else showMessage(getString(R.string.too_short_name))
                 }
             }
             selectButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     val bundle = Bundle()
-                    bundle.putInt(argsName, selectedCurrencyId)
-                    findNavController().navigate(
-                        R.id.nav_new_money_moving, bundle
-                    )
+                    when(findNavController().previousBackStackEntry?.destination?.id){
+                        R.id.nav_new_money_moving -> {
+                            bundle.putInt(argsNameForSelect, selectedCurrencyId)
+                            moveTo(R.id.nav_new_money_moving, bundle)
+                        }
+                        R.id.nav_money_moving -> {
+                            bundle.putInt(argsNameForQuery,selectedCurrencyId)
+                            moveTo(R.id.nav_money_moving, bundle)
+                        }
+                    }
                 }
             }
             cancel.setOnClickListener {
@@ -96,8 +102,14 @@ class CurrenciesFragment : Fragment() {
             }
         }
     }
+    private fun moveTo(nav: Int, bundle: Bundle) {
+        findNavController().navigate(
+            nav, bundle
+        )
+    }
+
     private fun showMessage(s: String) {
-        Toast.makeText(context,s, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {

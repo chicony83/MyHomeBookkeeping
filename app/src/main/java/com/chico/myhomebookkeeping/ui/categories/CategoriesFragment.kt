@@ -29,7 +29,7 @@ class CategoriesFragment : Fragment() {
 
     private var selectedCategoryId = 0
 
-    private val argsName: String by lazy { Constants.NEW_CATEGORY_KEY }
+    private val argsName: String by lazy { Constants.FOR_SELECT_CATEGORY_KEY }
     private val uiHelper = UiHelper()
 
     override fun onCreateView(

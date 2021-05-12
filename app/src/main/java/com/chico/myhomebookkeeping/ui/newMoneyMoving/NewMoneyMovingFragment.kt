@@ -152,12 +152,13 @@ class NewMoneyMovingFragment : Fragment() {
 
     private fun pressSelectButton(nav: Int) {
         newMoneyMovingViewModel.saveData()
-        navigateTo(nav)
+        control.navigate(nav)
+
     }
 
-    private fun navigateTo(nav: Int) {
-        control.navigate(nav)
-    }
+//    private fun navigateTo(nav: Int) {
+//        control.navigate(nav)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

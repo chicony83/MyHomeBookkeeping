@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.chico.myhomebookkeeping.constants.Constants
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
 
 class MoneyMovingFragment : Fragment() {
 
-
     private lateinit var db: MoneyMovementDao
+    private lateinit var control:NavController
 
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
     private var _binding: FragmentMoneyMovingBinding? = null
@@ -45,7 +44,18 @@ class MoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
         moneyMovingViewModel.loadMoneyMovement()
+
+        with(binding){
+            selectCurrency.setOnClickListener {
+                pressSelectButton(R.id.nav_currencies)
+            }
+        }
+    }
+
+    private fun pressSelectButton(nav: Int) {
+        control.navigate(nav)
     }
 
     override fun onDestroy() {
