@@ -19,6 +19,7 @@ import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
+import com.chico.myhomebookkeeping.ui.ControlHelper
 import com.chico.myhomebookkeeping.ui.UiHelper
 
 class CashAccountFragment : Fragment() {
@@ -32,8 +33,9 @@ class CashAccountFragment : Fragment() {
     private var selectedCashAccountId = 0
 
     private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CASH_ACCOUNT_KEY }
-    private val argsNameForQuery:String by lazy { Constants.FOR_QUERY_CASH_ACCOUNT_KEY }
+    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CASH_ACCOUNT_KEY }
     private val uiHelper = UiHelper()
+    private lateinit var controlHelper: ControlHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +64,7 @@ class CashAccountFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        controlHelper = ControlHelper(findNavController())
         view.hideKeyboard()
         with(binding) {
             showHideAddCashAccountFragment.setOnClickListener {
@@ -90,23 +93,35 @@ class CashAccountFragment : Fragment() {
                         )
                         uiHelper.hideUiElement(binding.addNewCashAccountFragment)
                         view.hideKeyboard()
-                    }
-                    else showMessage(getString(R.string.too_short_name))
+                    } else showMessage(getString(R.string.too_short_name))
                 }
             }
             selectButton.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     val bundle = Bundle()
-                    when(findNavController().previousBackStackEntry?.destination?.id){
-                        R.id.nav_new_money_moving -> bundle.putInt(argsNameForSelect, selectedCashAccountId)
-                        R.id.nav_money_moving -> bundle.putInt(argsNameForQuery,selectedCashAccountId)
-                    }
+
+                    controlHelper.checkAndMove(
+                        bundle,
+                        argsNameForSelect,
+                        argsNameForQuery,
+                        selectedCashAccountId
+                    )
+//                    when (findNavController().previousBackStackEntry?.destination?.id) {
+//                        R.id.nav_new_money_moving -> bundle.putInt(
+//                            argsNameForSelect,
+//                            selectedCashAccountId
+//                        )
+//                        R.id.nav_money_moving -> bundle.putInt(
+//                            argsNameForQuery,
+//                            selectedCashAccountId
+//                        )
+//                    }
 //                    bundle.putInt(argsNameForSelect, selectedCashAccountId)
 
-                    findNavController().navigate(
-                        R.id.nav_new_money_moving,
-                        bundle
-                    )
+//                    findNavController().navigate(
+//                        R.id.nav_new_money_moving,
+//                        bundle
+//                    )
                 }
             }
             cancel.setOnClickListener {
@@ -119,15 +134,16 @@ class CashAccountFragment : Fragment() {
     }
 
     private fun showMessage(s: String) {
-        Toast.makeText(context,s,Toast.LENGTH_LONG).show()
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    private fun View.hideKeyboard(){
+
+    private fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken,0)
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

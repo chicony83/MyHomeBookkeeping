@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.ui.ControlHelper
 import com.chico.myhomebookkeeping.ui.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -30,8 +31,9 @@ class CurrenciesFragment : Fragment() {
     private var selectedCurrencyId = 0
 
     private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CURRENCY_KEY }
-    private val argsNameForQuery:String by lazy { Constants.FOR_QUERY_CURRENCY_KEY }
+    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CURRENCY_KEY }
     private val uiHelper = UiHelper()
+    private lateinit var controlHelper: ControlHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +60,8 @@ class CurrenciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        controlHelper = ControlHelper(findNavController())
         view.hideKeyboard()
         with(binding) {
             showHideAddCurrencyFragment.setOnClickListener {
@@ -82,16 +86,13 @@ class CurrenciesFragment : Fragment() {
             selectButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     val bundle = Bundle()
-                    when(findNavController().previousBackStackEntry?.destination?.id){
-                        R.id.nav_new_money_moving -> {
-                            bundle.putInt(argsNameForSelect, selectedCurrencyId)
-                            moveTo(R.id.nav_new_money_moving, bundle)
-                        }
-                        R.id.nav_money_moving -> {
-                            bundle.putInt(argsNameForQuery,selectedCurrencyId)
-                            moveTo(R.id.nav_money_moving, bundle)
-                        }
-                    }
+                    controlHelper.checkAndMove(
+                        bundle,
+                        argsNameForSelect,
+                        argsNameForQuery,
+                        selectedCurrencyId
+                    )
+//                    checkAndMove(bundle)
                 }
             }
             cancel.setOnClickListener {
@@ -102,11 +103,7 @@ class CurrenciesFragment : Fragment() {
             }
         }
     }
-    private fun moveTo(nav: Int, bundle: Bundle) {
-        findNavController().navigate(
-            nav, bundle
-        )
-    }
+
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()

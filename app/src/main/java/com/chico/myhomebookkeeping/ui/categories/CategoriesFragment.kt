@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
+import com.chico.myhomebookkeeping.ui.ControlHelper
 import com.chico.myhomebookkeeping.ui.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -29,8 +30,10 @@ class CategoriesFragment : Fragment() {
 
     private var selectedCategoryId = 0
 
-    private val argsName: String by lazy { Constants.FOR_SELECT_CATEGORY_KEY }
+    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CATEGORY_KEY }
+    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CATEGORY_KEY }
     private val uiHelper = UiHelper()
+    private lateinit var controlHelper: ControlHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +59,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        controlHelper = ControlHelper(findNavController())
         view.hideKeyboard()
         with(binding) {
             showHideAddCategoryFragment.setOnClickListener {
@@ -97,11 +101,19 @@ class CategoriesFragment : Fragment() {
             selectButton.setOnClickListener {
                 if (selectedCategoryId > 0) {
                     val bundle = Bundle()
-                    bundle.putInt(argsName, selectedCategoryId)
-                    findNavController().navigate(
-                        R.id.nav_new_money_moving,
-                        bundle
+                    controlHelper.checkAndMove(
+                        bundle,
+                        argsNameForSelect,
+                        argsNameForQuery,
+                        selectedCategoryId
                     )
+
+
+//                    bundle.putInt(argsNameForSelect, selectedCategoryId)
+//                    findNavController().navigate(
+//                        R.id.nav_new_money_moving,
+//                        bundle
+//                    )
                 }
             }
             cancel.setOnClickListener {

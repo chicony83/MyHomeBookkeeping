@@ -51,6 +51,12 @@ class MoneyMovingFragment : Fragment() {
             selectCurrency.setOnClickListener {
                 pressSelectButton(R.id.nav_currencies)
             }
+            selectCashAccount.setOnClickListener {
+                pressSelectButton(R.id.nav_cash_account)
+            }
+            selectCategory.setOnClickListener {
+                pressSelectButton(R.id.nav_categories)
+            }
         }
     }
 
