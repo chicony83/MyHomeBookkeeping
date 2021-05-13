@@ -58,7 +58,7 @@
 
     </style>
 
-    <style name="DescriptionsNewMoneyMoving" parent="MatchParent_WrapContent">
+    <style name="TextDescriptions" parent="MatchParent_WrapContent">
 
     </style>
 

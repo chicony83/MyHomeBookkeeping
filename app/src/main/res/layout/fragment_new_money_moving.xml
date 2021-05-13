@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            style="@style/DescriptionsNewMoneyMoving"
+            style="@style/TextDescriptions"
             android:text="@string/date_time_textDescription" />
 
         <EditText
@@ -27,7 +27,7 @@
             android:inputType="datetime" />
 
         <TextView
-            style="@style/DescriptionsNewMoneyMoving"
+            style="@style/TextDescriptions"
             android:text="@string/cashAccountTextDescription" />
 
         <Button
@@ -36,7 +36,7 @@
             android:text="@string/selectCashAccount" />
 
         <TextView
-            style="@style/DescriptionsNewMoneyMoving"
+            style="@style/TextDescriptions"
             android:text="@string/currencyTextDescription" />
 
         <Button
@@ -45,7 +45,7 @@
             android:text="@string/selectCurrency" />
 
         <TextView
-            style="@style/DescriptionsNewMoneyMoving"
+            style="@style/TextDescriptions"
             android:text="@string/categoryTextDescription" />
 
         <Button
@@ -54,7 +54,7 @@
             android:text="@string/selectCategory" />
 
         <TextView
-            style="@style/DescriptionsNewMoneyMoving"
+            style="@style/TextDescriptions"
             android:text="@string/amountTextDescription" />
 
         <EditText
@@ -64,7 +64,7 @@
             android:inputType="numberDecimal" />
 
         <TextView
-            style="@style/DescriptionsNewMoneyMoving"
+            style="@style/TextDescriptions"
             android:text="@string/descriptionTextDescription" />
 
         <EditText

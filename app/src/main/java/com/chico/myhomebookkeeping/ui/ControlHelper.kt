@@ -1,10 +1,16 @@
 package com.chico.myhomebookkeeping.ui
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.R
 
 class ControlHelper(private val findNavController: NavController) {
+    private val previousFragment = findNavController.previousBackStackEntry?.destination?.id
+    private val navNewMoneyMoving = R.id.nav_new_money_moving
+    private val navMoneyMovingQuery = R.id.nav_money_moving_query
+
+    private val uiHelper = UiHelper()
 
     fun checkAndMove(
         bundle: Bundle,
@@ -12,12 +18,12 @@ class ControlHelper(private val findNavController: NavController) {
         argsNameForQuery: String,
         selectedCurrencyId: Int
     ) {
-        when (findNavController.previousBackStackEntry?.destination?.id) {
-            R.id.nav_new_money_moving -> {
+        when (previousFragment) {
+            navNewMoneyMoving -> {
                 bundle.putInt(argsNameForSelect, selectedCurrencyId)
                 moveTo(bundle)
             }
-            R.id.nav_money_moving_query -> {
+            navMoneyMovingQuery -> {
                 bundle.putInt(argsNameForQuery, selectedCurrencyId)
                 moveTo(bundle)
             }
@@ -30,5 +36,9 @@ class ControlHelper(private val findNavController: NavController) {
                 it.id, bundle
             )
         }
+    }
+
+    fun isPreviousFragment(showHideButton: Button) {
+        if (previousFragment == navMoneyMovingQuery) uiHelper.hideUiElement(showHideButton)
     }
 }

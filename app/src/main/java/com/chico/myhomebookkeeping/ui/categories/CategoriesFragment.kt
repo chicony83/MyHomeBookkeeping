@@ -59,10 +59,13 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         controlHelper = ControlHelper(findNavController())
+        controlHelper.isPreviousFragment(binding.showHideAddCategoryFragmentButton)
         view.hideKeyboard()
         with(binding) {
-            showHideAddCategoryFragment.setOnClickListener {
+            showHideAddCategoryFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCategoryFragment)
             }
             addNewCategoryButton.setOnClickListener {

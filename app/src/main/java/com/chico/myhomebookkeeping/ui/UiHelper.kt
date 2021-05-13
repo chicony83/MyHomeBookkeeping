@@ -4,10 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.TextView
+import android.widget.*
 import com.chico.myhomebookkeeping.constants.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -77,5 +74,9 @@ class UiHelper(
         for (element in listOf){
             clearUiElement(element)
         }
+    }
+
+    fun hideUiElement(button: Button) {
+        button.visibility = View.GONE
     }
 }

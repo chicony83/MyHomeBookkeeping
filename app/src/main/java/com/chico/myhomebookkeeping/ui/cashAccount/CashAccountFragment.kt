@@ -65,9 +65,10 @@ class CashAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         controlHelper = ControlHelper(findNavController())
+        controlHelper.isPreviousFragment(binding.showHideAddCashAccountFragmentButton)
         view.hideKeyboard()
         with(binding) {
-            showHideAddCashAccountFragment.setOnClickListener {
+            showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCashAccountFragment)
             }
             addNewCashAccountButton.setOnClickListener {

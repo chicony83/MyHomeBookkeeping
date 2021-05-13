@@ -62,9 +62,12 @@ class CurrenciesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         controlHelper = ControlHelper(findNavController())
+
+        controlHelper.isPreviousFragment(binding.showHideAddCurrencyFragmentButton)
+
         view.hideKeyboard()
         with(binding) {
-            showHideAddCurrencyFragment.setOnClickListener {
+            showHideAddCurrencyFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCurrencyFragment)
             }
             addNewCurrencyButton.setOnClickListener {
