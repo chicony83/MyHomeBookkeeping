@@ -153,19 +153,14 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressSelectButton(nav: Int) {
         newMoneyMovingViewModel.saveData()
         control.navigate(nav)
-
     }
-
-//    private fun navigateTo(nav: Int) {
-//        control.navigate(nav)
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    fun message(text: String) {
+    private fun message(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 }

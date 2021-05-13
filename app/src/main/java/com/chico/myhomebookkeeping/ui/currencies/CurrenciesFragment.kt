@@ -92,7 +92,6 @@ class CurrenciesFragment : Fragment() {
                         argsNameForQuery,
                         selectedCurrencyId
                     )
-//                    checkAndMove(bundle)
                 }
             }
             cancel.setOnClickListener {

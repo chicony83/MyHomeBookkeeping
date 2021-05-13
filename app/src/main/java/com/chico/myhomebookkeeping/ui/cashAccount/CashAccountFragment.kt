@@ -106,22 +106,6 @@ class CashAccountFragment : Fragment() {
                         argsNameForQuery,
                         selectedCashAccountId
                     )
-//                    when (findNavController().previousBackStackEntry?.destination?.id) {
-//                        R.id.nav_new_money_moving -> bundle.putInt(
-//                            argsNameForSelect,
-//                            selectedCashAccountId
-//                        )
-//                        R.id.nav_money_moving -> bundle.putInt(
-//                            argsNameForQuery,
-//                            selectedCashAccountId
-//                        )
-//                    }
-//                    bundle.putInt(argsNameForSelect, selectedCashAccountId)
-
-//                    findNavController().navigate(
-//                        R.id.nav_new_money_moving,
-//                        bundle
-//                    )
                 }
             }
             cancel.setOnClickListener {

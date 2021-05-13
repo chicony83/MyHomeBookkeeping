@@ -107,13 +107,6 @@ class CategoriesFragment : Fragment() {
                         argsNameForQuery,
                         selectedCategoryId
                     )
-
-
-//                    bundle.putInt(argsNameForSelect, selectedCategoryId)
-//                    findNavController().navigate(
-//                        R.id.nav_new_money_moving,
-//                        bundle
-//                    )
                 }
             }
             cancel.setOnClickListener {
