@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_money_moving"
-        android:name="com.chico.myhomebookkeeping.ui.MoneyMoving.MoneyMovingFragment"
+        android:name="com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingFragment"
         android:label="@string/home_title"
         tools:layout="@layout/fragment_money_moving" />
 

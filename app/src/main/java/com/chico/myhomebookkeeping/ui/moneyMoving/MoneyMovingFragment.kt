@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.MoneyMoving
+package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,13 +1,11 @@
-package com.chico.myhomebookkeeping.ui.MoneyMoving
+package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.MoneyMovingRecyclerViewItemBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
-import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 
 class MoneyMovingAdapter(
