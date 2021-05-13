@@ -15,19 +15,20 @@ class ControlHelper(private val findNavController: NavController) {
         when (findNavController.previousBackStackEntry?.destination?.id) {
             R.id.nav_new_money_moving -> {
                 bundle.putInt(argsNameForSelect, selectedCurrencyId)
-                moveTo(R.id.nav_new_money_moving, bundle)
+                moveTo(bundle)
             }
             R.id.nav_money_moving -> {
                 bundle.putInt(argsNameForQuery, selectedCurrencyId)
-                moveTo(R.id.nav_money_moving, bundle)
+                moveTo(bundle)
             }
         }
     }
 
-    private fun moveTo(nav: Int, bundle: Bundle) {
-        findNavController.navigate(
-            nav, bundle
-        )
+    private fun moveTo(bundle: Bundle) {
+        findNavController.previousBackStackEntry?.destination?.let {
+            findNavController.navigate(
+                it.id, bundle
+            )
+        }
     }
-
 }
