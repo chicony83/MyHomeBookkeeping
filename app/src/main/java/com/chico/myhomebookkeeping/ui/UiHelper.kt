@@ -63,6 +63,10 @@ class UiHelper(
         fab.visibility = View.GONE
     }
 
+    fun showUiElement(fab: FloatingActionButton) {
+        fab.visibility = View.VISIBLE
+    }
+
     fun clearUiListRadioButton(listOf: List<RadioButton>) {
         for (element in listOf){
             clearUiElement(element)

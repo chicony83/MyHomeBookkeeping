@@ -6,10 +6,32 @@
     app:startDestination="@+id/nav_money_moving">
 
     <fragment
+        android:id="@+id/nav_money_moving_query"
+        android:name="com.chico.myhomebookkeeping.ui.queryMoneyMoving.QueryMoneyMovingFragment"
+        tools:layout="@layout/fragment_money_moving_query"
+        android:label="параметры">
+        <action
+            android:id="@+id/action_nav_money_moving_query_to_nav_categories"
+            app:destination="@id/nav_categories" />
+        <action
+            android:id="@+id/action_nav_money_moving_query_to_nav_currencies"
+            app:destination="@id/nav_currencies" />
+        <action
+            android:id="@+id/action_nav_money_moving_query_to_nav_money_moving"
+            app:destination="@id/nav_money_moving" />
+        <action
+            android:id="@+id/action_nav_money_moving_query_to_nav_cash_account"
+            app:destination="@id/nav_cash_account" />
+    </fragment>
+    <fragment
         android:id="@+id/nav_money_moving"
         android:name="com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingFragment"
         android:label="@string/home_title"
-        tools:layout="@layout/fragment_money_moving" />
+        tools:layout="@layout/fragment_money_moving" >
+        <action
+            android:id="@+id/action_nav_money_moving_to_nav_money_moving_query"
+            app:destination="@id/nav_money_moving_query" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_reports"
@@ -36,6 +58,16 @@
         android:id="@+id/nav_new_money_moving"
         android:name="com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment"
         android:label="@string/new_money_movement"
-        tools:layout="@layout/fragment_new_money_moving" />
+        tools:layout="@layout/fragment_new_money_moving" >
+        <action
+            android:id="@+id/action_nav_new_money_moving_to_nav_categories"
+            app:destination="@id/nav_categories" />
+        <action
+            android:id="@+id/action_nav_new_money_moving_to_nav_cash_account"
+            app:destination="@id/nav_cash_account" />
+        <action
+            android:id="@+id/action_nav_new_money_moving_to_nav_currencies"
+            app:destination="@id/nav_currencies" />
+    </fragment>
 
 </navigation>

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    val uiHelper = UiHelper()
+    private val uiHelper = UiHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
+                R.id.nav_money_moving_query,
                 R.id.nav_money_moving,
 //                R.id.nav_reports,
                 R.id.nav_categories,
@@ -65,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_currencies -> uiHelper.hideUiElement(fab)
                 R.id.nav_categories -> uiHelper.hideUiElement(fab)
                 R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
-                else -> fab.visibility = View.VISIBLE
+                R.id.nav_money_moving_query -> uiHelper.hideUiElement(fab)
+                else -> uiHelper.showUiElement(fab)
             }
         }
     }

@@ -17,7 +17,7 @@ class ControlHelper(private val findNavController: NavController) {
                 bundle.putInt(argsNameForSelect, selectedCurrencyId)
                 moveTo(bundle)
             }
-            R.id.nav_money_moving -> {
+            R.id.nav_money_moving_query -> {
                 bundle.putInt(argsNameForQuery, selectedCurrencyId)
                 moveTo(bundle)
             }

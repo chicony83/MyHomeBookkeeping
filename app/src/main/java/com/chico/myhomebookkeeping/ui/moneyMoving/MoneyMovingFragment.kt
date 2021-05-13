@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
@@ -17,7 +18,7 @@ import com.chico.myhomebookkeeping.utils.hideKeyboard
 class MoneyMovingFragment : Fragment() {
 
     private lateinit var db: MoneyMovementDao
-    private lateinit var control:NavController
+//    private lateinit var control:NavController
 
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
     private var _binding: FragmentMoneyMovingBinding? = null
@@ -44,25 +45,29 @@ class MoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
-        control = activity?.findNavController(R.id.nav_host_fragment)!!
+//        control = activity?.findNavController(R.id.nav_host_fragment)!!
         moneyMovingViewModel.loadMoneyMovement()
 
+
         with(binding){
-            selectCurrency.setOnClickListener {
-                pressSelectButton(R.id.nav_currencies)
+            selectQuerySetting.setOnClickListener {
+                findNavController().navigate(R.id.nav_money_moving_query)
             }
-            selectCashAccount.setOnClickListener {
-                pressSelectButton(R.id.nav_cash_account)
-            }
-            selectCategory.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
-            }
+//            selectCurrency.setOnClickListener {
+//                pressSelectButton(R.id.nav_currencies)
+//            }
+//            selectCashAccount.setOnClickListener {
+//                pressSelectButton(R.id.nav_cash_account)
+//            }
+//            selectCategory.setOnClickListener {
+//                pressSelectButton(R.id.nav_categories)
+//            }
         }
     }
 
-    private fun pressSelectButton(nav: Int) {
-        control.navigate(nav)
-    }
+//    private fun pressSelectButton(nav: Int) {
+//        control.navigate(nav)
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
