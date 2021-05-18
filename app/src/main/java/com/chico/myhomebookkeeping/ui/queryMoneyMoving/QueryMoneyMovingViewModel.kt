@@ -1,7 +1,8 @@
-package com.chico.myhomebookkeeping.ui.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.queryMoneyMoving
 
+import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context.MODE_PRIVATE
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
@@ -17,19 +18,14 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.domain.NewMoneyMovingUseCase
 import com.chico.myhomebookkeeping.utils.launchIo
 
-class NewMoneyMovingViewModel(
-    val app: Application,
+class QueryMoneyMovingViewModel(
+    val app: Application
 ) : AndroidViewModel(app) {
-    private val argsCashAccountKey = Constants.FOR_SELECT_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_SELECT_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_SELECT_CATEGORY_KEY
     private val spName = Constants.SP_NAME
 
     private val dbCashAccount: CashAccountDao =
@@ -39,25 +35,29 @@ class NewMoneyMovingViewModel(
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
 
-    private val dbMoneyMovement: MoneyMovementDao =
+    private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
+    private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
+    private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
-    private val sharedPreferences: SharedPreferences =
-        app.getSharedPreferences(spName, MODE_PRIVATE)
 
+    private val sharedPreferences: SharedPreferences = app.getSharedPreferences(spName,
+        Context.MODE_PRIVATE
+    )
     private val spEditor = sharedPreferences.edit()
 
     private val viewModelCheck = ViewModelCheck(sharedPreferences)
 
-    private val _selectedCurrency = MutableLiveData<Currencies>()
-    val selectedCurrency: LiveData<Currencies>
+    private val _selectedCurrency = MutableLiveData<Currencies?>()
+    val selectedCurrency: MutableLiveData<Currencies?>
         get() = _selectedCurrency
 
-    private val _selectedCashAccount = MutableLiveData<CashAccount>()
-    val selectedCashAccount: LiveData<CashAccount>
+    private val _selectedCashAccount = MutableLiveData<CashAccount?>()
+    val selectedCashAccount: MutableLiveData<CashAccount?>
         get() = _selectedCashAccount
 
-    private val _selectedCategory = MutableLiveData<Categories>()
-    val selectedCategory: LiveData<Categories>
+    private val _selectedCategory = MutableLiveData<Categories?>()
+    val selectedCategory: MutableLiveData<Categories?>
         get() = _selectedCategory
 
     var cashAccountSP = -1
@@ -68,23 +68,11 @@ class NewMoneyMovingViewModel(
     var currenciesIdBundle: Int = -1
     var categoryIdBundle: Int = -1
 
-    fun checkArguments(arguments: Bundle?) {
 
+    fun checkArguments(arguments: Bundle?) {
         getSharedPreferencesArgs()
         getBundleArgs(arguments)
         setValuesViewModel()
-    }
-
-    private fun getBundleArgs(arguments: Bundle?) {
-        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
-        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
-        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
-    }
-
-    private fun getSharedPreferencesArgs() {
-        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
-        currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
-        categorySP = viewModelCheck.getValueSP(argsCategoryKey)
     }
 
     private fun setValuesViewModel() {
@@ -107,7 +95,6 @@ class NewMoneyMovingViewModel(
             if (viewModelCheck.isPositiveValue(categoryIdBundle)) postCategory(categoryIdBundle)
         }
     }
-
     private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
         return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
     }
@@ -129,10 +116,25 @@ class NewMoneyMovingViewModel(
             CashAccountsUseCase.getOneCashAccount(dbCashAccount, idNum)
         )
     }
-//    private fun isPositiveValue(value: Int): Boolean {
-//        return value > 0
-//    }
 
+
+    private fun getBundleArgs(arguments: Bundle?) {
+        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
+        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
+        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
+    }
+
+    private fun getSharedPreferencesArgs() {
+        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
+        currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
+        categorySP = viewModelCheck.getValueSP(argsCategoryKey)
+    }
+
+    fun reset() {
+        _selectedCashAccount.postValue(null)
+        _selectedCategory.postValue(null)
+        _selectedCurrency.postValue(null)
+    }
     fun saveData() {
         spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
         spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.cashAccountId ?: -1)
@@ -141,22 +143,4 @@ class NewMoneyMovingViewModel(
         spEditor.commit()
     }
 
-    suspend fun addNewMoneyMoving(
-        dataTime: Long,
-        amount: Double,
-        description: String
-    ): Long {
-        val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
-        val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
-        val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
-        val moneyMovement = MoneyMovement(
-            timeStamp = dataTime,
-            amount = amount,
-            cashAccount = cashAccountValue,
-            category = categoryValue,
-            currency = currencyValue,
-            description = description
-        )
-        return NewMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
-    }
 }

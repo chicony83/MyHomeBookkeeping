@@ -71,4 +71,15 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="SelectedParamDescription">
+        <item name="android:layout_marginStart">@dimen/margin_double</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="SelectedParamName" parent="WrapContent_WrapContent">
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

@@ -35,9 +35,12 @@
     <string name="categoryTextDescription">category</string>
     <string name="youDescriptionText">you description</string>
     <string name="date_time_textDescription">date/time</string>
-    <string name="selectCashAccount">select cash account</string>
-    <string name="selectCurrency">select currency</string>
-    <string name="selectCategory">select category</string>
+    <string name="selectedCashAccount">select cash account</string>
+    <string name="selectedCurrency">select currency</string>
+    <string name="selectedCategory">select category</string>
     <string name="amountTextDescription">amount</string>
     <string name="descriptionTextDescription">description</string>
+    <string name="apply">apply</string>
+    <string name="reset">reset</string>
+    <string name="all_text">all</string>
 </resources>

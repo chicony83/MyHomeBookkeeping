@@ -33,7 +33,7 @@
         <Button
             android:id="@+id/selectCashAccountButton"
             style="@style/ButtonsMatchParent_WrapContent"
-            android:text="@string/selectCashAccount" />
+            android:text="@string/selectedCashAccount" />
 
         <TextView
             style="@style/TextDescriptions"
@@ -42,7 +42,7 @@
         <Button
             android:id="@+id/selectCurrenciesButton"
             style="@style/ButtonsMatchParent_WrapContent"
-            android:text="@string/selectCurrency" />
+            android:text="@string/selectedCurrency" />
 
         <TextView
             style="@style/TextDescriptions"
@@ -51,7 +51,7 @@
         <Button
             android:id="@+id/selectCategoryButton"
             style="@style/ButtonsMatchParent_WrapContent"
-            android:text="@string/selectCategory" />
+            android:text="@string/selectedCategory" />
 
         <TextView
             style="@style/TextDescriptions"
