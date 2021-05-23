@@ -37,6 +37,15 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel.moneyMovementList.observe(viewLifecycleOwner, {
             binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it)
         })
+        moneyMovingViewModel.textDescriptionOfQueryCurrency.observe(viewLifecycleOwner,{
+            binding.selectedQueryCurrency.text = it
+        })
+        moneyMovingViewModel.textDescriptionOfQueryCategory.observe(viewLifecycleOwner,{
+            binding.selectedQueryCategory.text = it
+        })
+        moneyMovingViewModel.textDescriptionOfQueryCashAccount.observe(viewLifecycleOwner,{
+            binding.selectedQueryCashAccount.text = it
+        })
 
         return binding.root
     }
