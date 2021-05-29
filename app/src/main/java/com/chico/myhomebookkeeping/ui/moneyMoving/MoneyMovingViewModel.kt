@@ -72,6 +72,7 @@ class MoneyMovingViewModel(
     private var cashAccountSP = -1
     private var currencySP: Int = -1
     private var categorySP = -1
+
     private var foundLines = 0
 
     private lateinit var resultQuery:List<FullMoneyMoving>

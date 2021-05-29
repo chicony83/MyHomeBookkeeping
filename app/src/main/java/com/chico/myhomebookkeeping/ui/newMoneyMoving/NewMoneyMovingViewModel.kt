@@ -133,7 +133,7 @@ class NewMoneyMovingViewModel(
 //        return value > 0
 //    }
 
-    fun saveData() {
+    fun saveDataForAdding() {
         spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
         spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.cashAccountId ?: -1)
         spEditor.putInt(argsCategoryKey, _selectedCategory.value?.categoriesId ?: -1)
@@ -158,5 +158,9 @@ class NewMoneyMovingViewModel(
             description = description
         )
         return NewMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+    }
+
+    fun saveDataForShowMovement() {
+
     }
 }

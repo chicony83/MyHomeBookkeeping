@@ -16,10 +16,8 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.ui.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchUi
 
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -33,7 +31,7 @@ class NewMoneyMovingFragment : Fragment() {
 
     private lateinit var control: NavController
 
-    private var click = 0
+    //    private var click = 0
     private val uiHelper = UiHelper()
 
     override fun onCreateView(
@@ -86,52 +84,54 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressAddButton() {
-        click++
+//        click++
 
-        if (click == 1) {
-            val dataTime = currentDateTimeMillis
+//        if (click == 1) {
+        val dataTime = currentDateTimeMillis
 
-            if (CheckNewMoneyMoving.isEntered(binding.amount.text)) {
-                val amount: Double = binding.amount.text.toString().toDouble()
-                val description: String = binding.description.text.toString()
-                newMoneyMovingViewModel.saveData()
-                runBlocking {
-                    val result: Long =
-                        newMoneyMovingViewModel.addNewMoneyMoving(dataTime, amount, description)
-                    if (result > 0) {
-                        uiHelper.clearUiListEditText(
-                            listOf(
-                                binding.amount, binding.description
-                            )
+        if (CheckNewMoneyMoving.isEntered(binding.amount.text)) {
+            val amount: Double = binding.amount.text.toString().toDouble()
+            val description: String = binding.description.text.toString()
+            newMoneyMovingViewModel.saveDataForAdding()
+            runBlocking {
+                val result: Long =
+                    newMoneyMovingViewModel.addNewMoneyMoving(dataTime, amount, description)
+                if (result > 0) {
+                    uiHelper.clearUiListEditText(
+                        listOf(
+                            binding.amount, binding.description
                         )
-                        setBackgroundDefaultColor(binding.amount)
-                        view?.hideKeyboard()
-                        message("запись добавлена")
-                    }
+                    )
+                    setBackgroundDefaultColor(binding.amount)
+                    view?.hideKeyboard()
+                    message("запись добавлена")
+                    newMoneyMovingViewModel.saveDataForShowMovement()
+                    control.navigate(R.id.nav_money_moving)
                 }
-            } else {
-                setBackgroundWarningColor(binding.amount)
-                message("введите сумму")
-                clickIsZero()
             }
+        } else {
+            setBackgroundWarningColor(binding.amount)
+            message("введите сумму")
+//                clickIsZero()
         }
-        if (click >= 2) {
-            binding.addNewMoneyMovingButton.isEnabled = false
-            binding.addNewMoneyMovingButton.text = "слишком много нажатий"
-            message("запись добавляется или уже добавлена")
-            launchUi {
-                message("кнопка временно заблокирована")
-                delay(5000)
-                binding.addNewMoneyMovingButton.text = "можно добавить еще одну запись"
-                binding.addNewMoneyMovingButton.isEnabled = true
-                clickIsZero()
-            }
-        }
+//        }
+//        if (click >= 2) {
+//            binding.addNewMoneyMovingButton.isEnabled = false
+//            binding.addNewMoneyMovingButton.text = "слишком много нажатий"
+//            message("запись добавляется или уже добавлена")
+//            launchUi {
+//                message("кнопка временно заблокирована")
+//                delay(3000)
+//                binding.addNewMoneyMovingButton.text = "можно добавить еще одну запись"
+//                binding.addNewMoneyMovingButton.isEnabled = true
+//                clickIsZero()
+//            }
+//        }
     }
 
-    private fun clickIsZero() {
-        click = 0
-    }
+//    private fun clickIsZero() {
+//        click = 0
+//    }
 
     private fun setBackgroundWarningColor(editText: EditText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -151,7 +151,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(nav: Int) {
-        newMoneyMovingViewModel.saveData()
+        newMoneyMovingViewModel.saveDataForAdding()
         control.navigate(nav)
     }
 
