@@ -44,7 +44,7 @@
             <TextView
                 android:id="@+id/selectedQueryCategory"
                 style="@style/TextDescriptionLine"
-                android:text="@string/all_text"  />
+                android:text="@string/all_text" />
 
             <TextView
                 style="@style/TextDescriptionLine"
@@ -53,7 +53,7 @@
             <TextView
                 android:id="@+id/selectedQueryCashAccount"
                 style="@style/TextDescriptionLine"
-                android:text="@string/all_text"  />
+                android:text="@string/all_text" />
         </LinearLayout>
 
     </HorizontalScrollView>
@@ -63,8 +63,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/resultCountAmountOfQuery"
         app:layout_constraintTop_toBottomOf="@+id/descriptionSelectedQuery" />
 
+    <TextView
+        android:id="@+id/resultCountAmountOfQuery"
+        style="@style/MatchParent_WrapContent"
+        android:gravity="center"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

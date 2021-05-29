@@ -20,7 +20,6 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class MoneyMovingViewModel(
@@ -49,7 +48,7 @@ class MoneyMovingViewModel(
     private var viewModelCheck = ViewModelCheck(sharedPreferences)
 
     private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>>()
-    val moneyMovementList: LiveData<List<FullMoneyMoving>>
+    val moneyMovementList: MutableLiveData<List<FullMoneyMoving>>
         get() = _moneyMovementList
 
     private val _textDescriptionOfQueryCurrency = MutableLiveData<String>()
@@ -64,13 +63,21 @@ class MoneyMovingViewModel(
     val textDescriptionOfQueryCashAccount: LiveData<String>
         get() = _textDescriptionOfQueryCashAccount
 
+    private val _amountMoneyOfQuery = MutableLiveData<String>()
+    val amountMoneyOfQuery: LiveData<String>
+        get() = _amountMoneyOfQuery
+
     private var cashAccountSP = -1
     private var currencySP: Int = -1
     private var categorySP = -1
 
     init {
         getValuesSP()
-        loadMoneyMovement()
+
+        launchUi {
+            loadMoneyMovement()
+        }
+
     }
 
     private fun getValuesSP() {
@@ -79,7 +86,7 @@ class MoneyMovingViewModel(
         categorySP = viewModelCheck.getValueSP(argsCategoryKey)
     }
 
-    private fun loadMoneyMovement() {
+    private suspend fun loadMoneyMovement() {
 
         if (viewModelCheck.isPositiveValue(currencySP)) {
             launchUi {
@@ -112,16 +119,36 @@ class MoneyMovingViewModel(
             }
         }
 
-        runBlocking {
-            val moneyMovingCreteQuery = MoneyMovingCreteQuery()
-            val query = moneyMovingCreteQuery.createQuery(
-                    currencySP,
-                    categorySP,
-                    cashAccountSP
-                )
 
-        _moneyMovementList.postValue(MoneyMovingUseCase.getSelectedMoneyMovement(db, query))
+        val query = MoneyMovingCreteQuery.createQuery(
+            currencySP,
+            categorySP,
+            cashAccountSP
+        )
+
+        getResultQuery(query)
+
+    }
+
+    private fun getResultQuery(query: SimpleSQLiteQuery) = runBlocking {
+        val result: List<FullMoneyMoving>? = MoneyMovingUseCase.getSelectedMoneyMovement(db, query)
+        if (result != null) {
+            if (result.isNotEmpty()) {
+                launchUi {
+                    with(_moneyMovementList) { postValue(result) }
+                }
+            }
+            launchUi {
+//                val text:String = "text"
+//                _amountMoneyOfQuery.postValue(text)
+
+                _amountMoneyOfQuery.postValue(MoneyMovingCountMoney.count(fullMoneyMoving = result).toString())
+            }
         }
+    }
+
+    fun isOneCurrency(): Boolean {
+        return currencySP > 0
     }
 
 }

@@ -9,8 +9,9 @@ import com.chico.myhomebookkeeping.constants.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper(
-    val minLength: Int = Constants.MIN_LENGTH_NAME
+
 ) {
+    val minLength: Int = Constants.MIN_LENGTH_NAME
     fun showHideUIElements(selectedId: Int, showHideLayout: LinearLayout) {
         if (selectedId > 0) {
             showHideLayout.visibility = View.VISIBLE
@@ -78,5 +79,12 @@ class UiHelper(
 
     fun hideUiElement(button: Button) {
         button.visibility = View.GONE
+    }
+
+    fun hideUiElement(textView: TextView) {
+        textView.visibility = View.GONE
+    }
+    fun showUiElement(textView: TextView) {
+        textView.visibility = View.VISIBLE
     }
 }

@@ -3,7 +3,7 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 import androidx.sqlite.db.SimpleSQLiteQuery
 
 
-class MoneyMovingCreteQuery {
+object MoneyMovingCreteQuery {
     fun createQuery(currencyVal: Int, categoryVal: Int, cashAccountVal: Int): SimpleSQLiteQuery {
 
         var queryString =
