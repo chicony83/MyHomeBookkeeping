@@ -5,6 +5,7 @@ import android.text.Editable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.chico.myhomebookkeeping.constants.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -86,5 +87,19 @@ class UiHelper(
     }
     fun showUiElement(textView: TextView) {
         textView.visibility = View.VISIBLE
+    }
+
+    fun showHideUIElements(selectedId: Int, showHideLayout: ConstraintLayout) {
+        if (selectedId > 0) {
+            showHideLayout.visibility = View.VISIBLE
+        } else {
+            showHideLayout.visibility = View.GONE
+        }
+
+    }
+
+    fun hideUiElement(element: ConstraintLayout) {
+        element.visibility = View.GONE
+
     }
 }

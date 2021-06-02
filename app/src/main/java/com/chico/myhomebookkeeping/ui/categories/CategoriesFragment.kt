@@ -46,6 +46,9 @@ class CategoriesFragment : Fragment() {
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
         with(categoriesViewModel){
+            selectedCategory.observe(viewLifecycleOwner,{
+                binding.selectedItem.text = it?.categoryName
+            })
 
             categoriesList.observe(viewLifecycleOwner, {
                 binding.categoryHolder.adapter =

@@ -49,7 +49,7 @@ class CashAccountFragment : Fragment() {
 
         with(cashAccountViewModel) {
             selectedCashAccount.observe(viewLifecycleOwner,{
-                binding.selectedItem.text = it?.accountName ?: "счёт не выбран"
+                binding.selectedItem.text = it?.accountName
             })
             cashAccountList.observe(viewLifecycleOwner, {
                 binding.cashAccountHolder.adapter =

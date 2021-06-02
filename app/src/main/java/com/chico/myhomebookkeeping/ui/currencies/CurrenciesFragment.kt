@@ -47,6 +47,9 @@ class CurrenciesFragment : Fragment() {
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
         with(currenciesViewModel){
+            selectedCurrency.observe(viewLifecycleOwner,{
+                binding.selectedItem.text = it?.currencyName
+            })
 
             currenciesList.observe(viewLifecycleOwner, {
                 binding.currenciesHolder.adapter =
