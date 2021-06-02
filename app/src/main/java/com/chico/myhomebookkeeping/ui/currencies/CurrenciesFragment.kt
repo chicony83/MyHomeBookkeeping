@@ -1,24 +1,23 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.ui.ControlHelper
-import com.chico.myhomebookkeeping.ui.UiHelper
+import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class CurrenciesFragment : Fragment() {
@@ -30,10 +29,11 @@ class CurrenciesFragment : Fragment() {
 
     private var selectedCurrencyId = 0
 
-    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CURRENCY_KEY }
-    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CURRENCY_KEY }
+//    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CURRENCY_KEY }
+//    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CURRENCY_KEY }
     private val uiHelper = UiHelper()
     private lateinit var controlHelper: ControlHelper
+    private lateinit var control: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,25 +45,36 @@ class CurrenciesFragment : Fragment() {
 
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
-        currenciesViewModel.currenciesList.observe(viewLifecycleOwner, {
-            binding.currenciesHolder.adapter =
-                CurrenciesAdapter(it, object : OnItemViewClickListener {
-                    override fun onClick(selectedId: Int) {
-                        uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
-                        selectedCurrencyId = selectedId
-                        Log.i("TAG", "---2WTF---")
-                    }
-                })
-        })
+        with(currenciesViewModel){
+
+            selectedCurrency.observe(viewLifecycleOwner,{
+                binding.selectedItem.text = it?.currencyName ?: "валюта не выбрана"
+            })
+
+            currenciesList.observe(viewLifecycleOwner, {
+                binding.currenciesHolder.adapter =
+                    CurrenciesAdapter(it, object : OnItemViewClickListener {
+                        override fun onClick(selectedId: Int) {
+                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                            currenciesViewModel.loadSelectedCurrency(selectedId)
+                            selectedCurrencyId = selectedId
+                        }
+                    })
+            })
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controlHelper = ControlHelper(findNavController())
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
 
-        controlHelper.isPreviousFragment(binding.showHideAddCurrencyFragmentButton)
+        controlHelper = ControlHelper(control)
+
+        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
+            uiHelper.hideUiElement(binding.showHideAddCurrencyFragmentButton)
+        }
 
         view.hideKeyboard()
         with(binding) {
@@ -88,13 +99,8 @@ class CurrenciesFragment : Fragment() {
             }
             selectButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
-                    val bundle = Bundle()
-                    controlHelper.checkAndMove(
-                        bundle,
-                        argsNameForSelect,
-                        argsNameForQuery,
-                        selectedCurrencyId
-                    )
+                    currenciesViewModel.saveData(controlHelper)
+                    controlHelper.moveToPreviousPage()
                 }
             }
             cancel.setOnClickListener {

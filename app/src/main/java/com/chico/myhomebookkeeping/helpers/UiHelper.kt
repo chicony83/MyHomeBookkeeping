@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui
+package com.chico.myhomebookkeeping.helpers
 
 import android.content.Context
 import android.text.Editable

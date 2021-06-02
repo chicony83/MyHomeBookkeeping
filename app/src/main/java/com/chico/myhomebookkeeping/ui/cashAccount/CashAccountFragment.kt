@@ -13,14 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.ui.ControlHelper
-import com.chico.myhomebookkeeping.ui.UiHelper
+import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.UiHelper
 
 class CashAccountFragment : Fragment() {
 
@@ -32,8 +31,8 @@ class CashAccountFragment : Fragment() {
 
     private var selectedCashAccountId = 0
 
-    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CASH_ACCOUNT_KEY }
-    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CASH_ACCOUNT_KEY }
+    //    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CASH_ACCOUNT_KEY }
+//    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CASH_ACCOUNT_KEY }
     private val uiHelper = UiHelper()
     private lateinit var controlHelper: ControlHelper
 
@@ -48,16 +47,22 @@ class CashAccountFragment : Fragment() {
 
         cashAccountViewModel = ViewModelProvider(this).get(CashAccountViewModel::class.java)
 
-        cashAccountViewModel.cashAccountList.observe(viewLifecycleOwner, {
-            binding.cashAccountHolder.adapter =
+        with(cashAccountViewModel) {
+            selectedCashAccount.observe(viewLifecycleOwner,{
+                binding.selectedItem.text = it?.accountName ?: "счёт не выбран"
+            })
+            cashAccountList.observe(viewLifecycleOwner, {
+                binding.cashAccountHolder.adapter =
 
-                CashAccountAdapter(it, object : OnItemViewClickListener {
-                    override fun onClick(selectedId: Int) {
-                        uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
-                        selectedCashAccountId = selectedId
-                    }
-                })
-        })
+                    CashAccountAdapter(it, object : OnItemViewClickListener {
+                        override fun onClick(selectedId: Int) {
+                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                            cashAccountViewModel.loadSelectedCashAccount(selectedId)
+                            selectedCashAccountId = selectedId
+                        }
+                    })
+            })
+        }
         return binding.root
     }
 
@@ -65,7 +70,11 @@ class CashAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         controlHelper = ControlHelper(findNavController())
-        controlHelper.isPreviousFragment(binding.showHideAddCashAccountFragmentButton)
+
+        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
+            uiHelper.hideUiElement(binding.showHideAddCashAccountFragmentButton)
+        }
+
         view.hideKeyboard()
         with(binding) {
             showHideAddCashAccountFragmentButton.setOnClickListener {
@@ -99,14 +108,8 @@ class CashAccountFragment : Fragment() {
             }
             selectButton.setOnClickListener {
                 if (selectedCashAccountId > 0) {
-                    val bundle = Bundle()
-
-                    controlHelper.checkAndMove(
-                        bundle,
-                        argsNameForSelect,
-                        argsNameForQuery,
-                        selectedCashAccountId
-                    )
+                    cashAccountViewModel.saveData(controlHelper)
+                    controlHelper.moveToPreviousPage()
                 }
             }
             cancel.setOnClickListener {

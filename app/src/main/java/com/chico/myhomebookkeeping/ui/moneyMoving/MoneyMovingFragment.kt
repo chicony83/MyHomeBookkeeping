@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.ui.UiHelper
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.delay
 
@@ -26,6 +26,7 @@ class MoneyMovingFragment : Fragment() {
     private var _binding: FragmentMoneyMovingBinding? = null
     private val binding get() = _binding!!
     private val uiHelper = UiHelper()
+    private lateinit var control: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,32 +39,40 @@ class MoneyMovingFragment : Fragment() {
 
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
+        with(moneyMovingViewModel) {
+            moneyMovementList.observe(viewLifecycleOwner, {
+                binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it)
+            })
+            amountMoneyOfQuery.observe(viewLifecycleOwner, {
+                binding.resultCountAmountOfQuery.text = it.toString()
+            })
 
-        moneyMovingViewModel.moneyMovementList.observe(viewLifecycleOwner, {
-            binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it)
-        })
-        moneyMovingViewModel.textDescriptionOfQueryCurrency.observe(viewLifecycleOwner, {
-            binding.selectedQueryCurrency.text = it
-        })
-        moneyMovingViewModel.textDescriptionOfQueryCategory.observe(viewLifecycleOwner, {
-            binding.selectedQueryCategory.text = it
-        })
-        moneyMovingViewModel.textDescriptionOfQueryCashAccount.observe(viewLifecycleOwner, {
-            binding.selectedQueryCashAccount.text = it
-        })
-        moneyMovingViewModel.amountMoneyOfQuery.observe(viewLifecycleOwner, {
-            binding.resultCountAmountOfQuery.text = it.toString()
-        })
-
+        }
         return binding.root
+    }
+
+    private fun pressSelectButton(fragment: Int) {
+        control.navigate(fragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
+
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+
         with(binding) {
             selectQuerySetting.setOnClickListener {
-                findNavController().navigate(R.id.nav_money_moving_query)
+                pressSelectButton(R.id.nav_money_moving_query)
+            }
+            selectCategory.setOnClickListener {
+                pressSelectButton(R.id.nav_categories)
+            }
+            selectCurrency.setOnClickListener {
+                pressSelectButton(R.id.nav_currencies)
+            }
+            selectCashAccount.setOnClickListener {
+                pressSelectButton(R.id.nav_cash_account)
             }
         }
 

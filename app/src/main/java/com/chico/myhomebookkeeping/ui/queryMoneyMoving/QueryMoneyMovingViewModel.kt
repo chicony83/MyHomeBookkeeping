@@ -27,21 +27,22 @@ class QueryMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
+    private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
+    private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
 
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
+
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
-
-    private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
 
-    private val sharedPreferences: SharedPreferences = app.getSharedPreferences(spName,
+    private val sharedPreferences: SharedPreferences = app.getSharedPreferences(
+        spName,
         Context.MODE_PRIVATE
     )
     private val spEditor = sharedPreferences.edit()
@@ -95,6 +96,7 @@ class QueryMoneyMovingViewModel(
             if (viewModelCheck.isPositiveValue(categoryIdBundle)) postCategory(categoryIdBundle)
         }
     }
+
     private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
         return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
     }
@@ -135,6 +137,7 @@ class QueryMoneyMovingViewModel(
         _selectedCategory.postValue(null)
         _selectedCurrency.postValue(null)
     }
+
     fun saveData() {
         spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
         spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.cashAccountId ?: -1)

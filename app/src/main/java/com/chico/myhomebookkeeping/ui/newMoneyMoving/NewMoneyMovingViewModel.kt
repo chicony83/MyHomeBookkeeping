@@ -64,22 +64,18 @@ class NewMoneyMovingViewModel(
     var currencySP = -1
     var categorySP = -1
 
-    var cashAccountIdBundle: Int = -1
-    var currenciesIdBundle: Int = -1
-    var categoryIdBundle: Int = -1
-
     fun checkArguments(arguments: Bundle?) {
 
         getSharedPreferencesArgs()
-        getBundleArgs(arguments)
+//        getBundleArgs(arguments)
         setValuesViewModel()
     }
 
-    private fun getBundleArgs(arguments: Bundle?) {
-        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
-        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
-        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
-    }
+//    private fun getBundleArgs(arguments: Bundle?) {
+//        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
+//        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
+//        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
+//    }
 
     private fun getSharedPreferencesArgs() {
         cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
@@ -89,29 +85,20 @@ class NewMoneyMovingViewModel(
 
     private fun setValuesViewModel() {
         launchIo {
-            if (doubleCheck(cashAccountSP, cashAccountIdBundle)) postCashAccount(cashAccountSP)
-
-            if (viewModelCheck.isPositiveValue(cashAccountIdBundle)) postCashAccount(
-                cashAccountIdBundle
-            )
+            if (viewModelCheck.isPositiveValue(cashAccountSP)) postCashAccount(cashAccountSP)
         }
         launchIo {
-            if (doubleCheck(currencySP, currenciesIdBundle)) postCurrency(currencySP)
-
-            if (viewModelCheck.isPositiveValue(currenciesIdBundle)) postCurrency(currenciesIdBundle)
-
+            if (viewModelCheck.isPositiveValue(currencySP)) postCurrency(currencySP)
         }
         launchIo {
-            if (doubleCheck(categorySP, cashAccountIdBundle)) postCategory(categorySP)
-
-            if (viewModelCheck.isPositiveValue(categoryIdBundle)) postCategory(categoryIdBundle)
+            if (viewModelCheck.isPositiveValue(categorySP)) postCategory(categorySP)
         }
     }
 
-    private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
-        return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
-    }
-
+//    private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
+//        return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
+//    }
+//
     private suspend fun postCategory(idNum: Int) {
         _selectedCategory.postValue(
             CategoriesUseCase.getOneCategory(dbCategory, idNum)

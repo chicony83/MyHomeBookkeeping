@@ -16,8 +16,8 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.ui.ControlHelper
-import com.chico.myhomebookkeeping.ui.UiHelper
+import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class CategoriesFragment : Fragment() {
@@ -45,24 +45,31 @@ class CategoriesFragment : Fragment() {
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-        categoriesViewModel.categoriesList.observe(viewLifecycleOwner, {
-            binding.categoryHolder.adapter =
-                CategoriesAdapter(it, object : OnItemViewClickListener {
-                    override fun onClick(selectedId: Int) {
-                        uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
-                        selectedCategoryId = selectedId
-                    }
-                })
-        })
+        with(categoriesViewModel){
+
+            categoriesList.observe(viewLifecycleOwner, {
+                binding.categoryHolder.adapter =
+                    CategoriesAdapter(it, object : OnItemViewClickListener {
+                        override fun onClick(selectedId: Int) {
+                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                            categoriesViewModel.loadSelectedCategory(selectedId)
+                            selectedCategoryId = selectedId
+                        }
+                    })
+            })
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         controlHelper = ControlHelper(findNavController())
-        controlHelper.isPreviousFragment(binding.showHideAddCategoryFragmentButton)
+
+        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
+            uiHelper.hideUiElement(binding.showHideAddCategoryFragmentButton)
+        }
+
         view.hideKeyboard()
         with(binding) {
             showHideAddCategoryFragmentButton.setOnClickListener {
@@ -103,13 +110,8 @@ class CategoriesFragment : Fragment() {
             }
             selectButton.setOnClickListener {
                 if (selectedCategoryId > 0) {
-                    val bundle = Bundle()
-                    controlHelper.checkAndMove(
-                        bundle,
-                        argsNameForSelect,
-                        argsNameForQuery,
-                        selectedCategoryId
-                    )
+                    categoriesViewModel.saveData(controlHelper)
+                    controlHelper.moveToPreviousPage()
                 }
             }
             cancel.setOnClickListener {

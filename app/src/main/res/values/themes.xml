@@ -46,7 +46,7 @@
     </style>
 
     <style name="ConfirmationLayout" parent="MatchParent_WrapContent">
-        <item name="android:orientation">horizontal</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:visibility">gone</item>
     </style>
 
