@@ -26,7 +26,7 @@ class CurrenciesViewModel(
     private val spEditor = sharedPreferences.edit()
 
     private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsForSelect = Constants.FOR_SELECT_CASH_ACCOUNT_KEY
+    private val argsForSelect = Constants.FOR_SELECT_CURRENCY_KEY
 
     private val saveARGS = SaveARGS(spEditor)
 

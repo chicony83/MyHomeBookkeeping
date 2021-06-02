@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,10 +48,6 @@ class CurrenciesFragment : Fragment() {
 
         with(currenciesViewModel){
 
-            selectedCurrency.observe(viewLifecycleOwner,{
-                binding.selectedItem.text = it?.currencyName ?: "валюта не выбрана"
-            })
-
             currenciesList.observe(viewLifecycleOwner, {
                 binding.currenciesHolder.adapter =
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
@@ -58,6 +55,7 @@ class CurrenciesFragment : Fragment() {
                             uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
                             currenciesViewModel.loadSelectedCurrency(selectedId)
                             selectedCurrencyId = selectedId
+                            Log.i("TAG","---$selectedId---")
                         }
                     })
             })

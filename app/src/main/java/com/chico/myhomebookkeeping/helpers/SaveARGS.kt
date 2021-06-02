@@ -7,6 +7,9 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
     private val navNewMoneyMoving = R.id.nav_new_money_moving
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
+    private val navCategories = R.id.nav_categories
+    private val navCashAccount = R.id.nav_cash_account
+    private val navCurrencies = R.id.nav_currencies
 
     fun checkAndSaveSP(
         controlHelper: ControlHelper,
@@ -16,7 +19,7 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
     ) {
         when (controlHelper.previousFragment()) {
             navMoneyMoving -> {
-                saveSP(argsForSelect,id)
+                saveSP(argsForQuery,id)
             }
             navMoneyMovingQuery -> {
                 saveSP(argsForQuery,id)

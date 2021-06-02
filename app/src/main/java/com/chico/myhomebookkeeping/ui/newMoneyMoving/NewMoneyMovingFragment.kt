@@ -31,7 +31,6 @@ class NewMoneyMovingFragment : Fragment() {
 
     private lateinit var control: NavController
 
-    //    private var click = 0
     private val uiHelper = UiHelper()
 
     override fun onCreateView(
@@ -78,15 +77,13 @@ class NewMoneyMovingFragment : Fragment() {
             })
         }
 
-        newMoneyMovingViewModel.checkArguments(arguments)
+        newMoneyMovingViewModel.checkArguments()
 
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun pressAddButton() {
-//        click++
 
-//        if (click == 1) {
         val dataTime = currentDateTimeMillis
 
         if (CheckNewMoneyMoving.isEntered(binding.amount.text)) {
@@ -112,26 +109,8 @@ class NewMoneyMovingFragment : Fragment() {
         } else {
             setBackgroundWarningColor(binding.amount)
             message("введите сумму")
-//                clickIsZero()
         }
-//        }
-//        if (click >= 2) {
-//            binding.addNewMoneyMovingButton.isEnabled = false
-//            binding.addNewMoneyMovingButton.text = "слишком много нажатий"
-//            message("запись добавляется или уже добавлена")
-//            launchUi {
-//                message("кнопка временно заблокирована")
-//                delay(3000)
-//                binding.addNewMoneyMovingButton.text = "можно добавить еще одну запись"
-//                binding.addNewMoneyMovingButton.isEnabled = true
-//                clickIsZero()
-//            }
-//        }
     }
-
-//    private fun clickIsZero() {
-//        click = 0
-//    }
 
     private fun setBackgroundWarningColor(editText: EditText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

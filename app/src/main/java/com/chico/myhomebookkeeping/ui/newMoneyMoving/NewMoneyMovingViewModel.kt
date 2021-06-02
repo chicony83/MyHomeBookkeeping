@@ -64,18 +64,10 @@ class NewMoneyMovingViewModel(
     var currencySP = -1
     var categorySP = -1
 
-    fun checkArguments(arguments: Bundle?) {
-
+    fun checkArguments() {
         getSharedPreferencesArgs()
-//        getBundleArgs(arguments)
         setValuesViewModel()
     }
-
-//    private fun getBundleArgs(arguments: Bundle?) {
-//        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
-//        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
-//        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
-//    }
 
     private fun getSharedPreferencesArgs() {
         cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
@@ -95,10 +87,6 @@ class NewMoneyMovingViewModel(
         }
     }
 
-//    private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
-//        return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
-//    }
-//
     private suspend fun postCategory(idNum: Int) {
         _selectedCategory.postValue(
             CategoriesUseCase.getOneCategory(dbCategory, idNum)
@@ -116,9 +104,6 @@ class NewMoneyMovingViewModel(
             CashAccountsUseCase.getOneCashAccount(dbCashAccount, idNum)
         )
     }
-//    private fun isPositiveValue(value: Int): Boolean {
-//        return value > 0
-//    }
 
     fun saveDataForAdding() {
         spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
