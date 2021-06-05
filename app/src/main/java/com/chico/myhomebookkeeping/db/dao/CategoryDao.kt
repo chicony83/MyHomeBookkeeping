@@ -11,7 +11,7 @@ interface CategoryDao {
     @Insert
     suspend fun addCategory(category: Categories)
 
-    @Query("SELECT * FROM category_table")
+    @Query("SELECT * FROM category_table ORDER BY categoriesId DESC")
     suspend fun getAllCategory(): List<Categories>
 
     @Query("SELECT * FROM category_table WHERE categoriesId = :id")

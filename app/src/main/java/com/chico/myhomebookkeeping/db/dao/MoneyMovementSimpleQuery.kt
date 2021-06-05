@@ -34,6 +34,8 @@ object MoneyMovingCreteQuery {
             argsList.add(cashAccountVal)
         }
 
+        queryString += " ORDER BY id DESC "
+
         val args = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)

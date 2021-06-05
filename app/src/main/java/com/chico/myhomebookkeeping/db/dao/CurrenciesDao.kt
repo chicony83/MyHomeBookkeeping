@@ -11,7 +11,7 @@ interface CurrenciesDao {
     @Insert
     suspend fun addCurrency(currency: Currencies)
 
-    @Query("SELECT * FROM currency_table")
+    @Query("SELECT * FROM currency_table ORDER BY currencyId DESC")
     suspend fun getAllCurrency():List<Currencies>
 
     @Query("SELECT * FROM currency_table WHERE currencyId = :id")
