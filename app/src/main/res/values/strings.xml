@@ -27,7 +27,7 @@
     <string name="enterName">enter name</string>
     <string name="cash_account_title">accounts</string>
     <string name="currencies_title">currencies</string>
-    <string name="new_money_movement">новое движение денег</string>
+    <string name="new_money_movement">new money movement</string>
     <string name="add_income_or_expense">add income or expense </string>
     <string name="too_short_name">too short name</string>
     <string name="cashAccountTextDescription">cash account</string>

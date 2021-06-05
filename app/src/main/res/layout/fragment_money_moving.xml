@@ -27,66 +27,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="currency" />
+            android:text="@string/currencyTextDescription" />
 
         <Button
             android:id="@+id/selectCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="category" />
+            android:text="@string/categoryTextDescription" />
 
         <Button
             android:id="@+id/selectCashAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="cash account" />
+            android:text="@string/cashAccountTextDescription" />
     </LinearLayout>
-
-    <!--    <HorizontalScrollView-->
-    <!--        android:id="@+id/descriptionSelectedQuery"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/selectQuerySetting">-->
-
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content">-->
-
-    <!--            <TextView-->
-    <!--                style="@style/TextDescriptionLine"-->
-    <!--                android:text="currency" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/selectedQueryCurrency"-->
-    <!--                style="@style/TextDescriptionLine"-->
-    <!--                android:text="@string/all_text" />-->
-
-    <!--            <TextView-->
-    <!--                style="@style/TextDescriptionLine"-->
-    <!--                android:text="category" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/selectedQueryCategory"-->
-    <!--                style="@style/TextDescriptionLine"-->
-    <!--                android:text="@string/all_text" />-->
-
-    <!--            <TextView-->
-    <!--                style="@style/TextDescriptionLine"-->
-    <!--                android:text="cash account" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/selectedQueryCashAccount"-->
-    <!--                style="@style/TextDescriptionLine"-->
-    <!--                android:text="@string/all_text" />-->
-    <!--        </LinearLayout>-->
-
-    <!--    </HorizontalScrollView>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/moneyMovingHolder"
@@ -100,7 +56,7 @@
         android:id="@+id/resultCountAmountOfQuery"
         style="@style/MatchParent_WrapContent"
         android:gravity="center"
-        android:text="0"
+        tools:text="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

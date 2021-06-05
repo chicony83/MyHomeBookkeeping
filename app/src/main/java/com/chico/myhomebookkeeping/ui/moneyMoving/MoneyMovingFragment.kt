@@ -40,6 +40,15 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
+            buttonTextOfQueryCurrency.observe(viewLifecycleOwner,{
+                binding.selectCurrency.text = it
+            })
+            buttonTextOfQueryCategory.observe(viewLifecycleOwner,{
+                binding.selectCategory.text = it
+            })
+            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner,{
+                binding.selectCashAccount.text = it
+            })
             moneyMovementList.observe(viewLifecycleOwner, {
                 binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it)
             })
