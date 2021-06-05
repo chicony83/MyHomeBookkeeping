@@ -35,8 +35,8 @@ class CashAccountViewModel(
     val cashAccountList: LiveData<List<CashAccount>>
         get() = _cashAccountsList
 
-    private val _selectedCashAccount = MutableLiveData<CashAccount>()
-    val selectedCashAccount: LiveData<CashAccount>
+    private val _selectedCashAccount = MutableLiveData<CashAccount?>()
+    val selectedCashAccount: MutableLiveData<CashAccount?>
         get() = _selectedCashAccount
 
     init {
@@ -50,12 +50,23 @@ class CashAccountViewModel(
     }
 
     fun saveData(controlHelper: ControlHelper) {
-        saveARGS.checkAndSaveSP(controlHelper, argsForQuery,argsForSelect, _selectedCashAccount.value?.cashAccountId)
+        saveARGS.checkAndSaveSP(
+            controlHelper,
+            argsForQuery,
+            argsForSelect,
+            _selectedCashAccount.value?.cashAccountId
+        )
     }
 
     fun loadSelectedCashAccount(selectedId: Int) {
         launchIo {
             _selectedCashAccount.postValue(CashAccountsUseCase.getOneCashAccount(db, selectedId))
+        }
+    }
+
+    fun reset() {
+        launchIo {
+            _selectedCashAccount.postValue(null)
         }
     }
 

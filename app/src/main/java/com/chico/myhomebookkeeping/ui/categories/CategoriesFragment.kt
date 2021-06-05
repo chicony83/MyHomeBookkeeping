@@ -45,8 +45,8 @@ class CategoriesFragment : Fragment() {
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-        with(categoriesViewModel){
-            selectedCategory.observe(viewLifecycleOwner,{
+        with(categoriesViewModel) {
+            selectedCategory.observe(viewLifecycleOwner, {
                 binding.selectedItem.text = it?.categoryName
             })
 
@@ -69,12 +69,20 @@ class CategoriesFragment : Fragment() {
 
         controlHelper = ControlHelper(findNavController())
 
-        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
+        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
             uiHelper.hideUiElement(binding.showHideAddCategoryFragmentButton)
+            uiHelper.showUiElement(binding.selectAllButton)
         }
-
+        else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+            uiHelper.showUiElement(binding.selectAllButton)
+        }
         view.hideKeyboard()
         with(binding) {
+            selectAllButton.setOnClickListener {
+                categoriesViewModel.reset()
+                categoriesViewModel.saveData(controlHelper)
+                controlHelper.moveToMoneyMovingFragment()
+            }
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCategoryFragment)
             }

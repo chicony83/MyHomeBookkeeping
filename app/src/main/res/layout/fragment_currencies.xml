@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.currencies.CurrenciesFragment">
 
+    <Button
+        android:id="@+id/selectAllButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selectAll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currenciesHolder"
@@ -13,7 +22,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/show_hide_add_currency_fragment_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/selectAllButton" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutConfirmation"

@@ -40,8 +40,8 @@ class CategoriesViewModel(
     val categoriesList: LiveData<List<Categories>>
         get() = _categoriesList
 
-    private val _selectedCategory = MutableLiveData<Categories>()
-    val selectedCategory: LiveData<Categories>
+    private val _selectedCategory = MutableLiveData<Categories?>()
+    val selectedCategory: MutableLiveData<Categories?>
         get() = _selectedCategory
 
     fun loadCategories() {
@@ -57,5 +57,9 @@ class CategoriesViewModel(
         launchIo {
             _selectedCategory.postValue(CategoriesUseCase.getOneCategory(db,selectedId))
         }
+    }
+
+    fun reset() {
+        _selectedCategory.postValue(null)
     }
 }

@@ -3,12 +3,12 @@ package com.chico.myhomebookkeeping.helpers
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.R
 
-class ControlHelper(private val findNavController: NavController) {
-    private val previousFragment = findNavController.previousBackStackEntry?.destination?.id
+class ControlHelper(private val controller: NavController) {
+    private val previousFragment = controller.previousBackStackEntry?.destination?.id
 
     fun moveToPreviousPage() {
-        findNavController.previousBackStackEntry?.destination?.let {
-            findNavController.navigate(
+        controller.previousBackStackEntry?.destination?.let {
+            controller.navigate(
                 it.id
             )
         }
@@ -19,5 +19,8 @@ class ControlHelper(private val findNavController: NavController) {
     }
     fun previousFragment(): Int? {
         return previousFragment
+    }
+    fun moveToMoneyMovingFragment(){
+        controller.navigate(R.id.nav_money_moving)
     }
 }

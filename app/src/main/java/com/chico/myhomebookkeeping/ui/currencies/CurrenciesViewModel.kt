@@ -16,7 +16,7 @@ import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class CurrenciesViewModel(
-    val app: Application
+    val app: Application,
 ) : AndroidViewModel(app) {
     private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val spName by lazy { Constants.SP_NAME }
@@ -34,8 +34,8 @@ class CurrenciesViewModel(
     val currenciesList: LiveData<List<Currencies>>
         get() = _currenciesList
 
-    private val _selectedCurrency = MutableLiveData<Currencies>()
-    val selectedCurrency: LiveData<Currencies>
+    private val _selectedCurrency = MutableLiveData<Currencies?>()
+    val selectedCurrency: MutableLiveData<Currencies?>
         get() = _selectedCurrency
 
     init {
@@ -49,12 +49,23 @@ class CurrenciesViewModel(
     }
 
     fun saveData(controlHelper: ControlHelper) {
-        saveARGS.checkAndSaveSP(controlHelper, argsForQuery,argsForSelect, _selectedCurrency.value?.currencyId)
+        saveARGS.checkAndSaveSP(
+            controlHelper,
+            argsForQuery,
+            argsForSelect,
+            _selectedCurrency.value?.currencyId
+        )
     }
 
     fun loadSelectedCurrency(selectedId: Int) {
         launchIo {
             _selectedCurrency.postValue(CurrenciesUseCase.getOneCurrency(db, selectedId))
+        }
+    }
+
+    fun reset() {
+        launchIo {
+            _selectedCurrency.postValue(null)
         }
     }
 }

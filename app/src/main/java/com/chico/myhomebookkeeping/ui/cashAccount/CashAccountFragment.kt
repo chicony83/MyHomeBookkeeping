@@ -31,8 +31,6 @@ class CashAccountFragment : Fragment() {
 
     private var selectedCashAccountId = 0
 
-    //    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CASH_ACCOUNT_KEY }
-//    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CASH_ACCOUNT_KEY }
     private val uiHelper = UiHelper()
     private lateinit var controlHelper: ControlHelper
 
@@ -73,10 +71,19 @@ class CashAccountFragment : Fragment() {
 
         if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
             uiHelper.hideUiElement(binding.showHideAddCashAccountFragmentButton)
+            uiHelper.showUiElement(binding.selectAllButton)
+        }
+        else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+            uiHelper.showUiElement(binding.selectAllButton)
         }
 
         view.hideKeyboard()
         with(binding) {
+            selectAllButton.setOnClickListener {
+                cashAccountViewModel.reset()
+                cashAccountViewModel.saveData(controlHelper)
+                controlHelper.moveToMoneyMovingFragment()
+            }
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCashAccountFragment)
             }

@@ -75,10 +75,19 @@ class CurrenciesFragment : Fragment() {
 
         if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
             uiHelper.hideUiElement(binding.showHideAddCurrencyFragmentButton)
+            uiHelper.showUiElement(binding.selectAllButton)
+        }
+        else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+            uiHelper.showUiElement(binding.selectAllButton)
         }
 
         view.hideKeyboard()
         with(binding) {
+            selectAllButton.setOnClickListener {
+                currenciesViewModel.reset()
+                currenciesViewModel.saveData(controlHelper)
+                controlHelper.moveToMoneyMovingFragment()
+            }
             showHideAddCurrencyFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.addNewCurrencyFragment)
             }

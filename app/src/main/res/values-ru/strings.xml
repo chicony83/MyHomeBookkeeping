@@ -34,4 +34,5 @@
     <string name="apply">готово</string>
     <string name="reset">сбросить</string>
     <string name="all_text">все</string>
+    <string name="selectAll">выбрать все</string>
 </resources>
