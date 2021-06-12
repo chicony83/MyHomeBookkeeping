@@ -71,9 +71,6 @@ class MoneyMovingFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(binding) {
-            selectQuerySetting.setOnClickListener {
-                pressSelectButton(R.id.nav_money_moving_query)
-            }
             selectCategory.setOnClickListener {
                 pressSelectButton(R.id.nav_categories)
             }

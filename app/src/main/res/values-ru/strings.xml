@@ -35,4 +35,8 @@
     <string name="reset">сбросить</string>
     <string name="all_text">все</string>
     <string name="selectAll">выбрать все</string>
+    <string name="allIncome">все доходы</string>
+    <string name="allSpending">все расходы</string>
+    <string name="incomeCategoryTextOnButton">доходы</string>
+    <string name="spendingCategoryTextOnButton">расходы</string>
 </resources>

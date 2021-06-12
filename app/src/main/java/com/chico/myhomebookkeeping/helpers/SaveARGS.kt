@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.helpers
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.chico.myhomebookkeeping.R
 
 class SaveARGS(private val spEditor: SharedPreferences.Editor) {
@@ -11,7 +12,7 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
     private val navCashAccount = R.id.nav_cash_account
     private val navCurrencies = R.id.nav_currencies
 
-    fun checkAndSaveSP(
+    fun checkAndSaveToSP(
         controlHelper: ControlHelper,
         argsForQuery: String,
         argsForSelect: String,
@@ -19,22 +20,50 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
     ) {
         when (controlHelper.previousFragment()) {
             navMoneyMoving -> {
-                saveSP(argsForQuery,id)
+                saveToSP(argsForQuery,id)
             }
             navMoneyMovingQuery -> {
-                saveSP(argsForQuery,id)
+                saveToSP(argsForQuery,id)
             }
             navNewMoneyMoving -> {
-                saveSP(argsForSelect,id)
+                saveToSP(argsForSelect,id)
+            }
+        }
+    }
+    fun checkAndSaveToSP(
+        controlHelper: ControlHelper,
+        argsForQuery: String,
+        argsForSelect: String,
+        argsIncomeSpending:String,
+        id: Int?
+    ) {
+        when (controlHelper.previousFragment()) {
+            navMoneyMoving -> {
+                saveToSP(argsForQuery,id)
+            }
+            navMoneyMovingQuery -> {
+                saveToSP(argsForQuery,id)
+            }
+            navNewMoneyMoving -> {
+                saveToSP(argsForSelect,id)
             }
         }
     }
 
-    private fun saveSP(
+    private fun saveToSP(
         argsCurrencyKey: String,
-        _selected: Int?
+        value: Int?
     ) {
-        spEditor.putInt(argsCurrencyKey, _selected ?: -1)
+        spEditor.putInt(argsCurrencyKey, value ?: -1)
+        spCommit()
+    }
+
+    fun saveIsIncomeCategoryToSP(argsIncomeSpending: String, value: String) {
+            spEditor.putString(argsIncomeSpending,value)
+            spCommit()
+            Log.i("TAG","---$value---")
+    }
+    private fun spCommit(){
         spEditor.commit()
     }
 }

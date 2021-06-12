@@ -30,6 +30,8 @@ class QueryMoneyMovingViewModel(
     private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
     private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
+    private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsNone = Constants.FOR_QUERY_NONE
 
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
@@ -64,38 +66,40 @@ class QueryMoneyMovingViewModel(
     var cashAccountSP = -1
     var currencySP = -1
     var categorySP = -1
+    private var incomeSpendingCategories: String = argsNone
 
-    var cashAccountIdBundle: Int = -1
-    var currenciesIdBundle: Int = -1
-    var categoryIdBundle: Int = -1
+
+//    var cashAccountIdBundle: Int = -1
+//    var currenciesIdBundle: Int = -1
+//    var categoryIdBundle: Int = -1
 
 
     fun checkArguments(arguments: Bundle?) {
         getSharedPreferencesArgs()
-        getBundleArgs(arguments)
-        setValuesViewModel()
+//        getBundleArgs(arguments)
+//        setValuesViewModel()
     }
 
-    private fun setValuesViewModel() {
-        launchIo {
-            if (doubleCheck(cashAccountSP, cashAccountIdBundle)) postCashAccount(cashAccountSP)
-
-            if (viewModelCheck.isPositiveValue(cashAccountIdBundle)) postCashAccount(
-                cashAccountIdBundle
-            )
-        }
-        launchIo {
-            if (doubleCheck(currencySP, currenciesIdBundle)) postCurrency(currencySP)
-
-            if (viewModelCheck.isPositiveValue(currenciesIdBundle)) postCurrency(currenciesIdBundle)
-
-        }
-        launchIo {
-            if (doubleCheck(categorySP, cashAccountIdBundle)) postCategory(categorySP)
-
-            if (viewModelCheck.isPositiveValue(categoryIdBundle)) postCategory(categoryIdBundle)
-        }
-    }
+//    private fun setValuesViewModel() {
+//        launchIo {
+//            if (doubleCheck(cashAccountSP, cashAccountIdBundle)) postCashAccount(cashAccountSP)
+//
+//            if (viewModelCheck.isPositiveValue(cashAccountIdBundle)) postCashAccount(
+//                cashAccountIdBundle
+//            )
+//        }
+//        launchIo {
+//            if (doubleCheck(currencySP, currenciesIdBundle)) postCurrency(currencySP)
+//
+//            if (viewModelCheck.isPositiveValue(currenciesIdBundle)) postCurrency(currenciesIdBundle)
+//
+//        }
+//        launchIo {
+//            if (doubleCheck(categorySP, cashAccountIdBundle)) postCategory(categorySP)
+//
+//            if (viewModelCheck.isPositiveValue(categoryIdBundle)) postCategory(categoryIdBundle)
+//        }
+//    }
 
     private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
         return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
@@ -120,16 +124,17 @@ class QueryMoneyMovingViewModel(
     }
 
 
-    private fun getBundleArgs(arguments: Bundle?) {
-        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
-        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
-        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
-    }
+//    private fun getBundleArgs(arguments: Bundle?) {
+//        cashAccountIdBundle = viewModelCheck.getValueBundle(arguments, argsCashAccountKey)
+//        currenciesIdBundle = viewModelCheck.getValueBundle(arguments, argsCurrencyKey)
+//        categoryIdBundle = viewModelCheck.getValueBundle(arguments, argsCategoryKey)
+//    }
 
     private fun getSharedPreferencesArgs() {
         cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
         currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
         categorySP = viewModelCheck.getValueSP(argsCategoryKey)
+        incomeSpendingCategories = viewModelCheck.getStringValueSP(argsIncomeSpending)?:argsNone
     }
 
     fun reset() {
@@ -142,6 +147,7 @@ class QueryMoneyMovingViewModel(
         spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
         spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.cashAccountId ?: -1)
         spEditor.putInt(argsCategoryKey, _selectedCategory.value?.categoriesId ?: -1)
+        spEditor.putString(argsIncomeSpending,incomeSpendingCategories)
 
         spEditor.commit()
     }

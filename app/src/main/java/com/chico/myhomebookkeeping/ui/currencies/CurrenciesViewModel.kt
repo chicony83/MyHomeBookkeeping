@@ -26,7 +26,7 @@ class CurrenciesViewModel(
     private val spEditor = sharedPreferences.edit()
 
     private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsForSelect = Constants.FOR_SELECT_CURRENCY_KEY
+    private val argsForCreate = Constants.FOR_CREATE_CURRENCY_KEY
 
     private val saveARGS = SaveARGS(spEditor)
 
@@ -49,10 +49,10 @@ class CurrenciesViewModel(
     }
 
     fun saveData(controlHelper: ControlHelper) {
-        saveARGS.checkAndSaveSP(
+        saveARGS.checkAndSaveToSP(
             controlHelper,
             argsForQuery,
-            argsForSelect,
+            argsForCreate,
             _selectedCurrency.value?.currencyId
         )
     }

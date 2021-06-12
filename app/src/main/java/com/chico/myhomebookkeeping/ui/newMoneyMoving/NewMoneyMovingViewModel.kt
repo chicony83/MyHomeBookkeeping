@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.newMoneyMoving
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,9 +26,9 @@ import com.chico.myhomebookkeeping.utils.launchIo
 class NewMoneyMovingViewModel(
     val app: Application,
 ) : AndroidViewModel(app) {
-    private val argsCashAccountKey = Constants.FOR_SELECT_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_SELECT_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_SELECT_CATEGORY_KEY
+    private val argsCashAccountKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.FOR_CREATE_CURRENCY_KEY
+    private val argsCategoryKey = Constants.FOR_CREATE_CATEGORY_KEY
     private val spName = Constants.SP_NAME
 
     private val dbCashAccount: CashAccountDao =

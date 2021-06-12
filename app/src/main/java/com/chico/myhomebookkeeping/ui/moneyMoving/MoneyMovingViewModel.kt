@@ -17,7 +17,6 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
@@ -32,6 +31,8 @@ class MoneyMovingViewModel(
     private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
     private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
+    private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsNone = Constants.FOR_QUERY_NONE
 
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
@@ -72,6 +73,7 @@ class MoneyMovingViewModel(
     private var cashAccountSP = -1
     private var currencySP: Int = -1
     private var categorySP = -1
+    private var incomeSpending: String = argsNone
 
     private var foundLines = 0
 
@@ -85,7 +87,27 @@ class MoneyMovingViewModel(
         }
     }
 
-    private suspend fun setTextOnButtons() {
+    private fun setTextOnButtons() {
+        setTextOnCategoryButton()
+        setTextOnCurrencyButton()
+        setTextOnCashAccountButton()
+    }
+
+    private fun setTextOnCashAccountButton() {
+        launchUi {
+            val text: String = getResourceText(R.string.cashAccountTextDescription)
+            var name:String = ""
+            if (viewModelCheck.isPositiveValue(cashAccountSP)){
+                name = CashAccountsUseCase.getOneCashAccount(dbCashAccount,cashAccountSP)?.accountName.toString()
+            }
+            if(!viewModelCheck.isPositiveValue(cashAccountSP)){
+                name = getResourceText(R.string.all_text)
+            }
+            _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
+        }
+    }
+
+    private fun setTextOnCurrencyButton() {
         launchUi {
             val text: String = getResourceText(R.string.currencyTextDescription)
             var name: String = ""
@@ -101,7 +123,9 @@ class MoneyMovingViewModel(
             }
             _buttonTextOfQueryCurrency.postValue(createButtonText(text, name))
         }
+    }
 
+    private fun setTextOnCategoryButton() {
         launchUi {
             val text: String = getResourceText(R.string.categoryTextDescription)
             var name: String = ""
@@ -111,23 +135,22 @@ class MoneyMovingViewModel(
                     categorySP
                 )?.categoryName.toString()
             }
-            if (!viewModelCheck.isPositiveValue(categorySP)) {
-                name = getResourceText(R.string.all_text)
+            if (viewModelCheck.isCategoryNone(argsIncomeSpending)){
+                if (!viewModelCheck.isPositiveValue(categorySP)) {
+                    name = getResourceText(R.string.all_text)
+                }
+            }
+            if (!viewModelCheck.isCategoryNone(argsIncomeSpending)){
+                if (viewModelCheck.isCategoryIncome(argsIncomeSpending)){
+                    name = getResourceText(R.string.allIncome)
+                    Log.i("TAG","income message")
+                }
+                if (viewModelCheck.isCategorySpending(argsIncomeSpending)){
+                    Log.i("TAG","income spending")
+                    name = getResourceText(R.string.allSpending)
+                }
             }
             _buttonTextOfQueryCategory.postValue(createButtonText(text, name))
-        }
-
-        launchUi {
-
-            val text: String = getResourceText(R.string.cashAccountTextDescription)
-            var name:String = ""
-            if (viewModelCheck.isPositiveValue(cashAccountSP)){
-                name = CashAccountsUseCase.getOneCashAccount(dbCashAccount,cashAccountSP)?.accountName.toString()
-            }
-            if(!viewModelCheck.isPositiveValue(cashAccountSP)){
-                name = getResourceText(R.string.all_text)
-            }
-            _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
         }
     }
 
@@ -145,9 +168,13 @@ class MoneyMovingViewModel(
     }
 
     private fun getValuesSP() {
+        incomeSpending = viewModelCheck.getStringValueSP(argsIncomeSpending)?:argsNone
         cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
         currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
         categorySP = viewModelCheck.getValueSP(argsCategoryKey)
+
+        Log.i("TAG","incomeSpending = $incomeSpending, cashAccountSP = $cashAccountSP," +
+                "currencySP = $currencySP, categorySP = $categorySP")
     }
 
     private fun loadMoneyMovement(): Int {

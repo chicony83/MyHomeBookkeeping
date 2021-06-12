@@ -28,7 +28,11 @@ class CategoriesViewModel(
     private val spEditor = sharedPreferences.edit()
 
     private val argsForQuery = Constants.FOR_QUERY_CATEGORY_KEY
-    private val argsForSelect = Constants.FOR_SELECT_CATEGORY_KEY
+    private val argsForCreate = Constants.FOR_CREATE_CATEGORY_KEY
+    private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsIncome = Constants.FOR_QUERY_INCOME
+    private val argsSpending = Constants.FOR_QUERY_SPENDING
+    private val argsNone = Constants.FOR_QUERY_NONE
 
     private val saveARGS = SaveARGS(spEditor)
 
@@ -44,22 +48,74 @@ class CategoriesViewModel(
     val selectedCategory: MutableLiveData<Categories?>
         get() = _selectedCategory
 
+    private var selectedIsIncomeSpending: String = argsNone
+
     fun loadCategories() {
         launchIo {
             _categoriesList.postValue(db.getAllCategory())
         }
     }
-    fun saveData(controlHelper: ControlHelper) {
-        saveARGS.checkAndSaveSP(controlHelper,argsForQuery,argsForSelect,_selectedCategory.value?.categoriesId)
-    }
 
-    fun loadSelectedCategory(selectedId:Int){
+
+    fun loadSelectedCategory(selectedId: Int) {
         launchIo {
-            _selectedCategory.postValue(CategoriesUseCase.getOneCategory(db,selectedId))
+            _selectedCategory.postValue(CategoriesUseCase.getOneCategory(db, selectedId))
         }
     }
 
-    fun reset() {
+    private fun resetSelectedCategory() {
         _selectedCategory.postValue(null)
+    }
+
+
+    private fun setIsIncomeCategoriesSelect(value: String) {
+        selectedIsIncomeSpending = value
+    }
+
+    private fun saveIsIncomeCategory() {
+        saveARGS.saveIsIncomeCategoryToSP(
+            argsIncomeSpending, selectedIsIncomeSpending
+        )
+    }
+
+    private fun saveCategory(controlHelper: ControlHelper) {
+        saveARGS.checkAndSaveToSP(
+            controlHelper,
+            argsForQuery,
+            argsForCreate,
+            _selectedCategory.value?.categoriesId
+        )
+    }
+
+    fun selectSpendingCategory(controlHelper: ControlHelper) {
+        resetSelectedCategory()
+        setIsIncomeCategoriesSelect(argsSpending)
+        saveIsIncomeCategory()
+        saveCategory(controlHelper)
+    }
+
+    fun selectIncomeCategory(controlHelper: ControlHelper) {
+        resetSelectedCategory()
+        setIsIncomeCategoriesSelect(argsIncome)
+        saveIsIncomeCategory()
+        saveCategory(controlHelper)
+    }
+
+    private fun isIncomeSpendingSetNone() {
+        selectedIsIncomeSpending = argsNone
+    }
+
+    fun selectAllCategories(controlHelper: ControlHelper) {
+        isIncomeSpendingSetNone()
+        resetSelectedCategory()
+        saveIsIncomeCategory()
+        saveCategory(controlHelper)
+    }
+
+    fun selectIdCategory(controlHelper: ControlHelper) {
+        isIncomeSpendingSetNone()
+        saveIsIncomeCategory()
+        saveCategory(controlHelper)
+
     }
 }

@@ -44,4 +44,8 @@
     <string name="reset">reset</string>
     <string name="all_text">all</string>
     <string name="selectAll">select all</string>
+    <string name="allIncome">all income</string>
+    <string name="allSpending">all spending</string>
+    <string name="incomeCategoryTextOnButton">income</string>
+    <string name="spendingCategoryTextOnButton">spending</string>
 </resources>

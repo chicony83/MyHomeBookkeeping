@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -30,8 +29,6 @@ class CategoriesFragment : Fragment() {
 
     private var selectedCategoryId = 0
 
-    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CATEGORY_KEY }
-    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CATEGORY_KEY }
     private val uiHelper = UiHelper()
     private lateinit var controlHelper: ControlHelper
 
@@ -57,6 +54,7 @@ class CategoriesFragment : Fragment() {
                             uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
                             categoriesViewModel.loadSelectedCategory(selectedId)
                             selectedCategoryId = selectedId
+//                            categoriesViewModel.clearIncomeSpendingSelector()
                         }
                     })
             })
@@ -70,17 +68,31 @@ class CategoriesFragment : Fragment() {
         controlHelper = ControlHelper(findNavController())
 
         if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
-            uiHelper.hideUiElement(binding.showHideAddCategoryFragmentButton)
-            uiHelper.showUiElement(binding.selectAllButton)
+            with(uiHelper){
+                hideUiElement(binding.showHideAddCategoryFragmentButton)
+                showUiElement(binding.selectAllButton)
+                showUiElement(binding.allIncomeSpendingLayout)
+            }
         }
         else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
-            uiHelper.showUiElement(binding.selectAllButton)
+            with(uiHelper){
+                showUiElement(binding.selectAllButton)
+                showUiElement(binding.allIncomeSpendingLayout)
+            }
         }
         view.hideKeyboard()
         with(binding) {
+            selectAllIncomeButton.setOnClickListener {
+                categoriesViewModel.selectIncomeCategory(controlHelper)
+                controlHelper.moveToMoneyMovingFragment()
+            }
+            selectAllSpendingButton.setOnClickListener {
+                categoriesViewModel.selectSpendingCategory(controlHelper)
+                controlHelper.moveToMoneyMovingFragment()
+            }
             selectAllButton.setOnClickListener {
-                categoriesViewModel.reset()
-                categoriesViewModel.saveData(controlHelper)
+                categoriesViewModel.selectAllCategories(controlHelper)
+//                categoriesViewModel.setIdCategory(controlHelper)
                 controlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
@@ -121,7 +133,7 @@ class CategoriesFragment : Fragment() {
             }
             selectButton.setOnClickListener {
                 if (selectedCategoryId > 0) {
-                    categoriesViewModel.saveData(controlHelper)
+                    categoriesViewModel.selectIdCategory(controlHelper)
                     controlHelper.moveToPreviousPage()
                 }
             }
