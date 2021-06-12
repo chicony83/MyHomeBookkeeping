@@ -73,15 +73,15 @@ class MoneyMovingViewModel(
     private var cashAccountSP = -1
     private var currencySP: Int = -1
     private var categorySP = -1
-    private var incomeSpending: String = argsNone
+    private var incomeSpendingSP: String = argsNone
 
     private var foundLines = 0
 
     private lateinit var resultQuery: List<FullMoneyMoving>
 
     init {
-        getValuesSP()
         runBlocking {
+            getValuesSP()
             foundLines = loadMoneyMovement()
             setTextOnButtons()
         }
@@ -96,11 +96,14 @@ class MoneyMovingViewModel(
     private fun setTextOnCashAccountButton() {
         launchUi {
             val text: String = getResourceText(R.string.cashAccountTextDescription)
-            var name:String = ""
-            if (viewModelCheck.isPositiveValue(cashAccountSP)){
-                name = CashAccountsUseCase.getOneCashAccount(dbCashAccount,cashAccountSP)?.accountName.toString()
+            var name: String = ""
+            if (viewModelCheck.isPositiveValue(cashAccountSP)) {
+                name = CashAccountsUseCase.getOneCashAccount(
+                    dbCashAccount,
+                    cashAccountSP
+                )?.accountName.toString()
             }
-            if(!viewModelCheck.isPositiveValue(cashAccountSP)){
+            if (!viewModelCheck.isPositiveValue(cashAccountSP)) {
                 name = getResourceText(R.string.all_text)
             }
             _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
@@ -135,18 +138,18 @@ class MoneyMovingViewModel(
                     categorySP
                 )?.categoryName.toString()
             }
-            if (viewModelCheck.isCategoryNone(argsIncomeSpending)){
+            if (viewModelCheck.isCategoryNone(argsIncomeSpending)) {
                 if (!viewModelCheck.isPositiveValue(categorySP)) {
                     name = getResourceText(R.string.all_text)
                 }
             }
-            if (!viewModelCheck.isCategoryNone(argsIncomeSpending)){
-                if (viewModelCheck.isCategoryIncome(argsIncomeSpending)){
+            if (!viewModelCheck.isCategoryNone(argsIncomeSpending)) {
+                if (viewModelCheck.isCategoryIncome(argsIncomeSpending)) {
                     name = getResourceText(R.string.allIncome)
-                    Log.i("TAG","income message")
+                    Log.i("TAG", "income message")
                 }
-                if (viewModelCheck.isCategorySpending(argsIncomeSpending)){
-                    Log.i("TAG","income spending")
+                if (viewModelCheck.isCategorySpending(argsIncomeSpending)) {
+                    Log.i("TAG", "income spending")
                     name = getResourceText(R.string.allSpending)
                 }
             }
@@ -168,20 +171,24 @@ class MoneyMovingViewModel(
     }
 
     private fun getValuesSP() {
-        incomeSpending = viewModelCheck.getStringValueSP(argsIncomeSpending)?:argsNone
+        incomeSpendingSP = viewModelCheck.getStringValueSP(argsIncomeSpending) ?: argsNone
         cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
         currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
         categorySP = viewModelCheck.getValueSP(argsCategoryKey)
 
-        Log.i("TAG","incomeSpending = $incomeSpending, cashAccountSP = $cashAccountSP," +
-                "currencySP = $currencySP, categorySP = $categorySP")
+        Log.i(
+            "TAG", "incomeSpending = $incomeSpendingSP, cashAccountSP = $cashAccountSP," +
+                    "currencySP = $currencySP, categorySP = $categorySP"
+        )
     }
 
     private fun loadMoneyMovement(): Int {
+
         val query = MoneyMovingCreteQuery.createQuery(
             currencySP,
             categorySP,
-            cashAccountSP
+            cashAccountSP,
+            incomeSpendingSP
         )
 
         getResultQuery(query)
