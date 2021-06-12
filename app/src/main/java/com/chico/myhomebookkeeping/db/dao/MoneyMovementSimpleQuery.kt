@@ -31,35 +31,39 @@ object MoneyMovingCreteQuery {
         var argsList: ArrayList<Any> = arrayListOf()
 
         if (currencyVal > 0) {
-            queryString += " AND "
+            queryString += addAnd()
             queryString += " currency = :currency "
             argsList.add(currencyVal)
         }
-        if(incomeSpendingSP == argsIncome ){
-            queryString += " AND "
+        if (incomeSpendingSP == argsIncome) {
+            queryString += addAnd()
             queryString += " is_income = 1 "
         }
-        if(incomeSpendingSP == argsSpending ){
-            queryString += " AND "
+        if (incomeSpendingSP == argsSpending) {
+            queryString += addAnd()
             queryString += " is_income = 0 "
         }
         if (categoryVal > 0) {
-            queryString += " AND "
+            queryString += addAnd()
             queryString += " category = :category "
             argsList.add(categoryVal)
         }
         if (cashAccountVal > 0) {
-            queryString += " AND "
+            queryString += addAnd()
             queryString += " cash_account = :cash_account "
             argsList.add(cashAccountVal)
         }
 
         queryString += " ORDER BY id DESC "
 
-        Log.i("TAG","$queryString")
+//        Log.i("TAG","$queryString")
         val args = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)
+    }
+
+    private fun addAnd(): Any {
+        return " AND "
     }
 
 
