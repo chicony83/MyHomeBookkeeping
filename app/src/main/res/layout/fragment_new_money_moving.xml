@@ -20,11 +20,13 @@
             style="@style/TextDescriptions"
             android:text="@string/date_time_textDescription" />
 
-        <EditText
+        <Button
             android:id="@+id/dateTimeTimeStamp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="datetime" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             style="@style/TextDescriptions"

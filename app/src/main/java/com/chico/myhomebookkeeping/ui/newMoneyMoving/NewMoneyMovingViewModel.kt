@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.newMoneyMoving
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +23,9 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.NewMoneyMovingUseCase
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
+import com.chico.myhomebookkeeping.utils.parseTimeToMillis
+import java.util.*
 
 class NewMoneyMovingViewModel(
     val app: Application,
@@ -46,6 +50,13 @@ class NewMoneyMovingViewModel(
     private val spEditor = sharedPreferences.edit()
 
     private val viewModelCheck = ViewModelCheck(sharedPreferences)
+
+    private val _dateTime = MutableLiveData<String>()
+    val dataTime: LiveData<String>
+        get() = _dateTime
+
+    private var date: Long = 0
+    private var time: Long = 0
 
     private val _selectedCurrency = MutableLiveData<Currencies>()
     val selectedCurrency: LiveData<Currencies>
@@ -113,15 +124,16 @@ class NewMoneyMovingViewModel(
     }
 
     suspend fun addNewMoneyMoving(
-        dataTime: Long,
+//        dataTime: Long,
         amount: Double,
         description: String
     ): Long {
+        val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
         val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
         val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
         val moneyMovement = MoneyMovement(
-            timeStamp = dataTime,
+            timeStamp = dateTime,
             amount = amount,
             cashAccount = cashAccountValue,
             category = categoryValue,
@@ -131,7 +143,29 @@ class NewMoneyMovingViewModel(
         return NewMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
     }
 
-    fun saveDataForShowMovement() {
-
+    fun setDate(it: Long?) {
+        date = it ?: 0
     }
+
+    fun setTime(hour: Int, minute: Int) {
+        val timeZone: Int =  getTZ()
+        time = (((hour * 60 * 60 * 1000) - timeZone).toLong()) + ((minute * 60 * 1000).toLong())
+
+//        Log.i("TAG", "hour = $hour, minute = $minute, time = $time")
+    }
+
+    fun setDateTimeOnButton() {
+        val dateTime: String = (date + time).parseTimeFromMillis()
+        _dateTime.postValue(dateTime)
+    }
+
+    fun setDateTimeOnButton(currentDateTimeMillis: Long) {
+        val dateTime: String = currentDateTimeMillis.parseTimeFromMillis()
+        _dateTime.postValue(dateTime)
+    }
+
+    private fun getTZ(): Int {
+        return TimeZone.getDefault().getOffset(System.currentTimeMillis())
+    }
+
 }
