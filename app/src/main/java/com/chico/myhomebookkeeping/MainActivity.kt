@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_categories,
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
-                R.id.nav_new_money_moving
+                R.id.nav_new_money_moving,
+                R.id.nav_setting
             ),
             drawerLayout
         )
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         fabSetOnClickListener(fab, navController)
 
         hideFab(navController, fab)
-
     }
 
     private fun hideFab(
@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_categories -> uiHelper.hideUiElement(fab)
                 R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
                 R.id.nav_money_moving_query -> uiHelper.hideUiElement(fab)
+                R.id.nav_setting -> uiHelper.hideUiElement(fab)
                 else -> uiHelper.showUiElement(fab)
             }
         }
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
+//        menuInflater.inflate(R.menu.main, menu)
         return true
     }
 

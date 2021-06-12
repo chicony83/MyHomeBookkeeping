@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/nav_money_moving"
         android:name="com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingFragment"
-        android:label="@string/home_title"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_money_moving" >
         <action
             android:id="@+id/action_nav_money_moving_to_nav_money_moving_query"
@@ -42,17 +42,17 @@
     <fragment
         android:id="@+id/nav_categories"
         android:name="com.chico.myhomebookkeeping.ui.categories.CategoriesFragment"
-        android:label="@string/categories_title"
+        android:label="@string/title_categories"
         tools:layout="@layout/fragment_categories" />
     <fragment
         android:id="@+id/nav_currencies"
         android:name="com.chico.myhomebookkeeping.ui.currencies.CurrenciesFragment"
-        android:label="@string/currencies_title"
+        android:label="@string/title_currencies"
         tools:layout="@layout/fragment_currencies" />
     <fragment
         android:id="@+id/nav_cash_account"
         android:name="com.chico.myhomebookkeeping.ui.cashAccount.CashAccountFragment"
-        android:label="@string/cash_account_title"
+        android:label="@string/title_cash_account"
         tools:layout="@layout/fragment_cash_account" />
     <fragment
         android:id="@+id/nav_new_money_moving"
@@ -69,5 +69,11 @@
             android:id="@+id/action_nav_new_money_moving_to_nav_currencies"
             app:destination="@id/nav_currencies" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_setting"
+        android:name="com.chico.myhomebookkeeping.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings"/>
+
 
 </navigation>

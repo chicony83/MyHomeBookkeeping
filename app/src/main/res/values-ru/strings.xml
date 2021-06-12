@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Настройки</string>
-    <string name="home_title">Главная</string>
+    <string name="title_home">Главная</string>
     <string name="reports_title">Отчеты</string>
-    <string name="categories_title">Категоии</string>
+    <string name="title_categories">Категоии</string>
     <string name="header_cash_accounts">Названия счетов</string>
     <string name="select">выбрать</string>
     <string name="cancel">отменить</string>
@@ -16,10 +16,10 @@
     <string name="currency">валюта</string>
     <string name="add_money_category">новая категория</string>
     <string name="enterName">введите название</string>
-    <string name="cash_account_title">счета</string>
-    <string name="currencies_title">валюты</string>
+    <string name="title_cash_account">счета</string>
+    <string name="title_currencies">валюты</string>
     <string name="new_money_movement">новыe доходы/расходы</string>
-    <string name="add_income_or_expense">добавить доход/расход</string>
+    <string name="title_add_income_or_expense">добавить доход/расход</string>
     <string name="too_short_name">слишком короткое название</string>
     <string name="cashAccountTextDescription">счёт</string>
     <string name="currencyTextDescription">валюта</string>
@@ -39,4 +39,5 @@
     <string name="allSpending">все расходы</string>
     <string name="incomeCategoryTextOnButton">доходы</string>
     <string name="spendingCategoryTextOnButton">расходы</string>
+    <string name="title_settings">настройки</string>
 </resources>
