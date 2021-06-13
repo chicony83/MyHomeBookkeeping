@@ -39,7 +39,6 @@ class CashAccountFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         db = dataBase.getDataBase(requireContext()).cashAccountDao()
         _binding = FragmentCashAccountBinding.inflate(inflater, container, false)
 
