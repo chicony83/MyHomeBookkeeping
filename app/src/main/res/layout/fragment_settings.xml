@@ -6,10 +6,10 @@
     android:orientation="vertical"
     tools:context=".ui.settings.SettingsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/security" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/security" />-->
 
     <CheckBox
         android:id="@+id/enterInProgramWithPassword"
@@ -17,23 +17,16 @@
         android:layout_height="wrap_content"
         android:text="вход в программу по паролю" />
 
+    <CheckBox
+        android:id="@+id/changeLinesWithPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="изменять записи по паролю"/>
+
     <Button
         android:id="@+id/changePasswordButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="изменить пароль" />
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/passwordEnterInProgram"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="enter password">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType="numberPassword" />-->
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 </LinearLayout>

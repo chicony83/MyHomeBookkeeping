@@ -10,6 +10,7 @@ object Constants {
     const val FOR_QUERY_CURRENCY_KEY = "queryCurrency"
     const val FOR_QUERY_CATEGORY_KEY = "queryCategory"
     const val FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY = "queryCategoryIncomeSpending"
+
     const val FOR_QUERY_INCOME = "income"
     const val FOR_QUERY_SPENDING = "spending"
     const val FOR_QUERY_NONE = "none"
@@ -19,4 +20,7 @@ object Constants {
     const val SP_NAME = "SPNewMoneyMoving"
 
     const val MIN_LENGTH_NAME = 1
+
+    const val SP_PASS = "pass"
+    const val SP_PASS_PROMPT = "pass_prompt"
 }

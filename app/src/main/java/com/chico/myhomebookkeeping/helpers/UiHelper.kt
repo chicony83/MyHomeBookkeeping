@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.chico.myhomebookkeeping.constants.Constants
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper(
@@ -101,5 +102,13 @@ class UiHelper(
     fun hideUiElement(element: ConstraintLayout) {
         element.visibility = View.GONE
 
+    }
+
+    fun unblockButton(button: MaterialButton) {
+        button.isEnabled = true
+    }
+
+    fun blockButton(button: MaterialButton) {
+        button.isEnabled = false
     }
 }
