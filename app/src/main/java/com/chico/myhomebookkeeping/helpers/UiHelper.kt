@@ -6,7 +6,7 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.databinding.FragmentSelectCashAccountBinding
+
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

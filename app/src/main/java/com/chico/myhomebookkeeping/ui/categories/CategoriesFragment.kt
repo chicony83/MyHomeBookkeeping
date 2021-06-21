@@ -43,15 +43,15 @@ class CategoriesFragment : Fragment() {
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
         with(categoriesViewModel) {
-            selectedCategory.observe(viewLifecycleOwner, {
-                binding.selectedItem.text = it?.categoryName
+            selectedCategory.observe(viewLifecycleOwner,{
+                binding.layoutConfirmation.selectedItem.text = it?.categoryName
             })
 
             categoriesList.observe(viewLifecycleOwner, {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                            uiHelper.showHideUIElements(selectedId, binding.confirmationLayoutHolder)
                             categoriesViewModel.loadSelectedCategory(selectedId)
                             selectedCategoryId = selectedId
 //                            categoriesViewModel.clearIncomeSpendingSelector()
@@ -131,16 +131,17 @@ class CategoriesFragment : Fragment() {
                     } else showMessage(getString(R.string.too_short_name))
                 }
             }
-            selectButton.setOnClickListener {
+
+            layoutConfirmation.selectButton.setOnClickListener {
                 if (selectedCategoryId > 0) {
                     categoriesViewModel.selectIdCategory(controlHelper)
                     controlHelper.moveToPreviousPage()
                 }
             }
-            cancel.setOnClickListener {
+            layoutConfirmation.cancel.setOnClickListener {
                 if (selectedCategoryId > 0) {
                     selectedCategoryId = 0
-                    uiHelper.hideUiElement(binding.layoutConfirmation)
+                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
                 }
             }
         }

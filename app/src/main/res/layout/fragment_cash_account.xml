@@ -37,7 +37,7 @@
 
         <include
             android:id="@+id/layoutConfirmation"
-            layout="@layout/fragment_select_cash_account"
+            layout="@layout/fragment_confirmation_cash_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
