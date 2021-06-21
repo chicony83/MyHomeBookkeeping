@@ -41,4 +41,5 @@
     <string name="spendingCategoryTextOnButton">расходы</string>
     <string name="title_settings">настройки</string>
     <string name="security">безопасность</string>
+    <string name="changeText">изменить</string>
 </resources>

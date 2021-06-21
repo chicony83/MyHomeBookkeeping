@@ -46,14 +46,18 @@ class CashAccountFragment : Fragment() {
 
         with(cashAccountViewModel) {
             selectedCashAccount.observe(viewLifecycleOwner,{
-                binding.selectedItem.text = it?.accountName
+                binding.layoutConfirmation.selectedItem.text = it?.accountName
             })
+//            selectedCashAccount.observe(viewLifecycleOwner,{
+//                binding.selectedItem.text = it?.accountName
+//            })
             cashAccountList.observe(viewLifecycleOwner, {
                 binding.cashAccountHolder.adapter =
 
                     CashAccountAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                            uiHelper.showHideUIElements(selectedId,binding.confirmationLayoutHolder)
+//                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
                             cashAccountViewModel.loadSelectedCashAccount(selectedId)
                             selectedCashAccountId = selectedId
                         }
@@ -112,16 +116,17 @@ class CashAccountFragment : Fragment() {
                     } else showMessage(getString(R.string.too_short_name))
                 }
             }
-            selectButton.setOnClickListener {
+
+            layoutConfirmation.selectButton.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     cashAccountViewModel.saveData(controlHelper)
                     controlHelper.moveToPreviousPage()
                 }
             }
-            cancel.setOnClickListener {
+            layoutConfirmation.cancel.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     selectedCashAccountId = 0
-                    uiHelper.hideUiElement(binding.layoutConfirmation)
+                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
                 }
             }
         }

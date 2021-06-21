@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="выбран счет"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/selectedItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+    <Button
+        android:id="@+id/selectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectedItem" />
+
+    <Button
+        android:id="@+id/changeItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/changeText"
+        app:layout_constraintStart_toEndOf="@id/selectButton"
+        app:layout_constraintTop_toBottomOf="@id/selectedItem" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        app:layout_constraintStart_toEndOf="@id/changeItem"
+        app:layout_constraintTop_toBottomOf="@id/selectedItem" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
