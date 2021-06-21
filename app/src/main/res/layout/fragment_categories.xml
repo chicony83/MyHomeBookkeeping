@@ -76,19 +76,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
             android:id="@+id/newCategoryLayout"
             layout="@layout/fragment_new_category" />
-
-        <!--        <include-->
-        <!--            android:id="@+id/addNewCategoryFragment"-->
-
-        <!--            android:id="@+id/newCategoryLayout"-->
-        <!--            layout="@layout/fragment_new_category" />-->
-
     </LinearLayout>
 
     <Button
