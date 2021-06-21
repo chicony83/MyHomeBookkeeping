@@ -45,4 +45,5 @@
 
     <string name="add_new_category_button_text">добавить новую категорию</string>
     <string name="add_new_currency_button_text">доавить новую валюту</string>
+    <string name="add_new_cash_account_button_text">добавить новый счёт</string>
 </resources>

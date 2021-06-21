@@ -88,15 +88,15 @@ class CashAccountFragment : Fragment() {
                 controlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
-                uiHelper.setShowHideOnLayout(binding.addNewCashAccountFragment)
+                uiHelper.setShowHideOnLayout(binding.newCashAccountLayoutHolder)
             }
-            addNewCashAccountButton.setOnClickListener {
-                if (uiHelper.isVisibleLayout(binding.addNewCashAccountFragment)) {
-                    if (uiHelper.isLengthStringMoThan(binding.cashAccountName.text)) {
-                        val name = binding.cashAccountName.text.toString()
+            newCashAccountLayout.addNewCashAccountButton.setOnClickListener {
+                if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
+                    if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
+                        val name = binding.newCashAccountLayout.cashAccountName.text.toString()
                         var number: Int? = null
-                        if (binding.cashAccountNumber.text.isNotEmpty()) {
-                            number = binding.cashAccountNumber.text.toString().toInt()
+                        if (binding.newCashAccountLayout.cashAccountNumber.text.isNotEmpty()) {
+                            number = binding.newCashAccountLayout.cashAccountNumber.text.toString().toInt()
                         }
                         val newCashAccount = CashAccount(name, number)
 
@@ -107,11 +107,11 @@ class CashAccountFragment : Fragment() {
                         )
                         uiHelper.clearUiListEditText(
                             listOf(
-                                binding.cashAccountName,
-                                binding.cashAccountNumber
+                                binding.newCashAccountLayout.cashAccountName,
+                                binding.newCashAccountLayout.cashAccountNumber
                             )
                         )
-                        uiHelper.hideUiElement(binding.addNewCashAccountFragment)
+                        uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                         view.hideKeyboard()
                     } else showMessage(getString(R.string.too_short_name))
                 }

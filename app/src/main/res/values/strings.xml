@@ -62,4 +62,6 @@
 
     <string name="add_new_category_button_text">add new category</string>
     <string name="add_new_currency_button_text">add new currency</string>
+    <string name="add_new_cash_account_button_text">add new cash account</string>
+
 </resources>

@@ -32,59 +32,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
             android:id="@+id/layoutConfirmation"
-            layout="@layout/fragment_confirmation_cash_account"
- />
+            layout="@layout/fragment_confirmation_cash_account" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/newCashAccountLayoutHolder"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:visibility="visible">
+
+        <include android:id="@+id/newCashAccountLayout"
+            layout="@layout/fragment_new_cash_account"/>
+
+    </LinearLayout>
     <Button
         android:id="@+id/show_hide_add_cash_account_fragment_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/new_cash_account"
-        app:layout_constraintBottom_toTopOf="@id/addNewCashAccountFragment" />
-
-    <LinearLayout
-        android:id="@+id/addNewCashAccountFragment"
-        style="@style/EnterNameLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/account_name" />
-
-        <EditText
-            android:id="@+id/cashAccountName"
-            style="@style/EnterNameEditText" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/last_4_digits_of_card" />
-
-        <EditText
-            android:id="@+id/cashAccountNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/only_last_4_digits"
-            android:inputType="number"
-            android:maxLength="4"
-            android:maxLines="1" />
-
-        <Button
-            android:id="@+id/addNewCashAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_button" />
-
-    </LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
