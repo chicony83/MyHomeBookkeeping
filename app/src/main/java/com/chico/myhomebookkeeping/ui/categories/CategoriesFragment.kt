@@ -44,7 +44,7 @@ class CategoriesFragment : Fragment() {
 
         with(categoriesViewModel) {
             selectedCategory.observe(viewLifecycleOwner,{
-                binding.layoutConfirmation.selectedItem.text = it?.categoryName
+                binding.layoutConfirmation.selectedItemName.text = it?.categoryName
             })
 
             categoriesList.observe(viewLifecycleOwner, {
@@ -138,7 +138,7 @@ class CategoriesFragment : Fragment() {
                     controlHelper.moveToPreviousPage()
                 }
             }
-            layoutConfirmation.cancel.setOnClickListener {
+            layoutConfirmation.cancelButton.setOnClickListener {
                 if (selectedCategoryId > 0) {
                     selectedCategoryId = 0
                     uiHelper.hideUiElement(binding.confirmationLayoutHolder)

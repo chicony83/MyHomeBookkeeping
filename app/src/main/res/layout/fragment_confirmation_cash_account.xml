@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/selectedItem"
+        android:id="@+id/selectedItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,22 +28,22 @@
         android:layout_height="wrap_content"
         android:text="@string/select"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectedItem" />
+        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <Button
-        android:id="@+id/changeItem"
+        android:id="@+id/changeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/changeText"
         app:layout_constraintStart_toEndOf="@id/selectButton"
-        app:layout_constraintTop_toBottomOf="@id/selectedItem" />
+        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <Button
-        android:id="@+id/cancel"
+        android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel"
-        app:layout_constraintStart_toEndOf="@id/changeItem"
-        app:layout_constraintTop_toBottomOf="@id/selectedItem" />
+        app:layout_constraintStart_toEndOf="@id/changeButton"
+        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

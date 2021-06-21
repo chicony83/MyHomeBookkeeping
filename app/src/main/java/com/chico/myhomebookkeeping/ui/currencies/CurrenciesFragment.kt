@@ -30,8 +30,6 @@ class CurrenciesFragment : Fragment() {
 
     private var selectedCurrencyId = 0
 
-//    private val argsNameForSelect: String by lazy { Constants.FOR_SELECT_CURRENCY_KEY }
-//    private val argsNameForQuery: String by lazy { Constants.FOR_QUERY_CURRENCY_KEY }
     private val uiHelper = UiHelper()
     private lateinit var controlHelper: ControlHelper
     private lateinit var control: NavController
@@ -48,7 +46,7 @@ class CurrenciesFragment : Fragment() {
 
         with(currenciesViewModel){
             selectedCurrency.observe(viewLifecycleOwner,{
-                binding.selectedItem.text = it?.currencyName
+                binding.selectedItemName.text = it?.currencyName
             })
 
             currenciesList.observe(viewLifecycleOwner, {
@@ -113,7 +111,7 @@ class CurrenciesFragment : Fragment() {
                     controlHelper.moveToPreviousPage()
                 }
             }
-            cancel.setOnClickListener {
+            cancelButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     selectedCurrencyId = 0
                     uiHelper.hideUiElement(binding.layoutConfirmation)
@@ -121,7 +119,6 @@ class CurrenciesFragment : Fragment() {
             }
         }
     }
-
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
