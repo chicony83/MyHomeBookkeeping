@@ -18,6 +18,7 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.ControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CategoriesFragment : Fragment() {
 
@@ -96,20 +97,20 @@ class CategoriesFragment : Fragment() {
                 controlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
-                uiHelper.setShowHideOnLayout(binding.addNewCategoryFragment)
+                uiHelper.setShowHideOnLayout(binding.newCategoryLayoutHolder)
             }
-            addNewCategoryButton.setOnClickListener {
-                if (uiHelper.isVisibleLayout(binding.addNewCategoryFragment)) {
-                    if (uiHelper.isLengthStringMoThan(binding.categoryName.text)
+            newCategoryLayout.addNewCategoryButton.setOnClickListener {
+                if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
+                    if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)
                         and
-                        (uiHelper.isCheckedRadioButton(binding.categoryIncomingRadioButton)
+                        (uiHelper.isCheckedRadioButton(binding.newCategoryLayout.categoryIncomingRadioButton)
                                 or
-                                uiHelper.isCheckedRadioButton(binding.categorySpendingRadioButton)
+                                uiHelper.isCheckedRadioButton(binding.newCategoryLayout.categorySpendingRadioButton)
                                 )
                     ) {
-                        val category = binding.categoryName.text.toString()
+                        val category = binding.newCategoryLayout.categoryName.text.toString()
                         var isIncoming = true
-                        if (binding.categorySpendingRadioButton.isChecked) isIncoming = false
+                        if (binding.newCategoryLayout.categorySpendingRadioButton.isChecked) isIncoming = false
                         val newCategory = Categories(
                             categoryName = category,
                             isIncome = isIncoming
@@ -121,12 +122,12 @@ class CategoriesFragment : Fragment() {
                         )
                         uiHelper.clearUiListRadioButton(
                             listOf(
-                                binding.categoryIncomingRadioButton,
-                                binding.categorySpendingRadioButton
+                                binding.newCategoryLayout.categoryIncomingRadioButton,
+                                binding.newCategoryLayout.categorySpendingRadioButton
                             )
                         )
-                        uiHelper.clearUiElement(binding.categoryName)
-                        uiHelper.hideUiElement(binding.addNewCategoryFragment)
+                        uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
+                        uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                         view.hideKeyboard()
                     } else showMessage(getString(R.string.too_short_name))
                 }
@@ -155,4 +156,5 @@ class CategoriesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

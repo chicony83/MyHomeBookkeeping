@@ -16,30 +16,39 @@
     <string name="header_cash_accounts">account</string>
     <string name="selectButtonText">select</string>
     <string name="cancelButtonText">cancel</string>
+
     <string name="new_cash_account">new cash account</string>
+    <string name="new_currency">new currency</string>
+    <string name="new_money_movement">new money movement</string>
+
     <string name="account_name">cash account name</string>
     <string name="last_4_digits_of_card">last 4 digits of the card</string>
     <string name="only_last_4_digits">only last 4 digits</string>
+
     <string name="add_button">add</string>
-    <string name="new_currency">new currency</string>
+
     <string name="currency">currency</string>
-    <string name="add_money_category">add money category</string>
+
     <string name="enterName">enter name</string>
+
     <string name="title_cash_account">accounts</string>
     <string name="title_currencies">currencies</string>
-    <string name="new_money_movement">new money movement</string>
     <string name="title_add_income_or_expense">add income or expense </string>
+
     <string name="too_short_name">too short name</string>
     <string name="cashAccountTextDescription">cash account</string>
     <string name="currencyTextDescription">currency</string>
     <string name="categoryTextDescription">category</string>
     <string name="youDescriptionText">you description</string>
     <string name="date_time_textDescription">date/time</string>
+
     <string name="selectedCashAccount">select cash account</string>
     <string name="selectedCurrency">select currency</string>
     <string name="selectedCategory">select category</string>
+
     <string name="amountTextDescription">amount</string>
     <string name="descriptionTextDescription">description</string>
+
     <string name="apply">apply</string>
     <string name="reset">reset</string>
     <string name="all_text">all</string>
@@ -51,4 +60,6 @@
     <string name="title_settings">settings</string>
     <string name="security">security</string>
     <string name="changeButtonText">change</string>
+
+    <string name="add_new_category_button_text">add new Category</string>
 </resources>
