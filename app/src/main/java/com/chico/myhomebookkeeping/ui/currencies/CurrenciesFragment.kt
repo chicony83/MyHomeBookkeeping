@@ -87,20 +87,20 @@ class CurrenciesFragment : Fragment() {
                 controlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
-                uiHelper.setShowHideOnLayout(binding.addNewCurrencyFragment)
+                uiHelper.setShowHideOnLayout(binding.newCurrencyLayoutHolder)
             }
-            addNewCurrencyButton.setOnClickListener {
-                if (uiHelper.isVisibleLayout(binding.addNewCurrencyFragment)) {
-                    if (uiHelper.isLengthStringMoThan(binding.currencyName.text)) {
-                        val nameCurrency: String = binding.currencyName.text.toString()
+            newCurrencyLayout.addNewCurrencyButton.setOnClickListener {
+                if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
+                    if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
+                        val nameCurrency: String = binding.newCurrencyLayout.currencyName.text.toString()
                         val addingCurrency = Currencies(currencyName = nameCurrency)
                         CurrenciesUseCase.addNewCurrencyRunBlocking(
                             db,
                             addingCurrency,
                             currenciesViewModel
                         )
-                        uiHelper.clearUiElement(binding.currencyName)
-                        uiHelper.hideUiElement(binding.addNewCurrencyFragment)
+                        uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
+                        uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                         view.hideKeyboard()
                     } else showMessage(getString(R.string.too_short_name))
                 }

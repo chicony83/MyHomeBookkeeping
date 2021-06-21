@@ -18,7 +18,6 @@
     <string name="cancelButtonText">cancel</string>
 
     <string name="new_cash_account">new cash account</string>
-    <string name="new_currency">new currency</string>
     <string name="new_money_movement">new money movement</string>
 
     <string name="account_name">cash account name</string>
@@ -61,5 +60,6 @@
     <string name="security">security</string>
     <string name="changeButtonText">change</string>
 
-    <string name="add_new_category_button_text">add new Category</string>
+    <string name="add_new_category_button_text">add new category</string>
+    <string name="add_new_currency_button_text">add new currency</string>
 </resources>

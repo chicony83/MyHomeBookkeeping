@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/selectAll"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currenciesHolder"
@@ -32,42 +32,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
             android:id="@id/layoutConfirmation"
-            layout="@layout/fragment_confirmation_currency"
-            />
+            layout="@layout/fragment_confirmation_currency" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/newCurrencyLayoutHolder"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/newCurrencyLayout"
+            layout="@layout/fragment_new_currency" />
     </LinearLayout>
 
     <Button
         android:id="@+id/show_hide_add_currency_fragment_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/new_currency"
-        app:layout_constraintBottom_toTopOf="@+id/addNewCurrencyFragment" />
+        android:text="@string/add_new_currency_button_text"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/addNewCurrencyFragment"
-        style="@style/EnterNameLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/currency" />
-
-        <EditText
-            android:id="@+id/currency_name"
-            style="@style/EnterNameEditText" />
-
-        <Button
-            android:id="@+id/addNewCurrencyButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_button" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
