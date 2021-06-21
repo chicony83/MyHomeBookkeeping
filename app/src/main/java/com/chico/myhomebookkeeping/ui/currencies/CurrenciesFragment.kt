@@ -46,14 +46,14 @@ class CurrenciesFragment : Fragment() {
 
         with(currenciesViewModel){
             selectedCurrency.observe(viewLifecycleOwner,{
-                binding.selectedItemName.text = it?.currencyName
+                binding.layoutConfirmation.selectedItemName.text = it?.currencyName
             })
 
             currenciesList.observe(viewLifecycleOwner, {
                 binding.currenciesHolder.adapter =
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
+                            uiHelper.showHideUIElements(selectedId, binding.confirmationLayoutHolder)
                             currenciesViewModel.loadSelectedCurrency(selectedId)
                             selectedCurrencyId = selectedId
                             Log.i("TAG","---$selectedId---")
@@ -105,16 +105,16 @@ class CurrenciesFragment : Fragment() {
                     } else showMessage(getString(R.string.too_short_name))
                 }
             }
-            selectButton.setOnClickListener {
+            layoutConfirmation.selectButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     currenciesViewModel.saveData(controlHelper)
                     controlHelper.moveToPreviousPage()
                 }
             }
-            cancelButton.setOnClickListener {
+            layoutConfirmation.cancelButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     selectedCurrencyId = 0
-                    uiHelper.hideUiElement(binding.layoutConfirmation)
+                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
                 }
             }
         }

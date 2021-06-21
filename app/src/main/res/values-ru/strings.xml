@@ -5,8 +5,8 @@
     <string name="reports_title">Отчеты</string>
     <string name="title_categories">Категоии</string>
     <string name="header_cash_accounts">Названия счетов</string>
-    <string name="select">выбрать</string>
-    <string name="cancel">отменить</string>
+    <string name="selectButtonText">выбрать</string>
+    <string name="cancelButtonText">отменить</string>
     <string name="new_cash_account">новый счёт</string>
     <string name="account_name">название счёта</string>
     <string name="last_4_digits_of_card">последних 4 цифры карты</string>
@@ -41,5 +41,5 @@
     <string name="spendingCategoryTextOnButton">расходы</string>
     <string name="title_settings">настройки</string>
     <string name="security">безопасность</string>
-    <string name="changeText">изменить</string>
+    <string name="changeButtonText">изменить</string>
 </resources>

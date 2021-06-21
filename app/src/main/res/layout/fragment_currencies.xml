@@ -24,8 +24,8 @@
         app:layout_constraintBottom_toTopOf="@+id/show_hide_add_currency_fragment_button"
         app:layout_constraintTop_toBottomOf="@id/selectAllButton" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutConfirmation"
+    <LinearLayout
+        android:id="@+id/confirmationLayoutHolder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -35,38 +35,11 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="выбрана валюта"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/selectedItemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/selectButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select"
-            app:layout_constraintEnd_toStartOf="@+id/cancelButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selectedItemName"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@id/layoutConfirmation"
+            layout="@layout/fragment_confirmation_currency"
+            />
+    </LinearLayout>
 
     <Button
         android:id="@+id/show_hide_add_currency_fragment_button"

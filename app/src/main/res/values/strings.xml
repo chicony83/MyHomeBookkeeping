@@ -14,8 +14,8 @@
 
 
     <string name="header_cash_accounts">account</string>
-    <string name="select">select</string>
-    <string name="cancel">cancel</string>
+    <string name="selectButtonText">select</string>
+    <string name="cancelButtonText">cancel</string>
     <string name="new_cash_account">new cash account</string>
     <string name="account_name">cash account name</string>
     <string name="last_4_digits_of_card">last 4 digits of the card</string>
@@ -50,5 +50,5 @@
     <string name="spendingCategoryTextOnButton">spending</string>
     <string name="title_settings">settings</string>
     <string name="security">security</string>
-    <string name="changeText">change</string>
+    <string name="changeButtonText">change</string>
 </resources>

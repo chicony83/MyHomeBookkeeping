@@ -10,10 +10,10 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="выбрана категория"
+        android:text="выбрана валюта"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/selectedItemName"
@@ -30,13 +30,14 @@
         android:text="@string/selectButtonText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
+
     <Button
         android:id="@+id/changeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/changeButtonText"
         app:layout_constraintStart_toEndOf="@id/selectButton"
-        app:layout_constraintTop_toBottomOf="@id/selectedItemName"/>
+        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <Button
         android:id="@+id/cancelButton"
