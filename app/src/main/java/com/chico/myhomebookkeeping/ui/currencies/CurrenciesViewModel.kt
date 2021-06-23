@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.ControlHelper
 import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.runBlocking
 
 class CurrenciesViewModel(
     val app: Application,
@@ -37,6 +38,11 @@ class CurrenciesViewModel(
     private val _selectedCurrency = MutableLiveData<Currencies?>()
     val selectedCurrency: MutableLiveData<Currencies?>
         get() = _selectedCurrency
+
+    private var _changeCurrency = MutableLiveData<Currencies?>()
+    val changeCurrency: LiveData<Currencies?>
+        get() = _changeCurrency
+
 
     init {
         loadCurrencies()
@@ -63,9 +69,34 @@ class CurrenciesViewModel(
         }
     }
 
-    fun reset() {
+    fun resetCurrencyForSelect() {
         launchIo {
             _selectedCurrency.postValue(null)
         }
+    }
+
+    fun resetCurrencyForChange() {
+        launchIo {
+            _changeCurrency.postValue(null)
+        }
+    }
+
+    fun selectedToChange() {
+        _changeCurrency.postValue(_selectedCurrency.value)
+        resetCurrencyForSelect()
+    }
+
+    fun saveChangedCurrency(name: String) = runBlocking {
+        CurrenciesUseCase.changeCurrencyLine(db, _changeCurrency.value?.currencyId ?: 0, name)
+        loadCurrencies()
+    }
+
+    fun addNewCurrency(name: String) {
+        val newCurrency = Currencies(name)
+        CurrenciesUseCase.addNewCurrencyRunBlocking(
+            db,
+            newCurrency
+        )
+        loadCurrencies()
     }
 }

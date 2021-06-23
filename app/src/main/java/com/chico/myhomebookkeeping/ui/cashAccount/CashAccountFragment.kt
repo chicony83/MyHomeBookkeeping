@@ -46,7 +46,7 @@ class CashAccountFragment : Fragment() {
 
         with(cashAccountViewModel) {
             selectedCashAccount.observe(viewLifecycleOwner,{
-                binding.layoutConfirmation.selectedItemName.text = it?.accountName
+                binding.confirmationLayout.selectedItemName.text = it?.accountName
             })
 //            selectedCashAccount.observe(viewLifecycleOwner,{
 //                binding.selectedItem.text = it?.accountName
@@ -117,13 +117,13 @@ class CashAccountFragment : Fragment() {
                 }
             }
 
-            layoutConfirmation.selectButton.setOnClickListener {
+            confirmationLayout.selectButton.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     cashAccountViewModel.saveData(controlHelper)
                     controlHelper.moveToPreviousPage()
                 }
             }
-            layoutConfirmation.cancelButton.setOnClickListener {
+            confirmationLayout.cancelButton.setOnClickListener {
                 if (selectedCashAccountId > 0) {
                     selectedCashAccountId = 0
                     uiHelper.hideUiElement(binding.confirmationLayoutHolder)

@@ -35,23 +35,37 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            android:id="@id/layoutConfirmation"
+            android:id="@id/confirmationLayout"
             layout="@layout/fragment_confirmation_currency" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/newCurrencyLayoutHolder"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
             android:id="@+id/newCurrencyLayout"
             layout="@layout/fragment_new_currency" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/changeCurrencyLayoutHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <include
+            android:id="@+id/changeCurrencyLayout"
+            layout="@layout/fragment_change_currency"/>
     </LinearLayout>
 
     <Button

@@ -48,7 +48,7 @@
     <string name="amountTextDescription">amount</string>
     <string name="descriptionTextDescription">description</string>
 
-    <string name="apply">apply</string>
+    <string name="apply_button_text">apply</string>
     <string name="reset">reset</string>
     <string name="all_text">all</string>
     <string name="selectAll">select all</string>
@@ -58,10 +58,12 @@
     <string name="spendingCategoryTextOnButton">spending</string>
     <string name="title_settings">settings</string>
     <string name="security">security</string>
-    <string name="changeButtonText">change</string>
+    <string name="change_button_text">change</string>
 
     <string name="add_new_category_button_text">add new category</string>
     <string name="add_new_currency_button_text">add new currency</string>
     <string name="add_new_cash_account_button_text">add new cash account</string>
+    <string name="save_and_select_button_text">save and select</string>
+    <string name="save_button_text">save</string>
 
 </resources>

@@ -18,9 +18,11 @@ object CurrenciesUseCase {
     fun addNewCurrencyRunBlocking(
         db: CurrenciesDao,
         addingCurrency: Currencies,
-        currenciesViewModel: CurrenciesViewModel
-    ) = runBlocking {
+    ) = launchIo {
         db.addCurrency(addingCurrency)
-        currenciesViewModel.loadCurrencies()
+    }
+
+    fun changeCurrencyLine(db: CurrenciesDao, id:Int, name: String) = launchIo {
+        db.changeLine(id,name)
     }
 }

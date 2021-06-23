@@ -27,6 +27,7 @@ class CurrenciesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: CurrenciesDao
+    private lateinit var currenciesUseCase: CurrenciesUseCase
 
     private var selectedCurrencyId = 0
 
@@ -40,25 +41,32 @@ class CurrenciesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         db = dataBase.getDataBase(requireContext()).currenciesDao()
+
         _binding = FragmentCurrenciesBinding.inflate(inflater, container, false)
 
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
-        with(currenciesViewModel){
-            selectedCurrency.observe(viewLifecycleOwner,{
-                binding.layoutConfirmation.selectedItemName.text = it?.currencyName
-            })
 
+        with(currenciesViewModel) {
+            selectedCurrency.observe(viewLifecycleOwner, {
+                binding.confirmationLayout.selectedItemName.text = it?.currencyName
+            })
             currenciesList.observe(viewLifecycleOwner, {
                 binding.currenciesHolder.adapter =
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(selectedId, binding.confirmationLayoutHolder)
+                            uiHelper.showHideUIElements(
+                                selectedId,
+                                binding.confirmationLayoutHolder
+                            )
                             currenciesViewModel.loadSelectedCurrency(selectedId)
                             selectedCurrencyId = selectedId
-                            Log.i("TAG","---$selectedId---")
+                            Log.i("TAG", "---$selectedId---")
                         }
                     })
+            })
+            changeCurrency.observe(viewLifecycleOwner, {
+                binding.changeCurrencyLayout.itemName.setText(it?.currencyName)
             })
         }
         return binding.root
@@ -71,18 +79,17 @@ class CurrenciesFragment : Fragment() {
 
         controlHelper = ControlHelper(control)
 
-        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)){
+        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
             uiHelper.hideUiElement(binding.showHideAddCurrencyFragmentButton)
             uiHelper.showUiElement(binding.selectAllButton)
-        }
-        else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+        } else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
             uiHelper.showUiElement(binding.selectAllButton)
         }
 
         view.hideKeyboard()
         with(binding) {
             selectAllButton.setOnClickListener {
-                currenciesViewModel.reset()
+                currenciesViewModel.resetCurrencyForSelect()
                 currenciesViewModel.saveData(controlHelper)
                 controlHelper.moveToMoneyMovingFragment()
             }
@@ -92,29 +99,46 @@ class CurrenciesFragment : Fragment() {
             newCurrencyLayout.addNewCurrencyButton.setOnClickListener {
                 if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
                     if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
-                        val nameCurrency: String = binding.newCurrencyLayout.currencyName.text.toString()
-                        val addingCurrency = Currencies(currencyName = nameCurrency)
-                        CurrenciesUseCase.addNewCurrencyRunBlocking(
-                            db,
-                            addingCurrency,
-                            currenciesViewModel
-                        )
+                        currenciesViewModel.addNewCurrency(binding.newCurrencyLayout.currencyName.text.toString())
                         uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
                         uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                         view.hideKeyboard()
                     } else showMessage(getString(R.string.too_short_name))
                 }
             }
-            layoutConfirmation.selectButton.setOnClickListener {
+            confirmationLayout.selectButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     currenciesViewModel.saveData(controlHelper)
                     controlHelper.moveToPreviousPage()
                 }
             }
-            layoutConfirmation.cancelButton.setOnClickListener {
+            confirmationLayout.changeButton.setOnClickListener {
+                if (selectedCurrencyId > 0) {
+                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+                    uiHelper.showUiElement(binding.changeCurrencyLayoutHolder)
+                    currenciesViewModel.selectedToChange()
+                    selectedCurrencyId = 0
+                }
+            }
+            confirmationLayout.cancelButton.setOnClickListener {
                 if (selectedCurrencyId > 0) {
                     selectedCurrencyId = 0
                     uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+
+                }
+            }
+            changeCurrencyLayout.cancelChange.setOnClickListener {
+                if (selectedCurrencyId > 0) {
+                    selectedCurrencyId = 0
+                }
+                currenciesViewModel.resetCurrencyForSelect()
+                currenciesViewModel.resetCurrencyForChange()
+                uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
+            }
+            changeCurrencyLayout.saveChange.setOnClickListener {
+                if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)){
+                    val name: String = binding.changeCurrencyLayout.itemName.text.toString()
+                    currenciesViewModel.saveChangedCurrency(name = name)
                 }
             }
         }

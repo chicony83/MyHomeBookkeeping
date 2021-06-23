@@ -31,7 +31,6 @@
     <string name="selectedCategory">выбрать категорию</string>
     <string name="amountTextDescription">сумма</string>
     <string name="descriptionTextDescription">описание</string>
-    <string name="apply">готово</string>
     <string name="reset">сбросить</string>
     <string name="all_text">все</string>
     <string name="selectAll">выбрать все</string>
@@ -41,9 +40,14 @@
     <string name="spendingCategoryTextOnButton">расходы</string>
     <string name="title_settings">настройки</string>
     <string name="security">безопасность</string>
-    <string name="changeButtonText">изменить</string>
 
     <string name="add_new_category_button_text">добавить новую категорию</string>
     <string name="add_new_currency_button_text">доавить новую валюту</string>
     <string name="add_new_cash_account_button_text">добавить новый счёт</string>
+
+    <string name="save_and_select_button_text">сохранить и выбрать</string>
+    <string name="save_button_text">сохранить</string>
+
+    <string name="change_button_text">изменить</string>
+    <string name="apply_button_text">готово</string>
 </resources>
