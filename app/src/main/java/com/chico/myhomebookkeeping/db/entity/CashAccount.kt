@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cash_account_table")
 data class CashAccount(
-    @ColumnInfo(name = "account_name")
+    @ColumnInfo(name = "cash_account_name")
     val accountName: String,
     @ColumnInfo(name = "cash_account_number")
     val bankAccountNumber: Int?

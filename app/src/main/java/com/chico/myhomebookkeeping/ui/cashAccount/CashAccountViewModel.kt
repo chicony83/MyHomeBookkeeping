@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.helpers.ControlHelper
 import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.runBlocking
 
 class CashAccountViewModel(
     val app: Application
@@ -38,6 +39,10 @@ class CashAccountViewModel(
     private val _selectedCashAccount = MutableLiveData<CashAccount?>()
     val selectedCashAccount: MutableLiveData<CashAccount?>
         get() = _selectedCashAccount
+
+    private val _changeCashAccount = MutableLiveData<CashAccount?>()
+    val changeCashAccount: LiveData<CashAccount?>
+        get() = _changeCashAccount
 
     init {
         loadCashAccounts()
@@ -64,10 +69,38 @@ class CashAccountViewModel(
         }
     }
 
-    fun reset() {
+    fun resetCashAccountForChange() {
         launchIo {
             _selectedCashAccount.postValue(null)
         }
+    }
+
+    fun resetCashAccountForSelect() {
+        launchIo {
+            _selectedCashAccount.postValue(null)
+        }
+    }
+
+    fun selectedToChange() {
+        _changeCashAccount.postValue(_selectedCashAccount.value)
+    }
+
+    fun addNewCashAccount(name: String, number: Int?) {
+        val newCashAccount = CashAccount(name, number)
+        CashAccountsUseCase.addNewCashAccount(
+            db,
+            newCashAccount
+        )
+        loadCashAccounts()
+    }
+
+    fun saveChangedCashAccount(name: String, number: Int?) = runBlocking {
+        CashAccountsUseCase.changeCashAccountLine(
+            db = db,
+            id = _changeCashAccount.value?.cashAccountId ?: 0,
+            name = name,
+            number = number
+        )
     }
 
 

@@ -41,19 +41,36 @@
 
     <LinearLayout
         android:id="@+id/newCashAccountLayoutHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <include android:id="@+id/newCashAccountLayout"
-            layout="@layout/fragment_new_cash_account"/>
+        <include
+            android:id="@+id/newCashAccountLayout"
+            layout="@layout/fragment_new_cash_account" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/changeCashAccountLayoutHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <include
+            android:id="@+id/changeCashAccountLayout"
+            layout="@layout/fragment_change_cash_account" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/show_hide_add_cash_account_fragment_button"
         android:layout_width="match_parent"

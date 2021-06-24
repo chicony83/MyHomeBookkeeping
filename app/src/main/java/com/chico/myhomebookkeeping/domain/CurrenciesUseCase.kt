@@ -15,7 +15,7 @@ object CurrenciesUseCase {
         }
     }
 
-    fun addNewCurrencyRunBlocking(
+    fun addNewCurrency(
         db: CurrenciesDao,
         addingCurrency: Currencies,
     ) = launchIo {

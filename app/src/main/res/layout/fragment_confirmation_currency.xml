@@ -27,7 +27,7 @@
         android:id="@+id/selectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/selectButtonText"
+        android:text="@string/select_text_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancelButtonText"
+        android:text="@string/cancel_text_button"
         app:layout_constraintStart_toEndOf="@id/changeButton"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 

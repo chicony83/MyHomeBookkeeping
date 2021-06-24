@@ -14,8 +14,8 @@
 
 
     <string name="header_cash_accounts">account</string>
-    <string name="selectButtonText">select</string>
-    <string name="cancelButtonText">cancel</string>
+    <string name="select_text_button">select</string>
+    <string name="cancel_text_button">cancel</string>
 
     <string name="new_cash_account">new cash account</string>
     <string name="new_money_movement">new money movement</string>

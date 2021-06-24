@@ -20,7 +20,7 @@ object MoneyMovingCreteQuery {
 
         var queryString =
             "SELECT time_stamp,amount, " +
-                    "account_name AS cash_account_name_value, " +
+                    "cash_account_name AS cash_account_name_value, " +
                     "currency_name AS currency_name_value," +
                     "category_name AS category_name_value, " +
                     "is_income " +

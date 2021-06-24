@@ -6,29 +6,41 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/itemName"
+        android:id="@+id/cashAccountName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="большое спасибо" />
+        tools:text="процентная карточка" />
+
+    <EditText
+        android:id="@+id/cashAccountNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="4"
+        android:maxLines="1"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cashAccountName"
+        tools:text="1234" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:weightSum="2"
-        app:layout_constraintTop_toBottomOf="@id/itemName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/cashAccountNumber">
 
         <Button
             android:id="@+id/saveChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save_button_text"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="@string/save_button_text" />
 
         <Button
             android:id="@+id/cancelChange"
@@ -36,5 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel_text_button" />
+
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

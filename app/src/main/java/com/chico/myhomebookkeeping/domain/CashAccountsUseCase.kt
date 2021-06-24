@@ -4,6 +4,7 @@ import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
 import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
 
 object CashAccountsUseCase {
@@ -20,13 +21,14 @@ object CashAccountsUseCase {
         }
     }
 
-    fun addNewCashAccountRunBlocking(
+    fun addNewCashAccount(
         db: CashAccountDao,
         newCashAccount: CashAccount,
-        cashAccountViewModel: CashAccountViewModel
-    ) = runBlocking {
+    ) = launchIo {
         db.addCashAccount(newCashAccount)
-        cashAccountViewModel.loadCashAccounts()
+    }
+    fun changeCashAccountLine(db:CashAccountDao,id:Int,name:String,number:Int?) = launchIo {
+        db.changeLine(id,name,number)
     }
 
 }

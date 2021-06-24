@@ -99,46 +99,51 @@ class CurrenciesFragment : Fragment() {
             newCurrencyLayout.addNewCurrencyButton.setOnClickListener {
                 if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
                     if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
-                        currenciesViewModel.addNewCurrency(binding.newCurrencyLayout.currencyName.text.toString())
+                        val name: String = binding.newCurrencyLayout.currencyName.text.toString()
+                        currenciesViewModel.addNewCurrency(name = name)
                         uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
                         uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                         view.hideKeyboard()
                     } else showMessage(getString(R.string.too_short_name))
                 }
             }
-            confirmationLayout.selectButton.setOnClickListener {
-                if (selectedCurrencyId > 0) {
-                    currenciesViewModel.saveData(controlHelper)
-                    controlHelper.moveToPreviousPage()
+            with(confirmationLayout) {
+                selectButton.setOnClickListener {
+                    if (selectedCurrencyId > 0) {
+                        currenciesViewModel.saveData(controlHelper)
+                        controlHelper.moveToPreviousPage()
+                    }
                 }
-            }
-            confirmationLayout.changeButton.setOnClickListener {
-                if (selectedCurrencyId > 0) {
-                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-                    uiHelper.showUiElement(binding.changeCurrencyLayoutHolder)
-                    currenciesViewModel.selectedToChange()
-                    selectedCurrencyId = 0
+                changeButton.setOnClickListener {
+                    if (selectedCurrencyId > 0) {
+                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+                        uiHelper.showUiElement(binding.changeCurrencyLayoutHolder)
+                        currenciesViewModel.selectedToChange()
+                        selectedCurrencyId = 0
+                    }
                 }
-            }
-            confirmationLayout.cancelButton.setOnClickListener {
-                if (selectedCurrencyId > 0) {
-                    selectedCurrencyId = 0
-                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+                cancelButton.setOnClickListener {
+                    if (selectedCurrencyId > 0) {
+                        selectedCurrencyId = 0
+                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
 
+                    }
                 }
             }
-            changeCurrencyLayout.cancelChange.setOnClickListener {
-                if (selectedCurrencyId > 0) {
-                    selectedCurrencyId = 0
+            with(changeCurrencyLayout) {
+                cancelChange.setOnClickListener {
+                    if (selectedCurrencyId > 0) {
+                        selectedCurrencyId = 0
+                    }
+                    currenciesViewModel.resetCurrencyForSelect()
+                    currenciesViewModel.resetCurrencyForChange()
+                    uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                 }
-                currenciesViewModel.resetCurrencyForSelect()
-                currenciesViewModel.resetCurrencyForChange()
-                uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
-            }
-            changeCurrencyLayout.saveChange.setOnClickListener {
-                if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)){
-                    val name: String = binding.changeCurrencyLayout.itemName.text.toString()
-                    currenciesViewModel.saveChangedCurrency(name = name)
+                saveChange.setOnClickListener {
+                    if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
+                        val name: String = binding.changeCurrencyLayout.itemName.text.toString()
+                        currenciesViewModel.saveChangedCurrency(name = name)
+                    }
                 }
             }
         }

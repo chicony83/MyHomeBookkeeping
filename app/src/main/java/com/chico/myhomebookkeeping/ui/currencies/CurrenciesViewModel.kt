@@ -87,13 +87,17 @@ class CurrenciesViewModel(
     }
 
     fun saveChangedCurrency(name: String) = runBlocking {
-        CurrenciesUseCase.changeCurrencyLine(db, _changeCurrency.value?.currencyId ?: 0, name)
+        CurrenciesUseCase.changeCurrencyLine(
+            db = db,
+            id = _changeCurrency.value?.currencyId ?: 0,
+            name = name
+        )
         loadCurrencies()
     }
 
-    fun addNewCurrency(name: String) {
+    fun addNewCurrency(name: String) = runBlocking {
         val newCurrency = Currencies(name)
-        CurrenciesUseCase.addNewCurrencyRunBlocking(
+        CurrenciesUseCase.addNewCurrency(
             db,
             newCurrency
         )

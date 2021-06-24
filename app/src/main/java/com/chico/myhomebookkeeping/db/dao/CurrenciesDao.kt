@@ -19,5 +19,5 @@ interface CurrenciesDao {
     suspend fun getOneCurrency(id:Int):Currencies
 
     @Query("UPDATE currency_table SET currency_name = :name WHERE currencyId = :id")
-    abstract fun changeLine(id: Int, name: String)
+    suspend fun changeLine(id: Int, name: String)
 }
