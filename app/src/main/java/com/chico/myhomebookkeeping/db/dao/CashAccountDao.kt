@@ -16,6 +16,6 @@ interface CashAccountDao {
     @Query("SELECT * FROM cash_account_table WHERE cashAccountId = :id")
     suspend fun getOneCashAccount(id: Int): CashAccount
 
-    @Query("UPDATE cash_account_table SET cash_account_name =:name AND cash_account_number = :number WHERE cashAccountId = :id")
-    suspend fun changeLine(id: Int, name: String, number: Int?)
+    @Query("UPDATE cash_account_table SET cash_account_name =:name, cash_account_number = :number WHERE cashAccountId = :id")
+    suspend fun changeLine(id: Int, name: String, number: String)
 }

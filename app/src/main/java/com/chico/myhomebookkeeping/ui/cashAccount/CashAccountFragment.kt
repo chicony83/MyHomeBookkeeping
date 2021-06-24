@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.helpers.ControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class CashAccountFragment : Fragment() {
 
@@ -103,12 +104,9 @@ class CashAccountFragment : Fragment() {
                 if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
                     if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
                         val name = binding.newCashAccountLayout.cashAccountName.text.toString()
-                        var number: Int?  = null
-                        if (!binding.newCashAccountLayout.cashAccountNumber.text.isNullOrEmpty()){
-                            number = binding.newCashAccountLayout.cashAccountNumber.text.toString().toInt()
-                        }
+                        var number: String = binding.newCashAccountLayout.cashAccountNumber.text.toString()
 
-                        Log.i("TAG", "name = $name, number = $number")
+//                        Log.i("TAG", "name = $name, number = $number")
                         cashAccountViewModel.addNewCashAccount(name = name, number = number)
                         uiHelper.clearUiListEditText(
                             listOf(
@@ -143,9 +141,9 @@ class CashAccountFragment : Fragment() {
                     }
                 }
             }
-            with(changeCashAccountLayout){
-                cancelChange.setOnClickListener{
-                    if (selectedCashAccountId>0){
+            with(changeCashAccountLayout) {
+                cancelChange.setOnClickListener {
+                    if (selectedCashAccountId > 0) {
                         selectedCashAccountId = 0
                     }
                     cashAccountViewModel.resetCashAccountForChange()
@@ -153,13 +151,13 @@ class CashAccountFragment : Fragment() {
                     uiHelper.hideUiElement(binding.changeCashAccountLayoutHolder)
                 }
                 saveChange.setOnClickListener {
-                    if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)){
+                    if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
                         val name = binding.changeCashAccountLayout.cashAccountName.text.toString()
-                        val number: Int? = null
-//                        if (!binding.changeCashAccountLayout.cashAccountNumber.text.isNullOrEmpty()){
-//                            binding.changeCashAccountLayout.cashAccountNumber.toString().toInt()
-//                        }
-                        cashAccountViewModel.saveChangedCashAccount(name,number)
+                        val number = binding.changeCashAccountLayout.cashAccountNumber.text.toString()
+
+                        Log.i("TAG", " click name = $name, number = $number")
+                        cashAccountViewModel.saveChangedCashAccount(name, number)
+                        view.hideKeyboard()
                     }
                 }
             }
@@ -173,10 +171,5 @@ class CashAccountFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

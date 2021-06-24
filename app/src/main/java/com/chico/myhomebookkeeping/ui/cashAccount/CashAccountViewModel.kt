@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.cashAccount
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -83,9 +84,10 @@ class CashAccountViewModel(
 
     fun selectedToChange() {
         _changeCashAccount.postValue(_selectedCashAccount.value)
+        resetCashAccountForSelect()
     }
 
-    fun addNewCashAccount(name: String, number: Int?) {
+    fun addNewCashAccount(name: String, number: String) {
         val newCashAccount = CashAccount(name, number)
         CashAccountsUseCase.addNewCashAccount(
             db,
@@ -94,13 +96,15 @@ class CashAccountViewModel(
         loadCashAccounts()
     }
 
-    fun saveChangedCashAccount(name: String, number: Int?) = runBlocking {
+    fun saveChangedCashAccount(name: String, number: String) = runBlocking {
+        Log.i("TAG", "fun saveChangedCashAccount name = $name, number = $number")
         CashAccountsUseCase.changeCashAccountLine(
             db = db,
             id = _changeCashAccount.value?.cashAccountId ?: 0,
             name = name,
             number = number
         )
+        loadCashAccounts()
     }
 
 

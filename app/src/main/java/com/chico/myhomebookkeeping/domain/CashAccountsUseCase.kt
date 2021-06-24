@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.domain
 
+import android.util.Log
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
@@ -27,8 +28,11 @@ object CashAccountsUseCase {
     ) = launchIo {
         db.addCashAccount(newCashAccount)
     }
-    fun changeCashAccountLine(db:CashAccountDao,id:Int,name:String,number:Int?) = launchIo {
-        db.changeLine(id,name,number)
-    }
+
+    fun changeCashAccountLine(db: CashAccountDao, id: Int, name: String, number: String) =
+        launchIo {
+            Log.i("TAG", " fun changeCashAccountLine name = $name, number = $number")
+            db.changeLine(id = id, name = name, number = number)
+        }
 
 }

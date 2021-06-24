@@ -126,7 +126,6 @@ class CurrenciesFragment : Fragment() {
                     if (selectedCurrencyId > 0) {
                         selectedCurrencyId = 0
                         uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-
                     }
                 }
             }
@@ -143,6 +142,7 @@ class CurrenciesFragment : Fragment() {
                     if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
                         val name: String = binding.changeCurrencyLayout.itemName.text.toString()
                         currenciesViewModel.saveChangedCurrency(name = name)
+                        view.hideKeyboard()
                     }
                 }
             }
