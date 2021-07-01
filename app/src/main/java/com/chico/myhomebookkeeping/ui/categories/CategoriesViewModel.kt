@@ -11,7 +11,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
 
@@ -48,6 +48,10 @@ class CategoriesViewModel(
     val selectedCategory: MutableLiveData<Categories?>
         get() = _selectedCategory
 
+    private var _changeCategory = MutableLiveData<Categories?>()
+    val changeCategory: LiveData<Categories?>
+        get() = _changeCategory
+
     private var selectedIsIncomeSpending: String = argsNone
 
     fun loadCategories() {
@@ -63,10 +67,17 @@ class CategoriesViewModel(
         }
     }
 
-    private fun resetSelectedCategory() {
-        _selectedCategory.postValue(null)
+    fun resetCategoryForSelect() {
+        launchIo {
+            _selectedCategory.postValue(null)
+        }
     }
 
+    fun resetCategoryForChange() {
+        launchIo {
+            _changeCategory.postValue(null)
+        }
+    }
 
     private fun setIsIncomeCategoriesSelect(value: String) {
         selectedIsIncomeSpending = value
@@ -78,44 +89,57 @@ class CategoriesViewModel(
         )
     }
 
-    private fun saveCategory(controlHelper: ControlHelper) {
+    private fun saveCategory(navControlHelper: NavControlHelper) {
         saveARGS.checkAndSaveToSP(
-            controlHelper,
+            navControlHelper,
             argsForQuery,
             argsForCreate,
             _selectedCategory.value?.categoriesId
         )
     }
 
-    fun selectSpendingCategory(controlHelper: ControlHelper) {
-        resetSelectedCategory()
+    fun selectSpendingCategory(navControlHelper: NavControlHelper) {
+        resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsSpending)
         saveIsIncomeCategory()
-        saveCategory(controlHelper)
+        saveCategory(navControlHelper)
     }
 
-    fun selectIncomeCategory(controlHelper: ControlHelper) {
-        resetSelectedCategory()
+    fun selectIncomeCategory(navControlHelper: NavControlHelper) {
+        resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsIncome)
         saveIsIncomeCategory()
-        saveCategory(controlHelper)
+        saveCategory(navControlHelper)
+    }
+
+    fun selectAllCategories(navControlHelper: NavControlHelper) {
+        isIncomeSpendingSetNone()
+        resetCategoryForSelect()
+        saveIsIncomeCategory()
+        saveCategory(navControlHelper)
+    }
+
+    fun selectIdCategory(navControlHelper: NavControlHelper) {
+        isIncomeSpendingSetNone()
+        saveIsIncomeCategory()
+        saveCategory(navControlHelper)
     }
 
     private fun isIncomeSpendingSetNone() {
         selectedIsIncomeSpending = argsNone
     }
 
-    fun selectAllCategories(controlHelper: ControlHelper) {
-        isIncomeSpendingSetNone()
-        resetSelectedCategory()
-        saveIsIncomeCategory()
-        saveCategory(controlHelper)
+    fun selectToChange() {
+        _changeCategory.postValue(_selectedCategory.value)
+        resetCategoryForSelect()
     }
 
-    fun selectIdCategory(controlHelper: ControlHelper) {
-        isIncomeSpendingSetNone()
-        saveIsIncomeCategory()
-        saveCategory(controlHelper)
-
+    fun saveChangedCategory(name: String, isIncome: Boolean) {
+        CategoriesUseCase.changeCategoryLine(
+            db, _changeCategory.value?.categoriesId ?: 0,
+            name, isIncome
+        )
+        loadCategories()
+        resetCategoryForChange()
     }
 }

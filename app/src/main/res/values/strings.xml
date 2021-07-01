@@ -34,7 +34,9 @@
     <string name="title_currencies">currencies</string>
     <string name="title_add_income_or_expense">add income or expense </string>
 
-    <string name="too_short_name">too short name</string>
+    <string name="too_short_name_message_text">too short name</string>
+    <string name="select_category_message_text">select a category</string>
+
     <string name="cashAccountTextDescription">cash account</string>
     <string name="currencyTextDescription">currency</string>
     <string name="categoryTextDescription">category</string>
@@ -65,5 +67,7 @@
     <string name="add_new_cash_account_button_text">add new cash account</string>
     <string name="save_and_select_button_text">save and select</string>
     <string name="save_button_text">save</string>
+    <string name="income_category_text_radio_button">income</string>
+    <string name="spending_category_text_radio_button">spending</string>
 
 </resources>

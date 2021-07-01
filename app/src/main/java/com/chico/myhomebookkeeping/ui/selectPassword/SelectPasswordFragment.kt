@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.databinding.FragmentSelectPasswordBinding
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 
 
@@ -21,7 +21,7 @@ class SelectPasswordFragment : Fragment() {
 
     private var _binding: FragmentSelectPasswordBinding? = null
     private val binding get() = _binding!!
-    private lateinit var controlHelper: ControlHelper
+    private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
     private var passwordString = ""
@@ -37,7 +37,7 @@ class SelectPasswordFragment : Fragment() {
     ): View {
         selectedPasswordViewModel = ViewModelProvider(this).get(SelectPasswordViewModel::class.java)
         control = findNavController()
-        controlHelper = ControlHelper(control)
+        navControlHelper = NavControlHelper(control)
         _binding = FragmentSelectPasswordBinding.inflate(inflater, container, false)
         validatePassword = Validate(selectedPasswordViewModel)
 
@@ -92,7 +92,7 @@ class SelectPasswordFragment : Fragment() {
                     selectPasswordText.text.toString(),
                     promptText.text.toString()
                 )
-                controlHelper.moveToPreviousPage()
+                navControlHelper.moveToPreviousPage()
             }
 
         }

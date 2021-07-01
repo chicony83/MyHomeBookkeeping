@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
@@ -55,9 +55,9 @@ class CashAccountViewModel(
         }
     }
 
-    fun saveData(controlHelper: ControlHelper) {
+    fun saveData(navControlHelper: NavControlHelper) {
         saveARGS.checkAndSaveToSP(
-            controlHelper,
+            navControlHelper,
             argsForQuery,
             argsForCreate,
             _selectedCashAccount.value?.cashAccountId

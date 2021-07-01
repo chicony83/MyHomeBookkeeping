@@ -11,7 +11,7 @@ import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
@@ -54,9 +54,9 @@ class CurrenciesViewModel(
         }
     }
 
-    fun saveData(controlHelper: ControlHelper) {
+    fun saveData(navControlHelper: NavControlHelper) {
         saveARGS.checkAndSaveToSP(
-            controlHelper,
+            navControlHelper,
             argsForQuery,
             argsForCreate,
             _selectedCurrency.value?.currencyId

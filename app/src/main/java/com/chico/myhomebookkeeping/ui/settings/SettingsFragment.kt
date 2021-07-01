@@ -9,13 +9,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentSettingsBinding
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var controlHelper: ControlHelper
+    private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
     override fun onCreateView(
@@ -23,12 +23,12 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         control = findNavController()
-        controlHelper = ControlHelper(control)
+        navControlHelper = NavControlHelper(control)
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         with(binding) {
             changePasswordButton.setOnClickListener {
-                controlHelper.moveToSelectedFragment(R.id.nav_select_password)
+                navControlHelper.moveToSelectedFragment(R.id.nav_select_password)
             }
         }
 

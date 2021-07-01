@@ -1,13 +1,11 @@
 package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,9 +15,7 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -34,7 +30,7 @@ class CashAccountFragment : Fragment() {
     private var selectedCashAccountId = 0
 
     private val uiHelper = UiHelper()
-    private lateinit var controlHelper: ControlHelper
+    private lateinit var navControlHelper: NavControlHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,12 +77,12 @@ class CashAccountFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        controlHelper = ControlHelper(findNavController())
+        navControlHelper = NavControlHelper(findNavController())
 
-        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
+        if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
             uiHelper.hideUiElement(binding.showHideAddCashAccountFragmentButton)
             uiHelper.showUiElement(binding.selectAllButton)
-        } else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+        } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
             uiHelper.showUiElement(binding.selectAllButton)
         }
 
@@ -94,8 +90,8 @@ class CashAccountFragment : Fragment() {
         with(binding) {
             selectAllButton.setOnClickListener {
                 cashAccountViewModel.resetCashAccountForChange()
-                cashAccountViewModel.saveData(controlHelper)
-                controlHelper.moveToMoneyMovingFragment()
+                cashAccountViewModel.saveData(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.newCashAccountLayoutHolder)
@@ -116,14 +112,14 @@ class CashAccountFragment : Fragment() {
                         )
                         uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                         view.hideKeyboard()
-                    } else showMessage(getString(R.string.too_short_name))
+                    } else showMessage(getString(R.string.too_short_name_message_text))
                 }
             }
             with(confirmationLayout) {
                 selectButton.setOnClickListener {
                     if (selectedCashAccountId > 0) {
-                        cashAccountViewModel.saveData(controlHelper)
-                        controlHelper.moveToPreviousPage()
+                        cashAccountViewModel.saveData(navControlHelper)
+                        navControlHelper.moveToPreviousPage()
                     }
                 }
                 changeButton.setOnClickListener {

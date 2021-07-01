@@ -51,6 +51,8 @@
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectAllButton"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="34dp"
         tools:listitem="@layout/categories_recycler_view_item" />
 
     <LinearLayout
@@ -81,6 +83,21 @@
         <include
             android:id="@+id/newCategoryLayout"
             layout="@layout/fragment_new_category" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/changeCategoryLayoutHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/changeCategoryLayout"
+            layout="@layout/fragment_change_category" />
     </LinearLayout>
 
     <Button

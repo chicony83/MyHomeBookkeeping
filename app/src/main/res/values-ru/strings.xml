@@ -20,7 +20,7 @@
     <string name="title_currencies">валюты</string>
     <string name="new_money_movement">новыe доходы/расходы</string>
     <string name="title_add_income_or_expense">добавить доход/расход</string>
-    <string name="too_short_name">слишком короткое название</string>
+    <string name="too_short_name_message_text">слишком короткое название</string>
     <string name="cashAccountTextDescription">счёт</string>
     <string name="currencyTextDescription">валюта</string>
     <string name="categoryTextDescription">категория</string>
@@ -50,4 +50,7 @@
 
     <string name="change_button_text">изменить</string>
     <string name="apply_button_text">готово</string>
+    <string name="income_category_text_radio_button">доходы</string>
+    <string name="spending_category_text_radio_button">расходы</string>
+    <string name="select_category_message_text">выберите категорию</string>
 </resources>

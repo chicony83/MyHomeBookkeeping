@@ -4,6 +4,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.ui.categories.CategoriesViewModel
 import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
 
 object CategoriesUseCase {
@@ -20,5 +21,11 @@ object CategoriesUseCase {
     ) = runBlocking {
         db.addCategory(newCategory)
         categoriesViewModel.loadCategories()
+    }
+
+    fun changeCategoryLine(db: CategoryDao, id: Int, name: String, isIncome: Boolean) {
+        launchIo {
+            db.changeLine(id,name,isIncome)
+        }
     }
 }

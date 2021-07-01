@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,10 +16,9 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CategoriesFragment : Fragment() {
 
@@ -31,7 +31,7 @@ class CategoriesFragment : Fragment() {
     private var selectedCategoryId = 0
 
     private val uiHelper = UiHelper()
-    private lateinit var controlHelper: ControlHelper
+    private lateinit var navControlHelper: NavControlHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +44,7 @@ class CategoriesFragment : Fragment() {
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
         with(categoriesViewModel) {
-            selectedCategory.observe(viewLifecycleOwner,{
+            selectedCategory.observe(viewLifecycleOwner, {
                 binding.confirmationLayout.selectedItemName.text = it?.categoryName
             })
 
@@ -52,12 +52,18 @@ class CategoriesFragment : Fragment() {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(selectedId, binding.confirmationLayoutHolder)
+                            uiHelper.showHideUIElements(
+                                selectedId,
+                                binding.confirmationLayoutHolder
+                            )
                             categoriesViewModel.loadSelectedCategory(selectedId)
                             selectedCategoryId = selectedId
 //                            categoriesViewModel.clearIncomeSpendingSelector()
                         }
                     })
+            })
+            changeCategory.observe(viewLifecycleOwner, {
+                binding.changeCategoryLayout.categoryName.setText(it?.categoryName)
             })
         }
         return binding.root
@@ -66,17 +72,16 @@ class CategoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controlHelper = ControlHelper(findNavController())
+        navControlHelper = NavControlHelper(findNavController())
 
-        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
-            with(uiHelper){
+        if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
+            with(uiHelper) {
                 hideUiElement(binding.showHideAddCategoryFragmentButton)
                 showUiElement(binding.selectAllButton)
                 showUiElement(binding.allIncomeSpendingLayout)
             }
-        }
-        else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
-            with(uiHelper){
+        } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+            with(uiHelper) {
                 showUiElement(binding.selectAllButton)
                 showUiElement(binding.allIncomeSpendingLayout)
             }
@@ -84,17 +89,17 @@ class CategoriesFragment : Fragment() {
         view.hideKeyboard()
         with(binding) {
             selectAllIncomeButton.setOnClickListener {
-                categoriesViewModel.selectIncomeCategory(controlHelper)
-                controlHelper.moveToMoneyMovingFragment()
+                categoriesViewModel.selectIncomeCategory(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
             }
             selectAllSpendingButton.setOnClickListener {
-                categoriesViewModel.selectSpendingCategory(controlHelper)
-                controlHelper.moveToMoneyMovingFragment()
+                categoriesViewModel.selectSpendingCategory(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
             }
             selectAllButton.setOnClickListener {
-                categoriesViewModel.selectAllCategories(controlHelper)
+                categoriesViewModel.selectAllCategories(navControlHelper)
 //                categoriesViewModel.setIdCategory(controlHelper)
-                controlHelper.moveToMoneyMovingFragment()
+                navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.newCategoryLayoutHolder)
@@ -103,14 +108,19 @@ class CategoriesFragment : Fragment() {
                 if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
                     if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)
                         and
-                        (uiHelper.isCheckedRadioButton(binding.newCategoryLayout.categoryIncomingRadioButton)
+                        (uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
                                 or
-                                uiHelper.isCheckedRadioButton(binding.newCategoryLayout.categorySpendingRadioButton)
+                                uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
                                 )
                     ) {
                         val category = binding.newCategoryLayout.categoryName.text.toString()
-                        var isIncoming = true
-                        if (binding.newCategoryLayout.categorySpendingRadioButton.isChecked) isIncoming = false
+                        var isIncoming = isSelectedCategoryIncome(
+                            binding.newCategoryLayout.incomingRadioButton,
+                            binding.newCategoryLayout.spendingRadioButton
+                        )
+//                        var isIncoming = true
+//                        if (binding.newCategoryLayout.categorySpendingRadioButton.isChecked) isIncoming =
+//                            false
                         val newCategory = Categories(
                             categoryName = category,
                             isIncome = isIncoming
@@ -122,30 +132,79 @@ class CategoriesFragment : Fragment() {
                         )
                         uiHelper.clearUiListRadioButton(
                             listOf(
-                                binding.newCategoryLayout.categoryIncomingRadioButton,
-                                binding.newCategoryLayout.categorySpendingRadioButton
+                                binding.newCategoryLayout.incomingRadioButton,
+                                binding.newCategoryLayout.spendingRadioButton
                             )
                         )
                         uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
                         uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                         view.hideKeyboard()
-                    } else showMessage(getString(R.string.too_short_name))
+                    } else showMessage(getString(R.string.too_short_name_message_text))
                 }
             }
+            with(confirmationLayout) {
+                selectButton.setOnClickListener {
+                    if (selectedCategoryId > 0) {
+                        categoriesViewModel.selectIdCategory(navControlHelper)
+                        navControlHelper.moveToPreviousPage()
+                    }
+                }
+                changeButton.setOnClickListener {
+                    if (selectedCategoryId > 0) {
+                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+                        uiHelper.showUiElement(binding.changeCategoryLayoutHolder)
+                        categoriesViewModel.selectToChange()
+                        selectedCategoryId = 0
+                    }
+                }
+                cancelButton.setOnClickListener {
+                    if (selectedCategoryId > 0) {
+                        selectedCategoryId = 0
+                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+                    }
+                }
+            }
+            with(changeCategoryLayout) {
+                cancelChange.setOnClickListener {
+                    if (selectedCategoryId > 0) {
+                        selectedCategoryId = 0
+                    }
+                    categoriesViewModel.resetCategoryForSelect()
+                    categoriesViewModel.resetCategoryForChange()
+                    uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
+                }
 
-            confirmationLayout.selectButton.setOnClickListener {
-                if (selectedCategoryId > 0) {
-                    categoriesViewModel.selectIdCategory(controlHelper)
-                    controlHelper.moveToPreviousPage()
-                }
-            }
-            confirmationLayout.cancelButton.setOnClickListener {
-                if (selectedCategoryId > 0) {
-                    selectedCategoryId = 0
-                    uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+                saveChange.setOnClickListener {
+                    var name: String
+                    var isIncome: Boolean
+                    if (uiHelper.isLengthStringMoThan(binding.changeCategoryLayout.categoryName.text)) {
+                        name = binding.changeCategoryLayout.categoryName.text.toString()
+
+                        if (uiHelper.isCheckedRadioButton(binding.changeCategoryLayout.incomingRadioButton) or
+                            uiHelper.isCheckedRadioButton(binding.changeCategoryLayout.spendingRadioButton)
+                        ) {
+                            isIncome = isSelectedCategoryIncome(
+                                binding.changeCategoryLayout.incomingRadioButton,
+                                binding.changeCategoryLayout.spendingRadioButton
+                            )
+                            categoriesViewModel.saveChangedCategory(name,isIncome)
+
+                        } else {
+                            showMessage(getString(R.string.select_category_message_text))
+                        }
+                    } else {
+                        showMessage(getString(R.string.too_short_name_message_text))
+                    }
                 }
             }
         }
+    }
+
+    private fun isSelectedCategoryIncome(
+        incomingRadioButton: RadioButton,
+        spendingRadioButton: RadioButton
+    ): Boolean {
+        return incomingRadioButton.isChecked
     }
 
     private fun showMessage(s: String) {

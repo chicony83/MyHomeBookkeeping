@@ -15,9 +15,8 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.helpers.ControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -32,7 +31,7 @@ class CurrenciesFragment : Fragment() {
     private var selectedCurrencyId = 0
 
     private val uiHelper = UiHelper()
-    private lateinit var controlHelper: ControlHelper
+    private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
     override fun onCreateView(
@@ -77,12 +76,12 @@ class CurrenciesFragment : Fragment() {
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
-        controlHelper = ControlHelper(control)
+        navControlHelper = NavControlHelper(control)
 
-        if (controlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
+        if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
             uiHelper.hideUiElement(binding.showHideAddCurrencyFragmentButton)
             uiHelper.showUiElement(binding.selectAllButton)
-        } else if (controlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+        } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
             uiHelper.showUiElement(binding.selectAllButton)
         }
 
@@ -90,8 +89,8 @@ class CurrenciesFragment : Fragment() {
         with(binding) {
             selectAllButton.setOnClickListener {
                 currenciesViewModel.resetCurrencyForSelect()
-                currenciesViewModel.saveData(controlHelper)
-                controlHelper.moveToMoneyMovingFragment()
+                currenciesViewModel.saveData(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
                 uiHelper.setShowHideOnLayout(binding.newCurrencyLayoutHolder)
@@ -104,14 +103,14 @@ class CurrenciesFragment : Fragment() {
                         uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
                         uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                         view.hideKeyboard()
-                    } else showMessage(getString(R.string.too_short_name))
+                    } else showMessage(getString(R.string.too_short_name_message_text))
                 }
             }
             with(confirmationLayout) {
                 selectButton.setOnClickListener {
                     if (selectedCurrencyId > 0) {
-                        currenciesViewModel.saveData(controlHelper)
-                        controlHelper.moveToPreviousPage()
+                        currenciesViewModel.saveData(navControlHelper)
+                        navControlHelper.moveToPreviousPage()
                     }
                 }
                 changeButton.setOnClickListener {
