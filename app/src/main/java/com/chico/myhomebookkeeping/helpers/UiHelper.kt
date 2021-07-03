@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class UiHelper(
 
 ) {
-    val minLength: Int = Constants.MIN_LENGTH_NAME
+    private val minLength: Int = Constants.MIN_LENGTH_NAME
 
     fun clearUiElement(editText: EditText) {
         editText.text.clear()
