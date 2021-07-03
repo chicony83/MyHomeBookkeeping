@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
@@ -16,6 +18,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -31,6 +34,9 @@ class CashAccountFragment : Fragment() {
 
     private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
+    private lateinit var control: NavController
+
+    private lateinit var uiControl: UiControl
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,10 +60,11 @@ class CashAccountFragment : Fragment() {
 
                     CashAccountAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(
-                                selectedId,
-                                binding.confirmationLayoutHolder
-                            )
+                            uiControl.showConfirmationLayoutHolder()
+//                            uiHelper.showHideUIElements(
+//                                selectedId,
+//                                binding.confirmationLayoutHolder
+//                            )
 //                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
                             cashAccountViewModel.loadSelectedCashAccount(selectedId)
                             selectedCashAccountId = selectedId
@@ -77,7 +84,14 @@ class CashAccountFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navControlHelper = NavControlHelper(findNavController())
+        uiControl = UiControl(
+            newItemLayoutHolder = binding.newCashAccountLayoutHolder,
+            confirmationLayoutHolder = binding.confirmationLayoutHolder,
+            changeItemLayoutHolder = binding.changeCashAccountLayoutHolder
+        )
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+
+        navControlHelper = NavControlHelper(control)
 
         if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
             uiHelper.hideUiElement(binding.showHideAddCashAccountFragmentButton)
@@ -94,13 +108,15 @@ class CashAccountFragment : Fragment() {
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
-                uiHelper.setShowHideOnLayout(binding.newCashAccountLayoutHolder)
+                uiControl.showNewItemLayoutHolder()
+                //                uiHelper.setShowHideOnLayout(binding.newCashAccountLayoutHolder)
             }
             newCashAccountLayout.addNewCashAccountButton.setOnClickListener {
                 if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
                     if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
                         val name = binding.newCashAccountLayout.cashAccountName.text.toString()
-                        var number: String = binding.newCashAccountLayout.cashAccountNumber.text.toString()
+                        var number: String =
+                            binding.newCashAccountLayout.cashAccountNumber.text.toString()
 
 //                        Log.i("TAG", "name = $name, number = $number")
                         cashAccountViewModel.addNewCashAccount(name = name, number = number)
@@ -124,8 +140,9 @@ class CashAccountFragment : Fragment() {
                 }
                 changeButton.setOnClickListener {
                     if (selectedCashAccountId > 0) {
-                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-                        uiHelper.showUiElement(binding.changeCashAccountLayoutHolder)
+//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+//                        uiHelper.showUiElement(binding.changeCashAccountLayoutHolder)
+                        uiControl.showChangeLayoutHolder()
                         cashAccountViewModel.selectedToChange()
                         selectedCashAccountId = 0
                     }
@@ -149,7 +166,8 @@ class CashAccountFragment : Fragment() {
                 saveChange.setOnClickListener {
                     if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
                         val name = binding.changeCashAccountLayout.cashAccountName.text.toString()
-                        val number = binding.changeCashAccountLayout.cashAccountNumber.text.toString()
+                        val number =
+                            binding.changeCashAccountLayout.cashAccountNumber.text.toString()
 
                         Log.i("TAG", " click name = $name, number = $number")
                         cashAccountViewModel.saveChangedCashAccount(name, number)
