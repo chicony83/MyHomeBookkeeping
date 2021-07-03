@@ -8,6 +8,8 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
@@ -17,6 +19,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -32,6 +35,8 @@ class CategoriesFragment : Fragment() {
 
     private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
+    private lateinit var control: NavController
+    private lateinit var uiControl: UiControl
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,10 +57,11 @@ class CategoriesFragment : Fragment() {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiHelper.showHideUIElements(
-                                selectedId,
-                                binding.confirmationLayoutHolder
-                            )
+                            uiControl.showConfirmationLayoutHolder()
+//                            uiHelper.showHideUIElements(
+//                                selectedId,
+//                                binding.confirmationLayoutHolder
+//                            )
                             categoriesViewModel.loadSelectedCategory(selectedId)
                             selectedCategoryId = selectedId
 //                            categoriesViewModel.clearIncomeSpendingSelector()
@@ -72,7 +78,15 @@ class CategoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navControlHelper = NavControlHelper(findNavController())
+        uiControl = UiControl(
+            newItemLayoutHolder = binding.newCategoryLayoutHolder,
+            confirmationLayoutHolder = binding.confirmationLayoutHolder,
+            changeItemLayoutHolder = binding.changeCategoryLayoutHolder
+        )
+
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+
+        navControlHelper = NavControlHelper(control)
 
         if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
             with(uiHelper) {
@@ -102,7 +116,8 @@ class CategoriesFragment : Fragment() {
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
-                uiHelper.setShowHideOnLayout(binding.newCategoryLayoutHolder)
+                uiControl.showNewItemLayoutHolder()
+                //                uiHelper.setShowHideOnLayout(binding.newCategoryLayoutHolder)
             }
             newCategoryLayout.addNewCategoryButton.setOnClickListener {
                 if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
@@ -151,8 +166,9 @@ class CategoriesFragment : Fragment() {
                 }
                 changeButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
-                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-                        uiHelper.showUiElement(binding.changeCategoryLayoutHolder)
+//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+//                        uiHelper.showUiElement(binding.changeCategoryLayoutHolder)
+                        uiControl.showChangeLayoutHolder()
                         categoriesViewModel.selectToChange()
                         selectedCategoryId = 0
                     }
@@ -187,7 +203,7 @@ class CategoriesFragment : Fragment() {
                                 binding.changeCategoryLayout.incomingRadioButton,
                                 binding.changeCategoryLayout.spendingRadioButton
                             )
-                            categoriesViewModel.saveChangedCategory(name,isIncome)
+                            categoriesViewModel.saveChangedCategory(name, isIncome)
 
                         } else {
                             showMessage(getString(R.string.select_category_message_text))
