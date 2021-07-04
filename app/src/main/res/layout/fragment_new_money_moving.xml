@@ -30,7 +30,7 @@
 
         <TextView
             style="@style/TextDescriptions"
-            android:text="@string/cashAccountTextDescription" />
+            android:text="@string/cash_account_text" />
 
         <Button
             android:id="@+id/selectCashAccountButton"
@@ -39,7 +39,7 @@
 
         <TextView
             style="@style/TextDescriptions"
-            android:text="@string/currencyTextDescription" />
+            android:text="@string/currency_text" />
 
         <Button
             android:id="@+id/selectCurrenciesButton"
@@ -48,7 +48,7 @@
 
         <TextView
             style="@style/TextDescriptions"
-            android:text="@string/categoryTextDescription" />
+            android:text="@string/category_text" />
 
         <Button
             android:id="@+id/selectCategoryButton"
@@ -57,7 +57,7 @@
 
         <TextView
             style="@style/TextDescriptions"
-            android:text="@string/amountTextDescription" />
+            android:text="@string/amount_text" />
 
         <EditText
             android:id="@+id/amount"

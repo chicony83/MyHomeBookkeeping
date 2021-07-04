@@ -3,6 +3,9 @@ package com.chico.myhomebookkeeping.db
 import androidx.room.ColumnInfo
 
 class FullMoneyMoving (
+    @ColumnInfo(name = "id")
+    val id:Long,
+
     @ColumnInfo(name = "time_stamp")
     val timeStamp: Long,
 

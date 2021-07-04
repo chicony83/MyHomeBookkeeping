@@ -11,23 +11,30 @@ object MoneyMovingCreteQuery {
     private const val argsSpending = Constants.FOR_QUERY_SPENDING
     private const val argsNone = Constants.FOR_QUERY_NONE
 
-    fun createQuery(
+    fun createQueryOneLine(id: Long): SimpleSQLiteQuery {
+        var queryString = ""
+        var argsList: ArrayList<Any> = arrayListOf()
+        queryString += addMainQuery()
+
+        if (id > 0) {
+            queryString += addAnd()
+            queryString += " id = :id"
+            argsList.add(id)
+        }
+        val args = argsList.toArray()
+        return SimpleSQLiteQuery(queryString, args)
+
+    }
+
+    fun createQueryList(
         currencyVal: Int,
         categoryVal: Int,
         cashAccountVal: Int,
         incomeSpendingSP: String
     ): SimpleSQLiteQuery {
 
-        var queryString =
-            "SELECT time_stamp,amount, " +
-                    "cash_account_name AS cash_account_name_value, " +
-                    "currency_name AS currency_name_value," +
-                    "category_name AS category_name_value, " +
-                    "is_income " +
-                    "FROM money_moving_table,cash_account_table,currency_table,category_table " +
-                    "WHERE cash_account == cashAccountId " +
-                    "AND currency == currencyId " +
-                    "AND category == categoriesId"
+        var queryString = ""
+        queryString += addMainQuery()
         var argsList: ArrayList<Any> = arrayListOf()
 
         if (currencyVal > 0) {
@@ -60,6 +67,18 @@ object MoneyMovingCreteQuery {
         val args = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)
+    }
+
+    private fun addMainQuery(): String {
+        return "SELECT id,time_stamp,amount, " +
+                "cash_account_name AS cash_account_name_value, " +
+                "currency_name AS currency_name_value," +
+                "category_name AS category_name_value, " +
+                "is_income " +
+                "FROM money_moving_table,cash_account_table,currency_table,category_table " +
+                "WHERE cash_account == cashAccountId " +
+                "AND currency == currencyId " +
+                "AND category == categoriesId"
     }
 
     private fun addAnd(): Any {

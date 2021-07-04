@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
@@ -60,7 +59,7 @@ class CashAccountFragment : Fragment() {
 
                     CashAccountAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiControl.showConfirmationLayoutHolder()
+                            uiControl.showSelectLayoutHolder()
 //                            uiHelper.showHideUIElements(
 //                                selectedId,
 //                                binding.confirmationLayoutHolder

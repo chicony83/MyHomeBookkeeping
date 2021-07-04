@@ -37,9 +37,6 @@
     <string name="too_short_name_message_text">too short name</string>
     <string name="select_category_message_text">select a category</string>
 
-    <string name="cashAccountTextDescription">cash account</string>
-    <string name="currencyTextDescription">currency</string>
-    <string name="categoryTextDescription">category</string>
     <string name="youDescriptionText">you description</string>
     <string name="date_time_textDescription">date/time</string>
 
@@ -47,7 +44,6 @@
     <string name="selectedCurrency">select currency</string>
     <string name="selectedCategory">select category</string>
 
-    <string name="amountTextDescription">amount</string>
     <string name="descriptionTextDescription">description</string>
 
     <string name="apply_button_text">apply</string>
@@ -67,7 +63,14 @@
     <string name="add_new_cash_account_button_text">add new cash account</string>
     <string name="save_and_select_button_text">save and select</string>
     <string name="save_button_text">save</string>
+
     <string name="income_category_text_radio_button">income</string>
     <string name="spending_category_text_radio_button">spending</string>
+
+    <string name="amount_text">amount</string>
+
+    <string name="cash_account_text">cash account</string>
+    <string name="currency_text">currency</string>
+    <string name="category_text">category</string>
 
 </resources>

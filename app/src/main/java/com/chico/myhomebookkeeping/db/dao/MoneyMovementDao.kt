@@ -17,9 +17,12 @@ interface MoneyMovementDao {
     @Query("SELECT * FROM money_moving_table")
     suspend fun getAllMovingMoney(): List<MoneyMovement>
 
-    @Query("SELECT time_stamp,amount, cash_account_name AS cash_account_name_value, currency_name AS currency_name_value,category_name AS category_name_value, is_income FROM money_moving_table,cash_account_table,currency_table,category_table WHERE cash_account == cashAccountId AND currency == currencyId AND category== categoriesId ORDER BY id DESC")
+    @Query("SELECT id,time_stamp,amount, cash_account_name AS cash_account_name_value, currency_name AS currency_name_value,category_name AS category_name_value, is_income FROM money_moving_table,cash_account_table,currency_table,category_table WHERE cash_account == cashAccountId AND currency == currencyId AND category== categoriesId ORDER BY id DESC")
     suspend fun getFullMoneyMoving(): List<FullMoneyMoving>
 
     @RawQuery
     suspend fun getSelectedMoneyMoving(query:SimpleSQLiteQuery):List<FullMoneyMoving>
+
+    @RawQuery
+    suspend fun getOneFullMoneyMoving(query: SimpleSQLiteQuery):FullMoneyMoving
 }

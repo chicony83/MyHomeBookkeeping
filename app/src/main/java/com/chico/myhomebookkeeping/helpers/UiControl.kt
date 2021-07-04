@@ -21,7 +21,7 @@ class UiControl(
             hideThirdLayout = changeItemLayoutHolder
         )
     }
-    fun showConfirmationLayoutHolder(){
+    fun showSelectLayoutHolder(){
         showHideLayouts.showHideHide(
             showFirstLayout = confirmationLayoutHolder ,
             hideSecondLayout = newItemLayoutHolder,

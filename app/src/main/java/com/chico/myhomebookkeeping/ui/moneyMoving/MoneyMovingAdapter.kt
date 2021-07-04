@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.MoneyMovingRecyclerViewItemBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 
 class MoneyMovingAdapter(
-    private val moneyMovementList: List<FullMoneyMoving>
+    private val moneyMovementList: List<FullMoneyMoving>,
+    val listener: OnItemViewClickListenerLong
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,6 +47,11 @@ class MoneyMovingAdapter(
                         moneyMovingItem.setBackgroundColor(itemView.resources.getColor(R.color.spending,null))
                     }
                 }
+
+                moneyMovingItem.setOnClickListener {
+                    moneyMovement.id.let { listener.onClick(it) }
+                }
+
 //                categoryName.text = moneyMovement.category.toString()
 //                amount.text = moneyMovement.amount.toString()
 //                if (moneyMovement.description.isNotEmpty()){

@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -27,6 +29,8 @@ class MoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private val uiHelper = UiHelper()
     private lateinit var control: NavController
+
+    private var selectedMoneyMovingId = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,10 +54,25 @@ class MoneyMovingFragment : Fragment() {
                 binding.selectCashAccount.text = it
             })
             moneyMovementList.observe(viewLifecycleOwner, {
-                binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it)
+                binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it, object:
+                    OnItemViewClickListenerLong {
+                    override fun onClick(selectedId: Long) {
+                        uiHelper.showUiElement(binding.selectLayoutHolder)
+                        Log.i("TAG","---moneyMoving id $selectedId---")
+                        moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
+//                        selectedMoneyMovingId = selectedId
+                    }
+
+                })
             })
             amountMoneyOfQuery.observe(viewLifecycleOwner, {
                 binding.resultCountAmountOfQuery.text = it.toString()
+            })
+            selectedMoneyMoving.observe(viewLifecycleOwner,{
+                with(binding.selectLayout){
+                    currency.text = it?.currencyNameValue
+                    amount.text = it?.amount.toString()
+                }
             })
 
         }
@@ -79,6 +98,14 @@ class MoneyMovingFragment : Fragment() {
             }
             selectCashAccount.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
+            }
+            with(selectLayout){
+                cancelButton.setOnClickListener {
+                    uiHelper.hideUiElement(binding.selectLayoutHolder)
+                    if (selectedMoneyMovingId>0){
+                        selectedMoneyMovingId = 0
+                    }
+                }
             }
         }
 

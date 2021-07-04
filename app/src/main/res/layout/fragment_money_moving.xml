@@ -19,21 +19,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/currencyTextDescription" />
+            android:text="@string/currency_text" />
 
         <Button
             android:id="@+id/selectCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/categoryTextDescription" />
+            android:text="@string/category_text" />
 
         <Button
             android:id="@+id/selectCashAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/cashAccountTextDescription" />
+            android:text="@string/cash_account_text" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,13 +44,29 @@
         app:layout_constraintBottom_toTopOf="@id/resultCountAmountOfQuery"
         app:layout_constraintTop_toBottomOf="@+id/selectQueryButtons" />
 
+    <LinearLayout
+        android:id="@+id/selectLayoutHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <include
+            android:id="@+id/selectLayout"
+            layout="@layout/fragment_select_money_moving" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/resultCountAmountOfQuery"
         style="@style/MatchParent_WrapContent"
         android:gravity="center"
-        tools:text="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

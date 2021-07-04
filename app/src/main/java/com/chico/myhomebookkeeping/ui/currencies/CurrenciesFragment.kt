@@ -56,7 +56,7 @@ class CurrenciesFragment : Fragment() {
                 binding.currenciesHolder.adapter =
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiControl.showConfirmationLayoutHolder()
+                            uiControl.showSelectLayoutHolder()
                             currenciesViewModel.loadSelectedCurrency(selectedId)
                             selectedCurrencyId = selectedId
                             Log.i("TAG", "---$selectedId---")

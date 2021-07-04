@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 
@@ -70,6 +71,10 @@ class MoneyMovingViewModel(
     val amountMoneyOfQuery: LiveData<String>
         get() = _amountMoneyOfQuery
 
+    private val _selectedMoneyMoving = MutableLiveData<FullMoneyMoving?>()
+    val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
+        get() = _selectedMoneyMoving
+
     private var cashAccountSP = -1
     private var currencySP: Int = -1
     private var categorySP = -1
@@ -95,7 +100,7 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCashAccountButton() {
         launchUi {
-            val text: String = getResourceText(R.string.cashAccountTextDescription)
+            val text: String = getResourceText(R.string.cash_account_text)
             var name: String = ""
             if (viewModelCheck.isPositiveValue(cashAccountSP)) {
                 name = CashAccountsUseCase.getOneCashAccount(
@@ -112,7 +117,7 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCurrencyButton() {
         launchUi {
-            val text: String = getResourceText(R.string.currencyTextDescription)
+            val text: String = getResourceText(R.string.currency_text)
             var name: String = ""
 
             if (viewModelCheck.isPositiveValue(currencySP)) {
@@ -130,7 +135,7 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCategoryButton() {
         launchUi {
-            val text: String = getResourceText(R.string.categoryTextDescription)
+            val text: String = getResourceText(R.string.category_text)
             var name: String = ""
             if (viewModelCheck.isPositiveValue(categorySP)) {
                 name = CategoriesUseCase.getOneCategory(
@@ -184,7 +189,7 @@ class MoneyMovingViewModel(
 
     private fun loadMoneyMovement(): Int {
 
-        val query = MoneyMovingCreteQuery.createQuery(
+        val query = MoneyMovingCreteQuery.createQueryList(
             currencySP,
             categorySP,
             cashAccountSP,
@@ -227,5 +232,12 @@ class MoneyMovingViewModel(
 
     fun isMoneyMovementFound(): Boolean {
         return foundLines > 0
+    }
+
+    fun loadSelectedMoneyMoving(selectedId: Long) {
+        val query = MoneyMovingCreteQuery.createQueryOneLine(selectedId)
+        launchUi {
+            _selectedMoneyMoving.postValue(MoneyMovingUseCase.getOneFullMoneyMoving(db, query))
+        }
     }
 }
