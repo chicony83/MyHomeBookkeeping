@@ -25,7 +25,7 @@
     <string name="currency_text">валюта</string>
     <string name="category_text">категория</string>
     <string name="youDescriptionText">ваше описание</string>
-    <string name="date_time_textDescription">дата/время</string>
+    <string name="date_time_text">дата/время</string>
     <string name="selectedCashAccount">выбрать счёт</string>
     <string name="selectedCurrency">выбрать валюту</string>
     <string name="selectedCategory">выбрать категорию</string>

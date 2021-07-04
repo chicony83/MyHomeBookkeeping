@@ -18,7 +18,7 @@
 
         <TextView
             style="@style/TextDescriptions"
-            android:text="@string/date_time_textDescription" />
+            android:text="@string/date_time_text" />
 
         <Button
             android:id="@+id/dateTimeTimeStamp"

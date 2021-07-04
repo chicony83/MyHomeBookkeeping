@@ -18,6 +18,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import kotlinx.coroutines.delay
 
 class MoneyMovingFragment : Fragment() {
@@ -70,8 +71,11 @@ class MoneyMovingFragment : Fragment() {
             })
             selectedMoneyMoving.observe(viewLifecycleOwner,{
                 with(binding.selectLayout){
-                    currency.text = it?.currencyNameValue
+                    dateTimeText.text = it?.timeStamp?.parseTimeFromMillis()
                     amount.text = it?.amount.toString()
+                    currency.text = it?.currencyNameValue
+                    category.text = it?.categoryNameValue
+                    cashAccount.text = it?.cashAccountNameValue
                 }
             })
 

@@ -38,7 +38,7 @@
     <string name="select_category_message_text">select a category</string>
 
     <string name="youDescriptionText">you description</string>
-    <string name="date_time_textDescription">date/time</string>
+    <string name="date_time_text">date/time</string>
 
     <string name="selectedCashAccount">select cash account</string>
     <string name="selectedCurrency">select currency</string>
