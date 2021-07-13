@@ -20,5 +20,5 @@ data class MoneyMovement(
     val description: String,
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long? = null
 }

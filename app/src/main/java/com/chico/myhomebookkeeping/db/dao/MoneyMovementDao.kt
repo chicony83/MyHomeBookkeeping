@@ -14,6 +14,9 @@ interface MoneyMovementDao {
     @Insert
     suspend fun addMovingMoney(moneyMovement: MoneyMovement): Long
 
+    @Query("SELECT * FROM money_moving_table WHERE id = :id")
+    suspend fun getOneMoneyMoving(id:Long):MoneyMovement
+
     @Query("SELECT * FROM money_moving_table")
     suspend fun getAllMovingMoney(): List<MoneyMovement>
 
@@ -25,4 +28,15 @@ interface MoneyMovementDao {
 
     @RawQuery
     suspend fun getOneFullMoneyMoving(query: SimpleSQLiteQuery):FullMoneyMoving
+
+    @Query("UPDATE money_moving_table SET description=:description,currency=:currencyId,category=:categoryId,cash_account=:cashAccountId,amount = :amount,time_stamp = :dateTime WHERE id = :id")
+    suspend fun changeMoneyMovingLine(
+        id:Long,
+        dateTime: Long,
+        amount: Double,
+        cashAccountId: Int,
+        categoryId: Int,
+        currencyId: Int,
+        description: String
+    ): Int
 }

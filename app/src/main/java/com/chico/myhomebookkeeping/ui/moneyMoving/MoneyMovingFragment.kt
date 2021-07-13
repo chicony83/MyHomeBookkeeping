@@ -20,6 +20,7 @@ import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class MoneyMovingFragment : Fragment() {
 
@@ -104,6 +105,13 @@ class MoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_cash_account)
             }
             with(selectLayout){
+                changeButton.setOnClickListener {
+                    runBlocking {
+                        moneyMovingViewModel.saveMoneyMovingToChange()
+                        pressSelectButton(R.id.nav_change_money_moving)
+                    }
+
+                }
                 cancelButton.setOnClickListener {
                     uiHelper.hideUiElement(binding.selectLayoutHolder)
                     if (selectedMoneyMovingId>0){

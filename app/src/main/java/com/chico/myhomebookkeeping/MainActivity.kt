@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -13,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.helpers.UiHelper
 
 class MainActivity : AppCompatActivity() {
@@ -20,11 +22,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val uiHelper = UiHelper()
+    private val spName = Constants.SP_NAME
+    private lateinit var sharedPreferences: SharedPreferences
+//        getSharedPreferences(spName, MODE_PRIVATE)
+    private lateinit var spEditor:SharedPreferences.Editor
+    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        sharedPreferences = getSharedPreferences(spName, MODE_PRIVATE)
+        spEditor = sharedPreferences.edit()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -42,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_categories,
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
-                R.id.nav_new_money_moving,
+                R.id.nav_change_money_moving,
                 R.id.nav_setting
             ),
             drawerLayout
@@ -61,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.nav_new_money_moving -> uiHelper.hideUiElement(fab)
+                R.id.nav_change_money_moving -> uiHelper.hideUiElement(fab)
                 R.id.nav_currencies -> uiHelper.hideUiElement(fab)
 //                R.id.nav_categories -> uiHelper.hideUiElement(fab)
                 R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
@@ -77,7 +86,9 @@ class MainActivity : AppCompatActivity() {
         navController: NavController
     ) {
         fab.setOnClickListener {
-            navController.navigate(R.id.nav_new_money_moving)
+            navController.navigate(R.id.nav_change_money_moving)
+            spEditor.putLong(argsIdMoneyMovingForChange,-1)
+            spEditor.commit()
         }
     }
 

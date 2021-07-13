@@ -34,6 +34,7 @@ class MoneyMovingViewModel(
     private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
     private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
+    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
 
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
@@ -180,11 +181,6 @@ class MoneyMovingViewModel(
         cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
         currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
         categorySP = viewModelCheck.getValueSP(argsCategoryKey)
-
-        Log.i(
-            "TAG", "incomeSpending = $incomeSpendingSP, cashAccountSP = $cashAccountSP," +
-                    "currencySP = $currencySP, categorySP = $categorySP"
-        )
     }
 
     private fun loadMoneyMovement(): Int {
@@ -235,9 +231,18 @@ class MoneyMovingViewModel(
     }
 
     fun loadSelectedMoneyMoving(selectedId: Long) {
-        val query = MoneyMovingCreteQuery.createQueryOneLine(selectedId)
         launchUi {
-            _selectedMoneyMoving.postValue(MoneyMovingUseCase.getOneFullMoneyMoving(db, query))
+            _selectedMoneyMoving.postValue(
+                MoneyMovingUseCase.getOneFullMoneyMoving(
+                    db,
+                    MoneyMovingCreteQuery.createQueryOneLine(selectedId)
+                )
+            )
         }
+    }
+
+    fun saveMoneyMovingToChange() {
+        spEditor.putLong(argsIdMoneyMovingForChange, _selectedMoneyMoving.value?.id ?: -1)
+        spEditor.commit()
     }
 }

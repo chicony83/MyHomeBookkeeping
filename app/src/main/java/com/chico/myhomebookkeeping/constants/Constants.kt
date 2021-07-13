@@ -23,4 +23,6 @@ object Constants {
 
     const val SP_PASS = "pass"
     const val SP_PASS_PROMPT = "pass_prompt"
+
+    const val SP_ID_MONEY_MOVING_FOR_CHANGE = "id_money_moving_for_change"
 }

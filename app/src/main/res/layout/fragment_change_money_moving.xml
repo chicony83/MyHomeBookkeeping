@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.newMoneyMoving.NewMoneyMovingFragment">
+    tools:context="ui.newMoneyMoving.ChangeMoneyMovingFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/addNewMoneyMovingButton"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -79,10 +79,9 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/addNewMoneyMovingButton"
+        android:id="@+id/submitButton"
         style="@style/ButtonsMatchParent_WrapContent"
         android:gravity="center"
-        android:text="@string/add_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -6,10 +6,10 @@
     app:startDestination="@+id/nav_money_moving">
 
     <fragment
-        android:id="@+id/nav_new_money_moving"
-        android:name="com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment"
+        android:id="@+id/nav_change_money_moving"
+        android:name="com.chico.myhomebookkeeping.ui.newMoneyMoving.ChangeMoneyMovingFragment"
         android:label="@string/new_money_movement"
-        tools:layout="@layout/fragment_new_money_moving" >
+        tools:layout="@layout/fragment_change_money_moving" >
         <action
             android:id="@+id/action_nav_new_money_moving_to_nav_categories"
             app:destination="@id/nav_categories" />

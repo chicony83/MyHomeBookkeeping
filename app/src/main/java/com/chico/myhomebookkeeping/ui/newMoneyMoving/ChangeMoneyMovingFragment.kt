@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.newMoneyMoving
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,27 +13,27 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
+
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
+class ChangeMoneyMovingFragment : Fragment() {
 
-class NewMoneyMovingFragment : Fragment() {
-
-    private lateinit var newMoneyMovingViewModel: NewMoneyMovingViewModel
-    private var _binding: FragmentNewMoneyMovingBinding? = null
+    private lateinit var changeMoneyMovingViewModel: ChangeMoneyMovingViewModel
+    private var _binding: FragmentChangeMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
     private var currentDateTimeMillis: Long = Calendar.getInstance().timeInMillis
 
     private lateinit var control: NavController
-
+    private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
     private val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("select date")
         .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
@@ -49,18 +48,19 @@ class NewMoneyMovingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNewMoneyMovingBinding.inflate(inflater, container, false)
+        _binding = FragmentChangeMoneyMovingBinding.inflate(inflater, container, false)
 
-        newMoneyMovingViewModel = ViewModelProvider(this).get(NewMoneyMovingViewModel::class.java)
+        changeMoneyMovingViewModel = ViewModelProvider(this).get(ChangeMoneyMovingViewModel::class.java)
 
         return binding.root
     }
-
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
+
+        navControlHelper = NavControlHelper(controller = control)
 
         with(binding) {
 //            dateTimeTimeStamp.text = currentDateTimeMillis.parseTimeFromMillis()
@@ -78,11 +78,11 @@ class NewMoneyMovingFragment : Fragment() {
             selectCategoryButton.setOnClickListener {
                 pressSelectButton(R.id.nav_categories)
             }
-            addNewMoneyMovingButton.setOnClickListener {
-                pressAddButton()
+            submitButton.setOnClickListener {
+                pressSubmitButton()
             }
         }
-        with(newMoneyMovingViewModel) {
+        with(changeMoneyMovingViewModel) {
             dataTime.observe(viewLifecycleOwner, {
                 binding.dateTimeTimeStamp.text = it.toString()
             })
@@ -96,10 +96,17 @@ class NewMoneyMovingFragment : Fragment() {
                 binding.selectCategoryButton.text = it.categoryName
             })
             setDateTimeOnButton(currentDateTimeMillis)
+
+            amountMoney.observe(viewLifecycleOwner,{
+                binding.amount.setText(it.toString())
+            })
+            submitButton.observe(viewLifecycleOwner,{
+                binding.submitButton.text = it.toString()
+            })
         }
 
         datePicker.addOnPositiveButtonClickListener {
-            newMoneyMovingViewModel.setDate(it)
+            changeMoneyMovingViewModel.setDate(it)
             timePicker.show(parentFragmentManager, "TAG")
         }
 
@@ -107,29 +114,25 @@ class NewMoneyMovingFragment : Fragment() {
             val hour: Int = timePicker.hour
 //            Log.i("TAG","hour = $hour")
             var minute:Int = timePicker.minute
-            with(newMoneyMovingViewModel){
+            with(changeMoneyMovingViewModel){
                 setTime(hour,minute)
                 setDateTimeOnButton()
             }
         }
-
-        newMoneyMovingViewModel.checkArguments()
+        changeMoneyMovingViewModel.getAndCheckArgsSp()
 
         super.onViewCreated(view, savedInstanceState)
     }
 
-
-    private fun pressAddButton() {
-
-//        val dataTime = currentDateTimeMillis
+    private fun pressSubmitButton() {
 
         if (CheckNewMoneyMoving.isEntered(binding.amount.text)) {
             val amount: Double = binding.amount.text.toString().toDouble()
             val description: String = binding.description.text.toString()
-            newMoneyMovingViewModel.saveDataForAdding()
+            changeMoneyMovingViewModel.saveSP()
             runBlocking {
                 val result: Long =
-                    newMoneyMovingViewModel.addNewMoneyMoving(amount, description)
+                    changeMoneyMovingViewModel.updateDB(amount, description)
                 if (result > 0) {
                     uiHelper.clearUiListEditText(
                         listOf(
@@ -166,7 +169,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(nav: Int) {
-        newMoneyMovingViewModel.saveDataForAdding()
+        changeMoneyMovingViewModel.saveSP()
         control.navigate(nav)
     }
 

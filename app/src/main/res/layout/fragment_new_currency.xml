@@ -12,6 +12,6 @@
         android:id="@+id/addNewCurrencyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_button" />
+        android:text="@string/add_button_text" />
 
 </LinearLayout>
