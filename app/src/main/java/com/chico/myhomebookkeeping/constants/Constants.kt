@@ -6,6 +6,10 @@ object Constants {
     const val FOR_CREATE_CURRENCY_KEY = "currencyForCreate"
     const val FOR_CREATE_CATEGORY_KEY = "categoryForCreate"
 
+    const val FOR_CHANGE_CASH_ACCOUNT_KEY = "cashAccountForCreate"
+    const val FOR_CHANGE_CURRENCY_KEY = "currencyForCreate"
+    const val FOR_CHANGE_CATEGORY_KEY = "categoryForCreate"
+
     const val FOR_QUERY_CASH_ACCOUNT_KEY = "queryCashAccount"
     const val FOR_QUERY_CURRENCY_KEY = "queryCurrency"
     const val FOR_QUERY_CATEGORY_KEY = "queryCategory"

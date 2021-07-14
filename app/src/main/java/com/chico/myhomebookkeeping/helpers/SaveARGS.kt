@@ -12,10 +12,11 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
     private val navCashAccount = R.id.nav_cash_account
     private val navCurrencies = R.id.nav_currencies
 
+
     fun checkAndSaveToSP(
         navControlHelper: NavControlHelper,
         argsForQuery: String,
-        argsForSelect: String,
+        argsForChange: String,
         id: Int?
     ) {
         when (navControlHelper.previousFragment()) {
@@ -26,8 +27,11 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
                 saveToSP(argsForQuery,id)
             }
             navNewMoneyMoving -> {
-                saveToSP(argsForSelect,id)
+                Log.i("TAG","---currency value = save id $id, save args ${argsForChange.toString()}")
+
+                saveToSP(argsForChange,id)
             }
+
         }
     }
     fun checkAndSaveToSP(

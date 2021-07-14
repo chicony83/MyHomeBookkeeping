@@ -27,9 +27,14 @@ import java.util.*
 class ChangeMoneyMovingViewModel(
     val app: Application,
 ) : AndroidViewModel(app) {
-    private val argsCashAccountKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_CREATE_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_CREATE_CATEGORY_KEY
+    private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
+    private val argsCurrencyCreateKey = Constants.FOR_CREATE_CURRENCY_KEY
+    private val argsCategoryCreateKey = Constants.FOR_CREATE_CATEGORY_KEY
+
+    private val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
+    private val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
+    private val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
+
     private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
     private val spName = Constants.SP_NAME
 
@@ -84,34 +89,42 @@ class ChangeMoneyMovingViewModel(
 //    var id: Long = -1
 
     fun getAndCheckArgsSp() {
-        getSharedPreferencesArgs()
-        if (idMoneyMovingForChange > 0) {
 
+        getSharedPreferencesArgs()
+
+        if (idMoneyMovingForChange > 0) {
             launchIo {
                 val moneyMovingForChange: MoneyMovement? =
                     MoneyMovingUseCase.getOneMoneyMoving(dbMoneyMovement, idMoneyMovingForChange)
 //                id = moneyMovingForChange?.id?.toLong() ?: -1
-                cashAccountSP = moneyMovingForChange?.cashAccount ?: 0
-                currencySP = moneyMovingForChange?.currency ?: 0
-                categorySP = moneyMovingForChange?.category ?: 0
+                if (viewModelCheck.isPositiveValue(cashAccountSP)) {
+                    cashAccountSP = moneyMovingForChange?.cashAccount ?: 0
+                }
+                if (viewModelCheck.isPositiveValue(currencySP)) {
+                    currencySP = moneyMovingForChange?.currency ?: 0
+                }
+                if (viewModelCheck.isPositiveValue(categorySP)) {
+                    categorySP = moneyMovingForChange?.category ?: 0
+                }
                 _amountMoney.postValue(moneyMovingForChange?.amount)
-                setValuesViewModel()
+
                 setSubmitButtonText(app.getString(R.string.change_button_text))
 //                idMoneyMovingForChange = 0
 //                spEditor.putLong(argsIdMoneyMovingForChange, -1)
 //                spEditor.commit()
             }
         } else {
-            setValuesViewModel()
+
             setSubmitButtonText(app.getString(R.string.add_button_text))
         }
+        setValuesViewModel()
     }
 
     private fun getSharedPreferencesArgs() {
         idMoneyMovingForChange = viewModelCheck.getValueSPLong(argsIdMoneyMovingForChange)
-        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
-        currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
-        categorySP = viewModelCheck.getValueSP(argsCategoryKey)
+        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountCreateKey)
+        currencySP = viewModelCheck.getValueSP(argsCurrencyCreateKey)
+        categorySP = viewModelCheck.getValueSP(argsCategoryCreateKey)
     }
 
     private fun setValuesViewModel() {
@@ -145,9 +158,9 @@ class ChangeMoneyMovingViewModel(
     }
 
     fun saveSP() {
-        spEditor.putInt(argsCurrencyKey, _selectedCurrency.value?.currencyId ?: -1)
-        spEditor.putInt(argsCashAccountKey, _selectedCashAccount.value?.cashAccountId ?: -1)
-        spEditor.putInt(argsCategoryKey, _selectedCategory.value?.categoriesId ?: -1)
+        spEditor.putInt(argsCurrencyCreateKey, _selectedCurrency.value?.currencyId ?: -1)
+        spEditor.putInt(argsCashAccountCreateKey, _selectedCashAccount.value?.cashAccountId ?: -1)
+        spEditor.putInt(argsCategoryCreateKey, _selectedCategory.value?.categoriesId ?: -1)
 //        spEditor.putLong(argsIdMoneyMovingForChange, id ?: -1)
 
         spEditor.commit()

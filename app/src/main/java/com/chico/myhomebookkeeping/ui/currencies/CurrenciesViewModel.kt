@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.currencies
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,7 +28,7 @@ class CurrenciesViewModel(
     private val spEditor = sharedPreferences.edit()
 
     private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsForCreate = Constants.FOR_CREATE_CURRENCY_KEY
+    private val argsForChange = Constants.FOR_CREATE_CURRENCY_KEY
 
     private val saveARGS = SaveARGS(spEditor)
 
@@ -55,11 +56,12 @@ class CurrenciesViewModel(
     }
 
     fun saveData(navControlHelper: NavControlHelper) {
+        Log.i("TAG","---currency value = ${_selectedCurrency.value?.currencyId}")
         saveARGS.checkAndSaveToSP(
-            navControlHelper,
-            argsForQuery,
-            argsForCreate,
-            _selectedCurrency.value?.currencyId
+            navControlHelper = navControlHelper,
+            argsForQuery = argsForQuery,
+            argsForChange = argsForChange,
+            id = _selectedCurrency.value?.currencyId
         )
     }
 
