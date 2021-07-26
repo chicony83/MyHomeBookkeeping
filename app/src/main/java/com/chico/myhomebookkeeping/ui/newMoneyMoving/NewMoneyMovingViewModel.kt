@@ -24,7 +24,7 @@ import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeToMillis
 import java.util.*
 
-class ChangeMoneyMovingViewModel(
+class NewMoneyMovingViewModel(
     val app: Application,
 ) : AndroidViewModel(app) {
     private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY

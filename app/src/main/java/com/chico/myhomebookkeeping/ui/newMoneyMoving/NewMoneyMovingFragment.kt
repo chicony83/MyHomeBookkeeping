@@ -24,9 +24,9 @@ import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-class ChangeMoneyMovingFragment : Fragment() {
+class NewMoneyMovingFragment : Fragment() {
 
-    private lateinit var changeMoneyMovingViewModel: ChangeMoneyMovingViewModel
+    private lateinit var newMoneyMovingViewModel: NewMoneyMovingViewModel
     private var _binding: FragmentChangeMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
@@ -50,7 +50,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     ): View {
         _binding = FragmentChangeMoneyMovingBinding.inflate(inflater, container, false)
 
-        changeMoneyMovingViewModel = ViewModelProvider(this).get(ChangeMoneyMovingViewModel::class.java)
+        newMoneyMovingViewModel = ViewModelProvider(this).get(NewMoneyMovingViewModel::class.java)
 
         return binding.root
     }
@@ -82,7 +82,7 @@ class ChangeMoneyMovingFragment : Fragment() {
                 pressSubmitButton()
             }
         }
-        with(changeMoneyMovingViewModel) {
+        with(newMoneyMovingViewModel) {
             dataTime.observe(viewLifecycleOwner, {
                 binding.dateTimeTimeStamp.text = it.toString()
             })
@@ -106,7 +106,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         }
 
         datePicker.addOnPositiveButtonClickListener {
-            changeMoneyMovingViewModel.setDate(it)
+            newMoneyMovingViewModel.setDate(it)
             timePicker.show(parentFragmentManager, "TAG")
         }
 
@@ -114,12 +114,12 @@ class ChangeMoneyMovingFragment : Fragment() {
             val hour: Int = timePicker.hour
 //            Log.i("TAG","hour = $hour")
             var minute:Int = timePicker.minute
-            with(changeMoneyMovingViewModel){
+            with(newMoneyMovingViewModel){
                 setTime(hour,minute)
                 setDateTimeOnButton()
             }
         }
-        changeMoneyMovingViewModel.getAndCheckArgsSp()
+        newMoneyMovingViewModel.getAndCheckArgsSp()
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -129,10 +129,10 @@ class ChangeMoneyMovingFragment : Fragment() {
         if (CheckNewMoneyMoving.isEntered(binding.amount.text)) {
             val amount: Double = binding.amount.text.toString().toDouble()
             val description: String = binding.description.text.toString()
-            changeMoneyMovingViewModel.saveSP()
+            newMoneyMovingViewModel.saveSP()
             runBlocking {
                 val result: Long =
-                    changeMoneyMovingViewModel.updateDB(amount, description)
+                    newMoneyMovingViewModel.updateDB(amount, description)
                 if (result > 0) {
                     uiHelper.clearUiListEditText(
                         listOf(
@@ -169,7 +169,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(nav: Int) {
-        changeMoneyMovingViewModel.saveSP()
+        newMoneyMovingViewModel.saveSP()
         control.navigate(nav)
     }
 
