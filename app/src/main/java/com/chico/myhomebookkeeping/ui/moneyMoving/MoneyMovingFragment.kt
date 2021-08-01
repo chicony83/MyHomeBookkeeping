@@ -81,7 +81,6 @@ class MoneyMovingFragment : Fragment() {
             })
 
 
-
         }
         return binding.root
     }
@@ -124,6 +123,8 @@ class MoneyMovingFragment : Fragment() {
         }
 
         checkLinesFound()
+        moneyMovingViewModel.cleaningSP()
+
     }
 
     private fun checkLinesFound() {

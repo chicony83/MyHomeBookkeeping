@@ -22,6 +22,7 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
+import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 
@@ -38,17 +39,21 @@ class MoneyMovingViewModel(
     private val modelCheck = ModelCheck()
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
-
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
+
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
-
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
+
     private val spEditor = sharedPreferences.edit()
+    private val saveARGS = SaveARGS(spEditor)
+
+    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
+    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
     private var spValues = SharedPreferenceValues(sharedPreferences)
 
@@ -243,5 +248,23 @@ class MoneyMovingViewModel(
 
     fun saveMoneyMovingToChange() {
         spValues.setLong(argsIdMoneyMovingForChange,_selectedMoneyMoving.value?.id)
+    }
+
+    fun cleaningSP() {
+        with(saveARGS) {
+           val argsDateTimeChangeKey = Constants.FOR_CHANGE_DATE_TIME_KEY
+           val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
+           val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
+           val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
+           val argsDescriptionChangeKey = Constants.FOR_CHANGE_DESCRIPTION_KEY
+           val argsAmountChangeKey = Constants.FOR_CHANGE_AMOUNT_KEY
+
+            saveToSP(argsDateTimeChangeKey, minusOneLong)
+            saveToSP(argsCashAccountChangeKey,minusOneInt)
+            saveToSP(argsCurrencyChangeKey,minusOneInt)
+            saveToSP(argsCategoryChangeKey,minusOneInt)
+            saveToSP(argsDescriptionChangeKey,"")
+            saveToSP(argsAmountChangeKey,"")
+        }
     }
 }

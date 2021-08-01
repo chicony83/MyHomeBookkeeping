@@ -29,10 +29,14 @@ import java.util.*
 class NewMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
+
     private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
     private val argsCurrencyCreateKey = Constants.FOR_CREATE_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.FOR_CREATE_CATEGORY_KEY
     private val modelCheck = ModelCheck()
+
+    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
+    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
     private val spName = Constants.SP_NAME
 
@@ -90,32 +94,7 @@ class NewMoneyMovingViewModel(
     fun getAndCheckArgsSp() {
 
         getSharedPreferencesArgs()
-
-//        if (idMoneyMovingForChange > 0) {
-//            launchIo {
-//                val moneyMovingForChange: MoneyMovement? =
-//                    MoneyMovingUseCase.getOneMoneyMoving(dbMoneyMovement, idMoneyMovingForChange)
-////                id = moneyMovingForChange?.id?.toLong() ?: -1
-//                if (viewModelCheck.isPositiveValue(cashAccountSP)) {
-//                    cashAccountSP = moneyMovingForChange?.cashAccount ?: 0
-//                }
-//                if (viewModelCheck.isPositiveValue(currencySP)) {
-//                    currencySP = moneyMovingForChange?.currency ?: 0
-//                }
-//                if (viewModelCheck.isPositiveValue(categorySP)) {
-//                    categorySP = moneyMovingForChange?.category ?: 0
-//                }
-//                _amountMoney.postValue(moneyMovingForChange?.amount)
-//
-//                setSubmitButtonText(app.getString(R.string.change_button_text))
-////                idMoneyMovingForChange = 0
-////                spEditor.putLong(argsIdMoneyMovingForChange, -1)
-////                spEditor.commit()
-//            }
-//        } else {
-
         setSubmitButtonText(app.getString(R.string.add_button_text))
-//        }
         setValuesViewModel()
     }
 
@@ -157,39 +136,30 @@ class NewMoneyMovingViewModel(
     }
 
     fun saveDataToSP() {
-
-        with(saveARGS){
-            saveToSP(argsCurrencyCreateKey, _selectedCurrency.value?.currencyId ?: -1)
-            saveToSP(argsCashAccountCreateKey, _selectedCashAccount.value?.cashAccountId ?: -1)
-            saveToSP(argsCategoryCreateKey, _selectedCategory.value?.categoriesId ?: -1)
+        with(saveARGS) {
+            saveToSP(
+                argsCurrencyCreateKey,
+                _selectedCurrency.value?.currencyId ?: minusOneInt
+            )
+            saveToSP(
+                argsCashAccountCreateKey,
+                _selectedCashAccount.value?.cashAccountId ?: minusOneInt
+            )
+            saveToSP(
+                argsCategoryCreateKey,
+                _selectedCategory.value?.categoriesId ?: minusOneInt
+            )
         }
-//        spEditor.putLong(argsIdMoneyMovingForChange, id ?: -1)
-
-
     }
 
-    suspend fun updateDB(
-//        dataTime: Long,
+    suspend fun addInMoneyMovingDB(
         amount: Double,
         description: String
     ): Long {
-
         val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
         val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
         val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
-//        if (idMoneyMovingForChange > 0) {
-//            return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
-//                db = dbMoneyMovement,
-//                id = idMoneyMovingForChange,
-//                dateTime = dateTime,
-//                amount = amount,
-//                cashAccountId = cashAccountValue,
-//                categoryId = categoryValue,
-//                currencyId = currencyValue,
-//                description = description
-//            ).toLong()
-//        } else {
         val moneyMovement = MoneyMovement(
             timeStamp = dateTime,
             amount = amount,
@@ -199,8 +169,6 @@ class NewMoneyMovingViewModel(
             description = description
         )
         return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
-//        }
-
     }
 
     fun setDate(it: Long?) {
@@ -231,13 +199,4 @@ class NewMoneyMovingViewModel(
     fun setSubmitButtonText(string: String) {
         _submitButtonText.postValue(string)
     }
-
-
-//    fun isChangeMoneyMoving(): Boolean {
-//        return idMoneyMovingForChange > 0
-//    }
-//
-//    fun getIdMoneyMovingForChange(): Long {
-//        return idMoneyMovingForChange
-//    }
 }

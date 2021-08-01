@@ -122,18 +122,19 @@ class NewMoneyMovingFragment : Fragment() {
         }
         newMoneyMovingViewModel.getAndCheckArgsSp()
 
+
+
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun pressSubmitButton() {
-
         if (UiElementsCheck.isEntered(binding.amount.text)) {
             val amount: Double = binding.amount.text.toString().toDouble()
             val description: String = binding.description.text.toString()
             newMoneyMovingViewModel.saveDataToSP()
             runBlocking {
                 val result: Long =
-                    newMoneyMovingViewModel.updateDB(amount, description)
+                    newMoneyMovingViewModel.addInMoneyMovingDB(amount, description)
                 if (result > 0) {
                     uiHelper.clearUiListEditText(
                         listOf(

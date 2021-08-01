@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.changeMoneyMoving
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -124,13 +125,23 @@ class ChangeMoneyMovingViewModel(
 
     private fun postDateTime(moneyMovement: MoneyMovement?) {
         launchUi {
-            val postingDateTime: String = if (modelCheck.isPositiveValue(dataTimeSPLong)) {
-                dataTimeSPLong.parseTimeFromMillis()
-            } else {
-                moneyMovement?.timeStamp?.parseTimeFromMillis() ?: "select date/time"
+            var postingDateTime: String = ""
+            Log.i("TAG"," dataTimeLong = $dataTimeSPLong")
+            if (modelCheck.isPositiveValue(dataTimeSPLong)) {
+                postingDateTime = dataTimeSPLong.parseTimeFromMillis()
             }
+            if (!modelCheck.isPositiveValue(dataTimeSPLong)) {
+                postingDateTime =
+                    moneyMovement?.timeStamp?.parseTimeFromMillis() ?: "select date/time"
+            }
+
+//            messageLog(postingDateTime)
             _dateTime.postValue(postingDateTime)
         }
+    }
+
+    private fun messageLog(text: String) {
+        Log.i("TAG", " dateTime $text")
     }
 
     private suspend fun postCategory(moneyMovement: MoneyMovement?) {
@@ -240,15 +251,15 @@ class ChangeMoneyMovingViewModel(
     }
 
     suspend fun changeMoneyMovementInDB(): Long {
-        val dateTimeVal = _dateTime.value?.parseTimeToMillis()?:0
-        val amountVal:Double = _amountMoney.value?.toDouble() ?: 0.0
+        val dateTimeVal = _dateTime.value?.parseTimeToMillis() ?: 0
+        val amountVal: Double = _amountMoney.value?.toDouble() ?: 0.0
         return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
             db = dbMoneyMovement,
             id = idMoneyMovingForChangeLong,
             dateTime = dateTimeVal,
-            cashAccountId = _selectedCashAccount.value?.cashAccountId?:0,
-            categoryId = _selectedCategory.value?.categoriesId?:0,
-            currencyId = _selectedCurrency.value?.currencyId?:0,
+            cashAccountId = _selectedCashAccount.value?.cashAccountId ?: 0,
+            categoryId = _selectedCategory.value?.categoriesId ?: 0,
+            currencyId = _selectedCurrency.value?.currencyId ?: 0,
             amount = amountVal,
             description = _descriptionText.value.toString()
         ).toLong()

@@ -35,5 +35,5 @@ object Constants {
     const val SP_PASS_PROMPT = "pass_prompt"
 
     const val MINUS_ONE_VAL_INT: Int = -1
-    const val MINUS_ONE_VAL_LONG: Long = -1
+    const val MINUS_ONE_VAL_LONG: Long = -1L
 }
