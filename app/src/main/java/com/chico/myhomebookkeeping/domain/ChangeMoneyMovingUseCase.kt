@@ -5,10 +5,6 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 
 object ChangeMoneyMovingUseCase {
 
-    suspend fun addInDataBase(db: MoneyMovementDao, moneyMovement: MoneyMovement): Long {
-
-        return db.addMovingMoney(moneyMovement)
-    }
 
     suspend fun changeMoneyMovingLine(
         db: MoneyMovementDao,

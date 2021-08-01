@@ -1,14 +1,13 @@
 package com.chico.myhomebookkeeping.ui.queryMoneyMoving
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chico.myhomebookkeeping.checks.ViewModelCheck
+import com.chico.myhomebookkeeping.checks.ModelCheck
+import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -21,7 +20,6 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.utils.launchIo
 
 class QueryMoneyMovingViewModel(
     val app: Application
@@ -32,6 +30,8 @@ class QueryMoneyMovingViewModel(
     private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
     private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
+
+    private val modelCheck = ModelCheck()
 
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
@@ -49,7 +49,7 @@ class QueryMoneyMovingViewModel(
     )
     private val spEditor = sharedPreferences.edit()
 
-    private val viewModelCheck = ViewModelCheck(sharedPreferences)
+    private val spValues = SharedPreferenceValues(sharedPreferences)
 
     private val _selectedCurrency = MutableLiveData<Currencies?>()
     val selectedCurrency: MutableLiveData<Currencies?>
@@ -101,15 +101,15 @@ class QueryMoneyMovingViewModel(
 //        }
 //    }
 
-    private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
-        return viewModelCheck.isPositiveValue(checkOne) and !viewModelCheck.isPositiveValue(checkTwo)
-    }
+//    private fun doubleCheck(checkOne: Int, checkTwo: Int): Boolean {
+//        return spValues.isPositiveValue(checkOne) and !spValues.isPositiveValue(checkTwo)
+//    }
 
-    private suspend fun postCategory(idNum: Int) {
-        _selectedCategory.postValue(
-            CategoriesUseCase.getOneCategory(dbCategory, idNum)
-        )
-    }
+//    private suspend fun postCategory(idNum: Int) {
+//        _selectedCategory.postValue(
+//            CategoriesUseCase.getOneCategory(dbCategory, idNum)
+//        )
+//    }
 
     private suspend fun postCurrency(idNum: Int) {
         _selectedCurrency.postValue(
@@ -131,10 +131,10 @@ class QueryMoneyMovingViewModel(
 //    }
 
     private fun getSharedPreferencesArgs() {
-        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
-        currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
-        categorySP = viewModelCheck.getValueSP(argsCategoryKey)
-        incomeSpendingCategories = viewModelCheck.getStringValueSP(argsIncomeSpending)?:argsNone
+        cashAccountSP = spValues.getInt(argsCashAccountKey)
+        currencySP = spValues.getInt(argsCurrencyKey)
+        categorySP = spValues.getInt(argsCategoryKey)
+        incomeSpendingCategories = spValues.getString(argsIncomeSpending)?:argsNone
     }
 
     fun reset() {

@@ -9,7 +9,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.checks.ViewModelCheck
+import com.chico.myhomebookkeeping.checks.ModelCheck
+import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
@@ -21,7 +22,6 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
-import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 
@@ -34,8 +34,8 @@ class MoneyMovingViewModel(
     private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
     private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
-    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
-
+    private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
+    private val modelCheck = ModelCheck()
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
 
@@ -50,7 +50,7 @@ class MoneyMovingViewModel(
         app.getSharedPreferences(spName, MODE_PRIVATE)
     private val spEditor = sharedPreferences.edit()
 
-    private var viewModelCheck = ViewModelCheck(sharedPreferences)
+    private var spValues = SharedPreferenceValues(sharedPreferences)
 
     private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>>()
     val moneyMovementList: MutableLiveData<List<FullMoneyMoving>>
@@ -103,13 +103,13 @@ class MoneyMovingViewModel(
         launchUi {
             val text: String = getResourceText(R.string.cash_account_text)
             var name: String = ""
-            if (viewModelCheck.isPositiveValue(cashAccountSP)) {
+            if (modelCheck.isPositiveValue(cashAccountSP)) {
                 name = CashAccountsUseCase.getOneCashAccount(
                     dbCashAccount,
                     cashAccountSP
                 )?.accountName.toString()
             }
-            if (!viewModelCheck.isPositiveValue(cashAccountSP)) {
+            if (!modelCheck.isPositiveValue(cashAccountSP)) {
                 name = getResourceText(R.string.all_text)
             }
             _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
@@ -121,13 +121,13 @@ class MoneyMovingViewModel(
             val text: String = getResourceText(R.string.currency_text)
             var name: String = ""
 
-            if (viewModelCheck.isPositiveValue(currencySP)) {
+            if (modelCheck.isPositiveValue(currencySP)) {
                 name = CurrenciesUseCase.getOneCurrency(
                     dbCurrencies,
                     currencySP
                 )?.currencyName.toString()
             }
-            if (!viewModelCheck.isPositiveValue(currencySP)) {
+            if (!modelCheck.isPositiveValue(currencySP)) {
                 name = getResourceText(R.string.all_text)
             }
             _buttonTextOfQueryCurrency.postValue(createButtonText(text, name))
@@ -138,23 +138,23 @@ class MoneyMovingViewModel(
         launchUi {
             val text: String = getResourceText(R.string.category_text)
             var name: String = ""
-            if (viewModelCheck.isPositiveValue(categorySP)) {
+            if (modelCheck.isPositiveValue(categorySP)) {
                 name = CategoriesUseCase.getOneCategory(
                     dbCategory,
                     categorySP
                 )?.categoryName.toString()
             }
-            if (viewModelCheck.isCategoryNone(argsIncomeSpending)) {
-                if (!viewModelCheck.isPositiveValue(categorySP)) {
+            if (spValues.isCategoryNone(argsIncomeSpending)) {
+                if (!modelCheck.isPositiveValue(categorySP)) {
                     name = getResourceText(R.string.all_text)
                 }
             }
-            if (!viewModelCheck.isCategoryNone(argsIncomeSpending)) {
-                if (viewModelCheck.isCategoryIncome(argsIncomeSpending)) {
+            if (!spValues.isCategoryNone(argsIncomeSpending)) {
+                if (spValues.isCategoryIncome(argsIncomeSpending)) {
                     name = getResourceText(R.string.allIncome)
                     Log.i("TAG", "income message")
                 }
-                if (viewModelCheck.isCategorySpending(argsIncomeSpending)) {
+                if (spValues.isCategorySpending(argsIncomeSpending)) {
                     Log.i("TAG", "income spending")
                     name = getResourceText(R.string.allSpending)
                 }
@@ -177,10 +177,10 @@ class MoneyMovingViewModel(
     }
 
     private fun getValuesSP() {
-        incomeSpendingSP = viewModelCheck.getStringValueSP(argsIncomeSpending) ?: argsNone
-        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountKey)
-        currencySP = viewModelCheck.getValueSP(argsCurrencyKey)
-        categorySP = viewModelCheck.getValueSP(argsCategoryKey)
+        incomeSpendingSP = spValues.getString(argsIncomeSpending) ?: argsNone
+        cashAccountSP = spValues.getInt(argsCashAccountKey)
+        currencySP = spValues.getInt(argsCurrencyKey)
+        categorySP = spValues.getInt(argsCategoryKey)
     }
 
     private fun loadMoneyMovement(): Int {
@@ -242,7 +242,6 @@ class MoneyMovingViewModel(
     }
 
     fun saveMoneyMovingToChange() {
-        spEditor.putLong(argsIdMoneyMovingForChange, _selectedMoneyMoving.value?.id ?: -1)
-        spEditor.commit()
+        spValues.setLong(argsIdMoneyMovingForChange,_selectedMoneyMoving.value?.id)
     }
 }

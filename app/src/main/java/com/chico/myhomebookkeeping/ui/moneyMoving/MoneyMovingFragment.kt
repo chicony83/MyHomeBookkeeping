@@ -46,21 +46,21 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
-            buttonTextOfQueryCurrency.observe(viewLifecycleOwner,{
+            buttonTextOfQueryCurrency.observe(viewLifecycleOwner, {
                 binding.selectCurrency.text = it
             })
-            buttonTextOfQueryCategory.observe(viewLifecycleOwner,{
+            buttonTextOfQueryCategory.observe(viewLifecycleOwner, {
                 binding.selectCategory.text = it
             })
-            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner,{
+            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccount.text = it
             })
             moneyMovementList.observe(viewLifecycleOwner, {
-                binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it, object:
+                binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it, object :
                     OnItemViewClickListenerLong {
                     override fun onClick(selectedId: Long) {
                         uiHelper.showUiElement(binding.selectLayoutHolder)
-                        Log.i("TAG","---moneyMoving id $selectedId---")
+                        Log.i("TAG", "---moneyMoving id $selectedId---")
                         moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
 //                        selectedMoneyMovingId = selectedId
                     }
@@ -70,8 +70,8 @@ class MoneyMovingFragment : Fragment() {
             amountMoneyOfQuery.observe(viewLifecycleOwner, {
                 binding.resultCountAmountOfQuery.text = it.toString()
             })
-            selectedMoneyMoving.observe(viewLifecycleOwner,{
-                with(binding.selectLayout){
+            selectedMoneyMoving.observe(viewLifecycleOwner, {
+                with(binding.selectLayout) {
                     dateTimeText.text = it?.timeStamp?.parseTimeFromMillis()
                     amount.text = it?.amount.toString()
                     currency.text = it?.currencyNameValue
@@ -79,6 +79,8 @@ class MoneyMovingFragment : Fragment() {
                     cashAccount.text = it?.cashAccountNameValue
                 }
             })
+
+
 
         }
         return binding.root
@@ -104,7 +106,7 @@ class MoneyMovingFragment : Fragment() {
             selectCashAccount.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
-            with(selectLayout){
+            with(selectLayout) {
                 changeButton.setOnClickListener {
                     runBlocking {
                         moneyMovingViewModel.saveMoneyMovingToChange()
@@ -114,7 +116,7 @@ class MoneyMovingFragment : Fragment() {
                 }
                 cancelButton.setOnClickListener {
                     uiHelper.hideUiElement(binding.selectLayoutHolder)
-                    if (selectedMoneyMovingId>0){
+                    if (selectedMoneyMovingId > 0) {
                         selectedMoneyMovingId = 0
                     }
                 }

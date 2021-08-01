@@ -5,69 +5,99 @@ import android.util.Log
 import com.chico.myhomebookkeeping.R
 
 class SaveARGS(private val spEditor: SharedPreferences.Editor) {
-    private val navNewMoneyMoving = R.id.nav_change_money_moving
+    private val navNewMoneyMoving = R.id.nav_new_money_moving
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
-    private val navCategories = R.id.nav_categories
-    private val navCashAccount = R.id.nav_cash_account
-    private val navCurrencies = R.id.nav_currencies
+    private val navChangeMoneyMoving = R.id.nav_change_money_moving
+//    private val navCategories = R.id.nav_categories
+//    private val navCashAccount = R.id.nav_cash_account
+//    private val navCurrencies = R.id.nav_currencies
 
 
     fun checkAndSaveToSP(
         navControlHelper: NavControlHelper,
-        argsForQuery: String,
+        argsForNew: String,
         argsForChange: String,
-        id: Int?
-    ) {
-        when (navControlHelper.previousFragment()) {
-            navMoneyMoving -> {
-                saveToSP(argsForQuery,id)
-            }
-            navMoneyMovingQuery -> {
-                saveToSP(argsForQuery,id)
-            }
-            navNewMoneyMoving -> {
-                Log.i("TAG","---currency value = save id $id, save args ${argsForChange.toString()}")
-
-                saveToSP(argsForChange,id)
-            }
-
-        }
-    }
-    fun checkAndSaveToSP(
-        navControlHelper: NavControlHelper,
         argsForQuery: String,
-        argsForSelect: String,
-        argsIncomeSpending:String,
         id: Int?
     ) {
         when (navControlHelper.previousFragment()) {
             navMoneyMoving -> {
-                saveToSP(argsForQuery,id)
+                saveToSP(argsForQuery, id)
             }
             navMoneyMovingQuery -> {
-                saveToSP(argsForQuery,id)
+                saveToSP(argsForQuery, id)
             }
             navNewMoneyMoving -> {
-                saveToSP(argsForSelect,id)
+                saveToSP(argsForNew, id)
+            }
+            navChangeMoneyMoving -> {
+                saveToSP(argsForChange, id)
             }
         }
     }
+//    fun checkAndSaveToSP(
+//        navControlHelper: NavControlHelper,
+//        argsForQuery: String,
+//        argsForSelect: String,
+//        argsIncomeSpending:String,
+//        id: Int?
+//    ) {
+//        when (navControlHelper.previousFragment()) {
+//            navMoneyMoving -> {
+//                saveToSP(argsForQuery,id)
+//            }
+//            navMoneyMovingQuery -> {
+//                saveToSP(argsForQuery,id)
+//            }
+//            navNewMoneyMoving -> {
+//                saveToSP(argsForSelect,id)
+//            }
+//        }
+//    }
 
-    private fun saveToSP(
-        argsCurrencyKey: String,
+    fun saveToSP(
+        argsKey: String,
         value: Int?
     ) {
-        spEditor.putInt(argsCurrencyKey, value ?: -1)
+        messageLog( argsKey, value.toString())
+        spEditor.putInt(argsKey, value ?: -1)
+        spCommit()
+    }
+
+    fun saveToSP(
+        argsKey: String,
+        value: String?
+    ) {
+        messageLog( argsKey, value.toString())
+        spEditor.putString(argsKey, value ?: "")
+        spCommit()
+    }
+
+    fun saveToSP(
+        argsKey: String,
+        value: Long?
+    ) {
+        messageLog( argsKey, value.toString())
+        spEditor.putLong(argsKey, value ?: -1)
         spCommit()
     }
 
     fun saveIsIncomeCategoryToSP(argsIncomeSpending: String, value: String) {
-            spEditor.putString(argsIncomeSpending,value)
-            spCommit()
-            Log.i("TAG","---$value---")
+        spEditor.putString(argsIncomeSpending, value)
+        spCommit()
+        messageLog(value)
     }
-    private fun spCommit(){
+
+    private fun messageLog(argsKey: String, value: String) {
+
+        Log.i("TAG", "--- save to SP $argsKey $value---")
+    }
+    private fun messageLog(value: String) {
+        Log.i("TAG", "---$value---")
+    }
+
+    private fun spCommit() {
         spEditor.commit()
     }
 }

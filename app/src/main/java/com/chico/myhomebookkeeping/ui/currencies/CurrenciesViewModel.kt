@@ -27,8 +27,9 @@ class CurrenciesViewModel(
 
     private val spEditor = sharedPreferences.edit()
 
+    private val argsForCreate = Constants.FOR_CREATE_CURRENCY_KEY
     private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsForChange = Constants.FOR_CREATE_CURRENCY_KEY
+    private val argsForChange = Constants.FOR_CHANGE_CURRENCY_KEY
 
     private val saveARGS = SaveARGS(spEditor)
 
@@ -56,11 +57,12 @@ class CurrenciesViewModel(
     }
 
     fun saveData(navControlHelper: NavControlHelper) {
-        Log.i("TAG","---currency value = ${_selectedCurrency.value?.currencyId}")
+//        Log.i("TAG","---currency value = ${_selectedCurrency.value?.currencyId}")
         saveARGS.checkAndSaveToSP(
             navControlHelper = navControlHelper,
-            argsForQuery = argsForQuery,
+            argsForNew = argsForCreate,
             argsForChange = argsForChange,
+            argsForQuery = argsForQuery,
             id = _selectedCurrency.value?.currencyId
         )
     }

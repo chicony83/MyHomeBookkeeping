@@ -7,7 +7,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.checks.ViewModelCheck
+import com.chico.myhomebookkeeping.checks.ModelCheck
+import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -19,25 +20,24 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
+import com.chico.myhomebookkeeping.helpers.SaveARGS
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeToMillis
 import java.util.*
 
 class NewMoneyMovingViewModel(
-    val app: Application,
+    val app: Application
 ) : AndroidViewModel(app) {
     private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
     private val argsCurrencyCreateKey = Constants.FOR_CREATE_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.FOR_CREATE_CATEGORY_KEY
+    private val modelCheck = ModelCheck()
 
-    private val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
-    private val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
-    private val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
-
-    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
     private val spName = Constants.SP_NAME
 
+    private val dbMoneyMovement: MoneyMovementDao =
+        dataBase.getDataBase(app.applicationContext).moneyMovementDao()
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCurrencies: CurrenciesDao =
@@ -45,14 +45,13 @@ class NewMoneyMovingViewModel(
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
 
-    private val dbMoneyMovement: MoneyMovementDao =
-        dataBase.getDataBase(app.applicationContext).moneyMovementDao()
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
-    private val spEditor = sharedPreferences.edit()
+    //    private val spEditor = sharedPreferences.edit()
+    private val saveARGS = SaveARGS(spEditor = sharedPreferences.edit())
 
-    private val viewModelCheck = ViewModelCheck(sharedPreferences)
+    private val spValues = SharedPreferenceValues(sharedPreferences)
 
     private val _dateTime = MutableLiveData<String>()
     val dataTime: LiveData<String>
@@ -81,7 +80,7 @@ class NewMoneyMovingViewModel(
     val amountMoney: LiveData<Double?>
         get() = _amountMoney
 
-    private var idMoneyMovingForChange: Long = -1
+    //    private var idMoneyMovingForChange: Long = -1
     private var cashAccountSP = -1
     private var currencySP = -1
     private var categorySP = -1
@@ -92,50 +91,50 @@ class NewMoneyMovingViewModel(
 
         getSharedPreferencesArgs()
 
-        if (idMoneyMovingForChange > 0) {
-            launchIo {
-                val moneyMovingForChange: MoneyMovement? =
-                    MoneyMovingUseCase.getOneMoneyMoving(dbMoneyMovement, idMoneyMovingForChange)
-//                id = moneyMovingForChange?.id?.toLong() ?: -1
-                if (viewModelCheck.isPositiveValue(cashAccountSP)) {
-                    cashAccountSP = moneyMovingForChange?.cashAccount ?: 0
-                }
-                if (viewModelCheck.isPositiveValue(currencySP)) {
-                    currencySP = moneyMovingForChange?.currency ?: 0
-                }
-                if (viewModelCheck.isPositiveValue(categorySP)) {
-                    categorySP = moneyMovingForChange?.category ?: 0
-                }
-                _amountMoney.postValue(moneyMovingForChange?.amount)
+//        if (idMoneyMovingForChange > 0) {
+//            launchIo {
+//                val moneyMovingForChange: MoneyMovement? =
+//                    MoneyMovingUseCase.getOneMoneyMoving(dbMoneyMovement, idMoneyMovingForChange)
+////                id = moneyMovingForChange?.id?.toLong() ?: -1
+//                if (viewModelCheck.isPositiveValue(cashAccountSP)) {
+//                    cashAccountSP = moneyMovingForChange?.cashAccount ?: 0
+//                }
+//                if (viewModelCheck.isPositiveValue(currencySP)) {
+//                    currencySP = moneyMovingForChange?.currency ?: 0
+//                }
+//                if (viewModelCheck.isPositiveValue(categorySP)) {
+//                    categorySP = moneyMovingForChange?.category ?: 0
+//                }
+//                _amountMoney.postValue(moneyMovingForChange?.amount)
+//
+//                setSubmitButtonText(app.getString(R.string.change_button_text))
+////                idMoneyMovingForChange = 0
+////                spEditor.putLong(argsIdMoneyMovingForChange, -1)
+////                spEditor.commit()
+//            }
+//        } else {
 
-                setSubmitButtonText(app.getString(R.string.change_button_text))
-//                idMoneyMovingForChange = 0
-//                spEditor.putLong(argsIdMoneyMovingForChange, -1)
-//                spEditor.commit()
-            }
-        } else {
-
-            setSubmitButtonText(app.getString(R.string.add_button_text))
-        }
+        setSubmitButtonText(app.getString(R.string.add_button_text))
+//        }
         setValuesViewModel()
     }
 
     private fun getSharedPreferencesArgs() {
-        idMoneyMovingForChange = viewModelCheck.getValueSPLong(argsIdMoneyMovingForChange)
-        cashAccountSP = viewModelCheck.getValueSP(argsCashAccountCreateKey)
-        currencySP = viewModelCheck.getValueSP(argsCurrencyCreateKey)
-        categorySP = viewModelCheck.getValueSP(argsCategoryCreateKey)
+//        idMoneyMovingForChange = viewModelCheck.getValueSPLong(argsIdMoneyMovingForChange)
+        cashAccountSP = spValues.getInt(argsCashAccountCreateKey)
+        currencySP = spValues.getInt(argsCurrencyCreateKey)
+        categorySP = spValues.getInt(argsCategoryCreateKey)
     }
 
     private fun setValuesViewModel() {
         launchIo {
-            if (viewModelCheck.isPositiveValue(cashAccountSP)) postCashAccount(cashAccountSP)
+            if (modelCheck.isPositiveValue(cashAccountSP)) postCashAccount(cashAccountSP)
         }
         launchIo {
-            if (viewModelCheck.isPositiveValue(currencySP)) postCurrency(currencySP)
+            if (modelCheck.isPositiveValue(currencySP)) postCurrency(currencySP)
         }
         launchIo {
-            if (viewModelCheck.isPositiveValue(categorySP)) postCategory(categorySP)
+            if (modelCheck.isPositiveValue(categorySP)) postCategory(categorySP)
         }
     }
 
@@ -157,13 +156,16 @@ class NewMoneyMovingViewModel(
         )
     }
 
-    fun saveSP() {
-        spEditor.putInt(argsCurrencyCreateKey, _selectedCurrency.value?.currencyId ?: -1)
-        spEditor.putInt(argsCashAccountCreateKey, _selectedCashAccount.value?.cashAccountId ?: -1)
-        spEditor.putInt(argsCategoryCreateKey, _selectedCategory.value?.categoriesId ?: -1)
+    fun saveDataToSP() {
+
+        with(saveARGS){
+            saveToSP(argsCurrencyCreateKey, _selectedCurrency.value?.currencyId ?: -1)
+            saveToSP(argsCashAccountCreateKey, _selectedCashAccount.value?.cashAccountId ?: -1)
+            saveToSP(argsCategoryCreateKey, _selectedCategory.value?.categoriesId ?: -1)
+        }
 //        spEditor.putLong(argsIdMoneyMovingForChange, id ?: -1)
 
-        spEditor.commit()
+
     }
 
     suspend fun updateDB(
@@ -176,28 +178,28 @@ class NewMoneyMovingViewModel(
         val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
         val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
-        if (idMoneyMovingForChange > 0) {
-            return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
-                db = dbMoneyMovement,
-                id = idMoneyMovingForChange,
-                dateTime = dateTime,
-                amount = amount,
-                cashAccountId = cashAccountValue,
-                categoryId = categoryValue,
-                currencyId = currencyValue,
-                description = description
-            ).toLong()
-        } else {
-            val moneyMovement = MoneyMovement(
-                timeStamp = dateTime,
-                amount = amount,
-                cashAccount = cashAccountValue,
-                category = categoryValue,
-                currency = currencyValue,
-                description = description
-            )
-            return ChangeMoneyMovingUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
-        }
+//        if (idMoneyMovingForChange > 0) {
+//            return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
+//                db = dbMoneyMovement,
+//                id = idMoneyMovingForChange,
+//                dateTime = dateTime,
+//                amount = amount,
+//                cashAccountId = cashAccountValue,
+//                categoryId = categoryValue,
+//                currencyId = currencyValue,
+//                description = description
+//            ).toLong()
+//        } else {
+        val moneyMovement = MoneyMovement(
+            timeStamp = dateTime,
+            amount = amount,
+            cashAccount = cashAccountValue,
+            category = categoryValue,
+            currency = currencyValue,
+            description = description
+        )
+        return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+//        }
 
     }
 
@@ -231,11 +233,11 @@ class NewMoneyMovingViewModel(
     }
 
 
-    fun isChangeMoneyMoving(): Boolean {
-        return idMoneyMovingForChange > 0
-    }
-
-    fun getIdMoneyMovingForChange(): Long {
-        return idMoneyMovingForChange
-    }
+//    fun isChangeMoneyMoving(): Boolean {
+//        return idMoneyMovingForChange > 0
+//    }
+//
+//    fun getIdMoneyMovingForChange(): Long {
+//        return idMoneyMovingForChange
+//    }
 }

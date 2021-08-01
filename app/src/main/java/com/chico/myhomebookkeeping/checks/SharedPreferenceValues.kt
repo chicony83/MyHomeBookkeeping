@@ -1,32 +1,36 @@
 package com.chico.myhomebookkeeping.checks
 
 import android.content.SharedPreferences
-import android.os.Bundle
 import com.chico.myhomebookkeeping.constants.Constants
 
-class ViewModelCheck(private val sharedPreferences: SharedPreferences) {
+class SharedPreferenceValues(private val sharedPreferences: SharedPreferences) {
     private val argsNone = Constants.FOR_QUERY_NONE
     private val argsIncome = Constants.FOR_QUERY_INCOME
     private val argsSpending = Constants.FOR_QUERY_SPENDING
+    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
+    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
+    private val spEditor = sharedPreferences.edit()
 
-    fun getValueSP(argsKey: String): Int {
-        return sharedPreferences.getInt(argsKey, -1)
-    }
-    fun getValueSPLong(argsKey: String): Long {
-        return sharedPreferences.getLong(argsKey, -1)
-    }
-
-    fun getValueBundle(arguments: Bundle?, args: String): Int {
-        return arguments?.getInt(args) ?: -1
+    fun getInt(argsKey: String): Int {
+        return sharedPreferences.getInt(argsKey, minusOneInt)
     }
 
-    fun isPositiveValue(value: Int): Boolean {
-        return value > 0
+    fun getLong(argsKey: String): Long {
+        return sharedPreferences.getLong(argsKey, minusOneLong)
     }
 
-    fun getStringValueSP(argsKey: String): String? {
-        return sharedPreferences.getString(argsKey, argsNone)
+    fun getString(argsKey: String): String? {
+        return sharedPreferences.getString(argsKey, argsNone)?:""
     }
+
+    //    fun getValueBundle(arguments: Bundle?, args: String): Int {
+//        return arguments?.getInt(args) ?: -1
+//    }
+    fun setLong(args: String, id: Long?) {
+        spEditor.putLong(args, id ?: minusOneLong)
+        spEditor.commit()
+    }
+
 
     fun isCategoryNone(argsIncomeSpending: String): Boolean {
         return sharedPreferences.getString(argsIncomeSpending, argsNone).toString() == argsNone

@@ -14,7 +14,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import com.chico.myhomebookkeeping.collections.Collections
 import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.helpers.PurifierSharedPreferences
 import com.chico.myhomebookkeeping.helpers.UiHelper
 
 class MainActivity : AppCompatActivity() {
@@ -24,15 +26,20 @@ class MainActivity : AppCompatActivity() {
     private val uiHelper = UiHelper()
     private val spName = Constants.SP_NAME
     private lateinit var sharedPreferences: SharedPreferences
-//        getSharedPreferences(spName, MODE_PRIVATE)
-    private lateinit var spEditor:SharedPreferences.Editor
-    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
+
+    //        getSharedPreferences(spName, MODE_PRIVATE)
+    private lateinit var spEditor: SharedPreferences.Editor
+    private lateinit var purifierSharedPreferences :PurifierSharedPreferences
+
+    //    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         sharedPreferences = getSharedPreferences(spName, MODE_PRIVATE)
+
         spEditor = sharedPreferences.edit()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -40,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -64,6 +71,12 @@ class MainActivity : AppCompatActivity() {
         hideFab(navController, fab)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+//        purifierSharedPreferences.purifierSPForChangeMoneyMovement()
+    }
+
+
     private fun hideFab(
         navController: NavController,
         fab: FloatingActionButton
@@ -86,9 +99,9 @@ class MainActivity : AppCompatActivity() {
         navController: NavController
     ) {
         fab.setOnClickListener {
-            navController.navigate(R.id.nav_change_money_moving)
-            spEditor.putLong(argsIdMoneyMovingForChange,-1)
-            spEditor.commit()
+            navController.navigate(R.id.nav_new_money_moving)
+//            spEditor.putLong(argsIdMoneyMovingForChange,-1)
+//            spEditor.commit()
         }
     }
 
@@ -101,5 +114,4 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
 }

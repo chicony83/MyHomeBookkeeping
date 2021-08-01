@@ -23,7 +23,6 @@ object MoneyMovingCreteQuery {
         }
         val args = argsList.toArray()
         return SimpleSQLiteQuery(queryString, args)
-
     }
 
     fun createQueryList(

@@ -28,8 +28,10 @@ class CashAccountViewModel(
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
 
     private val spEditor = sharedPreferences.edit()
-    private val argsForQuery = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
+
     private val argsForCreate = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
+    private val argsForQuery = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
+    private val argsForChange = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
 
     private val saveARGS = SaveARGS(spEditor)
 
@@ -57,10 +59,11 @@ class CashAccountViewModel(
 
     fun saveData(navControlHelper: NavControlHelper) {
         saveARGS.checkAndSaveToSP(
-            navControlHelper,
-            argsForQuery,
-            argsForCreate,
-            _selectedCashAccount.value?.cashAccountId
+            navControlHelper = navControlHelper,
+            argsForNew =argsForCreate,
+            argsForChange = argsForChange,
+            argsForQuery = argsForQuery,
+            id = _selectedCashAccount.value?.cashAccountId
         )
     }
 

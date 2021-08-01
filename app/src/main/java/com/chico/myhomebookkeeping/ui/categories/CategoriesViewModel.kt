@@ -27,8 +27,10 @@ class CategoriesViewModel(
 
     private val spEditor = sharedPreferences.edit()
 
-    private val argsForQuery = Constants.FOR_QUERY_CATEGORY_KEY
     private val argsForCreate = Constants.FOR_CREATE_CATEGORY_KEY
+    private val argsForQuery = Constants.FOR_QUERY_CATEGORY_KEY
+    private val argsForChange = Constants.FOR_CHANGE_CATEGORY_KEY
+
     private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsIncome = Constants.FOR_QUERY_INCOME
     private val argsSpending = Constants.FOR_QUERY_SPENDING
@@ -89,12 +91,13 @@ class CategoriesViewModel(
         )
     }
 
-    private fun saveCategory(navControlHelper: NavControlHelper) {
+    private fun saveData(navControlHelper: NavControlHelper) {
         saveARGS.checkAndSaveToSP(
-            navControlHelper,
-            argsForQuery,
-            argsForCreate,
-            _selectedCategory.value?.categoriesId
+            navControlHelper = navControlHelper,
+            argsForNew = argsForCreate,
+            argsForChange = argsForChange,
+            argsForQuery = argsForQuery,
+            id = _selectedCategory.value?.categoriesId
         )
     }
 
@@ -102,27 +105,27 @@ class CategoriesViewModel(
         resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsSpending)
         saveIsIncomeCategory()
-        saveCategory(navControlHelper)
+        saveData(navControlHelper)
     }
 
     fun selectIncomeCategory(navControlHelper: NavControlHelper) {
         resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsIncome)
         saveIsIncomeCategory()
-        saveCategory(navControlHelper)
+        saveData(navControlHelper)
     }
 
     fun selectAllCategories(navControlHelper: NavControlHelper) {
         isIncomeSpendingSetNone()
         resetCategoryForSelect()
         saveIsIncomeCategory()
-        saveCategory(navControlHelper)
+        saveData(navControlHelper)
     }
 
     fun selectIdCategory(navControlHelper: NavControlHelper) {
         isIncomeSpendingSetNone()
         saveIsIncomeCategory()
-        saveCategory(navControlHelper)
+        saveData(navControlHelper)
     }
 
     private fun isIncomeSpendingSetNone() {

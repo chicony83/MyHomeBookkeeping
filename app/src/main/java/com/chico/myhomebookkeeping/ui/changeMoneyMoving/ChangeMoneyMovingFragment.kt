@@ -1,8 +1,9 @@
-package com.chico.myhomebookkeeping.ui.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.changeMoneyMoving
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,28 +15,20 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.UiElementsCheck
-import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
-import com.chico.myhomebookkeeping.helpers.NavControlHelper
-
-import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
+import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.runBlocking
-import java.util.*
 
-class NewMoneyMovingFragment : Fragment() {
-
-    private lateinit var newMoneyMovingViewModel: NewMoneyMovingViewModel
-    private var _binding: FragmentNewMoneyMovingBinding? = null
+class ChangeMoneyMovingFragment : Fragment() {
+    private lateinit var changeMoneyMovingViewModel: ChangeMoneyMovingViewModel
+    private var _binding: FragmentChangeMoneyMovingBinding? = null
     private val binding get() = _binding!!
-
-    private var currentDateTimeMillis: Long = Calendar.getInstance().timeInMillis
-
     private lateinit var control: NavController
-    private lateinit var navControlHelper: NavControlHelper
-    private val uiHelper = UiHelper()
+
     private val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("select date")
         .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
     private val timePicker =
@@ -49,23 +42,21 @@ class NewMoneyMovingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNewMoneyMovingBinding.inflate(inflater, container, false)
 
-        newMoneyMovingViewModel = ViewModelProvider(this).get(NewMoneyMovingViewModel::class.java)
+        _binding = FragmentChangeMoneyMovingBinding.inflate(inflater, container, false)
+
+        changeMoneyMovingViewModel =
+            ViewModelProvider(this).get(ChangeMoneyMovingViewModel::class.java)
 
         return binding.root
     }
 
-    @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
-        navControlHelper = NavControlHelper(controller = control)
-
         with(binding) {
-//            dateTimeTimeStamp.text = currentDateTimeMillis.parseTimeFromMillis()
-
             dateTimeTimeStampButton.setOnClickListener {
                 datePicker.show(parentFragmentManager, "TAG")
             }
@@ -82,7 +73,8 @@ class NewMoneyMovingFragment : Fragment() {
                 pressSubmitButton()
             }
         }
-        with(newMoneyMovingViewModel) {
+
+        with(changeMoneyMovingViewModel) {
             dataTime.observe(viewLifecycleOwner, {
                 binding.dateTimeTimeStampButton.text = it.toString()
             })
@@ -95,61 +87,51 @@ class NewMoneyMovingFragment : Fragment() {
             selectedCategory.observe(viewLifecycleOwner, {
                 binding.selectCategoryButton.text = it.categoryName
             })
-
-            setDateTimeOnButton(currentDateTimeMillis)
-
-            amountMoney.observe(viewLifecycleOwner,{
+            amountMoney.observe(viewLifecycleOwner, {
                 binding.amount.setText(it.toString())
             })
-            submitButton.observe(viewLifecycleOwner,{
-                binding.submitButton.text = it.toString()
+            descriptionText.observe(viewLifecycleOwner, {
+                binding.description.setText(it)
             })
-        }
 
+        }
         datePicker.addOnPositiveButtonClickListener {
-            newMoneyMovingViewModel.setDate(it)
+            changeMoneyMovingViewModel.setDate(it)
             timePicker.show(parentFragmentManager, "TAG")
         }
 
         timePicker.addOnPositiveButtonClickListener {
             val hour: Int = timePicker.hour
 //            Log.i("TAG","hour = $hour")
-            var minute:Int = timePicker.minute
-            with(newMoneyMovingViewModel){
-                setTime(hour,minute)
+            var minute: Int = timePicker.minute
+            with(changeMoneyMovingViewModel) {
+                setTime(hour, minute)
                 setDateTimeOnButton()
             }
         }
-        newMoneyMovingViewModel.getAndCheckArgsSp()
-
-        super.onViewCreated(view, savedInstanceState)
+        with(changeMoneyMovingViewModel) {
+            getDataForChangeMoneyMovingLine()
+            getLineForChange()
+        }
     }
 
     private fun pressSubmitButton() {
-
         if (UiElementsCheck.isEntered(binding.amount.text)) {
-            val amount: Double = binding.amount.text.toString().toDouble()
-            val description: String = binding.description.text.toString()
-            newMoneyMovingViewModel.saveDataToSP()
             runBlocking {
-                val result: Long =
-                    newMoneyMovingViewModel.updateDB(amount, description)
+                changeMoneyMovingViewModel.saveDataToSp()
+                val result: Long = changeMoneyMovingViewModel.changeMoneyMovementInDB()
                 if (result > 0) {
-                    uiHelper.clearUiListEditText(
-                        listOf(
-                            binding.amount, binding.description
-                        )
-                    )
-                    setBackgroundDefaultColor(binding.amount)
                     view?.hideKeyboard()
-                    message("запись добавлена")
+                    message("запись изменена")
                     control.navigate(R.id.nav_money_moving)
                 }
+//                changeMoneyMovingViewModel.changeMoneyMovementInDB()
             }
         } else {
             setBackgroundWarningColor(binding.amount)
             message("введите сумму")
         }
+
     }
 
     private fun setBackgroundWarningColor(editText: EditText) {
@@ -158,28 +140,19 @@ class NewMoneyMovingFragment : Fragment() {
         }
     }
 
-    private fun setBackgroundDefaultColor(editText: EditText) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            editText.setBackgroundColor(
-                resources.getColor(
-                    R.color.design_default_color_background,
-                    null
-                )
-            )
-        }
-    }
-
     private fun pressSelectButton(fragment: Int) {
-        newMoneyMovingViewModel.saveDataToSP()
+        changeMoneyMovingViewModel.saveDataToSp()
         control.navigate(fragment)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 
-    private fun message(text: String) {
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
+    fun message(text: String): Unit {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
+
 }

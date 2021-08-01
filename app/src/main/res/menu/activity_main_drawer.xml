@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_menu_home"
             android:title="@string/title_home" />
         <item
-            android:id="@+id/nav_change_money_moving"
+            android:id="@+id/nav_new_money_moving"
             android:icon="@drawable/ic_add_box"
             android:title="@string/title_add_income_or_expense"/>
         <item
