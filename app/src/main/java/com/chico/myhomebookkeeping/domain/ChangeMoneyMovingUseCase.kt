@@ -4,8 +4,6 @@ import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 
 object ChangeMoneyMovingUseCase {
-
-
     suspend fun changeMoneyMovingLine(
         db: MoneyMovementDao,
         id: Long,

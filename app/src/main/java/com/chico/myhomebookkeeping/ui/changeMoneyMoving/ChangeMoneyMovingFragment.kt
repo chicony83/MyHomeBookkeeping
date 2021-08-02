@@ -2,8 +2,6 @@ package com.chico.myhomebookkeeping.ui.changeMoneyMoving
 
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,6 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.UiElementsCheck
 import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
-import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -118,8 +115,10 @@ class ChangeMoneyMovingFragment : Fragment() {
     private fun pressSubmitButton() {
         if (UiElementsCheck.isEntered(binding.amount.text)) {
             runBlocking {
+                val amount: Double = binding.amount.text.toString().toDouble()
+                val description = binding.description.text.toString()
                 changeMoneyMovingViewModel.saveDataToSp()
-                val result: Long = changeMoneyMovingViewModel.changeMoneyMovementInDB()
+                val result: Long = changeMoneyMovingViewModel.changeMoneyMovementInDB(amount,description)
                 if (result > 0) {
                     view?.hideKeyboard()
                     message("запись изменена")

@@ -250,9 +250,9 @@ class ChangeMoneyMovingViewModel(
 //        amountSPDouble = spValues.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
     }
 
-    suspend fun changeMoneyMovementInDB(): Long {
+    suspend fun changeMoneyMovementInDB(amount: Double, description: String): Long {
         val dateTimeVal = _dateTime.value?.parseTimeToMillis() ?: 0
-        val amountVal: Double = _amountMoney.value?.toDouble() ?: 0.0
+        messageLog("amount = $amount")
         return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
             db = dbMoneyMovement,
             id = idMoneyMovingForChangeLong,
@@ -260,8 +260,8 @@ class ChangeMoneyMovingViewModel(
             cashAccountId = _selectedCashAccount.value?.cashAccountId ?: 0,
             categoryId = _selectedCategory.value?.categoriesId ?: 0,
             currencyId = _selectedCurrency.value?.currencyId ?: 0,
-            amount = amountVal,
-            description = _descriptionText.value.toString()
+            amount = amount,
+            description = description
         ).toLong()
     }
 }
