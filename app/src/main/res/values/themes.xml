@@ -86,4 +86,9 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="DialogLayout">
+        <item name="android:padding">@dimen/margin_double</item>
+        <item name="cornerRadius">@dimen/margin_double</item>
+    </style>
+
 </resources>

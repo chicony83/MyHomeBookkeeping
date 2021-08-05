@@ -13,4 +13,7 @@
 
     <color name="warning">#40FF0000</color>
 
+    <color name="dialogDayBackground">#FFFFFFFF</color>
+    <color name="dialogNightBackground">#FF000000</color>
+
 </resources>

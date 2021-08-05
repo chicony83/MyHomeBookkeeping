@@ -110,6 +110,7 @@ class ChangeMoneyMovingFragment : Fragment() {
             getDataForChangeMoneyMovingLine()
             getLineForChange()
         }
+
     }
 
     private fun pressSubmitButton() {

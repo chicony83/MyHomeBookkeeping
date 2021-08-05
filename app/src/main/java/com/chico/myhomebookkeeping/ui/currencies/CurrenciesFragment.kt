@@ -1,5 +1,7 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -148,6 +150,32 @@ class CurrenciesFragment : Fragment() {
                     }
                     uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                 }
+            }
+            checkUiMode()
+        }
+    }
+    @SuppressLint("ResourceAsColor")
+    private fun checkUiMode() {
+
+        val nightModeFlags = requireContext().resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+//                message("ночь")
+                binding.newCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
+                binding.changeCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
+                binding.confirmationLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.newCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+                binding.changeCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+                binding.confirmationLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+
+//                message("день")
+//                binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED ->{
+//                message("хз")
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +23,7 @@ import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlin.properties.Delegates
 
 class MoneyMovingFragment : Fragment() {
 
@@ -31,6 +34,7 @@ class MoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private val uiHelper = UiHelper()
     private lateinit var control: NavController
+    private var nightColor by Delegates.notNull<Int>()
 
     private var selectedMoneyMovingId = 0
 
@@ -40,6 +44,8 @@ class MoneyMovingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        nightColor = resources.getColor(R.color.dialogNightBackground)
+        
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
 
@@ -122,10 +128,32 @@ class MoneyMovingFragment : Fragment() {
             }
         }
 
+        checkUiMode()
+
         checkLinesFound()
         moneyMovingViewModel.cleaningSP()
-
     }
+
+    @SuppressLint("ResourceAsColor")
+    private fun checkUiMode() {
+
+        val nightModeFlags = requireContext().resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+//                message("ночь")
+                binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+//                message("день")
+                binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED ->{
+//                message("хз")
+            }
+        }
+    }
+
 
     private fun checkLinesFound() {
         var numFoundedLines = moneyMovingViewModel.getNumFoundLines()
@@ -137,12 +165,19 @@ class MoneyMovingFragment : Fragment() {
                     numFoundedLines = moneyMovingViewModel.getNumFoundLines()
                 }
             }
-            Toast.makeText(context, "найдено $numFoundedLines записи", Toast.LENGTH_LONG).show()
+            message("найдено $numFoundedLines строк")
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun message(text: String) {
+        launchUi {
+            delay(1000)
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        }
     }
 }
