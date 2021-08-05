@@ -1,5 +1,7 @@
 package com.chico.myhomebookkeeping.ui.categories
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -213,7 +215,34 @@ class CategoriesFragment : Fragment() {
                 }
             }
         }
+        checkUiMode()
     }
+
+    @SuppressLint("ResourceAsColor")
+    private fun checkUiMode() {
+        val nightModeFlags = requireContext().resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                setBackground(R.drawable.dialog_background_night)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                setBackground(R.drawable.dialog_background_day)
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                setBackground(R.drawable.dialog_background_day)
+            }
+        }
+    }
+
+    private fun setBackground(shape: Int) {
+        with(binding) {
+            newCategoryLayout.root.setBackgroundResource(shape)
+            changeCategoryLayout.root.setBackgroundResource(shape)
+            confirmationLayout.root.setBackgroundResource(shape)
+        }
+    }
+
 
     private fun isSelectedCategoryIncome(
         incomingRadioButton: RadioButton,
