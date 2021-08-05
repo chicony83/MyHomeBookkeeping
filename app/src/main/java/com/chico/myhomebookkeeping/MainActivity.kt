@@ -14,9 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
-import com.chico.myhomebookkeeping.collections.Collections
 import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.helpers.PurifierSharedPreferences
 import com.chico.myhomebookkeeping.helpers.UiHelper
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     //        getSharedPreferences(spName, MODE_PRIVATE)
     private lateinit var spEditor: SharedPreferences.Editor
-    private lateinit var purifierSharedPreferences :PurifierSharedPreferences
 
     //    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
     private lateinit var navController: NavController

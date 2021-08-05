@@ -154,29 +154,29 @@ class CurrenciesFragment : Fragment() {
             checkUiMode()
         }
     }
+
     @SuppressLint("ResourceAsColor")
     private fun checkUiMode() {
-
         val nightModeFlags = requireContext().resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK
         when (nightModeFlags) {
             Configuration.UI_MODE_NIGHT_YES -> {
-//                message("ночь")
-                binding.newCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
-                binding.changeCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
-                binding.confirmationLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
+                setBackground(R.drawable.dialog_background_night)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
-                binding.newCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
-                binding.changeCurrencyLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
-                binding.confirmationLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+                setBackground(R.drawable.dialog_background_day)
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                setBackground(R.drawable.dialog_background_day)
+            }
+        }
+    }
 
-//                message("день")
-//                binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED ->{
-//                message("хз")
-            }
+    private fun setBackground(shape: Int) {
+        with(binding) {
+            newCurrencyLayout.root.setBackgroundResource(shape)
+            changeCurrencyLayout.root.setBackgroundResource(shape)
+            confirmationLayout.root.setBackgroundResource(shape)
         }
     }
 
