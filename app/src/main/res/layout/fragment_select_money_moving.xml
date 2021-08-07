@@ -99,11 +99,13 @@
 
         <Button
             android:id="@+id/change_button"
+            style="@style/DialogButtonLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/change_button_text" />
 
         <Button
+            style="@style/DialogButtonRight"
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

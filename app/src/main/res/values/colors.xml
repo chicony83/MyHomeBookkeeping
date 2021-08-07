@@ -16,4 +16,18 @@
     <color name="dialogDayBackground">#FFFFFFFF</color>
     <color name="dialogNightBackground">#FF000000</color>
 
+    <color name="colorPrimary">#034C8C</color>
+    <color name="colorPrimaryVariant">#048ABF</color>
+    <color name="colorOnPrimary">#B0CDD9</color>
+    <color name="colorSecondary">#F2D7B6</color>
+    <color name="colorSecondaryVariant">#F29E6D</color>
+
+    <color name="colorPrimaryNight">#292929</color>
+    <color name="colorPrimaryVariantNight">#5B7876</color>
+    <color name="colorOnPrimaryNight">#8F9E8B</color>
+    <color name="colorSecondaryNight">#F2E6B6</color>
+    <color name="colorSecondaryVariantNight">#412A22</color>
+
+
+
 </resources>
