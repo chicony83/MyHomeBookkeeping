@@ -2,3 +2,5 @@
 0002 change in saved row entries in DB after enter password
 0003 login in program after enter password
 0004 при создании нового счета указывать входящий остаток
+0005 распознание чека с помощью ИИ
+0006 виджет на экран для быстрого добавления чека
