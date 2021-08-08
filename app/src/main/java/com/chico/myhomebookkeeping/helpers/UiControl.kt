@@ -8,9 +8,6 @@ class UiControl(
     private val confirmationLayoutHolder: LinearLayout,
     private val changeItemLayoutHolder: LinearLayout
 ) {
-//    var isConfirmationLayoutVisible = false
-//    var isNewItemLayoutVisible = false
-//    var isChangeLineLayoutVisible = false
 
     private val showHideLayouts = ShowHideLayouts()
 

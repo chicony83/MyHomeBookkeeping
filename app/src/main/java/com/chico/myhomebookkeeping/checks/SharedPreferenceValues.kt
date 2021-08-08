@@ -23,14 +23,10 @@ class SharedPreferenceValues(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getString(argsKey, argsNone)?:""
     }
 
-    //    fun getValueBundle(arguments: Bundle?, args: String): Int {
-//        return arguments?.getInt(args) ?: -1
-//    }
     fun setLong(args: String, id: Long?) {
         spEditor.putLong(args, id ?: minusOneLong)
         spEditor.commit()
     }
-
 
     fun isCategoryNone(argsIncomeSpending: String): Boolean {
         return sharedPreferences.getString(argsIncomeSpending, argsNone).toString() == argsNone
@@ -43,6 +39,4 @@ class SharedPreferenceValues(private val sharedPreferences: SharedPreferences) {
     fun isCategorySpending(argsIncomeSpending: String): Boolean {
         return sharedPreferences.getString(argsIncomeSpending, argsNone).toString() == argsSpending
     }
-
-
 }

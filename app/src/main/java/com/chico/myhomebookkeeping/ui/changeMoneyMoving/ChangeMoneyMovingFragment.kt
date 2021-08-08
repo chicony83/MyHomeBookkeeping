@@ -99,8 +99,7 @@ class ChangeMoneyMovingFragment : Fragment() {
 
         timePicker.addOnPositiveButtonClickListener {
             val hour: Int = timePicker.hour
-//            Log.i("TAG","hour = $hour")
-            var minute: Int = timePicker.minute
+            val minute: Int = timePicker.minute
             with(changeMoneyMovingViewModel) {
                 setTime(hour, minute)
                 setDateTimeOnButton()
@@ -110,7 +109,6 @@ class ChangeMoneyMovingFragment : Fragment() {
             getDataForChangeMoneyMovingLine()
             getLineForChange()
         }
-
     }
 
     private fun pressSubmitButton() {
@@ -125,13 +123,11 @@ class ChangeMoneyMovingFragment : Fragment() {
                     message("запись изменена")
                     control.navigate(R.id.nav_money_moving)
                 }
-//                changeMoneyMovingViewModel.changeMoneyMovementInDB()
             }
         } else {
             setBackgroundWarningColor(binding.amount)
             message("введите сумму")
         }
-
     }
 
     private fun setBackgroundWarningColor(editText: EditText) {
@@ -150,9 +146,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         _binding = null
     }
 
-
     fun message(text: String): Unit {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
-
 }

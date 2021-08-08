@@ -14,10 +14,10 @@ class ShowHideLayouts {
         hideLayout(hideSecondLayout)
         hideLayout(hideThirdLayout)
     }
-    fun hideLayout(element: LinearLayout) {
+    private fun hideLayout(element: LinearLayout) {
         element.visibility = viewGone()
     }
-    fun showLayout(element: LinearLayout) {
+    private fun showLayout(element: LinearLayout) {
         element.visibility = viewVisible()
     }
 
