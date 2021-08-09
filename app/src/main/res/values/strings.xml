@@ -73,4 +73,7 @@
     <string name="currency_text">currency</string>
     <string name="category_text">category</string>
 
+    <string name="help_fragment">help</string>
+    <string name="submit_text_button">submit</string>
+
 </resources>

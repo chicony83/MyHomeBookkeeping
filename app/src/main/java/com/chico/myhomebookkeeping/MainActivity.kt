@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         hideFab(navController, fab)
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
 //        purifierSharedPreferences.purifierSPForChangeMoneyMovement()
@@ -86,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
                 R.id.nav_money_moving_query -> uiHelper.hideUiElement(fab)
                 R.id.nav_setting -> uiHelper.hideUiElement(fab)
+                R.id.nav_help_fragment->uiHelper.hideUiElement(fab)
                 else -> uiHelper.showUiElement(fab)
             }
         }
@@ -103,8 +106,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.main, menu)
         return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.help_button -> {
+                navController.navigate(R.id.nav_help_fragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

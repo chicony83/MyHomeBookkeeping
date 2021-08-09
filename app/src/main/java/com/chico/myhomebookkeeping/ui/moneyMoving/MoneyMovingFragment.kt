@@ -2,16 +2,20 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
@@ -21,6 +25,7 @@ import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
+import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlin.properties.Delegates
@@ -45,7 +50,7 @@ class MoneyMovingFragment : Fragment() {
     ): View {
 
         nightColor = resources.getColor(R.color.dialogNightBackground)
-        
+
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
 
@@ -127,7 +132,6 @@ class MoneyMovingFragment : Fragment() {
                 }
             }
         }
-
         checkUiMode()
 
         checkLinesFound()
@@ -148,7 +152,7 @@ class MoneyMovingFragment : Fragment() {
 //                message("день")
                 binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
             }
-            Configuration.UI_MODE_NIGHT_UNDEFINED ->{
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
 //                message("хз")
             }
         }

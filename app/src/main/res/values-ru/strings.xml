@@ -53,4 +53,7 @@
     <string name="income_category_text_radio_button">доходы</string>
     <string name="spending_category_text_radio_button">расходы</string>
     <string name="select_category_message_text">выберите категорию</string>
+
+    <string name="help_fragment">помощь</string>
+    <string name="submit_text_button">принять</string>
 </resources>

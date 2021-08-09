@@ -5,6 +5,7 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_money_moving">
 
+
     <fragment
         android:id="@+id/nav_new_money_moving"
         android:name="com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment"
@@ -139,6 +140,11 @@
             android:id="@+id/action_nav_setting_to_nav_select_password"
             app:destination="@id/nav_select_password" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_help_fragment"
+        android:name="com.chico.myhomebookkeeping.ui.help.HelpFragment"
+        android:label="HelpFragment"
+        tools:layout="@layout/fragment_help"/>
 
 
 </navigation>
