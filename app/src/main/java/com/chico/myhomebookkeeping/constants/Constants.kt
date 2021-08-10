@@ -36,4 +36,6 @@ object Constants {
 
     const val MINUS_ONE_VAL_INT: Int = -1
     const val MINUS_ONE_VAL_LONG: Long = -1L
+
+    const val LOCAL_ASSETS_URL = "file:///android_asset/"
 }
