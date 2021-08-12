@@ -1,0 +1,50 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Buttons">
+
+    </style>
+
+    <style name="ButtonsMatchParent_WrapContent" parent="Buttons">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="SelectedParamDescription">
+        <item name="android:layout_marginStart">@dimen/margin_double</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="SelectedParamName" parent="WrapContent_WrapContent">
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="DialogButtons" parent="Buttons">
+        <item name="elevation">@dimen/margin_half_normal</item>
+        <item name="android:insetTop">@dimen/margin_zero</item>
+        <item name="android:insetBottom">@dimen/margin_zero</item>
+        <item name="android:layout_margin">@dimen/margin_half_normal</item>
+    </style>
+
+    <style name="DialogButtonLeft" parent="DialogButtons">
+        <item name="android:layout_marginRight">@dimen/margin_quarter_of_normal</item>
+    </style>
+
+    <style name="DialogButtonCenter" parent="DialogButtons">
+        <item name="android:layout_marginRight">@dimen/margin_quarter_of_normal</item>
+        <item name="android:layout_marginLeft">@dimen/margin_quarter_of_normal</item>
+
+    </style>
+
+    <style name="DialogButtonRight" parent="DialogButtons">
+        <item name="android:layout_marginLeft">@dimen/margin_quarter_of_normal</item>
+    </style>
+
+    <style name="ButtonFullWidth" parent="DialogButtons">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>

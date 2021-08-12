@@ -39,12 +39,14 @@
 
         <Button
             android:id="@+id/saveChange"
+            style="@style/DialogButtonLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/save_button_text" />
 
         <Button
+            style="@style/DialogButtonRight"
             android:id="@+id/cancelChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

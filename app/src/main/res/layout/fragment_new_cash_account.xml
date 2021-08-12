@@ -30,8 +30,7 @@
 
     <Button
         android:id="@+id/addNewCashAccountButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/ButtonFullWidth"
         android:text="@string/add_new_cash_account_button_text" />
 
 

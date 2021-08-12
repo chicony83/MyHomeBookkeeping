@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DialogLayout">
+        <item name="android:padding">@dimen/margin_double</item>
+        <item name="cornerRadius">@dimen/margin_double</item>
+    </style>
+</resources>

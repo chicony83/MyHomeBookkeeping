@@ -84,11 +84,12 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.nav_change_money_moving -> uiHelper.hideUiElement(fab)
                 R.id.nav_currencies -> uiHelper.hideUiElement(fab)
-//                R.id.nav_categories -> uiHelper.hideUiElement(fab)
+                R.id.nav_categories -> uiHelper.hideUiElement(fab)
                 R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
                 R.id.nav_money_moving_query -> uiHelper.hideUiElement(fab)
                 R.id.nav_setting -> uiHelper.hideUiElement(fab)
                 R.id.nav_help_fragment->uiHelper.hideUiElement(fab)
+                R.id.nav_new_money_moving->uiHelper.hideUiElement(fab)
                 else -> uiHelper.showUiElement(fab)
             }
         }
