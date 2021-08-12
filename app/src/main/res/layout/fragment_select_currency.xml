@@ -25,6 +25,7 @@
         app:layout_constraintTop_toBottomOf="@id/description" />
 
     <Button
+        style="@style/DialogButtonLeft"
         android:id="@+id/selectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <Button
+        style="@style/DialogButtonCenter"
         android:id="@+id/changeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,6 +43,7 @@
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <Button
+        style="@style/DialogButtonRight"
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
