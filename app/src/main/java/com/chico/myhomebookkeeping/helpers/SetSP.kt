@@ -11,6 +11,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
+    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
     fun checkAndSaveToSP(
         navControlHelper: NavControlHelper,
@@ -80,9 +81,13 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private fun spCommit() {
         spEditor.commit()
     }
+    fun setLong(args: String, id: Long?) {
+        spEditor.putLong(args, id ?: minusOneLong)
+        spCommit()
+    }
 
     fun saveToSP(args: String, b: Boolean) {
-        logMessage(args = args.toString(), value = b.toString())
+        messageLog(argsKey = args.toString(), value = b.toString())
         spEditor.putBoolean(args, b)
         spCommit()
     }
@@ -93,9 +98,5 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     fun setIsFirstLaunchFalse(){
         spEditor.putBoolean(argsIsFirstLaunch,false)
         spCommit()
-    }
-
-    private fun logMessage(args: String, value: String) {
-        Log.i("TAG", "$args = $value")
     }
 }

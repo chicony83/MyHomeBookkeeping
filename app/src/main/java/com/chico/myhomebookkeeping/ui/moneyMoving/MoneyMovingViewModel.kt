@@ -249,7 +249,7 @@ class MoneyMovingViewModel(
     }
 
     fun saveMoneyMovingToChange() {
-        spValues.setLong(argsIdMoneyMovingForChange,_selectedMoneyMoving.value?.id)
+        setSP.setLong(argsIdMoneyMovingForChange,_selectedMoneyMoving.value?.id)
     }
 
     fun cleaningSP() {

@@ -9,8 +9,6 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     private val argsSpending = Constants.FOR_QUERY_SPENDING
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
-    private val spEditor = sharedPreferences.edit()
-
 
     fun getInt(argsKey: String): Int {
         return sharedPreferences.getInt(argsKey, minusOneInt)
@@ -25,11 +23,6 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     }
     fun getBoolean(argsKey:String):Boolean{
         return sharedPreferences.getBoolean(argsKey,true)
-    }
-
-    fun setLong(args: String, id: Long?) {
-        spEditor.putLong(args, id ?: minusOneLong)
-        spEditor.commit()
     }
 
     fun isCategoryNone(argsIncomeSpending: String): Boolean {
