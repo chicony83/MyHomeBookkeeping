@@ -3,12 +3,14 @@ package com.chico.myhomebookkeeping.helpers
 import android.content.SharedPreferences
 import android.util.Log
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.constants.Constants
 
-class SaveARGS(private val spEditor: SharedPreferences.Editor) {
+class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navNewMoneyMoving = R.id.nav_new_money_moving
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
+    private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
 
     fun checkAndSaveToSP(
         navControlHelper: NavControlHelper,
@@ -37,7 +39,7 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
         argsKey: String,
         value: Int?
     ) {
-        messageLog( argsKey, value.toString())
+        messageLog(argsKey, value.toString())
         spEditor.putInt(argsKey, value ?: -1)
         spCommit()
     }
@@ -46,7 +48,7 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
         argsKey: String,
         value: String?
     ) {
-        messageLog( argsKey, value.toString())
+        messageLog(argsKey, value.toString())
         spEditor.putString(argsKey, value ?: "")
         spCommit()
     }
@@ -55,7 +57,7 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
         argsKey: String,
         value: Long?
     ) {
-        messageLog( argsKey, value.toString())
+        messageLog(argsKey, value.toString())
         spEditor.putLong(argsKey, value ?: -1)
         spCommit()
     }
@@ -70,11 +72,30 @@ class SaveARGS(private val spEditor: SharedPreferences.Editor) {
 
         Log.i("TAG", "--- save to SP $argsKey $value---")
     }
+
     private fun messageLog(value: String) {
         Log.i("TAG", "---$value---")
     }
 
     private fun spCommit() {
         spEditor.commit()
+    }
+
+    fun saveToSP(args: String, b: Boolean) {
+        logMessage(args = args.toString(), value = b.toString())
+        spEditor.putBoolean(args, b)
+        spCommit()
+    }
+    fun setIsFirstLaunchTrue(){
+        spEditor.putBoolean(argsIsFirstLaunch,true)
+        spCommit()
+    }
+    fun setIsFirstLaunchFalse(){
+        spEditor.putBoolean(argsIsFirstLaunch,false)
+        spCommit()
+    }
+
+    private fun logMessage(args: String, value: String) {
+        Log.i("TAG", "$args = $value")
     }
 }

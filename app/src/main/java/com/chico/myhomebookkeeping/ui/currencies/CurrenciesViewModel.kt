@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.currencies
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +12,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.SaveARGS
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
 
@@ -31,7 +30,7 @@ class CurrenciesViewModel(
     private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
     private val argsForChange = Constants.FOR_CHANGE_CURRENCY_KEY
 
-    private val saveARGS = SaveARGS(spEditor)
+    private val saveARGS = SetSP(spEditor)
 
     private val _currenciesList = MutableLiveData<List<Currencies>>()
     val currenciesList: LiveData<List<Currencies>>

@@ -15,8 +15,6 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
-import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
-import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -26,8 +24,6 @@ import kotlinx.coroutines.runBlocking
 import kotlin.properties.Delegates
 
 class MoneyMovingFragment : Fragment() {
-
-    private lateinit var db: MoneyMovementDao
 
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
     private var _binding: FragmentMoneyMovingBinding? = null
@@ -45,8 +41,7 @@ class MoneyMovingFragment : Fragment() {
     ): View {
 
         nightColor = resources.getColor(R.color.dialogNightBackground)
-        
-        db = dataBase.getDataBase(requireContext()).moneyMovementDao()
+
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
 
         moneyMovingViewModel =
@@ -91,10 +86,6 @@ class MoneyMovingFragment : Fragment() {
         return binding.root
     }
 
-    private fun pressSelectButton(fragment: Int) {
-        control.navigate(fragment)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
@@ -103,19 +94,19 @@ class MoneyMovingFragment : Fragment() {
 
         with(binding) {
             selectCategory.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                launchFragment(R.id.nav_categories)
             }
             selectCurrency.setOnClickListener {
-                pressSelectButton(R.id.nav_currencies)
+                launchFragment(R.id.nav_currencies)
             }
             selectCashAccount.setOnClickListener {
-                pressSelectButton(R.id.nav_cash_account)
+                launchFragment(R.id.nav_cash_account)
             }
             with(selectLayout) {
                 changeButton.setOnClickListener {
                     runBlocking {
                         moneyMovingViewModel.saveMoneyMovingToChange()
-                        pressSelectButton(R.id.nav_change_money_moving)
+                        launchFragment(R.id.nav_change_money_moving)
                     }
 
                 }
@@ -126,13 +117,39 @@ class MoneyMovingFragment : Fragment() {
                     }
                 }
             }
+            with(firstLaunchDialog){
+                submitFirstLaunchButton.setOnClickListener{
+                    launchFragment(R.id.nav_first_launch_fragment)
+                }
+                cancelFirstLaunchButton.setOnClickListener{
+                    uiHelper.hideUiElement(binding.firstLaunchDialogHolder)
+                    moneyMovingViewModel.setIsFirstLaunchFalse()
+                }
+            }
+
         }
 
         checkUiMode()
-
         checkLinesFound()
-        moneyMovingViewModel.cleaningSP()
+        with(moneyMovingViewModel) {
+            cleaningSP()
+            if (isFirstLaunch()){
+//                firstLaunchMessage()
+                binding.firstLaunchDialogHolder.visibility = View.VISIBLE
+                setIsFirstLaunchFalse()
+            }
+        }
     }
+    private fun launchFragment(fragment: Int) {
+        control.navigate(fragment)
+    }
+
+//    private fun firstLaunchMessage() {
+//        launchUi {
+//            delay(2000)
+//            message("это первый запуск программы")
+//        }
+//    }
 
     @SuppressLint("ResourceAsColor")
     private fun checkUiMode() {
@@ -148,7 +165,7 @@ class MoneyMovingFragment : Fragment() {
 //                message("день")
                 binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
             }
-            Configuration.UI_MODE_NIGHT_UNDEFINED ->{
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
 //                message("хз")
             }
         }

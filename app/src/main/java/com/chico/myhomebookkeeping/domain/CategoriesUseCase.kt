@@ -28,4 +28,10 @@ object CategoriesUseCase {
             db.changeLine(id,name,isIncome)
         }
     }
+    fun addNewCategory(
+        db: CategoryDao,
+        newCategory:Categories
+    )= runBlocking{
+        db.addCategory(newCategory)
+    }
 }

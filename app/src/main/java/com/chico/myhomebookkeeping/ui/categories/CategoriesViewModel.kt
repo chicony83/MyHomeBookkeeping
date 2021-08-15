@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.SaveARGS
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class CategoriesViewModel(
@@ -36,7 +36,7 @@ class CategoriesViewModel(
     private val argsSpending = Constants.FOR_QUERY_SPENDING
     private val argsNone = Constants.FOR_QUERY_NONE
 
-    private val saveARGS = SaveARGS(spEditor)
+    private val saveARGS = SetSP(spEditor)
 
     init {
         loadCategories()

@@ -24,9 +24,9 @@
             android:id="@+id/nav_cash_account"
             android:icon="@drawable/ic_credit_card"
             android:title="@string/title_cash_account"/>
-        <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/title_settings"/>
+<!--        <item-->
+<!--            android:id="@+id/nav_setting"-->
+<!--            android:icon="@drawable/ic_settings"-->
+<!--            android:title="@string/title_settings"/>-->
     </group>
 </menu>

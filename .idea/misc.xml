@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/dialog_background.xml" value="0.290625" />
         <entry key="app/src/main/res/drawable/dialog_background_day.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_add_box.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/blur.xml" value="0.348731884057971" />
         <entry key="app/src/main/res/layout/blur_layout.xml" value="0.353713768115942" />
@@ -14,6 +15,9 @@
         <entry key="app/src/main/res/layout/fragment_change_category.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_change_currency.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_change_money_moving.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/fragment_first_launch.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_first_launch_diallog.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_first_launch_dialog.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_money_moving.xml" value="0.30344202898550726" />
         <entry key="app/src/main/res/layout/fragment_money_moving_query.xml" value="0.259963768115942" />
         <entry key="app/src/main/res/layout/fragment_new_cash_account.xml" value="0.2617753623188406" />
@@ -21,6 +25,12 @@
         <entry key="app/src/main/res/layout/fragment_select_category.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_select_currency.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_select_money_moving.xml" value="0.30344202898550726" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25905797101449274" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.371875" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.371875" />
       </map>
     </option>
   </component>
