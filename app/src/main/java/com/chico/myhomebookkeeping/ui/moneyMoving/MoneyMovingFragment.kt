@@ -131,11 +131,32 @@ class MoneyMovingFragment : Fragment() {
                     }
                 }
             }
+            with(firstLaunchDialog){
+                submitFirstLaunchButton.setOnClickListener{
+                    launchFragment(R.id.nav_first_launch_fragment)
+                }
+                cancelFirstLaunchButton.setOnClickListener{
+                    uiHelper.hideUiElement(binding.firstLaunchDialogHolder)
+                    moneyMovingViewModel.setIsFirstLaunchFalse()
+                }
+            }
         }
         checkUiMode()
-
         checkLinesFound()
+        checkFirstLaunch()
         moneyMovingViewModel.cleaningSP()
+    }
+    private fun launchFragment(fragment: Int) {
+        control.navigate(fragment)
+    }
+
+    private fun checkFirstLaunch() {
+        if (moneyMovingViewModel.isFirstLaunch())
+        {
+            binding.firstLaunchDialogHolder.visibility = View.VISIBLE
+            moneyMovingViewModel.setIsFirstLaunchFalse()
+        }
+
     }
 
     @SuppressLint("ResourceAsColor")

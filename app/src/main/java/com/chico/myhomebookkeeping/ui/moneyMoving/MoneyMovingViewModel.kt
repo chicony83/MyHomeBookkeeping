@@ -57,7 +57,7 @@ class MoneyMovingViewModel(
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
-    private var spValues = GetSP(sharedPreferences)
+    private var getSP = GetSP(sharedPreferences)
 
     private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>>()
     val moneyMovementList: MutableLiveData<List<FullMoneyMoving>>
@@ -151,17 +151,17 @@ class MoneyMovingViewModel(
                     categorySP
                 )?.categoryName.toString()
             }
-            if (spValues.isCategoryNone(argsIncomeSpending)) {
+            if (getSP.isCategoryNone(argsIncomeSpending)) {
                 if (!modelCheck.isPositiveValue(categorySP)) {
                     name = getResourceText(R.string.all_text)
                 }
             }
-            if (!spValues.isCategoryNone(argsIncomeSpending)) {
-                if (spValues.isCategoryIncome(argsIncomeSpending)) {
+            if (!getSP.isCategoryNone(argsIncomeSpending)) {
+                if (getSP.isCategoryIncome(argsIncomeSpending)) {
                     name = getResourceText(R.string.allIncome)
                     Log.i("TAG", "income message")
                 }
-                if (spValues.isCategorySpending(argsIncomeSpending)) {
+                if (getSP.isCategorySpending(argsIncomeSpending)) {
                     Log.i("TAG", "income spending")
                     name = getResourceText(R.string.allSpending)
                 }
@@ -184,10 +184,10 @@ class MoneyMovingViewModel(
     }
 
     private fun getValuesSP() {
-        incomeSpendingSP = spValues.getString(argsIncomeSpending) ?: argsNone
-        cashAccountSP = spValues.getInt(argsCashAccountKey)
-        currencySP = spValues.getInt(argsCurrencyKey)
-        categorySP = spValues.getInt(argsCategoryKey)
+        incomeSpendingSP = getSP.getString(argsIncomeSpending) ?: argsNone
+        cashAccountSP = getSP.getInt(argsCashAccountKey)
+        currencySP = getSP.getInt(argsCurrencyKey)
+        categorySP = getSP.getInt(argsCategoryKey)
     }
 
     private fun loadMoneyMovement(): Int {
@@ -271,7 +271,7 @@ class MoneyMovingViewModel(
     }
 
     fun isFirstLaunch() :Boolean{
-        return spValues.getBoolean(argsIsFirstLaunch)
+        return getSP.getBoolean(argsIsFirstLaunch)
     }
 
     fun setIsFirstLaunchFalse() {

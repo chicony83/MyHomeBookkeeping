@@ -38,6 +38,8 @@ class FirstLaunchFragment : Fragment() {
                 firstLaunchViewModel.addDefaultCurrency()
             }
             launchFragment(R.id.nav_money_moving)
+
+            firstLaunchViewModel.setIsFirstLaunchFalse()
         }
 
         return binding.root

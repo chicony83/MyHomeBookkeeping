@@ -32,7 +32,7 @@ class FirstLaunchViewModel(
     private val spName = Constants.SP_NAME
     private val sharedPreferences:SharedPreferences = app.getSharedPreferences(spName,MODE_PRIVATE)
     private val spEditor = sharedPreferences.edit()
-    private val saveARGS = SetSP(spEditor)
+    private val setSP = SetSP(spEditor)
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
 
 
@@ -63,5 +63,9 @@ class FirstLaunchViewModel(
         launchIo {
             CurrenciesUseCase.addNewCurrency(dbCurrencies,currencies)
         }
+    }
+
+    fun setIsFirstLaunchFalse() {
+        setSP.setIsFirstLaunchFalse()
     }
 }

@@ -145,6 +145,10 @@
         android:name="com.chico.myhomebookkeeping.ui.help.HelpFragment"
         android:label="HelpFragment"
         tools:layout="@layout/fragment_help"/>
-
+    <fragment
+        android:id="@+id/nav_first_launch_fragment"
+        android:name="com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchFragment"
+        android:label="first_launch"
+        tools:layout="@layout/fragment_first_launch" />
 
 </navigation>
