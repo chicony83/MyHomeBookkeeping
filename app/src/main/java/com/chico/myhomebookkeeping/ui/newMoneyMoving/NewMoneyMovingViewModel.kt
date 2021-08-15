@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
+import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -20,7 +20,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
-import com.chico.myhomebookkeeping.helpers.SaveARGS
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeToMillis
@@ -53,9 +53,9 @@ class NewMoneyMovingViewModel(
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
     //    private val spEditor = sharedPreferences.edit()
-    private val saveARGS = SaveARGS(spEditor = sharedPreferences.edit())
+    private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
 
-    private val spValues = SharedPreferenceValues(sharedPreferences)
+    private val spValues = GetSP(sharedPreferences)
 
     private val _dateTime = MutableLiveData<String>()
     val dataTime: LiveData<String>

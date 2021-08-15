@@ -25,7 +25,7 @@ object CashAccountsUseCase {
     fun addNewCashAccount(
         db: CashAccountDao,
         newCashAccount: CashAccount,
-    ) = launchIo {
+    ) = runBlocking {
         db.addCashAccount(newCashAccount)
     }
 

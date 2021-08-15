@@ -13,7 +13,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.SaveARGS
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
 
@@ -33,7 +33,7 @@ class CashAccountViewModel(
     private val argsForQuery = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
     private val argsForChange = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
 
-    private val saveARGS = SaveARGS(spEditor)
+    private val saveARGS = SetSP(spEditor)
 
     private val _cashAccountsList = MutableLiveData<List<CashAccount>>()
     val cashAccountList: LiveData<List<CashAccount>>

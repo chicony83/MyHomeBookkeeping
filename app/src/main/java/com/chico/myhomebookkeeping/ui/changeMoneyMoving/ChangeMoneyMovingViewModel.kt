@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
+import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -20,7 +20,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
-import com.chico.myhomebookkeeping.helpers.SaveARGS
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
@@ -54,8 +54,8 @@ class ChangeMoneyMovingViewModel(
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
-    private val spValues = SharedPreferenceValues(sharedPreferences)
-    private val saveARGS = SaveARGS(spEditor = sharedPreferences.edit())
+    private val spValues = GetSP(sharedPreferences)
+    private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
 
     private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
     private var idMoneyMovingForChangeLong: Long = -1

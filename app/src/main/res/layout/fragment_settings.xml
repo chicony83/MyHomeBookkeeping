@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.settings.SettingsFragment">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/security" />-->
-
-    <CheckBox
-        android:id="@+id/enterInProgramWithPassword"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="вход в программу по паролю" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <CheckBox
-        android:id="@+id/changeLinesWithPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="изменять записи по паролю"/>
+<!--        <CheckBox-->
+<!--            android:id="@+id/enterInProgramWithPassword"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="вход в программу по паролю" />-->
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/changeLinesWithPassword"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="изменять записи по паролю" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/changePasswordButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="изменить пароль" />-->
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/changePasswordButton"
+        android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="изменить пароль" />
-
-</LinearLayout>
+        android:text="@string/save_button_text"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

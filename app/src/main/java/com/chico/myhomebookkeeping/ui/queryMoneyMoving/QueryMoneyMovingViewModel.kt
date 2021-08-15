@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
+import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -18,7 +18,6 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 
 class QueryMoneyMovingViewModel(
@@ -49,7 +48,7 @@ class QueryMoneyMovingViewModel(
     )
     private val spEditor = sharedPreferences.edit()
 
-    private val spValues = SharedPreferenceValues(sharedPreferences)
+    private val spValues = GetSP(sharedPreferences)
 
     private val _selectedCurrency = MutableLiveData<Currencies?>()
     val selectedCurrency: MutableLiveData<Currencies?>

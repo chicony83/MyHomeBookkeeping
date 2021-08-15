@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.checks.SharedPreferenceValues
+import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
@@ -22,7 +22,7 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
-import com.chico.myhomebookkeeping.helpers.SaveARGS
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 
@@ -36,6 +36,8 @@ class MoneyMovingViewModel(
     private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
     private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
+    private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
+
     private val modelCheck = ModelCheck()
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
@@ -50,12 +52,12 @@ class MoneyMovingViewModel(
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
     private val spEditor = sharedPreferences.edit()
-    private val saveARGS = SaveARGS(spEditor)
+    private val setSP = SetSP(spEditor)
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
-    private var spValues = SharedPreferenceValues(sharedPreferences)
+    private var spValues = GetSP(sharedPreferences)
 
     private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>>()
     val moneyMovementList: MutableLiveData<List<FullMoneyMoving>>
@@ -251,7 +253,7 @@ class MoneyMovingViewModel(
     }
 
     fun cleaningSP() {
-        with(saveARGS) {
+        with(setSP) {
            val argsDateTimeChangeKey = Constants.FOR_CHANGE_DATE_TIME_KEY
            val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
            val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
@@ -266,5 +268,13 @@ class MoneyMovingViewModel(
             saveToSP(argsDescriptionChangeKey,"")
             saveToSP(argsAmountChangeKey,"")
         }
+    }
+
+    fun isFirstLaunch() :Boolean{
+        return spValues.getBoolean(argsIsFirstLaunch)
+    }
+
+    fun setIsFirstLaunchFalse() {
+        setSP.setIsFirstLaunchFalse()
     }
 }

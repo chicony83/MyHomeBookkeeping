@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.viewbinding.ViewBinding
 import com.chico.myhomebookkeeping.constants.Constants
 
 import com.google.android.material.button.MaterialButton
@@ -40,6 +41,10 @@ class UiHelper(
 
     fun isCheckedRadioButton(radioButton: RadioButton): Boolean {
         return radioButton.isChecked
+    }
+
+    fun isCheckedCheckBox(checkBox: CheckBox):Boolean{
+        return checkBox.isChecked
     }
 
     fun isVisibleLayout(linearLayout: LinearLayout): Boolean {
@@ -119,4 +124,5 @@ class UiHelper(
     private fun viewGone(): Int {
         return View.GONE
     }
+
 }

@@ -15,7 +15,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private val uiHelper = UiHelper()
     private val spName = Constants.SP_NAME
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var getSP:GetSP
+    private lateinit var setSP: SetSP
 
     //        getSharedPreferences(spName, MODE_PRIVATE)
     private lateinit var spEditor: SharedPreferences.Editor
@@ -37,8 +41,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         sharedPreferences = getSharedPreferences(spName, MODE_PRIVATE)
-
+        getSP = GetSP(sharedPreferences)
         spEditor = sharedPreferences.edit()
+        setSP = SetSP(spEditor)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -72,9 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-//        purifierSharedPreferences.purifierSPForChangeMoneyMovement()
     }
-
 
     private fun hideFab(
         navController: NavController,

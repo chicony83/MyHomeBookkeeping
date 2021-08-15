@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DialogLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="это первый запуск программы \n включить обучение работы с программой \n и настройку первого запуска"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/submitFirstLaunchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="да"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
+
+
+    <Button
+        android:id="@+id/cancelFirstLaunchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="нет"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
+</androidx.constraintlayout.widget.ConstraintLayout>
