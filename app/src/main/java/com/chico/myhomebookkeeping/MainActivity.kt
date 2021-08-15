@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val uiHelper = UiHelper()
     private val spName = Constants.SP_NAME
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var getSP:GetSP
+    private lateinit var getSP: GetSP
     private lateinit var setSP: SetSP
 
     //        getSharedPreferences(spName, MODE_PRIVATE)
@@ -91,8 +91,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
                 R.id.nav_money_moving_query -> uiHelper.hideUiElement(fab)
                 R.id.nav_setting -> uiHelper.hideUiElement(fab)
-                R.id.nav_help_fragment->uiHelper.hideUiElement(fab)
-                R.id.nav_new_money_moving->uiHelper.hideUiElement(fab)
+                R.id.nav_help_fragment -> uiHelper.hideUiElement(fab)
+                R.id.nav_new_money_moving -> uiHelper.hideUiElement(fab)
+                R.id.nav_first_launch_fragment -> uiHelper.hideUiElement(fab)
                 else -> uiHelper.showUiElement(fab)
             }
         }
@@ -113,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.help_button -> {
