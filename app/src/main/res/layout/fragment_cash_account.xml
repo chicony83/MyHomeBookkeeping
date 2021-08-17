@@ -36,7 +36,7 @@
 
         <include
             android:id="@+id/confirmationLayout"
-            layout="@layout/fragment_select_cash_account" />
+            layout="@layout/dialog_select_cash_account" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +51,7 @@
 
         <include
             android:id="@+id/newCashAccountLayout"
-            layout="@layout/fragment_new_cash_account" />
+            layout="@layout/dialog_new_cash_account" />
 
     </LinearLayout>
 
@@ -68,7 +68,7 @@
 
         <include
             android:id="@+id/changeCashAccountLayout"
-            layout="@layout/fragment_change_cash_account" />
+            layout="@layout/dialog_change_cash_account" />
     </LinearLayout>
 
     <Button

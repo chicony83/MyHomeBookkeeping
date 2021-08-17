@@ -36,7 +36,7 @@
 
         <include
             android:id="@id/confirmationLayout"
-            layout="@layout/fragment_select_currency" />
+            layout="@layout/dialog_select_currency" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +51,7 @@
 
         <include
             android:id="@+id/newCurrencyLayout"
-            layout="@layout/fragment_new_currency" />
+            layout="@layout/dialog_new_currency" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent">
         <include
             android:id="@+id/changeCurrencyLayout"
-            layout="@layout/fragment_change_currency"/>
+            layout="@layout/dialog_change_currency"/>
     </LinearLayout>
 
     <Button

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.databinding.CategoriesRecyclerViewItemBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
 
 class CategoriesAdapter(
@@ -17,7 +17,7 @@ class CategoriesAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ): ViewHolder {
-        val binding = CategoriesRecyclerViewItemBinding
+        val binding = RecyclerViewItemCategoriesBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -31,7 +31,7 @@ class CategoriesAdapter(
     override fun getItemCount() = categoriesList.size
 
     inner class ViewHolder(
-        private val binding: CategoriesRecyclerViewItemBinding
+        private val binding: RecyclerViewItemCategoriesBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(categories: Categories) {

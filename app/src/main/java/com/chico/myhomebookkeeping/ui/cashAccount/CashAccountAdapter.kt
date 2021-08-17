@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.databinding.CashAccountRecyclerViewItemBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCashAccountBinding
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 
 class CashAccountAdapter(
@@ -17,7 +17,7 @@ class CashAccountAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        val binding = CashAccountRecyclerViewItemBinding
+        val binding = RecyclerViewItemCashAccountBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -30,7 +30,7 @@ class CashAccountAdapter(
     override fun getItemCount() = cashAccountList.size
 
     inner class ViewHolder(
-        private val binding: CashAccountRecyclerViewItemBinding
+        private val binding: RecyclerViewItemCashAccountBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
 

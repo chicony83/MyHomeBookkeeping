@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.databinding.CurrenciesRecyclerViewItemBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCurrenciesBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
 class CurrenciesAdapter(
@@ -17,7 +17,7 @@ class CurrenciesAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = CurrenciesRecyclerViewItemBinding
+        val binding = RecyclerViewItemCurrenciesBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -29,7 +29,7 @@ class CurrenciesAdapter(
     override fun getItemCount() = currenciesList.size
 
     inner class ViewHolder(
-        private val binding: CurrenciesRecyclerViewItemBinding
+        private val binding: RecyclerViewItemCurrenciesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currencies: Currencies) {
             with(binding) {

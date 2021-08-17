@@ -17,7 +17,7 @@
 
     <Button
         android:id="@+id/submitFirstLaunchButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="да"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/cancelFirstLaunchButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="нет"
         app:layout_constraintEnd_toEndOf="parent"

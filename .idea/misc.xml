@@ -23,11 +23,15 @@
         <entry key="app/src/main/res/layout/fragment_new_cash_account.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_new_category.xml" value="0.16302083333333334" />
         <entry key="app/src/main/res/layout/fragment_new_currency.xml" value="0.22327898550724637" />
+        <entry key="app/src/main/res/layout/fragment_new_money_moving.xml" value="0.22418478260869565" />
+        <entry key="app/src/main/res/layout/fragment_reports.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/fragment_select_cash_account.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_select_category.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_select_currency.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_select_money_moving.xml" value="0.30344202898550726" />
+        <entry key="app/src/main/res/layout/fragment_select_password.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25905797101449274" />
+        <entry key="app/src/main/res/layout/money_moving_recycler_view_item.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35572916666666665" />

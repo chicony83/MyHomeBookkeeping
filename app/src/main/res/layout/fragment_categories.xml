@@ -54,7 +54,7 @@
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/show_hide_add_category_fragment_button"
         app:layout_constraintTop_toBottomOf="@id/selectAllButton"
-        tools:listitem="@layout/categories_recycler_view_item" />
+        tools:listitem="@layout/recycler_view_item_categories" />
 
     <LinearLayout
         android:id="@+id/confirmationLayoutHolder"
@@ -68,7 +68,7 @@
 
         <include
             android:id="@+id/confirmationLayout"
-            layout="@layout/fragment_select_category" />
+            layout="@layout/dialog_select_category" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +83,7 @@
 
         <include
             android:id="@+id/newCategoryLayout"
-            layout="@layout/fragment_new_category" />
+            layout="@layout/dialog_new_category" />
     </LinearLayout>
 
     <LinearLayout
@@ -98,7 +98,7 @@
 
         <include
             android:id="@+id/changeCategoryLayout"
-            layout="@layout/fragment_change_category" />
+            layout="@layout/dialog_change_category" />
     </LinearLayout>
 
     <Button

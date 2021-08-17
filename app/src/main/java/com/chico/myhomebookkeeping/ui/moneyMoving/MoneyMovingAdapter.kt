@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
-import com.chico.myhomebookkeeping.databinding.MoneyMovingRecyclerViewItemBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 
@@ -15,7 +15,7 @@ class MoneyMovingAdapter(
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = MoneyMovingRecyclerViewItemBinding
+        val binding = RecyclerViewItemMoneyMovingBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
        return ViewHolder(binding)
     }
@@ -26,7 +26,7 @@ class MoneyMovingAdapter(
 
     override fun getItemCount() = moneyMovementList.size
 
-    inner class ViewHolder(private val binding: MoneyMovingRecyclerViewItemBinding) :
+    inner class ViewHolder(private val binding: RecyclerViewItemMoneyMovingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(moneyMovement: FullMoneyMoving) {
             with(binding){
