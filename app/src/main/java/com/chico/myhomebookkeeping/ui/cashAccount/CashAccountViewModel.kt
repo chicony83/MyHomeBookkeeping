@@ -51,7 +51,7 @@ class CashAccountViewModel(
         loadCashAccounts()
     }
 
-    fun loadCashAccounts() {
+    private fun loadCashAccounts() {
         launchIo {
             _cashAccountsList.postValue(db.getAllCashAccounts())
         }
@@ -60,7 +60,7 @@ class CashAccountViewModel(
     fun saveData(navControlHelper: NavControlHelper) {
         saveARGS.checkAndSaveToSP(
             navControlHelper = navControlHelper,
-            argsForNew =argsForCreate,
+            argsForNew = argsForCreate,
             argsForChange = argsForChange,
             argsForQuery = argsForQuery,
             id = _selectedCashAccount.value?.cashAccountId
@@ -90,8 +90,7 @@ class CashAccountViewModel(
         resetCashAccountForSelect()
     }
 
-    fun addNewCashAccount(name: String, number: String) {
-        val newCashAccount = CashAccount(name, number)
+    fun addNewCashAccount(newCashAccount: CashAccount) {
         CashAccountsUseCase.addNewCashAccount(
             db,
             newCashAccount
@@ -100,7 +99,7 @@ class CashAccountViewModel(
     }
 
     fun saveChangedCashAccount(name: String, number: String) = runBlocking {
-        Log.i("TAG", "fun saveChangedCashAccount name = $name, number = $number")
+//        Log.i("TAG", "fun saveChangedCashAccount name = $name, number = $number")
         CashAccountsUseCase.changeCashAccountLine(
             db = db,
             id = _changeCashAccount.value?.cashAccountId ?: 0,

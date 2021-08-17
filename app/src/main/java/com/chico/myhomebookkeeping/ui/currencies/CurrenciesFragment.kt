@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
@@ -105,7 +106,8 @@ class CurrenciesFragment : Fragment() {
                 if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
                     if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
                         val name: String = binding.newCurrencyLayout.currencyName.text.toString()
-                        currenciesViewModel.addNewCurrency(name = name)
+                        val newCurrency = Currencies(currencyName = name)
+                        currenciesViewModel.addNewCurrency(newCurrency)
                         uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
                         uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                         view.hideKeyboard()

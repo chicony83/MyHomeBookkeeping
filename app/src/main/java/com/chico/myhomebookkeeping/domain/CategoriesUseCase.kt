@@ -20,7 +20,6 @@ object CategoriesUseCase {
         categoriesViewModel: CategoriesViewModel
     ) = runBlocking {
         db.addCategory(newCategory)
-        categoriesViewModel.loadCategories()
     }
 
     fun changeCategoryLine(db: CategoryDao, id: Int, name: String, isIncome: Boolean) {

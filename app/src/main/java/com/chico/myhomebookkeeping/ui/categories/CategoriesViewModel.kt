@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.runBlocking
 
 class CategoriesViewModel(
     val app: Application
@@ -56,12 +57,11 @@ class CategoriesViewModel(
 
     private var selectedIsIncomeSpending: String = argsNone
 
-    fun loadCategories() {
+    private fun loadCategories() {
         launchIo {
             _categoriesList.postValue(db.getAllCategory())
         }
     }
-
 
     fun loadSelectedCategory(selectedId: Int) {
         launchIo {
@@ -144,5 +144,10 @@ class CategoriesViewModel(
         )
         loadCategories()
         resetCategoryForChange()
+    }
+
+    fun addNewCategory(newCategory: Categories) = runBlocking {
+        CategoriesUseCase.addNewCategory(db = db, newCategory = newCategory)
+        loadCategories()
     }
 }

@@ -59,13 +59,8 @@ class CategoriesFragment : Fragment() {
                     CategoriesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
                             uiControl.showSelectLayoutHolder()
-//                            uiHelper.showHideUIElements(
-//                                selectedId,
-//                                binding.confirmationLayoutHolder
-//                            )
                             categoriesViewModel.loadSelectedCategory(selectedId)
                             selectedCategoryId = selectedId
-//                            categoriesViewModel.clearIncomeSpendingSelector()
                         }
                     })
             })
@@ -113,12 +108,10 @@ class CategoriesFragment : Fragment() {
             }
             selectAllButton.setOnClickListener {
                 categoriesViewModel.selectAllCategories(navControlHelper)
-//                categoriesViewModel.setIdCategory(controlHelper)
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
-                //                uiHelper.setShowHideOnLayout(binding.newCategoryLayoutHolder)
             }
             newCategoryLayout.addNewCategoryButton.setOnClickListener {
                 if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
@@ -134,18 +127,11 @@ class CategoriesFragment : Fragment() {
                             binding.newCategoryLayout.incomingRadioButton,
                             binding.newCategoryLayout.spendingRadioButton
                         )
-//                        var isIncoming = true
-//                        if (binding.newCategoryLayout.categorySpendingRadioButton.isChecked) isIncoming =
-//                            false
                         val newCategory = Categories(
                             categoryName = category,
                             isIncome = isIncoming
                         )
-                        CategoriesUseCase.addNewCategoryRunBlocking(
-                            db,
-                            newCategory,
-                            categoriesViewModel
-                        )
+                        categoriesViewModel.addNewCategory(newCategory)
                         uiHelper.clearUiListRadioButton(
                             listOf(
                                 binding.newCategoryLayout.incomingRadioButton,
@@ -167,9 +153,6 @@ class CategoriesFragment : Fragment() {
                 }
                 changeButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
-//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-//                        uiHelper.showUiElement(binding.changeCategoryLayoutHolder)
-                        uiControl.showChangeLayoutHolder()
                         categoriesViewModel.selectToChange()
                         selectedCategoryId = 0
                     }

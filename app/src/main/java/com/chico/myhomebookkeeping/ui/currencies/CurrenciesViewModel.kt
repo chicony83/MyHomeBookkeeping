@@ -49,7 +49,7 @@ class CurrenciesViewModel(
         loadCurrencies()
     }
 
-    fun loadCurrencies() {
+    private fun loadCurrencies() {
         launchIo {
             _currenciesList.postValue(db.getAllCurrency())
         }
@@ -98,8 +98,7 @@ class CurrenciesViewModel(
         loadCurrencies()
     }
 
-    fun addNewCurrency(name: String) = runBlocking {
-        val newCurrency = Currencies(name)
+    fun addNewCurrency(newCurrency: Currencies) = runBlocking {
         CurrenciesUseCase.addNewCurrency(
             db,
             newCurrency

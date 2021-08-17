@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -52,20 +53,12 @@ class CashAccountFragment : Fragment() {
             selectedCashAccount.observe(viewLifecycleOwner, {
                 binding.confirmationLayout.selectedItemName.text = it?.accountName
             })
-//            selectedCashAccount.observe(viewLifecycleOwner,{
-//                binding.selectedItem.text = it?.accountName
-//            })
             cashAccountList.observe(viewLifecycleOwner, {
                 binding.cashAccountHolder.adapter =
 
                     CashAccountAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
                             uiControl.showSelectLayoutHolder()
-//                            uiHelper.showHideUIElements(
-//                                selectedId,
-//                                binding.confirmationLayoutHolder
-//                            )
-//                            uiHelper.showHideUIElements(selectedId, binding.layoutConfirmation)
                             cashAccountViewModel.loadSelectedCashAccount(selectedId)
                             selectedCashAccountId = selectedId
                         }
@@ -109,7 +102,6 @@ class CashAccountFragment : Fragment() {
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
-                //                uiHelper.setShowHideOnLayout(binding.newCashAccountLayoutHolder)
             }
             newCashAccountLayout.addNewCashAccountButton.setOnClickListener {
                 if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
@@ -117,9 +109,8 @@ class CashAccountFragment : Fragment() {
                         val name = binding.newCashAccountLayout.cashAccountName.text.toString()
                         var number: String =
                             binding.newCashAccountLayout.cashAccountNumber.text.toString()
-
-//                        Log.i("TAG", "name = $name, number = $number")
-                        cashAccountViewModel.addNewCashAccount(name = name, number = number)
+                        val newCashAccount = CashAccount(accountName = name,bankAccountNumber = number)
+                        cashAccountViewModel.addNewCashAccount(newCashAccount)
                         uiHelper.clearUiListEditText(
                             listOf(
                                 binding.newCashAccountLayout.cashAccountName,
