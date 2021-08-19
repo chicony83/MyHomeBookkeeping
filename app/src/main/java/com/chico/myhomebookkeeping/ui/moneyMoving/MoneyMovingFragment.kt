@@ -88,6 +88,17 @@ class MoneyMovingFragment : Fragment() {
                     currency.text = it?.currencyNameValue
                     category.text = it?.categoryNameValue
                     cashAccount.text = it?.cashAccountNameValue
+
+                    if (!it?.description.isNullOrEmpty()){
+                        binding.selectLayout.descriptionOfDescription.visibility = View.VISIBLE
+                        binding.selectLayout.description.visibility = View.VISIBLE
+                        description.text = it?.description
+                    }
+                    if (it?.description.isNullOrEmpty()){
+                        description.text = null
+                        binding.selectLayout.descriptionOfDescription.visibility = View.GONE
+                        binding.selectLayout.description.visibility = View.GONE
+                    }
                 }
             })
 

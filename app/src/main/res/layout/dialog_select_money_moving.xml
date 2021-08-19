@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLayout"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
 
-    style="@style/DialogLayout">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/title"
@@ -90,12 +91,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/description_cash_account" />
 
+    <TextView
+        android:gravity="center"
+        android:text="@string/descriptionTextDescription"
+        android:id="@+id/description_of_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description_cash_account" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/description_of_description" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description_cash_account">
+        app:layout_constraintTop_toBottomOf="@id/description">
 
         <Button
             android:id="@+id/change_button"
@@ -105,8 +126,8 @@
             android:text="@string/change_button_text" />
 
         <Button
-            style="@style/DialogButtonRight"
             android:id="@+id/cancel_button"
+            style="@style/DialogButtonRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel_text_button" />

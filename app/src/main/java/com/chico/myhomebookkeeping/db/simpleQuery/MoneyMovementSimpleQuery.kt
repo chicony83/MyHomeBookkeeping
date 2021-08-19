@@ -22,6 +22,7 @@ object MoneyMovingCreteQuery {
             argsList.add(id)
         }
         val args = argsList.toArray()
+        Log.i("TAG",queryString)
         return SimpleSQLiteQuery(queryString, args)
     }
 
@@ -73,7 +74,7 @@ object MoneyMovingCreteQuery {
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
                 "category_name AS category_name_value, " +
-                "is_income " +
+                "is_income, description " +
                 "FROM money_moving_table,cash_account_table,currency_table,category_table " +
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
