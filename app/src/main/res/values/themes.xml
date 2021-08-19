@@ -50,9 +50,6 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="MoneyMovingItemTextView" parent="WrapContent_WrapContent">
-
-    </style>
 
     <style name="TextDescriptions" parent="MatchParent_WrapContent">
 

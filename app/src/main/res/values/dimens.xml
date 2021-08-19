@@ -11,4 +11,10 @@
     <dimen name="margin_half_normal">4dp</dimen>
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_double">16dp</dimen>
+
+    <dimen name="H1">24dp</dimen>
+    <dimen name="H2">20dp</dimen>
+    <dimen name="H3">16dp</dimen>
+    <dimen name="H4">14dp</dimen>
+    <dimen name="H5">12dp</dimen>
 </resources>

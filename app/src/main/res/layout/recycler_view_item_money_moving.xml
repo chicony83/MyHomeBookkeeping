@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
+    style="@style/RecyclerViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,21 +12,27 @@
 
         <TextView
             android:id="@+id/dataTime"
-            style="@style/MoneyMovingItemTextView"
+            style="RecyclerViewItemTextH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:text="1970-01-01" />
 
         <TextView
             android:id="@+id/amount"
-            style="@style/MoneyMovingItemTextView"
+            style="RecyclerViewItemTextH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:text="1000" />
 
         <TextView
             android:id="@+id/currencyName"
-            style="@style/MoneyMovingItemTextView"
+            style="RecyclerViewItemTextH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             app:layout_constraintStart_toEndOf="@id/amount"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +40,9 @@
 
         <TextView
             android:id="@+id/cashAccountName"
-            style="@style/MoneyMovingItemTextView"
+            style="RecyclerViewItemTextH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             app:layout_constraintStart_toEndOf="@id/currencyName"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,14 +50,18 @@
 
         <TextView
             android:id="@+id/categoryName"
-            style="@style/MoneyMovingItemTextView"
+            style="RecyclerViewItemTextH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/amount"
             tool:text="проценты" />
 
         <TextView
             android:id="@+id/description"
-            style="@style/MoneyMovingItemTextView"
+            style="RecyclerViewItemTextH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

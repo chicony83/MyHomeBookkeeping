@@ -2,16 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/categoryItemCardView"
+    style="@style/RecyclerViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/categoriesItem"
-        style="@style/RecyclerViewItem"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/category_cardView_text"
+            style="@style/RecyclerViewItemTextH2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tool:text="проценты банка" />

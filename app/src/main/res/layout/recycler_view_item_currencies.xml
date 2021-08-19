@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
+    style="@style/RecyclerViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/currenciesItem"
-        style="@style/RecyclerViewItem"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/name_currency"
+            style="@style/RecyclerViewItemTextH2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tool:text="USD" />

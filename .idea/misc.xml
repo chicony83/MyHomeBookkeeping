@@ -33,6 +33,10 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25905797101449274" />
         <entry key="app/src/main/res/layout/money_moving_recycler_view_item.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_view_item_cash_account.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.371875" />

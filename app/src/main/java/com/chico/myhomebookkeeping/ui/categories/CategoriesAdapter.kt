@@ -38,16 +38,26 @@ class CategoriesAdapter(
             with(binding) {
                 categoryCardViewText.text = categories.categoryName
                 categoriesItem.setOnClickListener {
-                    categories.categoriesId?.let { it1->listener.onClick(it1) }
+                    categories.categoriesId?.let { it1 -> listener.onClick(it1) }
                 }
-                if(categories.isIncome){
+                if (categories.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoryItemCardView.setBackgroundColor(itemView.resources.getColor(R.color.income,null))
+                        categoriesItem.setBackgroundColor(
+                            itemView.resources.getColor(
+                                R.color.income,
+                                null
+                            )
+                        )
                     }
                 }
-                if (!categories.isIncome){
+                if (!categories.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoryItemCardView.setBackgroundColor(itemView.resources.getColor(R.color.spending,null))
+                        categoriesItem.setBackgroundColor(
+                            itemView.resources.getColor(
+                                R.color.spending,
+                                null
+                            )
+                        )
                     }
                 }
 
