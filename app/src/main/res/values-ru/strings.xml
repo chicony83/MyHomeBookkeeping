@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Настройки</string>
-    <string name="title_home">Главная</string>
+    <string name="title_home">Журнал</string>
     <string name="reports_title">Отчеты</string>
     <string name="title_categories">Категоии</string>
     <string name="header_cash_accounts">Названия счетов</string>
