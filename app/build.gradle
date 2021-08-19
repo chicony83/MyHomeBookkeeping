@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.chico.myhomebookkeeping"
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
-        versionName "0.5.6"
+        versionCode 5
+        versionName "0.5.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
