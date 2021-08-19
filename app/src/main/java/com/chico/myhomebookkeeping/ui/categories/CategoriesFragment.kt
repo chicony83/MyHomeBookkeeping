@@ -153,6 +153,7 @@ class CategoriesFragment : Fragment() {
                 }
                 changeButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
+                        uiControl.showChangeLayoutHolder()
                         categoriesViewModel.selectToChange()
                         selectedCategoryId = 0
                     }
@@ -187,8 +188,12 @@ class CategoriesFragment : Fragment() {
                                 binding.changeCategoryLayout.incomingRadioButton,
                                 binding.changeCategoryLayout.spendingRadioButton
                             )
-                            categoriesViewModel.saveChangedCategory(name, isIncome)
-
+                            categoriesViewModel.saveChangedCategory(
+                                name = name,
+                                isIncome = isIncome
+                            )
+                            view.hideKeyboard()
+                            uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
                         } else {
                             showMessage(getString(R.string.select_category_message_text))
                         }

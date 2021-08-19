@@ -33,13 +33,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="EnterNameEditText" parent="MatchParent_WrapContent">
-        <item name="android:maxLines">1</item>
-        <item name="android:inputType">text</item>
-        <item name="android:maxLength">30</item>
-        <item name="android:hint">@string/enterName</item>
-    </style>
-
     <style name="EnterNameLayout" parent="MatchParent_WrapContent">
         <item name="android:orientation">vertical</item>
         <item name="android:visibility">gone</item>

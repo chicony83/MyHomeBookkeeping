@@ -12,7 +12,7 @@
 
     <EditText
         android:id="@+id/cashAccountName"
-        style="@style/EnterNameEditText" />
+        style="@style/DialogEnterNewName" />
 
     <TextView
         android:layout_width="match_parent"

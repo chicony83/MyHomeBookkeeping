@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/category_name"
-        style="@style/EnterNameEditText"
+        style="@style/DialogEnterNewName"
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

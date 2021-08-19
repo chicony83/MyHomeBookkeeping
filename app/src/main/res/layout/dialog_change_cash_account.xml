@@ -2,18 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLayout"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    style="@style/DialogLayout">
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/cashAccountName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:maxLines="1"
         tools:text="процентная карточка" />
 
     <EditText
@@ -46,8 +44,8 @@
             android:text="@string/save_button_text" />
 
         <Button
-            style="@style/DialogButtonRight"
             android:id="@+id/cancelChange"
+            style="@style/DialogButtonRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
