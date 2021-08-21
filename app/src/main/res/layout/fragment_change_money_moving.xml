@@ -1,86 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="ui.changeMoneyMoving.ChangeMoneyMovingFragment"
-    >
+    tools:context="ui.changeMoneyMoving.ChangeMoneyMovingFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/date_time_text" />
-
-        <Button
-            style="@style/ButtonFullWidth"
-            android:id="@+id/dateTimeTimeStampButton"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/date_time_text" />
+
+            <Button
+                android:id="@+id/dateTimeTimeStampButton"
+                style="@style/ButtonFullWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/cash_account_text" />
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/cash_account_text" />
 
-        <Button
+            <Button
 
-            android:id="@+id/selectCashAccountButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/selectedCashAccount" />
+                android:id="@+id/selectCashAccountButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/selectedCashAccount" />
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/currency_text" />
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/currency_text" />
 
-        <Button
-            android:id="@+id/selectCurrenciesButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/selectedCurrency" />
+            <Button
+                android:id="@+id/selectCurrenciesButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/selectedCurrency" />
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/category_text" />
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/category_text" />
 
-        <Button
-            android:id="@+id/selectCategoryButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/selectedCategory" />
+            <Button
+                android:id="@+id/selectCategoryButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/selectedCategory" />
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/amount_text" />
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/amount_text" />
 
-        <EditText
-            android:id="@+id/amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/descriptionTextDescription" />
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/descriptionTextDescription" />
 
-        <EditText
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/youDescriptionText"
-            android:minLines="2" />
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/youDescriptionText"
+                android:minLines="2" />
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/submitButton"
