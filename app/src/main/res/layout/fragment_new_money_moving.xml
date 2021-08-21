@@ -6,74 +6,80 @@
     android:layout_height="match_parent"
     tools:context="ui.newMoneyMoving.NewMoneyMovingFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/date_time_text" />
-
-        <Button
-            android:id="@+id/dateTimeTimeStampButton"
-            style="@style/ButtonFullWidth" />
-
-
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/cash_account_text" />
-
-        <Button
-            android:id="@+id/selectCashAccountButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/selectedCashAccount" />
-
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/currency_text" />
-
-        <Button
-            android:id="@+id/selectCurrenciesButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/selectedCurrency" />
-
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/category_text" />
-
-        <Button
-            android:id="@+id/selectCategoryButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/selectedCategory" />
-
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/amount_text" />
-
-        <EditText
-            android:id="@+id/amount"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
+            android:layout_height="0dp"
+            android:orientation="vertical">
 
-        <TextView
-            style="@style/TextDescriptions"
-            android:text="@string/descriptionTextDescription" />
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/date_time_text" />
 
-        <EditText
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/youDescriptionText"
-            android:minLines="2" />
+            <Button
+                android:id="@+id/dateTimeTimeStampButton"
+                style="@style/ButtonFullWidth" />
 
-    </LinearLayout>
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/cash_account_text" />
+
+            <Button
+                android:id="@+id/selectCashAccountButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/selectedCashAccount" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/currency_text" />
+
+            <Button
+                android:id="@+id/selectCurrenciesButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/selectedCurrency" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/category_text" />
+
+            <Button
+                android:id="@+id/selectCategoryButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/selectedCategory" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/amount_text" />
+
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/descriptionTextDescription" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/youDescriptionText"
+                android:minLines="2" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/submitButton"
