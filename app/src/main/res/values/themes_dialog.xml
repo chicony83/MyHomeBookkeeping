@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="DialogLayout">
         <item name="android:padding">@dimen/margin_double</item>
         <item name="cornerRadius">@dimen/margin_double</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DialogSelectMoneyMoving" parent="DialogLayout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/margin_double</item>
     </style>
 </resources>

@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     tools:visibility="visible"
     style="@style/DialogLayout">
 
     <TextView
         android:id="@+id/description"
+        style="@style/Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="выбрана валюта"
@@ -17,6 +16,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:hint="dollars"
+        style="@style/Description"
         android:id="@+id/selectedItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,26 +26,28 @@
         app:layout_constraintTop_toBottomOf="@id/description" />
 
     <Button
-        style="@style/DialogButtonLeft"
         android:id="@+id/selectButton"
+        style="@style/DialogButtonLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/select_text_button"
+        app:layout_constraintEnd_toStartOf="@+id/changeButton"
+
+        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
+
+    <Button
+        android:id="@+id/changeButton"
+        style="@style/DialogButtonCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/change_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <Button
-        style="@style/DialogButtonCenter"
-        android:id="@+id/changeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/change_button_text"
-        app:layout_constraintStart_toEndOf="@id/selectButton"
-        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
-
-    <Button
-        style="@style/DialogButtonRight"
         android:id="@+id/cancelButton"
+        style="@style/DialogButtonRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel_text_button"
