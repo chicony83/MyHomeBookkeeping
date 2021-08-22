@@ -1,7 +1,8 @@
-0001 save picture shop check in DB
-0002 change in saved row entries in DB after enter password
-0003 login in program after enter password
-0004 при создании нового счета указывать входящий остаток
-0005 распознание чека с помощью ИИ
-0006 виджет на экран для быстрого добавления чека
-0007 help about fragment in every fragments
+save picture shop check in DB
+change in saved row entries in DB after enter password
+login in program after enter password
+при создании нового счета указывать входящий остаток
+распознание чека с помощью ИИ
+виджет на экран для быстрого добавления чека
+фрагмент быстрого выбора при добавлени нового платежа
+сортировку категорий
