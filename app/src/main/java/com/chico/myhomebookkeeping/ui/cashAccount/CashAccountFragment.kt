@@ -68,7 +68,6 @@ class CashAccountFragment : Fragment() {
                 binding.changeCashAccountLayout.cashAccountName.setText(it?.accountName)
                 binding.changeCashAccountLayout.cashAccountNumber.setText(it?.bankAccountNumber.toString())
             }
-
             )
         }
         return binding.root
@@ -92,7 +91,6 @@ class CashAccountFragment : Fragment() {
         } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
             uiHelper.showUiElement(binding.selectAllButton)
         }
-
         view.hideKeyboard()
         with(binding) {
             selectAllButton.setOnClickListener {
@@ -103,23 +101,26 @@ class CashAccountFragment : Fragment() {
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
             }
-            newCashAccountLayout.addNewCashAccountButton.setOnClickListener {
-                if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
-                    if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
-                        val name = binding.newCashAccountLayout.cashAccountName.text.toString()
-                        var number: String =
-                            binding.newCashAccountLayout.cashAccountNumber.text.toString()
-                        val newCashAccount = CashAccount(accountName = name,bankAccountNumber = number)
-                        cashAccountViewModel.addNewCashAccount(newCashAccount)
-                        uiHelper.clearUiListEditText(
-                            listOf(
-                                binding.newCashAccountLayout.cashAccountName,
-                                binding.newCashAccountLayout.cashAccountNumber
-                            )
-                        )
-                        uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
-                        view.hideKeyboard()
-                    } else showMessage(getString(R.string.too_short_name_message_text))
+            with(newCashAccountLayout) {
+                addNewCashAccountButton.setOnClickListener {
+                    if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
+                        if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
+                            val name = binding.newCashAccountLayout.cashAccountName.text.toString()
+                            var number: String =
+                                binding.newCashAccountLayout.cashAccountNumber.text.toString()
+                            val newCashAccount =
+                                CashAccount(accountName = name, bankAccountNumber = number)
+                            cashAccountViewModel.addNewCashAccount(newCashAccount)
+                            eraseUiElements()
+                            uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
+                            view.hideKeyboard()
+                        } else showMessage(getString(R.string.too_short_name_message_text))
+                    }
+                }
+                cancelCreate.setOnClickListener {
+                    eraseUiElements()
+                    uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
+                    view.hideKeyboard()
                 }
             }
             with(confirmationLayout) {
@@ -131,8 +132,6 @@ class CashAccountFragment : Fragment() {
                 }
                 changeButton.setOnClickListener {
                     if (selectedCashAccountId > 0) {
-//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-//                        uiHelper.showUiElement(binding.changeCashAccountLayoutHolder)
                         uiControl.showChangeLayoutHolder()
                         cashAccountViewModel.selectedToChange()
                         selectedCashAccountId = 0
@@ -169,6 +168,16 @@ class CashAccountFragment : Fragment() {
         }
         checkUiMode()
     }
+
+    private fun eraseUiElements() {
+        uiHelper.clearUiListEditText(
+            listOf(
+                binding.newCashAccountLayout.cashAccountName,
+                binding.newCashAccountLayout.cashAccountNumber
+            )
+        )
+    }
+
     @SuppressLint("ResourceAsColor")
     private fun checkUiMode() {
         val nightModeFlags = requireContext().resources.configuration.uiMode and

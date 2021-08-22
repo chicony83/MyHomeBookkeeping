@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    style="@style/DialogLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    style="@style/DialogLayout">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -28,10 +28,23 @@
         android:maxLength="4"
         android:maxLines="1" />
 
-    <Button
-        android:id="@+id/addNewCashAccountButton"
-        style="@style/ButtonFullWidth"
-        android:text="@string/add_new_cash_account_button_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/addNewCashAccountButton"
+            style="@style/DialogLinearButtonLeft"
+            android:text="@string/add_new_cash_account_button_text" />
+
+        <Button
+            android:id="@+id/cancelCreate"
+            style="@style/DialogLinearButtonRight.CancelButton"
+            android:text="@string/cancel_text_button" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -49,5 +49,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
+    <style name="DialogLinearButtonLeft" parent="DialogButtonLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="DialogLinearButtonRight" parent="DialogButtonRight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="DialogLinearButtonRight.CancelButton">
+        <item name="android:textSize">@dimen/H5</item>
+    </style>
 </resources>

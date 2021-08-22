@@ -113,39 +113,40 @@ class CategoriesFragment : Fragment() {
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
             }
-            newCategoryLayout.addNewCategoryButton.setOnClickListener {
-                if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
-                    if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
-                        if ((uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
-                                    or
-                                    uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
-                                    )
-                        ) {
+            with(newCategoryLayout){
+                addNewCategoryButton.setOnClickListener {
+                    if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
+                        if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
+                            if ((uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
+                                        or
+                                        uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
+                                        )
+                            ) {
 
 
-                        val category = binding.newCategoryLayout.categoryName.text.toString()
-                        var isIncoming = isSelectedCategoryIncome(
-                            binding.newCategoryLayout.incomingRadioButton,
-                            binding.newCategoryLayout.spendingRadioButton
-                        )
-                        val newCategory = Categories(
-                            categoryName = category,
-                            isIncome = isIncoming
-                        )
-                        categoriesViewModel.addNewCategory(newCategory)
-                        uiHelper.clearUiListRadioButton(
-                            listOf(
-                                binding.newCategoryLayout.incomingRadioButton,
-                                binding.newCategoryLayout.spendingRadioButton
-                            )
-                        )
-                        uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
-                        uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
-                        view.hideKeyboard()
-                        }else {
-                            showMessage(getString(R.string.select_type_of_category))
-                        }
-                    } else showMessage(getString(R.string.too_short_name_message_text))
+                                val category = binding.newCategoryLayout.categoryName.text.toString()
+                                val isIncoming: Boolean = isSelectedCategoryIncome(
+                                    binding.newCategoryLayout.incomingRadioButton,
+                                    binding.newCategoryLayout.spendingRadioButton
+                                )
+                                val newCategory = Categories(
+                                    categoryName = category,
+                                    isIncome = isIncoming
+                                )
+                                categoriesViewModel.addNewCategory(newCategory)
+                                eraceUiElements()
+                                uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
+                                view.hideKeyboard()
+                            }else {
+                                showMessage(getString(R.string.select_type_of_category))
+                            }
+                        } else showMessage(getString(R.string.too_short_name_message_text))
+                    }
+                }
+                cancelCreate.setOnClickListener {
+                    eraceUiElements()
+                    uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
+                    view.hideKeyboard()
                 }
             }
             with(confirmationLayout) {
@@ -208,6 +209,16 @@ class CategoriesFragment : Fragment() {
             }
         }
         checkUiMode()
+    }
+
+    private fun eraceUiElements() {
+        uiHelper.clearUiListRadioButton(
+            listOf(
+                binding.newCategoryLayout.incomingRadioButton,
+                binding.newCategoryLayout.spendingRadioButton
+            )
+        )
+        uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
     }
 
     @SuppressLint("ResourceAsColor")

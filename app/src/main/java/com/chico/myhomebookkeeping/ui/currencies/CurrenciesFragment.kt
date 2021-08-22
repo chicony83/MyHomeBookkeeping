@@ -102,16 +102,25 @@ class CurrenciesFragment : Fragment() {
 //                uiHelper.setShowHideOnLayout(binding.newCurrencyLayoutHolder)
                 uiControl.showNewItemLayoutHolder()
             }
-            newCurrencyLayout.addNewCurrencyButton.setOnClickListener {
-                if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
-                    if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
-                        val name: String = binding.newCurrencyLayout.currencyName.text.toString()
-                        val newCurrency = Currencies(currencyName = name)
-                        currenciesViewModel.addNewCurrency(newCurrency)
-                        uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
-                        uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
-                        view.hideKeyboard()
-                    } else showMessage(getString(R.string.too_short_name_message_text))
+            with(newCurrencyLayout) {
+
+                addNewCurrencyButton.setOnClickListener {
+                    if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
+                        if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
+                            val name: String =
+                                binding.newCurrencyLayout.currencyName.text.toString()
+                            val newCurrency = Currencies(currencyName = name)
+                            currenciesViewModel.addNewCurrency(newCurrency)
+                            eraseUiElements()
+                            uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
+                            view.hideKeyboard()
+                        } else showMessage(getString(R.string.too_short_name_message_text))
+                    }
+                }
+                cancelCreate.setOnClickListener {
+                    eraseUiElements()
+                    uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
+                    view.hideKeyboard()
                 }
             }
             with(confirmationLayout) {
@@ -155,6 +164,10 @@ class CurrenciesFragment : Fragment() {
             }
             checkUiMode()
         }
+    }
+
+    private fun eraseUiElements() {
+        uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
     }
 
     @SuppressLint("ResourceAsColor")

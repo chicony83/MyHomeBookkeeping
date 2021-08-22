@@ -7,11 +7,23 @@
 
     <EditText
         android:id="@+id/currency_name"
+
         style="@style/DialogEnterNewName" />
 
-    <Button
-        android:id="@+id/addNewCurrencyButton"
-        style="@style/ButtonFullWidth"
-        android:text="@string/add_button_text" />
+    <LinearLayout style="@style/LinearLayoutWeightSum2">
+
+        <Button
+            android:id="@+id/addNewCurrencyButton"
+            style="@style/DialogLinearButtonLeft"
+
+            android:text="@string/add_new_currency_button_text" />
+
+        <Button
+
+            android:id="@+id/cancelCreate"
+            style="@style/DialogLinearButtonRight.CancelButton"
+            android:text="@string/cancel_text_button"
+            android:textSize="@dimen/H5" />
+    </LinearLayout>
 
 </LinearLayout>

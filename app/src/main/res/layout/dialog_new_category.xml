@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    style="@style/DialogLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    style="@style/DialogLayout">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/category_name"
@@ -33,10 +33,19 @@
             android:text="@string/spending_category_text_radio_button" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/addNewCategoryButton"
-        style="@style/ButtonFullWidth"
-        android:text="@string/add_new_category_button_text"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+    <LinearLayout
+        style="@style/LinearLayoutWeightSum2"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup">
+
+        <Button
+            android:id="@+id/addNewCategoryButton"
+            style="@style/DialogLinearButtonLeft"
+            android:text="@string/add_new_category_button_text" />
+
+        <Button
+            android:id="@+id/cancelCreate"
+            style="@style/DialogLinearButtonRight.CancelButton"
+            android:text="@string/cancel_text_button" />
+    </LinearLayout>
 
 </LinearLayout>
