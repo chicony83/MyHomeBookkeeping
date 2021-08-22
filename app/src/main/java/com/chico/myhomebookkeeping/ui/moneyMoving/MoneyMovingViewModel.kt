@@ -24,7 +24,7 @@ import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class MoneyMovingViewModel(
     val app: Application
@@ -59,8 +59,8 @@ class MoneyMovingViewModel(
 
     private var getSP = GetSP(sharedPreferences)
 
-    private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>>()
-    val moneyMovementList: MutableLiveData<List<FullMoneyMoving>>
+    private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>?>()
+    val moneyMovementList: MutableLiveData<List<FullMoneyMoving>?>
         get() = _moneyMovementList
 
     private val _buttonTextOfQueryCurrency = MutableLiveData<String>()
@@ -75,9 +75,17 @@ class MoneyMovingViewModel(
     val buttonTextOfQueryCashAccount: LiveData<String>
         get() = _buttonTextOfQueryCashAccount
 
-    private val _amountMoneyOfQuery = MutableLiveData<String>()
-    val amountMoneyOfQuery: LiveData<String>
-        get() = _amountMoneyOfQuery
+    private val _incomeBalance = MutableLiveData<String>()
+    val incomeBalance: LiveData<String>
+        get() = _incomeBalance
+
+    private val _spendingBalance = MutableLiveData<String>()
+    val spendingBalance: LiveData<String>
+        get() = _spendingBalance
+
+    private val _totalBalance = MutableLiveData<String>()
+    val totalBalance: LiveData<String>
+        get() = _totalBalance
 
     private val _selectedMoneyMoving = MutableLiveData<FullMoneyMoving?>()
     val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
@@ -88,16 +96,26 @@ class MoneyMovingViewModel(
     private var categorySP = -1
     private var incomeSpendingSP: String = argsNone
 
-    private var foundLines = 0
+//    private lateinit var moneyMovingCountMoney:MoneyMovingCountMoney
 
-    private lateinit var resultQuery: List<FullMoneyMoving>
-
+    //    private lateinit var resultQuery: List<FullMoneyMoving>?
     init {
-        runBlocking {
-            getValuesSP()
-            foundLines = loadMoneyMovement()
+        launchUi {
             setTextOnButtons()
         }
+
+        runBlocking {
+            getValuesSP()
+            val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
+                async(Dispatchers.IO) { loadListMoneyMovement() }
+            Log.i("TAG", "found lines money moving ${listFullMoneyMoving.await()?.size}")
+            postListFullMoneyMoving(listFullMoneyMoving.await())
+            postBalanceValues(listFullMoneyMoving.await())
+        }
+    }
+
+    private fun postListFullMoneyMoving(list: List<FullMoneyMoving>?) {
+        _moneyMovementList.postValue(list)
     }
 
     private fun setTextOnButtons() {
@@ -190,7 +208,7 @@ class MoneyMovingViewModel(
         categorySP = getSP.getInt(argsCategoryKey)
     }
 
-    private fun loadMoneyMovement(): Int {
+    private suspend fun loadListMoneyMovement() = runBlocking {
 
         val query = MoneyMovingCreteQuery.createQueryList(
             currencySP,
@@ -198,31 +216,35 @@ class MoneyMovingViewModel(
             cashAccountSP,
             incomeSpendingSP
         )
-
-        getResultQuery(query)
-        return resultQuery.size
+        return@runBlocking getListMoneyMovement(query)
     }
 
-    private fun getResultQuery(query: SimpleSQLiteQuery) = runBlocking {
-        val result: List<FullMoneyMoving>? = MoneyMovingUseCase.getSelectedMoneyMovement(db, query)
-        if (result != null) {
-            resultQuery = result
-            if (result.isNotEmpty()) {
-                launchUi {
-                    with(_moneyMovementList) { postValue(result) }
-                }
-            }
-            if (isOneCurrency()) {
-                launchUi {
-                    _amountMoneyOfQuery.postValue(
-                        MoneyMovingCountMoney.count(fullMoneyMoving = result).toString()
-                    )
-                }
-            }
-            if (!isOneCurrency()) {
-                _amountMoneyOfQuery.postValue("для отображения итогов выберите валюту")
-            }
+    private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
+
+        return MoneyMovingUseCase.getSelectedMoneyMovement(
+            db,
+            query
+        )
+    }
+
+    private fun postBalanceValues(list: List<FullMoneyMoving>?) = runBlocking {
+        if (!list.isNullOrEmpty()){
+            val moneyMovingCountMoney = MoneyMovingCountMoney(list)
+            _incomeBalance.postValue(
+                getResourceText(R.string.income) + " " + moneyMovingCountMoney.getIncome()
+            )
+            _spendingBalance.postValue(
+                getResourceText(R.string.spending) + " " + moneyMovingCountMoney.getSpending()
+            )
+            _totalBalance.postValue(
+                getResourceText(R.string.balance) + " " + moneyMovingCountMoney.getBalance()
+            )
         }
+
+    }
+
+    private fun postIncomeBalance(await: MoneyMovingCountMoney?) {
+        _incomeBalance.postValue(await?.getIncome())
     }
 
     private fun isOneCurrency(): Boolean {
@@ -230,12 +252,13 @@ class MoneyMovingViewModel(
     }
 
     fun getNumFoundLines(): Int {
-        return foundLines
+        return 0
+//        return foundLines
     }
 
-    fun isMoneyMovementFound(): Boolean {
-        return foundLines > 0
-    }
+//    fun isMoneyMovementFound(): Boolean {
+//        return foundLines > 0
+//    }
 
     fun loadSelectedMoneyMoving(selectedId: Long) {
         launchUi {
@@ -249,28 +272,28 @@ class MoneyMovingViewModel(
     }
 
     fun saveMoneyMovingToChange() {
-        setSP.setLong(argsIdMoneyMovingForChange,_selectedMoneyMoving.value?.id)
+        setSP.setLong(argsIdMoneyMovingForChange, _selectedMoneyMoving.value?.id)
     }
 
     fun cleaningSP() {
         with(setSP) {
-           val argsDateTimeChangeKey = Constants.FOR_CHANGE_DATE_TIME_KEY
-           val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
-           val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
-           val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
-           val argsDescriptionChangeKey = Constants.FOR_CHANGE_DESCRIPTION_KEY
-           val argsAmountChangeKey = Constants.FOR_CHANGE_AMOUNT_KEY
+            val argsDateTimeChangeKey = Constants.FOR_CHANGE_DATE_TIME_KEY
+            val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
+            val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
+            val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
+            val argsDescriptionChangeKey = Constants.FOR_CHANGE_DESCRIPTION_KEY
+            val argsAmountChangeKey = Constants.FOR_CHANGE_AMOUNT_KEY
 
             saveToSP(argsDateTimeChangeKey, minusOneLong)
-            saveToSP(argsCashAccountChangeKey,minusOneInt)
-            saveToSP(argsCurrencyChangeKey,minusOneInt)
-            saveToSP(argsCategoryChangeKey,minusOneInt)
-            saveToSP(argsDescriptionChangeKey,"")
-            saveToSP(argsAmountChangeKey,"")
+            saveToSP(argsCashAccountChangeKey, minusOneInt)
+            saveToSP(argsCurrencyChangeKey, minusOneInt)
+            saveToSP(argsCategoryChangeKey, minusOneInt)
+            saveToSP(argsDescriptionChangeKey, "")
+            saveToSP(argsAmountChangeKey, "")
         }
     }
 
-    fun isFirstLaunch() :Boolean{
+    fun isFirstLaunch(): Boolean {
         return getSP.getBoolean(argsIsFirstLaunch)
     }
 

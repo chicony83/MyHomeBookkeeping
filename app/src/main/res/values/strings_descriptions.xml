@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="income">income</string>
+    <string name="spending">spending</string>
+    <string name="balance">balance</string>
+</resources>

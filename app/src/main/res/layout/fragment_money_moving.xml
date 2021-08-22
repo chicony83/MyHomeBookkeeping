@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/resultCountAmountOfQuery"
+        app:layout_constraintBottom_toTopOf="@id/totalBalance"
         app:layout_constraintTop_toBottomOf="@+id/selectQueryButtons" />
 
     <LinearLayout
@@ -79,12 +79,26 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/resultCountAmountOfQuery"
-        style="@style/MatchParent_WrapContent"
-        android:gravity="center"
+        android:id="@+id/incomeBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="0" />
+    <TextView
+        android:id="@+id/spendingBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/incomeBalance"
+        app:layout_constraintEnd_toStartOf="@id/totalBalance"
+        tools:text="0" />
+    <TextView
+        android:id="@+id/totalBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         tools:text="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,19 +67,27 @@ class MoneyMovingFragment : Fragment() {
                 binding.selectCashAccount.text = it
             })
             moneyMovementList.observe(viewLifecycleOwner, {
-                binding.moneyMovingHolder.adapter = MoneyMovingAdapter(it, object :
-                    OnItemViewClickListenerLong {
-                    override fun onClick(selectedId: Long) {
-                        uiHelper.showUiElement(binding.selectLayoutHolder)
-                        Log.i("TAG", "---moneyMoving id $selectedId---")
-                        moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
-//                        selectedMoneyMovingId = selectedId
-                    }
+                binding.moneyMovingHolder.adapter = it?.let { it1 ->
+                    MoneyMovingAdapter(it1, object :
+                        OnItemViewClickListenerLong {
+                        override fun onClick(selectedId: Long) {
+                            uiHelper.showUiElement(binding.selectLayoutHolder)
+                            Log.i("TAG", "---moneyMoving id $selectedId---")
+                            moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
+            //                        selectedMoneyMovingId = selectedId
+                        }
 
-                })
+                    })
+                }
             })
-            amountMoneyOfQuery.observe(viewLifecycleOwner, {
-                binding.resultCountAmountOfQuery.text = it.toString()
+            incomeBalance.observe(viewLifecycleOwner,{
+                binding.incomeBalance.text = it.toString()
+            })
+            spendingBalance.observe(viewLifecycleOwner,{
+                binding.spendingBalance.text = it.toString()
+            })
+            totalBalance.observe(viewLifecycleOwner,{
+                binding.totalBalance.text = it.toString()
             })
             selectedMoneyMoving.observe(viewLifecycleOwner, {
                 with(binding.selectLayout) {
@@ -153,7 +161,7 @@ class MoneyMovingFragment : Fragment() {
             }
         }
         checkUiMode()
-        checkLinesFound()
+//        checkLinesFound()
         checkFirstLaunch()
         moneyMovingViewModel.cleaningSP()
     }
@@ -197,9 +205,9 @@ class MoneyMovingFragment : Fragment() {
         launchUi {
             while (numFoundedLines == temp) {
                 delay(500)
-                if (moneyMovingViewModel.isMoneyMovementFound()) {
-                    numFoundedLines = moneyMovingViewModel.getNumFoundLines()
-                }
+//                if (moneyMovingViewModel.isMoneyMovementFound()) {
+//                    numFoundedLines = moneyMovingViewModel.getNumFoundLines()
+//                }
             }
             message("найдено $numFoundedLines строк")
         }

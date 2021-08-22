@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="income">доходы</string>
+    <string name="spending">расходы</string>
+    <string name="balance">баланс</string>
+</resources>

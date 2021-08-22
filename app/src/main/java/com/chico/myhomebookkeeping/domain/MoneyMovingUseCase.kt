@@ -42,8 +42,4 @@ object MoneyMovingUseCase {
             db.getOneFullMoneyMoving(query = query)
         }
     }
-
-//    suspend fun getOneFullMoneyMoving(db: MoneyMovementDao, id: Int): FullMoneyMoving? {
-//        return launchForResult { db.getOneFullMoneyMoving(id) }
-//    }
 }
