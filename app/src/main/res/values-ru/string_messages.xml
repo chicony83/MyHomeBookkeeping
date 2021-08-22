@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_type_of_category">выберите тип категории</string>
+    <string name="select_category_message_text">выберите категорию</string>
+    <string name="too_short_name_message_text">слишком короткое название</string>
+
+</resources>
