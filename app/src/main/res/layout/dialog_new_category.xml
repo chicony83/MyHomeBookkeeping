@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DialogLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -18,6 +18,8 @@
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@id/category_name">
 
         <RadioButton
@@ -33,19 +35,18 @@
             android:text="@string/spending_category_text_radio_button" />
     </RadioGroup>
 
-    <LinearLayout
-        style="@style/LinearLayoutWeightSum2"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup">
+    <Button
+        style="@style/DialogButtonLeft.Add"
+        android:id="@+id/addNewCategoryButton"
+        android:text="@string/add_button_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
-        <Button
-            android:id="@+id/addNewCategoryButton"
-            style="@style/DialogLinearButtonLeft"
-            android:text="@string/add_new_category_button_text" />
+    <Button
+        style="@style/DialogButtonRight.Cancel"
+        android:id="@+id/cancelCreate"
+        android:text="@string/cancel_text_button"
+        app:layout_constraintStart_toEndOf="@id/addNewCategoryButton"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
-        <Button
-            android:id="@+id/cancelCreate"
-            style="@style/DialogLinearButtonRight.CancelButton"
-            android:text="@string/cancel_text_button" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

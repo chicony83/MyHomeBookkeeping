@@ -49,17 +49,16 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="DialogLinearButtonLeft" parent="DialogButtonLeft">
+    <style name="DialogButtonLeft.Add" >
+        <item name="android:textColor">@color/colorSubmitButton</item>
+        <item name="android:textSize">@dimen/H3</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
     </style>
-    <style name="DialogLinearButtonRight" parent="DialogButtonRight">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-    </style>
-    <style name="DialogLinearButtonRight.CancelButton">
+    <style name="DialogButtonRight.Cancel">
+        <item name="android:textColor">@color/colorCancelButton</item>
         <item name="android:textSize">@dimen/H5</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

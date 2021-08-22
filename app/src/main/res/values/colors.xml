@@ -28,6 +28,8 @@
     <color name="colorSecondaryNight">#B8D9C6</color>
     <color name="colorSecondaryVariantNight">#6AA695</color>
 
+    <color name="colorCancelButton">#80FF0000</color>
+    <color name="colorSubmitButton">#8000FF00</color>
 
 
 </resources>

@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DialogLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/description_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/account_name" />
+        android:text="@string/account_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/cashAccountName"
-        style="@style/DialogEnterNewName" />
+        style="@style/DialogEnterNewName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description_name" />
 
     <TextView
+        android:id="@+id/description_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/last_4_digits_of_card" />
+        android:text="@string/last_4_digits_of_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cashAccountName" />
 
     <EditText
         android:id="@+id/cashAccountNumber"
@@ -26,25 +35,26 @@
         android:hint="@string/only_last_4_digits"
         android:inputType="number"
         android:maxLength="4"
-        android:maxLines="1" />
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/description_number" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/addNewCashAccountButton"
+        style="@style/DialogButtonLeft.Add"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:text="@string/add_button_text"
+        app:layout_constraintEnd_toStartOf="@+id/cancelCreate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cashAccountNumber" />
 
-        <Button
-            android:id="@+id/addNewCashAccountButton"
-            style="@style/DialogLinearButtonLeft"
-            android:text="@string/add_new_cash_account_button_text" />
+    <Button
+        style="@style/DialogButtonRight.Cancel"
+        android:id="@+id/cancelCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_text_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cashAccountNumber" />
 
-        <Button
-            android:id="@+id/cancelCreate"
-            style="@style/DialogLinearButtonRight.CancelButton"
-            android:text="@string/cancel_text_button" />
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
