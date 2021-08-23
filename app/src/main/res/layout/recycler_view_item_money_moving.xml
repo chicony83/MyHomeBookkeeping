@@ -2,71 +2,70 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
+
     style="@style/RecyclerViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/moneyMovingItem"
-        style="@style/RecyclerViewItem">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
         <TextView
-            android:id="@+id/dataTime"
-            style="RecyclerViewItemTextH3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tool:text="1970-01-01" />
-
-        <TextView
-            android:id="@+id/amount"
-            style="RecyclerViewItemTextH3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tool:text="1000" />
-
-        <TextView
+            style="@style/RecyclerViewItemLeftElement.Currency"
             android:id="@+id/currencyName"
-            style="RecyclerViewItemTextH3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
-            app:layout_constraintStart_toEndOf="@id/amount"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:text="долл" />
 
         <TextView
-            android:id="@+id/cashAccountName"
-            style="RecyclerViewItemTextH3"
+            style="@style/RecyclerViewItemLeftElement.Amount"
+            android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            app:layout_constraintStart_toEndOf="@id/currencyName"
+            app:layout_constraintEnd_toStartOf="@id/currencyName"
             app:layout_constraintTop_toTopOf="parent"
+            tool:text="1000" />
+
+        <TextView
+            style="@style/RecyclerViewItemLeftElement.DateTime"
+            android:id="@+id/dataTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/amount"
+            tool:text="1970-01-01" />
+        <TextView
+            style="@style/RecyclerViewItemLeftElement.Category"
+            android:id="@+id/categoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="заработал" />
+        <TextView
+            style="@style/RecyclerViewItemLeftElement.CashAccount"
+            android:id="@+id/cashAccountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/categoryName"
             tool:text="наличка" />
 
         <TextView
-            android:id="@+id/categoryName"
-            style="RecyclerViewItemTextH3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/amount"
-            tool:text="проценты" />
-
-        <TextView
             android:id="@+id/description"
-            style="RecyclerViewItemTextH3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categoryName"
+            app:layout_constraintTop_toBottomOf="@+id/cashAccountName"
+            android:visibility="gone"
+            tool:visibility="visible"
             tool:text="здесь должно быть описание" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

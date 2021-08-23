@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="RecyclerHolder">
         <item name="elevation">@dimen/margin_double</item>
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
@@ -10,6 +11,7 @@
         <item name="cardElevation">@dimen/margin_half_normal</item>
         <item name="cardUseCompatPadding">true</item>
     </style>
+
     <style name="RecyclerViewItemTextH2">
         <item name="android:textSize">@dimen/H2</item>
         <item name="android:layout_marginTop">@dimen/margin_quarter_of_normal</item>
@@ -17,9 +19,36 @@
         <item name="android:layout_marginLeft">@dimen/margin_normal</item>
         <item name="android:layout_marginRight">@dimen/margin_normal</item>
     </style>
+
     <style name="RecyclerViewItemTextH3" parent="RecyclerViewItemTextH2">
         <item name="android:textSize">@dimen/H3</item>
     </style>
+
+    <style name="RecyclerViewItemLeftElement">
+        <item name="android:layout_marginLeft">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_quarter_of_normal</item>
+    </style>
+    <style name="RecyclerViewItemLeftElement.Category">
+        <item name="android:textSize">@dimen/H3</item>
+    </style>
+    <style name="RecyclerViewItemLeftElement.CashAccount">
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
+    <style name="RecyclerViewItemRightElement">
+        <item name="android:layout_marginRight">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_quarter_of_normal</item>
+    </style>
+    <style name="RecyclerViewItemLeftElement.Amount">
+        <item name="android:textSize">@dimen/H3</item>
+        <item name="android:layout_marginRight">@dimen/margin_normal</item>
+    </style>
+    <style name="RecyclerViewItemLeftElement.Currency">
+        <item name="android:textSize">@dimen/H3</item>
+    </style>
+    <style name="RecyclerViewItemLeftElement.DateTime">
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
+
 
     <style name="MoneyMovingItemTextView" parent="WrapContent_WrapContent">
 

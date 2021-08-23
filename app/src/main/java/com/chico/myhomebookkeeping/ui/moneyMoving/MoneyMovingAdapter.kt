@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
@@ -33,31 +34,27 @@ class MoneyMovingAdapter(
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
                 amount.text = moneyMovement.amount.toString()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
-//                cashAccountName.text = moneyMovement.cashAccount.toString()
                 currencyName.text = moneyMovement.currencyNameValue
                 categoryName.text = moneyMovement.categoryNameValue
+                if (!moneyMovement.description.isNullOrEmpty()){
+                    description.text = moneyMovement.description
+                    description.visibility = View.VISIBLE
+                }
 
                 if (moneyMovement.isIncome){
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        moneyMovingItem.setBackgroundColor(itemView.resources.getColor(R.color.income,null))
+                        binding.amount.setTextColor(itemView.resources.getColor(R.color.incomeTextColor,null))
                     }
                 }
                 if (!moneyMovement.isIncome){
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        moneyMovingItem.setBackgroundColor(itemView.resources.getColor(R.color.spending,null))
+                        binding.amount.setTextColor(itemView.resources.getColor(R.color.spendingTextColor,null))
                     }
                 }
 
                 moneyMovingItem.setOnClickListener {
                     moneyMovement.id.let { listener.onClick(it) }
                 }
-
-//                categoryName.text = moneyMovement.category.toString()
-//                amount.text = moneyMovement.amount.toString()
-//                if (moneyMovement.description.isNotEmpty()){
-//                    description.visibility = View.VISIBLE
-//                    description.text = moneyMovement.description
-//                }
             }
         }
     }

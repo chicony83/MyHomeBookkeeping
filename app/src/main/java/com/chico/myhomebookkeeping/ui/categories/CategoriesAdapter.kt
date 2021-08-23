@@ -44,7 +44,7 @@ class CategoriesAdapter(
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoriesItem.setBackgroundColor(
                             itemView.resources.getColor(
-                                R.color.income,
+                                R.color.incomeBackgroundColor,
                                 null
                             )
                         )
@@ -54,7 +54,7 @@ class CategoriesAdapter(
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoriesItem.setBackgroundColor(
                             itemView.resources.getColor(
-                                R.color.spending,
+                                R.color.spendingBackgroundColor,
                                 null
                             )
                         )
