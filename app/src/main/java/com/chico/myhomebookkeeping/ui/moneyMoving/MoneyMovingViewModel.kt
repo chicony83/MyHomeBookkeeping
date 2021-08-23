@@ -103,7 +103,9 @@ class MoneyMovingViewModel(
         launchUi {
             setTextOnButtons()
         }
+    }
 
+    fun getListFulMoneyMoving(){
         runBlocking {
             getValuesSP()
             val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
@@ -112,8 +114,8 @@ class MoneyMovingViewModel(
             postListFullMoneyMoving(listFullMoneyMoving.await())
             postBalanceValues(listFullMoneyMoving.await())
         }
-    }
 
+    }
     private fun postListFullMoneyMoving(list: List<FullMoneyMoving>?) {
         _moneyMovementList.postValue(list)
     }

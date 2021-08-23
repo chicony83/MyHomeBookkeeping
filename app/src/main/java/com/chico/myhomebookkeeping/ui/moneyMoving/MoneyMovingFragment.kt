@@ -165,6 +165,11 @@ class MoneyMovingFragment : Fragment() {
         checkFirstLaunch()
         moneyMovingViewModel.cleaningSP()
     }
+
+    override fun onStart() {
+        super.onStart()
+        moneyMovingViewModel.getListFulMoneyMoving()
+    }
     private fun launchFragment(fragment: Int) {
         control.navigate(fragment)
     }
