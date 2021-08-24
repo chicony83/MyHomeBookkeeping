@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.currencies
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -98,8 +99,7 @@ class CurrenciesViewModel(
                 name = name
             )
         }
-        val reload: Unit = save.await()
-        loadCurrencies()
+        reloadCurrencies(save.await().toLong())
     }
 
     fun addNewCurrency(newCurrency: Currencies) = runBlocking {
@@ -109,7 +109,13 @@ class CurrenciesViewModel(
                 newCurrency = newCurrency
             )
         }
-        val reload = add.await()
-        loadCurrencies()
+        reloadCurrencies(add.await())
+    }
+
+    private fun reloadCurrencies(long: Long) {
+        if (long>0){
+            loadCurrencies()
+            Log.i("TAG","recycler reloaded")
+        }
     }
 }

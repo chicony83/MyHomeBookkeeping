@@ -103,7 +103,6 @@ class CurrenciesFragment : Fragment() {
                 uiControl.showNewItemLayoutHolder()
             }
             with(newCurrencyLayout) {
-
                 addNewCurrencyButton.setOnClickListener {
                     if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
                         if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {

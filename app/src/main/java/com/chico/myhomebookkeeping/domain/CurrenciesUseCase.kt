@@ -14,14 +14,14 @@ object CurrenciesUseCase {
         }
     }
 
-    fun addNewCurrency(
+    suspend fun addNewCurrency(
         db: CurrenciesDao,
         newCurrency: Currencies,
-    ) = runBlocking {
-        db.addCurrency(newCurrency)
+    ) :Long {
+        return db.addCurrency(newCurrency)
     }
 
-    fun changeCurrencyLine(db: CurrenciesDao, id:Int, name: String) = launchIo {
-        db.changeLine(id,name)
+    suspend fun changeCurrencyLine(db: CurrenciesDao, id:Int, name: String) :Int {
+        return db.changeLine(id,name)
     }
 }

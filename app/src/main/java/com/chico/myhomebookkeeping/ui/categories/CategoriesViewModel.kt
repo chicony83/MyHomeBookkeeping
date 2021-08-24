@@ -153,9 +153,7 @@ class CategoriesViewModel(
                 name, isIncome
             )
         }
-
         reloadCategories(save.await().toLong())
-
     }
 
     fun addNewCategory(newCategory: Categories) = runBlocking {
@@ -165,7 +163,6 @@ class CategoriesViewModel(
                 newCategory = newCategory
             )
         }
-//        Log.i("TAG","adding line number = $add")
         reloadCategories(add.await())
     }
 }
