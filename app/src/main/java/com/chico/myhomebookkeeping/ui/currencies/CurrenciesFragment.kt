@@ -23,6 +23,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class CurrenciesFragment : Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
@@ -155,7 +156,9 @@ class CurrenciesFragment : Fragment() {
                 saveChange.setOnClickListener {
                     if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
                         val name: String = binding.changeCurrencyLayout.itemName.text.toString()
-                        currenciesViewModel.saveChangedCurrency(name = name)
+                        launchIo {
+                            currenciesViewModel.saveChangedCurrency(name = name)
+                        }
                         uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                         view.hideKeyboard()
                     }

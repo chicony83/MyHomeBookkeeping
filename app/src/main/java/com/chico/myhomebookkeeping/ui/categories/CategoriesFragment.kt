@@ -23,6 +23,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class CategoriesFragment : Fragment() {
 
@@ -133,7 +134,9 @@ class CategoriesFragment : Fragment() {
                                     categoryName = category,
                                     isIncome = isIncoming
                                 )
-                                categoriesViewModel.addNewCategory(newCategory)
+                                launchIo {
+                                    categoriesViewModel.addNewCategory(newCategory)
+                                }
                                 eraceUiElements()
                                 uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                                 view.hideKeyboard()
@@ -193,10 +196,12 @@ class CategoriesFragment : Fragment() {
                                 binding.changeCategoryLayout.incomingRadioButton,
                                 binding.changeCategoryLayout.spendingRadioButton
                             )
-                            categoriesViewModel.saveChangedCategory(
-                                name = name,
-                                isIncome = isIncome
-                            )
+                            launchIo {
+                                categoriesViewModel.saveChangedCategory(
+                                    name = name,
+                                    isIncome = isIncome
+                                )
+                            }
                             view.hideKeyboard()
                             uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
                         } else {

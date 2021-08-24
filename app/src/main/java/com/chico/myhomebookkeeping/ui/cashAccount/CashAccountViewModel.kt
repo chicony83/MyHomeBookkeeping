@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class CashAccountViewModel(
@@ -90,22 +91,27 @@ class CashAccountViewModel(
         resetCashAccountForSelect()
     }
 
-    fun addNewCashAccount(newCashAccount: CashAccount) {
-        CashAccountsUseCase.addNewCashAccount(
-            db,
-            newCashAccount
-        )
+    fun addNewCashAccount(newCashAccount: CashAccount) = runBlocking {
+        val save = async {
+            CashAccountsUseCase.addNewCashAccount(
+                db,
+                newCashAccount
+            )
+        }
+        val reload = save.await()
         loadCashAccounts()
     }
 
     fun saveChangedCashAccount(name: String, number: String) = runBlocking {
-//        Log.i("TAG", "fun saveChangedCashAccount name = $name, number = $number")
-        CashAccountsUseCase.changeCashAccountLine(
-            db = db,
-            id = _changeCashAccount.value?.cashAccountId ?: 0,
-            name = name,
-            number = number
-        )
+        val add = async {
+            CashAccountsUseCase.changeCashAccountLine(
+                db = db,
+                id = _changeCashAccount.value?.cashAccountId ?: 0,
+                name = name,
+                number = number
+            )
+        }
+        val reload = add.await()
         loadCashAccounts()
     }
 

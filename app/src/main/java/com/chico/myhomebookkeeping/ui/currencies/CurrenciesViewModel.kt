@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class CurrenciesViewModel(
@@ -90,19 +91,25 @@ class CurrenciesViewModel(
     }
 
     fun saveChangedCurrency(name: String) = runBlocking {
-        CurrenciesUseCase.changeCurrencyLine(
-            db = db,
-            id = _changeCurrency.value?.currencyId ?: 0,
-            name = name
-        )
+        val save = async {
+            CurrenciesUseCase.changeCurrencyLine(
+                db = db,
+                id = _changeCurrency.value?.currencyId ?: 0,
+                name = name
+            )
+        }
+        val reload: Unit = save.await()
         loadCurrencies()
     }
 
     fun addNewCurrency(newCurrency: Currencies) = runBlocking {
-        CurrenciesUseCase.addNewCurrency(
-            db = db,
-            newCurrency = newCurrency
-        )
+        val add = async {
+            CurrenciesUseCase.addNewCurrency(
+                db = db,
+                newCurrency = newCurrency
+            )
+        }
+        val reload = add.await()
         loadCurrencies()
     }
 }

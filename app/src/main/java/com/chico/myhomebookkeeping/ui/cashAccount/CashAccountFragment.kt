@@ -22,6 +22,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class CashAccountFragment : Fragment() {
 
@@ -159,7 +160,9 @@ class CashAccountFragment : Fragment() {
                         val number =
                             binding.changeCashAccountLayout.cashAccountNumber.text.toString()
                         Log.i("TAG", " click name = $name, number = $number")
-                        cashAccountViewModel.saveChangedCashAccount(name = name, number = number)
+                        launchIo {
+                            cashAccountViewModel.saveChangedCashAccount(name = name, number = number)
+                        }
                         uiHelper.hideUiElement(changeCashAccountLayoutHolder)
                         view.hideKeyboard()
                     }

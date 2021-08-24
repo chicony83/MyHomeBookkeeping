@@ -14,6 +14,9 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 
 class CategoriesViewModel(
@@ -39,10 +42,6 @@ class CategoriesViewModel(
 
     private val saveARGS = SetSP(spEditor)
 
-    init {
-        loadCategories()
-    }
-
     private val _categoriesList = MutableLiveData<List<Categories>>()
     val categoriesList: LiveData<List<Categories>>
         get() = _categoriesList
@@ -56,6 +55,10 @@ class CategoriesViewModel(
         get() = _changeCategory
 
     private var selectedIsIncomeSpending: String = argsNone
+
+    init {
+        loadCategories()
+    }
 
     private fun loadCategories() {
         launchIo {
@@ -138,19 +141,27 @@ class CategoriesViewModel(
     }
 
     fun saveChangedCategory(name: String, isIncome: Boolean) = runBlocking {
-        CategoriesUseCase.changeCategoryLine(
-            db, _changeCategory.value?.categoriesId ?: 0,
-            name, isIncome
-        )
+        val save = async {
+            CategoriesUseCase.changeCategoryLine(
+                db, _changeCategory.value?.categoriesId ?: 0,
+                name, isIncome
+            )
+        }
+
+        val reload: Unit = save.await()
         loadCategories()
-//        resetCategoryForChange()
+
     }
 
     fun addNewCategory(newCategory: Categories) = runBlocking {
-        CategoriesUseCase.addNewCategory(
-            db = db,
-            newCategory = newCategory
-        )
+        val add = async {
+            CategoriesUseCase.addNewCategory(
+                db = db,
+                newCategory = newCategory
+            )
+        }
+        val reload = add.await()
         loadCategories()
+
     }
 }
