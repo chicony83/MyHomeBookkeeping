@@ -4,8 +4,6 @@ import android.text.Editable
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.viewbinding.ViewBinding
 import com.chico.myhomebookkeeping.constants.Constants
 
 import com.google.android.material.button.MaterialButton
@@ -123,6 +121,10 @@ class UiHelper(
 
     private fun viewGone(): Int {
         return View.GONE
+    }
+
+    fun setTrueOnRadioButton(radioButton: RadioButton) {
+        radioButton.isChecked = true
     }
 
 }

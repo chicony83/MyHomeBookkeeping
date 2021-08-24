@@ -66,6 +66,12 @@ class CategoriesFragment : Fragment() {
             })
             changeCategory.observe(viewLifecycleOwner, {
                 binding.changeCategoryLayout.categoryName.setText(it?.categoryName)
+                if (it?.isIncome == true) {
+                    uiHelper.setTrueOnRadioButton(binding.changeCategoryLayout.incomingRadioButton)
+                }
+                if (it?.isIncome == false) {
+                    uiHelper.setTrueOnRadioButton(binding.changeCategoryLayout.spendingRadioButton)
+                }
             })
         }
         return binding.root
@@ -113,7 +119,7 @@ class CategoriesFragment : Fragment() {
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
             }
-            with(newCategoryLayout){
+            with(newCategoryLayout) {
                 addNewCategoryButton.setOnClickListener {
                     if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
                         if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
@@ -122,9 +128,8 @@ class CategoriesFragment : Fragment() {
                                         uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
                                         )
                             ) {
-
-
-                                val category = binding.newCategoryLayout.categoryName.text.toString()
+                                val category =
+                                    binding.newCategoryLayout.categoryName.text.toString()
                                 val isIncoming: Boolean = isSelectedCategoryIncome(
                                     binding.newCategoryLayout.incomingRadioButton,
                                     binding.newCategoryLayout.spendingRadioButton
@@ -139,7 +144,7 @@ class CategoriesFragment : Fragment() {
                                 clearingUiElements()
                                 uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                                 view.hideKeyboard()
-                            }else {
+                            } else {
                                 showMessage(getString(R.string.select_type_of_category))
                             }
                         } else showMessage(getString(R.string.too_short_name_message_text))
