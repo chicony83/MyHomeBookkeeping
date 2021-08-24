@@ -22,17 +22,21 @@ object CashAccountsUseCase {
         }
     }
 
-    fun addNewCashAccount(
+    suspend fun addNewCashAccount(
         db: CashAccountDao,
         newCashAccount: CashAccount,
-    ) = runBlocking {
-        db.addCashAccount(newCashAccount)
+    ): Long {
+        return db.addCashAccount(newCashAccount)
     }
 
-    fun changeCashAccountLine(db: CashAccountDao, id: Int, name: String, number: String) =
-        launchIo {
-            Log.i("TAG", " fun changeCashAccountLine name = $name, number = $number")
-            db.changeLine(id = id, name = name, number = number)
-        }
+    suspend fun changeCashAccountLine(
+        db: CashAccountDao,
+        id: Int,
+        name: String,
+        number: String
+    ) :Int {
+        Log.i("TAG", " fun changeCashAccountLine name = $name, number = $number")
+        return db.changeLine(id = id, name = name, number = number)
+    }
 
 }

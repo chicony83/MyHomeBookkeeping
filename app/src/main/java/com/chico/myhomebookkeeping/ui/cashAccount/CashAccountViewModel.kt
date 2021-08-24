@@ -98,8 +98,14 @@ class CashAccountViewModel(
                 newCashAccount
             )
         }
-        val reload = save.await()
-        loadCashAccounts()
+        reloadCategories(save.await())
+    }
+
+    private fun reloadCategories(long: Long) {
+        if (long > 0) {
+            loadCashAccounts()
+            Log.i("TAG", "recycler reloaded")
+        }
     }
 
     fun saveChangedCashAccount(name: String, number: String) = runBlocking {
@@ -111,8 +117,7 @@ class CashAccountViewModel(
                 number = number
             )
         }
-        val reload = add.await()
-        loadCashAccounts()
+        reloadCategories(add.await().toLong())
     }
 
 

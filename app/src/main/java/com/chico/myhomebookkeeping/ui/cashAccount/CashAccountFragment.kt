@@ -163,9 +163,7 @@ class CashAccountFragment : Fragment() {
                         val number =
                             binding.changeCashAccountLayout.cashAccountNumber.text.toString()
                         Log.i("TAG", " click name = $name, number = $number")
-                        launchIo {
-                            cashAccountViewModel.saveChangedCashAccount(name = name, number = number)
-                        }
+                        cashAccountViewModel.saveChangedCashAccount(name = name, number = number)
                         uiHelper.hideUiElement(changeCashAccountLayoutHolder)
                         view.hideKeyboard()
                     }
