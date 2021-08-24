@@ -8,20 +8,26 @@ import kotlinx.coroutines.runBlocking
 
 object CurrenciesUseCase {
 
-    suspend fun getOneCurrency(db: CurrenciesDao, id: Int): Currencies? {
+    suspend fun addNewCurrency(
+        db: CurrenciesDao,
+        newCurrency: Currencies,
+    ): Long {
+        return db.addCurrency(newCurrency)
+    }
+
+    suspend fun getOneCurrency(
+        db: CurrenciesDao, id: Int
+    ): Currencies? {
         return launchForResult {
             db.getOneCurrency(id)
         }
     }
 
-    suspend fun addNewCurrency(
+    suspend fun changeCurrencyLine(
         db: CurrenciesDao,
-        newCurrency: Currencies,
-    ) :Long {
-        return db.addCurrency(newCurrency)
-    }
-
-    suspend fun changeCurrencyLine(db: CurrenciesDao, id:Int, name: String) :Int {
-        return db.changeLine(id,name)
+        id: Int,
+        name: String
+    ): Int {
+        return db.changeLine(id, name)
     }
 }

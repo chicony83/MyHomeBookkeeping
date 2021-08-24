@@ -9,19 +9,6 @@ import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
 
 object CashAccountsUseCase {
-
-//    suspend fun getOneCashAccountName(db: CashAccountDao, id: Int): String {
-//        return launchForResult {
-//            db.getOneCashAccount(id).first().accountName
-//        }.toString()
-//    }
-
-    suspend fun getOneCashAccount(db: CashAccountDao, id: Int): CashAccount? {
-        return launchForResult {
-            db.getOneCashAccount(id)
-        }
-    }
-
     suspend fun addNewCashAccount(
         db: CashAccountDao,
         newCashAccount: CashAccount,
@@ -29,14 +16,21 @@ object CashAccountsUseCase {
         return db.addCashAccount(newCashAccount)
     }
 
+    suspend fun getOneCashAccount(
+        db: CashAccountDao,
+        id: Int
+    ): CashAccount? {
+        return launchForResult {
+            db.getOneCashAccount(id)
+        }
+    }
+
     suspend fun changeCashAccountLine(
         db: CashAccountDao,
         id: Int,
         name: String,
         number: String
-    ) :Int {
-        Log.i("TAG", " fun changeCashAccountLine name = $name, number = $number")
+    ): Int {
         return db.changeLine(id = id, name = name, number = number)
     }
-
 }

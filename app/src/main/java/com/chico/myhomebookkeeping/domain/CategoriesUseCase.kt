@@ -8,18 +8,20 @@ import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.runBlocking
 
 object CategoriesUseCase {
-    suspend fun getOneCategory(db: CategoryDao, id: Int): Categories? {
+    suspend fun addNewCategory(
+        db: CategoryDao,
+        newCategory: Categories
+    ): Long {
+        return db.addCategory(newCategory)
+    }
+
+    suspend fun getOneCategory(
+        db: CategoryDao,
+        id: Int
+    ): Categories? {
         return launchForResult {
             db.getOneCategory(id)
         }
-    }
-
-    fun addNewCategoryRunBlocking(
-        db: CategoryDao,
-        newCategory: Categories,
-        categoriesViewModel: CategoriesViewModel
-    ) = runBlocking {
-        db.addCategory(newCategory)
     }
 
     suspend fun changeCategoryLine(
@@ -29,12 +31,5 @@ object CategoriesUseCase {
         isIncome: Boolean
     ): Int {
         return db.changeLine(id, name, isIncome)
-    }
-
-    suspend fun addNewCategory(
-        db: CategoryDao,
-        newCategory: Categories
-    ): Long {
-        return db.addCategory(newCategory)
     }
 }
