@@ -4,6 +4,7 @@ fix bug when not updated currencies after adding new currency
 fix bug with rounded balance
 fix bug hiding fragments after change element
 fix bug recyclers reloading after changing element
+fix bug when category put to change type of category is checked
 
 0.6.1
 add cancel button when adding new item
