@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.checks.UiElementsCheck
 import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -25,6 +25,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     private var _binding: FragmentChangeMoneyMovingBinding? = null
     private val binding get() = _binding!!
     private lateinit var control: NavController
+    private val uiHelper = UiHelper()
 
     private val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("select date")
         .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
@@ -112,7 +113,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
-        if (UiElementsCheck.isEntered(binding.amount.text)) {
+        if (uiHelper.isEntered(binding.amount.text)) {
             runBlocking {
                 val amount: Double = binding.amount.text.toString().toDouble()
                 val description = binding.description.text.toString()

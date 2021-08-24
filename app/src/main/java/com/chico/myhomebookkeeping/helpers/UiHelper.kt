@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.db.entity.CashAccount
 
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -125,6 +126,9 @@ class UiHelper(
 
     fun setTrueOnRadioButton(radioButton: RadioButton) {
         radioButton.isChecked = true
+    }
+    fun isEntered(text: Editable):Boolean{
+        return text.isNotEmpty()
     }
 
 }

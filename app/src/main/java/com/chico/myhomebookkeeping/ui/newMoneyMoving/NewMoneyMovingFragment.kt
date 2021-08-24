@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.newMoneyMoving
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.checks.UiElementsCheck
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
@@ -131,32 +129,85 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
-        if (UiElementsCheck.isEntered(binding.amount.text)) {
-            val amount: Double =
-                BigDecimal(binding.amount.text.toString())
-                    .setScale(2, RoundingMode.HALF_EVEN)
-                    .toDouble()
-            val description: String = binding.description.text.toString()
-            newMoneyMovingViewModel.saveDataToSP()
-            runBlocking {
-                val result: Long =
-                    newMoneyMovingViewModel.addInMoneyMovingDB(amount, description)
-                if (result > 0) {
-                    uiHelper.clearUiListEditText(
-                        listOf(
-                            binding.amount, binding.description
-                        )
-                    )
-                    setBackgroundDefaultColor(binding.amount)
-                    view?.hideKeyboard()
-                    message("запись добавлена")
-                    control.navigate(R.id.nav_money_moving)
+//        val checkCashAccount = uiHelper.isValueNotNull(newMoneyMovingViewModel.selectedCashAccount.value)
+        val checkCashAccount = newMoneyMovingViewModel.checkIsCashAccountSelected()
+        val checkCurrency = newMoneyMovingViewModel.checkIsCurrencySelected()
+        val checkCategory = newMoneyMovingViewModel.checkIsCategorySelected()
+        val checkAmount = uiHelper.isEntered(binding.amount.text)
+        if (checkCashAccount) {
+            if (checkCurrency) {
+                if (checkCategory) {
+                    if (checkAmount) {
+                        addNewMoneyMoving()
+                    } else {
+                        setBackgroundWarningColor(binding.amount)
+                        message("введите сумму")
+                    }
+                } else {
+                    message("категория не выбрана")
                 }
+            } else {
+                message("валюта не выбрана")
             }
         } else {
-            setBackgroundWarningColor(binding.amount)
-            message("введите сумму")
+            message("счет не выбран")
         }
+//        if (UiElementsCheck.isEntered(binding.amount.text)) {
+//            val amount: Double =
+//                BigDecimal(binding.amount.text.toString())
+//                    .setScale(2, RoundingMode.HALF_EVEN)
+//                    .toDouble()
+//            val description: String = binding.description.text.toString()
+//            newMoneyMovingViewModel.saveDataToSP()
+//            runBlocking {
+//                val result: Long =
+//                    newMoneyMovingViewModel.addInMoneyMovingDB(amount, description)
+//                if (result > 0) {
+//                    uiHelper.clearUiListEditText(
+//                        listOf(
+//                            binding.amount, binding.description
+//                        )
+//                    )
+//                    setBackgroundDefaultColor(binding.amount)
+//                    view?.hideKeyboard()
+////                    message("запись добавлена")
+//                    control.navigate(R.id.nav_money_moving)
+//                }
+//            }
+//        } else {
+//            setBackgroundWarningColor(binding.amount)
+//            message("введите сумму")
+//        }
+    }
+
+    private fun addNewMoneyMoving() {
+        val amount: Double = aroundDouble()
+        val description = binding.description.text.toString()
+        newMoneyMovingViewModel.saveDataToSP()
+        runBlocking {
+            val result = newMoneyMovingViewModel.addInMoneyMovingDB(
+                amount = amount,
+                description = description
+            )
+            if (result > 0) {
+                uiHelper.clearUiListEditText(
+                    listOf(
+                        binding.amount, binding.description
+                    )
+                )
+                setBackgroundDefaultColor(binding.amount)
+                view?.hideKeyboard()
+                message("запись добавлена")
+                control.navigate(R.id.nav_money_moving)
+            }
+        }
+        message("запись добавлена")
+    }
+
+    private fun aroundDouble(): Double {
+        return BigDecimal(binding.amount.text.toString())
+            .setScale(2, RoundingMode.HALF_EVEN)
+            .toDouble()
     }
 
     private fun setBackgroundWarningColor(editText: EditText) {

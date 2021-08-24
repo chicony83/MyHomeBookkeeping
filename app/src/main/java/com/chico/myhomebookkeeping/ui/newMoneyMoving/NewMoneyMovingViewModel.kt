@@ -199,4 +199,17 @@ class NewMoneyMovingViewModel(
     fun setSubmitButtonText(string: String) {
         _submitButtonText.postValue(string)
     }
+
+    fun checkIsCashAccountSelected(): Boolean {
+        return selectedCashAccount.value != null
+    }
+
+    fun checkIsCurrencySelected(): Boolean {
+        return selectedCurrency.value != null
+    }
+
+    fun checkIsCategorySelected(): Boolean {
+        return selectedCategory.value != null
+    }
+
 }
