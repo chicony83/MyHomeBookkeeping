@@ -2,30 +2,42 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import kotlinx.coroutines.Deferred
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class MoneyMovingCountMoney(
-    private val listFullMoneyMoving: List<FullMoneyMoving>
+    listFullMoneyMoving: List<FullMoneyMoving>
 ) {
-    var income = 0.0
-    var spending = 0.0
-    var balance = 0.0
+    private var income = 0.0
+    private var spending = 0.0
+    private var balance = 0.0
 
     init {
+        var inc: Double = 0.0
+        var spe: Double = 0.0
+        var bal: Double = 0.0
+
         for (i in listFullMoneyMoving.indices) {
             val amount = listFullMoneyMoving[i].amount
 
             if (listFullMoneyMoving[i].isIncome) {
-                income += amount
-                balance += amount
+                inc += amount
+                bal += amount
             }
 
             if (!listFullMoneyMoving[i].isIncome) {
-                spending -= amount
-                balance -= amount
+                spe -= amount
+                bal -= amount
             }
         }
+        income = roundedNumber(inc)
+        spending = roundedNumber(spe)
+        balance = roundedNumber(bal)
 
+    }
 
+    private fun roundedNumber(num: Double): Double {
+        return BigDecimal(num).setScale(2, RoundingMode.HALF_EVEN).toDouble()
     }
 
     fun getIncome(): String {

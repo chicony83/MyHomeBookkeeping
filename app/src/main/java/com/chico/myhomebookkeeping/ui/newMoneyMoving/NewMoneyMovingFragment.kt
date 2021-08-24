@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.newMoneyMoving
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.runBlocking
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 class NewMoneyMovingFragment : Fragment() {
@@ -98,10 +101,10 @@ class NewMoneyMovingFragment : Fragment() {
 
             setDateTimeOnButton(currentDateTimeMillis)
 
-            amountMoney.observe(viewLifecycleOwner,{
+            amountMoney.observe(viewLifecycleOwner, {
                 binding.amount.setText(it.toString())
             })
-            submitButton.observe(viewLifecycleOwner,{
+            submitButton.observe(viewLifecycleOwner, {
                 binding.submitButton.text = it.toString()
             })
         }
@@ -114,9 +117,9 @@ class NewMoneyMovingFragment : Fragment() {
         timePicker.addOnPositiveButtonClickListener {
             val hour: Int = timePicker.hour
 //            Log.i("TAG","hour = $hour")
-            var minute:Int = timePicker.minute
-            with(newMoneyMovingViewModel){
-                setTime(hour,minute)
+            var minute: Int = timePicker.minute
+            with(newMoneyMovingViewModel) {
+                setTime(hour, minute)
                 setDateTimeOnButton()
             }
         }
@@ -129,7 +132,10 @@ class NewMoneyMovingFragment : Fragment() {
 
     private fun pressSubmitButton() {
         if (UiElementsCheck.isEntered(binding.amount.text)) {
-            val amount: Double = binding.amount.text.toString().toDouble()
+            val amount: Double =
+                BigDecimal(binding.amount.text.toString())
+                    .setScale(2, RoundingMode.HALF_EVEN)
+                    .toDouble()
             val description: String = binding.description.text.toString()
             newMoneyMovingViewModel.saveDataToSP()
             runBlocking {
