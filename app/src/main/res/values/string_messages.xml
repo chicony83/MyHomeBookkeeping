@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="too_short_name_message_text">too short name</string>
-    <string name="select_category_message_text">select a category</string>
-    <string name="select_type_of_category">select type of category</string>
-</resources>

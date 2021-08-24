@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_type_of_category_message">выберите тип категории</string>
+    <string name="select_category_message">выберите категорию</string>
+    <string name="too_short_name_message">слишком короткое название</string>
+
+    <string name="enter_amount_message">"введите сумму"</string>
+    <string name="category_not_selected_message">"категория не выбрана"</string>
+    <string name="currency_not_selected_message">"валюта не выбрана"</string>
+    <string name="cash_account_not_selected_message">"счет не выбран"</string>
+</resources>

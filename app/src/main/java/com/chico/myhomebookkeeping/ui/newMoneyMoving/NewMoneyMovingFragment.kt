@@ -141,43 +141,17 @@ class NewMoneyMovingFragment : Fragment() {
                         addNewMoneyMoving()
                     } else {
                         setBackgroundWarningColor(binding.amount)
-                        message("введите сумму")
+                        message(getString(R.string.enter_amount_message))
                     }
                 } else {
-                    message("категория не выбрана")
+                    message(getString(R.string.category_not_selected_message))
                 }
             } else {
-                message("валюта не выбрана")
+                message(getString(R.string.currency_not_selected_message))
             }
         } else {
-            message("счет не выбран")
+            message(getString(R.string.cash_account_not_selected_message))
         }
-//        if (UiElementsCheck.isEntered(binding.amount.text)) {
-//            val amount: Double =
-//                BigDecimal(binding.amount.text.toString())
-//                    .setScale(2, RoundingMode.HALF_EVEN)
-//                    .toDouble()
-//            val description: String = binding.description.text.toString()
-//            newMoneyMovingViewModel.saveDataToSP()
-//            runBlocking {
-//                val result: Long =
-//                    newMoneyMovingViewModel.addInMoneyMovingDB(amount, description)
-//                if (result > 0) {
-//                    uiHelper.clearUiListEditText(
-//                        listOf(
-//                            binding.amount, binding.description
-//                        )
-//                    )
-//                    setBackgroundDefaultColor(binding.amount)
-//                    view?.hideKeyboard()
-////                    message("запись добавлена")
-//                    control.navigate(R.id.nav_money_moving)
-//                }
-//            }
-//        } else {
-//            setBackgroundWarningColor(binding.amount)
-//            message("введите сумму")
-//        }
     }
 
     private fun addNewMoneyMoving() {
@@ -201,7 +175,6 @@ class NewMoneyMovingFragment : Fragment() {
                 control.navigate(R.id.nav_money_moving)
             }
         }
-        message("запись добавлена")
     }
 
     private fun aroundDouble(): Double {

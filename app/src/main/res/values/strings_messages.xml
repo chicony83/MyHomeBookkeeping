@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="too_short_name_message">too short name</string>
+    <string name="select_category_message">select a category</string>
+    <string name="select_type_of_category_message">select type of category</string>
+
+    <string name="enter_amount_message">"enter amount"</string>
+    <string name="category_not_selected_message">"category not selected"</string>
+    <string name="currency_not_selected_message">"currency not selected"</string>
+    <string name="cash_account_not_selected_message">"cash account not selected"</string>
+</resources>

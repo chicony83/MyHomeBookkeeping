@@ -143,9 +143,9 @@ class CategoriesFragment : Fragment() {
                                 uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                                 view.hideKeyboard()
                             } else {
-                                showMessage(getString(R.string.select_type_of_category))
+                                showMessage(getString(R.string.select_type_of_category_message))
                             }
-                        } else showMessage(getString(R.string.too_short_name_message_text))
+                        } else showMessage(getString(R.string.too_short_name_message))
                     }
                 }
                 cancelCreate.setOnClickListener {
@@ -210,10 +210,10 @@ class CategoriesFragment : Fragment() {
                             view.hideKeyboard()
                             uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
                         } else {
-                            showMessage(getString(R.string.select_category_message_text))
+                            showMessage(getString(R.string.select_category_message))
                         }
                     } else {
-                        showMessage(getString(R.string.too_short_name_message_text))
+                        showMessage(getString(R.string.too_short_name_message))
                     }
                 }
             }

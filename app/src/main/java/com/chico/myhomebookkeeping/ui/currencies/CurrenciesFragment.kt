@@ -113,7 +113,7 @@ class CurrenciesFragment : Fragment() {
                             eraseUiElements()
                             uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                             view.hideKeyboard()
-                        } else showMessage(getString(R.string.too_short_name_message_text))
+                        } else showMessage(getString(R.string.too_short_name_message))
                     }
                 }
                 cancelCreate.setOnClickListener {

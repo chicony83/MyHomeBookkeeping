@@ -22,7 +22,6 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 
 class CashAccountFragment : Fragment() {
 
@@ -115,7 +114,7 @@ class CashAccountFragment : Fragment() {
                             eraseUiElements()
                             uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                             view.hideKeyboard()
-                        } else showMessage(getString(R.string.too_short_name_message_text))
+                        } else showMessage(getString(R.string.too_short_name_message))
                     }
                 }
                 cancelCreate.setOnClickListener {
