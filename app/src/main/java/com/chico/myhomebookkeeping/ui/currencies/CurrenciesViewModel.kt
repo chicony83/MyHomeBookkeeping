@@ -100,8 +100,8 @@ class CurrenciesViewModel(
 
     fun addNewCurrency(newCurrency: Currencies) = runBlocking {
         CurrenciesUseCase.addNewCurrency(
-            db,
-            newCurrency
+            db = db,
+            newCurrency = newCurrency
         )
         loadCurrencies()
     }

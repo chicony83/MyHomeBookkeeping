@@ -147,7 +147,10 @@ class CategoriesViewModel(
     }
 
     fun addNewCategory(newCategory: Categories) = runBlocking {
-        CategoriesUseCase.addNewCategory(db = db, newCategory = newCategory)
+        CategoriesUseCase.addNewCategory(
+            db = db,
+            newCategory = newCategory
+        )
         loadCategories()
     }
 }
