@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.categories
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +17,6 @@ import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 
 class CategoriesViewModel(
@@ -63,6 +63,12 @@ class CategoriesViewModel(
     private fun loadCategories() {
         launchIo {
             _categoriesList.postValue(db.getAllCategory())
+        }
+    }
+    private fun reloadCategories(long: Long) {
+        if (long>0){
+            loadCategories()
+            Log.i("TAG","recycler reloaded")
         }
     }
 
@@ -141,27 +147,25 @@ class CategoriesViewModel(
     }
 
     fun saveChangedCategory(name: String, isIncome: Boolean) = runBlocking {
-        val save = async {
+        val save: Deferred<Int> = async {
             CategoriesUseCase.changeCategoryLine(
                 db, _changeCategory.value?.categoriesId ?: 0,
                 name, isIncome
             )
         }
 
-        val reload: Unit = save.await()
-        loadCategories()
+        reloadCategories(save.await().toLong())
 
     }
 
     fun addNewCategory(newCategory: Categories) = runBlocking {
-        val add = async {
+        val add: Deferred<Long> = async {
             CategoriesUseCase.addNewCategory(
                 db = db,
                 newCategory = newCategory
             )
         }
-        val reload = add.await()
-        loadCategories()
-
+//        Log.i("TAG","adding line number = $add")
+        reloadCategories(add.await())
     }
 }

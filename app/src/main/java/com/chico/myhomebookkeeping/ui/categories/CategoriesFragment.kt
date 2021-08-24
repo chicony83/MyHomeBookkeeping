@@ -138,9 +138,7 @@ class CategoriesFragment : Fragment() {
                                     categoryName = category,
                                     isIncome = isIncoming
                                 )
-                                launchIo {
-                                    categoriesViewModel.addNewCategory(newCategory)
-                                }
+                                categoriesViewModel.addNewCategory(newCategory)
                                 clearingUiElements()
                                 uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                                 view.hideKeyboard()

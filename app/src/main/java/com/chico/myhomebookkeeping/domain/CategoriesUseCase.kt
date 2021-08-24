@@ -22,15 +22,19 @@ object CategoriesUseCase {
         db.addCategory(newCategory)
     }
 
-    fun changeCategoryLine(db: CategoryDao, id: Int, name: String, isIncome: Boolean) {
-        launchIo {
-            db.changeLine(id,name,isIncome)
-        }
-    }
-    fun addNewCategory(
+    suspend fun changeCategoryLine(
         db: CategoryDao,
-        newCategory:Categories
-    )= runBlocking{
-        db.addCategory(newCategory)
+        id: Int,
+        name: String,
+        isIncome: Boolean
+    ): Int {
+        return db.changeLine(id, name, isIncome)
+    }
+
+    suspend fun addNewCategory(
+        db: CategoryDao,
+        newCategory: Categories
+    ): Long {
+        return db.addCategory(newCategory)
     }
 }

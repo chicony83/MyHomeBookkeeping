@@ -9,7 +9,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 interface CategoryDao {
 
     @Insert
-    suspend fun addCategory(category: Categories)
+    suspend fun addCategory(category: Categories):Long
 
     @Query("SELECT * FROM category_table ORDER BY categoriesId DESC")
     suspend fun getAllCategory(): List<Categories>
@@ -18,5 +18,5 @@ interface CategoryDao {
     suspend fun getOneCategory(id:Int):Categories
 
     @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome WHERE categoriesId = :id")
-    suspend fun changeLine(id: Int, name: String, isIncome: Boolean)
+    suspend fun changeLine(id: Int, name: String, isIncome: Boolean):Int
 }
