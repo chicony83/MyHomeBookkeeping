@@ -156,9 +156,9 @@ class CurrenciesFragment : Fragment() {
                     if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
                         val name: String = binding.changeCurrencyLayout.itemName.text.toString()
                         currenciesViewModel.saveChangedCurrency(name = name)
+                        uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                         view.hideKeyboard()
                     }
-                    uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                 }
             }
             checkUiMode()

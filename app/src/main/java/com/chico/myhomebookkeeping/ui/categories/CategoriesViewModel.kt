@@ -137,13 +137,13 @@ class CategoriesViewModel(
         resetCategoryForSelect()
     }
 
-    fun saveChangedCategory(name: String, isIncome: Boolean) {
+    fun saveChangedCategory(name: String, isIncome: Boolean) = runBlocking {
         CategoriesUseCase.changeCategoryLine(
             db, _changeCategory.value?.categoriesId ?: 0,
             name, isIncome
         )
         loadCategories()
-        resetCategoryForChange()
+//        resetCategoryForChange()
     }
 
     fun addNewCategory(newCategory: Categories) = runBlocking {
