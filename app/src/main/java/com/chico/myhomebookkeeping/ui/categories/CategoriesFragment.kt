@@ -18,7 +18,6 @@ import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -137,7 +136,7 @@ class CategoriesFragment : Fragment() {
                                 launchIo {
                                     categoriesViewModel.addNewCategory(newCategory)
                                 }
-                                eraceUiElements()
+                                clearingUiElements()
                                 uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                                 view.hideKeyboard()
                             }else {
@@ -147,7 +146,7 @@ class CategoriesFragment : Fragment() {
                     }
                 }
                 cancelCreate.setOnClickListener {
-                    eraceUiElements()
+                    clearingUiElements()
                     uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                     view.hideKeyboard()
                 }
@@ -159,11 +158,14 @@ class CategoriesFragment : Fragment() {
                         navControlHelper.moveToPreviousPage()
                     }
                 }
+                selectedItemName.setOnClickListener {
+                    if (selectedCategoryId > 0) {
+                        putItemForChange()
+                    }
+                }
                 changeButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
-                        uiControl.showChangeLayoutHolder()
-                        categoriesViewModel.selectToChange()
-                        selectedCategoryId = 0
+                        putItemForChange()
                     }
                 }
                 cancelButton.setOnClickListener {
@@ -216,7 +218,13 @@ class CategoriesFragment : Fragment() {
         checkUiMode()
     }
 
-    private fun eraceUiElements() {
+    private fun putItemForChange() {
+        uiControl.showChangeLayoutHolder()
+        categoriesViewModel.selectToChange()
+        selectedCategoryId = 0
+    }
+
+    private fun clearingUiElements() {
         uiHelper.clearUiListRadioButton(
             listOf(
                 binding.newCategoryLayout.incomingRadioButton,

@@ -130,11 +130,14 @@ class CurrenciesFragment : Fragment() {
                         navControlHelper.moveToPreviousPage()
                     }
                 }
+                selectedItemName.setOnClickListener {
+                    if (selectedCurrencyId > 0) {
+                        putItemForChange()
+                    }
+                }
                 changeButton.setOnClickListener {
                     if (selectedCurrencyId > 0) {
-                        uiControl.showChangeLayoutHolder()
-                        currenciesViewModel.selectedToChange()
-                        selectedCurrencyId = 0
+                        putItemForChange()
                     }
                 }
                 cancelButton.setOnClickListener {
@@ -166,6 +169,12 @@ class CurrenciesFragment : Fragment() {
             }
             checkUiMode()
         }
+    }
+
+    private fun putItemForChange() {
+        uiControl.showChangeLayoutHolder()
+        currenciesViewModel.selectedToChange()
+        selectedCurrencyId = 0
     }
 
     private fun eraseUiElements() {

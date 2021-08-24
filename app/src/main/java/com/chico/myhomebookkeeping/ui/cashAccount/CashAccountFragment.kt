@@ -131,11 +131,14 @@ class CashAccountFragment : Fragment() {
                         navControlHelper.moveToPreviousPage()
                     }
                 }
+                selectedItemName.setOnClickListener {
+                    if (selectedCashAccountId > 0) {
+                        putItemForChange()
+                    }
+                }
                 changeButton.setOnClickListener {
                     if (selectedCashAccountId > 0) {
-                        uiControl.showChangeLayoutHolder()
-                        cashAccountViewModel.selectedToChange()
-                        selectedCashAccountId = 0
+                        putItemForChange()
                     }
                 }
                 cancelButton.setOnClickListener {
@@ -170,6 +173,12 @@ class CashAccountFragment : Fragment() {
             }
         }
         checkUiMode()
+    }
+
+    private fun putItemForChange() {
+        uiControl.showChangeLayoutHolder()
+        cashAccountViewModel.selectedToChange()
+        selectedCashAccountId = 0
     }
 
     private fun eraseUiElements() {
