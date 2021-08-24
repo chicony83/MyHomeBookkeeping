@@ -1,5 +1,6 @@
 0.6.2
 fix bug when not updated currencies after adding new currency
+fix bug with rounded balance
 
 0.6.1
 add cancel button when adding new item
