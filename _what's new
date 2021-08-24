@@ -1,6 +1,7 @@
 0.6.2
 fix bug when not updated currencies after adding new currency
 fix bug with rounded balance
+fix bug hiding fragments after change element
 
 0.6.1
 add cancel button when adding new item
