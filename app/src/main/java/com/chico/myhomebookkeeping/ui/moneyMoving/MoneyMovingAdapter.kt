@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
+import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import java.util.*
 
 class MoneyMovingAdapter(
@@ -20,6 +22,8 @@ class MoneyMovingAdapter(
     private lateinit var negative: String
     private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
 
+    private var dayToday: Long = 0
+    private var dayYesterday: Long = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderMovingItem {
         val binding = RecyclerViewItemMoneyMovingBinding
@@ -31,23 +35,49 @@ class MoneyMovingAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolderMovingItem, position: Int) {
-        holder.bind(moneyMovementList[position])
+        var showDate = false
+        dayToday = moneyMovementList[position].timeStamp.toLong()
+
+        calendar.timeInMillis = dayToday
+        val today = calendar.get(Calendar.DAY_OF_YEAR)
+
+        calendar.timeInMillis = dayYesterday
+        val yesterday = calendar.get(Calendar.DAY_OF_YEAR)
+
+        messageLog("dayToday = $dayToday")
+        messageLog("dayYesterday = $dayYesterday")
+        if (today == yesterday) {
+            messageLog("set False")
+            showDate = false
+        }
+        if (today != yesterday) {
+            messageLog("set True")
+            showDate = true
+            dayYesterday = moneyMovementList[position].timeStamp
+        }
+        messageLog("$showDate")
+        holder.bind(moneyMovementList[position], showDate)
     }
 
     override fun getItemCount() = moneyMovementList.size
 
-//    inner class ViewHolderDateItem():RecyclerView.ViewHolder(binding.root)
+    //    inner class ViewHolderDateItem():RecyclerView.ViewHolder(binding.root)
     inner class ViewHolderMovingItem(
         private val binding: RecyclerViewItemMoneyMovingBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(moneyMovement: FullMoneyMoving) {
-            with(binding) {
-                calendar.timeInMillis = moneyMovement.timeStamp
-                val date: Int = calendar.get(Calendar.DAY_OF_YEAR)
-                dateSeparatorText.text = date.toString()
+        fun bind(moneyMovement: FullMoneyMoving, showDate: Boolean) {
 
+            with(binding) {
+                if (showDate) {
+
+//                    calendar.timeInMillis = moneyMovement.timeStamp
+//                    val date: Int = calendar.get(Calendar.DAY_OF_YEAR)
+                    dateSeparatorText.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
+
+                    dateSeparatorText.visibility = View.VISIBLE
+                }
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
@@ -85,4 +115,7 @@ class MoneyMovingAdapter(
         }
     }
 
+    private fun messageLog(text: String) {
+        Log.i("TAG", "$text")
+    }
 }

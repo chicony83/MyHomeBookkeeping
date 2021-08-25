@@ -19,15 +19,15 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tool:visibility="visible">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/dateSeparatorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="today"
-
-                tool:visibility="visible" />
+                android:text="today" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

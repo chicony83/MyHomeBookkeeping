@@ -14,4 +14,8 @@ fun String.parseTimeToMillis(pattern: String = "yyyy-MM-dd HH:mm"):Long{
 fun Long.parseTimeFromMillis(pattern: String = "yyyy-MM-dd HH:mm"):String{
     val formatter = SimpleDateFormat(pattern)
     return formatter.format(this)
+
+}fun Long.parseTimeFromMillisShortDate(pattern: String = "dd MMMM yyyy"):String{
+    val formatter = SimpleDateFormat(pattern)
+    return formatter.format(this)
 }
