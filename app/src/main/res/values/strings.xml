@@ -72,5 +72,7 @@
     <string name="help_fragment">help</string>
     <string name="submit_text_button">submit</string>
 
+    <string name="positive_value" translatable="false">+</string>
+    <string name="negative_value" translatable="false">-</string>
 
 </resources>
