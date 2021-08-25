@@ -10,7 +10,7 @@ interface CashAccountDao {
     @Insert
     suspend fun addCashAccount(cashAccount: CashAccount):Long
 
-    @Query("SELECT * FROM cash_account_table ORDER BY cashAccountId DESC")
+    @Query("SELECT * FROM cash_account_table ORDER BY cash_account_name ASC")
     suspend fun getAllCashAccounts(): List<CashAccount>
 
     @Query("SELECT * FROM cash_account_table WHERE cashAccountId = :id")
