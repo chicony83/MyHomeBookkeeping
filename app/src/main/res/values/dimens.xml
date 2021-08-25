@@ -14,7 +14,7 @@
 
     <dimen name="H1">24dp</dimen>
     <dimen name="H2">20dp</dimen>
-    <dimen name="H3">16dp</dimen>
-    <dimen name="H4">14dp</dimen>
-    <dimen name="H5">12dp</dimen>
+    <dimen name="H3">18dp</dimen>
+    <dimen name="H4">16dp</dimen>
+    <dimen name="H5">14dp</dimen>
 </resources>

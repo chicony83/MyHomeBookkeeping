@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/dialog_background_day.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_add_box.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/item_shadow.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.245018115942029" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.245018115942029" />
@@ -50,7 +51,7 @@
         <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.5905947441217151" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.371875" />
