@@ -61,7 +61,7 @@ object MoneyMovingCreteQuery {
             argsList.add(cashAccountVal)
         }
 
-        queryString += " ORDER BY id DESC "
+        queryString += " ORDER BY time_stamp DESC "
 
 //        Log.i("TAG","$queryString")
         val args = argsList.toArray()
