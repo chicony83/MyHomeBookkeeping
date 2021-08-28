@@ -1,6 +1,8 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import java.util.*
@@ -24,58 +27,79 @@ class MoneyMovingAdapter(
 
     private var dayToday: Long = 0
     private var dayYesterday: Long = 0
+    private lateinit var context: Context
+    private val uiHelper = UiHelper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderMovingItem {
         val binding = RecyclerViewItemMoneyMovingBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        val context = parent.context
+        context = parent.context
+        getStrings()
+        val isNightMode = checkIsNightUiMode()
+        return ViewHolderMovingItem(binding,isNightMode)
+    }
+
+    private fun checkIsNightUiMode(): Boolean {
+        val nightModeFlags = context.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        return when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                true
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
+
+    private fun getStrings() {
         positive = context.getString(R.string.positive_value)
         negative = context.getString(R.string.negative_value)
-        return ViewHolderMovingItem(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolderMovingItem, position: Int) {
-        var showDate = false
-        dayToday = moneyMovementList[position].timeStamp.toLong()
 
+        var showDate = checkTodayAndYesterdayIsOneDate(position)
+        holder.bind(moneyMovementList[position], showDate)
+    }
+
+    private fun checkTodayAndYesterdayIsOneDate(position: Int): Boolean {
+        dayToday = moneyMovementList[position].timeStamp
         calendar.timeInMillis = dayToday
         val today = calendar.get(Calendar.DAY_OF_YEAR)
-
         calendar.timeInMillis = dayYesterday
         val yesterday = calendar.get(Calendar.DAY_OF_YEAR)
-
-        messageLog("dayToday = $dayToday")
-        messageLog("dayYesterday = $dayYesterday")
+        var showDate = false
         if (today == yesterday) {
-            messageLog("set False")
             showDate = false
         }
         if (today != yesterday) {
-            messageLog("set True")
             showDate = true
             dayYesterday = moneyMovementList[position].timeStamp
         }
-        messageLog("$showDate")
-        holder.bind(moneyMovementList[position], showDate)
+        return showDate
     }
 
     override fun getItemCount() = moneyMovementList.size
 
-    //    inner class ViewHolderDateItem():RecyclerView.ViewHolder(binding.root)
     inner class ViewHolderMovingItem(
-        private val binding: RecyclerViewItemMoneyMovingBinding
+        private val binding: RecyclerViewItemMoneyMovingBinding,
+        private val isNightMode: Boolean
     ) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(moneyMovement: FullMoneyMoving, showDate: Boolean) {
 
             with(binding) {
+                if (!isNightMode){
+//                    item.setBackgroundResource(R.drawable.money_moving_day_item_background)
+                }
                 if (showDate) {
-
-//                    calendar.timeInMillis = moneyMovement.timeStamp
-//                    val date: Int = calendar.get(Calendar.DAY_OF_YEAR)
-                    dateSeparatorText.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
-
+                    dateSeparatorText.text =
+                        moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                     dateSeparatorText.visibility = View.VISIBLE
                 }
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
