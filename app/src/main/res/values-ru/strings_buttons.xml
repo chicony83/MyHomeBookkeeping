@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cash_account_text_on_button">счёт</string>
+    <string name="currency_text_on_button">валюта</string>
+    <string name="category_text_on_button">категория</string>
+    <string name="time_period_text_on_button">период</string>
+    <string name="time_period_from_text_on_button">с</string>
+    <string name="time_period_to_text_on_button">по</string>
+    <string name="time_period_all_time_text_on_button">всё время</string>
+</resources>

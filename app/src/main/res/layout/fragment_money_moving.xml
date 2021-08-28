@@ -6,38 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".ui.moneyMoving.MoneyMovingFragment">
 
-
-    <LinearLayout
-        android:id="@+id/selectQueryButtons"
+    <HorizontalScrollView
+        android:id="@+id/scrollViewButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/selectCurrency"
-            style="@style/DialogButtonLeft"
+        <LinearLayout
+            android:id="@+id/selectQueryButtons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/currency_text" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/selectCategory"
-            style="@style/DialogButtonCenter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/category_text" />
+            <Button
+                android:id="@+id/selectCurrency"
+                style="@style/DialogButtonLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_text_on_button" />
 
-        <Button
-            android:id="@+id/selectCashAccount"
-            style="@style/DialogButtonRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cash_account_text" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/selectCategory"
+                style="@style/DialogButtonCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_text_on_button" />
+
+            <Button
+                android:id="@+id/selectCashAccount"
+                style="@style/DialogButtonCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cash_account_text_on_button" />
+
+            <Button
+                android:id="@+id/selectTimePeriod"
+                style="@style/DialogButtonRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time period" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/moneyMovingHolder"
@@ -46,7 +58,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/totalBalance"
-        app:layout_constraintTop_toBottomOf="@+id/selectQueryButtons" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewButtons" />
 
     <LinearLayout
         android:id="@+id/selectLayoutHolder"
@@ -85,14 +97,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="0" />
+
     <TextView
         android:id="@+id/spendingBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/incomeBalance"
         app:layout_constraintEnd_toStartOf="@id/totalBalance"
+        app:layout_constraintStart_toEndOf="@id/incomeBalance"
         tools:text="0" />
+
     <TextView
         android:id="@+id/totalBalance"
         android:layout_width="wrap_content"

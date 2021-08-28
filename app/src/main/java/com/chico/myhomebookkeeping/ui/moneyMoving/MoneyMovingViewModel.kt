@@ -24,6 +24,7 @@ import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.*
 
 class MoneyMovingViewModel(
@@ -37,6 +38,8 @@ class MoneyMovingViewModel(
     private val argsNone = Constants.FOR_QUERY_NONE
     private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
+    private val argsStartTimePeriod = Constants.FOR_QUERY_START_TIME_PERIOD
+    private val argsEndTimePeriod = Constants.FOR_QUERY_END_TIME_PERIOD
 
     private val modelCheck = ModelCheck()
     private val db: MoneyMovementDao =
@@ -75,6 +78,10 @@ class MoneyMovingViewModel(
     val buttonTextOfQueryCashAccount: LiveData<String>
         get() = _buttonTextOfQueryCashAccount
 
+    private val _buttonTextOfTimePeriod = MutableLiveData<String>()
+    val buttonTextOfTimePeriod: LiveData<String>
+        get() = _buttonTextOfTimePeriod
+
     private val _incomeBalance = MutableLiveData<String>()
     val incomeBalance: LiveData<String>
         get() = _incomeBalance
@@ -91,21 +98,22 @@ class MoneyMovingViewModel(
     val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
         get() = _selectedMoneyMoving
 
-    private var cashAccountSP = -1
-    private var currencySP: Int = -1
-    private var categorySP = -1
-    private var incomeSpendingSP: String = argsNone
+    private var cashAccountIntSP = -1
+    private var currencyIntSP: Int = -1
+    private var categoryIntSP = -1
+    private var incomeSpendingStringSP: String = argsNone
+    private var startTimePeriodLongSP = minusOneLong
+    private var endTimePeriodLongSP = minusOneLong
 
 //    private lateinit var moneyMovingCountMoney:MoneyMovingCountMoney
 
     //    private lateinit var resultQuery: List<FullMoneyMoving>?
     init {
         launchUi {
-            setTextOnButtons()
         }
     }
 
-    fun getListFulMoneyMoving(){
+    fun getListFulMoneyMoving() {
         runBlocking {
             getValuesSP()
             val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
@@ -113,9 +121,10 @@ class MoneyMovingViewModel(
             Log.i("TAG", "found lines money moving ${listFullMoneyMoving.await()?.size}")
             postListFullMoneyMoving(listFullMoneyMoving.await())
             postBalanceValues(listFullMoneyMoving.await())
+            setTextOnButtons()
         }
-
     }
+
     private fun postListFullMoneyMoving(list: List<FullMoneyMoving>?) {
         _moneyMovementList.postValue(list)
     }
@@ -124,19 +133,42 @@ class MoneyMovingViewModel(
         setTextOnCategoryButton()
         setTextOnCurrencyButton()
         setTextOnCashAccountButton()
+        setTextOnTimePeriodButton()
+    }
+
+    private fun setTextOnTimePeriodButton() {
+        launchUi {
+            val text: String = getResourceText(R.string.time_period_text_on_button)
+            var timePeriod: String = ""
+            val textFrom = getResourceText(R.string.time_period_from_text_on_button)
+            val textTo = getResourceText(R.string.time_period_to_text_on_button)
+            val textAllTime = getResourceText(R.string.time_period_all_time_text_on_button)
+            if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
+                timePeriod = textFrom + startTimePeriodLongSP.parseTimeFromMillisShortDate()
+            }
+            if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
+                timePeriod = textTo + endTimePeriodLongSP.parseTimeFromMillisShortDate()
+            }
+            if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
+                and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
+            ){
+                timePeriod = textAllTime
+            }
+                _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
+        }
     }
 
     private fun setTextOnCashAccountButton() {
         launchUi {
-            val text: String = getResourceText(R.string.cash_account_text)
+            val text: String = getResourceText(R.string.cash_account_text_on_button)
             var name: String = ""
-            if (modelCheck.isPositiveValue(cashAccountSP)) {
+            if (modelCheck.isPositiveValue(cashAccountIntSP)) {
                 name = CashAccountsUseCase.getOneCashAccount(
                     dbCashAccount,
-                    cashAccountSP
+                    cashAccountIntSP
                 )?.accountName.toString()
             }
-            if (!modelCheck.isPositiveValue(cashAccountSP)) {
+            if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
                 name = getResourceText(R.string.all_text)
             }
             _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
@@ -145,16 +177,16 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCurrencyButton() {
         launchUi {
-            val text: String = getResourceText(R.string.currency_text)
+            val text: String = getResourceText(R.string.currency_text_on_button)
             var name: String = ""
 
-            if (modelCheck.isPositiveValue(currencySP)) {
+            if (modelCheck.isPositiveValue(currencyIntSP)) {
                 name = CurrenciesUseCase.getOneCurrency(
                     dbCurrencies,
-                    currencySP
+                    currencyIntSP
                 )?.currencyName.toString()
             }
-            if (!modelCheck.isPositiveValue(currencySP)) {
+            if (!modelCheck.isPositiveValue(currencyIntSP)) {
                 name = getResourceText(R.string.all_text)
             }
             _buttonTextOfQueryCurrency.postValue(createButtonText(text, name))
@@ -163,16 +195,16 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCategoryButton() {
         launchUi {
-            val text: String = getResourceText(R.string.category_text)
+            val text: String = getResourceText(R.string.category_text_on_button)
             var name: String = ""
-            if (modelCheck.isPositiveValue(categorySP)) {
+            if (modelCheck.isPositiveValue(categoryIntSP)) {
                 name = CategoriesUseCase.getOneCategory(
                     dbCategory,
-                    categorySP
+                    categoryIntSP
                 )?.categoryName.toString()
             }
             if (getSP.isCategoryNone(argsIncomeSpending)) {
-                if (!modelCheck.isPositiveValue(categorySP)) {
+                if (!modelCheck.isPositiveValue(categoryIntSP)) {
                     name = getResourceText(R.string.all_text)
                 }
             }
@@ -204,19 +236,21 @@ class MoneyMovingViewModel(
     }
 
     private fun getValuesSP() {
-        incomeSpendingSP = getSP.getString(argsIncomeSpending) ?: argsNone
-        cashAccountSP = getSP.getInt(argsCashAccountKey)
-        currencySP = getSP.getInt(argsCurrencyKey)
-        categorySP = getSP.getInt(argsCategoryKey)
+        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriod)
+        startTimePeriodLongSP = getSP.getLong(argsStartTimePeriod)
+        incomeSpendingStringSP = getSP.getString(argsIncomeSpending) ?: argsNone
+        cashAccountIntSP = getSP.getInt(argsCashAccountKey)
+        currencyIntSP = getSP.getInt(argsCurrencyKey)
+        categoryIntSP = getSP.getInt(argsCategoryKey)
     }
 
     private suspend fun loadListMoneyMovement() = runBlocking {
 
         val query = MoneyMovingCreteQuery.createQueryList(
-            currencySP,
-            categorySP,
-            cashAccountSP,
-            incomeSpendingSP
+            currencyIntSP,
+            categoryIntSP,
+            cashAccountIntSP,
+            incomeSpendingStringSP
         )
         return@runBlocking getListMoneyMovement(query)
     }
@@ -230,7 +264,7 @@ class MoneyMovingViewModel(
     }
 
     private fun postBalanceValues(list: List<FullMoneyMoving>?) = runBlocking {
-        if (!list.isNullOrEmpty()){
+        if (!list.isNullOrEmpty()) {
             val moneyMovingCountMoney = MoneyMovingCountMoney(list)
             _incomeBalance.postValue(
                 getResourceText(R.string.income) + " " + moneyMovingCountMoney.getIncome()
@@ -250,7 +284,7 @@ class MoneyMovingViewModel(
     }
 
     private fun isOneCurrency(): Boolean {
-        return currencySP > 0
+        return currencyIntSP > 0
     }
 
     fun getNumFoundLines(): Int {

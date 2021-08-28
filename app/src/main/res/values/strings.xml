@@ -5,6 +5,7 @@
     <string name="nav_header_title" translatable="false">Android Studio</string>
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="nav_header_time_period">select time period</string>
 
     <string name="action_settings">Settings</string>
 
@@ -64,10 +65,6 @@
     <string name="spending_category_text_radio_button">spending</string>
 
     <string name="amount_text">amount</string>
-
-    <string name="cash_account_text">cash account</string>
-    <string name="currency_text">currency</string>
-    <string name="category_text">category</string>
 
     <string name="help_fragment">help</string>
     <string name="submit_text_button">submit</string>

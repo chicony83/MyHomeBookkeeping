@@ -62,7 +62,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
                 R.id.nav_change_money_moving,
-                R.id.nav_setting
+                R.id.nav_setting,
+                R.id.nav_time_period
             ),
             drawerLayout
         )
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_setting -> uiHelper.hideUiElement(fab)
                 R.id.nav_help_fragment -> uiHelper.hideUiElement(fab)
                 R.id.nav_new_money_moving -> uiHelper.hideUiElement(fab)
+                R.id.nav_first_launch_fragment -> uiHelper.hideUiElement(fab)
                 R.id.nav_first_launch_fragment -> uiHelper.hideUiElement(fab)
                 else -> uiHelper.showUiElement(fab)
             }

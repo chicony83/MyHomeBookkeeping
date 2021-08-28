@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="nav_header_time_period">выберите период времени</string>
+
     <string name="action_settings">Настройки</string>
     <string name="title_home">Журнал</string>
     <string name="reports_title">Отчеты</string>
-    <string name="title_categories">Категоии</string>
+    <string name="title_categories">Категории</string>
     <string name="header_cash_accounts">Названия счетов</string>
     <string name="select_text_button">выбрать</string>
     <string name="cancel_text_button">отменить</string>
@@ -20,9 +22,6 @@
     <string name="title_currencies">валюты</string>
     <string name="new_money_movement">новыe доходы/расходы</string>
     <string name="title_add_income_or_expense">добавить доход/расход</string>
-    <string name="cash_account_text">счёт</string>
-    <string name="currency_text">валюта</string>
-    <string name="category_text">категория</string>
     <string name="youDescriptionText">ваше описание</string>
     <string name="date_time_text">дата/время</string>
     <string name="selectedCashAccount">выбрать счёт</string>

@@ -5,6 +5,15 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_money_moving">
 
+    <fragment
+        android:id="@+id/nav_time_period"
+        android:name="com.chico.myhomebookkeeping.ui.timePeriod.TimePeriodFragment"
+        tools:layout="@layout/fragment_period_time"
+        android:label="select time period">
+        <action
+            android:id="@+id/action_nav_time_period_to_nav_money_moving"
+            app:destination="@id/nav_money_moving" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_new_money_moving"
@@ -60,6 +69,9 @@
         <action
             android:id="@+id/action_nav_money_moving_to_nav_change_money_moving"
             app:destination="@id/nav_change_money_moving" />
+        <action
+            android:id="@+id/action_nav_money_moving_to_nav_time_period"
+            app:destination="@id/nav_time_period" />
     </fragment>
 
     <fragment

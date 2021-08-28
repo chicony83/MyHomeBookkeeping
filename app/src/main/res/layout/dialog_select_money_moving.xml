@@ -50,7 +50,7 @@
         android:id="@+id/description_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/currency_text"
+        android:text="@string/currency_text_on_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_amount" />
 
@@ -65,7 +65,7 @@
         android:id="@+id/description_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/category_text"
+        android:text="@string/category_text_on_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_currency" />
 
@@ -80,7 +80,7 @@
         android:id="@+id/description_cash_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cash_account_text"
+        android:text="@string/cash_account_text_on_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_category" />
 

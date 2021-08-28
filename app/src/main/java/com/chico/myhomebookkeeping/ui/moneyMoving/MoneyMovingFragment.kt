@@ -55,6 +55,9 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner,{
+                binding.selectTimePeriod.text = it
+            })
             buttonTextOfQueryCurrency.observe(viewLifecycleOwner, {
                 binding.selectCurrency.text = it
             })
@@ -132,6 +135,9 @@ class MoneyMovingFragment : Fragment() {
             }
             selectCashAccount.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
+            }
+            selectTimePeriod.setOnClickListener {
+                pressSelectButton(R.id.nav_time_period)
             }
             with(selectLayout) {
                 changeButton.setOnClickListener {
