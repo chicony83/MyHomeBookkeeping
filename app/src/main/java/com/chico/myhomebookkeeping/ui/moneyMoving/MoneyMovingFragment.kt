@@ -49,8 +49,6 @@ class MoneyMovingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        nightColor = resources.getColor(R.color.dialogNightBackground)
-
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
 

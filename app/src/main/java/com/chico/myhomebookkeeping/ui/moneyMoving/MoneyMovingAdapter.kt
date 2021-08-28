@@ -95,7 +95,7 @@ class MoneyMovingAdapter(
 
             with(binding) {
                 if (!isNightMode){
-//                    item.setBackgroundResource(R.drawable.money_moving_day_item_background)
+                    item.setBackgroundResource(R.drawable.money_moving_day_item_background)
                 }
                 if (showDate) {
                     dateSeparatorText.text =
