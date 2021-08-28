@@ -8,4 +8,5 @@
     <string name="category_not_selected_message">"категория не выбрана"</string>
     <string name="currency_not_selected_message">"валюта не выбрана"</string>
     <string name="cash_account_not_selected_message">"счет не выбран"</string>
+    <string name="first_launch_dialog_message">"Это первый запуск программы \n включить быструю настройку"</string>
 </resources>

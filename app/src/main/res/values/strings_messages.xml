@@ -8,4 +8,5 @@
     <string name="category_not_selected_message">"category not selected"</string>
     <string name="currency_not_selected_message">"currency not selected"</string>
     <string name="cash_account_not_selected_message">"cash account not selected"</string>
+    <string name="first_launch_dialog_message">"This is the first launch \n of the program, \n enable quick setup?"</string>
 </resources>

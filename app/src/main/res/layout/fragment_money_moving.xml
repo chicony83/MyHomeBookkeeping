@@ -75,7 +75,7 @@
 
         <include
             android:id="@+id/firstLaunchDialog"
-            layout="@layout/fragment_first_launch_dialog" />
+            layout="@layout/dialog_first_launch" />
     </LinearLayout>
 
     <TextView
