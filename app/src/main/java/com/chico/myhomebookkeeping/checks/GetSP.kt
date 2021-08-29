@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.checks
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.chico.myhomebookkeeping.constants.Constants
 
 class GetSP(private val sharedPreferences: SharedPreferences) {
@@ -15,6 +16,7 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     }
 
     fun getLong(argsKey: String): Long {
+        messageLog("$argsKey ${sharedPreferences.getLong(argsKey,minusOneLong)}")
         return sharedPreferences.getLong(argsKey, minusOneLong)
     }
 
@@ -35,5 +37,8 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
 
     fun isCategorySpending(argsIncomeSpending: String): Boolean {
         return sharedPreferences.getString(argsIncomeSpending, argsNone).toString() == argsSpending
+    }
+    fun messageLog(text:String){
+        Log.i("TAG",text)
     }
 }

@@ -184,7 +184,6 @@ class MoneyMovingFragment : Fragment() {
             binding.firstLaunchDialogHolder.visibility = View.VISIBLE
             moneyMovingViewModel.setIsFirstLaunchFalse()
         }
-
     }
 
     @SuppressLint("ResourceAsColor")
@@ -206,7 +205,6 @@ class MoneyMovingFragment : Fragment() {
             }
         }
     }
-
 
     private fun checkLinesFound() {
         var numFoundedLines = moneyMovingViewModel.getNumFoundLines()

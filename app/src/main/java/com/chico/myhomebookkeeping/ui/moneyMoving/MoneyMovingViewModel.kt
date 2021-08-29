@@ -139,22 +139,33 @@ class MoneyMovingViewModel(
     private fun setTextOnTimePeriodButton() {
         launchUi {
             val text: String = getResourceText(R.string.time_period_text_on_button)
+            val space = " "
             var timePeriod: String = ""
             val textFrom = getResourceText(R.string.time_period_from_text_on_button)
             val textTo = getResourceText(R.string.time_period_to_text_on_button)
             val textAllTime = getResourceText(R.string.time_period_all_time_text_on_button)
             if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
-                timePeriod = textFrom + startTimePeriodLongSP.parseTimeFromMillisShortDate()
+                timePeriod =
+                    textFrom +
+                            space +
+                            startTimePeriodLongSP.parseTimeFromMillisShortDate() +
+                            space
             }
             if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
-                timePeriod = textTo + endTimePeriodLongSP.parseTimeFromMillisShortDate()
+                timePeriod =
+                    timePeriod +
+                            space +
+                            textTo +
+                            space +
+                            endTimePeriodLongSP.parseTimeFromMillisShortDate()
             }
             if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
                 and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
-            ){
+            ) {
                 timePeriod = textAllTime
             }
-                _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
+            messageLog(timePeriod)
+            _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
         }
     }
 
@@ -236,8 +247,8 @@ class MoneyMovingViewModel(
     }
 
     private fun getValuesSP() {
-        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriod)
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriod)
+        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriod)
         incomeSpendingStringSP = getSP.getString(argsIncomeSpending) ?: argsNone
         cashAccountIntSP = getSP.getInt(argsCashAccountKey)
         currencyIntSP = getSP.getInt(argsCurrencyKey)
@@ -336,4 +347,8 @@ class MoneyMovingViewModel(
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
     }
+    private fun messageLog(text: String) {
+        Log.i("TAG", text)
+    }
+
 }
