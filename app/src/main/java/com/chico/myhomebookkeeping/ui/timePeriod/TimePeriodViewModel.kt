@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.constants.Constants
@@ -59,7 +60,11 @@ class TimePeriodViewModel(
     }
 
     private fun postStartTimePeriod() {
-        _startTimePeriodText.postValue(startTimePeriodLong.parseTimeFromMillisShortDate())
+        if (modelCheck.isPositiveValue(startTimePeriodLong)) {
+            _startTimePeriodText.postValue(startTimePeriodLong.parseTimeFromMillisShortDate())
+        } else {
+            _startTimePeriodText.postValue(getStringResource(R.string.time_period_at_first_text_on_button))
+        }
     }
 
     private fun messageLog(message: String) {
@@ -73,15 +78,37 @@ class TimePeriodViewModel(
     }
 
     private fun postEndTimePeriod() {
-        _endTimePeriodText.postValue(endTimePeriodLong.parseTimeFromMillisShortDate())
+        if (modelCheck.isPositiveValue(endTimePeriodLong)) {
+            _endTimePeriodText.postValue(endTimePeriodLong.parseTimeFromMillisShortDate())
+        } else {
+            _endTimePeriodText.postValue(getStringResource(R.string.time_period_to_end_text_on_button))
+        }
+
     }
 
     fun getStartTimePeriod(): Long {
         return startTimePeriodLong
     }
+    fun getEndTimePeriod():Long{
+        return endTimePeriodLong
+    }
 
     fun saveARGStoSP() {
         setSP.setLong(argsStartTimePeriod, startTimePeriodLong)
         setSP.setLong(argsEndTimePeriod, endTimePeriodLong)
+    }
+
+    fun resetStartPeriod() {
+        startTimePeriodLong = minusOneLong
+        postStartTimePeriod()
+    }
+
+    fun resetEndPeriod() {
+        endTimePeriodLong = minusOneLong
+        postEndTimePeriod()
+    }
+
+    private fun getStringResource(text: Int): String {
+        return app.getString(text)
     }
 }

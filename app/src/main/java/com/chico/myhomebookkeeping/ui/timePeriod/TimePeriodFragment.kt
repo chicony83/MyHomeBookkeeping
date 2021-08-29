@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.databinding.FragmentPeriodTimeBinding
+import com.chico.myhomebookkeeping.databinding.FragmentTimePeriodBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
 class TimePeriodFragment : Fragment() {
     private lateinit var timePeriodViewModel: TimePeriodViewModel
-    private var _binding: FragmentPeriodTimeBinding? = null
+    private var _binding: FragmentTimePeriodBinding? = null
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
@@ -36,7 +36,7 @@ class TimePeriodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPeriodTimeBinding.inflate(inflater, container, false)
+        _binding = FragmentTimePeriodBinding.inflate(inflater, container, false)
 
         timePeriodViewModel = ViewModelProvider(this).get(TimePeriodViewModel::class.java)
 
@@ -58,19 +58,35 @@ class TimePeriodFragment : Fragment() {
                 isGetEndTimePeriod = true
                 datePicker.show(parentFragmentManager, textLogDataPicker)
             }
+            resetStartPeriodButton.setOnClickListener {
+                timePeriodViewModel.resetStartPeriod()
+                resetStartPeriodButton.isEnabled = false
+            }
+            resetEndPeriodButton.setOnClickListener {
+                timePeriodViewModel.resetEndPeriod()
+                resetEndPeriodButton.isEnabled = false
+            }
         }
         with(timePeriodViewModel) {
-            startTimePeriodText.observe(viewLifecycleOwner, {
-                binding.startPeriodText.text = it
+            startTimePeriodText.observe(viewLifecycleOwner,{
+                binding.selectStartPeriodButton.text = it
             })
-            endTimePeriodText.observe(viewLifecycleOwner, {
-                binding.endPeriodText.text = it
+            endTimePeriodText.observe(viewLifecycleOwner,{
+                binding.selectEndPeriodButton.text = it
             })
+
+//            startTimePeriodText.observe(viewLifecycleOwner, {
+//                binding.startPeriodText.text = it
+//            })
+//            endTimePeriodText.observe(viewLifecycleOwner, {
+//                binding.endPeriodText.text = it
+//            })
         }
         datePicker.addOnPositiveButtonClickListener {
             if (isGetStartTimePeriod) {
                 if (it < dateNowInMills) {
                     timePeriodViewModel.setStartTimePeriod(it)
+                    binding.resetStartPeriodButton.isEnabled = true
                 }
                 if (it > dateNowInMills) {
                     message("начальная дата не может быть больше текущей")
@@ -82,6 +98,7 @@ class TimePeriodFragment : Fragment() {
                     message("конечная дата не может быть больше начальной")
                 }
                 else{
+                    binding.resetEndPeriodButton.isEnabled = true
                     timePeriodViewModel.setEndTimePeriod(it)
                 }
                 isGetEndTimePeriod = false

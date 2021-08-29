@@ -261,7 +261,9 @@ class MoneyMovingViewModel(
             currencyIntSP,
             categoryIntSP,
             cashAccountIntSP,
-            incomeSpendingStringSP
+            incomeSpendingStringSP,
+            startTimePeriodLongSP,
+            endTimePeriodLongSP
         )
         return@runBlocking getListMoneyMovement(query)
     }

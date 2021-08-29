@@ -22,7 +22,7 @@ object MoneyMovingCreteQuery {
             argsList.add(id)
         }
         val args = argsList.toArray()
-        Log.i("TAG",queryString)
+        Log.i("TAG", queryString)
         return SimpleSQLiteQuery(queryString, args)
     }
 
@@ -30,13 +30,33 @@ object MoneyMovingCreteQuery {
         currencyVal: Int,
         categoryVal: Int,
         cashAccountVal: Int,
-        incomeSpendingSP: String
+        incomeSpendingSP: String,
+        startTimePeriodLongSP: Long,
+        endTimePeriodLongSP: Long
     ): SimpleSQLiteQuery {
 
         var queryString = ""
         queryString += addMainQuery()
         var argsList: ArrayList<Any> = arrayListOf()
 
+        if ((startTimePeriodLongSP > 0) and (endTimePeriodLongSP > 0)) {
+            queryString += addAnd()
+            queryString += "time_stamp BETWEEN :startTime AND :endTime"
+            argsList.add(startTimePeriodLongSP)
+            argsList.add(endTimePeriodLongSP)
+        }
+        if ((startTimePeriodLongSP > 0) xor (endTimePeriodLongSP > 0)) {
+            if (startTimePeriodLongSP > 0) {
+                queryString += addAnd()
+                queryString += "time_stamp > :time_stamp"
+                argsList.add(startTimePeriodLongSP)
+            }
+            if (endTimePeriodLongSP > 0) {
+                queryString += addAnd()
+                queryString += "time_stamp < :time_stamp"
+                argsList.add(endTimePeriodLongSP)
+            }
+        }
         if (currencyVal > 0) {
             queryString += addAnd()
             queryString += " currency = :currency "
@@ -63,7 +83,7 @@ object MoneyMovingCreteQuery {
 
         queryString += " ORDER BY time_stamp DESC "
 
-//        Log.i("TAG","$queryString")
+        Log.i("TAG", "$queryString")
         val args = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)

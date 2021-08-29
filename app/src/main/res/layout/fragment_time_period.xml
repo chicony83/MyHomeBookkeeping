@@ -24,17 +24,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/startPeriodText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="выберите дату ->" />
-
-            <ImageButton
+            <Button
                 android:id="@+id/selectStartPeriodButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar" />
+                android:hint="@string/time_period_at_first_text_on_button" />
+
+            <Button
+                android:id="@+id/resetStartPeriodButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset" />
         </LinearLayout>
 
         <TextView
@@ -47,17 +47,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/endPeriodText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="выберите дату ->" />
-
-            <ImageButton
+            <Button
                 android:id="@+id/selectEndPeriodButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar" />
+                android:hint="@string/time_period_to_end_text_on_button" />
+
+            <Button
+                android:id="@+id/resetEndPeriodButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset" />
         </LinearLayout>
 
     </LinearLayout>
