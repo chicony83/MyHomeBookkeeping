@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -19,6 +20,7 @@ import com.chico.myhomebookkeeping.checks.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.utils.launchUi
 
 class MainActivity : AppCompatActivity() {
 
@@ -73,6 +75,16 @@ class MainActivity : AppCompatActivity() {
         fabSetOnClickListener(fab, navController)
 
         hideFab(navController, fab)
+        launchUi {
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (destination.id == R.id.nav_help_fragment) {
+                    toolbar.visibility = View.GONE
+                } else {
+                    toolbar.visibility = View.VISIBLE
+                }
+            }
+        }
+
     }
 
 
