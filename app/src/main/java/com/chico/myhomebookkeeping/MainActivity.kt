@@ -84,9 +84,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -119,8 +117,6 @@ class MainActivity : AppCompatActivity() {
     ) {
         fab.setOnClickListener {
             navController.navigate(R.id.nav_new_money_moving)
-//            spEditor.putLong(argsIdMoneyMovingForChange,-1)
-//            spEditor.commit()
         }
     }
 
