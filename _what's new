@@ -1,6 +1,7 @@
 0.7.0
 add fragment select Time period in journal
 fix bug disable toolBar in help
+fix bug now button press back working right
 
 0.6.3
 add show positive/negative values in journal in amount
