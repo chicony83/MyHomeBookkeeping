@@ -8,9 +8,11 @@ class NavControlHelper(private val controller: NavController) {
 
     fun moveToPreviousPage() {
         controller.previousBackStackEntry?.destination?.let {
+//            controller.popBackStack(R.id.nav_money_moving, true)
             controller.navigate(
                 it.id
             )
+
         }
     }
 
