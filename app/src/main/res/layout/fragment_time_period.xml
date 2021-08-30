@@ -6,63 +6,66 @@
     android:layout_height="match_parent"
     tools:context="ui.timePeriod.TimePeriodFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/submitButton"
+    <TextView
+        android:id="@+id/descriptionStartPeriod"
+        style="@style/Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="начало периода"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="начало периода" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/selectStartPeriodButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/time_period_at_first_text_on_button" />
-
-            <Button
-                android:id="@+id/resetStartPeriodButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reset" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="конец периода" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/selectEndPeriodButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/time_period_to_end_text_on_button" />
-
-            <Button
-                android:id="@+id/resetEndPeriodButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reset" />
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/selectStartPeriodButton"
+        style="@style/DialogButtonLeft.Add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/time_period_at_first_text_on_button"
+        app:layout_constraintEnd_toStartOf="@id/resetStartPeriodButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionStartPeriod" />
+
+    <Button
+        android:id="@+id/resetStartPeriodButton"
+        style="@style/DialogButtonRight.Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionStartPeriod" />
+
+    <TextView
+        android:id="@+id/descriptionEndPeriod"
+        style="@style/Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="конец периода"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectStartPeriodButton" />
+
+    <Button
+        android:id="@+id/selectEndPeriodButton"
+        style="@style/DialogButtonLeft.Add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/time_period_to_end_text_on_button"
+        app:layout_constraintEnd_toStartOf="@id/resetEndPeriodButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEndPeriod" />
+
+    <Button
+        android:id="@+id/resetEndPeriodButton"
+        style="@style/DialogButtonRight.Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEndPeriod" />
+
+    <Button
+        style="@style/ButtonFullWidth"
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

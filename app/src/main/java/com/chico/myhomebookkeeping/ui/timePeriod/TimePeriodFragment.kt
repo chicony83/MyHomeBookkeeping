@@ -68,19 +68,12 @@ class TimePeriodFragment : Fragment() {
             }
         }
         with(timePeriodViewModel) {
-            startTimePeriodText.observe(viewLifecycleOwner,{
+            startTimePeriodText.observe(viewLifecycleOwner, {
                 binding.selectStartPeriodButton.text = it
             })
-            endTimePeriodText.observe(viewLifecycleOwner,{
+            endTimePeriodText.observe(viewLifecycleOwner, {
                 binding.selectEndPeriodButton.text = it
             })
-
-//            startTimePeriodText.observe(viewLifecycleOwner, {
-//                binding.startPeriodText.text = it
-//            })
-//            endTimePeriodText.observe(viewLifecycleOwner, {
-//                binding.endPeriodText.text = it
-//            })
         }
         datePicker.addOnPositiveButtonClickListener {
             if (isGetStartTimePeriod) {
@@ -89,20 +82,37 @@ class TimePeriodFragment : Fragment() {
                     binding.resetStartPeriodButton.isEnabled = true
                 }
                 if (it > dateNowInMills) {
-                    message("начальная дата не может быть больше текущей")
+                    message("Начальная дата не может быть больше текущей")
                 }
                 isGetStartTimePeriod = false
             }
             if (isGetEndTimePeriod) {
-                if (it < timePeriodViewModel.getStartTimePeriod()){
-                    message("конечная дата не может быть больше начальной")
-                }
-                else{
+                if (it > dateNowInMills) {
                     binding.resetEndPeriodButton.isEnabled = true
                     timePeriodViewModel.setEndTimePeriod(it)
+                    message("Хотите заглянуть в будущее? \nКонечная дата больше текущей!!!")
+
+                }
+                if (it <= dateNowInMills) {
+                    if (it < timePeriodViewModel.getStartTimePeriod()) {
+                        message("Конечная дата не может быть меньше начальной")
+                    } else {
+                        binding.resetEndPeriodButton.isEnabled = true
+                        timePeriodViewModel.setEndTimePeriod(it)
+                    }
                 }
                 isGetEndTimePeriod = false
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (timePeriodViewModel.getStartTimePeriod() < 0) {
+            binding.resetStartPeriodButton.isEnabled = false
+        }
+        if (timePeriodViewModel.getEndTimePeriod() < 0) {
+            binding.resetEndPeriodButton.isEnabled = false
         }
     }
 
