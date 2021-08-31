@@ -26,26 +26,26 @@
             android:id="@+id/incoming_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/income_category_text_radio_button" />
+            android:text="@string/text_on_radio_button_income_category" />
 
         <RadioButton
             android:id="@+id/spending_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/spending_category_text_radio_button" />
+            android:text="@string/text_on_radio_button_spending_category" />
     </RadioGroup>
 
     <Button
         style="@style/DialogButtonLeft.Add"
         android:id="@+id/addNewCategoryButton"
-        android:text="@string/add_button_text"
+        android:text="@string/text_on_button_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
     <Button
         style="@style/DialogButtonRight.Cancel"
         android:id="@+id/cancelCreate"
-        android:text="@string/cancel_text_button"
+        android:text="@string/text_on_button_cancel"
         app:layout_constraintStart_toEndOf="@id/addNewCategoryButton"
         app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 

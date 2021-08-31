@@ -138,12 +138,12 @@ class MoneyMovingViewModel(
 
     private fun setTextOnTimePeriodButton() {
         launchUi {
-            val text: String = getResourceText(R.string.time_period_text_on_button)
+            val text: String = getResourceText(R.string.text_on_button_time_period)
             val space = " "
             var timePeriod: String = ""
-            val textFrom = getResourceText(R.string.time_period_from_text_on_button)
-            val textTo = getResourceText(R.string.time_period_to_text_on_button)
-            val textAllTime = getResourceText(R.string.time_period_all_time_text_on_button)
+            val textFrom = getResourceText(R.string.text_on_button_time_period_from)
+            val textTo = getResourceText(R.string.text_on_button_time_period_to)
+            val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
             if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
                 timePeriod =
                     textFrom +
@@ -171,7 +171,7 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCashAccountButton() {
         launchUi {
-            val text: String = getResourceText(R.string.cash_account_text_on_button)
+            val text: String = getResourceText(R.string.text_on_button_cash_account)
             var name: String = ""
             if (modelCheck.isPositiveValue(cashAccountIntSP)) {
                 name = CashAccountsUseCase.getOneCashAccount(
@@ -180,7 +180,7 @@ class MoneyMovingViewModel(
                 )?.accountName.toString()
             }
             if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
-                name = getResourceText(R.string.all_text)
+                name = getResourceText(R.string.text_on_button_all_text)
             }
             _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
         }
@@ -188,7 +188,7 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCurrencyButton() {
         launchUi {
-            val text: String = getResourceText(R.string.currency_text_on_button)
+            val text: String = getResourceText(R.string.text_on_button_currency)
             var name: String = ""
 
             if (modelCheck.isPositiveValue(currencyIntSP)) {
@@ -198,7 +198,7 @@ class MoneyMovingViewModel(
                 )?.currencyName.toString()
             }
             if (!modelCheck.isPositiveValue(currencyIntSP)) {
-                name = getResourceText(R.string.all_text)
+                name = getResourceText(R.string.text_on_button_all_text)
             }
             _buttonTextOfQueryCurrency.postValue(createButtonText(text, name))
         }
@@ -206,7 +206,7 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCategoryButton() {
         launchUi {
-            val text: String = getResourceText(R.string.category_text_on_button)
+            val text: String = getResourceText(R.string.text_on_button_category)
             var name: String = ""
             if (modelCheck.isPositiveValue(categoryIntSP)) {
                 name = CategoriesUseCase.getOneCategory(
@@ -216,17 +216,17 @@ class MoneyMovingViewModel(
             }
             if (getSP.isCategoryNone(argsIncomeSpending)) {
                 if (!modelCheck.isPositiveValue(categoryIntSP)) {
-                    name = getResourceText(R.string.all_text)
+                    name = getResourceText(R.string.text_on_button_all_text)
                 }
             }
             if (!getSP.isCategoryNone(argsIncomeSpending)) {
                 if (getSP.isCategoryIncome(argsIncomeSpending)) {
-                    name = getResourceText(R.string.allIncome)
+                    name = getResourceText(R.string.text_on_button_all_income)
                     Log.i("TAG", "income message")
                 }
                 if (getSP.isCategorySpending(argsIncomeSpending)) {
                     Log.i("TAG", "income spending")
-                    name = getResourceText(R.string.allSpending)
+                    name = getResourceText(R.string.text_on_button_all_spending)
                 }
             }
             _buttonTextOfQueryCategory.postValue(createButtonText(text, name))
@@ -280,13 +280,13 @@ class MoneyMovingViewModel(
         if (!list.isNullOrEmpty()) {
             val moneyMovingCountMoney = MoneyMovingCountMoney(list)
             _incomeBalance.postValue(
-                getResourceText(R.string.income) + " " + moneyMovingCountMoney.getIncome()
+                getResourceText(R.string.description_income) + " " + moneyMovingCountMoney.getIncome()
             )
             _spendingBalance.postValue(
-                getResourceText(R.string.spending) + " " + moneyMovingCountMoney.getSpending()
+                getResourceText(R.string.description_spending) + " " + moneyMovingCountMoney.getSpending()
             )
             _totalBalance.postValue(
-                getResourceText(R.string.balance) + " " + moneyMovingCountMoney.getBalance()
+                getResourceText(R.string.description_balance) + " " + moneyMovingCountMoney.getBalance()
             )
         }
 

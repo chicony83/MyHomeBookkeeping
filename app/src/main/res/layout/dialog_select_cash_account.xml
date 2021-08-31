@@ -32,7 +32,7 @@
         android:id="@+id/selectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/select_text_button"
+        android:text="@string/text_on_button_select"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
@@ -41,7 +41,7 @@
         android:id="@+id/changeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/change_button_text"
+        android:text="@string/text_on_button_change"
         app:layout_constraintStart_toEndOf="@id/selectButton"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
@@ -50,7 +50,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel_text_button"
+        android:text="@string/text_on_button_cancel"
         app:layout_constraintStart_toEndOf="@id/changeButton"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

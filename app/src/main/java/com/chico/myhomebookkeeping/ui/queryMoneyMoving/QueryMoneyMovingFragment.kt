@@ -34,7 +34,7 @@ class QueryMoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        textAll = resources.getString(R.string.all_text)
+        textAll = resources.getString(R.string.text_on_button_all_text)
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 

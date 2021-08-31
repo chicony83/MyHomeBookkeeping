@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/save_button_text" />
+            android:text="@string/text_on_button_save" />
 
         <Button
             style="@style/DialogButtonRight"
@@ -37,6 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/cancel_text_button" />
+            android:text="@string/text_on_button_cancel" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

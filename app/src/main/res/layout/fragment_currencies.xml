@@ -10,7 +10,7 @@
         android:id="@+id/selectAllButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/selectAll"
+        android:text="@string/text_on_button_select_all"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         android:id="@+id/show_hide_add_currency_fragment_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_new_currency_button_text"
+        android:text="@string/text_on_button_add_new_currency"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

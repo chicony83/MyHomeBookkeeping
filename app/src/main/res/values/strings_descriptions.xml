@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="income">income</string>
-    <string name="spending">spending</string>
-    <string name="balance">balance</string>
+    <string name="positive_value" translatable="false">+</string>
+    <string name="negative_value" translatable="false">-</string>
+
+    <string name="description_income">Income</string>
+    <string name="description_spending">Spending</string>
+
+    <string name="description_balance">Balance</string>
+
+    <string name="description_date_time_text">Date/time</string>
+    <string name="description_cash_account">Cash account</string>
+    <string name="description_currency">Currency</string>
+    <string name="description_category">Category</string>
+    <string name="description_amount">Amount</string>
+    <string name="description_description">Description</string>
+    <string name="description_add_you_description">Add you description</string>
+
+    <string name="descriptions_last_4_digits_of_card">last 4 digits of the card</string>
+
+    <string name="description_cash_account_name">cash account name</string>
 </resources>

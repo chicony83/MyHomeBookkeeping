@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cash_account_text_on_button">cash account</string>
-    <string name="currency_text_on_button">currency</string>
-    <string name="category_text_on_button">category</string>
-    <string name="time_period_text_on_button">period</string>
-    <string name="time_period_from_text_on_button">с</string>
-    <string name="time_period_to_text_on_button">по</string>
-    <string name="time_period_all_time_text_on_button">all time</string>
-    
-    <string name="time_period_at_first_text_on_button">at first</string>
-    <string name="time_period_to_end_text_on_button">to end</string>
+    <string name="text_on_button_cash_account">Cash account</string>
+    <string name="text_on_button_currency">Currency</string>
+    <string name="text_on_button_category">Category</string>
+
+    <string name="text_on_button_time_period">Period</string>
+    <string name="text_on_button_time_period_from">from</string>
+    <string name="text_on_button_time_period_to">to</string>
+    <string name="text_on_button_time_period_all_time">All time</string>
+    <string name="text_on_button_time_period_at_first">At first</string>
+    <string name="text_on_button_time_period_to_end">To end</string>
+
+    <string name="text_on_button_help">Help</string>
+    <string name="text_on_button_submit">Submit</string>
+    <string name="text_on_button_change">Change</string>
+    <string name="text_on_button_save">Save</string>
+    <string name="text_on_button_apply">Apply</string>
+    <string name="text_on_button_reset">Reset</string>
+    <string name="text_on_button_select_all">Select all</string>
+    <string name="text_on_button_add">Add</string>
+
+    <string name="text_on_button_all_income">All income</string>
+    <string name="text_on_button_all_spending">All spending</string>
+    <string name="text_on_button_income_category">Income</string>
+    <string name="text_on_button_spending_category">Spending</string>
+
+    <string name="text_on_button_add_new_category">Add new category</string>
+    <string name="text_on_button_add_new_currency">Add new currency</string>
+    <string name="text_on_button_add_new_cash_account">Add new cash account</string>
+
+    <string name="text_on_button_select_cash_account">Select cash account</string>
+    <string name="text_on_button_select_currency">Select currency</string>
+    <string name="text_on_button_select_category">Select category</string>
+
+    <string name="text_on_button_save_and_select">Save and select</string>
+
+    <string name="text_on_radio_button_income_category">Income</string>
+    <string name="text_on_radio_button_spending_category">Spending</string>
+
+    <string name="text_on_button_select">Select</string>
+    <string name="text_on_button_cancel">Cancel</string>
+
+    <string name="text_on_button_all_text">All</string>
+
+
 </resources>

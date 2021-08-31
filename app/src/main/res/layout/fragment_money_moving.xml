@@ -26,21 +26,21 @@
                 style="@style/DialogButtonLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/currency_text_on_button" />
+                android:text="@string/text_on_button_currency" />
 
             <Button
                 android:id="@+id/selectCategory"
                 style="@style/DialogButtonCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/category_text_on_button" />
+                android:text="@string/text_on_button_category" />
 
             <Button
                 android:id="@+id/selectCashAccount"
                 style="@style/DialogButtonCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cash_account_text_on_button" />
+                android:text="@string/text_on_button_cash_account" />
 
             <Button
                 android:id="@+id/selectTimePeriod"

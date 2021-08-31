@@ -94,7 +94,7 @@ class NewMoneyMovingViewModel(
     fun getAndCheckArgsSp() {
 
         getSharedPreferencesArgs()
-        setSubmitButtonText(app.getString(R.string.add_button_text))
+        setSubmitButtonText(app.getString(R.string.text_on_button_add))
         setValuesViewModel()
     }
 

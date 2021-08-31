@@ -23,7 +23,7 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/date_time_text" />
+                android:text="@string/description_date_time_text" />
 
             <Button
                 android:id="@+id/dateTimeTimeStampButton"
@@ -36,35 +36,35 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/cash_account_text_on_button" />
+                android:text="@string/text_on_button_cash_account" />
 
             <Button
 
                 android:id="@+id/selectCashAccountButton"
                 style="@style/ButtonFullWidth"
-                android:text="@string/selectedCashAccount" />
+                android:text="@string/text_on_button_select_cash_account" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/currency_text_on_button" />
+                android:text="@string/text_on_button_currency" />
 
             <Button
                 android:id="@+id/selectCurrenciesButton"
                 style="@style/ButtonFullWidth"
-                android:text="@string/selectedCurrency" />
+                android:text="@string/text_on_button_select_currency" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/category_text_on_button" />
+                android:text="@string/text_on_button_category" />
 
             <Button
                 android:id="@+id/selectCategoryButton"
                 style="@style/ButtonFullWidth"
-                android:text="@string/selectedCategory" />
+                android:text="@string/text_on_button_select_category" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/amount_text" />
+                android:text="@string/description_amount" />
 
             <EditText
                 android:id="@+id/amount"
@@ -74,13 +74,13 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/descriptionTextDescription" />
+                android:text="@string/description_description" />
 
             <EditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/youDescriptionText"
+                android:hint="@string/description_add_you_description"
                 android:minLines="2" />
 
         </LinearLayout>
@@ -90,7 +90,7 @@
         android:id="@+id/submitButton"
         style="@style/ButtonFullWidth"
         android:gravity="center"
-        android:text="@string/change_button_text"
+        android:text="@string/text_on_button_change"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

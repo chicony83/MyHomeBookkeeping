@@ -48,7 +48,7 @@
             <Button
                 android:id="@+id/selectCashAccount"
                 style="@style/ButtonsMatchParent_WrapContent"
-                android:text="@string/selectedCashAccount" />
+                android:text="@string/text_on_button_select_cash_account" />
 
             <LinearLayout
                 style="@style/MatchParent_WrapContent"
@@ -56,19 +56,19 @@
 
                 <TextView
                     style="@style/SelectedParamDescription"
-                    android:text="@string/selectedCashAccount" />
+                    android:text="@string/text_on_button_select_cash_account" />
 
                 <TextView
                     android:id="@+id/nameSelectedCashAccount"
                     style="@style/SelectedParamName"
-                    android:text="@string/all_text"
+                    android:text="@string/text_on_button_all_text"
                     tools:text="наличные" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/selectCurrency"
                 style="@style/ButtonsMatchParent_WrapContent"
-                android:text="@string/selectedCurrency" />
+                android:text="@string/text_on_button_select_currency" />
 
             <LinearLayout
                 style="@style/MatchParent_WrapContent"
@@ -76,19 +76,19 @@
 
                 <TextView
                     style="@style/SelectedParamDescription"
-                    android:text="@string/selectedCurrency" />
+                    android:text="@string/text_on_button_select_currency" />
 
                 <TextView
                     android:id="@+id/nameSelectedCurrency"
                     style="@style/SelectedParamName"
-                    android:text="@string/all_text"
+                    android:text="@string/text_on_button_all_text"
                     tools:text="euro" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/selectCategory"
                 style="@style/ButtonsMatchParent_WrapContent"
-                android:text="@string/selectedCategory" />
+                android:text="@string/text_on_button_select_category" />
 
             <LinearLayout
                 style="@style/MatchParent_WrapContent"
@@ -96,12 +96,12 @@
 
                 <TextView
                     style="@style/SelectedParamDescription"
-                    android:text="@string/selectedCategory" />
+                    android:text="@string/text_on_button_select_category" />
 
                 <TextView
                     android:id="@+id/nameSelectedCategory"
                     style="@style/SelectedParamName"
-                    android:text="@string/all_text"
+                    android:text="@string/text_on_button_all_text"
                     tools:text="percents" />
             </LinearLayout>
         </LinearLayout>
@@ -119,14 +119,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:text="@string/apply_button_text" />
+            android:text="@string/text_on_button_apply" />
 
         <Button
             android:id="@+id/resetParams"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/reset" />
+            android:text="@string/text_on_button_reset" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

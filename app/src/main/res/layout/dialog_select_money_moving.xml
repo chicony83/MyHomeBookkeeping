@@ -20,7 +20,7 @@
         android:id="@+id/description_date_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/date_time_text"
+        android:text="@string/description_date_time_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
@@ -35,7 +35,7 @@
         android:id="@+id/description_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/amount_text"
+        android:text="@string/description_amount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_date_time" />
 
@@ -50,7 +50,7 @@
         android:id="@+id/description_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/currency_text_on_button"
+        android:text="@string/text_on_button_currency"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_amount" />
 
@@ -65,7 +65,7 @@
         android:id="@+id/description_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/category_text_on_button"
+        android:text="@string/text_on_button_category"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_currency" />
 
@@ -80,7 +80,7 @@
         android:id="@+id/description_cash_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cash_account_text_on_button"
+        android:text="@string/text_on_button_cash_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_category" />
 
@@ -93,7 +93,7 @@
 
     <TextView
         android:gravity="center"
-        android:text="@string/descriptionTextDescription"
+        android:text="@string/description_description"
         android:id="@+id/description_of_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -123,13 +123,13 @@
             style="@style/DialogButtonLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/change_button_text" />
+            android:text="@string/text_on_button_change" />
 
         <Button
             android:id="@+id/cancel_button"
             style="@style/DialogButtonRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel_text_button" />
+            android:text="@string/text_on_button_cancel" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

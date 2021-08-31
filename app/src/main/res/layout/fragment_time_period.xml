@@ -21,7 +21,7 @@
         style="@style/DialogButtonLeft.Add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/time_period_at_first_text_on_button"
+        android:hint="@string/text_on_button_time_period_at_first"
         app:layout_constraintEnd_toStartOf="@id/resetStartPeriodButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionStartPeriod" />
@@ -31,7 +31,7 @@
         style="@style/DialogButtonRight.Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reset"
+        android:text="@string/text_on_button_reset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionStartPeriod" />
 
@@ -50,7 +50,7 @@
         style="@style/DialogButtonLeft.Add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/time_period_to_end_text_on_button"
+        android:hint="@string/text_on_button_time_period_to_end"
         app:layout_constraintEnd_toStartOf="@id/resetEndPeriodButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionEndPeriod" />
@@ -60,7 +60,7 @@
         style="@style/DialogButtonRight.Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reset"
+        android:text="@string/text_on_button_reset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionEndPeriod" />
 
@@ -69,7 +69,7 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit_text_button"
+        android:text="@string/text_on_button_submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

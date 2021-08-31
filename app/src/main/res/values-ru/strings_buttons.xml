@@ -1,12 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cash_account_text_on_button">счёт</string>
-    <string name="currency_text_on_button">валюта</string>
-    <string name="category_text_on_button">категория</string>
-    <string name="time_period_text_on_button">период</string>
-    <string name="time_period_from_text_on_button">с</string>
-    <string name="time_period_to_text_on_button">по</string>
-    <string name="time_period_all_time_text_on_button">всё время</string>
-    <string name="time_period_at_first_text_on_button">с начала</string>
-    <string name="time_period_to_end_text_on_button">до конца</string>
+    <string name="text_on_button_cash_account">Счёт</string>
+    <string name="text_on_button_currency">Валюта</string>
+    <string name="text_on_button_category">Категория</string>
+
+    <string name="text_on_button_time_period">Период</string>
+    <string name="text_on_button_time_period_from">с</string>
+    <string name="text_on_button_time_period_to">по</string>
+    <string name="text_on_button_time_period_all_time">Всё время</string>
+    <string name="text_on_button_time_period_at_first">С начала</string>
+    <string name="text_on_button_time_period_to_end">До конца</string>
+
+    <string name="text_on_button_help">Помощь</string>
+    <string name="text_on_button_submit">Принять</string>
+    <string name="text_on_button_change">Изменить</string>
+    <string name="text_on_button_save">Сохранить</string>
+    <string name="text_on_button_apply">Готово</string>
+    <string name="text_on_button_reset">Сбросить</string>
+    <string name="text_on_button_select_all">Выбрать все</string>
+    <string name="text_on_button_add">Добавить</string>
+
+    <string name="text_on_button_all_income">Все доходы</string>
+    <string name="text_on_button_all_spending">Все расходы</string>
+    <string name="text_on_button_income_category">Доходы</string>
+    <string name="text_on_button_spending_category">Расходы</string>
+
+    <string name="text_on_button_add_new_category">Добавить новую категорию</string>
+    <string name="text_on_button_add_new_currency">Доавить новую валюту</string>
+    <string name="text_on_button_add_new_cash_account">Добавить новый счёт</string>
+
+    <string name="text_on_button_select_cash_account">Выбрать счёт</string>
+    <string name="text_on_button_select_currency">Выбрать валюту</string>
+    <string name="text_on_button_select_category">Выбрать категорию</string>
+
+    <string name="text_on_button_save_and_select">Сохранить и выбрать</string>
+
+    <string name="text_on_radio_button_income_category">Доходы</string>
+    <string name="text_on_radio_button_spending_category">Расходы</string>
+
+    <string name="text_on_button_select">Выбрать</string>
+    <string name="text_on_button_cancel">Отменить</string>
+
+    <string name="text_on_button_all_text">Все</string>
 </resources>

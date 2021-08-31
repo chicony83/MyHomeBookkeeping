@@ -63,7 +63,7 @@ class TimePeriodViewModel(
         if (modelCheck.isPositiveValue(startTimePeriodLong)) {
             _startTimePeriodText.postValue(startTimePeriodLong.parseTimeFromMillisShortDate())
         } else {
-            _startTimePeriodText.postValue(getStringResource(R.string.time_period_at_first_text_on_button))
+            _startTimePeriodText.postValue(getStringResource(R.string.text_on_button_time_period_at_first))
         }
     }
 
@@ -81,7 +81,7 @@ class TimePeriodViewModel(
         if (modelCheck.isPositiveValue(endTimePeriodLong)) {
             _endTimePeriodText.postValue(endTimePeriodLong.parseTimeFromMillisShortDate())
         } else {
-            _endTimePeriodText.postValue(getStringResource(R.string.time_period_to_end_text_on_button))
+            _endTimePeriodText.postValue(getStringResource(R.string.text_on_button_time_period_to_end))
         }
 
     }

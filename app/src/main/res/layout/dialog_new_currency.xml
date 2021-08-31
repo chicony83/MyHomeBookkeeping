@@ -18,14 +18,14 @@
     <Button
         android:id="@+id/addNewCurrencyButton"
         style="@style/DialogButtonLeft.Add"
-        android:text="@string/add_button_text"
+        android:text="@string/text_on_button_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/currency_name" />
 
     <Button
         android:id="@+id/cancelCreate"
         style="@style/DialogButtonRight.Cancel"
-        android:text="@string/cancel_text_button"
+        android:text="@string/text_on_button_cancel"
         app:layout_constraintStart_toEndOf="@id/addNewCurrencyButton"
         app:layout_constraintTop_toBottomOf="@id/currency_name" />
 

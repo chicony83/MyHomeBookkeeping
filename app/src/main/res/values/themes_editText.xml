@@ -9,7 +9,7 @@
     </style>
     <style name="DialogEnterNewName" parent="DialogEditText">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:hint">@string/enterName</item>
+        <item name="android:hint">@string/hint_enter_name</item>
     </style>
 
 </resources>

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="income">доходы</string>
-    <string name="spending">расходы</string>
-    <string name="balance">баланс</string>
+    <string name="description_income">Доходы</string>
+    <string name="description_spending">Расходы</string>
+    <string name="description_balance">Баланс</string>
+
+    <string name="description_date_time_text">Дата/время</string>
+    <string name="description_cash_account">Счет</string>
+    <string name="description_currency">Валюта</string>
+    <string name="description_category">Категория</string>
+    <string name="description_amount">Сумма</string>
+    <string name="description_description">Описание</string>
+    <string name="description_add_you_description">Добавьте ваше описание</string>
+
+    <string name="descriptions_last_4_digits_of_card">последних 4 цифры карты</string>
+
+    <string name="description_cash_account_name">название счёта</string>
 </resources>
