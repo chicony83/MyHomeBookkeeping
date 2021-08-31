@@ -3,9 +3,9 @@
     <string name="nav_header_time_period">выберите период времени</string>
 
     <string name="action_settings">Настройки</string>
-    <string name="title_home">Журнал</string>
-    <string name="reports_title">Отчеты</string>
-    <string name="title_categories">Категории</string>
+
+
+
     <string name="header_cash_accounts">Названия счетов</string>
     <string name="select_text_button">выбрать</string>
     <string name="cancel_text_button">отменить</string>
@@ -18,8 +18,8 @@
 
     <string name="enterName">введите название</string>
 
-    <string name="title_cash_account">счета</string>
-    <string name="title_currencies">валюты</string>
+
+
     <string name="new_money_movement">новыe доходы/расходы</string>
     <string name="title_add_income_or_expense">добавить доход/расход</string>
     <string name="youDescriptionText">ваше описание</string>
@@ -36,7 +36,7 @@
     <string name="allSpending">все расходы</string>
     <string name="incomeCategoryTextOnButton">доходы</string>
     <string name="spendingCategoryTextOnButton">расходы</string>
-    <string name="title_settings">настройки</string>
+
     <string name="security">безопасность</string>
 
     <string name="add_new_category_button_text">добавить новую категорию</string>

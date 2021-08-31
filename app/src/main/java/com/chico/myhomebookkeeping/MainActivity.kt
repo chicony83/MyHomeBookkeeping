@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.nav_help_fragment -> toolbar.visibility = View.GONE
+                    R.id.nav_first_launch_fragment -> toolbar.visibility = View.GONE
                     else -> toolbar.visibility = View.VISIBLE
                 }
             }

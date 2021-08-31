@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_money_moving"
             android:icon="@drawable/ic_menu_home"
-            android:title="@string/title_home" />
+            android:title="@string/fragment_label_money_moving" />
         <item
             android:id="@+id/nav_new_money_moving"
             android:icon="@drawable/ic_add_box"
@@ -15,15 +15,15 @@
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_menu_category"
-            android:title="@string/title_categories" />
+            android:title="@string/fragment_label_categories" />
         <item
             android:id="@+id/nav_currencies"
             android:icon="@drawable/ic_attach_money"
-            android:title="@string/title_currencies" />
+            android:title="@string/fragment_label_currencies" />
         <item
             android:id="@+id/nav_cash_account"
             android:icon="@drawable/ic_credit_card"
-            android:title="@string/title_cash_account"/>
+            android:title="@string/fragment_label_cash_account"/>
 <!--        <item-->
 <!--            android:id="@+id/nav_setting"-->
 <!--            android:icon="@drawable/ic_settings"-->
