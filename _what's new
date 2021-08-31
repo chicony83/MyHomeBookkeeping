@@ -1,5 +1,6 @@
 0.7.0
 add fragment select Time period in journal
+improved localization
 fix bug disable toolBar in help
 fix bug now button press back working right
 
