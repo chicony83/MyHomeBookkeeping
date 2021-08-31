@@ -75,12 +75,15 @@ class MainActivity : AppCompatActivity() {
         fabSetOnClickListener(fab, navController)
 
         hideFab(navController, fab)
+        hideToolbar(toolbar)
+    }
+
+    private fun hideToolbar(toolbar: Toolbar) {
         launchUi {
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id == R.id.nav_help_fragment) {
-                    toolbar.visibility = View.GONE
-                } else {
-                    toolbar.visibility = View.VISIBLE
+                when (destination.id) {
+                    R.id.nav_help_fragment -> toolbar.visibility = View.GONE
+                    else -> toolbar.visibility = View.VISIBLE
                 }
             }
         }
@@ -138,8 +141,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (navController.currentDestination?.id == R.id.nav_money_moving) {
             finish()
-        }
-        else {
+        } else {
             super.onBackPressed()
         }
     }

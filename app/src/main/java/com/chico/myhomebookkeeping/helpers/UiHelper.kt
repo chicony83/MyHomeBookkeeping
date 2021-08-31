@@ -130,5 +130,4 @@ class UiHelper(
     fun isEntered(text: Editable):Boolean{
         return text.isNotEmpty()
     }
-
 }
