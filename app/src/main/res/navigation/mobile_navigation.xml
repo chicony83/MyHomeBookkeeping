@@ -9,11 +9,7 @@
         android:id="@+id/nav_time_period"
         android:name="com.chico.myhomebookkeeping.ui.timePeriod.TimePeriodFragment"
         tools:layout="@layout/fragment_time_period"
-        android:label="select time period">
-        <action
-            android:id="@+id/action_nav_time_period_to_nav_money_moving"
-            app:destination="@id/nav_money_moving" />
-    </fragment>
+        android:label="select time period"/>
 
     <fragment
         android:id="@+id/nav_new_money_moving"
@@ -34,11 +30,7 @@
         android:id="@+id/nav_select_password"
         android:name="com.chico.myhomebookkeeping.ui.selectPassword.SelectPasswordFragment"
         tools:layout="@layout/fragment_select_password"
-        android:label="пароль">
-        <action
-            android:id="@+id/action_nav_select_password_to_nav_setting"
-            app:destination="@id/nav_setting" />
-    </fragment>
+        android:label="пароль"/>
 
     <fragment
         android:id="@+id/nav_money_moving_query"
@@ -51,9 +43,6 @@
         <action
             android:id="@+id/action_nav_money_moving_query_to_nav_currencies"
             app:destination="@id/nav_currencies" />
-        <action
-            android:id="@+id/action_nav_money_moving_query_to_nav_money_moving"
-            app:destination="@id/nav_money_moving" />
         <action
             android:id="@+id/action_nav_money_moving_query_to_nav_cash_account"
             app:destination="@id/nav_cash_account" />
@@ -80,9 +69,6 @@
         android:label="change"
         tools:layout="@layout/fragment_change_money_moving">
         <action
-            android:id="@+id/action_nav_change_money_moving_to_nav_money_moving"
-            app:destination="@id/nav_money_moving" />
-        <action
             android:id="@+id/action_nav_change_money_moving_to_nav_currencies"
             app:destination="@id/nav_currencies" />
         <action
@@ -102,47 +88,17 @@
         android:id="@+id/nav_categories"
         android:name="com.chico.myhomebookkeeping.ui.categories.CategoriesFragment"
         android:label="@string/title_categories"
-        tools:layout="@layout/fragment_categories" >
-        <action
-            android:id="@+id/action_nav_categories_to_nav_money_moving_query"
-            app:destination="@id/nav_money_moving_query" />
-        <action
-            android:id="@+id/action_nav_categories_to_nav_change_money_moving"
-            app:destination="@id/nav_change_money_moving" />
-        <action
-            android:id="@+id/action_nav_categories_to_nav_new_money_moving"
-            app:destination="@id/nav_new_money_moving" />
-    </fragment>
+        tools:layout="@layout/fragment_categories" />
     <fragment
         android:id="@+id/nav_currencies"
         android:name="com.chico.myhomebookkeeping.ui.currencies.CurrenciesFragment"
         android:label="@string/title_currencies"
-        tools:layout="@layout/fragment_currencies" >
-        <action
-            android:id="@+id/action_nav_currencies_to_nav_money_moving_query"
-            app:destination="@id/nav_money_moving_query" />
-        <action
-            android:id="@+id/action_nav_currencies_to_nav_change_money_moving"
-            app:destination="@id/nav_change_money_moving" />
-        <action
-            android:id="@+id/action_nav_currencies_to_nav_new_money_moving"
-            app:destination="@id/nav_new_money_moving" />
-    </fragment>
+        tools:layout="@layout/fragment_currencies" />
     <fragment
         android:id="@+id/nav_cash_account"
         android:name="com.chico.myhomebookkeeping.ui.cashAccount.CashAccountFragment"
         android:label="@string/title_cash_account"
-        tools:layout="@layout/fragment_cash_account" >
-        <action
-            android:id="@+id/action_nav_cash_account_to_nav_money_moving_query"
-            app:destination="@id/nav_money_moving_query" />
-        <action
-            android:id="@+id/action_nav_cash_account_to_nav_change_money_moving"
-            app:destination="@id/nav_change_money_moving" />
-        <action
-            android:id="@+id/action_nav_cash_account_to_nav_new_money_moving"
-            app:destination="@id/nav_new_money_moving" />
-    </fragment>
+        tools:layout="@layout/fragment_cash_account" />
     <fragment
         android:id="@+id/nav_setting"
         android:name="com.chico.myhomebookkeeping.ui.settings.SettingsFragment"
