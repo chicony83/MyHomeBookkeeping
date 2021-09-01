@@ -30,9 +30,13 @@ class NewMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
+    private val argsDateTimeCreateKey = Constants.FOR_CREATE_DATE_TIME_KEY
     private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
     private val argsCurrencyCreateKey = Constants.FOR_CREATE_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.FOR_CREATE_CATEGORY_KEY
+    private val argsAmountCreateKey = Constants.FOR_CREATE_AMOUNT_KEY
+    private val argsDescriptionCreateKey = Constants.FOR_CREATE_DESCRIPTION_KEY
+
     private val modelCheck = ModelCheck()
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
@@ -64,6 +68,10 @@ class NewMoneyMovingViewModel(
     private var date: Long = 0
     private var time: Long = 0
 
+    private val _selectedDateTime = MutableLiveData<String>()
+    val selectedDateTime: LiveData<String>
+        get() = _selectedDateTime
+
     private val _selectedCurrency = MutableLiveData<Currencies>()
     val selectedCurrency: LiveData<Currencies>
         get() = _selectedCurrency
@@ -76,19 +84,26 @@ class NewMoneyMovingViewModel(
     val selectedCategory: LiveData<Categories>
         get() = _selectedCategory
 
+    private val _enteredDescription = MutableLiveData<String>()
+    val enteredDescription: LiveData<String>
+        get() = _enteredDescription
+
+    private val _enteredAmount = MutableLiveData<Double?>()
+    val enteredAmount: LiveData<Double?>
+        get() = _enteredAmount
+
     private val _submitButtonText = MutableLiveData<String>()
     val submitButton: LiveData<String>
         get() = _submitButtonText
 
-    private val _amountMoney = MutableLiveData<Double?>()
-    val amountMoney: LiveData<Double?>
-        get() = _amountMoney
-
     //    private var idMoneyMovingForChange: Long = -1
-    private var cashAccountSP = -1
-    private var currencySP = -1
-    private var categorySP = -1
 
+    private var dateTimeSPLong = -1L
+    private var cashAccountSPInt = -1
+    private var currencySPInt = -1
+    private var categorySPInt = -1
+    private var amountSPFloat: Float = (-1.0).toFloat()
+    private var descriptionSPString = ""
 //    var id: Long = -1
 
     fun getAndCheckArgsSp() {
@@ -100,21 +115,45 @@ class NewMoneyMovingViewModel(
 
     private fun getSharedPreferencesArgs() {
 //        idMoneyMovingForChange = viewModelCheck.getValueSPLong(argsIdMoneyMovingForChange)
-        cashAccountSP = spValues.getInt(argsCashAccountCreateKey)
-        currencySP = spValues.getInt(argsCurrencyCreateKey)
-        categorySP = spValues.getInt(argsCategoryCreateKey)
+        dateTimeSPLong = spValues.getLong(argsDateTimeCreateKey)
+        cashAccountSPInt = spValues.getInt(argsCashAccountCreateKey)
+        currencySPInt = spValues.getInt(argsCurrencyCreateKey)
+        categorySPInt = spValues.getInt(argsCategoryCreateKey)
+        amountSPFloat = spValues.getFloat(argsAmountCreateKey)
+        descriptionSPString = spValues.getString(argsDescriptionCreateKey).toString()
     }
 
     private fun setValuesViewModel() {
         launchIo {
-            if (modelCheck.isPositiveValue(cashAccountSP)) postCashAccount(cashAccountSP)
+            if (modelCheck.isPositiveValue(dateTimeSPLong)) postDateTime(dateTimeSPLong)
         }
         launchIo {
-            if (modelCheck.isPositiveValue(currencySP)) postCurrency(currencySP)
+            if (modelCheck.isPositiveValue(cashAccountSPInt)) postCashAccount(cashAccountSPInt)
         }
         launchIo {
-            if (modelCheck.isPositiveValue(categorySP)) postCategory(categorySP)
+            if (modelCheck.isPositiveValue(currencySPInt)) postCurrency(currencySPInt)
         }
+        launchIo {
+            if (modelCheck.isPositiveValue(categorySPInt)) postCategory(categorySPInt)
+        }
+        launchIo {
+            if (modelCheck.isPositiveValue(amountSPFloat.toDouble())) postAmount(amountSPFloat)
+        }
+        launchIo {
+            if (descriptionSPString.isNotEmpty()) postDescription(descriptionSPString)
+        }
+    }
+
+    private fun postAmount(amountSPFloat: Float) {
+        _enteredAmount.postValue(amountSPFloat.toDouble())
+    }
+
+    private fun postDescription(descriptionSPString: String) {
+        _enteredDescription.postValue(descriptionSPString)
+    }
+
+    private fun postDateTime(dateTimeSPLong: Long) {
+        _dateTime.postValue(dateTimeSPLong.parseTimeFromMillis())
     }
 
     private suspend fun postCategory(idNum: Int) {
@@ -135,20 +174,24 @@ class NewMoneyMovingViewModel(
         )
     }
 
-    fun saveDataToSP() {
+    fun saveDataToSP(amount: Double, description: String) {
         with(saveARGS) {
+            saveToSP(argsDateTimeCreateKey, _dateTime.value?.parseTimeToMillis())
+
             saveToSP(
                 argsCurrencyCreateKey,
-                _selectedCurrency.value?.currencyId ?: minusOneInt
+                _selectedCurrency.value?.currencyId
             )
             saveToSP(
                 argsCashAccountCreateKey,
-                _selectedCashAccount.value?.cashAccountId ?: minusOneInt
+                _selectedCashAccount.value?.cashAccountId
             )
             saveToSP(
                 argsCategoryCreateKey,
-                _selectedCategory.value?.categoriesId ?: minusOneInt
+                _selectedCategory.value?.categoriesId
             )
+            saveToSP(argsAmountCreateKey, amount.toFloat())
+            saveToSP(argsDescriptionCreateKey, description)
         }
     }
 
@@ -196,7 +239,7 @@ class NewMoneyMovingViewModel(
         return TimeZone.getDefault().getOffset(System.currentTimeMillis())
     }
 
-    fun setSubmitButtonText(string: String) {
+    private fun setSubmitButtonText(string: String) {
         _submitButtonText.postValue(string)
     }
 
@@ -210,6 +253,14 @@ class NewMoneyMovingViewModel(
 
     fun checkIsCategorySelected(): Boolean {
         return selectedCategory.value != null
+    }
+
+    fun clearSPAfterSave() {
+        with(saveARGS){
+            saveToSP(argsDateTimeCreateKey,minusOneLong)
+            saveToSP(argsAmountCreateKey,(-1.0).toFloat())
+            saveToSP(argsDescriptionCreateKey,"")
+        }
     }
 
 }

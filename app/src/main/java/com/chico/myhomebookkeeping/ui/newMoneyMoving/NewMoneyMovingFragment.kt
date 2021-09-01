@@ -99,8 +99,11 @@ class NewMoneyMovingFragment : Fragment() {
 
             setDateTimeOnButton(currentDateTimeMillis)
 
-            amountMoney.observe(viewLifecycleOwner, {
+            enteredAmount.observe(viewLifecycleOwner, {
                 binding.amount.setText(it.toString())
+            })
+            enteredDescription.observe(viewLifecycleOwner,{
+                binding.description.setText(it.toString())
             })
             submitButton.observe(viewLifecycleOwner, {
                 binding.submitButton.text = it.toString()
@@ -157,7 +160,7 @@ class NewMoneyMovingFragment : Fragment() {
     private fun addNewMoneyMoving() {
         val amount: Double = aroundDouble()
         val description = binding.description.text.toString()
-        newMoneyMovingViewModel.saveDataToSP()
+        newMoneyMovingViewModel.saveDataToSP(amount, description)
         runBlocking {
             val result = newMoneyMovingViewModel.addInMoneyMovingDB(
                 amount = amount,
@@ -173,6 +176,8 @@ class NewMoneyMovingFragment : Fragment() {
                 view?.hideKeyboard()
                 message("запись добавлена")
                 control.navigate(R.id.nav_money_moving)
+                newMoneyMovingViewModel.clearSPAfterSave()
+
             }
         }
     }
@@ -201,7 +206,9 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(fragment: Int) {
-        newMoneyMovingViewModel.saveDataToSP()
+        val amount = aroundDouble()
+        val description = binding.description.text.toString()
+        newMoneyMovingViewModel.saveDataToSP(amount,description)
         control.navigate(fragment)
     }
 

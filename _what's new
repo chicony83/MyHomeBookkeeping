@@ -1,3 +1,6 @@
+0.7.1
+fix when creating new money moving if first select date and time or enter amount or description
+
 0.7.0.1
 change in items in Journal
 fix critical bug with dates in journal

@@ -2,9 +2,12 @@ package com.chico.myhomebookkeeping.constants
 
 object Constants {
 
+    const val FOR_CREATE_DATE_TIME_KEY = "dateTimeForCreate"
     const val FOR_CREATE_CASH_ACCOUNT_KEY = "cashAccountForCreate"
     const val FOR_CREATE_CURRENCY_KEY = "currencyForCreate"
     const val FOR_CREATE_CATEGORY_KEY = "categoryForCreate"
+    const val FOR_CREATE_AMOUNT_KEY = "amountForCreate"
+    const val FOR_CREATE_DESCRIPTION_KEY = "descriptionForCreate"
 
     const val FOR_CHANGE_ID_MONEY_MOVING = "id_money_moving_for_change"
 
@@ -13,7 +16,6 @@ object Constants {
     const val FOR_CHANGE_CURRENCY_KEY = "currencyForChange"
     const val FOR_CHANGE_CATEGORY_KEY = "categoryForChange"
     const val FOR_CHANGE_AMOUNT_KEY = "amountForChange"
-
     const val FOR_CHANGE_DESCRIPTION_KEY = "descriptionForChange"
 
     const val FOR_QUERY_CASH_ACCOUNT_KEY = "queryCashAccount"
@@ -26,7 +28,7 @@ object Constants {
     const val FOR_QUERY_INCOME = "income"
     const val FOR_QUERY_SPENDING = "spending"
 
-    const val FOR_QUERY_NONE = "none"
+    const val FOR_QUERY_NONE = ""
 
     const val IS_FIRST_LAUNCH = "isFirstLaunch"
 

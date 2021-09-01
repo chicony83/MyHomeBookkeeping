@@ -16,7 +16,7 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     }
 
     fun getLong(argsKey: String): Long {
-        messageLog("$argsKey ${sharedPreferences.getLong(argsKey,minusOneLong)}")
+//        messageLog("$argsKey ${sharedPreferences.getLong(argsKey,minusOneLong)}")
         return sharedPreferences.getLong(argsKey, minusOneLong)
     }
 
@@ -40,5 +40,9 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     }
     fun messageLog(text:String){
         Log.i("TAG",text)
+    }
+
+    fun getFloat(argsKey: String): Float {
+        return sharedPreferences.getFloat(argsKey, (-1.0).toFloat())
     }
 }

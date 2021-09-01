@@ -10,8 +10,11 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
+
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
+
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
+    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
 
     fun checkAndSaveToSP(
         navControlHelper: NavControlHelper,
@@ -41,7 +44,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
         value: Int?
     ) {
         messageLog(argsKey, value.toString())
-        spEditor.putInt(argsKey, value ?: -1)
+        spEditor.putInt(argsKey, value ?: minusOneInt)
         spCommit()
     }
 
@@ -59,7 +62,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
         value: Long?
     ) {
         messageLog(argsKey, value.toString())
-        spEditor.putLong(argsKey, value ?: -1)
+        spEditor.putLong(argsKey, value ?: minusOneLong)
         spCommit()
     }
 
@@ -81,8 +84,15 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private fun spCommit() {
         spEditor.commit()
     }
+
     fun setLong(args: String, id: Long?) {
         spEditor.putLong(args, id ?: minusOneLong)
+        spCommit()
+    }
+
+    fun saveToSP(args: String, float: Float) {
+        spEditor.putFloat(args, float)
+        messageLog(argsKey = args, float.toString())
         spCommit()
     }
 
@@ -91,12 +101,14 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
         spEditor.putBoolean(args, b)
         spCommit()
     }
-    fun setIsFirstLaunchTrue(){
-        spEditor.putBoolean(argsIsFirstLaunch,true)
+
+    fun setIsFirstLaunchTrue() {
+        spEditor.putBoolean(argsIsFirstLaunch, true)
         spCommit()
     }
-    fun setIsFirstLaunchFalse(){
-        spEditor.putBoolean(argsIsFirstLaunch,false)
+
+    fun setIsFirstLaunchFalse() {
+        spEditor.putBoolean(argsIsFirstLaunch, false)
         spCommit()
     }
 }
