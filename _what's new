@@ -1,6 +1,6 @@
-0.7.1
+0.7.0.1
 change in items in Journal
-fix bug with dates in journal
+fix critical bug with dates in journal
 
 0.7.0
 add fragment select Time period in journal
