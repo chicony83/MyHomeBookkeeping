@@ -62,8 +62,9 @@ class MoneyMovingAdapter(
 
     override fun onBindViewHolder(holder: ViewHolderMovingItem, position: Int) {
 
-        var showDate = checkTodayAndYesterdayIsOneDate(position)
-        holder.bind(moneyMovementList[position], showDate)
+//        var showDate = checkTodayAndYesterdayIsOneDate(position)
+        holder.bind(moneyMovementList[position])
+//        holder.bind(moneyMovementList[position], showDate)
     }
 
     private fun checkTodayAndYesterdayIsOneDate(position: Int): Boolean {
@@ -91,17 +92,18 @@ class MoneyMovingAdapter(
     ) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(moneyMovement: FullMoneyMoving, showDate: Boolean) {
+        fun bind(moneyMovement: FullMoneyMoving) {
 
             with(binding) {
                 if (!isNightMode){
                     item.setBackgroundResource(R.drawable.money_moving_day_item_background)
                 }
-                if (showDate) {
-                    dateSeparatorText.text =
-                        moneyMovement.timeStamp.parseTimeFromMillisShortDate()
-                    dateSeparatorText.visibility = View.VISIBLE
-                }
+//                if (showDate) {
+//                    dateSeparatorText.text =
+//                        moneyMovement.timeStamp.parseTimeFromMillisShortDate()
+//                    dateSeparatorText.visibility = View.VISIBLE
+//                }
+                dateSeparatorText.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue

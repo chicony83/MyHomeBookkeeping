@@ -27,13 +27,11 @@
             tool:visibility="visible">
 
             <TextView
-                android:textSize="@dimen/H3"
+                android:textSize="@dimen/H4"
                 android:id="@+id/dateSeparatorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="today"
-                android:visibility="gone"
-                tool:visibility="visible" />
+                android:text="today" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
