@@ -1,3 +1,6 @@
+0.7.1
+fix bug with dates in journal
+
 0.7.0
 add fragment select Time period in journal
 improved localization
