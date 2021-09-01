@@ -6,23 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.currencies.CurrenciesFragment">
 
-    <Button
-        android:id="@+id/selectAllButton"
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/topButtonsHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_on_button_select_all"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/selectAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_on_button_select_all"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currenciesHolder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/show_hide_add_currency_fragment_button"
-        app:layout_constraintTop_toBottomOf="@id/selectAllButton" />
+        app:layout_constraintTop_toBottomOf="@id/topButtonsHolder" />
 
     <LinearLayout
         android:id="@+id/confirmationLayoutHolder"
@@ -63,9 +72,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <include
             android:id="@+id/changeCurrencyLayout"
-            layout="@layout/dialog_change_currency"/>
+            layout="@layout/dialog_change_currency" />
     </LinearLayout>
 
     <Button

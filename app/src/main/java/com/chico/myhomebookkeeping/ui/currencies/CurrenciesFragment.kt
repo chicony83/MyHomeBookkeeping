@@ -20,6 +20,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.ShowHideLayouts
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -39,6 +40,7 @@ class CurrenciesFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
     private lateinit var uiControl: UiControl
+    private val showHideLayouts = ShowHideLayouts()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +52,14 @@ class CurrenciesFragment : Fragment() {
         _binding = FragmentCurrenciesBinding.inflate(inflater, container, false)
 
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
+
+        uiControl = UiControl(
+//            binding.showHideAddCurrencyFragmentButton,
+//            binding.topButtonsHolder,
+            newItemLayoutHolder = binding.newCurrencyLayoutHolder,
+            confirmationLayoutHolder = binding.confirmationLayoutHolder,
+            changeItemLayoutHolder = binding.changeCurrencyLayoutHolder)
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(currenciesViewModel) {
             selectedCurrency.observe(viewLifecycleOwner, {
@@ -75,12 +85,6 @@ class CurrenciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        uiControl = UiControl(
-            newItemLayoutHolder = binding.newCurrencyLayoutHolder,
-            confirmationLayoutHolder = binding.confirmationLayoutHolder,
-            changeItemLayoutHolder = binding.changeCurrencyLayoutHolder
-        )
-        control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         navControlHelper = NavControlHelper(control)
 
@@ -101,6 +105,8 @@ class CurrenciesFragment : Fragment() {
             showHideAddCurrencyFragmentButton.setOnClickListener {
 //                uiHelper.setShowHideOnLayout(binding.newCurrencyLayoutHolder)
                 uiControl.showNewItemLayoutHolder()
+
+
             }
             with(newCurrencyLayout) {
                 addNewCurrencyButton.setOnClickListener {
