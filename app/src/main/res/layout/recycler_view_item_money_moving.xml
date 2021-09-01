@@ -17,21 +17,21 @@
         android:paddingBottom="@dimen/margin_half_normal">
 
         <LinearLayout
-
             android:id="@+id/dateSeparator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:visibility="visible">
 
             <TextView
-                android:textSize="@dimen/H4"
                 android:id="@+id/dateSeparatorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="today" />
+                android:text="today"
+                android:textSize="@dimen/H4" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dataTime"
                 tool:text="долл" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@id/currencyName"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dataTime"
                 tool:text="1000" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amount"
+                app:layout_constraintTop_toTopOf="parent"
                 tool:text="1970-01-01" />
 
             <TextView

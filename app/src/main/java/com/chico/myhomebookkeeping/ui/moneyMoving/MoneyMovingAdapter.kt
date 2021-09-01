@@ -103,8 +103,8 @@ class MoneyMovingAdapter(
 //                        moneyMovement.timeStamp.parseTimeFromMillisShortDate()
 //                    dateSeparatorText.visibility = View.VISIBLE
 //                }
-                dateSeparatorText.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
-                dataTime.text = moneyMovement.timeStamp.parseTimeFromMillis()
+//                dateSeparatorText.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
+                dataTime.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
                 categoryName.text = moneyMovement.categoryNameValue
