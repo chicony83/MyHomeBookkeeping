@@ -25,6 +25,7 @@ import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CurrenciesFragment : Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
@@ -95,7 +96,6 @@ class CurrenciesFragment : Fragment() {
         } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
             uiHelper.showUiElement(binding.selectAllButton)
         }
-
         view.hideKeyboard()
         with(binding) {
             selectAllButton.setOnClickListener {
@@ -104,10 +104,12 @@ class CurrenciesFragment : Fragment() {
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
-//                uiHelper.setShowHideOnLayout(binding.newCurrencyLayoutHolder)
                 uiControl.showNewItemLayoutHolder()
-
-
+                view.showKeyboard()
+                with(binding.newCurrencyLayout.currencyName) {
+                    requestFocus()
+                    setSelection(0)
+                }
             }
             with(newCurrencyLayout) {
                 addNewCurrencyButton.setOnClickListener {
@@ -141,11 +143,21 @@ class CurrenciesFragment : Fragment() {
                 selectedItemName.setOnClickListener {
                     if (selectedCurrencyId > 0) {
                         putItemForChange()
+                        view.showKeyboard()
+                        with(binding.changeCurrencyLayout.itemName) {
+                            requestFocus()
+                            setSelection(0)
+                        }
                     }
                 }
                 changeButton.setOnClickListener {
                     if (selectedCurrencyId > 0) {
                         putItemForChange()
+                        view.showKeyboard()
+                        with(binding.changeCurrencyLayout.itemName) {
+                            requestFocus()
+                            setSelection(0)
+                        }
                     }
                 }
                 cancelButton.setOnClickListener {
@@ -181,6 +193,7 @@ class CurrenciesFragment : Fragment() {
             checkUiMode()
         }
     }
+
     private fun showUIControlElements() {
         showHideDialogsController.showUIControlElements(
             topButtonsHolder = binding.topButtonsHolder,

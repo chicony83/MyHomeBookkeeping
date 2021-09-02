@@ -24,6 +24,7 @@ import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CategoriesFragment : Fragment() {
 
@@ -122,6 +123,11 @@ class CategoriesFragment : Fragment() {
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
+                view.showKeyboard()
+                with(binding.newCategoryLayout.categoryName){
+                    requestFocus()
+                    setSelection(0)
+                }
             }
             with(newCategoryLayout) {
                 addNewCategoryButton.setOnClickListener {
@@ -170,11 +176,21 @@ class CategoriesFragment : Fragment() {
                 selectedItemName.setOnClickListener {
                     if (selectedCategoryId > 0) {
                         putItemForChange()
+                        view.showKeyboard()
+                        with(binding.changeCategoryLayout.categoryName){
+                            requestFocus()
+                            setSelection(0)
+                        }
                     }
                 }
                 changeButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
                         putItemForChange()
+                        view.showKeyboard()
+                        with(binding.changeCategoryLayout.categoryName){
+                            requestFocus()
+                            setSelection(0)
+                        }
                     }
                 }
                 cancelButton.setOnClickListener {

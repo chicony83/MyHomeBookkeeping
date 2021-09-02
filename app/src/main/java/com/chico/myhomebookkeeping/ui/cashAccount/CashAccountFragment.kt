@@ -24,6 +24,7 @@ import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CashAccountFragment : Fragment() {
 
@@ -105,6 +106,11 @@ class CashAccountFragment : Fragment() {
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
+                view.showKeyboard()
+                with(binding.newCashAccountLayout.cashAccountName) {
+                    requestFocus()
+                    setSelection(0)
+                }
             }
             with(newCashAccountLayout) {
                 addNewCashAccountButton.setOnClickListener {
@@ -140,11 +146,21 @@ class CashAccountFragment : Fragment() {
                 selectedItemName.setOnClickListener {
                     if (selectedCashAccountId > 0) {
                         putItemForChange()
+                        view.showKeyboard()
+                        with(binding.changeCashAccountLayout.cashAccountName) {
+                            requestFocus()
+                            setSelection(0)
+                        }
                     }
                 }
                 changeButton.setOnClickListener {
                     if (selectedCashAccountId > 0) {
                         putItemForChange()
+                        view.showKeyboard()
+                        with(binding.changeCashAccountLayout.cashAccountName) {
+                            requestFocus()
+                            setSelection(0)
+                        }
                     }
                 }
                 cancelButton.setOnClickListener {
