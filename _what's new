@@ -1,5 +1,6 @@
 0.7.3
 fix keyboard showing when select create new item or change name item
+improved IU in first launch message
 
 0.7.2
 fix bug when some names editing or creating UI elements hiding
