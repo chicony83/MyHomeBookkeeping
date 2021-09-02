@@ -206,8 +206,14 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(fragment: Int) {
-        val amount = aroundDouble()
-        val description = binding.description.text.toString()
+        var amount = 0.0
+        if (!binding.amount.text.isNullOrEmpty()){
+             amount = aroundDouble()
+        }
+        var description = ""
+        if (!binding.description.text.isNullOrEmpty()){
+            description = binding.description.text.toString()
+        }
         newMoneyMovingViewModel.saveDataToSP(amount,description)
         control.navigate(fragment)
     }
