@@ -19,6 +19,9 @@
     <string name="text_on_button_reset">Сбросить</string>
     <string name="text_on_button_select_all">Выбрать все</string>
     <string name="text_on_button_add">Добавить</string>
+    <string name="text_on_button_yes">Да</string>
+    <string name="text_on_button_no">Нет</string>
+
 
     <string name="text_on_button_all_income">Все доходы</string>
     <string name="text_on_button_all_spending">Все расходы</string>

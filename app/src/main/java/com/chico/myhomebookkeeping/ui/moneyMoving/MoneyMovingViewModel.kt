@@ -23,6 +23,7 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetSP
+import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.*
@@ -140,7 +141,7 @@ class MoneyMovingViewModel(
         launchUi {
             val text: String = getResourceText(R.string.text_on_button_time_period)
             val space = " "
-            var timePeriod: String = ""
+            var timePeriod = ""
             val textFrom = getResourceText(R.string.text_on_button_time_period_from)
             val textTo = getResourceText(R.string.text_on_button_time_period_to)
             val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
@@ -172,7 +173,7 @@ class MoneyMovingViewModel(
     private fun setTextOnCashAccountButton() {
         launchUi {
             val text: String = getResourceText(R.string.text_on_button_cash_account)
-            var name: String = ""
+            var name = ""
             if (modelCheck.isPositiveValue(cashAccountIntSP)) {
                 name = CashAccountsUseCase.getOneCashAccount(
                     dbCashAccount,
@@ -189,7 +190,7 @@ class MoneyMovingViewModel(
     private fun setTextOnCurrencyButton() {
         launchUi {
             val text: String = getResourceText(R.string.text_on_button_currency)
-            var name: String = ""
+            var name = ""
 
             if (modelCheck.isPositiveValue(currencyIntSP)) {
                 name = CurrenciesUseCase.getOneCurrency(
@@ -207,7 +208,7 @@ class MoneyMovingViewModel(
     private fun setTextOnCategoryButton() {
         launchUi {
             val text: String = getResourceText(R.string.text_on_button_category)
-            var name: String = ""
+            var name = ""
             if (modelCheck.isPositiveValue(categoryIntSP)) {
                 name = CategoriesUseCase.getOneCategory(
                     dbCategory,
@@ -255,7 +256,7 @@ class MoneyMovingViewModel(
         categoryIntSP = getSP.getInt(argsCategoryKey)
     }
 
-    private suspend fun loadListMoneyMovement() = runBlocking {
+    private suspend fun loadListMoneyMovement() = launchForResult {
 
         val query = MoneyMovingCreteQuery.createQueryList(
             currencyIntSP,
@@ -265,7 +266,7 @@ class MoneyMovingViewModel(
             startTimePeriodLongSP,
             endTimePeriodLongSP
         )
-        return@runBlocking getListMoneyMovement(query)
+        return@launchForResult getListMoneyMovement(query)
     }
 
     private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
@@ -343,7 +344,8 @@ class MoneyMovingViewModel(
     }
 
     fun isFirstLaunch(): Boolean {
-        return getSP.getBoolean(argsIsFirstLaunch)
+//        return getSP.getBoolean(argsIsFirstLaunch)
+        return true
     }
 
     fun setIsFirstLaunchFalse() {

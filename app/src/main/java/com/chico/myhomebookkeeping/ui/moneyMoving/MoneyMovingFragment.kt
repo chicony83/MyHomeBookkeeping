@@ -110,8 +110,6 @@ class MoneyMovingFragment : Fragment() {
                     }
                 }
             })
-
-
         }
         return binding.root
     }
@@ -195,10 +193,12 @@ class MoneyMovingFragment : Fragment() {
             Configuration.UI_MODE_NIGHT_YES -> {
 //                message("ночь")
                 binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
+                binding.firstLaunchDialog.root.setBackgroundResource(R.drawable.dialog_background_night)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
 //                message("день")
                 binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
+                binding.firstLaunchDialog.root.setBackgroundResource(R.drawable.dialog_background_day)
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
 //                message("хз")
@@ -206,19 +206,19 @@ class MoneyMovingFragment : Fragment() {
         }
     }
 
-    private fun checkLinesFound() {
-        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()
-        var temp = numFoundedLines
-        launchUi {
-            while (numFoundedLines == temp) {
-                delay(500)
-//                if (moneyMovingViewModel.isMoneyMovementFound()) {
-//                    numFoundedLines = moneyMovingViewModel.getNumFoundLines()
-//                }
-            }
-            message("найдено $numFoundedLines строк")
-        }
-    }
+//    private fun checkLinesFound() {
+//        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()
+//        var temp = numFoundedLines
+//        launchUi {
+//            while (numFoundedLines == temp) {
+//                delay(500)
+////                if (moneyMovingViewModel.isMoneyMovementFound()) {
+////                    numFoundedLines = moneyMovingViewModel.getNumFoundLines()
+////                }
+//            }
+//            message("найдено $numFoundedLines строк")
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
