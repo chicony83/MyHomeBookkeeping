@@ -128,7 +128,6 @@ class CashAccountFragment : Fragment() {
                     uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                     view.hideKeyboard()
                     showUIControlElements()
-
                 }
             }
             with(confirmationLayout) {
@@ -163,8 +162,8 @@ class CashAccountFragment : Fragment() {
                     cashAccountViewModel.resetCashAccountForChange()
                     cashAccountViewModel.resetCashAccountForSelect()
                     uiHelper.hideUiElement(binding.changeCashAccountLayoutHolder)
-                    showUIControlElements()
                     view.hideKeyboard()
+                    showUIControlElements()
                 }
                 saveChange.setOnClickListener {
                     if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {

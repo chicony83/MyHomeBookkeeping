@@ -192,8 +192,8 @@ class CategoriesFragment : Fragment() {
                     categoriesViewModel.resetCategoryForSelect()
                     categoriesViewModel.resetCategoryForChange()
                     uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
-                    showUIControlElements()
                     view.hideKeyboard()
+                    showUIControlElements()
                 }
 
                 saveChange.setOnClickListener {
@@ -215,8 +215,8 @@ class CategoriesFragment : Fragment() {
                                     isIncome = isIncome
                                 )
                             }
-                            view.hideKeyboard()
                             uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
+                            view.hideKeyboard()
                             showUIControlElements()
                         } else {
                             showMessage(getString(R.string.select_category_message))

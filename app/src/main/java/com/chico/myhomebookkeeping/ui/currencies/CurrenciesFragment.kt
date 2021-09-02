@@ -163,6 +163,7 @@ class CurrenciesFragment : Fragment() {
                     currenciesViewModel.resetCurrencyForSelect()
                     currenciesViewModel.resetCurrencyForChange()
                     uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
+                    view.hideKeyboard()
                     showUIControlElements()
                 }
                 saveChange.setOnClickListener {
