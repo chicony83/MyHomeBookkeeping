@@ -19,9 +19,11 @@ import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.ShowHideDialogsController
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class CashAccountFragment : Fragment() {
 
@@ -38,6 +40,7 @@ class CashAccountFragment : Fragment() {
     private lateinit var control: NavController
 
     private lateinit var uiControl: UiControl
+    private val showHideDialogsController = ShowHideDialogsController()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +80,8 @@ class CashAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         uiControl = UiControl(
+            topButtonsHolder = binding.topButtonsHolder,
+            bottomButton = binding.showHideAddCashAccountFragmentButton,
             newItemLayoutHolder = binding.newCashAccountLayoutHolder,
             confirmationLayoutHolder = binding.confirmationLayoutHolder,
             changeItemLayoutHolder = binding.changeCashAccountLayoutHolder
@@ -106,7 +111,7 @@ class CashAccountFragment : Fragment() {
                     if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
                         if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
                             val name = binding.newCashAccountLayout.cashAccountName.text.toString()
-                            var number: String =
+                            val number: String =
                                 binding.newCashAccountLayout.cashAccountNumber.text.toString()
                             val newCashAccount =
                                 CashAccount(accountName = name, bankAccountNumber = number)
@@ -114,6 +119,7 @@ class CashAccountFragment : Fragment() {
                             eraseUiElements()
                             uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                             view.hideKeyboard()
+                            showUIControlElements()
                         } else showMessage(getString(R.string.too_short_name_message))
                     }
                 }
@@ -121,6 +127,8 @@ class CashAccountFragment : Fragment() {
                     eraseUiElements()
                     uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                     view.hideKeyboard()
+                    showUIControlElements()
+
                 }
             }
             with(confirmationLayout) {
@@ -155,6 +163,8 @@ class CashAccountFragment : Fragment() {
                     cashAccountViewModel.resetCashAccountForChange()
                     cashAccountViewModel.resetCashAccountForSelect()
                     uiHelper.hideUiElement(binding.changeCashAccountLayoutHolder)
+                    showUIControlElements()
+                    view.hideKeyboard()
                 }
                 saveChange.setOnClickListener {
                     if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
@@ -162,14 +172,27 @@ class CashAccountFragment : Fragment() {
                         val number =
                             binding.changeCashAccountLayout.cashAccountNumber.text.toString()
                         Log.i("TAG", " click name = $name, number = $number")
-                        cashAccountViewModel.saveChangedCashAccount(name = name, number = number)
+                        launchIo {
+                            cashAccountViewModel.saveChangedCashAccount(
+                                name = name,
+                                number = number
+                            )
+                        }
                         uiHelper.hideUiElement(changeCashAccountLayoutHolder)
                         view.hideKeyboard()
+                        showUIControlElements()
                     }
                 }
             }
         }
         checkUiMode()
+    }
+
+    private fun showUIControlElements() {
+        showHideDialogsController.showUIControlElements(
+            topButtonsHolder = binding.topButtonsHolder,
+            bottomButton = binding.showHideAddCashAccountFragmentButton
+        )
     }
 
     private fun putItemForChange() {

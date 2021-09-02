@@ -20,7 +20,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.ShowHideLayouts
+import com.chico.myhomebookkeeping.helpers.ShowHideDialogsController
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -40,7 +40,7 @@ class CurrenciesFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
     private lateinit var uiControl: UiControl
-    private val showHideLayouts = ShowHideLayouts()
+    private val showHideDialogsController = ShowHideDialogsController()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,11 +54,12 @@ class CurrenciesFragment : Fragment() {
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
         uiControl = UiControl(
-//            binding.showHideAddCurrencyFragmentButton,
-//            binding.topButtonsHolder,
+            topButtonsHolder = binding.topButtonsHolder,
+            bottomButton = binding.showHideAddCurrencyFragmentButton,
             newItemLayoutHolder = binding.newCurrencyLayoutHolder,
             confirmationLayoutHolder = binding.confirmationLayoutHolder,
-            changeItemLayoutHolder = binding.changeCurrencyLayoutHolder)
+            changeItemLayoutHolder = binding.changeCurrencyLayoutHolder
+        )
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(currenciesViewModel) {
@@ -119,6 +120,7 @@ class CurrenciesFragment : Fragment() {
                             eraseUiElements()
                             uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                             view.hideKeyboard()
+                            showUIControlElements()
                         } else showMessage(getString(R.string.too_short_name_message))
                     }
                 }
@@ -126,6 +128,7 @@ class CurrenciesFragment : Fragment() {
                     eraseUiElements()
                     uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                     view.hideKeyboard()
+                    showUIControlElements()
                 }
             }
             with(confirmationLayout) {
@@ -160,6 +163,7 @@ class CurrenciesFragment : Fragment() {
                     currenciesViewModel.resetCurrencyForSelect()
                     currenciesViewModel.resetCurrencyForChange()
                     uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
+                    showUIControlElements()
                 }
                 saveChange.setOnClickListener {
                     if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
@@ -169,11 +173,18 @@ class CurrenciesFragment : Fragment() {
                         }
                         uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                         view.hideKeyboard()
+                        showUIControlElements()
                     }
                 }
             }
             checkUiMode()
         }
+    }
+    private fun showUIControlElements() {
+        showHideDialogsController.showUIControlElements(
+            topButtonsHolder = binding.topButtonsHolder,
+            bottomButton = binding.showHideAddCurrencyFragmentButton
+        )
     }
 
     private fun putItemForChange() {

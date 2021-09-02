@@ -2,17 +2,16 @@ package com.chico.myhomebookkeeping.helpers
 
 import android.widget.Button
 import android.widget.LinearLayout
-import kotlin.coroutines.coroutineContext
 
 class UiControl(
-//    private val showHideAddCurrencyFragmentButton: Button,
-//    private val topButtonsHolder: LinearLayout,
+    private val topButtonsHolder: LinearLayout,
+    private val bottomButton: Button,
     private val newItemLayoutHolder: LinearLayout,
     private val confirmationLayoutHolder: LinearLayout,
     private val changeItemLayoutHolder: LinearLayout
 ) {
     private val uiHelper = UiHelper()
-    private val showHideLayouts = ShowHideLayouts()
+    private val showHideLayouts = ShowHideDialogsController()
 
     fun showNewItemLayoutHolder() {
         showHideLayouts.showHideHide(
@@ -20,7 +19,10 @@ class UiControl(
             hideSecondLayout = confirmationLayoutHolder,
             hideThirdLayout = changeItemLayoutHolder
         )
-
+        showHideLayouts.hideUIControlElements(
+            topButtonsHolder = topButtonsHolder,
+            bottomButton = bottomButton
+        )
     }
     fun showSelectLayoutHolder(){
         showHideLayouts.showHideHide(
@@ -35,5 +37,10 @@ class UiControl(
             hideSecondLayout = newItemLayoutHolder,
             hideThirdLayout = confirmationLayoutHolder
         )
+        showHideLayouts.hideUIControlElements(
+            topButtonsHolder = topButtonsHolder,
+            bottomButton = bottomButton
+        )
+
     }
 }

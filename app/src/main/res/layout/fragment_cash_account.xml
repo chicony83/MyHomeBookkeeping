@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/show_hide_add_cash_account_fragment_button"
-        app:layout_constraintTop_toBottomOf="@id/selectAllButton" />
+        app:layout_constraintTop_toBottomOf="@id/topButtonsHolder" />
 
     <LinearLayout
         android:id="@+id/confirmationLayoutHolder"
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <include
             android:id="@+id/changeCashAccountLayout"

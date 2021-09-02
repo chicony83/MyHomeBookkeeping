@@ -19,6 +19,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.ShowHideDialogsController
 import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -38,6 +39,7 @@ class CategoriesFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
     private lateinit var uiControl: UiControl
+    private val showHideDialogsController = ShowHideDialogsController()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,6 +83,8 @@ class CategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         uiControl = UiControl(
+            topButtonsHolder = binding.topButtonsHolder,
+            bottomButton = binding.showHideAddCategoryFragmentButton,
             newItemLayoutHolder = binding.newCategoryLayoutHolder,
             confirmationLayoutHolder = binding.confirmationLayoutHolder,
             changeItemLayoutHolder = binding.changeCategoryLayoutHolder
@@ -132,7 +136,7 @@ class CategoriesFragment : Fragment() {
                                     binding.newCategoryLayout.categoryName.text.toString()
                                 val isIncoming: Boolean = isSelectedCategoryIncome(
                                     binding.newCategoryLayout.incomingRadioButton,
-                                    binding.newCategoryLayout.spendingRadioButton
+//                                    binding.newCategoryLayout.spendingRadioButton
                                 )
                                 val newCategory = Categories(
                                     categoryName = category,
@@ -142,6 +146,7 @@ class CategoriesFragment : Fragment() {
                                 clearingUiElements()
                                 uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                                 view.hideKeyboard()
+                                showUIControlElements()
                             } else {
                                 showMessage(getString(R.string.select_type_of_category_message))
                             }
@@ -152,6 +157,7 @@ class CategoriesFragment : Fragment() {
                     clearingUiElements()
                     uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                     view.hideKeyboard()
+                    showUIControlElements()
                 }
             }
             with(confirmationLayout) {
@@ -186,11 +192,13 @@ class CategoriesFragment : Fragment() {
                     categoriesViewModel.resetCategoryForSelect()
                     categoriesViewModel.resetCategoryForChange()
                     uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
+                    showUIControlElements()
+                    view.hideKeyboard()
                 }
 
                 saveChange.setOnClickListener {
-                    var name: String
-                    var isIncome: Boolean
+                    val name: String
+                    val isIncome: Boolean
                     if (uiHelper.isLengthStringMoThan(binding.changeCategoryLayout.categoryName.text)) {
                         name = binding.changeCategoryLayout.categoryName.text.toString()
 
@@ -199,7 +207,7 @@ class CategoriesFragment : Fragment() {
                         ) {
                             isIncome = isSelectedCategoryIncome(
                                 binding.changeCategoryLayout.incomingRadioButton,
-                                binding.changeCategoryLayout.spendingRadioButton
+//                                binding.changeCategoryLayout.spendingRadioButton
                             )
                             launchIo {
                                 categoriesViewModel.saveChangedCategory(
@@ -209,6 +217,7 @@ class CategoriesFragment : Fragment() {
                             }
                             view.hideKeyboard()
                             uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
+                            showUIControlElements()
                         } else {
                             showMessage(getString(R.string.select_category_message))
                         }
@@ -219,6 +228,13 @@ class CategoriesFragment : Fragment() {
             }
         }
         checkUiMode()
+    }
+
+    private fun showUIControlElements() {
+        showHideDialogsController.showUIControlElements(
+            topButtonsHolder = binding.topButtonsHolder,
+            bottomButton = binding.showHideAddCategoryFragmentButton
+        )
     }
 
     private fun putItemForChange() {
@@ -265,7 +281,7 @@ class CategoriesFragment : Fragment() {
 
     private fun isSelectedCategoryIncome(
         incomingRadioButton: RadioButton,
-        spendingRadioButton: RadioButton
+//        spendingRadioButton: RadioButton
     ): Boolean {
         return incomingRadioButton.isChecked
     }
