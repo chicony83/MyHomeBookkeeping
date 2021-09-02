@@ -1,5 +1,6 @@
 0.7.2
 fix bug when some names editing or creating UI elements hiding
+fix bug in new payment with adding when not entered amount
 
 0.7.1
 rename application
