@@ -1,3 +1,6 @@
+0.7.3
+fix keyboard showing when select create new item or change name item
+
 0.7.2
 fix bug when some names editing or creating UI elements hiding
 fix bug in new payment with adding when not entered amount
