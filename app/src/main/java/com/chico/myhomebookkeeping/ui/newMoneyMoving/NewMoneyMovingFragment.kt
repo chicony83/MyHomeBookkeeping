@@ -37,12 +37,16 @@ class NewMoneyMovingFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
-    private val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("select date")
-        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
+    private val datePicker =
+        MaterialDatePicker.Builder
+            .datePicker()
+            .setTitleText(getString(R.string.description_select_date))
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .build()
     private val timePicker =
         MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_24H)
-            .setTitleText("select Time")
+            .setTitleText(getString(R.string.description_select_time))
             .build()
 
     override fun onCreateView(
@@ -102,7 +106,7 @@ class NewMoneyMovingFragment : Fragment() {
             enteredAmount.observe(viewLifecycleOwner, {
                 binding.amount.setText(it.toString())
             })
-            enteredDescription.observe(viewLifecycleOwner,{
+            enteredDescription.observe(viewLifecycleOwner, {
                 binding.description.setText(it.toString())
             })
             submitButton.observe(viewLifecycleOwner, {
@@ -118,7 +122,7 @@ class NewMoneyMovingFragment : Fragment() {
         timePicker.addOnPositiveButtonClickListener {
             val hour: Int = timePicker.hour
 //            Log.i("TAG","hour = $hour")
-            var minute: Int = timePicker.minute
+            val minute: Int = timePicker.minute
             with(newMoneyMovingViewModel) {
                 setTime(hour, minute)
                 setDateTimeOnButton()
@@ -144,16 +148,16 @@ class NewMoneyMovingFragment : Fragment() {
                         addNewMoneyMoving()
                     } else {
                         setBackgroundWarningColor(binding.amount)
-                        message(getString(R.string.enter_amount_message))
+                        message(getString(R.string.message_enter_amount))
                     }
                 } else {
-                    message(getString(R.string.category_not_selected_message))
+                    message(getString(R.string.message_category_not_selected))
                 }
             } else {
-                message(getString(R.string.currency_not_selected_message))
+                message(getString(R.string.message_currency_not_selected))
             }
         } else {
-            message(getString(R.string.cash_account_not_selected_message))
+            message(getString(R.string.message_cash_account_not_selected))
         }
     }
 
@@ -174,7 +178,7 @@ class NewMoneyMovingFragment : Fragment() {
                 )
                 setBackgroundDefaultColor(binding.amount)
                 view?.hideKeyboard()
-                message("запись добавлена")
+                message(getString(R.string.message_entry_added))
                 control.navigate(R.id.nav_money_moving)
                 newMoneyMovingViewModel.clearSPAfterSave()
 
@@ -207,14 +211,14 @@ class NewMoneyMovingFragment : Fragment() {
 
     private fun pressSelectButton(fragment: Int) {
         var amount = 0.0
-        if (!binding.amount.text.isNullOrEmpty()){
-             amount = aroundDouble()
+        if (!binding.amount.text.isNullOrEmpty()) {
+            amount = aroundDouble()
         }
         var description = ""
-        if (!binding.description.text.isNullOrEmpty()){
+        if (!binding.description.text.isNullOrEmpty()) {
             description = binding.description.text.toString()
         }
-        newMoneyMovingViewModel.saveDataToSP(amount,description)
+        newMoneyMovingViewModel.saveDataToSP(amount, description)
         control.navigate(fragment)
     }
 

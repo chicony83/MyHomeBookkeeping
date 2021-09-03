@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="too_short_name_message">too short name</string>
-    <string name="select_category_message">select a category</string>
-    <string name="select_type_of_category_message">select type of category</string>
+    <string name="message_too_short_name">too short name</string>
+    <string name="message_select_category">select a category</string>
+    <string name="message_select_type_of_category">select type of category</string>
 
-    <string name="enter_amount_message">"enter amount"</string>
-    <string name="category_not_selected_message">"category not selected"</string>
-    <string name="currency_not_selected_message">"currency not selected"</string>
-    <string name="cash_account_not_selected_message">"cash account not selected"</string>
-    <string name="first_launch_dialog_message">"This is the first launch \n of the program, \n enable quick setup?"</string>
+    <string name="message_enter_amount">"enter amount"</string>
+    <string name="message_category_not_selected">"category not selected"</string>
+    <string name="message_currency_not_selected">"currency not selected"</string>
+    <string name="message_cash_account_not_selected">"cash account not selected"</string>
+    <string name="message_first_launch_dialog">"This is the first launch\nof the program,\enable quick setup?"</string>
+
+    <string name="message_entry_changed">Entry changed</string>
+    <string name="message_entry_added">Entry added</string>
+
+    <string name="message_start_date_can_not_be_more_than_the_current">Start Date can not be more than the current</string>
+    <string name="message_the_end_date_is_greater_than_the_current_one">Looking to the future?\nThe end date is greater than the current one !!!</string>
+    <string name="message_end_date_cannot_be_less_than_start_date">End date cannot be less than start date</string>
+
 </resources>

@@ -41,7 +41,6 @@ class FirstLaunchFragment : Fragment() {
 
             firstLaunchViewModel.setIsFirstLaunchFalse()
         }
-
         return binding.root
     }
 

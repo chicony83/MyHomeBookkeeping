@@ -37,6 +37,7 @@ class NewMoneyMovingViewModel(
     private val argsAmountCreateKey = Constants.FOR_CREATE_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.FOR_CREATE_DESCRIPTION_KEY
 
+
     private val modelCheck = ModelCheck()
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
@@ -98,10 +99,10 @@ class NewMoneyMovingViewModel(
 
     //    private var idMoneyMovingForChange: Long = -1
 
-    private var dateTimeSPLong = -1L
-    private var cashAccountSPInt = -1
-    private var currencySPInt = -1
-    private var categorySPInt = -1
+    private var dateTimeSPLong = minusOneLong
+    private var cashAccountSPInt = minusOneInt
+    private var currencySPInt = minusOneInt
+    private var categorySPInt = minusOneInt
     private var amountSPFloat: Float = (-1.0).toFloat()
     private var descriptionSPString = ""
 //    var id: Long = -1

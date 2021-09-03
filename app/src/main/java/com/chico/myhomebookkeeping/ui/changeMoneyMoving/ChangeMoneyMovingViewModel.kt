@@ -58,7 +58,7 @@ class ChangeMoneyMovingViewModel(
     private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
 
     private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
-    private var idMoneyMovingForChangeLong: Long = -1
+    private var idMoneyMovingForChangeLong: Long = minusOneLong
 
     private val dbMoneyMovement: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
@@ -125,7 +125,7 @@ class ChangeMoneyMovingViewModel(
 
     private fun postDateTime(moneyMovement: MoneyMovement?) {
         launchUi {
-            var postingDateTime: String = ""
+            var postingDateTime = ""
             Log.i("TAG"," dataTimeLong = $dataTimeSPLong")
             if (modelCheck.isPositiveValue(dataTimeSPLong)) {
                 postingDateTime = dataTimeSPLong.parseTimeFromMillis()

@@ -13,9 +13,9 @@ class MoneyMovingCountMoney(
     private var balance = 0.0
 
     init {
-        var inc: Double = 0.0
-        var spe: Double = 0.0
-        var bal: Double = 0.0
+        var inc = 0.0
+        var spe = 0.0
+        var bal = 0.0
 
         for (i in listFullMoneyMoving.indices) {
             val amount = listFullMoneyMoving[i].amount
@@ -33,7 +33,6 @@ class MoneyMovingCountMoney(
         income = roundedNumber(inc)
         spending = roundedNumber(spe)
         balance = roundedNumber(bal)
-
     }
 
     private fun roundedNumber(num: Double): Double {

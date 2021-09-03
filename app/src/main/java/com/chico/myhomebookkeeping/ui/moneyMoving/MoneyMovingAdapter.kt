@@ -61,7 +61,6 @@ class MoneyMovingAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolderMovingItem, position: Int) {
-
 //        var showDate = checkTodayAndYesterdayIsOneDate(position)
         holder.bind(moneyMovementList[position])
 //        holder.bind(moneyMovementList[position], showDate)
@@ -140,8 +139,7 @@ class MoneyMovingAdapter(
             }
         }
     }
-
-    private fun messageLog(text: String) {
-        Log.i("TAG", "$text")
-    }
+//    private fun messageLog(text: String) {
+//        Log.i("TAG", "$text")
+//    }
 }

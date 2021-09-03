@@ -27,12 +27,17 @@ class ChangeMoneyMovingFragment : Fragment() {
     private lateinit var control: NavController
     private val uiHelper = UiHelper()
 
-    private val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("select date")
-        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
+    private val datePicker =
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.description_select_date))
+            .setSelection(
+                MaterialDatePicker.todayInUtcMilliseconds()
+            )
+            .build()
     private val timePicker =
         MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_24H)
-            .setTitleText("select Time")
+            .setTitleText(getString(R.string.description_select_time))
             .build()
 
     override fun onCreateView(
@@ -118,16 +123,17 @@ class ChangeMoneyMovingFragment : Fragment() {
                 val amount: Double = binding.amount.text.toString().toDouble()
                 val description = binding.description.text.toString()
                 changeMoneyMovingViewModel.saveDataToSp()
-                val result: Long = changeMoneyMovingViewModel.changeMoneyMovementInDB(amount,description)
+                val result: Long =
+                    changeMoneyMovingViewModel.changeMoneyMovementInDB(amount, description)
                 if (result > 0) {
                     view?.hideKeyboard()
-                    message("запись изменена")
+                    message(getString(R.string.message_entry_changed))
                     control.navigate(R.id.nav_money_moving)
                 }
             }
         } else {
             setBackgroundWarningColor(binding.amount)
-            message("введите сумму")
+            message(getString(R.string.message_enter_amount))
         }
     }
 
@@ -147,7 +153,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         _binding = null
     }
 
-    fun message(text: String): Unit {
+    private fun message(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 }

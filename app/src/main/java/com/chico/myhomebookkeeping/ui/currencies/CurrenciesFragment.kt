@@ -33,7 +33,6 @@ class CurrenciesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: CurrenciesDao
-    private lateinit var currenciesUseCase: CurrenciesUseCase
 
     private var selectedCurrencyId = 0
 
@@ -123,7 +122,7 @@ class CurrenciesFragment : Fragment() {
                             uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                             view.hideKeyboard()
                             showUIControlElements()
-                        } else showMessage(getString(R.string.too_short_name_message))
+                        } else showMessage(getString(R.string.message_too_short_name))
                     }
                 }
                 cancelCreate.setOnClickListener {

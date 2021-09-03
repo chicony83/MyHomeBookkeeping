@@ -126,7 +126,7 @@ class CashAccountFragment : Fragment() {
                             uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                             view.hideKeyboard()
                             showUIControlElements()
-                        } else showMessage(getString(R.string.too_short_name_message))
+                        } else showMessage(getString(R.string.message_too_short_name))
                     }
                 }
                 cancelCreate.setOnClickListener {

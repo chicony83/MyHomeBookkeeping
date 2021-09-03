@@ -15,4 +15,7 @@
     <string name="descriptions_last_4_digits_of_card">последних 4 цифры карты</string>
 
     <string name="description_cash_account_name">название счёта</string>
+
+    <string name="description_select_date">Выберите дату</string>
+    <string name="description_select_time">Выберите время</string>
 </resources>

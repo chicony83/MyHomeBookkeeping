@@ -119,6 +119,4 @@ class CashAccountViewModel(
         }
         reloadCategories(add.await().toLong())
     }
-
-
 }

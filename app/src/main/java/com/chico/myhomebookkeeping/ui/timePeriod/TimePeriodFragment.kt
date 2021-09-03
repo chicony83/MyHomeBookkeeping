@@ -21,12 +21,14 @@ class TimePeriodFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-    private val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("select date")
-        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
+    private val datePicker =
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.description_select_date))
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
 
     private var isGetStartTimePeriod = false
     private var isGetEndTimePeriod = false
-    private val textLogDataPicker = "data picker"
+    private val textLogDataPicker = "TAG data picker"
 
     private val calendar = Calendar.getInstance()
     private val dateNowInMills = calendar.timeInMillis
@@ -82,7 +84,7 @@ class TimePeriodFragment : Fragment() {
                     binding.resetStartPeriodButton.isEnabled = true
                 }
                 if (it > dateNowInMills) {
-                    message("Начальная дата не может быть больше текущей")
+                    message(getString(R.string.message_start_date_can_not_be_more_than_the_current))
                 }
                 isGetStartTimePeriod = false
             }
@@ -90,12 +92,12 @@ class TimePeriodFragment : Fragment() {
                 if (it > dateNowInMills) {
                     binding.resetEndPeriodButton.isEnabled = true
                     timePeriodViewModel.setEndTimePeriod(it)
-                    message("Хотите заглянуть в будущее? \nКонечная дата больше текущей!!!")
+                    message(getString(R.string.message_the_end_date_is_greater_than_the_current_one))
 
                 }
                 if (it <= dateNowInMills) {
                     if (it < timePeriodViewModel.getStartTimePeriod()) {
-                        message("Конечная дата не может быть меньше начальной")
+                        message(getString(R.string.message_end_date_cannot_be_less_than_start_date))
                     } else {
                         binding.resetEndPeriodButton.isEnabled = true
                         timePeriodViewModel.setEndTimePeriod(it)

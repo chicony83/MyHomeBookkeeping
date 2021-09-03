@@ -46,7 +46,6 @@ class CurrenciesViewModel(
     val changeCurrency: LiveData<Currencies?>
         get() = _changeCurrency
 
-
     init {
         loadCurrencies()
     }

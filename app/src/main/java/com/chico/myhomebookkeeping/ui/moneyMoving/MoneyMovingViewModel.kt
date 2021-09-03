@@ -31,6 +31,7 @@ import kotlinx.coroutines.*
 class MoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
+    private val space = " "
     private val spName = Constants.SP_NAME
     private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
@@ -109,10 +110,6 @@ class MoneyMovingViewModel(
 //    private lateinit var moneyMovingCountMoney:MoneyMovingCountMoney
 
     //    private lateinit var resultQuery: List<FullMoneyMoving>?
-    init {
-        launchUi {
-        }
-    }
 
     fun getListFulMoneyMoving() {
         runBlocking {
@@ -140,7 +137,7 @@ class MoneyMovingViewModel(
     private fun setTextOnTimePeriodButton() {
         launchUi {
             val text: String = getResourceText(R.string.text_on_button_time_period)
-            val space = " "
+
             var timePeriod = ""
             val textFrom = getResourceText(R.string.text_on_button_time_period_from)
             val textTo = getResourceText(R.string.text_on_button_time_period_to)
@@ -281,30 +278,30 @@ class MoneyMovingViewModel(
         if (!list.isNullOrEmpty()) {
             val moneyMovingCountMoney = MoneyMovingCountMoney(list)
             _incomeBalance.postValue(
-                getResourceText(R.string.description_income) + " " + moneyMovingCountMoney.getIncome()
+                getResourceText(R.string.description_income) + space + moneyMovingCountMoney.getIncome()
             )
             _spendingBalance.postValue(
-                getResourceText(R.string.description_spending) + " " + moneyMovingCountMoney.getSpending()
+                getResourceText(R.string.description_spending) + space + moneyMovingCountMoney.getSpending()
             )
             _totalBalance.postValue(
-                getResourceText(R.string.description_balance) + " " + moneyMovingCountMoney.getBalance()
+                getResourceText(R.string.description_balance) + space + moneyMovingCountMoney.getBalance()
             )
         }
 
     }
 
-    private fun postIncomeBalance(await: MoneyMovingCountMoney?) {
-        _incomeBalance.postValue(await?.getIncome())
-    }
-
-    private fun isOneCurrency(): Boolean {
-        return currencyIntSP > 0
-    }
-
-    fun getNumFoundLines(): Int {
-        return 0
-//        return foundLines
-    }
+//    private fun postIncomeBalance(await: MoneyMovingCountMoney?) {
+//        _incomeBalance.postValue(await?.getIncome())
+//    }
+//
+//    private fun isOneCurrency(): Boolean {
+//        return currencyIntSP > 0
+//    }
+//
+//    fun getNumFoundLines(): Int {
+//        return 0
+////        return foundLines
+//    }
 
 //    fun isMoneyMovementFound(): Boolean {
 //        return foundLines > 0

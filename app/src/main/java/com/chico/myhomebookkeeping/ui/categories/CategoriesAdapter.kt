@@ -60,9 +60,7 @@ class CategoriesAdapter(
                         )
                     }
                 }
-
             }
         }
-
     }
 }

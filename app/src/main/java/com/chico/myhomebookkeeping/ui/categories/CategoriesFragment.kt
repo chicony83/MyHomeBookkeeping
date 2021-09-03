@@ -154,9 +154,9 @@ class CategoriesFragment : Fragment() {
                                 view.hideKeyboard()
                                 showUIControlElements()
                             } else {
-                                showMessage(getString(R.string.select_type_of_category_message))
+                                showMessage(getString(R.string.message_select_type_of_category))
                             }
-                        } else showMessage(getString(R.string.too_short_name_message))
+                        } else showMessage(getString(R.string.message_too_short_name))
                     }
                 }
                 cancelCreate.setOnClickListener {
@@ -235,10 +235,10 @@ class CategoriesFragment : Fragment() {
                             view.hideKeyboard()
                             showUIControlElements()
                         } else {
-                            showMessage(getString(R.string.select_category_message))
+                            showMessage(getString(R.string.message_select_category))
                         }
                     } else {
-                        showMessage(getString(R.string.too_short_name_message))
+                        showMessage(getString(R.string.message_too_short_name))
                     }
                 }
             }
@@ -294,7 +294,6 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-
     private fun isSelectedCategoryIncome(
         incomingRadioButton: RadioButton,
 //        spendingRadioButton: RadioButton
@@ -310,5 +309,4 @@ class CategoriesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

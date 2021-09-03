@@ -16,7 +16,10 @@
     <string name="description_description">Description</string>
     <string name="description_add_you_description">Add you description</string>
 
-    <string name="descriptions_last_4_digits_of_card">last 4 digits of the card</string>
+    <string name="descriptions_last_4_digits_of_card">Last 4 digits of the card</string>
 
-    <string name="description_cash_account_name">cash account name</string>
+    <string name="description_cash_account_name">Cash account name</string>
+
+    <string name="description_select_date">Select date</string>
+    <string name="description_select_time">Select time</string>
 </resources>

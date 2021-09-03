@@ -38,7 +38,7 @@ class FirstLaunchViewModel(
 
     fun addDefaultCashAccount() {
         val cashAccountCash = CashAccount("Наличные", "")
-        val cashAccountCard = CashAccount("Зарплатная карточка", "")
+        val cashAccountCard = CashAccount("Карточка", "")
         launchIo {
             with(CashAccountsUseCase) {
                 addNewCashAccount(dbCashAccount, cashAccountCash)
