@@ -12,9 +12,9 @@
     <string name="description_description">Описание</string>
     <string name="description_add_you_description">Добавьте ваше описание</string>
 
-    <string name="descriptions_last_4_digits_of_card">последних 4 цифры карты</string>
+    <string name="descriptions_last_4_digits_of_card">Последних 4 цифры карты</string>
 
-    <string name="description_cash_account_name">название счёта</string>
+    <string name="description_cash_account_name">Название счёта</string>
 
     <string name="description_select_date">Выберите дату</string>
     <string name="description_select_time">Выберите время</string>

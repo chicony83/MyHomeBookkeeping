@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="message_select_type_of_category">выберите тип категории</string>
-    <string name="message_select_category">выберите категорию</string>
-    <string name="message_too_short_name">слишком короткое название</string>
+    <string name="message_select_type_of_category">Выберите тип категории</string>
+    <string name="message_select_category">Выберите категорию</string>
+    <string name="message_too_short_name">Слишком короткое название</string>
 
-    <string name="message_enter_amount">"введите сумму"</string>
-    <string name="message_category_not_selected">"категория не выбрана"</string>
-    <string name="message_currency_not_selected">"валюта не выбрана"</string>
-    <string name="message_cash_account_not_selected">"счет не выбран"</string>
+    <string name="message_enter_amount">"Введите сумму"</string>
+    <string name="message_category_not_selected">"Категория не выбрана"</string>
+    <string name="message_currency_not_selected">"Валюта не выбрана"</string>
+    <string name="message_cash_account_not_selected">"Счет не выбран"</string>
     <string name="message_first_launch_dialog">"Это первый запуск программы\nвключить быструю настройку?"</string>
 
-    <string name="message_entry_changed">запись изменена</string>
-    <string name="message_entry_added">запись добавлена</string>
+    <string name="message_entry_changed">Запись изменена</string>
+    <string name="message_entry_added">Запись добавлена</string>
 
     <string name="message_start_date_can_not_be_more_than_the_current">Начальная дата не может быть больше текущей</string>
     <string name="message_the_end_date_is_greater_than_the_current_one">Хотите заглянуть в будущее?\nКонечная дата больше текущей!!!</string>
