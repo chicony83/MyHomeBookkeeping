@@ -29,7 +29,7 @@ class ChangeMoneyMovingFragment : Fragment() {
 
     private val datePicker =
         MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.description_select_date))
+//            .setTitleText(getString(R.string.description_select_date))
             .setSelection(
                 MaterialDatePicker.todayInUtcMilliseconds()
             )
@@ -37,7 +37,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     private val timePicker =
         MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_24H)
-            .setTitleText(getString(R.string.description_select_time))
+//            .setTitleText(getString(R.string.description_select_time))
             .build()
 
     override fun onCreateView(

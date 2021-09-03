@@ -38,15 +38,13 @@ class NewMoneyMovingFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
     private val datePicker =
-        MaterialDatePicker.Builder
-            .datePicker()
-            .setTitleText(getString(R.string.description_select_date))
-            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-            .build()
+        MaterialDatePicker.Builder.datePicker()
+//            .setTitleText(getString(R.string.description_select_date))
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
     private val timePicker =
         MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_24H)
-            .setTitleText(getString(R.string.description_select_time))
+//            .setTitleText(getString(R.string.description_select_time))
             .build()
 
     override fun onCreateView(
