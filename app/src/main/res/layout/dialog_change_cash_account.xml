@@ -2,9 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/DialogLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    style="@style/DialogLayout">
 
     <EditText
         android:id="@+id/cashAccountName"
@@ -16,39 +14,29 @@
 
     <EditText
         android:id="@+id/cashAccountNumber"
-        android:layout_width="0dp"
+        style="@style/DialogEditText"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:maxLength="4"
-        android:maxLines="1"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cashAccountName"
         tools:text="1234" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
+        style="@style/DialogLayout.PositiveNegativeButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cashAccountNumber">
 
         <Button
             android:id="@+id/saveChange"
-            style="@style/DialogButtonLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/DialogButtonLeft.Positive"
             android:text="@string/text_on_button_save" />
 
         <Button
             android:id="@+id/cancelChange"
-            style="@style/DialogButtonRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/DialogButtonRight.Negative"
             android:text="@string/text_on_button_cancel" />
 
     </LinearLayout>

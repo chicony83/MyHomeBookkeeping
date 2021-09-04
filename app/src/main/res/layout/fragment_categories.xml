@@ -68,9 +68,7 @@
 
     <LinearLayout
         android:id="@+id/confirmationLayoutHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
+        style="@style/DialogLayout.Holder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,9 +81,7 @@
 
     <LinearLayout
         android:id="@+id/newCategoryLayoutHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
+        style="@style/DialogLayout.Holder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,9 +94,7 @@
 
     <LinearLayout
         android:id="@+id/changeCategoryLayoutHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
+        style="@style/DialogLayout.Holder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

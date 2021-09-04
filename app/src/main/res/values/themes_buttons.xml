@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources >
 
     <style name="Buttons">
 
@@ -49,16 +49,20 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="DialogButtonLeft.Add" >
+
+    <style name="DialogButtonLeft.Positive">
+        <item name="android:layout_weight">3</item>
         <item name="android:textColor">@color/colorSubmitButton</item>
         <item name="android:textSize">@dimen/H4</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="DialogButtonRight.Cancel">
+
+    <style name="DialogButtonRight.Negative">
+        <item name="android:layout_weight">2</item>
         <item name="android:textColor">@color/colorCancelButton</item>
         <item name="android:textSize">@dimen/H5</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

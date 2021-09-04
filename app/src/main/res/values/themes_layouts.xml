@@ -4,6 +4,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
-
+    </style>
+    <style name="DialogLayout.PositiveNegativeButtons" parent="MatchParent_WrapContent">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">5</item>
     </style>
 </resources>

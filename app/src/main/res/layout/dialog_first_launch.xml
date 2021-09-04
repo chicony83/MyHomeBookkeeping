@@ -6,8 +6,8 @@
     android:layout_height="wrap_content">
 
     <TextView
-        style="@style/Description"
         android:id="@+id/message"
+        style="@style/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -17,33 +17,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="5"
+        style="@style/DialogLayout.PositiveNegativeButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message">
 
         <Button
-            style="@style/DialogButtonLeft.Add"
             android:id="@+id/submitFirstLaunchButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/text_on_button_yes"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/message" />
+            style="@style/DialogButtonLeft.Positive"
+            android:text="@string/text_on_button_yes" />
 
 
         <Button
-            style="@style/DialogButtonRight.Cancel"
             android:id="@+id/cancelFirstLaunchButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="@string/text_on_button_no"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/message" />
+            style="@style/DialogButtonRight.Negative"
+            android:text="@string/text_on_button_no" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,13 +15,13 @@
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.245018115942029" />
         <entry key="app/src/main/res/layout/blur.xml" value="0.348731884057971" />
         <entry key="app/src/main/res/layout/blur_layout.xml" value="0.353713768115942" />
-        <entry key="app/src/main/res/layout/dialog_change_cash_account.xml" value="0.1950354609929078" />
+        <entry key="app/src/main/res/layout/dialog_change_cash_account.xml" value="0.2726449275362319" />
         <entry key="app/src/main/res/layout/dialog_change_category.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_change_currency.xml" value="0.22509057971014493" />
         <entry key="app/src/main/res/layout/dialog_first_launch.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_new_cash_account.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dialog_new_category.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/dialog_new_currency.xml" value="0.4819277108433735" />
+        <entry key="app/src/main/res/layout/dialog_new_currency.xml" value="0.5" />
         <entry key="app/src/main/res/layout/dialog_select_cash_account.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_select_category.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_select_currency.xml" value="0.4010416666666667" />

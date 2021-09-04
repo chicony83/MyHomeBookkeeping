@@ -6,7 +6,6 @@
 >
 
     <TextView
-
         style="@style/Header"
         android:id="@+id/title"
         android:layout_width="wrap_content"

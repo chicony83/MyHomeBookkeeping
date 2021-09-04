@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/selectStartPeriodButton"
-        style="@style/DialogButtonLeft.Add"
+        style="@style/DialogButtonLeft.Positive"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/text_on_button_time_period_at_first"
@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/resetStartPeriodButton"
-        style="@style/DialogButtonRight.Cancel"
+        style="@style/DialogButtonRight.Negative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_on_button_reset"
@@ -47,7 +47,7 @@
 
     <Button
         android:id="@+id/selectEndPeriodButton"
-        style="@style/DialogButtonLeft.Add"
+        style="@style/DialogButtonLeft.Positive"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/text_on_button_time_period_to_end"
@@ -57,7 +57,7 @@
 
     <Button
         android:id="@+id/resetEndPeriodButton"
-        style="@style/DialogButtonRight.Cancel"
+        style="@style/DialogButtonRight.Negative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_on_button_reset"
