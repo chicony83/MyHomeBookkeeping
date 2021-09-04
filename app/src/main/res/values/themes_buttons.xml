@@ -1,7 +1,6 @@
-<resources >
+<resources>
 
     <style name="Buttons">
-
     </style>
 
     <style name="ButtonsMatchParent_WrapContent" parent="Buttons">
@@ -61,6 +60,20 @@
     <style name="DialogButtonRight.Negative">
         <item name="android:layout_weight">2</item>
         <item name="android:textColor">@color/colorCancelButton</item>
+        <item name="android:textSize">@dimen/H5</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DialogButtonLeft.Select">
+        <item name="android:layout_weight">2</item>
+        <item name="android:textSize">@dimen/H5</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DialogButtonCenter.Change">
+        <item name="android:layout_weight">2</item>
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

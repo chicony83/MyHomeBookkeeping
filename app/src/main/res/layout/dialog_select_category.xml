@@ -18,36 +18,30 @@
         style="@style/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="GAS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description" />
 
-    <Button
-        android:id="@+id/selectButton"
-        style="@style/DialogButtonLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_on_button_select"
+    <LinearLayout
+        style="@style/DialogLayout.PositiveChangeNegativeButtons"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
+        app:layout_constraintTop_toBottomOf="@id/selectedItemName">
 
-    <Button
-        android:id="@+id/changeButton"
-        style="@style/DialogButtonCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_on_button_change"
-        app:layout_constraintStart_toEndOf="@id/selectButton"
-        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
+        <Button
+            android:id="@+id/selectButton"
+            style="@style/DialogButtonLeft.Select"
+            android:text="@string/text_on_button_select" />
 
-    <Button
-        android:id="@+id/cancelButton"
-        style="@style/DialogButtonRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_on_button_cancel"
-        app:layout_constraintStart_toEndOf="@id/changeButton"
-        app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
+        <Button
+            android:id="@+id/changeButton"
+            style="@style/DialogButtonCenter.Change"
+            android:text="@string/text_on_button_change" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="@style/DialogButtonRight.Negative"
+            android:text="@string/text_on_button_cancel" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

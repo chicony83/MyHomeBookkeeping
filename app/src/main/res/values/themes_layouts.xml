@@ -9,4 +9,8 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:weightSum">5</item>
     </style>
+    <style name="DialogLayout.PositiveChangeNegativeButtons">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">6</item>
+    </style>
 </resources>

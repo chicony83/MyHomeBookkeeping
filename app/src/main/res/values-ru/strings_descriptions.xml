@@ -21,4 +21,5 @@
 
     <string name="description_selected_cash_account">Выбранный счёт</string>
     <string name="description_selected_category">Выбранная категория</string>
+    <string name="description_selected_currency">Выбранная валюта</string>
 </resources>
