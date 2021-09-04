@@ -1,5 +1,6 @@
 0.7.4
 improved styles
+fix bug with description in payment in journal list
 
 0.7.3
 fix keyboard showing when select create new item or change name item

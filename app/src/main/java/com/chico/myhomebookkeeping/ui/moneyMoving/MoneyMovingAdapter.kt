@@ -36,7 +36,7 @@ class MoneyMovingAdapter(
         context = parent.context
         getStrings()
         val isNightMode = checkIsNightUiMode()
-        return ViewHolderMovingItem(binding,isNightMode)
+        return ViewHolderMovingItem(binding, isNightMode)
     }
 
     private fun checkIsNightUiMode(): Boolean {
@@ -94,7 +94,7 @@ class MoneyMovingAdapter(
         fun bind(moneyMovement: FullMoneyMoving) {
 
             with(binding) {
-                if (!isNightMode){
+                if (!isNightMode) {
                     item.setBackgroundResource(R.drawable.money_moving_day_item_background)
                 }
 //                if (showDate) {
@@ -110,6 +110,10 @@ class MoneyMovingAdapter(
                 if (!moneyMovement.description.isNullOrEmpty()) {
                     description.text = moneyMovement.description
                     description.visibility = View.VISIBLE
+                }
+                if (moneyMovement.description.isNullOrEmpty()){
+                    description.text = null
+                    description.visibility = View.GONE
                 }
                 if (moneyMovement.isIncome) {
                     amount.text = positive + moneyMovement.amount.toString()
