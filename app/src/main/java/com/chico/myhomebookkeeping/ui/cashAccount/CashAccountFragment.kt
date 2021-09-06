@@ -108,10 +108,9 @@ class CashAccountFragment : Fragment() {
                 view.showKeyboard()
 
                 val result: Any = cashAccountViewModel.getNamesList()
-
-                if (result is Int) {
-                    showMessage("список имён пуст")
-                }
+//                if (result is Int) {
+//                    showMessage("список имён пуст")
+//                }
                 if (result is List<*>) {
                     val namesList: List<String> = result as List<String>
                     binding.newCashAccountLayout.cashAccountName.addTextChangedListener(
@@ -120,8 +119,7 @@ class CashAccountFragment : Fragment() {
                             binding.newCashAccountLayout.addNewCashAccountButton
                         )
                     )
-
-                    showMessage("список имен отправлен на проверку")
+//                    showMessage("список имен отправлен на проверку")
                 }
                 with(binding.newCashAccountLayout.cashAccountName) {
                     requestFocus()

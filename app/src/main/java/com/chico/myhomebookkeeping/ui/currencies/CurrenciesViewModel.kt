@@ -112,9 +112,27 @@ class CurrenciesViewModel(
     }
 
     private fun reloadCurrencies(long: Long) {
-        if (long>0){
+        if (long > 0) {
             loadCurrencies()
-            Log.i("TAG","recycler reloaded")
+            Log.i("TAG", "recycler reloaded")
         }
+    }
+
+    fun getNamesList(): Any {
+        val items = getItemsList()
+        return if (!items.isNullOrEmpty()) return getNamesOfItems(items)
+        else -1
+    }
+
+    private fun getNamesOfItems(items: List<Currencies>): MutableList<String> {
+        val names = mutableListOf<String>()
+        for (element in items){
+            names.add(element.currencyName)
+        }
+        return names
+    }
+
+    private fun getItemsList(): List<Currencies>? {
+        return currenciesList.value?.toList()
     }
 }

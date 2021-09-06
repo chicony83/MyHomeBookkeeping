@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
@@ -105,6 +106,18 @@ class CurrenciesFragment : Fragment() {
             showHideAddCurrencyFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
                 view.showKeyboard()
+                val result = currenciesViewModel.getNamesList()
+
+                if (result is List<*>){
+                    val namesList:List<String> = result as List<String>
+                    binding.newCurrencyLayout.currencyName.addTextChangedListener(
+                        EditNameTextWatcher(
+                            namesList,
+                            binding.newCurrencyLayout.addNewCurrencyButton
+                        )
+                    )
+                }
+
                 with(binding.newCurrencyLayout.currencyName) {
                     requestFocus()
                     setSelection(0)

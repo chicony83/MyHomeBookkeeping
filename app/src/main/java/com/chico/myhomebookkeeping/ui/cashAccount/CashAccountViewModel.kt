@@ -123,18 +123,14 @@ class CashAccountViewModel(
 
     fun getNamesList(): Any {
         val items = getItemsList()
-        return if (!items.isNullOrEmpty()) {
-            getNamesOfItems(items)
-        } else {
-            -1
-        }
+        return if (!items.isNullOrEmpty()) getNamesOfItems(items)
+        else -1
     }
 
     private fun getNamesOfItems(items: List<CashAccount>): MutableList<String> {
         val names = mutableListOf<String>()
         for (element in items) {
             names.add(element.accountName)
-            Message.log(element.accountName)
         }
         return names
     }
