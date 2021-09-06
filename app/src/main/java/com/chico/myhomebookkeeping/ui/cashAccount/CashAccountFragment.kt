@@ -12,16 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.ShowHideDialogsController
-import com.chico.myhomebookkeeping.helpers.UiControl
-import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.showKeyboard
@@ -80,6 +78,8 @@ class CashAccountFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
+
         uiControl = UiControl(
             topButtonsHolder = binding.topButtonsHolder,
             bottomButton = binding.showHideAddCashAccountFragmentButton,
@@ -97,7 +97,6 @@ class CashAccountFragment : Fragment() {
         } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
             uiHelper.showUiElement(binding.selectAllButton)
         }
-        view.hideKeyboard()
         with(binding) {
             selectAllButton.setOnClickListener {
                 cashAccountViewModel.resetCashAccountForChange()
@@ -107,6 +106,23 @@ class CashAccountFragment : Fragment() {
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
                 view.showKeyboard()
+
+                val result: Any = cashAccountViewModel.getNamesList()
+
+                if (result is Int) {
+                    showMessage("список имён пуст")
+                }
+                if (result is List<*>) {
+                    val namesList: List<String> = result as List<String>
+                    binding.newCashAccountLayout.cashAccountName.addTextChangedListener(
+                        EditNameTextWatcher(
+                            namesList,
+                            binding.newCashAccountLayout.addNewCashAccountButton
+                        )
+                    )
+
+                    showMessage("список имен отправлен на проверку")
+                }
                 with(binding.newCashAccountLayout.cashAccountName) {
                     requestFocus()
                     setSelection(0)
@@ -202,6 +218,7 @@ class CashAccountFragment : Fragment() {
         }
         checkUiMode()
     }
+
 
     private fun showUIControlElements() {
         showHideDialogsController.showUIControlElements(

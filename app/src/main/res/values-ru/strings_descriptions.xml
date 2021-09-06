@@ -22,4 +22,6 @@
     <string name="description_selected_cash_account">Выбранный счёт</string>
     <string name="description_selected_category">Выбранная категория</string>
     <string name="description_selected_currency">Выбранная валюта</string>
+    
+    <string name="description_this_name_is_taken">Это имя занято</string>
 </resources>

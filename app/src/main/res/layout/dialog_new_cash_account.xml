@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/DialogLayout">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLayout"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/description_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/description_cash_account_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/description_cash_account_name" />
 
     <EditText
         android:id="@+id/cashAccountName"
-        style="@style/DialogEnterNewName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description_name" />
+        style="@style/DialogEnterNewName" />
+
+    <TextView
+        android:id="@+id/error_this_name_is_taken"
+        style="@style/Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/description_this_name_is_taken"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/description_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/descriptions_last_4_digits_of_card"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cashAccountName" />
+        android:text="@string/descriptions_last_4_digits_of_card" />
 
     <EditText
         android:id="@+id/cashAccountNumber"
@@ -32,14 +36,9 @@
         android:hint="@string/hint_only_last_4_digits"
         android:inputType="number"
         android:maxLength="4"
-        android:maxLines="1"
-        app:layout_constraintTop_toBottomOf="@id/description_number" />
+        android:maxLines="1" />
 
-    <LinearLayout
-        style="@style/DialogLayout.PositiveNegativeButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cashAccountNumber">
+    <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
 
         <Button
             android:id="@+id/addNewCashAccountButton"
@@ -57,4 +56,4 @@
             android:text="@string/text_on_button_cancel" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

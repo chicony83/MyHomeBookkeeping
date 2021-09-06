@@ -27,4 +27,5 @@
     <string name="description_selected_category">Selected category</string>
     <string name="description_selected_currency">Selected currency</string>
 
+    <string name="description_this_name_is_taken">This name is taken</string>
 </resources>

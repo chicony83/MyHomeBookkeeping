@@ -42,7 +42,7 @@ class UiHelper(
         return radioButton.isChecked
     }
 
-    fun isCheckedCheckBox(checkBox: CheckBox):Boolean{
+    fun isCheckedCheckBox(checkBox: CheckBox): Boolean {
         return checkBox.isChecked
     }
 
@@ -96,7 +96,15 @@ class UiHelper(
         button.isEnabled = true
     }
 
+    fun unblockButton(button: Button) {
+        button.isEnabled = true
+    }
+
     fun blockButton(button: MaterialButton) {
+        button.isEnabled = false
+    }
+
+    fun blockButton(button: Button) {
         button.isEnabled = false
     }
 
@@ -127,7 +135,8 @@ class UiHelper(
     fun setTrueOnRadioButton(radioButton: RadioButton) {
         radioButton.isChecked = true
     }
-    fun isEntered(text: Editable):Boolean{
+
+    fun isEntered(text: Editable): Boolean {
         return text.isNotEmpty()
     }
 }

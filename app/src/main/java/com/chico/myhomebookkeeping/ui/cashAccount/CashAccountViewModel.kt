@@ -12,6 +12,7 @@ import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -118,5 +119,27 @@ class CashAccountViewModel(
             )
         }
         reloadCategories(add.await().toLong())
+    }
+
+    fun getNamesList(): Any {
+        val items = getItemsList()
+        return if (!items.isNullOrEmpty()) {
+            getNamesOfItems(items)
+        } else {
+            -1
+        }
+    }
+
+    private fun getNamesOfItems(items: List<CashAccount>): MutableList<String> {
+        val names = mutableListOf<String>()
+        for (element in items) {
+            names.add(element.accountName)
+            Message.log(element.accountName)
+        }
+        return names
+    }
+
+    private fun getItemsList(): List<CashAccount>? {
+        return cashAccountList.value?.toList()
     }
 }
