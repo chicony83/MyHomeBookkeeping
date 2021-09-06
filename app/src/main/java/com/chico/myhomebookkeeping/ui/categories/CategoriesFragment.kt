@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
@@ -124,6 +125,19 @@ class CategoriesFragment : Fragment() {
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
                 view.showKeyboard()
+
+                val result:Any = categoriesViewModel.getNamesList()
+
+                if (result is List<*>){
+                    val namesList:List<String> = result as List<String>
+                    binding.newCategoryLayout.categoryName.addTextChangedListener(
+                        EditNameTextWatcher(
+                            namesList,
+                            binding.newCategoryLayout.addNewCategoryButton
+                        )
+                    )
+                }
+
                 with(binding.newCategoryLayout.categoryName){
                     requestFocus()
                     setSelection(0)

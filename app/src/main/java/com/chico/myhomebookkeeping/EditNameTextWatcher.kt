@@ -23,7 +23,7 @@ class EditNameTextWatcher(
     override fun afterTextChanged(s: Editable?) {
         if (s.toString().isNotEmpty()){
             launchUi {
-                delay(1000)
+                delay(500)
                 CheckNewName.check(s, namesList, addNewCashAccountButton)
             }
         }

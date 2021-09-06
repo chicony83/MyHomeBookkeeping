@@ -129,9 +129,7 @@ class CashAccountViewModel(
 
     private fun getNamesOfItems(items: List<CashAccount>): MutableList<String> {
         val names = mutableListOf<String>()
-        for (element in items) {
-            names.add(element.accountName)
-        }
+        for (element in items) names.add(element.accountName)
         return names
     }
 

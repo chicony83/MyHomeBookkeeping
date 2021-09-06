@@ -65,10 +65,11 @@ class CategoriesViewModel(
             _categoriesList.postValue(db.getAllCategory())
         }
     }
+
     private fun reloadCategories(long: Long) {
-        if (long>0){
+        if (long > 0) {
             loadCategories()
-            Log.i("TAG","recycler reloaded")
+            Log.i("TAG", "recycler reloaded")
         }
     }
 
@@ -164,5 +165,21 @@ class CategoriesViewModel(
             )
         }
         reloadCategories(add.await())
+    }
+
+    fun getNamesList(): Any {
+        val items = getItemsList()
+        return if (!items.isNullOrEmpty()) getNamesOfItems(items)
+        else -1
+    }
+
+    private fun getNamesOfItems(items: List<Categories>): MutableList<String> {
+        val names = mutableListOf<String>()
+        for (element in items) names.add(element.categoryName)
+        return names
+    }
+
+    private fun getItemsList(): List<Categories>? {
+        return categoriesList.value?.toList()
     }
 }

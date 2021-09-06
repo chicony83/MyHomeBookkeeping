@@ -126,9 +126,7 @@ class CurrenciesViewModel(
 
     private fun getNamesOfItems(items: List<Currencies>): MutableList<String> {
         val names = mutableListOf<String>()
-        for (element in items){
-            names.add(element.currencyName)
-        }
+        for (element in items) names.add(element.currencyName)
         return names
     }
 
