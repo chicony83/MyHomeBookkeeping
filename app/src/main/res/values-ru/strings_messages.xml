@@ -16,4 +16,7 @@
     <string name="message_start_date_can_not_be_more_than_the_current">Начальная дата не может быть больше текущей</string>
     <string name="message_the_end_date_is_greater_than_the_current_one">Хотите заглянуть в будущее?\nКонечная дата больше текущей!!!</string>
     <string name="message_end_date_cannot_be_less_than_start_date">Конечная дата не может быть меньше начальной</string>
+
+    <string name="message_deletion_canceled">Удаление отменено</string>
+    <string name="message_entry_deleted">Запись удалена</string>
 </resources>

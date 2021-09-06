@@ -10,7 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintBottom_toTopOf="@+id/bottomButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -86,14 +86,37 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/submitButton"
-        style="@style/ButtonFullWidth"
-        android:gravity="center"
-        android:text="@string/text_on_button_change"
+    <LinearLayout
+        android:id="@+id/bottomButtons"
+        style="@style/DialogLayout.PositiveNegativeButtons"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
 
+        <Button
+            android:id="@+id/submitButton"
+            style="@style/DialogButtonLeft.Positive"
+            android:gravity="center"
+            android:text="@string/text_on_button_change" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            style="@style/DialogButtonRight.Negative"
+            android:text="@string/text_on_button_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogSubmitDeleteMoneyMovingHolder"
+        style="@style/DialogLayout.Holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/dialogSubmitDeleteMoneyMoving"
+            layout="@layout/dialog_submit_delete_money_moving" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

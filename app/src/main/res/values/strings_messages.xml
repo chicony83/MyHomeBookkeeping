@@ -17,4 +17,6 @@
     <string name="message_the_end_date_is_greater_than_the_current_one">Looking to the future?\nThe end date is greater than the current one !!!</string>
     <string name="message_end_date_cannot_be_less_than_start_date">End date cannot be less than start date</string>
 
+    <string name="message_deletion_canceled">Deletion canceled</string>
+    <string name="message_entry_deleted">Entry deleted</string>
 </resources>

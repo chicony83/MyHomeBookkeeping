@@ -1,9 +1,6 @@
 package com.chico.myhomebookkeeping.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.RawQuery
+import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
@@ -39,4 +36,7 @@ interface MoneyMovementDao {
         currencyId: Int,
         description: String
     ): Int
+
+    @Query("DELETE FROM money_moving_table WHERE id = :id")
+    suspend fun deleteLine(id: Long):Int
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DialogLayout"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Description"
+        android:gravity="center"
+        android:text="@string/description_you_want_to_delete_the_entry" />
+
+    <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
+
+        <Button
+            android:id="@+id/submitDeleteButton"
+            style="@style/DialogButtonLeft.Positive"
+            android:text="@string/text_on_button_yes" />
+
+        <Button
+            android:id="@+id/cancelDeleteButton"
+            style="@style/DialogButtonRight.Negative"
+            android:text="@string/text_on_button_no" />
+    </LinearLayout>
+</LinearLayout>

@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/dialog_select_currency.xml" value="0.4010416666666667" />
         <entry key="app/src/main/res/layout/dialog_select_money_moving.xml" value="0.4010416666666667" />
         <entry key="app/src/main/res/layout/dialog_select_time_period.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/dialog_submit_delete_money_moving.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_cash_account.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.22192028985507245" />
         <entry key="app/src/main/res/layout/fragment_change_cash_account.xml" value="0.3007246376811594" />

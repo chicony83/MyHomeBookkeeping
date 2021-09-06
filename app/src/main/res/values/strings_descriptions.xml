@@ -28,4 +28,5 @@
     <string name="description_selected_currency">Selected currency</string>
 
     <string name="description_this_name_is_taken">This name is taken</string>
+    <string name="description_you_want_to_delete_the_entry">Вы хотите удалить запись</string>
 </resources>

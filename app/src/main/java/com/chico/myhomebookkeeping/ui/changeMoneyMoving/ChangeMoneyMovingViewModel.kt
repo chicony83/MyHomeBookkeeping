@@ -27,6 +27,7 @@ import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeToMillis
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class ChangeMoneyMovingViewModel(
@@ -126,7 +127,7 @@ class ChangeMoneyMovingViewModel(
     private fun postDateTime(moneyMovement: MoneyMovement?) {
         launchUi {
             var postingDateTime = ""
-            Log.i("TAG"," dataTimeLong = $dataTimeSPLong")
+            Log.i("TAG", " dataTimeLong = $dataTimeSPLong")
             if (modelCheck.isPositiveValue(dataTimeSPLong)) {
                 postingDateTime = dataTimeSPLong.parseTimeFromMillis()
             }
@@ -141,7 +142,7 @@ class ChangeMoneyMovingViewModel(
     }
 
     private fun messageLog(text: String) {
-        Log.i("TAG", " dateTime $text")
+        Log.i("TAG", " WTF $text")
     }
 
     private suspend fun postCategory(moneyMovement: MoneyMovement?) {
@@ -263,5 +264,9 @@ class ChangeMoneyMovingViewModel(
             amount = amount,
             description = description
         ).toLong()
+    }
+
+    suspend fun deleteLine(): Int {
+        return ChangeMoneyMovingUseCase.deleteLine(dbMoneyMovement, idMoneyMovingForChangeLong)
     }
 }

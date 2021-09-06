@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.changeMoneyMoving
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +16,11 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class ChangeMoneyMovingFragment : Fragment() {
@@ -75,6 +78,18 @@ class ChangeMoneyMovingFragment : Fragment() {
             submitButton.setOnClickListener {
                 pressSubmitButton()
             }
+            deleteButton.setOnClickListener {
+                pressDeleteButton()
+            }
+            with(dialogSubmitDeleteMoneyMoving) {
+                submitDeleteButton.setOnClickListener {
+                    deleteEntry()
+                }
+                cancelDeleteButton.setOnClickListener {
+                    message(getString(R.string.message_deletion_canceled))
+                    binding.dialogSubmitDeleteMoneyMovingHolder.visibility = View.GONE
+                }
+            }
         }
 
         with(changeMoneyMovingViewModel) {
@@ -115,6 +130,24 @@ class ChangeMoneyMovingFragment : Fragment() {
             getDataForChangeMoneyMovingLine()
             getLineForChange()
         }
+        checkUiMode()
+    }
+
+    private fun deleteEntry() {
+        runBlocking {
+            val result = async { changeMoneyMovingViewModel.deleteLine() }
+            if (result.await() > 0) {
+                Toast.makeText(
+                    requireContext(), getString(R.string.message_entry_deleted),
+                    Toast.LENGTH_SHORT
+                ).show()
+                control.navigate(R.id.nav_money_moving)
+            }
+        }
+    }
+
+    private fun pressDeleteButton() {
+        binding.dialogSubmitDeleteMoneyMovingHolder.visibility = View.VISIBLE
     }
 
     private fun pressSubmitButton() {
@@ -156,4 +189,27 @@ class ChangeMoneyMovingFragment : Fragment() {
     private fun message(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
+
+    private fun checkUiMode() {
+        val nightModeFlags = requireContext().resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                setBackground(R.drawable.dialog_background_night)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                setBackground(R.drawable.dialog_background_day)
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                setBackground(R.drawable.dialog_background_day)
+            }
+        }
+    }
+
+    private fun setBackground(shape: Int) {
+        with(binding) {
+            dialogSubmitDeleteMoneyMoving.root.setBackgroundResource(shape)
+        }
+    }
+
 }

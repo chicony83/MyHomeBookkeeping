@@ -19,6 +19,7 @@
     <string name="text_on_button_reset">Reset</string>
     <string name="text_on_button_select_all">Select all</string>
     <string name="text_on_button_add">Add</string>
+    <string name="text_on_button_delete">Delete</string>
     <string name="text_on_button_yes">Yes</string>
     <string name="text_on_button_no">No</string>
 

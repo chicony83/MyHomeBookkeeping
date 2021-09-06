@@ -25,4 +25,8 @@ object ChangeMoneyMovingUseCase {
             description
         )
     }
+
+    suspend fun deleteLine(db: MoneyMovementDao, id: Long): Int {
+       return db.deleteLine(id)
+    }
 }
