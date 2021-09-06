@@ -3,13 +3,15 @@ package com.chico.myhomebookkeeping
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
+import android.widget.TextView
 import com.chico.myhomebookkeeping.checks.CheckNewName
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.delay
 
 class EditNameTextWatcher(
-    private val namesList: List<String>,
-    private val addNewCashAccountButton: Button
+    private val list: List<String>,
+    private val button: Button,
+    private val errorMessage: TextView
 ) :
     TextWatcher {
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -21,10 +23,10 @@ class EditNameTextWatcher(
     }
 
     override fun afterTextChanged(s: Editable?) {
-        if (s.toString().isNotEmpty()){
+        if (s.toString().isNotEmpty()) {
             launchUi {
                 delay(500)
-                CheckNewName.check(s, namesList, addNewCashAccountButton)
+                CheckNewName.check(s, list, button, errorMessage)
             }
         }
     }

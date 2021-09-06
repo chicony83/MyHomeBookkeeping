@@ -133,7 +133,8 @@ class CategoriesFragment : Fragment() {
                     binding.newCategoryLayout.categoryName.addTextChangedListener(
                         EditNameTextWatcher(
                             namesList,
-                            binding.newCategoryLayout.addNewCategoryButton
+                            binding.newCategoryLayout.addNewCategoryButton,
+                            binding.newCategoryLayout.errorThisNameIsTaken
                         )
                     )
                 }

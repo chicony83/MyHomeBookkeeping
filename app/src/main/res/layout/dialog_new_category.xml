@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/DialogLayout">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLayout"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/category_name"
-        style="@style/DialogEnterNewName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/DialogEnterNewName" />
+
+    <TextView
+        android:id="@+id/error_this_name_is_taken"
+        style="@style/Description.MessageOfBusyName"
+        tools:visibility="visible" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_name">
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/incoming_radio_button"
@@ -30,25 +32,16 @@
             android:text="@string/text_on_radio_button_spending_category" />
     </RadioGroup>
 
-    <LinearLayout
-        style="@style/DialogLayout.PositiveNegativeButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup">
-
+    <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
         <Button
             android:id="@+id/addNewCategoryButton"
             style="@style/DialogButtonLeft.Positive"
-            android:text="@string/text_on_button_add"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+            android:text="@string/text_on_button_add" />
 
         <Button
             android:id="@+id/cancelCreate"
             style="@style/DialogButtonRight.Negative"
-            android:text="@string/text_on_button_cancel"
-            app:layout_constraintStart_toEndOf="@id/addNewCategoryButton"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+            android:text="@string/text_on_button_cancel" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

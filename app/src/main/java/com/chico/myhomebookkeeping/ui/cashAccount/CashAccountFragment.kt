@@ -116,7 +116,9 @@ class CashAccountFragment : Fragment() {
                     binding.newCashAccountLayout.cashAccountName.addTextChangedListener(
                         EditNameTextWatcher(
                             namesList,
-                            binding.newCashAccountLayout.addNewCashAccountButton
+                            binding.newCashAccountLayout.addNewCashAccountButton,
+                            binding.newCashAccountLayout.errorThisNameIsTaken
+
                         )
                     )
 //                    showMessage("список имен отправлен на проверку")

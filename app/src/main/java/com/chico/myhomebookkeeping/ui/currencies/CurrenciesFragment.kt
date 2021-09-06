@@ -19,7 +19,6 @@ import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.ShowHideDialogsController
 import com.chico.myhomebookkeeping.helpers.UiControl
@@ -113,7 +112,8 @@ class CurrenciesFragment : Fragment() {
                     binding.newCurrencyLayout.currencyName.addTextChangedListener(
                         EditNameTextWatcher(
                             namesList,
-                            binding.newCurrencyLayout.addNewCurrencyButton
+                            binding.newCurrencyLayout.addNewCurrencyButton,
+                            binding.newCurrencyLayout.errorThisNameIsTaken
                         )
                     )
                 }

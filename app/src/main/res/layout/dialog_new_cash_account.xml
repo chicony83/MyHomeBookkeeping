@@ -16,11 +16,7 @@
 
     <TextView
         android:id="@+id/error_this_name_is_taken"
-        style="@style/Description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/description_this_name_is_taken"
-        android:visibility="gone"
+        style="@style/Description.MessageOfBusyName"
         tools:visibility="visible" />
 
     <TextView
