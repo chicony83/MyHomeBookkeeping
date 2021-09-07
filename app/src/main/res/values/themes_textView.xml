@@ -10,12 +10,23 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/H1</item>
-    <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
     </style>
-<style name="Description.MessageOfBusyName">
-    <item name="android:gravity">center</item>
-    <item name="android:background">@color/warning</item>
-    <item name="android:visibility">gone</item>
-    <item name="android:text">@string/description_this_name_is_taken</item>
-</style>
+
+    <style name="Description.MessageOfBusyName">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/warning</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:text">@string/description_this_name_is_taken</item>
+    </style>
+
+    <style name="Description.IncomeText">
+        <item name="android:textColor">@color/incomeTextColor</item>
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
+
+    <style name="Description.SpendingText">
+        <item name="android:textColor">@color/spendingTextColor</item>
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
 </resources>

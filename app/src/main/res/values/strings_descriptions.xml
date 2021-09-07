@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="positive_value" translatable="false">+</string>
-    <string name="negative_value" translatable="false">-</string>
+    <string name="sign_plus" translatable="false">+</string>
+    <string name="sign_minus" translatable="false">-</string>
 
     <string name="description_income">Income</string>
     <string name="description_spending">Spending</string>
 
     <string name="description_balance">Balance</string>
 
+    <string name="description_selected_entry">Selected entry</string>
     <string name="description_date_time_text">Date/time</string>
     <string name="description_cash_account">Cash account</string>
     <string name="description_currency">Currency</string>
@@ -28,5 +29,5 @@
     <string name="description_selected_currency">Selected currency</string>
 
     <string name="description_this_name_is_taken">This name is taken</string>
-    <string name="description_you_want_to_delete_the_entry">Вы хотите удалить запись</string>
+    <string name="description_you_want_to_delete_the_entry">You want to delete the entry</string>
 </resources>

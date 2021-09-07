@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import java.util.*
 
@@ -21,8 +19,8 @@ class MoneyMovingAdapter(
     private val moneyMovementList: List<FullMoneyMoving>,
     val listener: OnItemViewClickListenerLong
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolderMovingItem>() {
-    private lateinit var positive: String
-    private lateinit var negative: String
+    private lateinit var plus: String
+    private lateinit var minus: String
     private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
 
     private var dayToday: Long = 0
@@ -56,8 +54,8 @@ class MoneyMovingAdapter(
     }
 
     private fun getStrings() {
-        positive = context.getString(R.string.positive_value)
-        negative = context.getString(R.string.negative_value)
+        plus = context.getString(R.string.sign_plus)
+        minus = context.getString(R.string.sign_minus)
     }
 
     override fun onBindViewHolder(holder: ViewHolderMovingItem, position: Int) {
@@ -116,7 +114,7 @@ class MoneyMovingAdapter(
                     description.visibility = View.GONE
                 }
                 if (moneyMovement.isIncome) {
-                    amount.text = positive + moneyMovement.amount.toString()
+                    amount.text = plus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         binding.amount.setTextColor(
                             itemView.resources.getColor(
@@ -127,7 +125,7 @@ class MoneyMovingAdapter(
                     }
                 }
                 if (!moneyMovement.isIncome) {
-                    amount.text = negative + moneyMovement.amount.toString()
+                    amount.text = minus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         binding.amount.setTextColor(
                             itemView.resources.getColor(

@@ -6,16 +6,14 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
@@ -25,13 +23,14 @@ import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
-import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlin.properties.Delegates
 
 class MoneyMovingFragment : Fragment() {
 
+    private lateinit var plus: String
+    private lateinit var minus: String
     private lateinit var db: MoneyMovementDao
 
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
@@ -43,19 +42,21 @@ class MoneyMovingFragment : Fragment() {
 
     private var selectedMoneyMovingId = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
+        getStrings()
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
 
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
-            buttonTextOfTimePeriod.observe(viewLifecycleOwner,{
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
                 binding.selectTimePeriod.text = it
             })
             buttonTextOfQueryCurrency.observe(viewLifecycleOwner, {
@@ -75,35 +76,42 @@ class MoneyMovingFragment : Fragment() {
                             uiHelper.showUiElement(binding.selectLayoutHolder)
                             Log.i("TAG", "---moneyMoving id $selectedId---")
                             moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
-            //                        selectedMoneyMovingId = selectedId
+                            //                        selectedMoneyMovingId = selectedId
                         }
 
                     })
                 }
             })
-            incomeBalance.observe(viewLifecycleOwner,{
+            incomeBalance.observe(viewLifecycleOwner, {
                 binding.incomeBalance.text = it.toString()
             })
-            spendingBalance.observe(viewLifecycleOwner,{
+            spendingBalance.observe(viewLifecycleOwner, {
                 binding.spendingBalance.text = it.toString()
             })
-            totalBalance.observe(viewLifecycleOwner,{
+            totalBalance.observe(viewLifecycleOwner, {
                 binding.totalBalance.text = it.toString()
             })
             selectedMoneyMoving.observe(viewLifecycleOwner, {
                 with(binding.selectLayout) {
                     dateTimeText.text = it?.timeStamp?.parseTimeFromMillis()
-                    amount.text = it?.amount.toString()
+                    if (it?.isIncome == true) {
+                        amount.text = plus + it.amount.toString()
+                        setTextColor(binding.selectLayout.amount,R.style.Description_IncomeText)
+                    }
+                    if (it?.isIncome == false) {
+                        amount.text = minus + it.amount.toString()
+                        setTextColor(binding.selectLayout.amount,R.style.Description_SpendingText)
+                    }
                     currency.text = it?.currencyNameValue
                     category.text = it?.categoryNameValue
                     cashAccount.text = it?.cashAccountNameValue
 
-                    if (!it?.description.isNullOrEmpty()){
+                    if (!it?.description.isNullOrEmpty()) {
                         binding.selectLayout.descriptionOfDescription.visibility = View.VISIBLE
                         binding.selectLayout.description.visibility = View.VISIBLE
                         description.text = it?.description
                     }
-                    if (it?.description.isNullOrEmpty()){
+                    if (it?.description.isNullOrEmpty()) {
                         description.text = null
                         binding.selectLayout.descriptionOfDescription.visibility = View.GONE
                         binding.selectLayout.description.visibility = View.GONE
@@ -112,6 +120,17 @@ class MoneyMovingFragment : Fragment() {
             })
         }
         return binding.root
+    }
+
+    private fun setTextColor(amount: TextView, style: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            amount.setTextAppearance(style)
+        }
+    }
+
+    private fun getStrings() {
+        plus = requireContext().getString(R.string.sign_plus)
+        minus = requireContext().getString(R.string.sign_minus)
     }
 
     private fun pressSelectButton(fragment: Int) {
@@ -143,7 +162,6 @@ class MoneyMovingFragment : Fragment() {
                         moneyMovingViewModel.saveMoneyMovingToChange()
                         pressSelectButton(R.id.nav_change_money_moving)
                     }
-
                 }
                 cancelButton.setOnClickListener {
                     uiHelper.hideUiElement(binding.selectLayoutHolder)
@@ -152,11 +170,11 @@ class MoneyMovingFragment : Fragment() {
                     }
                 }
             }
-            with(firstLaunchDialog){
-                submitFirstLaunchButton.setOnClickListener{
+            with(firstLaunchDialog) {
+                submitFirstLaunchButton.setOnClickListener {
                     launchFragment(R.id.nav_first_launch_fragment)
                 }
-                cancelFirstLaunchButton.setOnClickListener{
+                cancelFirstLaunchButton.setOnClickListener {
                     uiHelper.hideUiElement(binding.firstLaunchDialogHolder)
                     moneyMovingViewModel.setIsFirstLaunchFalse()
                 }
@@ -172,13 +190,13 @@ class MoneyMovingFragment : Fragment() {
         super.onStart()
         moneyMovingViewModel.getListFulMoneyMoving()
     }
+
     private fun launchFragment(fragment: Int) {
         control.navigate(fragment)
     }
 
     private fun checkFirstLaunch() {
-        if (moneyMovingViewModel.isFirstLaunch())
-        {
+        if (moneyMovingViewModel.isFirstLaunch()) {
             binding.firstLaunchDialogHolder.visibility = View.VISIBLE
             moneyMovingViewModel.setIsFirstLaunchFalse()
         }

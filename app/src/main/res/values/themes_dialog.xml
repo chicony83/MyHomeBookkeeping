@@ -2,7 +2,8 @@
 <resources>
 
     <style name="DialogLayout">
-        <item name="android:padding">@dimen/margin_double</item>
+        <item name="android:layout_margin">@dimen/margin_half_normal</item>
+        <item name="android:padding">@dimen/margin_half_normal</item>
         <item name="cornerRadius">@dimen/margin_double</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -16,5 +17,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_margin">@dimen/margin_double</item>
+        <item name="android:padding">@dimen/margin_double</item>
     </style>
 </resources>
