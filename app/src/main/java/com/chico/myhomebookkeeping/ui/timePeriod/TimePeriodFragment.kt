@@ -23,7 +23,7 @@ class TimePeriodFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private val datePicker =
         MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.description_select_date))
+//            .setTitleText(getString(R.string.description_select_date))
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
 
     private var isGetStartTimePeriod = false
