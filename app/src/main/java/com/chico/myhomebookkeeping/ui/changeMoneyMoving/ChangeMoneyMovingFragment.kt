@@ -32,15 +32,14 @@ class ChangeMoneyMovingFragment : Fragment() {
 
     private val datePicker =
         MaterialDatePicker.Builder.datePicker()
-//            .setTitleText(getString(R.string.description_select_date))
             .setSelection(
                 MaterialDatePicker.todayInUtcMilliseconds()
             )
             .build()
+
     private val timePicker =
         MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_24H)
-//            .setTitleText(getString(R.string.description_select_time))
             .build()
 
     override fun onCreateView(
@@ -63,7 +62,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(binding) {
-            dateTimeTimeStampButton.setOnClickListener {
+            selectDateTimeButton.setOnClickListener {
                 datePicker.show(parentFragmentManager, "TAG")
             }
             selectCashAccountButton.setOnClickListener {
@@ -94,7 +93,7 @@ class ChangeMoneyMovingFragment : Fragment() {
 
         with(changeMoneyMovingViewModel) {
             dataTime.observe(viewLifecycleOwner, {
-                binding.dateTimeTimeStampButton.text = it.toString()
+                binding.selectDateTimeButton.text = it.toString()
             })
             selectedCashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccountButton.text = it.accountName

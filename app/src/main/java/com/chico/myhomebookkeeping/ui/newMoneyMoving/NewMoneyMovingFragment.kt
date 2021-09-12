@@ -37,15 +37,6 @@ class NewMoneyMovingFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
-    private val datePicker =
-        MaterialDatePicker.Builder.datePicker()
-//            .setTitleText(getString(R.string.description_select_date))
-            .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
-    private val timePicker =
-        MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_24H)
-//            .setTitleText(getString(R.string.description_select_time))
-            .build()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,10 +58,9 @@ class NewMoneyMovingFragment : Fragment() {
         navControlHelper = NavControlHelper(controller = control)
 
         with(binding) {
-//            dateTimeTimeStamp.text = currentDateTimeMillis.parseTimeFromMillis()
 
-            dateTimeTimeStampButton.setOnClickListener {
-                datePicker.show(parentFragmentManager, "TAG")
+            selectDateTimeButton.setOnClickListener {
+                launchDatePicker()
             }
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
@@ -87,7 +77,7 @@ class NewMoneyMovingFragment : Fragment() {
         }
         with(newMoneyMovingViewModel) {
             dataTime.observe(viewLifecycleOwner, {
-                binding.dateTimeTimeStampButton.text = it.toString()
+                binding.selectDateTimeButton.text = it.toString()
             })
             selectedCashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccountButton.text = it.accountName
@@ -111,30 +101,45 @@ class NewMoneyMovingFragment : Fragment() {
                 binding.submitButton.text = it.toString()
             })
         }
-
-        datePicker.addOnPositiveButtonClickListener {
-            newMoneyMovingViewModel.setDate(it)
-            timePicker.show(parentFragmentManager, "TAG")
-        }
-
-        timePicker.addOnPositiveButtonClickListener {
-            val hour: Int = timePicker.hour
-//            Log.i("TAG","hour = $hour")
-            val minute: Int = timePicker.minute
-            with(newMoneyMovingViewModel) {
-                setTime(hour, minute)
-                setDateTimeOnButton()
-            }
-        }
         newMoneyMovingViewModel.getAndCheckArgsSp()
-
-
 
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun launchDatePicker() {
+        val builderDatePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.description_select_date))
+            .setSelection(MaterialDatePicker.thisMonthInUtcMilliseconds())
+        val datePicker = builderDatePicker.build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            newMoneyMovingViewModel.setDate(it)
+            launchTimePicker()
+        }
+        datePicker.show(parentFragmentManager, "TAG")
+    }
+
+    private fun launchTimePicker() {
+        val timePicker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setTitleText(getString(R.string.description_select_time))
+            .build()
+
+        timePicker.addOnPositiveButtonClickListener {
+            val hour: Int = timePicker.hour
+            val minute = timePicker.minute
+            with(newMoneyMovingViewModel) {
+                setTime(
+                    hour = hour,
+                    minute = minute
+                )
+                setDateTimeOnButton()
+            }
+        }
+        timePicker.show(childFragmentManager, "TAG")
+    }
+
     private fun pressSubmitButton() {
-//        val checkCashAccount = uiHelper.isValueNotNull(newMoneyMovingViewModel.selectedCashAccount.value)
         val checkCashAccount = newMoneyMovingViewModel.checkIsCashAccountSelected()
         val checkCurrency = newMoneyMovingViewModel.checkIsCurrencySelected()
         val checkCategory = newMoneyMovingViewModel.checkIsCategorySelected()
