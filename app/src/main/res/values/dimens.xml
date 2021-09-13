@@ -17,4 +17,6 @@
     <dimen name="H3">18sp</dimen>
     <dimen name="H4">16sp</dimen>
     <dimen name="H5">14sp</dimen>
+    <dimen name="H6">12sp</dimen>
+    <dimen name="H7">10sp</dimen>
 </resources>
