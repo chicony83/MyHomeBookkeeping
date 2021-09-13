@@ -27,20 +27,22 @@ class FirstLaunchFragment : Fragment() {
         _binding = FragmentFirstLaunchBinding.inflate(inflater, container, false)
         firstLaunchViewModel = ViewModelProvider(this).get(FirstLaunchViewModel::class.java)
 
-        binding.submitButton.setOnClickListener {
-            if (uiHelper.isCheckedCheckBox(binding.addDefaultCashAccounts)){
-                firstLaunchViewModel.addDefaultCashAccount()
-            }
-            if (uiHelper.isCheckedCheckBox(binding.addDefaultCategories)){
-                firstLaunchViewModel.addDefaultCategories()
-            }
-            if (uiHelper.isCheckedCheckBox(binding.addDefaultCurrency)){
-                firstLaunchViewModel.addDefaultCurrency()
-            }
-            launchFragment(R.id.nav_money_moving)
 
-            firstLaunchViewModel.setIsFirstLaunchFalse()
-        }
+
+//        binding.submitButton.setOnClickListener {
+//            if (uiHelper.isCheckedCheckBox(binding.addDefaultCashAccounts)){
+//                firstLaunchViewModel.addDefaultCashAccount()
+//            }
+//            if (uiHelper.isCheckedCheckBox(binding.addDefaultCategories)){
+//                firstLaunchViewModel.addDefaultCategories()
+//            }
+//            if (uiHelper.isCheckedCheckBox(binding.addDefaultCurrency)){
+//                firstLaunchViewModel.addDefaultCurrency()
+//            }
+//            launchFragment(R.id.nav_money_moving)
+//
+//            firstLaunchViewModel.setIsFirstLaunchFalse()
+//        }
         return binding.root
     }
 

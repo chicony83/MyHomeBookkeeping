@@ -38,7 +38,6 @@ class MoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private val uiHelper = UiHelper()
     private lateinit var control: NavController
-    private var nightColor by Delegates.notNull<Int>()
 
     private var selectedMoneyMovingId = 0
 

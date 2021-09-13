@@ -6,11 +6,15 @@
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
     </style>
 
-    <style name="Description">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="Description" parent="MatchParent_WrapContent">
         <item name="android:textSize">@dimen/H1</item>
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+    </style>
+
+    <style name="Description.first_launch_fragment">
+        <item name="android:textSize">@dimen/H3</item>
+        <item name="android:layout_margin">@dimen/margin_normal</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="Description.MessageOfBusyName">
@@ -25,8 +29,25 @@
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
+    <style name="Description.IncomeText.FirstLaunch"></style>
+
     <style name="Description.SpendingText">
         <item name="android:textColor">@color/spendingTextColor</item>
         <item name="android:textSize">@dimen/H4</item>
     </style>
+
+    <style name="Description.SpendingText.FirstLaunch"></style>
+
+    <style name="Description.CashAccounts"></style>
+
+    <style name="Description.CashAccounts.FirstLaunch">
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
+
+    <style name="Description.Currencies"></style>
+
+    <style name="Description.Currencies.FirstLaunch">
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
+
 </resources>

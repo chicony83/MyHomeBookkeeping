@@ -6,49 +6,86 @@
     android:layout_height="match_parent"
     tools:context=".ui.firstLaunch.FirstLaunchFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_normal"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Здесь будет сделана быстрая настройка программы" />
+            android:layout_margin="@dimen/margin_double"
+            android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/addDefaultCashAccounts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="добавить счета 'наличные' и 'зарплатная карточка' " />
+            <TextView
+                style="@style/Description.first_launch_fragment"
 
-        <CheckBox
-            android:id="@+id/addDefaultCurrency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="добавить валюту 'рубли'" />
+                android:text="@string/description_A_quick_setup_of_the_program_will_be_done_here" />
 
-        <CheckBox
-            android:id="@+id/addDefaultCategories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="добавить категории 'зарплата' и 'продукты'" />
+            <TextView
+                style="@style/Description.first_launch_fragment"
+                android:text="@string/description_After_adding_the_name_it_will_be_possible_to_change" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="После добавления названия можно будет изменять." />
+            <TextView
+                style="@style/MatchParent_WrapContent"
+                android:gravity="center"
+                android:text="@string/quick_setup_add_Cash_account" />
 
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/cashAccountsCard"
+                style="@style/Description.CashAccounts.FirstLaunch"
+                android:text="@string/quick_setup_name_Card" />
+
+            <CheckBox
+                android:id="@+id/cashAccountsCash"
+                style="@style/Description.CashAccounts.FirstLaunch"
+                android:text="@string/quick_setup_name_Cash" />
+
+            <TextView
+                style="@style/MatchParent_WrapContent"
+                android:gravity="center"
+                android:text="@string/quick_setup_add_Currency" />
+
+            <CheckBox
+                android:id="@+id/newCurrency"
+                style="@style/Description.Currencies.FirstLaunch"
+                android:text="@string/quick_setup_name_Currency" />
+
+            <TextView
+                style="@style/MatchParent_WrapContent"
+                android:gravity="center"
+                android:text="@string/quick_setup_add_Category" />
+
+            <CheckBox
+                android:id="@+id/addDefaultCategories"
+                style="@style/Description.IncomeText.FirstLaunch"
+                android:text="@string/quick_setup_name_The_Salary" />
+
+            <CheckBox
+                style="@style/Description.SpendingText.FirstLaunch"
+                android:text="@string/quick_setup_name_Products" />
+
+            <CheckBox
+                style="@style/Description.SpendingText.FirstLaunch"
+                android:text="@string/quick_setup_name_Fuel_for_the_car" />
+
+            <CheckBox
+                style="@style/Description.SpendingText.FirstLaunch"
+                android:text="@string/quick_setup_name_Mobile_connection" />
+
+            <CheckBox
+                style="@style/Description.SpendingText.FirstLaunch"
+                android:text="@string/quick_setup_name_Credit" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/ButtonFullWidth"
         android:text="@string/text_on_button_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

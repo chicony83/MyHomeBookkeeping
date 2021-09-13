@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_setup_add_Cash_account">Счета</string>
+    <string name="quick_setup_name_Card">Карточка</string>
+    <string name="quick_setup_name_Cash">Наличные</string>
+
+    <string name="quick_setup_add_Currency">Валюта</string>
+    <string name="quick_setup_name_Currency">Рубли</string>
+
+    <string name="quick_setup_add_Category">Категории</string>
+    <string name="quick_setup_name_The_Salary">Зарплата</string>
+    <string name="quick_setup_name_Products">Продукты</string>
+    <string name="quick_setup_name_Fuel_for_the_car">Топливо для автомобиля</string>
+    <string name="quick_setup_name_Mobile_connection">Мобильная связь</string>
+    <string name="quick_setup_name_Credit">Кредиты</string>
+
+</resources>
