@@ -22,7 +22,6 @@
 
             <TextView
                 style="@style/Description.first_launch_fragment"
-
                 android:text="@string/description_A_quick_setup_of_the_program_will_be_done_here" />
 
             <TextView
@@ -35,12 +34,12 @@
                 android:text="@string/quick_setup_add_Cash_account" />
 
             <CheckBox
-                android:id="@+id/cashAccountsCard"
+                android:id="@+id/addCashAccountsCard"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:text="@string/quick_setup_name_Card" />
 
             <CheckBox
-                android:id="@+id/cashAccountsCash"
+                android:id="@+id/addCashAccountsCash"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:text="@string/quick_setup_name_Cash" />
 
@@ -50,7 +49,7 @@
                 android:text="@string/quick_setup_add_Currency" />
 
             <CheckBox
-                android:id="@+id/newCurrency"
+                android:id="@+id/addDefaultCurrency"
                 style="@style/Description.Currencies.FirstLaunch"
                 android:text="@string/quick_setup_name_Currency" />
 
@@ -60,23 +59,27 @@
                 android:text="@string/quick_setup_add_Category" />
 
             <CheckBox
-                android:id="@+id/addDefaultCategories"
+                android:id="@+id/addCategoryTheSalary"
                 style="@style/Description.IncomeText.FirstLaunch"
                 android:text="@string/quick_setup_name_The_Salary" />
 
             <CheckBox
+                android:id="@+id/addCategoryProducts"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:text="@string/quick_setup_name_Products" />
 
             <CheckBox
+                android:id="@+id/addCategoryFuelForTheCar"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:text="@string/quick_setup_name_Fuel_for_the_car" />
 
             <CheckBox
+                android:id="@+id/addCategoryCellularCommunication"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Mobile_connection" />
+                android:text="@string/quick_setup_name_Cellular_communication" />
 
             <CheckBox
+                android:id="@+id/addCategoryCredit"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:text="@string/quick_setup_name_Credit" />
 

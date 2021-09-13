@@ -29,22 +29,22 @@
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
-    <style name="Description.IncomeText.FirstLaunch"></style>
+    <style name="Description.IncomeText.FirstLaunch" />
 
     <style name="Description.SpendingText">
         <item name="android:textColor">@color/spendingTextColor</item>
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
-    <style name="Description.SpendingText.FirstLaunch"></style>
+    <style name="Description.SpendingText.FirstLaunch" />
 
-    <style name="Description.CashAccounts"></style>
+    <style name="Description.CashAccounts" />
 
     <style name="Description.CashAccounts.FirstLaunch">
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
-    <style name="Description.Currencies"></style>
+    <style name="Description.Currencies" />
 
     <style name="Description.Currencies.FirstLaunch">
         <item name="android:textSize">@dimen/H4</item>

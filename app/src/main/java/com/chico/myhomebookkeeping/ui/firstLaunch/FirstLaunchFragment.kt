@@ -10,6 +10,8 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.UiControl
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
@@ -17,8 +19,8 @@ class FirstLaunchFragment : Fragment() {
     private lateinit var firstLaunchViewModel: FirstLaunchViewModel
     private var _binding: FragmentFirstLaunchBinding? = null
     private val binding get() = _binding!!
-    private val uiHelper = UiHelper()
-    private lateinit var control:NavController
+    private lateinit var control: NavController
+    private lateinit var navControlHelper: NavControlHelper
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,23 +28,6 @@ class FirstLaunchFragment : Fragment() {
     ): View {
         _binding = FragmentFirstLaunchBinding.inflate(inflater, container, false)
         firstLaunchViewModel = ViewModelProvider(this).get(FirstLaunchViewModel::class.java)
-
-
-
-//        binding.submitButton.setOnClickListener {
-//            if (uiHelper.isCheckedCheckBox(binding.addDefaultCashAccounts)){
-//                firstLaunchViewModel.addDefaultCashAccount()
-//            }
-//            if (uiHelper.isCheckedCheckBox(binding.addDefaultCategories)){
-//                firstLaunchViewModel.addDefaultCategories()
-//            }
-//            if (uiHelper.isCheckedCheckBox(binding.addDefaultCurrency)){
-//                firstLaunchViewModel.addDefaultCurrency()
-//            }
-//            launchFragment(R.id.nav_money_moving)
-//
-//            firstLaunchViewModel.setIsFirstLaunchFalse()
-//        }
         return binding.root
     }
 
@@ -50,12 +35,29 @@ class FirstLaunchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
+        navControlHelper = NavControlHelper(control)
+        binding.submitButton.setOnClickListener {
+            with(firstLaunchViewModel) {
+                addCashAccountCard(binding.addCashAccountsCard)
+                addCashAccountCash(binding.addCashAccountsCash)
+                addDefaultCurrency(binding.addDefaultCurrency)
+                addCategoryTheSalary(binding.addCategoryTheSalary)
+                addCategoryProducts(binding.addCategoryProducts)
+                addCategoryFuelForTheCar(binding.addCategoryFuelForTheCar)
+                addCategoryCellularCommunication(binding.addCategoryCellularCommunication)
+                addCategoryCredit(binding.addCategoryCredit)
+            }
+            firstLaunchViewModel.setIsFirstLaunchFalse()
+            navControlHelper.moveToPreviousPage()
+        }
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
     private fun launchFragment(fragment: Int) {
         control.navigate(fragment)
     }
