@@ -1,9 +1,10 @@
-package com.chico.myhomebookkeeping.helpers
+package com.chico.myhomebookkeeping.sp
 
 import android.content.SharedPreferences
 import android.util.Log
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navNewMoneyMoving = R.id.nav_new_money_moving
@@ -97,7 +98,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     }
 
     fun saveToSP(args: String, b: Boolean) {
-        messageLog(argsKey = args.toString(), value = b.toString())
+        messageLog(argsKey = args, value = b.toString())
         spEditor.putBoolean(args, b)
         spCommit()
     }

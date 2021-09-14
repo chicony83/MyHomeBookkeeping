@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.checks.GetSP
+import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -20,10 +20,12 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
-import com.chico.myhomebookkeeping.helpers.SetSP
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeToMillis
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 class NewMoneyMovingViewModel(
@@ -103,7 +105,7 @@ class NewMoneyMovingViewModel(
     private var cashAccountSPInt = minusOneInt
     private var currencySPInt = minusOneInt
     private var categorySPInt = minusOneInt
-    private var amountSPFloat: Float = (-1.0).toFloat()
+    private var amountSPString = ""
     private var descriptionSPString = ""
 //    var id: Long = -1
 
@@ -120,7 +122,7 @@ class NewMoneyMovingViewModel(
         cashAccountSPInt = spValues.getInt(argsCashAccountCreateKey)
         currencySPInt = spValues.getInt(argsCurrencyCreateKey)
         categorySPInt = spValues.getInt(argsCategoryCreateKey)
-        amountSPFloat = spValues.getFloat(argsAmountCreateKey)
+        amountSPString = spValues.getString(argsAmountCreateKey).toString()
         descriptionSPString = spValues.getString(argsDescriptionCreateKey).toString()
     }
 
@@ -138,15 +140,17 @@ class NewMoneyMovingViewModel(
             if (modelCheck.isPositiveValue(categorySPInt)) postCategory(categorySPInt)
         }
         launchIo {
-            if (modelCheck.isPositiveValue(amountSPFloat.toDouble())) postAmount(amountSPFloat)
+            if (modelCheck.isPositiveValue(amountSPString)) postAmount(
+                aroundDouble(amountSPString)
+            )
         }
         launchIo {
             if (descriptionSPString.isNotEmpty()) postDescription(descriptionSPString)
         }
     }
 
-    private fun postAmount(amountSPFloat: Float) {
-        _enteredAmount.postValue(amountSPFloat.toDouble())
+    private fun postAmount(amount:Double) {
+        _enteredAmount.postValue(amount)
     }
 
     private fun postDescription(descriptionSPString: String) {
@@ -191,7 +195,7 @@ class NewMoneyMovingViewModel(
                 argsCategoryCreateKey,
                 _selectedCategory.value?.categoriesId
             )
-            saveToSP(argsAmountCreateKey, amount.toFloat())
+            saveToSP(argsAmountCreateKey, amount.toString())
             saveToSP(argsDescriptionCreateKey, description)
         }
     }
@@ -257,11 +261,16 @@ class NewMoneyMovingViewModel(
     }
 
     fun clearSPAfterSave() {
-        with(saveARGS){
-            saveToSP(argsDateTimeCreateKey,minusOneLong)
-            saveToSP(argsAmountCreateKey,(-1.0).toFloat())
-            saveToSP(argsDescriptionCreateKey,"")
+        with(saveARGS) {
+            saveToSP(argsDateTimeCreateKey, minusOneLong)
+            saveToSP(argsAmountCreateKey, (-1.0).toFloat())
+            saveToSP(argsDescriptionCreateKey, "")
         }
     }
 
+    fun aroundDouble(text: String): Double {
+        return BigDecimal(text)
+            .setScale(2, RoundingMode.HALF_EVEN)
+            .toDouble()
+    }
 }

@@ -14,7 +14,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.helpers.SetSP
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.launchIo
 

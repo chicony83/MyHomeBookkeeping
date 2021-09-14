@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.checks
+package com.chico.myhomebookkeeping.sp
 
 import android.content.SharedPreferences
 import android.util.Log

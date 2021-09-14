@@ -7,10 +7,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.checks.GetSP
+import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.helpers.SetSP
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 
 class TimePeriodViewModel(

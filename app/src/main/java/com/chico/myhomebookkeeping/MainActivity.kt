@@ -16,10 +16,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
-import com.chico.myhomebookkeeping.checks.GetSP
+import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.helpers.SetSP
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.utils.launchUi
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var getSP: GetSP
     private lateinit var setSP: SetSP
+    private lateinit var eraseSP: EraseSP
 
     //        getSharedPreferences(spName, MODE_PRIVATE)
     private lateinit var spEditor: SharedPreferences.Editor
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         getSP = GetSP(sharedPreferences)
         spEditor = sharedPreferences.edit()
         setSP = SetSP(spEditor)
+        eraseSP = EraseSP(spEditor)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -76,6 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         hideFab(navController, fab)
         hideToolbar(toolbar)
+        eraseSP.eraseTempSP()
     }
 
     private fun hideToolbar(toolbar: Toolbar) {

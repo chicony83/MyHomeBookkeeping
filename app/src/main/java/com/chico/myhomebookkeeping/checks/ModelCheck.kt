@@ -10,4 +10,7 @@ class ModelCheck {
     fun isPositiveValue(value: Long): Boolean {
         return value > 0
     }
+    fun isPositiveValue(value: String):Boolean{
+        return value.isNotEmpty()
+    }
 }

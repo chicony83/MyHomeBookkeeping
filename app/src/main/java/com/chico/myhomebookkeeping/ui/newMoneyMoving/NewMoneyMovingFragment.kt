@@ -22,8 +22,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.runBlocking
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.util.*
 
 class NewMoneyMovingFragment : Fragment() {
@@ -165,7 +163,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun addNewMoneyMoving() {
-        val amount: Double = aroundDouble()
+        val amount: Double = newMoneyMovingViewModel.aroundDouble(binding.amount.text.toString())
         val description = binding.description.text.toString()
         newMoneyMovingViewModel.saveDataToSP(amount, description)
         runBlocking {
@@ -189,11 +187,6 @@ class NewMoneyMovingFragment : Fragment() {
         }
     }
 
-    private fun aroundDouble(): Double {
-        return BigDecimal(binding.amount.text.toString())
-            .setScale(2, RoundingMode.HALF_EVEN)
-            .toDouble()
-    }
 
     private fun setBackgroundWarningColor(editText: EditText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -215,7 +208,7 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressSelectButton(fragment: Int) {
         var amount = 0.0
         if (!binding.amount.text.isNullOrEmpty()) {
-            amount = aroundDouble()
+            amount = newMoneyMovingViewModel.aroundDouble(binding.amount.text.toString())
         }
         var description = ""
         if (!binding.description.text.isNullOrEmpty()) {
