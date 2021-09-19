@@ -1,12 +1,15 @@
 package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.R.color.buttonDayBackground
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
@@ -145,7 +149,7 @@ class CashAccountFragment : Fragment() {
                         } else showMessage(getString(R.string.message_too_short_name))
                     }
                 }
-                cancelCreate.setOnClickListener {
+                cancelCreateButton.setOnClickListener {
                     eraseUiElements()
                     uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
                     view.hideKeyboard()
@@ -242,31 +246,63 @@ class CashAccountFragment : Fragment() {
         )
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "UseCompatLoadingForColorStateLists")
     private fun checkUiMode() {
+        val buttonsList = listOf(
+            binding.newCashAccountLayout.addNewCashAccountButton,
+            binding.newCashAccountLayout.cancelCreateButton,
+            binding.confirmationLayout.changeButton,
+            binding.confirmationLayout.selectButton,
+            binding.confirmationLayout.cancelButton,
+            binding.changeCashAccountLayout.saveChange,
+            binding.changeCashAccountLayout.cancelChange
+        )
         val nightModeFlags = requireContext().resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK
+        val dayColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColorStateList(buttonDayBackground, null)
+        } else {
+            resources.getColorStateList(buttonDayBackground)
+        }
         when (nightModeFlags) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                setBackground(R.drawable.dialog_background_night)
+                setDialogBackgroundColor(R.drawable.dialog_background_night)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
-                setBackground(R.drawable.dialog_background_day)
+                setDialogBackgroundColor(R.drawable.dialog_background_day)
+                setButtonsBackgroundColor(buttonsList,dayColor)
+                setButtonsTextColor()
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                setBackground(R.drawable.dialog_background_day)
-
+                setDialogBackgroundColor(R.drawable.dialog_background_day)
+                setButtonsBackgroundColor(buttonsList, dayColor)
             }
         }
     }
 
-    private fun setBackground(shape: Int) {
+    private fun setButtonsTextColor() {
+
+    }
+
+
+    private fun setButtonsBackgroundColor(buttonsList: List<Button>, dayColor: ColorStateList) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (item in buttonsList) {
+                item.backgroundTintList = dayColor
+            }
+//            binding.newCashAccountLayout.addNewCashAccountButton.backgroundTintList =
+//                resources.getColorStateList(buttonDayBackground, null)
+        }
+    }
+
+    private fun setDialogBackgroundColor(shape: Int) {
         with(binding) {
             newCashAccountLayout.root.setBackgroundResource(shape)
             changeCashAccountLayout.root.setBackgroundResource(shape)
             confirmationLayout.root.setBackgroundResource(shape)
         }
     }
+
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()

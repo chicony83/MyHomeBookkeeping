@@ -19,6 +19,9 @@
     <color name="dialogDayBackground">#FFFFFFFF</color>
     <color name="dialogNightBackground">#FF000000</color>
 
+    <color name="buttonDayBackground">#FFFFFFFF</color>
+    <color name="buttonNightBackground">#000</color>
+
     <color name="colorPrimary">#2999A6</color>
     <color name="colorPrimaryVariant">#175973</color>
     <color name="colorOnPrimary">#D0F2F2</color>

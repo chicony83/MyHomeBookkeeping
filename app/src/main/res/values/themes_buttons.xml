@@ -53,6 +53,7 @@
         <item name="android:textColor">@color/colorSubmitButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+<!--        <item name="backgroundTint">@color/buttonDayBackground</item>-->
     </style>
 
     <style name="DialogButtonRight.Negative">

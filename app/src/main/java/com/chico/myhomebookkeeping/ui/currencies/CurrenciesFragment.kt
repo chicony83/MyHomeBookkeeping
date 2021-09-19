@@ -138,7 +138,7 @@ class CurrenciesFragment : Fragment() {
                         } else showMessage(getString(R.string.message_too_short_name))
                     }
                 }
-                cancelCreate.setOnClickListener {
+                cancelCreateButton.setOnClickListener {
                     eraseUiElements()
                     uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                     view.hideKeyboard()

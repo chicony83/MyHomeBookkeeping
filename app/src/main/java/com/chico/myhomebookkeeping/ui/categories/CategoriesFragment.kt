@@ -174,7 +174,7 @@ class CategoriesFragment : Fragment() {
                         } else showMessage(getString(R.string.message_too_short_name))
                     }
                 }
-                cancelCreate.setOnClickListener {
+                cancelCreateButton.setOnClickListener {
                     clearingUiElements()
                     uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
                     view.hideKeyboard()
