@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -38,6 +40,7 @@ class MoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private val uiHelper = UiHelper()
     private lateinit var control: NavController
+    private val uiColors = UiColors()
 
     private var selectedMoneyMovingId = 0
 
@@ -209,19 +212,73 @@ class MoneyMovingFragment : Fragment() {
         when (nightModeFlags) {
             Configuration.UI_MODE_NIGHT_YES -> {
 //                message("ночь")
-                binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_night)
-                binding.firstLaunchDialog.root.setBackgroundResource(R.drawable.dialog_background_night)
+                with(uiColors){
+                    setDialogBackgroundColor(
+                        getDialogsList(),
+                        R.drawable.dialog_background_night
+                    )
+                    setButtonsBackgroundColor(
+                        getButtonsList(),
+                        getNightColorForButtonsBackground()
+                    )
+                }
             }
             Configuration.UI_MODE_NIGHT_NO -> {
 //                message("день")
-                binding.selectLayout.root.setBackgroundResource(R.drawable.dialog_background_day)
-                binding.firstLaunchDialog.root.setBackgroundResource(R.drawable.dialog_background_day)
+                with(uiColors){
+                    setDialogBackgroundColor(
+                        getDialogsList(),
+                        R.drawable.dialog_background_day
+                    )
+                    setButtonsBackgroundColor(
+                        getButtonsList(),
+                        getDayColorForButtonsBackground()
+                    )
+                }
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-//                message("хз")
+                with(uiColors){
+                    setDialogBackgroundColor(
+                        getDialogsList(),
+                        R.drawable.dialog_background_day
+                    )
+                    setButtonsBackgroundColor(
+                        getButtonsList(),
+                        getDayColorForButtonsBackground()
+                    )
+                }
             }
         }
     }
+
+    private fun getDayColorForButtonsBackground(): ColorStateList {
+        return getButtonsBackgroundColor(R.color.buttonDayBackground)
+    }
+
+    private fun getNightColorForButtonsBackground(): ColorStateList {
+        return getButtonsBackgroundColor(R.color.buttonNightBackground)
+    }
+
+    @SuppressLint("UseCompatLoadingForColorStateLists")
+    private fun getButtonsBackgroundColor(color: Int): ColorStateList {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColorStateList(color, null)
+        } else {
+            resources.getColorStateList(color)
+        }
+    }
+
+    private fun getButtonsList() = listOf(
+        binding.selectLayout.changeButton,
+        binding.selectLayout.cancelButton,
+        binding.firstLaunchDialog.submitFirstLaunchButton,
+        binding.firstLaunchDialog.cancelFirstLaunchButton
+    )
+
+    private fun getDialogsList()= listOf(
+        binding.selectLayout,
+        binding.firstLaunchDialog
+    )
 
 //    private fun checkLinesFound() {
 //        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()

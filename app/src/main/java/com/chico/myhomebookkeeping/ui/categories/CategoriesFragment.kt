@@ -1,7 +1,9 @@
 package com.chico.myhomebookkeeping.ui.categories
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +14,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.viewbinding.ViewBinding
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
+import com.chico.myhomebookkeeping.databinding.DialogNewCategoryBinding
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
-import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.ShowHideDialogsController
-import com.chico.myhomebookkeeping.helpers.UiControl
-import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.showKeyboard
@@ -42,6 +43,7 @@ class CategoriesFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var uiControl: UiControl
     private val showHideDialogsController = ShowHideDialogsController()
+    private val uiColors = UiColors()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -126,10 +128,10 @@ class CategoriesFragment : Fragment() {
                 uiControl.showNewItemLayoutHolder()
                 view.showKeyboard()
 
-                val result:Any = categoriesViewModel.getNamesList()
+                val result: Any = categoriesViewModel.getNamesList()
 
-                if (result is List<*>){
-                    val namesList:List<String> = result as List<String>
+                if (result is List<*>) {
+                    val namesList: List<String> = result as List<String>
                     binding.newCategoryLayout.categoryName.addTextChangedListener(
                         EditNameTextWatcher(
                             namesList,
@@ -139,7 +141,7 @@ class CategoriesFragment : Fragment() {
                     )
                 }
 
-                with(binding.newCategoryLayout.categoryName){
+                with(binding.newCategoryLayout.categoryName) {
                     requestFocus()
                     setSelection(0)
                 }
@@ -192,7 +194,7 @@ class CategoriesFragment : Fragment() {
                     if (selectedCategoryId > 0) {
                         putItemForChange()
                         view.showKeyboard()
-                        with(binding.changeCategoryLayout.categoryName){
+                        with(binding.changeCategoryLayout.categoryName) {
                             requestFocus()
                             setSelection(0)
                         }
@@ -202,7 +204,7 @@ class CategoriesFragment : Fragment() {
                     if (selectedCategoryId > 0) {
                         putItemForChange()
                         view.showKeyboard()
-                        with(binding.changeCategoryLayout.categoryName){
+                        with(binding.changeCategoryLayout.categoryName) {
                             requestFocus()
                             setSelection(0)
                         }
@@ -290,24 +292,57 @@ class CategoriesFragment : Fragment() {
                 Configuration.UI_MODE_NIGHT_MASK
         when (nightModeFlags) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                setBackground(R.drawable.dialog_background_night)
+                with(uiColors) {
+                    setDialogBackgroundColor(getDialogsList(), R.drawable.dialog_background_night)
+                    setButtonsBackgroundColor(getButtonsList(),getNightColorForButtonsBackground())
+                }
             }
             Configuration.UI_MODE_NIGHT_NO -> {
-                setBackground(R.drawable.dialog_background_day)
+                with(uiColors) {
+                    setDialogBackgroundColor(getDialogsList(), R.drawable.dialog_background_day)
+                    setButtonsBackgroundColor(getButtonsList(),getDayColorForButtonsBackground())
+                }
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                setBackground(R.drawable.dialog_background_day)
+                with(uiColors) {
+                    setDialogBackgroundColor(getDialogsList(), R.drawable.dialog_background_day)
+                    setButtonsBackgroundColor(getButtonsList(),getDayColorForButtonsBackground())
+                }
             }
+        }
+    }
+    private fun getDayColorForButtonsBackground(): ColorStateList {
+        return getButtonsBackgroundColor(R.color.buttonDayBackground)
+    }
+
+    private fun getNightColorForButtonsBackground(): ColorStateList {
+        return getButtonsBackgroundColor(R.color.buttonNightBackground)
+    }
+
+    @SuppressLint("UseCompatLoadingForColorStateLists")
+    private fun getButtonsBackgroundColor(color: Int): ColorStateList {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColorStateList(color, null)
+        } else {
+            resources.getColorStateList(color)
         }
     }
 
-    private fun setBackground(shape: Int) {
-        with(binding) {
-            newCategoryLayout.root.setBackgroundResource(shape)
-            changeCategoryLayout.root.setBackgroundResource(shape)
-            confirmationLayout.root.setBackgroundResource(shape)
-        }
-    }
+    private fun getButtonsList() = listOf(
+        binding.newCategoryLayout.addNewCategoryButton,
+        binding.newCategoryLayout.cancelCreateButton,
+        binding.confirmationLayout.changeButton,
+        binding.confirmationLayout.selectButton,
+        binding.confirmationLayout.cancelButton,
+        binding.changeCategoryLayout.saveChange,
+        binding.changeCategoryLayout.cancelChange
+    )
+
+    private fun getDialogsList() = listOf(
+        binding.newCategoryLayout,
+        binding.changeCategoryLayout,
+        binding.confirmationLayout
+    )
 
     private fun isSelectedCategoryIncome(
         incomingRadioButton: RadioButton,
