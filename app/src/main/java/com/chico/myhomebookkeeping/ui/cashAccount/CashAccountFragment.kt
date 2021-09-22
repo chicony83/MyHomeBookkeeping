@@ -259,7 +259,7 @@ class CashAccountFragment : Fragment() {
                         R.drawable.dialog_background_night
                     )
                     setButtonsBackgroundColor(
-                        getButtonsList(),
+                        getButtonsListForColorButton(),
                         getNightColorForButtonsBackground()
                     )
                 }
@@ -271,8 +271,12 @@ class CashAccountFragment : Fragment() {
                         R.drawable.dialog_background_day
                     )
                     setButtonsBackgroundColor(
-                        getButtonsList(),
+                        getButtonsListForColorButton(),
                         getDayColorForButtonsBackground()
+                    )
+                    setColorTextOnButton(
+                        getButtonsListForColorButtonText(),
+                        getDayColorForButtonsText()
                     )
                 }
             }
@@ -283,13 +287,25 @@ class CashAccountFragment : Fragment() {
                         R.drawable.dialog_background_day
                     )
                     setButtonsBackgroundColor(
-                        getButtonsList(),
+                        getButtonsListForColorButton(),
                         getDayColorForButtonsBackground()
                     )
+                    setColorTextOnButton(
+                        getButtonsListForColorButtonText(),
+                        getDayColorForButtonsText()
+                    )
+
                 }
             }
         }
     }
+
+    private fun getDayColorForButtonsText()= resources.getColor(R.color.colorPrimaryVariant)
+
+    private fun getButtonsListForColorButtonText() = listOf(
+        binding.confirmationLayout.changeButton,
+        binding.confirmationLayout.selectButton
+    )
 
     private fun getDayColorForButtonsBackground(): ColorStateList {
         return getButtonsBackgroundColor(buttonDayBackground)
@@ -308,7 +324,7 @@ class CashAccountFragment : Fragment() {
         }
     }
 
-    private fun getButtonsList() = listOf(
+    private fun getButtonsListForColorButton() = listOf(
         binding.newCashAccountLayout.addNewCashAccountButton,
         binding.newCashAccountLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,

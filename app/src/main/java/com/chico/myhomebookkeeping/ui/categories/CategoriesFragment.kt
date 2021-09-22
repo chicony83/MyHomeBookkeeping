@@ -14,11 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.viewbinding.ViewBinding
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.databinding.DialogNewCategoryBinding
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -294,23 +292,33 @@ class CategoriesFragment : Fragment() {
             Configuration.UI_MODE_NIGHT_YES -> {
                 with(uiColors) {
                     setDialogBackgroundColor(getDialogsList(), R.drawable.dialog_background_night)
-                    setButtonsBackgroundColor(getButtonsList(),getNightColorForButtonsBackground())
+                    setButtonsBackgroundColor(getButtonsListForColorButton(),getNightColorForButtonsBackground())
                 }
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 with(uiColors) {
                     setDialogBackgroundColor(getDialogsList(), R.drawable.dialog_background_day)
-                    setButtonsBackgroundColor(getButtonsList(),getDayColorForButtonsBackground())
+                    setButtonsBackgroundColor(getButtonsListForColorButton(),getDayColorForButtonsBackground())
+                    setColorTextOnButton(getButtonsListForColorButtonText(), getDayColorForButtonsText())
                 }
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
                 with(uiColors) {
                     setDialogBackgroundColor(getDialogsList(), R.drawable.dialog_background_day)
-                    setButtonsBackgroundColor(getButtonsList(),getDayColorForButtonsBackground())
+                    setButtonsBackgroundColor(getButtonsListForColorButton(),getDayColorForButtonsBackground())
+                    setColorTextOnButton(getButtonsListForColorButtonText(), getDayColorForButtonsText())
                 }
             }
         }
     }
+
+    private fun getDayColorForButtonsText() = resources.getColor(R.color.colorPrimaryVariant)
+
+    private fun getButtonsListForColorButtonText() = listOf(
+        binding.confirmationLayout.changeButton,
+        binding.confirmationLayout.selectButton
+    )
+
     private fun getDayColorForButtonsBackground(): ColorStateList {
         return getButtonsBackgroundColor(R.color.buttonDayBackground)
     }
@@ -328,7 +336,7 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private fun getButtonsList() = listOf(
+    private fun getButtonsListForColorButton() = listOf(
         binding.newCategoryLayout.addNewCategoryButton,
         binding.newCategoryLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,

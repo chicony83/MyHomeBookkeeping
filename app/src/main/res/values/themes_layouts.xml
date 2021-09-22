@@ -7,10 +7,10 @@
     </style>
     <style name="DialogLayout.PositiveNegativeButtons" parent="MatchParent_WrapContent">
         <item name="android:orientation">horizontal</item>
-        <item name="android:weightSum">5</item>
+        <item name="android:weightSum">2</item>
     </style>
     <style name="DialogLayout.PositiveChangeNegativeButtons">
         <item name="android:orientation">horizontal</item>
-        <item name="android:weightSum">6</item>
+        <item name="android:weightSum">3</item>
     </style>
 </resources>

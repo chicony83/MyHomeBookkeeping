@@ -20,4 +20,10 @@ class UiColors {
             item.root.setBackgroundResource(resource)
         }
     }
+
+    fun setColorTextOnButton(list: List<Button>, color: Int) {
+        for (item in list){
+            item.setTextColor(color)
+        }
+    }
 }

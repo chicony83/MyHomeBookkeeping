@@ -21,7 +21,7 @@
 
     <style name="DialogButtons" parent="Buttons">
         <item name="android:textSize">@dimen/H6</item>
-        <item name="elevation">@dimen/margin_half_normal</item>
+        <item name="elevation">@dimen/margin_normal</item>
         <item name="android:insetTop">@dimen/margin_zero</item>
         <item name="android:insetBottom">@dimen/margin_zero</item>
         <item name="android:layout_marginTop">@dimen/margin_normal</item>
@@ -49,7 +49,7 @@
     </style>
 
     <style name="DialogButtonLeft.Positive">
-        <item name="android:layout_weight">3</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/colorSubmitButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -57,20 +57,20 @@
     </style>
 
     <style name="DialogButtonRight.Negative">
-        <item name="android:layout_weight">2</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/colorCancelButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DialogButtonLeft.Select">
-        <item name="android:layout_weight">2</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DialogButtonCenter.Change">
-        <item name="android:layout_weight">2</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

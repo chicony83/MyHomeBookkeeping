@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.viewbinding.ViewBinding
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
@@ -236,7 +235,7 @@ class CurrenciesFragment : Fragment() {
                         R.drawable.dialog_background_night
                     )
                     setButtonsBackgroundColor(
-                        getButtonsList(),
+                        getButtonsListForColorButton(),
                         getNightColorForButtonsBackground()
                     )
                 }
@@ -248,8 +247,12 @@ class CurrenciesFragment : Fragment() {
                         R.drawable.dialog_background_day
                     )
                     setButtonsBackgroundColor(
-                        getButtonsList(),
+                        getButtonsListForColorButton(),
                         getDayColorForButtonsBackground()
+                    )
+                    setColorTextOnButton(
+                        getButtonsListForColorButtonText(),
+                        getDayColorForButtonsText()
                     )
                 }
             }
@@ -260,13 +263,24 @@ class CurrenciesFragment : Fragment() {
                         R.drawable.dialog_background_day
                     )
                     setButtonsBackgroundColor(
-                        getButtonsList(),
+                        getButtonsListForColorButton(),
                         getDayColorForButtonsBackground()
+                    )
+                    setColorTextOnButton(
+                        getButtonsListForColorButtonText(),
+                        getDayColorForButtonsText()
                     )
                 }
             }
         }
     }
+
+    private fun getDayColorForButtonsText() = resources.getColor(R.color.colorPrimaryVariant)
+
+    private fun getButtonsListForColorButtonText()= listOf(
+        binding.confirmationLayout.changeButton,
+        binding.confirmationLayout.selectButton
+    )
 
     private fun getDayColorForButtonsBackground(): ColorStateList {
         return getButtonsBackgroundColor(R.color.buttonDayBackground)
@@ -291,7 +305,7 @@ class CurrenciesFragment : Fragment() {
         binding.confirmationLayout
     )
 
-    private fun getButtonsList() = listOf(
+    private fun getButtonsListForColorButton() = listOf(
         binding.newCurrencyLayout.addNewCurrencyButton,
         binding.newCurrencyLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,
