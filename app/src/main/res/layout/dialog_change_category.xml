@@ -30,20 +30,27 @@
             android:text="@string/text_on_radio_button_spending_category" />
     </RadioGroup>
 
-    <LinearLayout
-        style="@style/DialogLayout.PositiveNegativeButtons"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/saveChange"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_save"
+        app:layout_constraintEnd_toStartOf="@id/centerDialogChangeCategory"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup">
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
-        <Button
-            android:id="@+id/saveChange"
-            style="@style/DialogButtonLeft.Positive"
-            android:text="@string/text_on_button_save" />
+    <Button
+        android:id="@+id/cancelChange"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerDialogChangeCategory"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
-        <Button
-            android:id="@+id/cancelChange"
-            style="@style/DialogButtonRight.Negative"
-            android:text="@string/text_on_button_cancel" />
-    </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerDialogChangeCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,23 +9,29 @@
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="большое спасибо" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        style="@style/DialogLayout.PositiveNegativeButtons"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/saveChange"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_save"
+        app:layout_constraintEnd_toStartOf="@id/centerDialogChangeCurrency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemName">
+        app:layout_constraintTop_toBottomOf="@id/itemName" />
 
-        <Button
-            android:id="@+id/saveChange"
-            style="@style/DialogButtonLeft.Positive"
-            android:text="@string/text_on_button_save" />
+    <Button
+        android:id="@+id/cancelChange"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerDialogChangeCurrency"
+        app:layout_constraintTop_toBottomOf="@id/itemName" />
 
-        <Button
-            android:id="@+id/cancelChange"
-            style="@style/DialogButtonRight.Negative"
-            android:text="@string/text_on_button_cancel" />
-    </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerDialogChangeCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

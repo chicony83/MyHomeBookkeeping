@@ -16,21 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        style="@style/DialogLayout.PositiveNegativeButtons"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/submitFirstLaunchButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_yes"
+        app:layout_constraintEnd_toStartOf="@id/centerDialogFirstLaunch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/message">
+        app:layout_constraintTop_toBottomOf="@id/message" />
 
-        <Button
-            android:id="@+id/submitFirstLaunchButton"
-            style="@style/DialogButtonLeft.Positive"
-            android:text="@string/text_on_button_yes" />
+    <Button
+        android:id="@+id/cancelFirstLaunchButton"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerDialogFirstLaunch"
+        app:layout_constraintTop_toBottomOf="@id/message" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerDialogFirstLaunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-        <Button
-            android:id="@+id/cancelFirstLaunchButton"
-            style="@style/DialogButtonRight.Negative"
-            android:text="@string/text_on_button_no" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DialogLayout"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/message"
         style="@style/Description"
         android:gravity="center"
-        android:text="@string/description_you_want_to_delete_the_entry" />
+        android:text="@string/description_you_want_to_delete_the_entry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
 
-        <Button
-            android:id="@+id/submitDeleteButton"
-            style="@style/DialogButtonLeft.Positive"
-            android:text="@string/text_on_button_yes" />
+    <Button
+        app:layout_constraintEnd_toStartOf="@id/centerDialogCenterDeleteMoneyMoving"
+        app:layout_constraintTop_toBottomOf="@id/message"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/submitDeleteButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_yes" />
 
-        <Button
-            android:id="@+id/cancelDeleteButton"
-            style="@style/DialogButtonRight.Negative"
-            android:text="@string/text_on_button_no" />
-    </LinearLayout>
-</LinearLayout>
+    <Button
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerDialogCenterDeleteMoneyMoving"
+        app:layout_constraintTop_toBottomOf="@id/message"
+        android:id="@+id/cancelDeleteButton"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_no" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerDialogCenterDeleteMoneyMoving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
