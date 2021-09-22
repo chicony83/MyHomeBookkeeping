@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/selectButton"
-        style="@style/DialogButtonLeft.Select"
+        style="@style/DialogButtons.Select"
         android:text="@string/text_on_button_select"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
 
     <Button
         android:id="@+id/changeButton"
-        style="@style/DialogButtonCenter.Change"
+        style="@style/DialogButtonLeft.Change"
         android:text="@string/text_on_button_change"
         app:layout_constraintEnd_toStartOf="@+id/centerDialogCurrency"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         style="@style/DialogButtonRight.Negative"
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/changeButton"
+        app:layout_constraintStart_toEndOf="@id/centerDialogCurrency"
         app:layout_constraintTop_toBottomOf="@id/selectButton" />
 
     <androidx.constraintlayout.widget.Guideline
