@@ -111,7 +111,7 @@
 
     <Button
         android:id="@+id/change_button"
-        style="@style/DialogButtonLeft.Positive"
+        style="@style/DialogButtonLeft.Change"
         android:text="@string/text_on_button_change"
         app:layout_constraintEnd_toStartOf="@id/centerDialogSelectMoneyMoving"
         app:layout_constraintStart_toStartOf="parent"

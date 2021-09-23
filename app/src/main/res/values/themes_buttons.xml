@@ -20,6 +20,7 @@
     </style>
 
     <style name="DialogButtons" parent="Buttons">
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/H6</item>
         <item name="elevation">@dimen/margin_normal</item>
         <item name="android:insetTop">@dimen/margin_zero</item>

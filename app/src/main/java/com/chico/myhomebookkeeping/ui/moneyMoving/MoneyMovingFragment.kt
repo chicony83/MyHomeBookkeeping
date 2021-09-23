@@ -263,7 +263,8 @@ class MoneyMovingFragment : Fragment() {
 
     private fun getButtonsListForColorButtonText() = listOf(
         binding.firstLaunchDialog.submitFirstLaunchButton,
-        binding.firstLaunchDialog.cancelFirstLaunchButton
+        binding.firstLaunchDialog.cancelFirstLaunchButton,
+        binding.selectLayout.changeButton
     )
 
     private fun getDayColorForButtonsBackground(): ColorStateList {
