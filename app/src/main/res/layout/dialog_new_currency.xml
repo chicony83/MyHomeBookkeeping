@@ -18,11 +18,13 @@
     <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/addNewCurrencyButton"
             style="@style/DialogButtonLeft.Positive"
             android:text="@string/text_on_button_add" />
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/cancelCreateButton"
             style="@style/DialogButtonRight.Negative"
             android:text="@string/text_on_button_cancel" />
