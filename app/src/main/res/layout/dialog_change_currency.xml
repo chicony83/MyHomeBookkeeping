@@ -5,6 +5,7 @@
     style="@style/DialogLayout">
 
     <EditText
+        android:hint="@string/hint_enter_name"
         android:id="@+id/itemName"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"

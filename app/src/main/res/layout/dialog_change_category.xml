@@ -5,6 +5,7 @@
 
     <EditText
         android:id="@+id/categoryName"
+        android:hint="@string/hint_enter_name"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

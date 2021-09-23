@@ -5,6 +5,7 @@
     style="@style/DialogLayout">
 
     <EditText
+        android:hint="@string/hint_enter_name"
         android:id="@+id/cashAccountName"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cashAccountName"
-        tools:text="1234" />
+        android:hint="@string/hint_only_last_4_digits" />
 
     <Button
         android:id="@+id/saveChange"
