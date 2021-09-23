@@ -234,6 +234,10 @@ class MoneyMovingFragment : Fragment() {
                         getButtonsList(),
                         getDayColorForButtonsBackground()
                     )
+                    setColorTextOnButton(
+                        getButtonsListForColorButtonText(),
+                        getDayColorForButtonsText()
+                    )
                 }
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
@@ -246,10 +250,21 @@ class MoneyMovingFragment : Fragment() {
                         getButtonsList(),
                         getDayColorForButtonsBackground()
                     )
+                    setColorTextOnButton(
+                        getButtonsListForColorButtonText(),
+                        getDayColorForButtonsText()
+                    )
                 }
             }
         }
     }
+
+    private fun getDayColorForButtonsText() = resources.getColor(R.color.colorPrimaryVariant)
+
+    private fun getButtonsListForColorButtonText() = listOf(
+        binding.firstLaunchDialog.submitFirstLaunchButton,
+        binding.firstLaunchDialog.cancelFirstLaunchButton
+    )
 
     private fun getDayColorForButtonsBackground(): ColorStateList {
         return getButtonsBackgroundColor(R.color.buttonDayBackground)

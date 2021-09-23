@@ -29,25 +29,32 @@
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
-    <style name="Description.IncomeText.FirstLaunch" />
+    <style name="Description.IncomeText.FirstLaunch" >
+        <item name="android:checked">true</item>
+    </style>
 
     <style name="Description.SpendingText">
         <item name="android:textColor">@color/spendingTextColor</item>
         <item name="android:textSize">@dimen/H4</item>
+
     </style>
 
-    <style name="Description.SpendingText.FirstLaunch" />
+    <style name="Description.SpendingText.FirstLaunch" >
+        <item name="android:checked">true</item>
+    </style>
 
     <style name="Description.CashAccounts" />
 
     <style name="Description.CashAccounts.FirstLaunch">
         <item name="android:textSize">@dimen/H4</item>
+        <item name="android:checked">true</item>
     </style>
 
     <style name="Description.Currencies" />
 
     <style name="Description.Currencies.FirstLaunch">
         <item name="android:textSize">@dimen/H4</item>
+        <item name="android:checked">true</item>
     </style>
 
 </resources>
