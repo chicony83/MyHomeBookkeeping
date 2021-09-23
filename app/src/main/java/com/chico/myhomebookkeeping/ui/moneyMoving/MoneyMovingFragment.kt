@@ -222,6 +222,7 @@ class MoneyMovingFragment : Fragment() {
                         getNightColorForButtonsBackground()
                     )
                 }
+                binding.moneyMovingHolder.setBackgroundResource(R.drawable.money_moving_night_item_background)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
 //                message("день")

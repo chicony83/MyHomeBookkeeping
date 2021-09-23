@@ -41,29 +41,38 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     }
 
     fun saveToSP(
-        argsKey: String,
+        args: String,
         value: Int?
     ) {
-        messageLog(argsKey, value.toString())
-        spEditor.putInt(argsKey, value ?: minusOneInt)
+        messageLog(args, value.toString())
+        spEditor.putInt(args, value ?: minusOneInt)
         spCommit()
     }
 
+//    fun saveToSp(
+//        argsKey: String,
+//        value: Boolean
+//    ) {
+//        messageLog(argsKey,value.toString())
+//        spEditor.putBoolean(argsKey,value?:false)
+//        spCommit()
+//    }
+
     fun saveToSP(
-        argsKey: String,
+        args: String,
         value: String?
     ) {
-        messageLog(argsKey, value.toString())
-        spEditor.putString(argsKey, value ?: "")
+        messageLog(args, value.toString())
+        spEditor.putString(args, value ?: "")
         spCommit()
     }
 
     fun saveToSP(
-        argsKey: String,
+        args: String,
         value: Long?
     ) {
-        messageLog(argsKey, value.toString())
-        spEditor.putLong(argsKey, value ?: minusOneLong)
+        messageLog(args, value.toString())
+        spEditor.putLong(args, value ?: minusOneLong)
         spCommit()
     }
 

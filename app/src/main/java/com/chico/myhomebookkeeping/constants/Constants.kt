@@ -31,6 +31,7 @@ object Constants {
     const val FOR_QUERY_NONE = ""
 
     const val IS_FIRST_LAUNCH = "isFirstLaunch"
+    const val IS_NIGHT_MODE_ON = "isNightModeOn"
 
     const val SP_NAME = "SPNewMoneyMoving"
 

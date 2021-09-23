@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
+import com.chico.myhomebookkeeping.checks.CheckNightMode
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -27,30 +28,16 @@ class MoneyMovingAdapter(
     private var dayYesterday: Long = 0
     private lateinit var context: Context
     private val uiHelper = UiHelper()
+    private lateinit var checkNightMode:CheckNightMode
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderMovingItem {
         val binding = RecyclerViewItemMoneyMovingBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
         getStrings()
-        val isNightMode = checkIsNightUiMode()
+        checkNightMode = CheckNightMode()
+        val isNightMode = checkNightMode.isNightMode(context)
         return ViewHolderMovingItem(binding, isNightMode)
-    }
-
-    private fun checkIsNightUiMode(): Boolean {
-        val nightModeFlags = context.resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK
-        return when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                true
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                false
-            }
-            else -> {
-                true
-            }
-        }
     }
 
     private fun getStrings() {
@@ -94,6 +81,9 @@ class MoneyMovingAdapter(
             with(binding) {
                 if (!isNightMode) {
                     item.setBackgroundResource(R.drawable.money_moving_day_item_background)
+                }
+                if(isNightMode){
+                    cardView.setBackgroundResource(R.drawable.money_moving_night_item_background)
                 }
 //                if (showDate) {
 //                    dateSeparatorText.text =

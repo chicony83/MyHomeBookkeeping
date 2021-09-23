@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="@dimen/margin_quarter_of_normal"
+        android:right="@dimen/margin_quarter_of_normal"
+        android:top="@dimen/margin_quarter_of_normal"
+        android:bottom="@dimen/margin_quarter_of_normal">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/dialogNightBackground"/>
+            <corners android:radius="@dimen/margin_half_normal" />
+        </shape>
+    </item>
+</layer-list>

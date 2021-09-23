@@ -2,19 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="0dp">
+    android:id="@+id/cardView"
+    style="@style/MatchParent_WrapContent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/moneyMovingItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/margin_half_normal"
-        android:paddingTop="@dimen/margin_half_normal"
-        android:paddingEnd="@dimen/margin_half_normal"
-        android:paddingBottom="@dimen/margin_half_normal">
+        style="@style/MatchParent_WrapContent">
 
         <LinearLayout
             android:id="@+id/dateSeparator"
@@ -36,14 +29,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_half_normal"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_half_normal"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:elevation="@dimen/margin_half_normal"
-            android:padding="@dimen/margin_half_normal"
+            style="@style/RecyclerViewItem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dateSeparator">

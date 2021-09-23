@@ -19,11 +19,11 @@ class CashAccountAdapter(
     ): ViewHolder {
         val binding = RecyclerViewItemCashAccountBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
+
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val item = cashAccountList[position]
         holder.bind(cashAccountList[position])
     }
 

@@ -16,8 +16,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import com.chico.myhomebookkeeping.checks.CheckNightMode
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.sp.EraseSP
@@ -26,13 +28,15 @@ import com.chico.myhomebookkeeping.utils.launchUi
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    private val argsIsNightModeOn = Constants.IS_NIGHT_MODE_ON
     private val uiHelper = UiHelper()
     private val spName = Constants.SP_NAME
+    private val checkNightMode = CheckNightMode()
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var getSP: GetSP
     private lateinit var setSP: SetSP
     private lateinit var eraseSP: EraseSP
+    private var isNightMode = false
 
     //        getSharedPreferences(spName, MODE_PRIVATE)
     private lateinit var spEditor: SharedPreferences.Editor
@@ -49,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         spEditor = sharedPreferences.edit()
         setSP = SetSP(spEditor)
         eraseSP = EraseSP(spEditor)
+        checkIsNightModeOn()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -80,6 +85,12 @@ class MainActivity : AppCompatActivity() {
         hideFab(navController, fab)
         hideToolbar(toolbar)
         eraseSP.eraseTempSP()
+    }
+
+    private fun checkIsNightModeOn() {
+        isNightMode = checkNightMode.isNightMode(context = applicationContext)
+        setSP.saveToSP(args = argsIsNightModeOn,isNightMode)
+        Message.log("is night mode on =  $isNightMode")
     }
 
     private fun hideToolbar(toolbar: Toolbar) {
