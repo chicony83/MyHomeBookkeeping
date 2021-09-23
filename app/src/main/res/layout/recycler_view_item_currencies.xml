@@ -13,7 +13,6 @@
 
         <TextView
             android:id="@+id/name_currency"
-            style="@style/RecyclerViewItemTextH2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tool:text="USD" />

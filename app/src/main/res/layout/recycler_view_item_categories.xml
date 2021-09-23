@@ -14,7 +14,6 @@
 
         <TextView
             android:id="@+id/category_cardView_text"
-            style="@style/RecyclerViewItemTextH2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tool:text="проценты банка" />

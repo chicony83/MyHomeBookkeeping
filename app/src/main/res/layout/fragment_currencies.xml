@@ -7,10 +7,10 @@
     tools:context=".ui.currencies.CurrenciesFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/topButtonsHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,12 +25,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currenciesHolder"
+        style="@style/RecyclerHolder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/show_hide_add_currency_fragment_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topButtonsHolder" />
 
     <LinearLayout

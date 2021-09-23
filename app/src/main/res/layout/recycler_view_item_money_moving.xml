@@ -50,7 +50,6 @@
 
             <TextView
                 android:id="@+id/currencyName"
-                style="@style/RecyclerViewItemLeftElement.Currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
@@ -60,7 +59,6 @@
 
             <TextView
                 android:id="@+id/amount"
-                style="@style/RecyclerViewItemLeftElement.Amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@id/currencyName"
@@ -69,7 +67,6 @@
 
             <TextView
                 android:id="@+id/dataTime"
-                style="@style/RecyclerViewItemLeftElement.DateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +75,6 @@
 
             <TextView
                 android:id="@+id/categoryName"
-                style="@style/RecyclerViewItemLeftElement.Category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +83,6 @@
 
             <TextView
                 android:id="@+id/cashAccountName"
-                style="@style/RecyclerViewItemLeftElement.CashAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"

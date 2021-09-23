@@ -12,14 +12,12 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/RecyclerViewItemTextH2"
             android:id="@+id/nameCashAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tool:text="зарплатный счет" />
 
         <TextView
-            style="@style/RecyclerViewItemTextH3"
             android:id="@+id/numberCashAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

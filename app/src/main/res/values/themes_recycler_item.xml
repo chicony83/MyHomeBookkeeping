@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RecyclerViewItem" parent="MatchParent_WrapContent">
+        <item name="android:layout_margin">@dimen/margin_quarter_of_normal</item>
+        <item name="cardElevation">@dimen/margin_quarter_of_normal</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+</resources>
