@@ -5,20 +5,22 @@
     style="@style/RecyclerViewCard">
 
     <LinearLayout
+
         android:id="@+id/cashAccountItem"
         style="@style/RecyclerViewItem"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/nameCashAccount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tool:text="зарплатный счет" />
+            android:layout_marginEnd="@dimen/margin_normal"
+            tool:text="card" />
 
         <TextView
             android:id="@+id/numberCashAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tool:text="1234" />
+            tool:text="@string/sign_number_of_account" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_plus" translatable="false">+</string>
+    <string name="sign_minus" translatable="false">-</string>
+
+    <string name="sign_number_of_account">number</string>
+</resources>

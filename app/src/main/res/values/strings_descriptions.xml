@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sign_plus" translatable="false">+</string>
-    <string name="sign_minus" translatable="false">-</string>
-
     <string name="description_income">Income</string>
     <string name="description_spending">Spending</string>
 
