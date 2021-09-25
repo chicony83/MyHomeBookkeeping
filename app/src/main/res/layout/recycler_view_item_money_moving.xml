@@ -6,7 +6,8 @@
 
     style="@style/RecyclerViewCard">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/moneyMovingItem"
         style="@style/MatchParent_WrapContent">
 
@@ -100,9 +101,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/description_of_description"
                 tool:text="здесь должно быть описание"
                 tool:visibility="visible" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

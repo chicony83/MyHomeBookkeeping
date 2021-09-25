@@ -95,15 +95,18 @@ class MoneyMovingAdapter(
                 categoryName.text = moneyMovement.categoryNameValue
 
                 if (!moneyMovement.description.isNullOrEmpty()) {
-                    val text = moneyMovement.description.toString()
-                    val numOfLines = countLines(text)
-                    if (numOfLines > 2) {
-                        val array = textToArray(text)
-                        val newArray: MutableList<String> = changeArray(array)
-                        description.text = newArray.joinToString()
-                        uiHelper.showUiElement(description)
-                        uiHelper.showUiElement(descriptionOfDescription)
-                    }
+                    description.text = moneyMovement.description
+                    uiHelper.showUiElement(description)
+                    uiHelper.showUiElement(descriptionOfDescription)
+//                    val text = moneyMovement.description.toString()
+//                    val numOfLines = countLines(text)
+//                    if (numOfLines > 2) {
+//                        val array = textToArray(text)
+//                        val newArray: MutableList<String> = changeArray(array)
+//                        description.text = newArray.joinToString()
+//                        uiHelper.showUiElement(description)
+//                        uiHelper.showUiElement(descriptionOfDescription)
+//                    }
                 }
                 if (moneyMovement.description.isNullOrEmpty()) {
                     description.text = null
