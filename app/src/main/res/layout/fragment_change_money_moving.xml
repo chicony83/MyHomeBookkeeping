@@ -8,8 +8,7 @@
     tools:context="ui.changeMoneyMoving.ChangeMoneyMovingFragment">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        style="@style/MoneyMovingScrollView"
         app:layout_constraintBottom_toTopOf="@+id/bottomButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

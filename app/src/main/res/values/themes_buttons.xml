@@ -1,7 +1,6 @@
 <resources>
 
-    <style name="Buttons">
-    </style>
+    <style name="Buttons" />
 
     <style name="ButtonsMatchParent_WrapContent" parent="Buttons">
         <item name="android:layout_width">match_parent</item>
@@ -25,17 +24,14 @@
         <item name="elevation">@dimen/margin_normal</item>
         <item name="android:insetTop">@dimen/margin_zero</item>
         <item name="android:insetBottom">@dimen/margin_zero</item>
-    <item name="android:layout_margin">@dimen/margin_normal</item>
+        <item name="android:layout_margin">@dimen/margin_normal</item>
     </style>
 
-    <style name="DialogButtonLeft" parent="DialogButtons">
-    </style>
+    <style name="DialogButtonLeft" parent="DialogButtons" />
 
-    <style name="DialogButtonCenter" parent="DialogButtons">
-    </style>
+    <style name="DialogButtonCenter" parent="DialogButtons" />
 
-    <style name="DialogButtonRight" parent="DialogButtons">
-    </style>
+    <style name="DialogButtonRight" parent="DialogButtons" />
 
     <style name="ButtonFullWidth" parent="DialogButtons">
         <item name="android:layout_width">match_parent</item>
@@ -48,7 +44,7 @@
         <item name="android:textColor">@color/colorSubmitButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-<!--        <item name="backgroundTint">@color/buttonDayBackground</item>-->
+        <!--        <item name="backgroundTint">@color/buttonDayBackground</item>-->
     </style>
 
     <style name="DialogButtonRight.Negative">

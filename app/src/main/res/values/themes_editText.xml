@@ -14,12 +14,16 @@
         <item name="android:hint">@string/hint_enter_name</item>
     </style>
 
-    <style name="EditTextAmount" parent="MatchParent_WrapContent">
+    <style name="EditText" parent="MatchParent_WrapContent">
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+    </style>
+    <style name="EditTextAmount" parent="EditText">
         <item name="android:inputType">numberDecimal</item>
         <item name="android:hint">@string/hint_enter_amount</item>
     </style>
 
-    <style name="EditTextDescription" parent="MatchParent_WrapContent">
+    <style name="EditTextDescription" parent="EditText">
         <item name="android:inputType">textMultiLine</item>
         <item name="maxLines">2</item>
         <item name="android:hint">@string/hint_add_you_description</item>
