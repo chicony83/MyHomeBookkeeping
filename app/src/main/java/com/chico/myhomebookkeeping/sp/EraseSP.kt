@@ -1,7 +1,7 @@
 package com.chico.myhomebookkeeping.sp
 
 import android.content.SharedPreferences
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 
 class EraseSP(val spEditor: SharedPreferences.Editor) {
     fun eraseTempSP(){

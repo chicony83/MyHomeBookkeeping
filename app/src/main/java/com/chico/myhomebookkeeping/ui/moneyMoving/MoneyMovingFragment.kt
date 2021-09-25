@@ -1,8 +1,6 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -27,7 +25,6 @@ import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import kotlin.properties.Delegates
 
 class MoneyMovingFragment : Fragment() {
 
@@ -98,11 +95,11 @@ class MoneyMovingFragment : Fragment() {
                     dateTimeText.text = it?.timeStamp?.parseTimeFromMillis()
                     if (it?.isIncome == true) {
                         amount.text = plus + it.amount.toString()
-                        setTextColor(binding.selectLayout.amount,R.style.Description_IncomeText)
+                        setTextColor(binding.selectLayout.amount, R.style.Description_IncomeText)
                     }
                     if (it?.isIncome == false) {
                         amount.text = minus + it.amount.toString()
-                        setTextColor(binding.selectLayout.amount,R.style.Description_SpendingText)
+                        setTextColor(binding.selectLayout.amount, R.style.Description_SpendingText)
                     }
                     currency.text = it?.currencyNameValue
                     category.text = it?.categoryNameValue
@@ -182,7 +179,7 @@ class MoneyMovingFragment : Fragment() {
                 }
             }
         }
-        checkUiMode()
+        uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
 //        checkLinesFound()
         checkFirstLaunch()
         moneyMovingViewModel.cleaningSP()
@@ -190,7 +187,7 @@ class MoneyMovingFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        moneyMovingViewModel.getListFulMoneyMoving()
+        moneyMovingViewModel.getListFullMoneyMoving()
     }
 
     private fun launchFragment(fragment: Int) {
@@ -204,95 +201,20 @@ class MoneyMovingFragment : Fragment() {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
-    private fun checkUiMode() {
-
-        val nightModeFlags = requireContext().resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK
-        when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-//                message("ночь")
-                with(uiColors){
-                    setDialogBackgroundColor(
-                        getDialogsList(),
-                        R.drawable.dialog_background_night
-                    )
-                    setButtonsBackgroundColor(
-                        getButtonsList(),
-                        getNightColorForButtonsBackground()
-                    )
-                }
-                binding.moneyMovingHolder.setBackgroundResource(R.drawable.money_moving_night_item_background)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-//                message("день")
-                with(uiColors){
-                    setDialogBackgroundColor(
-                        getDialogsList(),
-                        R.drawable.dialog_background_day
-                    )
-                    setButtonsBackgroundColor(
-                        getButtonsList(),
-                        getDayColorForButtonsBackground()
-                    )
-                    setColorTextOnButton(
-                        getButtonsListForColorButtonText(),
-                        getDayColorForButtonsText()
-                    )
-                }
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                with(uiColors){
-                    setDialogBackgroundColor(
-                        getDialogsList(),
-                        R.drawable.dialog_background_day
-                    )
-                    setButtonsBackgroundColor(
-                        getButtonsList(),
-                        getDayColorForButtonsBackground()
-                    )
-                    setColorTextOnButton(
-                        getButtonsListForColorButtonText(),
-                        getDayColorForButtonsText()
-                    )
-                }
-            }
-        }
-    }
-
-    private fun getDayColorForButtonsText() = resources.getColor(R.color.colorPrimaryVariant)
-
     private fun getButtonsListForColorButtonText() = listOf(
         binding.firstLaunchDialog.submitFirstLaunchButton,
         binding.firstLaunchDialog.cancelFirstLaunchButton,
         binding.selectLayout.changeButton
     )
 
-    private fun getDayColorForButtonsBackground(): ColorStateList {
-        return getButtonsBackgroundColor(R.color.buttonDayBackground)
-    }
-
-    private fun getNightColorForButtonsBackground(): ColorStateList {
-        return getButtonsBackgroundColor(R.color.buttonNightBackground)
-    }
-
-    @SuppressLint("UseCompatLoadingForColorStateLists")
-    private fun getButtonsBackgroundColor(color: Int): ColorStateList {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            resources.getColorStateList(color, null)
-        } else {
-            resources.getColorStateList(color)
-        }
-    }
-
-    private fun getButtonsList() = listOf(
+    private fun getButtonsListForColorButton() = listOf(
         binding.selectLayout.changeButton,
         binding.selectLayout.cancelButton,
         binding.firstLaunchDialog.submitFirstLaunchButton,
         binding.firstLaunchDialog.cancelFirstLaunchButton
     )
 
-    private fun getDialogsList()= listOf(
+    private fun getDialogsList() = listOf(
         binding.selectLayout,
         binding.firstLaunchDialog
     )

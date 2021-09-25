@@ -15,7 +15,7 @@ import androidx.navigation.findNavController
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.databinding.FragmentHelpBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard

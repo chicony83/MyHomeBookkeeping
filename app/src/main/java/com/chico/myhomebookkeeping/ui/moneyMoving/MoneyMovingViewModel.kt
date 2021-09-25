@@ -11,7 +11,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.sp.GetSP
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -58,11 +58,10 @@ class MoneyMovingViewModel(
 
     private val spEditor = sharedPreferences.edit()
     private val setSP = SetSP(spEditor)
+    private var getSP = GetSP(sharedPreferences)
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
-
-    private var getSP = GetSP(sharedPreferences)
 
     private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>?>()
     val moneyMovementList: MutableLiveData<List<FullMoneyMoving>?>
@@ -107,11 +106,7 @@ class MoneyMovingViewModel(
     private var startTimePeriodLongSP = minusOneLong
     private var endTimePeriodLongSP = minusOneLong
 
-//    private lateinit var moneyMovingCountMoney:MoneyMovingCountMoney
-
-    //    private lateinit var resultQuery: List<FullMoneyMoving>?
-
-    fun getListFulMoneyMoving() {
+    fun getListFullMoneyMoving() {
         runBlocking {
             getValuesSP()
             val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
@@ -348,6 +343,7 @@ class MoneyMovingViewModel(
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
     }
+
     private fun messageLog(text: String) {
         Log.i("TAG", text)
     }

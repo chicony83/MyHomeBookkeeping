@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao

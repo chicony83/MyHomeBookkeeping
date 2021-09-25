@@ -1,6 +1,5 @@
 package com.chico.myhomebookkeeping.ui.changeMoneyMoving
 
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +13,9 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
+import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -29,7 +28,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private val uiHelper = UiHelper()
-
+    private val uiColors = UiColors()
     private val datePicker =
         MaterialDatePicker.Builder.datePicker()
             .setSelection(
@@ -129,8 +128,10 @@ class ChangeMoneyMovingFragment : Fragment() {
             getDataForChangeMoneyMovingLine()
             getLineForChange()
         }
-        checkUiMode()
+
+        uiColors.setColors(getDialogsList(), getButtonsListForColorButton(), getButtonsListForColorButtonText())
     }
+
 
     private fun deleteEntry() {
         runBlocking {
@@ -145,9 +146,6 @@ class ChangeMoneyMovingFragment : Fragment() {
         }
     }
 
-    private fun pressDeleteButton() {
-        binding.dialogSubmitDeleteMoneyMovingHolder.visibility = View.VISIBLE
-    }
 
     private fun pressSubmitButton() {
         if (uiHelper.isEntered(binding.amount.text)) {
@@ -189,26 +187,23 @@ class ChangeMoneyMovingFragment : Fragment() {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
-    private fun checkUiMode() {
-        val nightModeFlags = requireContext().resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK
-        when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                setBackground(R.drawable.dialog_background_night)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                setBackground(R.drawable.dialog_background_day)
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                setBackground(R.drawable.dialog_background_day)
-            }
-        }
-    }
+    private fun getDialogsList() = listOf(
+        binding.dialogSubmitDeleteMoneyMoving
+    )
 
-    private fun setBackground(shape: Int) {
-        with(binding) {
-            dialogSubmitDeleteMoneyMoving.root.setBackgroundResource(shape)
-        }
-    }
+    private fun getButtonsListForColorButton() = listOf(
+        binding.submitButton,
+        binding.deleteButton,
+        binding.dialogSubmitDeleteMoneyMoving.submitDeleteButton,
+        binding.dialogSubmitDeleteMoneyMoving.cancelDeleteButton
+    )
 
+    private fun getButtonsListForColorButtonText() = listOf(
+        binding.submitButton,
+        binding.dialogSubmitDeleteMoneyMoving.submitDeleteButton
+    )
+
+    private fun pressDeleteButton() {
+        binding.dialogSubmitDeleteMoneyMovingHolder.visibility = View.VISIBLE
+    }
 }

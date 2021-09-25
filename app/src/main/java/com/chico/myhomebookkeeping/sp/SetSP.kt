@@ -3,7 +3,7 @@ package com.chico.myhomebookkeeping.sp
 import android.content.SharedPreferences
 import android.util.Log
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 class SetSP(private val spEditor: SharedPreferences.Editor) {

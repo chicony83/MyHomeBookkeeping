@@ -2,7 +2,7 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.util.Log
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 
 
 object MoneyMovingCreteQuery {
@@ -13,7 +13,7 @@ object MoneyMovingCreteQuery {
 
     fun createQueryOneLine(id: Long): SimpleSQLiteQuery {
         var queryString = ""
-        var argsList: ArrayList<Any> = arrayListOf()
+        val argsList: ArrayList<Any> = arrayListOf()
         queryString += addMainQuery()
 
         if (id > 0) {
@@ -37,7 +37,7 @@ object MoneyMovingCreteQuery {
 
         var queryString = ""
         queryString += addMainQuery()
-        var argsList: ArrayList<Any> = arrayListOf()
+        val argsList: ArrayList<Any> = arrayListOf()
 
         if ((startTimePeriodLongSP > 0) and (endTimePeriodLongSP > 0)) {
             queryString += addAnd()
@@ -83,7 +83,7 @@ object MoneyMovingCreteQuery {
 
         queryString += " ORDER BY time_stamp DESC "
 
-        Log.i("TAG", "$queryString")
+        Log.i("TAG", queryString)
         val args = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)

@@ -18,12 +18,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.checks.CheckNightMode
 import com.chico.myhomebookkeeping.sp.GetSP
-import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.Colors
+import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var getSP: GetSP
     private lateinit var setSP: SetSP
     private lateinit var eraseSP: EraseSP
-    private var isNightMode = false
+//    private var isNightMode = false
+
 
     //        getSharedPreferences(spName, MODE_PRIVATE)
     private lateinit var spEditor: SharedPreferences.Editor
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         spEditor = sharedPreferences.edit()
         setSP = SetSP(spEditor)
         eraseSP = EraseSP(spEditor)
-        checkIsNightModeOn()
+        uiMode()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -87,10 +90,19 @@ class MainActivity : AppCompatActivity() {
         eraseSP.eraseTempSP()
     }
 
+    private fun uiMode() {
+        runBlocking {
+            checkIsNightModeOn()
+            uiColors()
+        }
+    }
+
     private fun checkIsNightModeOn() {
-        isNightMode = checkNightMode.isNightMode(context = applicationContext)
-        setSP.saveToSP(args = argsIsNightModeOn,isNightMode)
-        Message.log("is night mode on =  $isNightMode")
+        DayNightMode.setIsNightMode(checkNightMode.isNightMode(context = applicationContext))
+    }
+
+    private fun uiColors() {
+        Colors.setColors(resources)
     }
 
     private fun hideToolbar(toolbar: Toolbar) {

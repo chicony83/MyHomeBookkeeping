@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.constants
+package com.chico.myhomebookkeeping.obj
 
 object Constants {
 

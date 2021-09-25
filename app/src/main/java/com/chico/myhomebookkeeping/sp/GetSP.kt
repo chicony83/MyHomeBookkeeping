@@ -2,7 +2,7 @@ package com.chico.myhomebookkeeping.sp
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 
 class GetSP(private val sharedPreferences: SharedPreferences) {
     private val argsNone = Constants.FOR_QUERY_NONE

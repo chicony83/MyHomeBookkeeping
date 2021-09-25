@@ -202,7 +202,7 @@ class CurrenciesFragment : Fragment() {
                     }
                 }
             }
-            checkUiMode()
+            uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
         }
     }
 
@@ -223,81 +223,10 @@ class CurrenciesFragment : Fragment() {
         uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
     }
 
-    @SuppressLint("ResourceAsColor")
-    private fun checkUiMode() {
-        val nightModeFlags = requireContext().resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK
-        when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                with(uiColors){
-                    setDialogBackgroundColor(
-                        getDialogsList(),
-                        R.drawable.dialog_background_night
-                    )
-                    setButtonsBackgroundColor(
-                        getButtonsListForColorButton(),
-                        getNightColorForButtonsBackground()
-                    )
-                }
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                with(uiColors) {
-                    setDialogBackgroundColor(
-                        getDialogsList(),
-                        R.drawable.dialog_background_day
-                    )
-                    setButtonsBackgroundColor(
-                        getButtonsListForColorButton(),
-                        getDayColorForButtonsBackground()
-                    )
-                    setColorTextOnButton(
-                        getButtonsListForColorButtonText(),
-                        getDayColorForButtonsText()
-                    )
-                }
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                with(uiColors) {
-                    setDialogBackgroundColor(
-                        getDialogsList(),
-                        R.drawable.dialog_background_day
-                    )
-                    setButtonsBackgroundColor(
-                        getButtonsListForColorButton(),
-                        getDayColorForButtonsBackground()
-                    )
-                    setColorTextOnButton(
-                        getButtonsListForColorButtonText(),
-                        getDayColorForButtonsText()
-                    )
-                }
-            }
-        }
-    }
-
-    private fun getDayColorForButtonsText() = resources.getColor(R.color.colorPrimaryVariant)
-
     private fun getButtonsListForColorButtonText()= listOf(
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton
     )
-
-    private fun getDayColorForButtonsBackground(): ColorStateList {
-        return getButtonsBackgroundColor(R.color.buttonDayBackground)
-    }
-
-    private fun getNightColorForButtonsBackground(): ColorStateList {
-        return getButtonsBackgroundColor(R.color.buttonNightBackground)
-    }
-
-    @SuppressLint("UseCompatLoadingForColorStateLists")
-    private fun getButtonsBackgroundColor(color: Int): ColorStateList {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            resources.getColorStateList(color, null)
-        } else {
-            resources.getColorStateList(color)
-        }
-    }
 
     private fun getDialogsList() = listOf(
         binding.newCurrencyLayout,

@@ -4,8 +4,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.chico.myhomebookkeeping.constants.Constants
-import com.chico.myhomebookkeeping.db.entity.CashAccount
+import com.chico.myhomebookkeeping.obj.Constants
 
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton

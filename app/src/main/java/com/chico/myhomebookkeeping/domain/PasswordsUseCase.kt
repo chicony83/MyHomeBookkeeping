@@ -1,7 +1,7 @@
 package com.chico.myhomebookkeeping.domain
 
 import android.content.SharedPreferences
-import com.chico.myhomebookkeeping.constants.Constants
+import com.chico.myhomebookkeeping.obj.Constants
 
 class PasswordsUseCase(val sharedPreferences: SharedPreferences) {
 
