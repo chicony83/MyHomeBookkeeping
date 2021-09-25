@@ -10,9 +10,12 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import java.util.*
+
 
 class MoneyMovingAdapter(
     private val moneyMovementList: List<FullMoneyMoving>,
@@ -25,16 +28,13 @@ class MoneyMovingAdapter(
     private var dayToday: Long = 0
     private var dayYesterday: Long = 0
     private lateinit var context: Context
-//    private val uiHelper = UiHelper()
+    private val uiHelper = UiHelper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderMovingItem {
         val binding = RecyclerViewItemMoneyMovingBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
         getStrings()
-//        val isNightMode = NightMode.isNightMode
-//        checkNightMode = CheckNightMode()
-//        val isNightMode = checkNightMode.isNightMode(context)
         return ViewHolderMovingItem(binding)
     }
 
@@ -93,13 +93,22 @@ class MoneyMovingAdapter(
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
                 categoryName.text = moneyMovement.categoryNameValue
+
                 if (!moneyMovement.description.isNullOrEmpty()) {
-                    description.text = moneyMovement.description
-                    description.visibility = View.VISIBLE
+                    val text = moneyMovement.description.toString()
+                    val numOfLines = countLines(text)
+                    if (numOfLines > 2) {
+                        val array = textToArray(text)
+                        val newArray: MutableList<String> = changeArray(array)
+                        description.text = newArray.joinToString()
+                        uiHelper.showUiElement(description)
+                        uiHelper.showUiElement(descriptionOfDescription)
+                    }
                 }
                 if (moneyMovement.description.isNullOrEmpty()) {
                     description.text = null
-                    description.visibility = View.GONE
+                    uiHelper.hideUiElement(description)
+                    uiHelper.hideUiElement(descriptionOfDescription)
                 }
                 if (moneyMovement.isIncome) {
                     amount.text = plus + moneyMovement.amount.toString()
@@ -128,8 +137,23 @@ class MoneyMovingAdapter(
                 }
             }
         }
+
+        private fun changeArray(array: Array<String>): MutableList<String> {
+            val newArray = mutableListOf<String>()
+            for (item in 0..1) {
+                newArray.add(item, array[item])
+            }
+            newArray.add(2, "...")
+            return newArray
+        }
+
+        private fun textToArray(text: String): Array<String> {
+            return text.split("\n").toTypedArray()
+        }
+
+        private fun countLines(str: String): Int {
+            val lines: Array<String> = str.split("\n").toTypedArray()
+            return lines.size
+        }
     }
-//    private fun messageLog(text: String) {
-//        Log.i("TAG", "$text")
-//    }
 }

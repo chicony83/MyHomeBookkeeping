@@ -23,7 +23,6 @@
                 android:id="@+id/dateSeparatorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="today"
                 android:textSize="@dimen/H4" />
         </LinearLayout>
 
@@ -47,6 +46,7 @@
                 android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
                 app:layout_constraintEnd_toStartOf="@id/currencyName"
                 app:layout_constraintTop_toBottomOf="@id/dataTime"
                 tool:text="1000" />
@@ -76,13 +76,27 @@
                 tool:text="наличка" />
 
             <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:id="@+id/description_of_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                tool:visibility="visible"
+                android:text="@string/description_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cashAccountName" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cashAccountName"
+                app:layout_constraintTop_toBottomOf="@+id/description_of_description"
                 tool:text="здесь должно быть описание"
                 tool:visibility="visible" />
 

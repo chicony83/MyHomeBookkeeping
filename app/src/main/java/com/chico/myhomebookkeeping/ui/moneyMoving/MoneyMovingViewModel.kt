@@ -132,7 +132,6 @@ class MoneyMovingViewModel(
     private fun setTextOnTimePeriodButton() {
         launchUi {
             val text: String = getResourceText(R.string.text_on_button_time_period)
-
             var timePeriod = ""
             val textFrom = getResourceText(R.string.text_on_button_time_period_from)
             val textTo = getResourceText(R.string.text_on_button_time_period_to)
@@ -284,23 +283,6 @@ class MoneyMovingViewModel(
         }
 
     }
-
-//    private fun postIncomeBalance(await: MoneyMovingCountMoney?) {
-//        _incomeBalance.postValue(await?.getIncome())
-//    }
-//
-//    private fun isOneCurrency(): Boolean {
-//        return currencyIntSP > 0
-//    }
-//
-//    fun getNumFoundLines(): Int {
-//        return 0
-////        return foundLines
-//    }
-
-//    fun isMoneyMovementFound(): Boolean {
-//        return foundLines > 0
-//    }
 
     fun loadSelectedMoneyMoving(selectedId: Long) {
         launchUi {
