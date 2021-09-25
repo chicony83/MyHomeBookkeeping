@@ -24,31 +24,31 @@
 
             <Button
                 android:id="@+id/selectCurrency"
-                style="@style/DialogButtonLeft"
+                style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_on_button_currency" />
 
             <Button
                 android:id="@+id/selectCategory"
-                style="@style/DialogButtonCenter"
+                style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_on_button_category" />
 
             <Button
                 android:id="@+id/selectCashAccount"
-                style="@style/DialogButtonCenter"
+                style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_on_button_cash_account" />
 
             <Button
                 android:id="@+id/selectTimePeriod"
-                style="@style/DialogButtonRight"
+                style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="time period" />
+                android:text="@string/text_on_button_time_period" />
         </LinearLayout>
     </HorizontalScrollView>
 

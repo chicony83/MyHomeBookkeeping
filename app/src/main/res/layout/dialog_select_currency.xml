@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/selectButton"
-        style="@style/DialogButtons.Select"
+        style="@style/DialogButtonCenter.Select"
         android:text="@string/text_on_button_select"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

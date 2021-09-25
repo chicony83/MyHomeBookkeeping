@@ -13,9 +13,13 @@ object Colors {
     val dialogBackgroundColor: Int
         get() = _dialogBackgroundColor
 
-    private lateinit var _dialogButtonsColor: ColorStateList
-    val dialogButtonsColor: ColorStateList
+    private var _dialogButtonsColor = 0
+    val dialogButtonsColor: Int
         get() = _dialogButtonsColor
+
+    private lateinit var _dialogButtonsTintColor: ColorStateList
+    val dialogButtonsTintColor: ColorStateList
+        get() = _dialogButtonsTintColor
 
     private var _dialogButtonsTextColor = 0
     val dialogButtonsTextColor: Int
@@ -26,12 +30,14 @@ object Colors {
         when (DayNightMode.isNightMode) {
             true -> {
                 _dialogBackgroundColor = R.drawable.dialog_background_night
-                _dialogButtonsColor = getNightColorForButtonsBackground()
+                _dialogButtonsColor = R.drawable.button_shape_night
+                _dialogButtonsTintColor = getNightColorForButtonsBackground()
             }
             false -> {
                 _dialogButtonsTextColor = R.color.buttonsTextColorDay
                 _dialogBackgroundColor = R.drawable.dialog_background_day
-                _dialogButtonsColor = getDayColorForButtonsBackground()
+                _dialogButtonsColor = R.drawable.button_shape_day
+                _dialogButtonsTintColor = getDayColorForButtonsBackground()
             }
         }
     }

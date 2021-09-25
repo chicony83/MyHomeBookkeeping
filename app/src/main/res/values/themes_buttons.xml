@@ -27,11 +27,21 @@
         <item name="android:layout_margin">@dimen/margin_normal</item>
     </style>
 
-    <style name="DialogButtonLeft" parent="DialogButtons" />
+    <style name="TopButtons" parent="DialogButtons">
 
-    <style name="DialogButtonCenter" parent="DialogButtons" />
+    </style>
 
-    <style name="DialogButtonRight" parent="DialogButtons" />
+    <style name="DialogButtonLeft" parent="DialogButtons">
+
+    </style>
+
+    <style name="DialogButtonCenter" parent="DialogButtons">
+
+    </style>
+
+    <style name="DialogButtonRight" parent="DialogButtons">
+
+    </style>
 
     <style name="ButtonFullWidth" parent="DialogButtons">
         <item name="android:layout_width">match_parent</item>
@@ -39,27 +49,30 @@
     </style>
 
     <style name="DialogButtonLeft.Positive">
+        <item name="backgroundTint">@null</item>
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/colorSubmitButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <!--        <item name="backgroundTint">@color/buttonDayBackground</item>-->
     </style>
 
     <style name="DialogButtonRight.Negative">
+        <item name="backgroundTint">@null</item>
         <item name="android:textColor">@color/colorCancelButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="DialogButtons.Select">
+    <style name="DialogButtonCenter.Select">
+        <item name="backgroundTint">@null</item>
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DialogButtonLeft.Change">
+        <item name="backgroundTint">@null</item>
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

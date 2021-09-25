@@ -16,7 +16,7 @@
 
     <color name="warning">#40FF0000</color>
 
-    <color name="buttonsTextColorDay">#2B2B2B</color>
+    <color name="buttonsTextColorDay">#1B1B1B</color>
 
     <color name="dialogDayBackground">#FFFFFFFF</color>
     <color name="dialogNightBackground">#FF000000</color>
