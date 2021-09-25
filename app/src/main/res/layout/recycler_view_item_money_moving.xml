@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    style="@style/MatchParent_WrapContent">
+
+    style="@style/RecyclerViewCard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/moneyMovingItem"

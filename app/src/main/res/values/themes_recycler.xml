@@ -2,7 +2,7 @@
 <resources>
 
     <style name="RecyclerHolder">
-        <item name="elevation">@dimen/margin_double</item>
+        <item name="elevation">0dp</item>
         <item name="android:layout_marginLeft">@dimen/margin_half_normal</item>
         <item name="android:layout_marginRight">@dimen/margin_half_normal</item>
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
