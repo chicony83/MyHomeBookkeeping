@@ -2,12 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/categoryItemCardView"
-    style="@style/RecyclerViewCard">
+    style="@style/RecyclerViewCard.Categories">
 
     <LinearLayout
         style="@style/RecyclerViewItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/categoriesItem"
         android:orientation="vertical">
 

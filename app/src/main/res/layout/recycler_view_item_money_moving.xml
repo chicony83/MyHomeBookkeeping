@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-
-    style="@style/RecyclerViewCard">
+    style="@style/RecyclerViewCard.MoneyMoving">
 
     <LinearLayout
         android:orientation="vertical"
@@ -30,7 +29,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item"
-            style="@style/RecyclerViewItem"
+            style="@style/RecyclerViewItem.MoneyMoving"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dateSeparator">
@@ -78,19 +77,6 @@
                 tool:text="наличка" />
 
             <TextView
-                android:layout_marginTop="@dimen/margin_half_normal"
-                android:id="@+id/description_of_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="gone"
-                tool:visibility="visible"
-                android:text="@string/description_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cashAccountName" />
-
-            <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +84,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description_of_description"
+                app:layout_constraintTop_toBottomOf="@+id/cashAccountName"
                 tool:text="здесь должно быть описание"
                 tool:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>

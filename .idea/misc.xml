@@ -65,7 +65,7 @@
         <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.33" />
         <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.3393574297188755" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.371875" />

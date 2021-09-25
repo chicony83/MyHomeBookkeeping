@@ -2,10 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    style="@style/RecyclerViewCard">
+    style="@style/RecyclerViewCard.CashAccounts">
 
     <LinearLayout
-
         android:id="@+id/cashAccountItem"
         style="@style/RecyclerViewItem"
         android:orientation="horizontal">

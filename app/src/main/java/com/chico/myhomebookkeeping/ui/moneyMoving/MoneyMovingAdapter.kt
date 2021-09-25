@@ -97,7 +97,6 @@ class MoneyMovingAdapter(
                 if (!moneyMovement.description.isNullOrEmpty()) {
                     description.text = moneyMovement.description
                     uiHelper.showUiElement(description)
-                    uiHelper.showUiElement(descriptionOfDescription)
 //                    val text = moneyMovement.description.toString()
 //                    val numOfLines = countLines(text)
 //                    if (numOfLines > 2) {
@@ -111,7 +110,6 @@ class MoneyMovingAdapter(
                 if (moneyMovement.description.isNullOrEmpty()) {
                     description.text = null
                     uiHelper.hideUiElement(description)
-                    uiHelper.hideUiElement(descriptionOfDescription)
                 }
                 if (moneyMovement.isIncome) {
                     amount.text = plus + moneyMovement.amount.toString()
