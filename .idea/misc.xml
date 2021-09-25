@@ -60,7 +60,7 @@
         <entry key="app/src/main/res/layout/money_moving_recycler_view_item.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_cash_account.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.33" />
         <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.25" />
