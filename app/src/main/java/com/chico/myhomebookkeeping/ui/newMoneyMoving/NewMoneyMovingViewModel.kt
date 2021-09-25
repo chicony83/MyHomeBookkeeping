@@ -195,7 +195,9 @@ class NewMoneyMovingViewModel(
                 argsCategoryCreateKey,
                 _selectedCategory.value?.categoriesId
             )
-            saveToSP(argsAmountCreateKey, amount.toString())
+            if (amount>0){
+                saveToSP(argsAmountCreateKey, amount.toString())
+            }
             saveToSP(argsDescriptionCreateKey, description)
         }
     }
@@ -263,7 +265,7 @@ class NewMoneyMovingViewModel(
     fun clearSPAfterSave() {
         with(saveARGS) {
             saveToSP(argsDateTimeCreateKey, minusOneLong)
-            saveToSP(argsAmountCreateKey, (-1.0).toFloat())
+            saveToSP(argsAmountCreateKey, "")
             saveToSP(argsDescriptionCreateKey, "")
         }
     }
