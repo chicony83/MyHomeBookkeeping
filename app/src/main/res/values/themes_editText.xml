@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="DialogEditText">
         <item name="android:inputType">text</item>
         <item name="android:maxLength">30</item>
@@ -7,9 +8,20 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="maxLines">1</item>
     </style>
+
     <style name="DialogEnterNewName" parent="DialogEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:hint">@string/hint_enter_name</item>
     </style>
 
+    <style name="EditTextAmount" parent="MatchParent_WrapContent">
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:hint">@string/hint_enter_amount</item>
+    </style>
+
+    <style name="EditTextDescription" parent="MatchParent_WrapContent">
+        <item name="android:inputType">textMultiLine</item>
+        <item name="maxLines">2</item>
+        <item name="android:hint">@string/hint_add_you_description</item>
+    </style>
 </resources>

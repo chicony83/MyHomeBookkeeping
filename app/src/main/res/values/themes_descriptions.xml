@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextDescriptions" parent="MatchParent_WrapContent">
+        <item name="android:layout_marginLeft">@dimen/margin_normal</item>
+    </style>
+
+    <style name="TextDescriptionLine" parent="WrapContent_WrapContent">
+        <item name="android:layout_margin">@dimen/margin_normal</item>
+    </style>
+</resources>

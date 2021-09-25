@@ -2,4 +2,6 @@
 <resources>
     <string name="hint_only_last_4_digits">Only last 4 digits</string>
     <string name="hint_enter_name">Enter name</string>
+    <string name="hint_enter_amount">Enter amount</string>
+    <string name="hint_add_you_description">Add you description</string>
 </resources>

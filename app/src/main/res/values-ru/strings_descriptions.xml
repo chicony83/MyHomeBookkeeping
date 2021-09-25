@@ -11,7 +11,6 @@
     <string name="description_category">Категория</string>
     <string name="description_amount">Сумма</string>
     <string name="description_description">Описание</string>
-    <string name="description_add_you_description">Добавьте ваше описание</string>
 
     <string name="descriptions_last_4_digits_of_card">Последних 4 цифры карты</string>
 

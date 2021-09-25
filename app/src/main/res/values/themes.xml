@@ -43,16 +43,6 @@
         <item name="android:visibility">gone</item>
     </style>
 
-
-    <style name="TextDescriptions" parent="MatchParent_WrapContent">
-
-    </style>
-
-    <style name="TextDescriptionLine" parent="WrapContent_WrapContent">
-        <item name="android:layout_margin">@dimen/margin_normal</item>
-    </style>
-
-
     <style name="DialogHeaderText">
 
     </style>
