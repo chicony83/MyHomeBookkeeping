@@ -45,6 +45,6 @@
     <string name="text_on_button_cancel">Cancel</string>
 
     <string name="text_on_button_all_text">All</string>
-
+    <string name="text_on_button_check_update">Check new version</string>
 
 </resources>

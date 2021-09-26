@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.chico.myhomebookkeeping.checks.GetVersionCode
 import com.chico.myhomebookkeeping.databinding.FragmentSettingsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -36,13 +37,26 @@ class SettingsFragment : Fragment() {
 //            changePasswordButton.setOnClickListener {
 //                navControlHelper.moveToSelectedFragment(R.id.nav_select_password)
 //            }
+            checkNewVersionButton.setOnClickListener {
+                checkNewVersion()
+            }
             submitButton.setOnClickListener {
                 message("настройки сохранены")
                 navControlHelper.moveToPreviousPage()
             }
         }
+        with(settingsViewModel){
+            appVersion.observe(viewLifecycleOwner, {
+                binding.appVersion.text = it.toString()
+            })
+        }
 
         return binding.root
+    }
+
+    private fun checkNewVersion() {
+        val getVersionCode = GetVersionCode(requireContext())
+        val version: Any = getVersionCode.getNewVersion()
     }
 
     private fun message(text: String) {

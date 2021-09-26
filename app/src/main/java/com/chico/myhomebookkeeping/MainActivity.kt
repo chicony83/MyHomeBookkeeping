@@ -27,10 +27,17 @@ import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 
+import android.content.pm.PackageManager
+import android.widget.Toast
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.FLEXIBLE
+import com.google.android.play.core.install.model.UpdateAvailability
+
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val argsIsNightModeOn = Constants.IS_NIGHT_MODE_ON
     private val uiHelper = UiHelper()
     private val spName = Constants.SP_NAME
     private val checkNightMode = CheckNightMode()
@@ -38,13 +45,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var getSP: GetSP
     private lateinit var setSP: SetSP
     private lateinit var eraseSP: EraseSP
-//    private var isNightMode = false
 
-
-    //        getSharedPreferences(spName, MODE_PRIVATE)
     private lateinit var spEditor: SharedPreferences.Editor
 
-    //    private val argsIdMoneyMovingForChange = Constants.SP_ID_MONEY_MOVING_FOR_CHANGE
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         hideFab(navController, fab)
         hideToolbar(toolbar)
         eraseSP.eraseTempSP()
+
     }
 
     private fun uiMode() {

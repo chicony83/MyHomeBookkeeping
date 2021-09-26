@@ -19,4 +19,7 @@
 
     <string name="message_deletion_canceled">Удаление отменено</string>
     <string name="message_entry_deleted">Запись удалена</string>
+
+    <string name="message_you_have_latest_version">У вас последняя версия программы</string>
+    <string name="message_you_can_update_the_program">Можно обновить программу</string>
 </resources>

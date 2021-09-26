@@ -14,23 +14,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/enterInProgramWithPassword"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="вход в программу по паролю" />-->
+        <TextView
+            android:id="@+id/appVersion"
+            style="@style/Description.ItemsSettings"
+            android:hint="@string/current_version"/>
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/changeLinesWithPassword"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="изменять записи по паролю" />-->
+        <Button
+            android:id="@+id/checkNewVersionButton"
+            style="@style/ButtonFullWidth"
+            android:text="@string/text_on_button_check_update" />
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/enterInProgramWithPassword"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="вход в программу по паролю" />-->
 
-<!--        <Button-->
-<!--            android:id="@+id/changePasswordButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="изменить пароль" />-->
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/changeLinesWithPassword"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="изменять записи по паролю" />-->
+
+        <!--        <Button-->
+        <!--            android:id="@+id/changePasswordButton"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="изменить пароль" />-->
 
     </LinearLayout>
 

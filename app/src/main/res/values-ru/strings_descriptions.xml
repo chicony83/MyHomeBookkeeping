@@ -29,4 +29,6 @@
 
     <string name="description_A_quick_setup_of_the_program_will_be_done_here">Здесь будет произведена быстрая настройка программы.</string>
     <string name="description_After_adding_the_name_it_will_be_possible_to_change">После добавления все названия можно будет изменять.</string>
+
+    <string name="current_version">Текущая версия</string>
 </resources>

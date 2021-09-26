@@ -11,6 +11,11 @@
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
     </style>
 
+    <style name="Description.ItemsSettings">
+        <item name="android:textSize">@dimen/H3</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="Description.first_launch_fragment">
         <item name="android:textSize">@dimen/H3</item>
         <item name="android:layout_margin">@dimen/margin_normal</item>

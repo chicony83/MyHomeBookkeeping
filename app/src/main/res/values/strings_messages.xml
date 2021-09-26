@@ -19,4 +19,7 @@
 
     <string name="message_deletion_canceled">Deletion canceled</string>
     <string name="message_entry_deleted">Entry deleted</string>
+
+    <string name="message_you_have_latest_version">You have latest version</string>
+    <string name="message_you_can_update_the_program">You can update the program</string>
 </resources>
