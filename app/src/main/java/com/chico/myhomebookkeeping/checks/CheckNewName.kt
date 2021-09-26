@@ -12,14 +12,13 @@ object CheckNewName {
         namesList: List<String>,
     ): Boolean {
         Message.log("ищем")
-        search@ for (i in namesList.indices) {
-            if (s.toString().equals(namesList[i], ignoreCase = true)) {
-//                    showMessage("найдено совпадение $s == ${namesList[i]}")
-                return true
-                break@search
+        for (i in namesList.indices) {
+            return if (s.toString().equals(namesList[i], ignoreCase = true)) {
+                //                    showMessage("найдено совпадение $s == ${namesList[i]}")
+                true
             } else {
                 Message.log("$s != ${namesList[i]}")
-                return false
+                false
             }
         }
         return false
