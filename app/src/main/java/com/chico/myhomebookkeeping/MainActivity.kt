@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_new_money_moving -> uiHelper.hideUiElement(fab)
                 R.id.nav_first_launch_fragment -> uiHelper.hideUiElement(fab)
                 R.id.nav_time_period -> uiHelper.hideUiElement(fab)
+                R.id.nav_reports -> uiHelper.hideUiElement(fab)
                 else -> uiHelper.showUiElement(fab)
             }
         }

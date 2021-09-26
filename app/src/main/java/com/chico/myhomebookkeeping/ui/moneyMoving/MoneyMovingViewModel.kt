@@ -318,8 +318,8 @@ class MoneyMovingViewModel(
     }
 
     fun isFirstLaunch(): Boolean {
-//        return getSP.getBoolean(argsIsFirstLaunch)
-        return true
+        return getSP.getBoolean(argsIsFirstLaunch)
+//        return true
     }
 
     fun setIsFirstLaunchFalse() {
