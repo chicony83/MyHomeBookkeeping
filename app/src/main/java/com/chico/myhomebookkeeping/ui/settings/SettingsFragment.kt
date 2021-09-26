@@ -38,9 +38,6 @@ class SettingsFragment : Fragment() {
 //            changePasswordButton.setOnClickListener {
 //                navControlHelper.moveToSelectedFragment(R.id.nav_select_password)
 //            }
-            quickSetupButton.setOnClickListener {
-                navControlHelper.moveToSelectedFragment(R.id.nav_first_launch_fragment)
-            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
