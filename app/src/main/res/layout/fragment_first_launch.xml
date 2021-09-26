@@ -24,9 +24,6 @@
                 style="@style/Description.first_launch_fragment"
                 android:text="@string/description_A_quick_setup_of_the_program_will_be_done_here" />
 
-            <TextView
-                style="@style/Description.first_launch_fragment"
-                android:text="@string/description_After_adding_the_name_it_will_be_possible_to_change" />
 
             <TextView
                 style="@style/MatchParent_WrapContent"

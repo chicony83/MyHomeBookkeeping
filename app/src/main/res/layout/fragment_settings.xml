@@ -14,8 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Button
+            android:id="@+id/quickSetupButton"
+            android:text="@string/text_on_button_launch_quick_setup"
+            style="@style/ButtonFullWidth">
+        </Button>
+
         <TextView
             android:id="@+id/appVersion"
+            android:layout_marginTop="@dimen/margin_normal"
             style="@style/Description.ItemsSettings"
             android:hint="@string/current_version"/>
 

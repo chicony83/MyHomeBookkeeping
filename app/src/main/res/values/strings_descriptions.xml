@@ -27,8 +27,7 @@
     <string name="description_this_name_is_taken">This name is taken</string>
     <string name="description_you_want_to_delete_the_entry">You want to delete the entry</string>
     
-    <string name="description_A_quick_setup_of_the_program_will_be_done_here">A quick setup of the program will be done here.</string>
-    <string name="description_After_adding_the_name_it_will_be_possible_to_change">After adding the name it will be possible to change.</string>
+    <string name="description_A_quick_setup_of_the_program_will_be_done_here">A quick setup of the program.</string>
 
     <string name="current_version">Current version</string>
 </resources>

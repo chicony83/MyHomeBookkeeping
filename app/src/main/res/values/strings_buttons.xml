@@ -46,5 +46,5 @@
 
     <string name="text_on_button_all_text">All</string>
     <string name="text_on_button_check_update">Check new version</string>
-
+    <string name="text_on_button_launch_quick_setup">Launch quick setup</string>
 </resources>
