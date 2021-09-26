@@ -25,7 +25,6 @@ object CheckNewName {
                 button.isEnabled = true
                 errorMessage.visibility = View.GONE
             }
-
         }
     }
 }

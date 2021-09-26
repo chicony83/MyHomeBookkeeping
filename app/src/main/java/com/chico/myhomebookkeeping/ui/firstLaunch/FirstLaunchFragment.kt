@@ -50,7 +50,6 @@ class FirstLaunchFragment : Fragment() {
             firstLaunchViewModel.setIsFirstLaunchFalse()
             navControlHelper.moveToPreviousPage()
         }
-
     }
 
     override fun onDestroy() {
