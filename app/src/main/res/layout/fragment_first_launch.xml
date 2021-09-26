@@ -38,6 +38,8 @@
             <CheckBox
                 android:id="@+id/addCashAccountsCash"
                 style="@style/Description.CashAccounts.FirstLaunch"
+                android:checked="true"
+                android:enabled="false"
                 android:text="@string/quick_setup_name_Cash" />
 
             <TextView
@@ -48,6 +50,8 @@
             <CheckBox
                 android:id="@+id/addDefaultCurrency"
                 style="@style/Description.Currencies.FirstLaunch"
+                android:checked="true"
+                android:enabled="false"
                 android:text="@string/quick_setup_name_Currency" />
 
             <TextView
@@ -58,11 +62,15 @@
             <CheckBox
                 android:id="@+id/addCategoryTheSalary"
                 style="@style/Description.IncomeText.FirstLaunch"
+                android:checked="true"
+                android:enabled="false"
                 android:text="@string/quick_setup_name_The_Salary" />
 
             <CheckBox
                 android:id="@+id/addCategoryProducts"
                 style="@style/Description.SpendingText.FirstLaunch"
+                android:checked="true"
+                android:enabled="false"
                 android:text="@string/quick_setup_name_Products" />
 
             <CheckBox

@@ -27,7 +27,7 @@
 
     <string name="description_you_want_to_delete_the_entry">Вы хотите удалить запись</string>
 
-    <string name="description_A_quick_setup_of_the_program_will_be_done_here">Быстрая настройка программы.</string>
+    <string name="description_A_quick_setup_of_the_program_will_be_done_here">Быстрая настройка программы.\nСледующие элементы будут добавлены</string>
 
     <string name="current_version">Текущая версия</string>
 </resources>

@@ -196,8 +196,9 @@ class MoneyMovingFragment : Fragment() {
 
     private fun checkFirstLaunch() {
         if (moneyMovingViewModel.isFirstLaunch()) {
-            binding.firstLaunchDialogHolder.visibility = View.VISIBLE
+//            binding.firstLaunchDialogHolder.visibility = View.VISIBLE
             moneyMovingViewModel.setIsFirstLaunchFalse()
+            control.navigate(R.id.nav_first_launch_fragment)
         }
     }
 

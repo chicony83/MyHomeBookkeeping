@@ -59,7 +59,6 @@
 
     <style name="Description.Currencies.FirstLaunch">
         <item name="android:textSize">@dimen/H4</item>
-        <item name="android:checked">true</item>
     </style>
 
 </resources>
