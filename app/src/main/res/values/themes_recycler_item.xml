@@ -44,11 +44,8 @@
     </style>
 
     <style name="RecyclerViewItem.MoneyMoving">
-        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
-        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
-        <item name="android:layout_marginStart">@dimen/margin_normal</item>
-        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
-
+        <item name="android:padding">@dimen/margin_half_normal</item>
+        <item name="android:layout_margin">@dimen/margin_half_normal</item>
     </style>
 
     <style name="RecyclerViewItem.Categories">
