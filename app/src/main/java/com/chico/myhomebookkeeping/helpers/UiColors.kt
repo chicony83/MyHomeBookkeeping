@@ -10,16 +10,24 @@ import com.chico.myhomebookkeeping.obj.DayNightMode
 
 class UiColors {
     fun setColors(
+        buttonsList: List<Button>,
+        buttonsListForColorButtonText: List<Button>
+    ) {
+        setButtonsBackgroundColor(buttonsList = buttonsList, color = Colors.dialogButtonsColor)
+        setButtonsTextColor(buttonsListForColorButtonText)
+    }
+
+    fun setColors(
         dialogsList: List<ViewBinding>,
         buttonsList: List<Button>,
         buttonsListForColorButtonText: List<Button>
     ) {
         setDialogBackgroundColor(dialogsList = dialogsList, color = Colors.dialogBackgroundColor)
-//        setButtonsBackgroundTintColor(
-//            buttonsList = buttonsList,
-//            color = Colors.dialogButtonsTintColor
-//        )
         setButtonsBackgroundColor(buttonsList = buttonsList, color = Colors.dialogButtonsColor)
+        setButtonsTextColor(buttonsListForColorButtonText)
+    }
+
+    private fun setButtonsTextColor(buttonsList: List<Button>) {
         when (DayNightMode.isNightMode) {
             true -> {
 //                message("ночь")
@@ -27,7 +35,7 @@ class UiColors {
             false -> {
 //                message("день")
                 setColorTextOnButton(
-                    buttonsListForColorButtonText,
+                    buttonsList,
                     Colors.dialogButtonsTextColor
                 )
             }

@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentTimePeriodBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.UiColors
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
@@ -32,6 +33,7 @@ class TimePeriodFragment : Fragment() {
 
     private val calendar = Calendar.getInstance()
     private val dateNowInMills = calendar.timeInMillis
+    private val uiColors = UiColors()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,7 +108,20 @@ class TimePeriodFragment : Fragment() {
                 isGetEndTimePeriod = false
             }
         }
+        uiColors.setColors(getButtonsListForColorButton(),getButtonsListForColorButtonText())
     }
+
+    private fun getButtonsListForColorButtonText() = listOf(
+        binding.selectStartPeriodButton,
+        binding.selectEndPeriodButton
+    )
+
+    private fun getButtonsListForColorButton() = listOf(
+        binding.selectStartPeriodButton,
+        binding.resetStartPeriodButton,
+        binding.selectEndPeriodButton,
+        binding.resetEndPeriodButton
+    )
 
     override fun onStart() {
         super.onStart()
