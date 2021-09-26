@@ -10,21 +10,18 @@ object CheckNewName {
     fun check(
         s: Editable?,
         namesList: List<String>,
-        button: Button,
-        errorMessage: TextView
-    ) {
+    ): Boolean {
         Message.log("ищем")
         search@ for (i in namesList.indices) {
             if (s.toString().equals(namesList[i], ignoreCase = true)) {
 //                    showMessage("найдено совпадение $s == ${namesList[i]}")
-                button.isEnabled = false
-                errorMessage.visibility = View.VISIBLE
+                return true
                 break@search
             } else {
                 Message.log("$s != ${namesList[i]}")
-                button.isEnabled = true
-                errorMessage.visibility = View.GONE
+                return false
             }
         }
+        return false
     }
 }

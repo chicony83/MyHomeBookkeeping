@@ -10,8 +10,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper(
-
 ) {
+    
     private val minLength: Int = Constants.MIN_LENGTH_NAME
 
     fun clearUiElement(editText: EditText) {
@@ -137,5 +137,13 @@ class UiHelper(
 
     fun isEntered(text: Editable): Boolean {
         return text.isNotEmpty()
+    }
+
+    fun disableButton(button: Button) {
+        button.isEnabled = false
+    }
+
+    fun enableButton(button: Button) {
+        button.isEnabled = true
     }
 }
