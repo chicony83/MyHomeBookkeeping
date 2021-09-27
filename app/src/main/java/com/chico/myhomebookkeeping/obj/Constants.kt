@@ -18,15 +18,26 @@ object Constants {
     const val FOR_CHANGE_AMOUNT_KEY = "amountForChange"
     const val FOR_CHANGE_DESCRIPTION_KEY = "descriptionForChange"
 
+    const val FOR_QUERY_START_TIME_PERIOD ="queryStartTimePeriod"
+    const val FOR_QUERY_END_TIME_PERIOD ="queryEndTimePeriod"
     const val FOR_QUERY_CASH_ACCOUNT_KEY = "queryCashAccount"
     const val FOR_QUERY_CURRENCY_KEY = "queryCurrency"
     const val FOR_QUERY_CATEGORY_KEY = "queryCategory"
-    const val FOR_QUERY_START_TIME_PERIOD ="queryStartTimePeriod"
-    const val FOR_QUERY_END_TIME_PERIOD ="queryEndTimePeriod"
-
     const val FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY = "queryCategoryIncomeSpending"
     const val FOR_QUERY_INCOME = "income"
     const val FOR_QUERY_SPENDING = "spending"
+
+    const val FOR_REPORTS_START_TIME_PERIOD ="startTimePeriodForReports"
+    const val FOR_REPORTS_END_TIME_PERIOD ="endTimePeriodForReports"
+    const val FOR_REPORTS_CASH_ACCOUNT_KEY = "cashAccountForReports"
+    const val FOR_REPORTS_CURRENCY_KEY = "currencyForReports"
+    const val FOR_REPORTS_CATEGORY_KEY = "categoryForReports"
+    const val FOR_REPORTS_CATEGORIES_INCOME_SPENDING_KEY = "categoryIncomeSpendingForReports"
+    const val FOR_REPORTS_INCOME = "incomeForReports"
+    const val FOR_REPORTS_SPENDING = "spendingForReports"
+
+
+    const val FOR_REPORTS_AMOUNT_KEY = "amountForReports"
 
     const val FOR_QUERY_NONE = ""
 

@@ -19,7 +19,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class CurrenciesViewModel(
-    val app: Application,
+    val app: Application
 ) : AndroidViewModel(app) {
     private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val spName by lazy { Constants.SP_NAME }

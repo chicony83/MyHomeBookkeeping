@@ -190,6 +190,11 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel.getListFullMoneyMoving()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun launchFragment(fragment: Int) {
         control.navigate(fragment)
     }
@@ -234,10 +239,6 @@ class MoneyMovingFragment : Fragment() {
 //        }
 //    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 
     private fun message(text: String) {
         launchUi {

@@ -6,17 +6,85 @@
     android:layout_height="match_parent"
     tools:context=".ui.reports.ReportsFragment">
 
-    <TextView
-        android:id="@+id/text_reports"
+    <HorizontalScrollView
+        android:id="@+id/scrollViewButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/selectQueryButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/selectCurrency"
+                style="@style/TopButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_currency" />
+
+            <Button
+                android:id="@+id/selectCategory"
+                style="@style/TopButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_category" />
+
+            <Button
+                android:id="@+id/selectCashAccount"
+                style="@style/TopButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_cash_account" />
+
+            <Button
+                android:id="@+id/selectTimePeriod"
+                style="@style/TopButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_time_period" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/scrollViewButtons">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <org.eazegraph.lib.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:layout_gravity="center" />
+
+            <!--            <org.eazegraph.lib.charts.BarChart-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:id="@+id/barChart"-->
+            <!--                android:layout_width="400dp"-->
+            <!--                android:layout_height="400dp"-->
+            <!--                app:egBarMargin="40dp"-->
+            <!--                app:egLegendColor="@color/colorPrimary"-->
+            <!--                app:egShowValues="true"-->
+            <!--                app:egShowDecimal="true"-->
+            <!--                app:egFixedBarWidth="false"-->
+            <!--                app:egBarWidth="20dp"-->
+            <!--                app:egLegendHeight="40dp"/>-->
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

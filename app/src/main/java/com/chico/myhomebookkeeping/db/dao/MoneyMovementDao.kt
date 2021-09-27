@@ -21,7 +21,10 @@ interface MoneyMovementDao {
     suspend fun getFullMoneyMoving(): List<FullMoneyMoving>
 
     @RawQuery
-    suspend fun getSelectedMoneyMoving(query:SimpleSQLiteQuery):List<FullMoneyMoving>
+    suspend fun getSelectedMoneyMoving(query:SimpleSQLiteQuery):List<MoneyMovement>
+
+    @RawQuery
+    suspend fun getSelectedFullMoneyMoving(query: SimpleSQLiteQuery):List<FullMoneyMoving>
 
     @RawQuery
     suspend fun getOneFullMoneyMoving(query: SimpleSQLiteQuery):FullMoneyMoving

@@ -36,32 +36,40 @@ class MoneyMovingViewModel(
     private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
     private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
-    private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsIncomeSpendingKey = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
     private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
     private val argsStartTimePeriod = Constants.FOR_QUERY_START_TIME_PERIOD
     private val argsEndTimePeriod = Constants.FOR_QUERY_END_TIME_PERIOD
 
+    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
+    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
+
+    private var startTimePeriodLongSP = minusOneLong
+    private var endTimePeriodLongSP = minusOneLong
+    private var cashAccountIntSP = -1
+    private var currencyIntSP: Int = -1
+    private var categoryIntSP = -1
+    private var incomeSpendingStringSP: String = argsNone
+
     private val modelCheck = ModelCheck()
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
+
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
-
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
+
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
     private val spEditor = sharedPreferences.edit()
     private val setSP = SetSP(spEditor)
     private var getSP = GetSP(sharedPreferences)
-
-    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
-    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
     private val _moneyMovementList = MutableLiveData<List<FullMoneyMoving>?>()
     val moneyMovementList: MutableLiveData<List<FullMoneyMoving>?>
@@ -99,22 +107,15 @@ class MoneyMovingViewModel(
     val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
         get() = _selectedMoneyMoving
 
-    private var cashAccountIntSP = -1
-    private var currencyIntSP: Int = -1
-    private var categoryIntSP = -1
-    private var incomeSpendingStringSP: String = argsNone
-    private var startTimePeriodLongSP = minusOneLong
-    private var endTimePeriodLongSP = minusOneLong
-
     fun getListFullMoneyMoving() {
         runBlocking {
             getValuesSP()
+            setTextOnButtons()
             val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
-                async(Dispatchers.IO) { loadListMoneyMovement() }
+                async(Dispatchers.IO) { loadListOfMoneyMoving() }
             Log.i("TAG", "found lines money moving ${listFullMoneyMoving.await()?.size}")
             postListFullMoneyMoving(listFullMoneyMoving.await())
             postBalanceValues(listFullMoneyMoving.await())
-            setTextOnButtons()
         }
     }
 
@@ -163,65 +164,65 @@ class MoneyMovingViewModel(
 
     private fun setTextOnCashAccountButton() {
         launchUi {
-            val text: String = getResourceText(R.string.text_on_button_cash_account)
-            var name = ""
+            val nameButton: String = getResourceText(R.string.text_on_button_cash_account)
+            var nameCashAccount = ""
             if (modelCheck.isPositiveValue(cashAccountIntSP)) {
-                name = CashAccountsUseCase.getOneCashAccount(
+                nameCashAccount = CashAccountsUseCase.getOneCashAccount(
                     dbCashAccount,
                     cashAccountIntSP
                 )?.accountName.toString()
             }
             if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
-                name = getResourceText(R.string.text_on_button_all_text)
+                nameCashAccount = getResourceText(R.string.text_on_button_all_text)
             }
-            _buttonTextOfQueryCashAccount.postValue(createButtonText(text, name))
+            _buttonTextOfQueryCashAccount.postValue(createButtonText(nameButton, nameCashAccount))
         }
     }
 
     private fun setTextOnCurrencyButton() {
         launchUi {
-            val text: String = getResourceText(R.string.text_on_button_currency)
-            var name = ""
+            val nameButton: String = getResourceText(R.string.text_on_button_currency)
+            var nameCurrency = ""
 
             if (modelCheck.isPositiveValue(currencyIntSP)) {
-                name = CurrenciesUseCase.getOneCurrency(
+                nameCurrency = CurrenciesUseCase.getOneCurrency(
                     dbCurrencies,
                     currencyIntSP
                 )?.currencyName.toString()
             }
             if (!modelCheck.isPositiveValue(currencyIntSP)) {
-                name = getResourceText(R.string.text_on_button_all_text)
+                nameCurrency = getResourceText(R.string.text_on_button_all_text)
             }
-            _buttonTextOfQueryCurrency.postValue(createButtonText(text, name))
+            _buttonTextOfQueryCurrency.postValue(createButtonText(nameButton, nameCurrency))
         }
     }
 
     private fun setTextOnCategoryButton() {
         launchUi {
-            val text: String = getResourceText(R.string.text_on_button_category)
-            var name = ""
+            val nameButton: String = getResourceText(R.string.text_on_button_category)
+            var nameCategory = ""
             if (modelCheck.isPositiveValue(categoryIntSP)) {
-                name = CategoriesUseCase.getOneCategory(
+                nameCategory = CategoriesUseCase.getOneCategory(
                     dbCategory,
                     categoryIntSP
                 )?.categoryName.toString()
             }
-            if (getSP.isCategoryNone(argsIncomeSpending)) {
+            if (getSP.isCategoryNone(argsIncomeSpendingKey)) {
                 if (!modelCheck.isPositiveValue(categoryIntSP)) {
-                    name = getResourceText(R.string.text_on_button_all_text)
+                    nameCategory = getResourceText(R.string.text_on_button_all_text)
                 }
             }
-            if (!getSP.isCategoryNone(argsIncomeSpending)) {
-                if (getSP.isCategoryIncome(argsIncomeSpending)) {
-                    name = getResourceText(R.string.text_on_button_all_income)
+            if (!getSP.isCategoryNone(argsIncomeSpendingKey)) {
+                if (getSP.isCategoryIncome(argsIncomeSpendingKey)) {
+                    nameCategory = getResourceText(R.string.text_on_button_all_income)
                     Log.i("TAG", "income message")
                 }
-                if (getSP.isCategorySpending(argsIncomeSpending)) {
+                if (getSP.isCategorySpending(argsIncomeSpendingKey)) {
                     Log.i("TAG", "income spending")
-                    name = getResourceText(R.string.text_on_button_all_spending)
+                    nameCategory = getResourceText(R.string.text_on_button_all_spending)
                 }
             }
-            _buttonTextOfQueryCategory.postValue(createButtonText(text, name))
+            _buttonTextOfQueryCategory.postValue(createButtonText(nameButton, nameCategory))
         }
     }
 
@@ -241,14 +242,13 @@ class MoneyMovingViewModel(
     private fun getValuesSP() {
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriod)
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriod)
-        incomeSpendingStringSP = getSP.getString(argsIncomeSpending) ?: argsNone
+        incomeSpendingStringSP = getSP.getString(argsIncomeSpendingKey) ?: argsNone
         cashAccountIntSP = getSP.getInt(argsCashAccountKey)
         currencyIntSP = getSP.getInt(argsCurrencyKey)
         categoryIntSP = getSP.getInt(argsCategoryKey)
     }
 
-    private suspend fun loadListMoneyMovement() = launchForResult {
-
+    private suspend fun loadListOfMoneyMoving() = launchForResult {
         val query = MoneyMovingCreteQuery.createQueryList(
             currencyIntSP,
             categoryIntSP,
@@ -261,8 +261,7 @@ class MoneyMovingViewModel(
     }
 
     private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
-
-        return MoneyMovingUseCase.getSelectedMoneyMovement(
+        return MoneyMovingUseCase.getSelectedFullMoneyMovement(
             db,
             query
         )

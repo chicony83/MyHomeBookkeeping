@@ -35,58 +35,178 @@ object MoneyMovingCreteQuery {
         endTimePeriodLongSP: Long
     ): SimpleSQLiteQuery {
 
-        var queryString = ""
-        queryString += addMainQuery()
+        var queryString = addMainQuery()
         val argsList: ArrayList<Any> = arrayListOf()
 
-        if ((startTimePeriodLongSP > 0) and (endTimePeriodLongSP > 0)) {
-            queryString += addAnd()
-            queryString += "time_stamp BETWEEN :startTime AND :endTime"
-            argsList.add(startTimePeriodLongSP)
-            argsList.add(endTimePeriodLongSP)
-        }
-        if ((startTimePeriodLongSP > 0) xor (endTimePeriodLongSP > 0)) {
-            if (startTimePeriodLongSP > 0) {
-                queryString += addAnd()
-                queryString += "time_stamp > :time_stamp"
-                argsList.add(startTimePeriodLongSP)
-            }
-            if (endTimePeriodLongSP > 0) {
-                queryString += addAnd()
-                queryString += "time_stamp < :time_stamp"
-                argsList.add(endTimePeriodLongSP)
-            }
-        }
-        if (currencyVal > 0) {
-            queryString += addAnd()
-            queryString += " currency = :currency "
-            argsList.add(currencyVal)
-        }
-        if (incomeSpendingSP == argsIncome) {
-            queryString += addAnd()
-            queryString += " is_income = 1 "
-        }
-        if (incomeSpendingSP == argsSpending) {
-            queryString += addAnd()
-            queryString += " is_income = 0 "
-        }
-        if (categoryVal > 0) {
-            queryString += addAnd()
-            queryString += " category = :category "
-            argsList.add(categoryVal)
-        }
-        if (cashAccountVal > 0) {
-            queryString += addAnd()
-            queryString += " cash_account = :cash_account "
-            argsList.add(cashAccountVal)
-        }
+        queryString =
+            addSelectedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+        queryString =
+            addNotEndedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+        queryString = addCurrency(currencyVal, queryString, argsList)
+        queryString = addIsIncomeCategory(incomeSpendingSP, queryString)
+        queryString = addIsSpendingCategory(incomeSpendingSP, queryString)
+        queryString = addCategory(categoryVal, queryString, argsList)
+        queryString = addCashAccount(cashAccountVal, queryString, argsList)
 
-        queryString += " ORDER BY time_stamp DESC "
+        queryString = addSortingByTimeStampDesc(queryString)
 
         Log.i("TAG", queryString)
         val args = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)
+    }
+    fun createQueryListForReports(
+        currencyVal: Int,
+        cashAccountVal: Int,
+        incomeSpendingSP: String,
+        startTimePeriodLongSP: Long,
+        endTimePeriodLongSP: Long
+    ): SimpleSQLiteQuery {
+        var queryString = addMainQuery()
+        val argsList: ArrayList<Any> = arrayListOf()
+        queryString =
+            addSelectedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+        queryString =
+            addNotEndedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+        queryString = addCurrency(currencyVal, queryString, argsList)
+        queryString = addIsIncomeCategory(incomeSpendingSP, queryString)
+        queryString = addIsSpendingCategory(incomeSpendingSP, queryString)
+        queryString = addCashAccount(cashAccountVal, queryString, argsList)
+
+        queryString += "ORDER BY category DESC"
+
+        val args = argsList.toArray()
+        return SimpleSQLiteQuery(queryString, args)
+
+    }
+    private fun addNotEndedTimePeriod(
+        startTimePeriodLongSP: Long,
+        endTimePeriodLongSP: Long,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if ((startTimePeriodLongSP > 0) xor (endTimePeriodLongSP > 0)) {
+            queryString1 = addStartTimePeriod(startTimePeriodLongSP, queryString1, argsList)
+            queryString1 = addEndTimePeriod(endTimePeriodLongSP, queryString1, argsList)
+        }
+        return queryString1
+    }
+
+    private fun addSortingByTimeStampDesc(queryString: String): String {
+        var queryString1 = queryString
+        queryString1 += " ORDER BY time_stamp DESC "
+        return queryString1
+    }
+
+    private fun addCashAccount(
+        cashAccountVal: Int,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if (cashAccountVal > 0) {
+            queryString1 += addAnd()
+            queryString1 += " cash_account = :cash_account "
+            argsList.add(cashAccountVal)
+        }
+        return queryString1
+    }
+
+    private fun addCategory(
+        categoryVal: Int,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if (categoryVal > 0) {
+            queryString1 += addAnd()
+            queryString1 += " category = :category "
+            argsList.add(categoryVal)
+        }
+        return queryString1
+    }
+
+    private fun addIsSpendingCategory(
+        incomeSpendingSP: String,
+        queryString: String
+    ): String {
+        var queryString1 = queryString
+        if (incomeSpendingSP == argsSpending) {
+            queryString1 += addAnd()
+            queryString1 += " is_income = 0 "
+        }
+        return queryString1
+    }
+
+    private fun addIsIncomeCategory(
+        incomeSpendingSP: String,
+        queryString: String
+    ): String {
+        var queryString1 = queryString
+        if (incomeSpendingSP == argsIncome) {
+            queryString1 += addAnd()
+            queryString1 += " is_income = 1 "
+        }
+        return queryString1
+    }
+
+    private fun addCurrency(
+        currencyVal: Int,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if (currencyVal > 0) {
+            queryString1 += addAnd()
+            queryString1 += " currency = :currency "
+            argsList.add(currencyVal)
+        }
+        return queryString1
+    }
+
+    private fun addEndTimePeriod(
+        endTimePeriodLongSP: Long,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if (endTimePeriodLongSP > 0) {
+            queryString1 += addAnd()
+            queryString1 += "time_stamp < :time_stamp"
+            argsList.add(endTimePeriodLongSP)
+        }
+        return queryString1
+    }
+
+    private fun addStartTimePeriod(
+        startTimePeriodLongSP: Long,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if (startTimePeriodLongSP > 0) {
+            queryString1 += addAnd()
+            queryString1 += "time_stamp > :time_stamp"
+            argsList.add(startTimePeriodLongSP)
+        }
+        return queryString1
+    }
+
+    private fun addSelectedTimePeriod(
+        startTimePeriodLongSP: Long,
+        endTimePeriodLongSP: Long,
+        queryString: String,
+        argsList: ArrayList<Any>
+    ): String {
+        var queryString1 = queryString
+        if ((startTimePeriodLongSP > 0) and (endTimePeriodLongSP > 0)) {
+            queryString1 += addAnd()
+            queryString1 += "time_stamp BETWEEN :startTime AND :endTime"
+            argsList.add(startTimePeriodLongSP)
+            argsList.add(endTimePeriodLongSP)
+        }
+        return queryString1
     }
 
     private fun addMainQuery(): String {
@@ -104,6 +224,4 @@ object MoneyMovingCreteQuery {
     private fun addAnd(): Any {
         return " AND "
     }
-
-
 }

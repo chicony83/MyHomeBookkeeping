@@ -28,7 +28,7 @@ object MoneyMovingUseCase {
     suspend fun getSelectedMoneyMovement(
         db: MoneyMovementDao,
         query: SimpleSQLiteQuery
-    ): List<FullMoneyMoving>? {
+    ): List<MoneyMovement>? {
         return launchForResult {
             db.getSelectedMoneyMoving(query)
         }
@@ -42,4 +42,14 @@ object MoneyMovingUseCase {
             db.getOneFullMoneyMoving(query = query)
         }
     }
+
+    suspend fun getSelectedFullMoneyMovement(
+        db: MoneyMovementDao,
+        query: SimpleSQLiteQuery
+    ): List<FullMoneyMoving>? {
+        return launchForResult {
+            db.getSelectedFullMoneyMoving(query)
+        }
+    }
 }
+

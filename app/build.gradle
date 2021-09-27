@@ -38,6 +38,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs = ['-Xinline-classes']
     }
 }
 
@@ -76,4 +77,8 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation'org.jsoup:jsoup:1.8.3'
+
+    //EazeGraph
+    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
 }
