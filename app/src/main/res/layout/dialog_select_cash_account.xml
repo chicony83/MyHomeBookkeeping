@@ -36,7 +36,7 @@
         style="@style/DialogButtonLeft.Change"
         android:layout_width="0dp"
         android:text="@string/text_on_button_change"
-        app:layout_constraintEnd_toStartOf="@+id/centerDialogCashAccount"
+        app:layout_constraintEnd_toStartOf="@+id/verticalCenterLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectButton" />
 
@@ -45,11 +45,11 @@
         style="@style/DialogButtonRight.Negative"
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/centerDialogCashAccount"
+        app:layout_constraintStart_toStartOf="@+id/verticalCenterLayout"
         app:layout_constraintTop_toBottomOf="@id/selectButton" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/centerDialogCashAccount"
+        android:id="@+id/verticalCenterLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
