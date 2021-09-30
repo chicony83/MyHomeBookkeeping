@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
-import com.chico.myhomebookkeeping.enums.Reports
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.sp.SetSP
 
 class ReportsMenuViewModel(
     val app: Application
@@ -16,13 +16,12 @@ class ReportsMenuViewModel(
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
     private val spEditor = sharedPreferences.edit()
+    private val setSP = SetSP(spEditor)
 
     private val argsReportType = Constants.REPORT_TYPE
-//    private val argsIncomeCategoryPieReport: String = Reports.PieIncome.toString()
-//    private val argsSpendingCategoryPieReport: String = Reports.PieSpending.toString()
 
     fun saveArgs(report: String) {
-        Message.log("ARGS Saved, reports type = $report")
-        spEditor.putString(argsReportType,report)
+//        Message.log("ARGS Saved, reports type = $report")
+        setSP.saveToSP(argsReportType,report)
     }
 }

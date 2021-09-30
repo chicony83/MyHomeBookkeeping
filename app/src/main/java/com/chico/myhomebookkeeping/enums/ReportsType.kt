@@ -1,6 +1,6 @@
 package com.chico.myhomebookkeeping.enums
 
-enum class Reports {
+enum class ReportsType {
     PieIncome,
     PieSpending
 }

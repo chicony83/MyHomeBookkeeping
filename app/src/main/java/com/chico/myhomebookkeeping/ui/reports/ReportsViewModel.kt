@@ -16,11 +16,11 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
+import com.chico.myhomebookkeeping.enums.ReportsType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -43,6 +43,7 @@ class ReportsViewModel(
     private val argsCategoryKey = Constants.FOR_REPORTS_CATEGORY_KEY
     private val argsIncomeSpendingKey = Constants.FOR_REPORTS_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
+    private val argsReportType = Constants.REPORT_TYPE
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
@@ -53,6 +54,7 @@ class ReportsViewModel(
     private var currencyIntSP: Int = -1
     private var categoryIntSP = -1
     private var incomeSpendingStringSP: String = argsNone
+    private var reportsTypeStringSP = argsNone
 
     private val modelCheck = ModelCheck()
     private val sharedPreferences: SharedPreferences =
@@ -92,9 +94,18 @@ class ReportsViewModel(
     fun getListFullMoneyMoving() {
         runBlocking {
             getValuesSP()
-//            if ((currencyIntSP > 0) and (cashAccountIntSP > 0)) {
+            Message.log("argsReportType = $reportsTypeStringSP")
+            if (reportsTypeStringSP == ReportsType.PieIncome.toString()) {
+                incomeSpendingStringSP = Constants.FOR_QUERY_INCOME
+                Message.log("income")
+            }
+            if (reportsTypeStringSP == ReportsType.PieSpending.toString()){
+                incomeSpendingStringSP = Constants.FOR_QUERY_SPENDING
+                Message.log("spending")
+            }
+
             val listMoneyMoving: Deferred<List<FullMoneyMoving>?> =
-                async(Dispatchers.IO) { loadListOfMoneyMoving() }
+                async(Dispatchers.IO) { loadListOfFullMoneyMoving() }
 
             if (!listMoneyMoving.await().isNullOrEmpty()) {
                 Message.log("list size ${listMoneyMoving.await()?.size.toString()}")
@@ -118,7 +129,7 @@ class ReportsViewModel(
         return _map
     }
 
-    private suspend fun loadListOfMoneyMoving() = launchForResult {
+    private suspend fun loadListOfFullMoneyMoving() = launchForResult {
         val query = MoneyMovingCreteQuery.createQueryListForReports(
             currencyIntSP,
             cashAccountIntSP,
@@ -253,9 +264,11 @@ class ReportsViewModel(
     }
 
     private fun getValuesSP() {
+        reportsTypeStringSP = getSP.getString(argsReportType) ?: argsNone
+        Message.log("reportsType = $reportsTypeStringSP")
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
-        incomeSpendingStringSP = getSP.getString(argsIncomeSpendingKey) ?: argsNone
+//        incomeSpendingStringSP = getSP.getString(argsIncomeSpendingKey) ?: argsNone
         cashAccountIntSP = getSP.getInt(argsCashAccountKey)
         currencyIntSP = getSP.getInt(argsCurrencyKey)
         categoryIntSP = getSP.getInt(argsCategoryKey)

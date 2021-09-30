@@ -74,7 +74,6 @@ object MoneyMovingCreteQuery {
             or (endTimePeriodLongSP > 0)
             or (incomeSpendingStringSP.isNotEmpty())
         ) {
-            queryString += addWhere()
             queryString =
                 addSelectedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
             queryString =
@@ -85,7 +84,6 @@ object MoneyMovingCreteQuery {
             queryString = addCashAccount(cashAccountVal, queryString, argsList)
         }
 
-//        queryString += "ORDER BY category DESC"
         Log.i("TAG", queryString)
 
         val args = argsList.toArray()

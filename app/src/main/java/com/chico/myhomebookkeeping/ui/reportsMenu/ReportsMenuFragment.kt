@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsMenuBinding
-import com.chico.myhomebookkeeping.enums.Reports
+import com.chico.myhomebookkeeping.enums.ReportsType
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 class ReportsMenuFragment : Fragment() {
@@ -41,12 +41,12 @@ class ReportsMenuFragment : Fragment() {
     }
 
     private fun selectSpendingCategoryPieReport() {
-        reportsMenuViewModel.saveArgs(Reports.PieSpending.toString())
+        reportsMenuViewModel.saveArgs(ReportsType.PieSpending.toString())
         launchPieReport()
     }
 
     private fun selectIncomeCategoryPieReport() {
-        reportsMenuViewModel.saveArgs(Reports.PieIncome.toString())
+        reportsMenuViewModel.saveArgs(ReportsType.PieIncome.toString())
         launchPieReport()
     }
 
