@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
@@ -24,16 +23,12 @@ import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.objReports.PieSlice
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingCreteQuery
 import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class ReportsViewModel(
     val app: Application
@@ -90,38 +85,37 @@ class ReportsViewModel(
     val buttonTextOfTimePeriod: LiveData<String>
         get() = _buttonTextOfTimePeriod
 
+    private val _map = MutableLiveData<Map<String, Double>?>()
+    val map: LiveData<Map<String, Double>?>
+        get() = _map
+
     fun getListFullMoneyMoving() {
         runBlocking {
             getValuesSP()
-            if ((currencyIntSP > 0) and (cashAccountIntSP > 0)) {
-                val listMoneyMoving: Deferred<List<MoneyMovement>?> =
-                    async(Dispatchers.IO) { loadListOfMoneyMoving() }
+//            if ((currencyIntSP > 0) and (cashAccountIntSP > 0)) {
+            val listMoneyMoving: Deferred<List<FullMoneyMoving>?> =
+                async(Dispatchers.IO) { loadListOfMoneyMoving() }
 
-//                createPie(listFullMoneyMoving.await())
+            if (!listMoneyMoving.await().isNullOrEmpty()) {
+                Message.log("list size ${listMoneyMoving.await()?.size.toString()}")
+                runBlocking {
 
-                setTextOnButtons()
-            }else{
+                    val map: Map<String, Double> =
+                        listMoneyMoving.await()!!.sortedBy { it.categoryNameValue }
+                            .groupBy { it.categoryNameValue }
+                            .mapValues {
+                                it.value.sumOf { it.amount }
+                            }
 
+                    Message.log("map size ${map.size}")
+                    _map.postValue(map)
+                }
             }
         }
     }
 
-    private fun createPie(list: List<FullMoneyMoving>?) {
-        if (!list.isNullOrEmpty()){
-            val pie:List<PieSlice>
-            val numOfCategories = getNumCategories(list)
-        }
-    }
-
-    private fun getNumCategories(list: List<FullMoneyMoving>){
-        val numOfCategories = mutableListOf<Int>()
-        for (i in list){
-            for (j in numOfCategories){
-//                if (i.ca == j){
-//
-//                }
-            }
-        }
+    fun getMap(): MutableLiveData<Map<String, Double>?> {
+        return _map
     }
 
     private suspend fun loadListOfMoneyMoving() = launchForResult {
@@ -135,14 +129,14 @@ class ReportsViewModel(
         return@launchForResult getListMoneyMovement(query)
     }
 
-    private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<MoneyMovement>? {
+    private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
         return MoneyMovingUseCase.getSelectedMoneyMovement(
             db,
             query
         )
     }
 
-    private fun setTextOnButtons() {
+    fun setTextOnButtons() {
         setTextOnCategoryButton()
         setTextOnCurrencyButton()
         setTextOnCashAccountButton()

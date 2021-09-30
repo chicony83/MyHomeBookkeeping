@@ -65,25 +65,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <org.eazegraph.lib.charts.PieChart
+
+            <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="400dp"
-                android:layout_height="400dp"
-                android:layout_gravity="center" />
+                android:layout_height="400dp">
 
-            <!--            <org.eazegraph.lib.charts.BarChart-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:id="@+id/barChart"-->
-            <!--                android:layout_width="400dp"-->
-            <!--                android:layout_height="400dp"-->
-            <!--                app:egBarMargin="40dp"-->
-            <!--                app:egLegendColor="@color/colorPrimary"-->
-            <!--                app:egShowValues="true"-->
-            <!--                app:egShowDecimal="true"-->
-            <!--                app:egFixedBarWidth="false"-->
-            <!--                app:egBarWidth="20dp"-->
-            <!--                app:egLegendHeight="40dp"/>-->
-
+            </com.github.mikephil.charting.charts.PieChart>
         </LinearLayout>
     </ScrollView>
 

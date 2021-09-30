@@ -14,7 +14,7 @@ object MoneyMovingCreteQuery {
     fun createQueryOneLine(id: Long): SimpleSQLiteQuery {
         var queryString = ""
         val argsList: ArrayList<Any> = arrayListOf()
-        queryString += addMainQuery()
+        queryString += addMainQueryFullMoneyMoving()
 
         if (id > 0) {
             queryString += addAnd()
@@ -35,7 +35,7 @@ object MoneyMovingCreteQuery {
         endTimePeriodLongSP: Long
     ): SimpleSQLiteQuery {
 
-        var queryString = addMainQuery()
+        var queryString = addMainQueryFullMoneyMoving()
         val argsList: ArrayList<Any> = arrayListOf()
 
         queryString =
@@ -55,30 +55,44 @@ object MoneyMovingCreteQuery {
 
         return SimpleSQLiteQuery(queryString, args)
     }
+
     fun createQueryListForReports(
         currencyVal: Int,
         cashAccountVal: Int,
-        incomeSpendingSP: String,
+        incomeSpendingStringSP: String,
         startTimePeriodLongSP: Long,
         endTimePeriodLongSP: Long
     ): SimpleSQLiteQuery {
-        var queryString = addMainQuery()
-        val argsList: ArrayList<Any> = arrayListOf()
-        queryString =
-            addSelectedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
-        queryString =
-            addNotEndedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
-        queryString = addCurrency(currencyVal, queryString, argsList)
-        queryString = addIsIncomeCategory(incomeSpendingSP, queryString)
-        queryString = addIsSpendingCategory(incomeSpendingSP, queryString)
-        queryString = addCashAccount(cashAccountVal, queryString, argsList)
 
-        queryString += "ORDER BY category DESC"
+        var queryString = addMainQueryFullMoneyMoving()
+        val argsList: ArrayList<Any> = arrayListOf()
+
+        if (
+            (currencyVal > 0)
+            or (cashAccountVal > 0)
+            or (startTimePeriodLongSP > 0)
+            or (endTimePeriodLongSP > 0)
+            or (incomeSpendingStringSP.isNotEmpty())
+        ) {
+            queryString += addWhere()
+            queryString =
+                addSelectedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+            queryString =
+                addNotEndedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+            queryString = addCurrency(currencyVal, queryString, argsList)
+            queryString = addIsIncomeCategory(incomeSpendingStringSP, queryString)
+            queryString = addIsSpendingCategory(incomeSpendingStringSP, queryString)
+            queryString = addCashAccount(cashAccountVal, queryString, argsList)
+        }
+
+//        queryString += "ORDER BY category DESC"
+        Log.i("TAG", queryString)
 
         val args = argsList.toArray()
         return SimpleSQLiteQuery(queryString, args)
 
     }
+
     private fun addNotEndedTimePeriod(
         startTimePeriodLongSP: Long,
         endTimePeriodLongSP: Long,
@@ -209,19 +223,28 @@ object MoneyMovingCreteQuery {
         return queryString1
     }
 
-    private fun addMainQuery(): String {
-        return "SELECT id,time_stamp,amount, " +
+    private fun addMainQueryFullMoneyMoving(): String {
+        return "SELECT id,time_stamp, " +
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
                 "category_name AS category_name_value, " +
-                "is_income, description " +
+                "amount, is_income, description " +
                 "FROM money_moving_table,cash_account_table,currency_table,category_table " +
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
                 "AND category == categoriesId"
     }
 
-    private fun addAnd(): Any {
+    private fun addMainQueryMoneyMoving(): String {
+        return "SELECT id,time_stamp, cash_account, currency, category, amount, description " +
+                "FROM money_moving_table"
+    }
+
+    private fun addAnd(): String {
         return " AND "
+    }
+
+    private fun addWhere(): String {
+        return " WHERE "
     }
 }

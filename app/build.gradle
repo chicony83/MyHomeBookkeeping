@@ -41,7 +41,9 @@ android {
         freeCompilerArgs = ['-Xinline-classes']
     }
 }
-
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -78,7 +80,6 @@ dependencies {
 
     implementation'org.jsoup:jsoup:1.8.3'
 
-    //EazeGraph
-    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
-    implementation 'com.nineoldandroids:library:2.4.0'
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
