@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hint_only_last_4_digits">Только последние 4 цыфры</string>
+    <string name="hint_only_last_4_digits">Только последние 4 цифры</string>
     <string name="hint_enter_name">Введите название</string>
     <string name="hint_enter_amount">Введите сумму</string>
     <string name="hint_add_you_description">Добавьте ваше описание</string>
