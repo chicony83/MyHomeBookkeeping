@@ -42,21 +42,6 @@ class TimePeriodViewModel(
     val endTimePeriodText: LiveData<String>
         get() = _endTimePeriodText
 
-    init {
-        getARGSFromSP()
-    }
-
-    private fun getARGSFromSP() {
-        startTimePeriodLong = getSP.getLong(argsStartTimePeriodForQuery)
-        endTimePeriodLong = getSP.getLong(argsEndTimePeriodForQuery)
-        if (modelCheck.isPositiveValue(startTimePeriodLong)) {
-            postStartTimePeriod()
-        }
-        if (modelCheck.isPositiveValue(endTimePeriodLong)) {
-            postEndTimePeriod()
-        }
-    }
-
     fun setStartTimePeriod(date: Long) {
         messageLog("start time = $date")
         startTimePeriodLong = date
@@ -122,4 +107,32 @@ class TimePeriodViewModel(
     private fun getStringResource(text: Int): String {
         return app.getString(text)
     }
+
+    fun setTextOnButtons(navControlHelper: NavControlHelper) {
+        val argsStartTimePeriod:String
+        val argsEndTimePeriod:String
+        when (navControlHelper.previousFragment()) {
+            R.id.nav_money_moving -> {
+                argsStartTimePeriod = argsStartTimePeriodForQuery
+                argsEndTimePeriod = argsEndTimePeriodForQuery
+            }
+            else -> {
+                argsStartTimePeriod = argsStartTimePeriodForReport
+                argsEndTimePeriod = argsEndTimePeriodForReports
+            }
+        }
+        getARGSFromSP(argsStartTimePeriod,argsEndTimePeriod)
+    }
+
+    private fun getARGSFromSP(argsStartTimePeriod: String, argsEndTimePeriod: String) {
+        startTimePeriodLong = getSP.getLong(argsStartTimePeriod)
+        endTimePeriodLong = getSP.getLong(argsEndTimePeriod)
+        if (modelCheck.isPositiveValue(startTimePeriodLong)) {
+            postStartTimePeriod()
+        }
+        if (modelCheck.isPositiveValue(endTimePeriodLong)) {
+            postEndTimePeriod()
+        }
+    }
+
 }

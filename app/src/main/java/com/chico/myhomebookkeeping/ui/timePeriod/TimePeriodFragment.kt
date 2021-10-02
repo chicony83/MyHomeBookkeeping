@@ -78,6 +78,7 @@ class TimePeriodFragment : Fragment() {
             endTimePeriodText.observe(viewLifecycleOwner, {
                 binding.selectEndPeriodButton.text = it
             })
+            setTextOnButtons(navControlHelper)
         }
         datePicker.addOnPositiveButtonClickListener {
             if (isGetStartTimePeriod) {
@@ -110,6 +111,7 @@ class TimePeriodFragment : Fragment() {
         }
         uiColors.setColors(getButtonsListForColorButton(), getButtonsListForColorButtonText())
     }
+
 
     private fun getButtonsListForColorButtonText() = listOf(
         binding.selectStartPeriodButton,
