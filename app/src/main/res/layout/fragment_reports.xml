@@ -68,11 +68,17 @@
 
 
             <com.github.mikephil.charting.charts.PieChart
+                android:layout_gravity="center"
                 android:id="@+id/pieChart"
                 android:layout_width="400dp"
                 android:layout_height="400dp">
 
             </com.github.mikephil.charting.charts.PieChart>
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:layout_gravity="center"
+                android:id="@+id/horizontalBarChart"
+                android:layout_width="400dp"
+                android:layout_height="400dp"/>
         </LinearLayout>
     </ScrollView>
 

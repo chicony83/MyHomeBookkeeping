@@ -2,14 +2,14 @@ package com.chico.myhomebookkeeping.ui.reports
 
 import android.graphics.Color
 import com.chico.myhomebookkeeping.helpers.Message
+import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
+
 
 class Charts {
 
-    fun showPieChart(pieChartView: PieChart, map: Map<String, Double>) {
+    fun showPieChart(chartView: PieChart, map: Map<String, Double>) {
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = "отчёт"
 
@@ -44,7 +44,34 @@ class Charts {
         val pieData = PieData(pieDataSet)
         //showing the value of the entries, default true if not set
         pieData.setDrawValues(true)
-        pieChartView.setData(pieData)
-        pieChartView.invalidate()
+        chartView.setData(pieData)
+        chartView.invalidate()
     }
+
+    fun showHorizontalBarChart(chartView: HorizontalBarChart, map: Map<String, Double>) {
+        val sortedMap:MutableMap<String,Double> = LinkedHashMap()
+        map.entries.sortedBy { it.value }.forEach{sortedMap[it.key] = it.value}
+
+        val valuesList: List<Double> = sortedMap.values.toList()
+        val keysList:List<String> = sortedMap.keys.toList()
+
+        val barWith: Float = 5f
+        val spaceForBars: Float = 2f
+        val yVals: ArrayList<BarEntry> = mutableListOf<BarEntry>() as ArrayList<BarEntry>
+
+        for (i in valuesList.indices) {
+            Message.log("line List $i = ${valuesList[i]}")
+            yVals.add(BarEntry(i*spaceForBars,valuesList[i].toFloat()))
+        }
+
+        val set1 = BarDataSet(yVals, "data Set 1")
+        val data = BarData(set1)
+//        data.barWidth = barWith
+
+        chartView.data = data
+        chartView.invalidate()
+    }
+//    }
+
+
 }

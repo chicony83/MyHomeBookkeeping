@@ -9,7 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 
 class ReportsFragment : Fragment() {
 
@@ -17,8 +21,8 @@ class ReportsFragment : Fragment() {
     private var _binding: FragmentReportsBinding? = null
     private val binding get() = _binding!!
     private lateinit var pieChartView: PieChart
+    private lateinit var horizontalLineChartView:HorizontalBarChart
     private val charts = Charts()
-    private val converter = Converter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +34,10 @@ class ReportsFragment : Fragment() {
             ViewModelProvider(this).get(ReportsViewModel::class.java)
 
         with(reportsViewModel) {
-            getMap().observe(viewLifecycleOwner, Observer { map ->
+            getMap().observe(viewLifecycleOwner, { map ->
                 map?.let {
-                    charts.showPieChart(pieChartView = pieChartView,it)
+                    charts.showPieChart(chartView = pieChartView,it)
+                    charts.showHorizontalBarChart(horizontalLineChartView,it)
                 }
             })
         }
@@ -45,8 +50,10 @@ class ReportsFragment : Fragment() {
         view.hideKeyboard()
 
         pieChartView = binding.pieChart
+        horizontalLineChartView = binding.horizontalBarChart
 
     }
+
 
     override fun onStart() {
         super.onStart()
