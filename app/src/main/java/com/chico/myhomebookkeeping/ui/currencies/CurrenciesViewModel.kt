@@ -32,7 +32,7 @@ class CurrenciesViewModel(
     private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
     private val argsForChange = Constants.FOR_CHANGE_CURRENCY_KEY
 
-    private val saveARGS = SetSP(spEditor)
+    private val setSP = SetSP(spEditor)
 
     private val _currenciesList = MutableLiveData<List<Currencies>>()
     val currenciesList: LiveData<List<Currencies>>
@@ -58,7 +58,7 @@ class CurrenciesViewModel(
 
     fun saveData(navControlHelper: NavControlHelper) {
 //        Log.i("TAG","---currency value = ${_selectedCurrency.value?.currencyId}")
-        saveARGS.checkAndSaveToSP(
+        setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
             argsForNew = argsForCreate,
             argsForChange = argsForChange,

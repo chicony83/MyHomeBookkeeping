@@ -12,7 +12,14 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
 
+    private val navReportsMenu = R.id.nav_reports_menu
+
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
+    private val argsStartTimePeriodForQuery = Constants.FOR_QUERY_START_TIME_PERIOD
+    private val argsEndTimePeriodForQuery = Constants.FOR_QUERY_END_TIME_PERIOD
+    private val argsStartTimePeriodForReport = Constants.FOR_REPORTS_START_TIME_PERIOD
+    private val argsEndTimePeriodForReports = Constants.FOR_REPORTS_END_TIME_PERIOD
+
 
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
@@ -120,5 +127,22 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     fun setIsFirstLaunchFalse() {
         spEditor.putBoolean(argsIsFirstLaunch, false)
         spCommit()
+    }
+
+    fun checkAndSaveToSpTimePeriod(
+        navControlHelper: NavControlHelper,
+        startTimePeriodLong: Long,
+        endTimePeriodLong: Long
+    ) {
+        when(navControlHelper.previousFragment()){
+            navMoneyMoving ->{
+                saveToSP(argsStartTimePeriodForQuery,startTimePeriodLong)
+                saveToSP(argsEndTimePeriodForQuery,endTimePeriodLong)
+            }
+            navReportsMenu ->{
+                saveToSP(argsStartTimePeriodForReport,startTimePeriodLong)
+                saveToSP(argsEndTimePeriodForReports,endTimePeriodLong)
+            }
+        }
     }
 }

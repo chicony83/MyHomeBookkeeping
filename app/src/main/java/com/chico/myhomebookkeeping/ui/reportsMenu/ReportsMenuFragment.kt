@@ -36,8 +36,20 @@ class ReportsMenuFragment : Fragment() {
             allSpendingPieButton.setOnClickListener {
                 selectSpendingCategoryPieReport()
             }
+            selectTimePeriodButton.setOnClickListener {
+                pressSelectButton(R.id.nav_time_period)
+            }
+        }
+        with(reportsMenuViewModel){
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner,{
+                binding.selectTimePeriodButton.text = it
+            })
         }
         return binding.root
+    }
+
+    private fun pressSelectButton(fragment: Int) {
+        navControlHelper.moveToSelectedFragment(fragment)
     }
 
     private fun selectSpendingCategoryPieReport() {

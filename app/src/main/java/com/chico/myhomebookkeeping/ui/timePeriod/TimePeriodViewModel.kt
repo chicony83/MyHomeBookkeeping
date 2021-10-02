@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.checks.ModelCheck
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
@@ -19,12 +20,15 @@ class TimePeriodViewModel(
 
     private val spName = Constants.SP_NAME
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
-    private val argsStartTimePeriod = Constants.FOR_QUERY_START_TIME_PERIOD
-    private val argsEndTimePeriod = Constants.FOR_QUERY_END_TIME_PERIOD
+    private val argsStartTimePeriodForQuery = Constants.FOR_QUERY_START_TIME_PERIOD
+    private val argsEndTimePeriodForQuery = Constants.FOR_QUERY_END_TIME_PERIOD
+    private val argsStartTimePeriodForReport = Constants.FOR_REPORTS_START_TIME_PERIOD
+    private val argsEndTimePeriodForReports = Constants.FOR_REPORTS_END_TIME_PERIOD
 
     private val sharedPreferences = app.getSharedPreferences(spName, MODE_PRIVATE)
+    private val spEditor = sharedPreferences.edit()
     private val getSP = GetSP(sharedPreferences)
-    private val setSP = SetSP(sharedPreferences.edit())
+    private val setSP = SetSP(spEditor)
     private val modelCheck = ModelCheck()
 
     private var startTimePeriodLong: Long = minusOneLong
@@ -43,8 +47,8 @@ class TimePeriodViewModel(
     }
 
     private fun getARGSFromSP() {
-        startTimePeriodLong = getSP.getLong(argsStartTimePeriod)
-        endTimePeriodLong = getSP.getLong(argsEndTimePeriod)
+        startTimePeriodLong = getSP.getLong(argsStartTimePeriodForQuery)
+        endTimePeriodLong = getSP.getLong(argsEndTimePeriodForQuery)
         if (modelCheck.isPositiveValue(startTimePeriodLong)) {
             postStartTimePeriod()
         }
@@ -89,13 +93,20 @@ class TimePeriodViewModel(
     fun getStartTimePeriod(): Long {
         return startTimePeriodLong
     }
-    fun getEndTimePeriod():Long{
+
+    fun getEndTimePeriod(): Long {
         return endTimePeriodLong
     }
 
-    fun saveARGStoSP() {
-        setSP.setLong(argsStartTimePeriod, startTimePeriodLong)
-        setSP.setLong(argsEndTimePeriod, endTimePeriodLong)
+    fun saveARGStoSP(navControlHelper: NavControlHelper) {
+        setSP.checkAndSaveToSpTimePeriod(
+            navControlHelper = navControlHelper,
+            startTimePeriodLong = startTimePeriodLong,
+            endTimePeriodLong = endTimePeriodLong
+
+        )
+//        setSP.setLong(argsStartTimePeriodForQuery, startTimePeriodLong)
+//        setSP.setLong(argsEndTimePeriodForQuery, endTimePeriodLong)
     }
 
     fun resetStartPeriod() {

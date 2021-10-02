@@ -108,7 +108,7 @@ class TimePeriodFragment : Fragment() {
                 isGetEndTimePeriod = false
             }
         }
-        uiColors.setColors(getButtonsListForColorButton(),getButtonsListForColorButtonText())
+        uiColors.setColors(getButtonsListForColorButton(), getButtonsListForColorButtonText())
     }
 
     private fun getButtonsListForColorButtonText() = listOf(
@@ -138,7 +138,7 @@ class TimePeriodFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
-        timePeriodViewModel.saveARGStoSP()
+        timePeriodViewModel.saveARGStoSP(navControlHelper)
         navControlHelper.moveToPreviousPage()
     }
 

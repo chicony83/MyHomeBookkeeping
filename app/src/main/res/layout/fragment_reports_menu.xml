@@ -16,30 +16,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
+            <Button
+                android:id="@+id/selectTimePeriodButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_time_period"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticalCenterLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/selectTimePeriodButton" />
 
-            <Button
-                android:id="@+id/allIncomePieButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_on_button_all_income"
-                app:layout_constraintEnd_toStartOf="@+id/verticalCenterLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@id/selectTimePeriodButton">
 
-            <Button
-                android:id="@+id/allSpendingPieButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_all_spending"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/verticalCenterLayout"
-                app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/allIncomePieButton"
+                    style="@style/DialogButtonLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/text_on_button_all_income" />
+
+                <Button
+                    android:id="@+id/allSpendingPieButton"
+                    style="@style/DialogButtonRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/text_on_button_all_spending" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
