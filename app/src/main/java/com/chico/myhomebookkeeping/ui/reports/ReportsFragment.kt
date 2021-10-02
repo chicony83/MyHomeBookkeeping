@@ -35,9 +35,13 @@ class ReportsFragment : Fragment() {
 
         with(reportsViewModel) {
             getMap().observe(viewLifecycleOwner, { map ->
-                map?.let {
-                    charts.showPieChart(chartView = pieChartView,it)
-                    charts.showHorizontalBarChart(horizontalLineChartView,it)
+                map?.let { it1 ->
+
+                    val sortedMap:MutableMap<String,Double> = LinkedHashMap()
+                    it1.entries.sortedBy { it.value }.forEach{sortedMap[it.key] = it.value}
+
+                    charts.showPieChart(chartView = pieChartView,sortedMap)
+                    charts.showHorizontalBarChart(horizontalLineChartView,sortedMap)
                 }
             })
         }
@@ -51,6 +55,7 @@ class ReportsFragment : Fragment() {
 
         pieChartView = binding.pieChart
         horizontalLineChartView = binding.horizontalBarChart
+//        horizontalLineChartView.setDrawGridBackground(false)
 
     }
 
