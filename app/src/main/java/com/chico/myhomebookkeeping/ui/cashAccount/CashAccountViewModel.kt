@@ -67,6 +67,15 @@ class CashAccountViewModel(
             id = _selectedCashAccount.value?.cashAccountId
         )
     }
+    fun saveData(navControlHelper: NavControlHelper, id: Int) {
+        saveARGS.checkAndSaveToSP(
+            navControlHelper = navControlHelper,
+            argsForNew = argsForCreate,
+            argsForChange = argsForChange,
+            argsForQuery = argsForQuery,
+            id = id
+        )
+    }
 
     fun loadSelectedCashAccount(selectedId: Int) {
         launchIo {
@@ -91,7 +100,7 @@ class CashAccountViewModel(
         resetCashAccountForSelect()
     }
 
-    fun addNewCashAccount(newCashAccount: CashAccount) = runBlocking {
+    fun addNewCashAccount(newCashAccount: CashAccount):Long = runBlocking {
         val save = async {
             CashAccountsUseCase.addNewCashAccount(
                 db,
@@ -99,6 +108,7 @@ class CashAccountViewModel(
             )
         }
         reloadCategories(save.await())
+        return@runBlocking save.await()
     }
 
     private fun reloadCategories(long: Long) {
@@ -135,4 +145,5 @@ class CashAccountViewModel(
     private fun getItemsList(): List<CashAccount>? {
         return cashAccountList.value?.toList()
     }
+
 }

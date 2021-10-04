@@ -48,6 +48,10 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="ButtonFullWidth.AddAndSelect">
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/colorSubmitButton</item>
+    </style>
     <style name="DialogButtonLeft.Positive">
         <item name="backgroundTint">@null</item>
         <item name="android:textSize">@dimen/H5</item>

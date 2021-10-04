@@ -1,8 +1,6 @@
 package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.EditNameTextWatcher
-import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.R.color.buttonDayBackground
-import com.chico.myhomebookkeeping.R.color.buttonNightBackground
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
@@ -36,7 +31,7 @@ class CashAccountFragment : Fragment() {
 
     private lateinit var db: CashAccountDao
 
-    private var selectedCashAccountId = 0
+    private var selectedCashAccountId: Int = 0
 
     private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
@@ -134,21 +129,18 @@ class CashAccountFragment : Fragment() {
                 }
             }
             with(newCashAccountLayout) {
-                addNewCashAccountButton.setOnClickListener {
-                    if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
-                        if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
-                            val name = binding.newCashAccountLayout.cashAccountName.text.toString()
-                            val number: String =
-                                binding.newCashAccountLayout.cashAccountNumber.text.toString()
-                            val newCashAccount =
-                                CashAccount(accountName = name, bankAccountNumber = number)
-                            cashAccountViewModel.addNewCashAccount(newCashAccount)
-                            eraseUiElements()
-                            uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
-                            view.hideKeyboard()
-                            showUIControlElements()
-                        } else showMessage(getString(R.string.message_too_short_name))
+                addAndSelectNewItemButton.setOnClickListener {
+                    selectedCashAccountId = addNewCashAccount(view)
+                    if (selectedCashAccountId > 0) {
+//                        cashAccountViewModel.loadSelectedCashAccount(selectedCashAccountId)
+                        Message.log("selected cash Account ID = $selectedCashAccountId")
+                        cashAccountViewModel.saveData(navControlHelper,selectedCashAccountId)
+//                        cashAccountViewModel.saveData(navControlHelper)
+                        navControlHelper.moveToPreviousPage()
                     }
+                }
+                addNewCashAccountButton.setOnClickListener {
+                    addNewCashAccount(view)
                 }
                 cancelCreateButton.setOnClickListener {
                     eraseUiElements()
@@ -221,7 +213,32 @@ class CashAccountFragment : Fragment() {
                 }
             }
         }
-        uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
+        uiColors.setColors(
+            getDialogsList(),
+            getButtonsListForColorButton(),
+            getButtonsListForColorButtonText()
+        )
+    }
+
+    private fun addNewCashAccount(view: View): Int {
+        if (uiHelper.isVisibleLayout(binding.newCashAccountLayoutHolder)) {
+            if (uiHelper.isLengthStringMoThan(binding.newCashAccountLayout.cashAccountName.text)) {
+                val name = binding.newCashAccountLayout.cashAccountName.text.toString()
+                val number: String =
+                    binding.newCashAccountLayout.cashAccountNumber.text.toString()
+                val newCashAccount =
+                    CashAccount(accountName = name, bankAccountNumber = number)
+                Message.log("adding new CAsh Account = $newCashAccount")
+                eraseUiElements()
+                uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
+                view.hideKeyboard()
+                showUIControlElements()
+                return cashAccountViewModel.addNewCashAccount(newCashAccount).toInt()
+            } else {
+                showMessage(getString(R.string.message_too_short_name))
+                return -1
+            }
+        } else return -1
     }
 
     private fun showUIControlElements() {
@@ -255,6 +272,7 @@ class CashAccountFragment : Fragment() {
     private fun getButtonsListForColorButton() = listOf(
         binding.newCashAccountLayout.addNewCashAccountButton,
         binding.newCashAccountLayout.cancelCreateButton,
+        binding.newCashAccountLayout.addAndSelectNewItemButton,
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,

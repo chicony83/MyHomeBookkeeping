@@ -34,20 +34,26 @@
         android:maxLength="4"
         android:maxLines="1" />
 
+    <Button
+        android:id="@+id/addAndSelectNewItemButton"
+        style="@style/ButtonFullWidth.AddAndSelect"
+        android:text="@string/text_on_button_add_and_select"
+        android:visibility="gone"/>
+
     <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/addNewCashAccountButton"
             style="@style/DialogButtonLeft.Positive"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:text="@string/text_on_button_add" />
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/cancelCreateButton"
             style="@style/DialogButtonRight.Negative"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:text="@string/text_on_button_cancel" />
     </LinearLayout>
 
