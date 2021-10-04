@@ -114,12 +114,14 @@ class MoneyMovingAdapter(
                 if (moneyMovement.isIncome) {
                     amount.text = plus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        binding.amount.setTextColor(
-                            itemView.resources.getColor(
-                                R.color.incomeTextColor,
-                                null
+                        with(binding){
+                            amount.setTextColor(
+                                itemView.resources.getColor(
+                                    R.color.incomeTextColor,
+                                    null
+                                )
                             )
-                        )
+                        }
                     }
                 }
                 if (!moneyMovement.isIncome) {
