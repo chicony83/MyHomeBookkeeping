@@ -12,6 +12,7 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.sp.GetSP
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 
@@ -25,86 +26,58 @@ class SetTextOnButtons(val resources: Resources) {
         startTimePeriodLongSP: Long,
         endTimePeriodLongSP: Long
     ) {
+
+        val text: String = getResourceText(R.string.text_on_button_time_period)
+        var timePeriod = ""
+        val textFrom = getResourceText(R.string.text_on_button_time_period_from)
+        val textTo = getResourceText(R.string.text_on_button_time_period_to)
+        val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
+        if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
+            timePeriod =
+                textFrom +
+                        space +
+                        startTimePeriodLongSP.parseTimeFromMillisShortDate() +
+                        space
+        }
+        if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
+            timePeriod =
+                timePeriod +
+                        space +
+                        textTo +
+                        space +
+                        endTimePeriodLongSP.parseTimeFromMillisShortDate()
+        }
+        if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
+            and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
+        ) {
+            timePeriod = textAllTime
+        }
+        Message.log(timePeriod)
         launchUi {
-            val text: String = getResourceText(R.string.text_on_button_time_period)
-            var timePeriod = ""
-            val textFrom = getResourceText(R.string.text_on_button_time_period_from)
-            val textTo = getResourceText(R.string.text_on_button_time_period_to)
-            val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
-            if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
-                timePeriod =
-                    textFrom +
-                            space +
-                            startTimePeriodLongSP.parseTimeFromMillisShortDate() +
-                            space
-            }
-            if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
-                timePeriod =
-                    timePeriod +
-                            space +
-                            textTo +
-                            space +
-                            endTimePeriodLongSP.parseTimeFromMillisShortDate()
-            }
-            if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
-                and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
-            ) {
-                timePeriod = textAllTime
-            }
-            Message.log(timePeriod)
             _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
         }
     }
-
-//    private fun textOnTimePeriodButton() {
-//        launchUi {
-//            val text: String = getResourceText(R.string.text_on_button_time_period)
-//            var timePeriod = ""
-//            val textFrom = getResourceText(R.string.text_on_button_time_period_from)
-//            val textTo = getResourceText(R.string.text_on_button_time_period_to)
-//            val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
-//            if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
-//                timePeriod =
-//                    textFrom +
-//                            space +
-//                            startTimePeriodLongSP.parseTimeFromMillisShortDate() +
-//                            space
-//            }
-//            if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
-//                timePeriod =
-//                    timePeriod +
-//                            space +
-//                            textTo +
-//                            space +
-//                            endTimePeriodLongSP.parseTimeFromMillisShortDate()
-//            }
-//            if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
-//                and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
-//            ) {
-//                timePeriod = textAllTime
-//            }
-//            Message.log(timePeriod)
-//            _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
-//        }
-//    }
 
     fun textOnCashAccountButton(
         _buttonTextOfQueryCashAccount: MutableLiveData<String>,
         dbCashAccount: CashAccountDao,
         cashAccountIntSP: Int
     ) {
-        launchUi {
-            val nameButton: String = getResourceText(R.string.text_on_button_cash_account)
-            var nameCashAccount = ""
-            if (modelCheck.isPositiveValue(cashAccountIntSP)) {
+
+        val nameButton: String = getResourceText(R.string.text_on_button_cash_account)
+        var nameCashAccount = ""
+        if (modelCheck.isPositiveValue(cashAccountIntSP)) {
+            launchIo {
                 nameCashAccount = CashAccountsUseCase.getOneCashAccount(
                     dbCashAccount,
                     cashAccountIntSP
                 )?.accountName.toString()
             }
-            if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
-                nameCashAccount = getResourceText(R.string.text_on_button_all_text)
-            }
+        }
+        if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
+            nameCashAccount = getResourceText(R.string.text_on_button_all_text)
+        }
+        launchUi {
             _buttonTextOfQueryCashAccount.postValue(createButtonText(nameButton, nameCashAccount))
         }
     }
@@ -114,19 +87,22 @@ class SetTextOnButtons(val resources: Resources) {
         dbCurrencies: CurrenciesDao,
         currencyIntSP: Int
     ) {
-        launchUi {
-            val nameButton: String = getResourceText(R.string.text_on_button_currency)
-            var nameCurrency = ""
 
-            if (modelCheck.isPositiveValue(currencyIntSP)) {
+        val nameButton: String = getResourceText(R.string.text_on_button_currency)
+        var nameCurrency = ""
+
+        if (modelCheck.isPositiveValue(currencyIntSP)) {
+            launchIo {
                 nameCurrency = CurrenciesUseCase.getOneCurrency(
                     dbCurrencies,
                     currencyIntSP
                 )?.currencyName.toString()
             }
-            if (!modelCheck.isPositiveValue(currencyIntSP)) {
-                nameCurrency = getResourceText(R.string.text_on_button_all_text)
-            }
+        }
+        if (!modelCheck.isPositiveValue(currencyIntSP)) {
+            nameCurrency = getResourceText(R.string.text_on_button_all_text)
+        }
+        launchUi {
             _buttonTextOfQueryCurrency.postValue(
                 createButtonText(nameButton, nameCurrency)
             )
@@ -140,30 +116,33 @@ class SetTextOnButtons(val resources: Resources) {
         getSP: GetSP,
         argsIncomeSpendingKey: String
     ) {
-        launchUi {
-            val nameButton: String = getResourceText(R.string.text_on_button_category)
-            var nameCategory = ""
-            if (modelCheck.isPositiveValue(categoryIntSP)) {
+
+        val nameButton: String = getResourceText(R.string.text_on_button_category)
+        var nameCategory = ""
+        if (modelCheck.isPositiveValue(categoryIntSP)) {
+            launchIo {
                 nameCategory = CategoriesUseCase.getOneCategory(
                     dbCategory,
                     categoryIntSP
                 )?.categoryName.toString()
             }
-            if (getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {
-                if (!modelCheck.isPositiveValue(categoryIntSP)) {
-                    nameCategory = getResourceText(R.string.text_on_button_all_text)
-                }
+        }
+        if (getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {
+            if (!modelCheck.isPositiveValue(categoryIntSP)) {
+                nameCategory = getResourceText(R.string.text_on_button_all_text)
             }
-            if (!getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {
-                if (getSP.isCategoryIncome(argsIncomeSpendingKey)) {
-                    nameCategory = getResourceText(R.string.text_on_button_all_income)
-                    Log.i("TAG", "income message")
-                }
-                if (getSP.isCategorySpending(argsIncomeSpendingKey)) {
-                    Log.i("TAG", "income spending")
-                    nameCategory = getResourceText(R.string.text_on_button_all_spending)
-                }
+        }
+        if (!getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {
+            if (getSP.isCategoryIncome(argsIncomeSpendingKey)) {
+                nameCategory = getResourceText(R.string.text_on_button_all_income)
+                Log.i("TAG", "income message")
             }
+            if (getSP.isCategorySpending(argsIncomeSpendingKey)) {
+                Log.i("TAG", "income spending")
+                nameCategory = getResourceText(R.string.text_on_button_all_spending)
+            }
+        }
+        launchUi {
             _buttonTextOfQueryCategory.postValue(createButtonText(nameButton, nameCategory))
         }
     }

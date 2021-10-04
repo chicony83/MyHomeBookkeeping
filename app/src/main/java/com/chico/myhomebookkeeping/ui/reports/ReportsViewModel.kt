@@ -140,32 +140,30 @@ class ReportsViewModel(
     }
 
     fun setTextOnButtons() {
-        setTextOnButtons.textOnCategoryButton(
-            _buttonTextOfQueryCategory,
-            dbCategory,
-            categoryIntSP,
-            getSP,
-            argsIncomeSpendingKey
-        )
-
-        setTextOnButtons.textOnCurrencyButton(
-            _buttonTextOfQueryCurrency,
-            dbCurrencies,
-            currencyIntSP
-        )
-
-        setTextOnButtons.textOnCashAccountButton(
-            _buttonTextOfQueryCashAccount,
-            dbCashAccount,
-            cashAccountIntSP
-        )
-
-        setTextOnButtons.textOnTimePeriodButton(
-            _buttonTextOfTimePeriod,
-            startTimePeriodLongSP,
-            endTimePeriodLongSP
-        )
-
+        with(setTextOnButtons) {
+            textOnCategoryButton(
+                _buttonTextOfQueryCategory,
+                dbCategory,
+                categoryIntSP,
+                getSP,
+                argsIncomeSpendingKey
+            )
+            textOnCurrencyButton(
+                _buttonTextOfQueryCurrency,
+                dbCurrencies,
+                currencyIntSP
+            )
+            textOnCashAccountButton(
+                _buttonTextOfQueryCashAccount,
+                dbCashAccount,
+                cashAccountIntSP
+            )
+            textOnTimePeriodButton(
+                _buttonTextOfTimePeriod,
+                startTimePeriodLongSP,
+                endTimePeriodLongSP
+            )
+        }
     }
 
     private fun getValuesSP() {
