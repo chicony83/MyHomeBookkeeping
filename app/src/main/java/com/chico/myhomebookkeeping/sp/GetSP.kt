@@ -27,7 +27,7 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getBoolean(argsKey,true)
     }
 
-    fun isCategoryNone(argsIncomeSpending: String): Boolean {
+    fun isIncomeSpendingNone(argsIncomeSpending: String): Boolean {
         return sharedPreferences.getString(argsIncomeSpending, argsNone).toString() == argsNone
     }
 

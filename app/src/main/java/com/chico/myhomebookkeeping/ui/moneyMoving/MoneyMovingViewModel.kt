@@ -207,12 +207,12 @@ class MoneyMovingViewModel(
                     categoryIntSP
                 )?.categoryName.toString()
             }
-            if (getSP.isCategoryNone(argsIncomeSpendingKey)) {
+            if (getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {
                 if (!modelCheck.isPositiveValue(categoryIntSP)) {
                     nameCategory = getResourceText(R.string.text_on_button_all_text)
                 }
             }
-            if (!getSP.isCategoryNone(argsIncomeSpendingKey)) {
+            if (!getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {
                 if (getSP.isCategoryIncome(argsIncomeSpendingKey)) {
                     nameCategory = getResourceText(R.string.text_on_button_all_income)
                     Log.i("TAG", "income message")

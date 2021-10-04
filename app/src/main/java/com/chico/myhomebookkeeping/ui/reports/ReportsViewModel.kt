@@ -3,12 +3,10 @@ package com.chico.myhomebookkeeping.ui.reports
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
@@ -16,26 +14,20 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.enums.ReportsType
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingCreteQuery
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.*
 
 class ReportsViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
-
-    private val space = " "
     private val argsStartTimePeriodKey = Constants.FOR_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodKey = Constants.FOR_REPORTS_END_TIME_PERIOD
     private val argsCashAccountKey = Constants.FOR_REPORTS_CASH_ACCOUNT_KEY
@@ -63,7 +55,6 @@ class ReportsViewModel(
 
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
-
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCurrencies: CurrenciesDao =
@@ -90,6 +81,7 @@ class ReportsViewModel(
     private val _map = MutableLiveData<Map<String, Double>?>()
     val map: LiveData<Map<String, Double>?>
         get() = _map
+    private val setTextOnButtons = SetTextOnButtons(app.resources)
 
     fun getListFullMoneyMoving() {
         runBlocking {
@@ -99,7 +91,7 @@ class ReportsViewModel(
                 incomeSpendingStringSP = Constants.FOR_QUERY_INCOME
                 Message.log("income")
             }
-            if (reportsTypeStringSP == ReportsType.PieSpending.toString()){
+            if (reportsTypeStringSP == ReportsType.PieSpending.toString()) {
                 incomeSpendingStringSP = Constants.FOR_QUERY_SPENDING
                 Message.log("spending")
             }
@@ -148,119 +140,32 @@ class ReportsViewModel(
     }
 
     fun setTextOnButtons() {
-        setTextOnCategoryButton()
-        setTextOnCurrencyButton()
-        setTextOnCashAccountButton()
-        setTextOnTimePeriodButton()
-    }
+        setTextOnButtons.textOnCategoryButton(
+            _buttonTextOfQueryCategory,
+            dbCategory,
+            categoryIntSP,
+            getSP,
+            argsIncomeSpendingKey
+        )
 
-    private fun setTextOnTimePeriodButton() {
-        launchUi {
-            val text: String = getResourceText(R.string.text_on_button_time_period)
-            var timePeriod = ""
-            val textFrom = getResourceText(R.string.text_on_button_time_period_from)
-            val textTo = getResourceText(R.string.text_on_button_time_period_to)
-            val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
-            if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
-                timePeriod =
-                    textFrom +
-                            space +
-                            startTimePeriodLongSP.parseTimeFromMillisShortDate() +
-                            space
-            }
-            if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
-                timePeriod =
-                    timePeriod +
-                            space +
-                            textTo +
-                            space +
-                            endTimePeriodLongSP.parseTimeFromMillisShortDate()
-            }
-            if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
-                and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
-            ) {
-                timePeriod = textAllTime
-            }
-            Message.log(timePeriod)
-            _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
-        }
-    }
+        setTextOnButtons.textOnCurrencyButton(
+            _buttonTextOfQueryCurrency,
+            dbCurrencies,
+            currencyIntSP
+        )
 
-    private fun setTextOnCashAccountButton() {
-        launchUi {
-            val nameButton: String = getResourceText(R.string.text_on_button_cash_account)
-            var nameCashAccount = ""
-            if (modelCheck.isPositiveValue(cashAccountIntSP)) {
-                nameCashAccount = CashAccountsUseCase.getOneCashAccount(
-                    dbCashAccount,
-                    cashAccountIntSP
-                )?.accountName.toString()
-            }
-            if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
-                nameCashAccount = getResourceText(R.string.text_on_button_all_text)
-            }
-            _buttonTextOfQueryCashAccount.postValue(createButtonText(nameButton, nameCashAccount))
-        }
-    }
+        setTextOnButtons.textOnCashAccountButton(
+            _buttonTextOfQueryCashAccount,
+            dbCashAccount,
+            cashAccountIntSP
+        )
 
-    private fun setTextOnCurrencyButton() {
-        launchUi {
-            val nameButton: String = getResourceText(R.string.text_on_button_currency)
-            var nameCurrency = ""
+        setTextOnButtons.textOnTimePeriodButton(
+            _buttonTextOfTimePeriod,
+            startTimePeriodLongSP,
+            endTimePeriodLongSP
+        )
 
-            if (modelCheck.isPositiveValue(currencyIntSP)) {
-                nameCurrency = CurrenciesUseCase.getOneCurrency(
-                    dbCurrencies,
-                    currencyIntSP
-                )?.currencyName.toString()
-            }
-            if (!modelCheck.isPositiveValue(currencyIntSP)) {
-                nameCurrency = getResourceText(R.string.text_on_button_all_text)
-            }
-            _buttonTextOfQueryCurrency.postValue(createButtonText(nameButton, nameCurrency))
-        }
-    }
-
-    private fun setTextOnCategoryButton() {
-        launchUi {
-            val nameButton: String = getResourceText(R.string.text_on_button_category)
-            var nameCategory = ""
-            if (modelCheck.isPositiveValue(categoryIntSP)) {
-                nameCategory = CategoriesUseCase.getOneCategory(
-                    dbCategory,
-                    categoryIntSP
-                )?.categoryName.toString()
-            }
-            if (getSP.isCategoryNone(argsIncomeSpendingKey)) {
-                if (!modelCheck.isPositiveValue(categoryIntSP)) {
-                    nameCategory = getResourceText(R.string.text_on_button_all_text)
-                }
-            }
-            if (!getSP.isCategoryNone(argsIncomeSpendingKey)) {
-                if (getSP.isCategoryIncome(argsIncomeSpendingKey)) {
-                    nameCategory = getResourceText(R.string.text_on_button_all_income)
-                    Log.i("TAG", "income message")
-                }
-                if (getSP.isCategorySpending(argsIncomeSpendingKey)) {
-                    Log.i("TAG", "income spending")
-                    nameCategory = getResourceText(R.string.text_on_button_all_spending)
-                }
-            }
-            _buttonTextOfQueryCategory.postValue(createButtonText(nameButton, nameCategory))
-        }
-    }
-
-    private fun createButtonText(text: String, name: String): String {
-        val separator: String = getNewLineSeparator()
-        return text + separator + name
-    }
-
-    private fun getResourceText(string: Int): String {
-        return app.getString(string)
-    }
-
-    private fun getNewLineSeparator(): String {
-        return "\n"
     }
 
     private fun getValuesSP() {
