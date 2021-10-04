@@ -55,7 +55,9 @@ class CategoriesFragment : Fragment() {
             selectedCategory.observe(viewLifecycleOwner, {
                 binding.confirmationLayout.selectedItemName.text = it?.categoryName
             })
-
+            sortedByTextOnButton.observe(viewLifecycleOwner,{
+                binding.sortingCategoriesButton.text = it
+            })
             categoriesList.observe(viewLifecycleOwner, {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it, object : OnItemViewClickListener {
@@ -124,7 +126,7 @@ class CategoriesFragment : Fragment() {
                 Message.log("click popup menu button")
                 val popupMenu = PopupMenu(context, sortingCategoriesButton)
                 popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
-                popupMenu.setOnMenuItemClickListener({ item ->
+                popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.sort_by_numbers_ASC -> {
                             Message.log("sort by numbers ASC")
@@ -148,7 +150,7 @@ class CategoriesFragment : Fragment() {
                         }
                     }
                     true
-                })
+                }
 
 
                 popupMenu.show()

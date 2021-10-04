@@ -49,7 +49,7 @@
     <string name="text_on_button_check_update">Проверить новую версию</string>
     <string name="text_on_button_launch_quick_setup">Запустить быструю настройку</string>
 
-    <string name="text_on_button_sorting_as">Сортировать\n</string>
+    <string name="text_on_button_sorting_as">отсортировано:</string>
     <string name="text_on_button_sorting_as_numbers_ASC">номера по возростанию</string>
     <string name="text_on_button_sorting_as_numbers_DESC">номера по убыванию</string>
     <string name="text_on_button_sorting_as_alphabet_ASC">алфавит А->Я</string>

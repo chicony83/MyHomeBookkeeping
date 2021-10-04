@@ -116,7 +116,6 @@ class SetTextOnButtons(val resources: Resources) {
         getSP: GetSP,
         argsIncomeSpendingKey: String
     ) {
-
         val nameButton: String = getResourceText(R.string.text_on_button_category)
         var nameCategory = ""
         if (modelCheck.isPositiveValue(categoryIntSP)) {
@@ -158,6 +157,15 @@ class SetTextOnButtons(val resources: Resources) {
 
     private fun getNewLineSeparator(): String {
         return "\n"
+    }
+
+    fun setTextOnSortingCategoriesButton(
+        textOnButton: MutableLiveData<String>,
+        additionalTextForTheButton: String,
+
+        ) {
+        val nameButton = getResourceText(R.string.text_on_button_sorting_as)
+        textOnButton.postValue(createButtonText(nameButton,additionalTextForTheButton))
     }
 
 }

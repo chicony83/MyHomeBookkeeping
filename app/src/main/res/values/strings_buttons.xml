@@ -49,7 +49,7 @@
     <string name="text_on_button_check_update">Check new version</string>
     <string name="text_on_button_launch_quick_setup">Launch quick setup</string>
 
-    <string name="text_on_button_sorting_as">Sorting as\n</string>
+    <string name="text_on_button_sorting_as">Sorted by:</string>
     <string name="text_on_button_sorting_as_numbers_ASC">numbers ascending</string>
     <string name="text_on_button_sorting_as_numbers_DESC">numbers descending</string>
     <string name="text_on_button_sorting_as_alphabet_ASC">alphabet A->Z</string>
