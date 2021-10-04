@@ -110,6 +110,15 @@ class CategoriesViewModel(
             id = _selectedCategory.value?.categoriesId
         )
     }
+    fun saveData(navControlHelper: NavControlHelper,id:Int) {
+        saveARGS.checkAndSaveToSP(
+            navControlHelper = navControlHelper,
+            argsForNew = argsForCreate,
+            argsForChange = argsForChange,
+            argsForQuery = argsForQuery,
+            id = id
+        )
+    }
 
     fun selectSpendingCategory(navControlHelper: NavControlHelper) {
         resetCategoryForSelect()
@@ -157,14 +166,15 @@ class CategoriesViewModel(
         reloadCategories(save.await().toLong())
     }
 
-    fun addNewCategory(newCategory: Categories) = runBlocking {
-        val add: Deferred<Long> = async {
+    fun addNewCategory(newCategory: Categories):Long = runBlocking {
+        val add = async {
             CategoriesUseCase.addNewCategory(
                 db = db,
                 newCategory = newCategory
             )
         }
         reloadCategories(add.await())
+        return@runBlocking add.await()
     }
 
     fun getNamesList(): Any {

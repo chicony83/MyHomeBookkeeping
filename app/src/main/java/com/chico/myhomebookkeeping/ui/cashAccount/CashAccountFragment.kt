@@ -270,9 +270,9 @@ class CashAccountFragment : Fragment() {
     )
 
     private fun getButtonsListForColorButton() = listOf(
+        binding.newCashAccountLayout.addAndSelectNewItemButton,
         binding.newCashAccountLayout.addNewCashAccountButton,
         binding.newCashAccountLayout.cancelCreateButton,
-        binding.newCashAccountLayout.addAndSelectNewItemButton,
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,

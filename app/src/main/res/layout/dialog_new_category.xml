@@ -32,17 +32,22 @@
             android:text="@string/text_on_radio_button_spending_category" />
     </RadioGroup>
 
+    <Button
+        android:id="@+id/addAndSelectNewItemButton"
+        style="@style/ButtonFullWidth.AddAndSelect" />
+
     <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
+
         <Button
-            android:layout_weight="1"
             android:id="@+id/addNewCategoryButton"
             style="@style/DialogButtonLeft.Positive"
+            android:layout_weight="1"
             android:text="@string/text_on_button_add" />
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/cancelCreateButton"
             style="@style/DialogButtonRight.Negative"
+            android:layout_weight="1"
             android:text="@string/text_on_button_cancel" />
     </LinearLayout>
 

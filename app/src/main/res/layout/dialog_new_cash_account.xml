@@ -36,9 +36,7 @@
 
     <Button
         android:id="@+id/addAndSelectNewItemButton"
-        style="@style/ButtonFullWidth.AddAndSelect"
-        android:text="@string/text_on_button_add_and_select"
-        android:visibility="gone"/>
+        style="@style/ButtonFullWidth.AddAndSelect" />
 
     <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
 

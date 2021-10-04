@@ -34,7 +34,7 @@ class CategoriesFragment : Fragment() {
 
     private lateinit var db: CategoryDao
 
-    private var selectedCategoryId = 0
+    private var selectedCategoryId: Int = 0
 
     private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
@@ -145,34 +145,16 @@ class CategoriesFragment : Fragment() {
                 }
             }
             with(newCategoryLayout) {
-                addNewCategoryButton.setOnClickListener {
-                    if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
-                        if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
-                            if ((uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
-                                        or
-                                        uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
-                                        )
-                            ) {
-                                val category =
-                                    binding.newCategoryLayout.categoryName.text.toString()
-                                val isIncoming: Boolean = isSelectedCategoryIncome(
-                                    binding.newCategoryLayout.incomingRadioButton,
-//                                    binding.newCategoryLayout.spendingRadioButton
-                                )
-                                val newCategory = Categories(
-                                    categoryName = category,
-                                    isIncome = isIncoming
-                                )
-                                categoriesViewModel.addNewCategory(newCategory)
-                                clearingUiElements()
-                                uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
-                                view.hideKeyboard()
-                                showUIControlElements()
-                            } else {
-                                showMessage(getString(R.string.message_select_type_of_category))
-                            }
-                        } else showMessage(getString(R.string.message_too_short_name))
+                addAndSelectNewItemButton.setOnClickListener {
+                    selectedCategoryId = addNewCategory(view)
+                    if (selectedCategoryId>0){
+                        Message.log("selected Category ID = $selectedCategoryId")
+                        categoriesViewModel.saveData(navControlHelper,selectedCategoryId)
+                        navControlHelper.moveToPreviousPage()
                     }
+                }
+                addNewCategoryButton.setOnClickListener {
+                    addNewCategory(view)
                 }
                 cancelCreateButton.setOnClickListener {
                     clearingUiElements()
@@ -258,7 +240,46 @@ class CategoriesFragment : Fragment() {
                 }
             }
         }
-        uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
+        uiColors.setColors(
+            getDialogsList(),
+            getButtonsListForColorButton(),
+            getButtonsListForColorButtonText()
+        )
+    }
+
+    private fun addNewCategory(view: View): Int {
+        if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
+            if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
+                if ((uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
+                            or
+                            uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
+                            )
+                ) {
+                    val category =
+                        binding.newCategoryLayout.categoryName.text.toString()
+                    val isIncoming: Boolean = isSelectedCategoryIncome(
+                        binding.newCategoryLayout.incomingRadioButton,
+                        //                                    binding.newCategoryLayout.spendingRadioButton
+                    )
+                    val newCategory = Categories(
+                        categoryName = category,
+                        isIncome = isIncoming
+                    )
+                    clearingUiElements()
+                    uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
+                    view.hideKeyboard()
+                    showUIControlElements()
+                    return categoriesViewModel.addNewCategory(newCategory).toInt()
+                } else {
+                    showMessage(getString(R.string.message_select_type_of_category))
+                    return -1
+                }
+            } else {
+                showMessage(getString(R.string.message_too_short_name))
+                return -1
+            }
+        }
+        return -1
     }
 
     private fun showUIControlElements() {
@@ -290,6 +311,7 @@ class CategoriesFragment : Fragment() {
     )
 
     private fun getButtonsListForColorButton() = listOf(
+        binding.newCategoryLayout.addAndSelectNewItemButton,
         binding.newCategoryLayout.addNewCategoryButton,
         binding.newCategoryLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,

@@ -101,14 +101,14 @@ class CashAccountViewModel(
     }
 
     fun addNewCashAccount(newCashAccount: CashAccount):Long = runBlocking {
-        val save = async {
+        val add = async {
             CashAccountsUseCase.addNewCashAccount(
                 db,
                 newCashAccount
             )
         }
-        reloadCategories(save.await())
-        return@runBlocking save.await()
+        reloadCategories(add.await())
+        return@runBlocking add.await()
     }
 
     private fun reloadCategories(long: Long) {
