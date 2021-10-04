@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="все доходы" />
+                android:text="@string/text_on_button_all_income" />
 
             <Button
                 android:id="@+id/selectAllSpendingButton"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="все расходы" />
+                android:text="@string/text_on_button_all_spending" />
         </LinearLayout>
 
         <Button
@@ -56,6 +56,14 @@
             tools:visibility="visible" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/sortingCategoriesButton"
+        style="@style/ButtonFullWidth"
+        android:text="@string/text_on_button_sorting_as"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topButtonsHolder" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoryHolder"
         style="@style/RecyclerHolder"
@@ -63,7 +71,9 @@
         android:layout_height="0dp"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/show_hide_add_category_fragment_button"
-        app:layout_constraintTop_toBottomOf="@id/topButtonsHolder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sortingCategoriesButton"
         tools:listitem="@layout/recycler_view_item_categories" />
 
     <LinearLayout

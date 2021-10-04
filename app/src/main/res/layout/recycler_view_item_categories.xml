@@ -5,9 +5,16 @@
     style="@style/RecyclerViewCard.Categories">
 
     <LinearLayout
-        style="@style/RecyclerViewItem"
         android:id="@+id/categoriesItem"
-        android:orientation="vertical">
+        style="@style/RecyclerViewItem"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/id_categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            tool:text="1" />
 
         <TextView
             android:id="@+id/category_cardView_text"

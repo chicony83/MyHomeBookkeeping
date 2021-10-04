@@ -35,8 +35,6 @@ object Constants {
     const val FOR_REPORTS_CATEGORIES_INCOME_SPENDING_KEY = "categoryIncomeSpendingForReports"
     const val FOR_REPORTS_INCOME = "incomeForReports"
     const val FOR_REPORTS_SPENDING = "spendingForReports"
-
-
     const val FOR_REPORTS_AMOUNT_KEY = "amountForReports"
 
     const val FOR_QUERY_NONE = ""
@@ -57,4 +55,5 @@ object Constants {
     const val LOCAL_ASSETS_URL = "file:///android_asset/"
 
     const val REPORT_TYPE = "report_type"
+    const val SORTING_CATEGORIES = "sorting_categories"
 }

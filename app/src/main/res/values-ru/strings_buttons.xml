@@ -24,7 +24,6 @@
     <string name="text_on_button_yes">Да</string>
     <string name="text_on_button_no">Нет</string>
 
-
     <string name="text_on_button_all_income">Все доходы</string>
     <string name="text_on_button_all_spending">Все расходы</string>
     <string name="text_on_button_income_category">Доходы</string>
@@ -49,4 +48,11 @@
     <string name="text_on_button_all_text">Все</string>
     <string name="text_on_button_check_update">Проверить новую версию</string>
     <string name="text_on_button_launch_quick_setup">Запустить быструю настройку</string>
+
+    <string name="text_on_button_sorting_as">Сортировать\n</string>
+    <string name="text_on_button_sorting_as_numbers_ASC">номера по возростанию</string>
+    <string name="text_on_button_sorting_as_numbers_DESC">номера по убыванию</string>
+    <string name="text_on_button_sorting_as_alphabet_ASC">алфавит А->Я</string>
+    <string name="text_on_button_sorting_as_alphabet_DESC">алфавит Я->А</string>
+
 </resources>

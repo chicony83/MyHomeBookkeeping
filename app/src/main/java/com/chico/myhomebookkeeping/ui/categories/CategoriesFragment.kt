@@ -1,12 +1,10 @@
 package com.chico.myhomebookkeeping.ui.categories
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,13 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.EditNameTextWatcher
-import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -122,6 +120,39 @@ class CategoriesFragment : Fragment() {
                 categoriesViewModel.selectAllCategories(navControlHelper)
                 navControlHelper.moveToMoneyMovingFragment()
             }
+            sortingCategoriesButton.setOnClickListener {
+                Message.log("click popup menu button")
+                val popupMenu = PopupMenu(context, sortingCategoriesButton)
+                popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener({ item ->
+                    when (item.itemId) {
+                        R.id.sort_by_numbers_ASC -> {
+                            Message.log("sort by numbers ASC")
+                            categoriesViewModel.setSortingCategories(SortingCategories.NumbersByASC.toString())
+                            categoriesViewModel.reloadCategories()
+                        }
+                        R.id.sort_by_numbers_DESC -> {
+                            categoriesViewModel.setSortingCategories(SortingCategories.NumbersByDESC.toString())
+                            categoriesViewModel.reloadCategories()
+                            Message.log("Sort by numbers DESC")
+                        }
+                        R.id.sort_by_alphabet_ASC -> {
+                            categoriesViewModel.setSortingCategories(SortingCategories.AlphabetByASC.toString())
+                            categoriesViewModel.reloadCategories()
+                            Message.log("Sorting by alphabet ASC")
+                        }
+                        R.id.sorting_by_alphabet_DESC -> {
+                            categoriesViewModel.setSortingCategories(SortingCategories.AlphabetByDESC.toString())
+                            categoriesViewModel.reloadCategories()
+                            Message.log("Sorting by alphabet DESC")
+                        }
+                    }
+                    true
+                })
+
+
+                popupMenu.show()
+            }
             showHideAddCategoryFragmentButton.setOnClickListener {
                 uiControl.showNewItemLayoutHolder()
                 view.showKeyboard()
@@ -138,7 +169,6 @@ class CategoriesFragment : Fragment() {
                         )
                     )
                 }
-
                 with(binding.newCategoryLayout.categoryName) {
                     requestFocus()
                     setSelection(0)
@@ -147,9 +177,9 @@ class CategoriesFragment : Fragment() {
             with(newCategoryLayout) {
                 addAndSelectNewItemButton.setOnClickListener {
                     selectedCategoryId = addNewCategory(view)
-                    if (selectedCategoryId>0){
+                    if (selectedCategoryId > 0) {
                         Message.log("selected Category ID = $selectedCategoryId")
-                        categoriesViewModel.saveData(navControlHelper,selectedCategoryId)
+                        categoriesViewModel.saveData(navControlHelper, selectedCategoryId)
                         navControlHelper.moveToPreviousPage()
                     }
                 }
@@ -318,13 +348,13 @@ class CategoriesFragment : Fragment() {
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,
         binding.changeCategoryLayout.saveChange,
-        binding.changeCategoryLayout.cancelChange
+        binding.changeCategoryLayout.cancelChange,
     )
 
     private fun getDialogsList() = listOf(
         binding.newCategoryLayout,
         binding.changeCategoryLayout,
-        binding.confirmationLayout
+        binding.confirmationLayout,
     )
 
     private fun isSelectedCategoryIncome(

@@ -36,6 +36,7 @@ class CategoriesAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(categories: Categories) {
             with(binding) {
+                idCategories.text = categories.categoriesId.toString()
                 categoryCardViewText.text = categories.categoryName
                 categoriesItem.setOnClickListener {
                     categories.categoriesId?.let { it1 -> listener.onClick(it1) }

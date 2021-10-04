@@ -12,7 +12,16 @@ interface CategoryDao {
     suspend fun addCategory(category: Categories):Long
 
     @Query("SELECT * FROM category_table ORDER BY category_name ASC")
-    suspend fun getAllCategory(): List<Categories>
+    suspend fun getAllCategoriesNameASC(): List<Categories>
+
+    @Query("SELECT * FROM category_table ORDER BY category_name DESC")
+    suspend fun getAllCategoriesNameDESC(): List<Categories>
+
+    @Query("SELECT * FROM category_table ORDER BY categoriesId ASC")
+    suspend fun getAllCategoriesIdASC(): List<Categories>
+
+    @Query("SELECT * FROM category_table ORDER BY categoriesId DESC")
+    suspend fun getAllCategoriesIdDESC(): List<Categories>
 
     @Query("SELECT * FROM category_table WHERE categoriesId = :id")
     suspend fun getOneCategory(id:Int):Categories

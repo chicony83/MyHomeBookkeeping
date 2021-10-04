@@ -12,7 +12,10 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
+import com.chico.myhomebookkeeping.enums.SortingCategories
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.Deferred
@@ -39,8 +42,10 @@ class CategoriesViewModel(
     private val argsIncome = Constants.FOR_QUERY_INCOME
     private val argsSpending = Constants.FOR_QUERY_SPENDING
     private val argsNone = Constants.FOR_QUERY_NONE
+    private val argsSortingCategories = Constants.SORTING_CATEGORIES
 
-    private val saveARGS = SetSP(spEditor)
+    private val getSP = GetSP(sharedPreferences)
+    private val setSP = SetSP(spEditor)
 
     private val _categoriesList = MutableLiveData<List<Categories>>()
     val categoriesList: LiveData<List<Categories>>
@@ -55,15 +60,32 @@ class CategoriesViewModel(
         get() = _changeCategory
 
     private var selectedIsIncomeSpending: String = argsNone
+    private var sortingCategoriesStringSP = getSP.getString(argsSortingCategories)
 
     init {
         loadCategories()
     }
 
     private fun loadCategories() {
+        sortingCategoriesStringSP = getSortingValueFromSP()
+        Message.log("get sortingCategoriesStringSP = $sortingCategoriesStringSP")
         launchIo {
-            _categoriesList.postValue(db.getAllCategory())
+            when (sortingCategoriesStringSP) {
+                SortingCategories.NumbersByASC.toString() -> _categoriesList.postValue(db.getAllCategoriesIdASC())
+                SortingCategories.NumbersByDESC.toString() -> _categoriesList.postValue(db.getAllCategoriesIdDESC())
+                SortingCategories.AlphabetByASC.toString() -> _categoriesList.postValue(db.getAllCategoriesNameASC())
+                SortingCategories.AlphabetByDESC.toString() -> _categoriesList.postValue(db.getAllCategoriesNameDESC())
+                else -> _categoriesList.postValue(db.getAllCategoriesNameASC())
+            }
         }
+    }
+
+    private fun getSortingValueFromSP(): String? {
+        return getSP.getString(argsSortingCategories)
+    }
+
+    fun reloadCategories() {
+        loadCategories()
     }
 
     private fun reloadCategories(long: Long) {
@@ -96,13 +118,13 @@ class CategoriesViewModel(
     }
 
     private fun saveIsIncomeCategory() {
-        saveARGS.saveIsIncomeCategoryToSP(
+        setSP.saveIsIncomeCategoryToSP(
             argsIncomeSpending, selectedIsIncomeSpending
         )
     }
 
     private fun saveData(navControlHelper: NavControlHelper) {
-        saveARGS.checkAndSaveToSP(
+        setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
             argsForNew = argsForCreate,
             argsForChange = argsForChange,
@@ -110,8 +132,9 @@ class CategoriesViewModel(
             id = _selectedCategory.value?.categoriesId
         )
     }
-    fun saveData(navControlHelper: NavControlHelper,id:Int) {
-        saveARGS.checkAndSaveToSP(
+
+    fun saveData(navControlHelper: NavControlHelper, id: Int) {
+        setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
             argsForNew = argsForCreate,
             argsForChange = argsForChange,
@@ -166,7 +189,7 @@ class CategoriesViewModel(
         reloadCategories(save.await().toLong())
     }
 
-    fun addNewCategory(newCategory: Categories):Long = runBlocking {
+    fun addNewCategory(newCategory: Categories): Long = runBlocking {
         val add = async {
             CategoriesUseCase.addNewCategory(
                 db = db,
@@ -191,5 +214,9 @@ class CategoriesViewModel(
 
     private fun getItemsList(): List<Categories>? {
         return categoriesList.value?.toList()
+    }
+
+    fun setSortingCategories(sorting: String) {
+        setSP.saveToSP(argsSortingCategories, sorting)
     }
 }

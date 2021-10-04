@@ -30,4 +30,6 @@
     <string name="description_A_quick_setup_of_the_program_will_be_done_here">Быстрая настройка программы.\nСледующие элементы будут добавлены</string>
 
     <string name="current_version">Текущая версия</string>
+
+    <string name="description_sort_categories_as">Отсортировать категории по</string>
 </resources>

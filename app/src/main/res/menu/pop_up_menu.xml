@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_by_numbers_ASC"
+        android:title="@string/text_on_button_sorting_as_numbers_ASC"/>
+    <item
+        android:id="@+id/sort_by_numbers_DESC"
+        android:title="@string/text_on_button_sorting_as_numbers_DESC"/>
+    <item
+        android:id="@+id/sort_by_alphabet_ASC"
+        android:title="@string/text_on_button_sorting_as_alphabet_ASC"/>
+    <item
+        android:id="@+id/sorting_by_alphabet_DESC"
+        android:title="@string/text_on_button_sorting_as_alphabet_DESC"/>
+</menu>
