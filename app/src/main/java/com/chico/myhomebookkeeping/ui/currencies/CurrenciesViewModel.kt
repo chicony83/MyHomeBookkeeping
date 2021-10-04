@@ -67,6 +67,17 @@ class CurrenciesViewModel(
         )
     }
 
+    fun saveData(navControlHelper: NavControlHelper, id: Int) {
+        setSP.checkAndSaveToSP(
+            navControlHelper = navControlHelper,
+            argsForNew = argsForCreate,
+            argsForChange = argsForChange,
+            argsForQuery = argsForQuery,
+            id = id
+        )
+
+    }
+
     fun loadSelectedCurrency(selectedId: Int) {
         launchIo {
             _selectedCurrency.postValue(CurrenciesUseCase.getOneCurrency(db, selectedId))
@@ -101,7 +112,7 @@ class CurrenciesViewModel(
         reloadCurrencies(save.await().toLong())
     }
 
-    fun addNewCurrency(newCurrency: Currencies) = runBlocking {
+    fun addNewCurrency(newCurrency: Currencies): Long = runBlocking {
         val add = async {
             CurrenciesUseCase.addNewCurrency(
                 db = db,
@@ -109,6 +120,7 @@ class CurrenciesViewModel(
             )
         }
         reloadCurrencies(add.await())
+        return@runBlocking add.await()
     }
 
     private fun reloadCurrencies(long: Long) {

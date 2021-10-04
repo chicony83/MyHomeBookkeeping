@@ -124,19 +124,16 @@ class CurrenciesFragment : Fragment() {
                 }
             }
             with(newCurrencyLayout) {
-                addNewCurrencyButton.setOnClickListener {
-                    if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
-                        if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
-                            val name: String =
-                                binding.newCurrencyLayout.currencyName.text.toString()
-                            val newCurrency = Currencies(currencyName = name)
-                            currenciesViewModel.addNewCurrency(newCurrency)
-                            eraseUiElements()
-                            uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
-                            view.hideKeyboard()
-                            showUIControlElements()
-                        } else showMessage(getString(R.string.message_too_short_name))
+                addAndSelectNewItemButton.setOnClickListener {
+                    selectedCurrencyId = addNewCurrency(view)
+                    if (selectedCurrencyId>0){
+                        Message.log("selected Currency ID = $selectedCurrencyId")
+                        currenciesViewModel.saveData(navControlHelper,selectedCurrencyId)
+                        navControlHelper.moveToPreviousPage()
                     }
+                }
+                addNewCurrencyButton.setOnClickListener {
+                    addNewCurrency(view)
                 }
                 cancelCreateButton.setOnClickListener {
                     eraseUiElements()
@@ -206,6 +203,25 @@ class CurrenciesFragment : Fragment() {
         }
     }
 
+    private fun addNewCurrency(view: View):Int {
+        if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
+            if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
+                val name: String =
+                    binding.newCurrencyLayout.currencyName.text.toString()
+                val newCurrency = Currencies(currencyName = name)
+                eraseUiElements()
+                uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
+                view.hideKeyboard()
+                showUIControlElements()
+                return currenciesViewModel.addNewCurrency(newCurrency).toInt()
+            } else {
+                showMessage(getString(R.string.message_too_short_name))
+                return -1
+            }
+        }
+        else return -1
+    }
+
     private fun showUIControlElements() {
         showHideDialogsController.showUIControlElements(
             topButtonsHolder = binding.topButtonsHolder,
@@ -235,6 +251,7 @@ class CurrenciesFragment : Fragment() {
     )
 
     private fun getButtonsListForColorButton() = listOf(
+        binding.newCurrencyLayout.addAndSelectNewItemButton,
         binding.newCurrencyLayout.addNewCurrencyButton,
         binding.newCurrencyLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,
