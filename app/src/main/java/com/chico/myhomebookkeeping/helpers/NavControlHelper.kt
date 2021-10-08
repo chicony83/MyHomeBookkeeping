@@ -27,4 +27,8 @@ class NavControlHelper(private val controller: NavController) {
     fun moveToSelectedFragment(toFragment: Int) {
         controller.navigate(toFragment)
     }
+
+    fun moveToSelectTimePeriod() {
+        controller.navigate(R.id.nav_time_period)
+    }
 }

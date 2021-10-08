@@ -23,21 +23,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/selectCurrency"
+                android:id="@+id/selectCurrencyButton"
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_on_button_currency" />
 
             <Button
-                android:id="@+id/selectCategory"
+                android:id="@+id/selectCategoryButton"
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_on_button_category" />
 
             <Button
-                android:id="@+id/selectCashAccount"
+                android:id="@+id/selectCashAccountButton"
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,10 +66,16 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
             <Button
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/hideRecyclerButton"
                 style="@style/ButtonFullWidth.AddAndSelect"
                 android:text="@string/text_on_button_submit" />
 

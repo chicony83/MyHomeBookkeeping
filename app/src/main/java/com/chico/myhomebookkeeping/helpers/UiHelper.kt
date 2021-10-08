@@ -4,6 +4,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.obj.Constants
 
 import com.google.android.material.button.MaterialButton
@@ -145,5 +146,13 @@ class UiHelper(
 
     fun enableButton(button: Button) {
         button.isEnabled = true
+    }
+
+    fun showUiElement(recyclerView: RecyclerView) {
+        recyclerView.visibility = View.VISIBLE
+    }
+
+    fun hideUiElement(recyclerView: RecyclerView) {
+        recyclerView.visibility = View.VISIBLE
     }
 }
