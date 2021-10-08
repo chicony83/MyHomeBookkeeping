@@ -4,16 +4,18 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.widget.Button
 import androidx.viewbinding.ViewBinding
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 
-class UiColors {
+class UiColors(
+    private val dialogButtonsColor: Int = Colors.dialogButtonsColor,
+    private val dialogBackgroundColor: Int = Colors.dialogBackgroundColor
+) {
     fun setColors(
         buttonsList: List<Button>,
         buttonsListForColorButtonText: List<Button>
     ) {
-        setButtonsBackgroundColor(buttonsList = buttonsList, color = Colors.dialogButtonsColor)
+        setButtonsBackgroundColor(buttonsList = buttonsList, color = dialogButtonsColor)
         setButtonsTextColor(buttonsListForColorButtonText)
     }
 
@@ -22,8 +24,8 @@ class UiColors {
         buttonsList: List<Button>,
         buttonsListForColorButtonText: List<Button>
     ) {
-        setDialogBackgroundColor(dialogsList = dialogsList, color = Colors.dialogBackgroundColor)
-        setButtonsBackgroundColor(buttonsList = buttonsList, color = Colors.dialogButtonsColor)
+        setDialogBackgroundColor(dialogsList = dialogsList, color = dialogBackgroundColor)
+        setButtonsBackgroundColor(buttonsList = buttonsList, color = dialogButtonsColor)
         setButtonsTextColor(buttonsListForColorButtonText)
     }
 
@@ -67,5 +69,9 @@ class UiColors {
             }
 
         }
+    }
+
+    fun setButtonsColor(list: List<Button>) {
+        setButtonsBackgroundColor(list,dialogButtonsColor)
     }
 }

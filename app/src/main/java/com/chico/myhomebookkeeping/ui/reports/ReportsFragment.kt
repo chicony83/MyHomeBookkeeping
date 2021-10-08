@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.github.mikephil.charting.charts.HorizontalBarChart
@@ -27,7 +28,7 @@ class ReportsFragment : Fragment() {
     private val uiHelper = UiHelper()
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-
+    private val uiColors = UiColors()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +41,37 @@ class ReportsFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
 
+        with(reportsViewModel) {
+            getMap().observe(viewLifecycleOwner, { map ->
+                map?.let { it1 ->
+                    val sortedMap: MutableMap<String, Double> = LinkedHashMap()
+                    it1.entries.sortedBy { it.value }.forEach { sortedMap[it.key] = it.value }
+                    charts.showPieChart(chartView = pieChartView, sortedMap)
+                    charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
+                }
+            })
+        }
+        return binding.root
+    }
+
+
+    private fun hideUiElements() {
+        binding.recyclerView.visibility = View.GONE
+        binding.hideRecyclerButton.visibility = View.GONE
+    }
+
+    private fun showUiElements() {
+        uiHelper.showUiElement(binding.recyclerView)
+        uiHelper.showUiElement(binding.hideRecyclerButton)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
+
+        pieChartView = binding.pieChart
+        horizontalLineChartView = binding.horizontalBarChart
+//        horizontalLineChartView.setDrawGridBackground(false)
         with(binding) {
             selectCashAccountButton.setOnClickListener {
                 showUiElements()
@@ -58,59 +90,13 @@ class ReportsFragment : Fragment() {
             }
         }
 
-
-
-        with(reportsViewModel) {
-            getMap().observe(viewLifecycleOwner, { map ->
-                map?.let { it1 ->
-                    val sortedMap: MutableMap<String, Double> = LinkedHashMap()
-                    it1.entries.sortedBy { it.value }.forEach { sortedMap[it.key] = it.value }
-                    charts.showPieChart(chartView = pieChartView, sortedMap)
-                    charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
-                }
-            })
-        }
-        return binding.root
-    }
-
-    private fun hideUiElements() {
-        binding.recyclerView.visibility = View.GONE
-        binding.hideRecyclerButton.visibility = View.GONE
-    }
-
-    private fun showUiElements() {
-        uiHelper.showUiElement(binding.recyclerView)
-        uiHelper.showUiElement(binding.hideRecyclerButton)
-//        binding.recyclerView.visibility = View.VISIBLE
-//        binding.hideRecyclerButton.visibility = View.VISIBLE
-    }
-
-//    private fun hideHideRecyclerViewButton() {
-//        uiHelper.hideUiElement(binding.hideRecyclerButton)
-//    }
-//
-//    private fun showHideRecyclerViewButton() {
-//        uiHelper.showUiElement(binding.hideRecyclerButton)
-//    }
-//
-//    private fun hideRecyclerView() {
-//        uiHelper.hideUiElement(binding.recyclerView)
-//    }
-//
-//    private fun showRecyclerView() {
-//        uiHelper.showUiElement(binding.recyclerView)
-//    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.hideKeyboard()
-
-        pieChartView = binding.pieChart
-        horizontalLineChartView = binding.horizontalBarChart
-//        horizontalLineChartView.setDrawGridBackground(false)
+        uiColors.setButtonsColor(getButtonsListForColorButtons())
 
     }
+
+    private fun getButtonsListForColorButtons() = listOf(
+        binding.hideRecyclerButton
+    )
 
 
     override fun onStart() {
