@@ -33,10 +33,11 @@ class ReportsFragment : Fragment() {
         reportsViewModel =
             ViewModelProvider(this).get(ReportsViewModel::class.java)
 
+
+
         with(reportsViewModel) {
             getMap().observe(viewLifecycleOwner, { map ->
                 map?.let { it1 ->
-
                     val sortedMap:MutableMap<String,Double> = LinkedHashMap()
                     it1.entries.sortedBy { it.value }.forEach{sortedMap[it.key] = it.value}
 

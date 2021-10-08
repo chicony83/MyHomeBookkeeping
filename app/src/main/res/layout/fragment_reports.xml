@@ -7,7 +7,6 @@
     tools:context=".ui.reports.ReportsFragment">
 
     <HorizontalScrollView
-        android:visibility="gone"
         android:id="@+id/scrollViewButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,19 +65,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <Button
+                style="@style/ButtonFullWidth.AddAndSelect"
+                android:text="@string/text_on_button_submit" />
 
             <com.github.mikephil.charting.charts.PieChart
-                android:layout_gravity="center"
                 android:id="@+id/pieChart"
                 android:layout_width="400dp"
-                android:layout_height="400dp">
+                android:layout_height="400dp"
+                android:layout_gravity="center">
 
             </com.github.mikephil.charting.charts.PieChart>
+
             <com.github.mikephil.charting.charts.HorizontalBarChart
-                android:layout_gravity="center"
                 android:id="@+id/horizontalBarChart"
                 android:layout_width="400dp"
-                android:layout_height="400dp"/>
+                android:layout_height="400dp"
+                android:layout_gravity="center" />
         </LinearLayout>
     </ScrollView>
 
