@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportsBinding
+import com.chico.myhomebookkeeping.helpers.Message
 
 class ReportsAdapter(
     private val itemsList: List<ReportsItem>
@@ -27,13 +28,15 @@ class ReportsAdapter(
 
     override fun getItemCount() =  itemsList.size
 
-    class ViewHolder(
+    inner class ViewHolder(
         private val binding: RecyclerViewItemReportsBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(reportsItem: ReportsItem) {
             with(binding){
                 itemId.text = reportsItem.id.toString()
                 name.text = reportsItem.name
+                Message.log("reportsItem.id = ${reportsItem.id}, reportsItem.name = ${reportsItem.name}")
             }
         }
 

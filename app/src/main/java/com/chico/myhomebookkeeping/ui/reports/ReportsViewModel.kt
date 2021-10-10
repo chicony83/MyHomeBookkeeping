@@ -14,6 +14,8 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.enums.ReportsType
 import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
@@ -23,6 +25,8 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingCreteQuery
 import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
 class ReportsViewModel(
@@ -188,8 +192,29 @@ class ReportsViewModel(
         stateRecycler = name
     }
 
-    fun getCashAccountsList() {
-//        _itemsForReportsList.postValue()
+    fun getCategoriesList() {
+        launchIo {
+            val categoriesList = CategoriesUseCase.getAllCategoriesSortNameAsc(dbCategory)
+//            val itemsList: MutableList<ReportsItem> =
+//                convCategoriesListToItems(categoriesList)
+            launchUi {
+                _itemsForReportsList.postValue(
+                    convCategoriesListToItems(categoriesList)
+                )
+            }
+        }
+//        _itemsForReportsList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(dbCategory))
+    }
+
+    private fun convCategoriesListToItems(
+        categoriesList: List<Categories>
+    ): MutableList<ReportsItem> {
+        val list: MutableList<ReportsItem> = mutableListOf()
+        for (i in categoriesList.indices) {
+            list.add(ReportsItem(i, categoriesList[i].categoryName))
+            Message.log("add in List ${list[i].id}, name ${list[i].name}")
+        }
+        return list
     }
 
 }

@@ -51,7 +51,7 @@ class ReportsFragment : Fragment() {
                     charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
                 }
             })
-            itemsListForRecycler.observe(viewLifecycleOwner,{
+            itemsListForRecycler.observe(viewLifecycleOwner, {
                 binding.recyclerView.adapter = ReportsAdapter(it)
             })
         }
@@ -80,11 +80,11 @@ class ReportsFragment : Fragment() {
             selectCashAccountButton.setOnClickListener {
                 showUiElements()
                 reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
-                reportsViewModel.getCashAccountsList()
             }
             selectCategoryButton.setOnClickListener {
                 showUiElements()
                 reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCategories.name)
+                reportsViewModel.getCategoriesList()
             }
             selectCurrencyButton.setOnClickListener {
                 showUiElements()
