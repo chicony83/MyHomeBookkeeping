@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
+import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -50,6 +51,9 @@ class ReportsFragment : Fragment() {
                     charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
                 }
             })
+            itemsListForRecycler.observe(viewLifecycleOwner,{
+                binding.recyclerView.adapter = ReportsAdapter(it)
+            })
         }
         return binding.root
     }
@@ -75,17 +79,22 @@ class ReportsFragment : Fragment() {
         with(binding) {
             selectCashAccountButton.setOnClickListener {
                 showUiElements()
+                reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
+                reportsViewModel.getCashAccountsList()
             }
             selectCategoryButton.setOnClickListener {
                 showUiElements()
+                reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCategories.name)
             }
             selectCurrencyButton.setOnClickListener {
                 showUiElements()
+                reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
             }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
             }
             hideRecyclerButton.setOnClickListener {
+                reportsViewModel.setRecyclerState(StatesReportsRecycler.None.name)
                 hideUiElements()
             }
         }

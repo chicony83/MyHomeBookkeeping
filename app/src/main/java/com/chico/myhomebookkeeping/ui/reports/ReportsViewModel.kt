@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.enums.ReportsType
+import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
@@ -82,6 +83,11 @@ class ReportsViewModel(
     val map: LiveData<Map<String, Double>?>
         get() = _map
     private val setTextOnButtons = SetTextOnButtons(app.resources)
+
+    private val _itemsForReportsList = MutableLiveData<List<ReportsItem>>()
+    val itemsListForRecycler: LiveData<List<ReportsItem>> get() = _itemsForReportsList
+
+    private var stateRecycler: String = StatesReportsRecycler.None.name
 
     fun getListFullMoneyMoving() {
         runBlocking {
@@ -175,6 +181,15 @@ class ReportsViewModel(
         cashAccountIntSP = getSP.getInt(argsCashAccountKey)
         currencyIntSP = getSP.getInt(argsCurrencyKey)
         categoryIntSP = getSP.getInt(argsCategoryKey)
+    }
+
+    fun setRecyclerState(name: String) {
+        Message.log("set state RecyclerView $name")
+        stateRecycler = name
+    }
+
+    fun getCashAccountsList() {
+//        _itemsForReportsList.postValue()
     }
 
 }

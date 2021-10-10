@@ -65,7 +65,7 @@ class CategoriesViewModel(
     private var selectedIsIncomeSpending: String = argsNone
     private var sortingCategoriesStringSP = getSP.getString(argsSortingCategories)
     private val setTextOnButtons = SetTextOnButtons(app.resources)
-    private var additionalTextForTheButton = " "
+
     init {
         loadCategories()
     }
@@ -76,23 +76,27 @@ class CategoriesViewModel(
         launchIo {
             when (sortingCategoriesStringSP) {
                 SortingCategories.NumbersByASC.toString() -> {
-                    _categoriesList.postValue(db.getAllCategoriesIdASC())
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdAsc(db))
+//                    _categoriesList.postValue(db.getAllCategoriesIdASC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_ASC))
                 }
                 SortingCategories.NumbersByDESC.toString() -> {
-                    _categoriesList.postValue(db.getAllCategoriesIdDESC())
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdDesc(db))
+//                    _categoriesList.postValue(db.getAllCategoriesIdDESC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_DESC))
                 }
                 SortingCategories.AlphabetByASC.toString() -> {
-                    _categoriesList.postValue(db.getAllCategoriesNameASC())
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
+//                    _categoriesList.postValue(db.getAllCategoriesNameASC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
                 }
                 SortingCategories.AlphabetByDESC.toString() -> {
-                    _categoriesList.postValue(db.getAllCategoriesNameDESC())
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameDesc(db))
+//                    _categoriesList.postValue(db.getAllCategoriesNameDESC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 }
                 else -> {
-                    _categoriesList.postValue(db.getAllCategoriesNameASC())
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 }
             }
