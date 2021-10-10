@@ -52,7 +52,7 @@ class CurrenciesViewModel(
 
     private fun loadCurrencies() {
         launchIo {
-            _currenciesList.postValue(db.getAllCurrency())
+            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
         }
     }
 

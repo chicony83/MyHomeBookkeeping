@@ -54,7 +54,7 @@ class CashAccountViewModel(
 
     private fun loadCashAccounts() {
         launchIo {
-            _cashAccountsList.postValue(db.getAllCashAccounts())
+            _cashAccountsList.postValue(db.getAllCashAccountsSortNameAsc())
         }
     }
 

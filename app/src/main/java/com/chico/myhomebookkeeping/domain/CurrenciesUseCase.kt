@@ -3,8 +3,6 @@ package com.chico.myhomebookkeeping.domain
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchIo
-import kotlinx.coroutines.runBlocking
 
 object CurrenciesUseCase {
 
@@ -29,5 +27,11 @@ object CurrenciesUseCase {
         name: String
     ): Int {
         return db.changeLine(id, name)
+    }
+
+    suspend fun getAllCurrenciesSortNameAsc(
+        db: CurrenciesDao
+    ): List<Currencies> {
+        return db.getAllCurrenciesSortNameAsc()
     }
 }

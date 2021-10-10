@@ -1,12 +1,8 @@
 package com.chico.myhomebookkeeping.domain
 
-import android.util.Log
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchIo
-import kotlinx.coroutines.runBlocking
 
 object CashAccountsUseCase {
     suspend fun addNewCashAccount(
@@ -32,5 +28,9 @@ object CashAccountsUseCase {
         number: String
     ): Int {
         return db.changeLine(id = id, name = name, number = number)
+    }
+
+    suspend fun getAllCashAccountsSortNameAsc(db: CashAccountDao): List<CashAccount> {
+        return db.getAllCashAccountsSortNameAsc()
     }
 }

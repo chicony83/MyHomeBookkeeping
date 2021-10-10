@@ -79,16 +79,25 @@ class ReportsFragment : Fragment() {
         with(binding) {
             selectCashAccountButton.setOnClickListener {
                 showUiElements()
-                reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
+                with(reportsViewModel) {
+                    setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
+                    postCashAccountsList()
+                }
+
             }
             selectCategoryButton.setOnClickListener {
                 showUiElements()
-                reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCategories.name)
-                reportsViewModel.getCategoriesList()
+                with(reportsViewModel) {
+                    setRecyclerState(StatesReportsRecycler.ShowCategories.name)
+                    postCategoriesList()
+                }
             }
             selectCurrencyButton.setOnClickListener {
                 showUiElements()
-                reportsViewModel.setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
+                with(reportsViewModel){
+                    setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
+                    postCurrenciesList()
+                }
             }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()

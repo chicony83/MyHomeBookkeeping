@@ -31,18 +31,18 @@ object CategoriesUseCase {
     }
 
     suspend fun getAllCategoriesSortIdDesc(db: CategoryDao): List<Categories> {
-        return db.getAllCategoriesIdDESC()
+        return db.getAllCategoriesSortIdDESC()
     }
 
     suspend fun getAllCategoriesSortIdAsc(db: CategoryDao): List<Categories> {
-        return db.getAllCategoriesIdASC()
+        return db.getAllCategoriesSortIdASC()
     }
 
     suspend fun getAllCategoriesSortNameAsc(db: CategoryDao): List<Categories> {
-        return db.getAllCategoriesNameASC()
+        return db.getAllCategoriesSortNameASC()
     }
 
     suspend fun getAllCategoriesSortNameDesc(db: CategoryDao): List<Categories> {
-        return db.getAllCategoriesNameDESC()
+        return db.getAllCategoriesSortNameDESC()
     }
 }

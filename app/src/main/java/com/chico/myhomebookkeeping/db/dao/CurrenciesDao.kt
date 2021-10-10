@@ -13,7 +13,7 @@ interface CurrenciesDao {
     suspend fun addCurrency(currency: Currencies):Long
 
     @Query("SELECT * FROM currency_table ORDER BY currency_name ASC")
-    suspend fun getAllCurrency():List<Currencies>
+    suspend fun getAllCurrenciesSortNameAsc():List<Currencies>
 
     @Query("SELECT * FROM currency_table WHERE currencyId = :id")
     suspend fun getOneCurrency(id:Int):Currencies
