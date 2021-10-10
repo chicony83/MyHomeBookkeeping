@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.`interface`.OnItemChecked
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -52,7 +54,15 @@ class ReportsFragment : Fragment() {
                 }
             })
             itemsListForRecycler.observe(viewLifecycleOwner, {
-                binding.recyclerView.adapter = ReportsAdapter(it)
+                binding.recyclerView.adapter = ReportsAdapter(it, object :OnItemChecked{
+                    override fun onChecked(id: Int) {
+                        Message.log("checked Item = $id")
+                    }
+
+                    override fun onUnChecked(id: Int) {
+                        Message.log("un Checked = $id")
+                    }
+                })
             })
         }
         return binding.root
@@ -83,7 +93,6 @@ class ReportsFragment : Fragment() {
                     setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
                     postCashAccountsList()
                 }
-
             }
             selectCategoryButton.setOnClickListener {
                 showUiElements()
