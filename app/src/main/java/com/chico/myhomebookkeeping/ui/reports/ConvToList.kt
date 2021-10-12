@@ -5,25 +5,37 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Message
 
-object ConvToReportsItem {
+object ConvToList {
 
-    fun categoriesListToItems(
+    fun categoriesListToReportsItemsList(
         categoriesList: List<Categories>
     ): MutableList<ReportsItem> {
         val list: MutableList<ReportsItem> = mutableListOf()
         for (i in categoriesList.indices) {
-            list.add(ReportsItem(i, categoriesList[i].categoryName))
+            list.add(ReportsItem(i, categoriesList[i].categoryName,false))
             addToListMessage(list, i)
         }
         return list
     }
 
-    fun cashAccountsListToItems(
+    fun cashAccountsListToReportsItemsList(
         cashAccountsList: List<CashAccount>
     ): MutableList<ReportsItem> {
         val list: MutableList<ReportsItem> = mutableListOf()
         for (i in cashAccountsList.indices) {
-            list.add(ReportsItem(i, cashAccountsList[i].accountName))
+            list.add(ReportsItem(i, cashAccountsList[i].accountName,false))
+            addToListMessage(list, i)
+        }
+        return list
+    }
+
+
+    fun currenciesListToReportsItemsList(
+        currenciesList: List<Currencies>
+    ): MutableList<ReportsItem> {
+        val list: MutableList<ReportsItem> = mutableListOf()
+        for (i in currenciesList.indices) {
+            list.add(ReportsItem(i, currenciesList[i].currencyName,false))
             addToListMessage(list, i)
         }
         return list
@@ -36,15 +48,14 @@ object ConvToReportsItem {
         Message.log("add in List ${list[i].id}, name ${list[i].name}")
     }
 
-    fun currenciesListToItems(
-        currenciesList: List<Currencies>
-    ): MutableList<ReportsItem> {
-        val list: MutableList<ReportsItem> = mutableListOf()
-        for (i in currenciesList.indices) {
-            list.add(ReportsItem(i, currenciesList[i].currencyName))
-            addToListMessage(list, i)
-        }
-        return list
-    }
+//    fun cashAccountListToList(
+//        cashAccountsList: List<CashAccount>
+//    ): List<Int> {
+//        val list: MutableList<Int> = mutableListOf()
+//        for (i in cashAccountsList.indices) {
+//            list.add(cashAccountsList[i].cashAccountId ?: i)
+//        }
+//        return list.toList()
+//    }
 
 }

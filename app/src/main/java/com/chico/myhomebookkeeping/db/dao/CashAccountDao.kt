@@ -13,6 +13,9 @@ interface CashAccountDao {
     @Query("SELECT * FROM cash_account_table ORDER BY cash_account_name ASC")
     suspend fun getAllCashAccountsSortNameAsc(): List<CashAccount>
 
+    @Query("SELECT * FROM cash_account_table ORDER BY cashAccountId ASC")
+    suspend fun getAllCashAccountsSortIdAsc():List<CashAccount>
+
     @Query("SELECT * FROM cash_account_table WHERE cashAccountId = :id")
     suspend fun getOneCashAccount(id: Int): CashAccount
 

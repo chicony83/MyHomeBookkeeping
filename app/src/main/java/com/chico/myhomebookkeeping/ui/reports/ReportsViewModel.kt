@@ -26,6 +26,7 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingCreteQuery
 import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
@@ -93,12 +94,31 @@ class ReportsViewModel(
 
     private var stateRecycler: String = StatesReportsRecycler.None.name
 
-    private var cashAccountsItemsList: MutableSet<Int> = mutableSetOf()
-    private var categoriesItemsList: MutableSet<Int> = mutableSetOf()
-    private var currenciesItemsList: MutableSet<Int> = mutableSetOf()
+    private lateinit var listItemsOfCashAccounts: List<ReportsItem>
+    private lateinit var listItemsOfCategories: List<ReportsItem>
+    private lateinit var listItemsOfCurrencies: List<ReportsItem>
 
     init {
         getTimePeriodsSP()
+        getLists()
+    }
+
+    private fun getLists() {
+        launchIo {
+            listItemsOfCashAccounts = ConvToList.cashAccountsListToReportsItemsList(
+                CashAccountsUseCase.getAllCashAccountsSortNameAsc(dbCashAccount)
+            )
+        }
+        launchIo {
+            listItemsOfCategories = ConvToList.categoriesListToReportsItemsList(
+                CategoriesUseCase.getAllCategoriesSortNameAsc(dbCategory)
+            )
+        }
+        launchIo {
+            listItemsOfCurrencies = ConvToList.currenciesListToReportsItemsList(
+                CurrenciesUseCase.getAllCurrenciesSortNameAsc(dbCurrencies)
+            )
+        }
     }
 
     private fun getTimePeriodsSP() {
@@ -162,32 +182,32 @@ class ReportsViewModel(
         )
     }
 
-    fun setTextOnButtons() {
-        with(setTextOnButtons) {
-            textOnCategoryButton(
-                _buttonTextOfQueryCategory,
-                dbCategory,
-                categoryIntSP,
-                getSP,
-                argsIncomeSpendingKey
-            )
-            textOnCurrencyButton(
-                _buttonTextOfQueryCurrency,
-                dbCurrencies,
-                currencyIntSP
-            )
-            textOnCashAccountButton(
-                _buttonTextOfQueryCashAccount,
-                dbCashAccount,
-                cashAccountIntSP
-            )
-            textOnTimePeriodButton(
-                _buttonTextOfTimePeriod,
-                startTimePeriodLongSP,
-                endTimePeriodLongSP
-            )
-        }
-    }
+//    fun setTextOnButtons() {
+//        with(setTextOnButtons) {
+//            textOnCategoryButton(
+//                _buttonTextOfQueryCategory,
+//                dbCategory,
+//                categoryIntSP,
+//                getSP,
+//                argsIncomeSpendingKey
+//            )
+//            textOnCurrencyButton(
+//                _buttonTextOfQueryCurrency,
+//                dbCurrencies,
+//                currencyIntSP
+//            )
+//            textOnCashAccountButton(
+//                _buttonTextOfQueryCashAccount,
+//                dbCashAccount,
+//                cashAccountIntSP
+//            )
+//            textOnTimePeriodButton(
+//                _buttonTextOfTimePeriod,
+//                startTimePeriodLongSP,
+//                endTimePeriodLongSP
+//            )
+//        }
+//    }
 
     private fun getValuesSP() {
         reportsTypeStringSP = getSP.getString(argsReportType) ?: argsNone
@@ -207,74 +227,60 @@ class ReportsViewModel(
 
     fun postCategoriesList() {
         launchUi {
-            _itemsForReportsList.postValue(
-                ConvToReportsItem.categoriesListToItems(
-                    CategoriesUseCase.getAllCategoriesSortNameAsc(
-                        dbCategory
-                    )
-                )
-            )
+            _itemsForReportsList.postValue(listItemsOfCategories)
         }
     }
 
     fun postCashAccountsList() {
         launchUi {
-            _itemsForReportsList.postValue(
-                ConvToReportsItem.cashAccountsListToItems(
-                    CashAccountsUseCase.getAllCashAccountsSortNameAsc(
-                        dbCashAccount
-                    )
-                )
-            )
+            _itemsForReportsList.postValue(listItemsOfCashAccounts)
         }
     }
 
 
     fun postCurrenciesList() {
         launchUi {
-            _itemsForReportsList.postValue(
-                ConvToReportsItem.currenciesListToItems(
-                    CurrenciesUseCase.getAllCurrenciesSortNameAsc(
-                        dbCurrencies
-                    )
-                )
-            )
+            _itemsForReportsList.postValue(listItemsOfCurrencies)
         }
     }
 
-    fun addItemInReport(id: Int) {
+    fun itemChecked(id: Int) {
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
-                currenciesItemsList.add(id)
-                printList(currenciesItemsList)
+                setCheckedTrue(listItemsOfCurrencies,id)
+//                Message.log("set checked on listItemsOfCurrencies ${listItemsOfCurrencies[id]}")
+//                Message.log("state listItemsOfCurrencies = ${listItemsOfCurrencies[id].isChecked} ")
             }
             StatesReportsRecycler.ShowCategories.name -> {
-                categoriesItemsList.add(id)
-                printList(categoriesItemsList)
+                setCheckedTrue(listItemsOfCategories,id)
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
-                cashAccountsItemsList.add(id)
-                printList(cashAccountsItemsList)
+                setCheckedTrue(listItemsOfCashAccounts,id)
             }
         }
     }
 
-    fun removeItemFromReport(id: Int) {
+    private fun setCheckedTrue(list: List<ReportsItem>, id: Int) {
+        list[id].isChecked = true
+    }
+
+    fun itemUnchecked(id: Int) {
         stateRecyclerMessage()
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
-                currenciesItemsList.remove(id)
-                printList(currenciesItemsList)
+                setCheckedFalse(listItemsOfCurrencies,id)
             }
             StatesReportsRecycler.ShowCategories.name -> {
-                categoriesItemsList.remove(id)
-                printList(categoriesItemsList)
+                setCheckedFalse(listItemsOfCategories,id)
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
-                cashAccountsItemsList.remove(id)
-                printList(cashAccountsItemsList)
+                setCheckedFalse(listItemsOfCashAccounts,id)
             }
         }
+    }
+
+    private fun setCheckedFalse(list: List<ReportsItem>, id: Int) {
+        list[id].isChecked = false
     }
 
     private fun printList(list: MutableSet<Int>) {
