@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.reports
 
+import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
@@ -12,7 +13,7 @@ object ConvToList {
     ): MutableList<ReportsItem> {
         val list: MutableList<ReportsItem> = mutableListOf()
         for (i in categoriesList.indices) {
-            list.add(ReportsItem(i, categoriesList[i].categoryName,false))
+            list.add(ReportsItem(i, categoriesList[i].categoryName, false))
             addToListMessage(list, i)
         }
         return list
@@ -23,7 +24,7 @@ object ConvToList {
     ): MutableList<ReportsItem> {
         val list: MutableList<ReportsItem> = mutableListOf()
         for (i in cashAccountsList.indices) {
-            list.add(ReportsItem(i, cashAccountsList[i].accountName,false))
+            list.add(ReportsItem(i, cashAccountsList[i].accountName, false))
             addToListMessage(list, i)
         }
         return list
@@ -35,7 +36,7 @@ object ConvToList {
     ): MutableList<ReportsItem> {
         val list: MutableList<ReportsItem> = mutableListOf()
         for (i in currenciesList.indices) {
-            list.add(ReportsItem(i, currenciesList[i].currencyName,false))
+            list.add(ReportsItem(i, currenciesList[i].currencyName, false))
             addToListMessage(list, i)
         }
         return list
@@ -46,6 +47,14 @@ object ConvToList {
         i: Int
     ) {
         Message.log("add in List ${list[i].id}, name ${list[i].name}")
+    }
+
+    fun moneyMovementListToMap(list: List<FullMoneyMoving>): Map<String, Double> {
+//            Message.log(list.toString())
+        return list
+            .sortedBy { it.categoryNameValue }
+            .groupBy { it.categoryNameValue }
+            .mapValues { it.value.sumOf { it.amount } }
     }
 
 //    fun cashAccountListToList(

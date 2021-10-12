@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchUi
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
 
@@ -58,14 +59,20 @@ class ReportsFragment : Fragment() {
                     override fun onChecked(id: Int) {
                         Message.log("checked Item = $id")
                         reportsViewModel.itemChecked(id)
+                        launchUi {
+                            reportsViewModel.updateReports()
+                        }
                     }
 
                     override fun onUnChecked(id: Int) {
                         Message.log("un Checked Item = $id")
                         reportsViewModel.itemUnchecked(id)
+                        launchUi {
+                            reportsViewModel.updateReports()
+                        }
+
                     }
                 })
-                reportsViewModel.updateReports()
             })
         }
         return binding.root

@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 import android.util.Log
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.ui.reports.ReportsItem
 
 
 object MoneyMovingCreteQuery {
@@ -13,8 +14,8 @@ object MoneyMovingCreteQuery {
 
     fun createQueryOneLine(id: Long): SimpleSQLiteQuery {
         var queryString = ""
-        val argsList: ArrayList<Any> = arrayListOf()
         queryString += addMainQueryFullMoneyMoving()
+        val argsList: ArrayList<Any> = arrayListOf()
 
         if (id > 0) {
             queryString += addAnd()
@@ -75,9 +76,19 @@ object MoneyMovingCreteQuery {
             or (incomeSpendingStringSP.isNotEmpty())
         ) {
             queryString =
-                addSelectedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+                addSelectedTimePeriod(
+                    startTimePeriodLongSP,
+                    endTimePeriodLongSP,
+                    queryString,
+                    argsList
+                )
             queryString =
-                addNotEndedTimePeriod(startTimePeriodLongSP, endTimePeriodLongSP, queryString, argsList)
+                addNotEndedTimePeriod(
+                    startTimePeriodLongSP,
+                    endTimePeriodLongSP,
+                    queryString,
+                    argsList
+                )
             queryString = addCurrency(currencyVal, queryString, argsList)
             queryString = addIsIncomeCategory(incomeSpendingStringSP, queryString)
             queryString = addIsSpendingCategory(incomeSpendingStringSP, queryString)
@@ -242,8 +253,24 @@ object MoneyMovingCreteQuery {
         return " AND "
     }
 
-    private fun addWhere(): String {
-        return " WHERE "
+//    private fun addWhere(): String {
+//        return " WHERE "
+//    }
+
+    fun createSampleQueryForReports(
+        startTimePeriodLong: Long,
+        endTimePeriodLong: Long,
+        listItemsOfCashAccounts: List<ReportsItem>,
+        listItemsOfCurrencies: List<ReportsItem>,
+        listItemsOfCurrencies1: List<ReportsItem>
+    ): SimpleSQLiteQuery {
+        var query = addMainQueryFullMoneyMoving()
+        val argsList:ArrayList<Any> = arrayListOf()
+        com.chico.myhomebookkeeping.helpers.Message.log(query)
+
+
+        val args = argsList.toArray()
+        return SimpleSQLiteQuery(query,args)
     }
 
 //    fun createSampleQuery(

@@ -18,17 +18,16 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
-import com.chico.myhomebookkeeping.enums.ReportsType
 import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingCreteQuery
-import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class ReportsViewModel(
     val app: Application
@@ -126,60 +125,68 @@ class ReportsViewModel(
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
     }
 
-    fun getListFullMoneyMoving() {
-        runBlocking {
-            getValuesSP()
-            Message.log("argsReportType = $reportsTypeStringSP")
-            if (reportsTypeStringSP == ReportsType.PieIncome.toString()) {
-                incomeSpendingStringSP = Constants.FOR_QUERY_INCOME
-                Message.log("income")
-            }
-            if (reportsTypeStringSP == ReportsType.PieSpending.toString()) {
-                incomeSpendingStringSP = Constants.FOR_QUERY_SPENDING
-                Message.log("spending")
-            }
-
-            val listMoneyMoving: Deferred<List<FullMoneyMoving>?> =
-                async(Dispatchers.IO) { loadListOfFullMoneyMoving() }
-
-            if (!listMoneyMoving.await().isNullOrEmpty()) {
-                Message.log("list size ${listMoneyMoving.await()?.size.toString()}")
-                runBlocking {
-
-                    val map: Map<String, Double> =
-                        listMoneyMoving.await()!!.sortedBy { it.categoryNameValue }
-                            .groupBy { it.categoryNameValue }
-                            .mapValues {
-                                it.value.sumOf { it.amount }
-                            }
-
-                    Message.log("map size ${map.size}")
-                    _map.postValue(map)
-                }
-            }
-        }
-    }
+//    fun getListFullMoneyMoving() {
+//        runBlocking {
+//            getValuesSP()
+//            Message.log("argsReportType = $reportsTypeStringSP")
+//            if (reportsTypeStringSP == ReportsType.PieIncome.toString()) {
+//                incomeSpendingStringSP = Constants.FOR_QUERY_INCOME
+//                Message.log("income")
+//            }
+//            if (reportsTypeStringSP == ReportsType.PieSpending.toString()) {
+//                incomeSpendingStringSP = Constants.FOR_QUERY_SPENDING
+//                Message.log("spending")
+//            }
+//
+//            val listMoneyMoving: Deferred<List<FullMoneyMoving>?> =
+//                async(Dispatchers.IO) { loadListOfFullMoneyMoving() }
+//
+//            if (!listMoneyMoving.await().isNullOrEmpty()) {
+//                Message.log("list size ${listMoneyMoving.await()?.size.toString()}")
+//                runBlocking {
+//
+//                    val map: Map<String, Double> =
+//                        listMoneyMoving.await()!!.sortedBy { it.categoryNameValue }
+//                            .groupBy { it.categoryNameValue }
+//                            .mapValues {
+//                                it.value.sumOf { it.amount }
+//                            }
+//
+//                    Message.log("map size ${map.size}")
+//                    _map.postValue(map)
+//                }
+//            }
+//        }
+//    }
 
     fun getMap(): MutableLiveData<Map<String, Double>?> {
         return _map
     }
 
-    private suspend fun loadListOfFullMoneyMoving() = launchForResult {
-        val query = MoneyMovingCreteQuery.createQueryListForReports(
-            currencyIntSP,
-            cashAccountIntSP,
-            incomeSpendingStringSP,
-            startTimePeriodLongSP,
-            endTimePeriodLongSP
-        )
-        return@launchForResult getListMoneyMovement(query)
-    }
+//    private suspend fun loadListOfFullMoneyMoving() = launchForResult {
+//        val query = MoneyMovingCreteQuery.createQueryListForReports(
+//            currencyIntSP,
+//            cashAccountIntSP,
+//            incomeSpendingStringSP,
+//            startTimePeriodLongSP,
+//            endTimePeriodLongSP
+//        )
+//        return@launchForResult getListMoneyMovement(query)
+//    }
 
     private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
         return MoneyMovingUseCase.getSelectedMoneyMovement(
             db,
             query
         )
+    }
+
+    private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
+        return MoneyMovingUseCase.getSelectedMoneyMovement(
+            db,
+            query
+        )
+
     }
 
 //    fun setTextOnButtons() {
@@ -247,15 +254,15 @@ class ReportsViewModel(
     fun itemChecked(id: Int) {
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
-                setCheckedTrue(listItemsOfCurrencies,id)
+                setCheckedTrue(listItemsOfCurrencies, id)
 //                Message.log("set checked on listItemsOfCurrencies ${listItemsOfCurrencies[id]}")
 //                Message.log("state listItemsOfCurrencies = ${listItemsOfCurrencies[id].isChecked} ")
             }
             StatesReportsRecycler.ShowCategories.name -> {
-                setCheckedTrue(listItemsOfCategories,id)
+                setCheckedTrue(listItemsOfCategories, id)
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
-                setCheckedTrue(listItemsOfCashAccounts,id)
+                setCheckedTrue(listItemsOfCashAccounts, id)
             }
         }
     }
@@ -268,13 +275,13 @@ class ReportsViewModel(
         stateRecyclerMessage()
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
-                setCheckedFalse(listItemsOfCurrencies,id)
+                setCheckedFalse(listItemsOfCurrencies, id)
             }
             StatesReportsRecycler.ShowCategories.name -> {
-                setCheckedFalse(listItemsOfCategories,id)
+                setCheckedFalse(listItemsOfCategories, id)
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
-                setCheckedFalse(listItemsOfCashAccounts,id)
+                setCheckedFalse(listItemsOfCashAccounts, id)
             }
         }
     }
@@ -294,17 +301,28 @@ class ReportsViewModel(
         Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
     }
 
-    fun updateReports() {
-        createQuery()
+    suspend fun updateReports() {
+        runBlocking {
+            val query = createQuery()
+
+            val listMoneyMovingForReports = async { getListOfFullMoneyMovements(query) }
+            if (!listMoneyMovingForReports.await().isNullOrEmpty()) {
+                _map.postValue(
+                    listMoneyMovingForReports.await()
+                        ?.let { ConvToList.moneyMovementListToMap(it) })
+
+            }
+        }
+
     }
 
-    private fun createQuery() {
-//        val query = MoneyMovingCreteQuery.createSampleQuery(
-//            startTimePeriodLongSP,
-//            endTimePeriodLongSP,
-//            cashAccountsItemsList,
-//            currenciesItemsList,
-//            categoriesItemsList
-//        )
+    private fun createQuery(): SimpleSQLiteQuery {
+        return MoneyMovingCreteQuery.createSampleQueryForReports(
+            startTimePeriodLongSP,
+            endTimePeriodLongSP,
+            listItemsOfCashAccounts,
+            listItemsOfCurrencies,
+            listItemsOfCurrencies
+        )
     }
 }
