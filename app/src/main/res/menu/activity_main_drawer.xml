@@ -10,7 +10,7 @@
             android:icon="@drawable/ic_menu_home"
             android:title="@string/fragment_label_money_moving" />
         <item
-            android:id="@+id/nav_reports_menu"
+            android:id="@+id/nav_reports"
             android:icon="@drawable/ic_baseline_incomplete_circle_24"
             android:title="@string/fragment_label_reports" />
     </group>
