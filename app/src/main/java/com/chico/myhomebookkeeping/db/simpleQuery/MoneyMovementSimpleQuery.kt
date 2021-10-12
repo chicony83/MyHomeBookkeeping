@@ -245,4 +245,14 @@ object MoneyMovingCreteQuery {
     private fun addWhere(): String {
         return " WHERE "
     }
+
+//    fun createSampleQuery(
+//        startTimePeriodLongSP: Long,
+//        endTimePeriodLongSP: Long,
+//        cashAccountsItemsList: MutableSet<Int>,
+//        currenciesItemsList: MutableSet<Int>,
+//        categoriesItemsList: MutableSet<Int>
+//    ): SimpleSQLiteQuery {
+//
+//    }
 }

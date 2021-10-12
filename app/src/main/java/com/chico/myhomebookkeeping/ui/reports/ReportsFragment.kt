@@ -57,12 +57,15 @@ class ReportsFragment : Fragment() {
                 binding.recyclerView.adapter = ReportsAdapter(it, object :OnItemChecked{
                     override fun onChecked(id: Int) {
                         Message.log("checked Item = $id")
+                        reportsViewModel.addItemInReport(id)
                     }
 
                     override fun onUnChecked(id: Int) {
-                        Message.log("un Checked = $id")
+                        Message.log("un Checked Item = $id")
+                        reportsViewModel.removeItemFromReport(id)
                     }
                 })
+                reportsViewModel.updateReports()
             })
         }
         return binding.root
@@ -128,7 +131,7 @@ class ReportsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        reportsViewModel.getListFullMoneyMoving()
+//        reportsViewModel.getListFullMoneyMoving()
         reportsViewModel.setTextOnButtons()
     }
 

@@ -93,6 +93,19 @@ class ReportsViewModel(
 
     private var stateRecycler: String = StatesReportsRecycler.None.name
 
+    private var cashAccountsItemsList: MutableSet<Int> = mutableSetOf()
+    private var categoriesItemsList: MutableSet<Int> = mutableSetOf()
+    private var currenciesItemsList: MutableSet<Int> = mutableSetOf()
+
+    init {
+        getTimePeriodsSP()
+    }
+
+    private fun getTimePeriodsSP() {
+        startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
+        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
+    }
+
     fun getListFullMoneyMoving() {
         runBlocking {
             getValuesSP()
@@ -229,4 +242,63 @@ class ReportsViewModel(
         }
     }
 
+    fun addItemInReport(id: Int) {
+        when (stateRecycler) {
+            StatesReportsRecycler.ShowCurrencies.name -> {
+                currenciesItemsList.add(id)
+                printList(currenciesItemsList)
+            }
+            StatesReportsRecycler.ShowCategories.name -> {
+                categoriesItemsList.add(id)
+                printList(categoriesItemsList)
+            }
+            StatesReportsRecycler.ShowCashAccounts.name -> {
+                cashAccountsItemsList.add(id)
+                printList(cashAccountsItemsList)
+            }
+        }
+    }
+
+    fun removeItemFromReport(id: Int) {
+        stateRecyclerMessage()
+        when (stateRecycler) {
+            StatesReportsRecycler.ShowCurrencies.name -> {
+                currenciesItemsList.remove(id)
+                printList(currenciesItemsList)
+            }
+            StatesReportsRecycler.ShowCategories.name -> {
+                categoriesItemsList.remove(id)
+                printList(categoriesItemsList)
+            }
+            StatesReportsRecycler.ShowCashAccounts.name -> {
+                cashAccountsItemsList.remove(id)
+                printList(cashAccountsItemsList)
+            }
+        }
+    }
+
+    private fun printList(list: MutableSet<Int>) {
+        Message.log(list.toString())
+        //        for (i in list.indices){
+//            Message.log("${list[i]}")
+//        }
+    }
+
+    private fun stateRecyclerMessage() {
+        Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
+    }
+
+    fun updateReports() {
+        createQuery()
+    }
+
+    private fun createQuery() {
+//        val query = MoneyMovingCreteQuery.createSampleQuery(
+//            startTimePeriodLongSP,
+//            endTimePeriodLongSP,
+//            cashAccountsItemsList,
+//            currenciesItemsList,
+//            categoriesItemsList
+//        )
+    }
 }

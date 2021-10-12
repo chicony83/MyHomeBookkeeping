@@ -41,9 +41,11 @@ class ReportsAdapter(
                 name.text = reportsItem.name
                 Message.log("reportsItem.id = ${reportsItem.id}, reportsItem.name = ${reportsItem.name}")
 
-                checkbox.setOnCheckedChangeListener {
-                        buttonView, isChecked ->
-                    run { if (isChecked) checkedListener.onChecked(reportsItem.id) }
+                checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                    run {
+                        if (isChecked) checkedListener.onChecked(reportsItem.id)
+                        if (!isChecked) checkedListener.onUnChecked(reportsItem.id)
+                    }
 
                 }
             }
