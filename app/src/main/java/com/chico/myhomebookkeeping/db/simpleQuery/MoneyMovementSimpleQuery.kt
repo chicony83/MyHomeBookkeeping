@@ -13,8 +13,7 @@ object MoneyMovingCreteQuery {
     private const val argsNone = Constants.FOR_QUERY_NONE
 
     fun createQueryOneLine(id: Long): SimpleSQLiteQuery {
-        var queryString = ""
-        queryString += addMainQueryFullMoneyMoving()
+        var queryString = mainQueryFullMoneyMoving()
         val argsList: ArrayList<Any> = arrayListOf()
 
         if (id > 0) {
@@ -36,7 +35,7 @@ object MoneyMovingCreteQuery {
         endTimePeriodLongSP: Long
     ): SimpleSQLiteQuery {
 
-        var queryString = addMainQueryFullMoneyMoving()
+        var queryString = mainQueryFullMoneyMoving()
         val argsList: ArrayList<Any> = arrayListOf()
 
         queryString =
@@ -65,7 +64,7 @@ object MoneyMovingCreteQuery {
         endTimePeriodLongSP: Long
     ): SimpleSQLiteQuery {
 
-        var queryString = addMainQueryFullMoneyMoving()
+        var queryString = mainQueryFullMoneyMoving()
         val argsList: ArrayList<Any> = arrayListOf()
 
         if (
@@ -232,7 +231,7 @@ object MoneyMovingCreteQuery {
         return queryString1
     }
 
-    private fun addMainQueryFullMoneyMoving(): String {
+    private fun mainQueryFullMoneyMoving(): String {
         return "SELECT id,time_stamp, " +
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
@@ -264,7 +263,7 @@ object MoneyMovingCreteQuery {
         listItemsOfCurrencies: List<ReportsItem>,
         listItemsOfCurrencies1: List<ReportsItem>
     ): SimpleSQLiteQuery {
-        var query = addMainQueryFullMoneyMoving()
+        var query = mainQueryFullMoneyMoving()
         val argsList:ArrayList<Any> = arrayListOf()
         com.chico.myhomebookkeeping.helpers.Message.log(query)
 
@@ -272,14 +271,4 @@ object MoneyMovingCreteQuery {
         val args = argsList.toArray()
         return SimpleSQLiteQuery(query,args)
     }
-
-//    fun createSampleQuery(
-//        startTimePeriodLongSP: Long,
-//        endTimePeriodLongSP: Long,
-//        cashAccountsItemsList: MutableSet<Int>,
-//        currenciesItemsList: MutableSet<Int>,
-//        categoriesItemsList: MutableSet<Int>
-//    ): SimpleSQLiteQuery {
-//
-//    }
 }

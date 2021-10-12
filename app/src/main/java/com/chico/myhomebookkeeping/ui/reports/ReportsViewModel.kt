@@ -125,60 +125,8 @@ class ReportsViewModel(
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
     }
 
-//    fun getListFullMoneyMoving() {
-//        runBlocking {
-//            getValuesSP()
-//            Message.log("argsReportType = $reportsTypeStringSP")
-//            if (reportsTypeStringSP == ReportsType.PieIncome.toString()) {
-//                incomeSpendingStringSP = Constants.FOR_QUERY_INCOME
-//                Message.log("income")
-//            }
-//            if (reportsTypeStringSP == ReportsType.PieSpending.toString()) {
-//                incomeSpendingStringSP = Constants.FOR_QUERY_SPENDING
-//                Message.log("spending")
-//            }
-//
-//            val listMoneyMoving: Deferred<List<FullMoneyMoving>?> =
-//                async(Dispatchers.IO) { loadListOfFullMoneyMoving() }
-//
-//            if (!listMoneyMoving.await().isNullOrEmpty()) {
-//                Message.log("list size ${listMoneyMoving.await()?.size.toString()}")
-//                runBlocking {
-//
-//                    val map: Map<String, Double> =
-//                        listMoneyMoving.await()!!.sortedBy { it.categoryNameValue }
-//                            .groupBy { it.categoryNameValue }
-//                            .mapValues {
-//                                it.value.sumOf { it.amount }
-//                            }
-//
-//                    Message.log("map size ${map.size}")
-//                    _map.postValue(map)
-//                }
-//            }
-//        }
-//    }
-
     fun getMap(): MutableLiveData<Map<String, Double>?> {
         return _map
-    }
-
-//    private suspend fun loadListOfFullMoneyMoving() = launchForResult {
-//        val query = MoneyMovingCreteQuery.createQueryListForReports(
-//            currencyIntSP,
-//            cashAccountIntSP,
-//            incomeSpendingStringSP,
-//            startTimePeriodLongSP,
-//            endTimePeriodLongSP
-//        )
-//        return@launchForResult getListMoneyMovement(query)
-//    }
-
-    private suspend fun getListMoneyMovement(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
-        return MoneyMovingUseCase.getSelectedMoneyMovement(
-            db,
-            query
-        )
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
@@ -186,45 +134,6 @@ class ReportsViewModel(
             db,
             query
         )
-
-    }
-
-//    fun setTextOnButtons() {
-//        with(setTextOnButtons) {
-//            textOnCategoryButton(
-//                _buttonTextOfQueryCategory,
-//                dbCategory,
-//                categoryIntSP,
-//                getSP,
-//                argsIncomeSpendingKey
-//            )
-//            textOnCurrencyButton(
-//                _buttonTextOfQueryCurrency,
-//                dbCurrencies,
-//                currencyIntSP
-//            )
-//            textOnCashAccountButton(
-//                _buttonTextOfQueryCashAccount,
-//                dbCashAccount,
-//                cashAccountIntSP
-//            )
-//            textOnTimePeriodButton(
-//                _buttonTextOfTimePeriod,
-//                startTimePeriodLongSP,
-//                endTimePeriodLongSP
-//            )
-//        }
-//    }
-
-    private fun getValuesSP() {
-        reportsTypeStringSP = getSP.getString(argsReportType) ?: argsNone
-        Message.log("reportsType = $reportsTypeStringSP")
-        startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
-        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
-//        incomeSpendingStringSP = getSP.getString(argsIncomeSpendingKey) ?: argsNone
-        cashAccountIntSP = getSP.getInt(argsCashAccountKey)
-        currencyIntSP = getSP.getInt(argsCurrencyKey)
-        categoryIntSP = getSP.getInt(argsCategoryKey)
     }
 
     fun setRecyclerState(name: String) {
@@ -255,8 +164,6 @@ class ReportsViewModel(
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
                 setCheckedTrue(listItemsOfCurrencies, id)
-//                Message.log("set checked on listItemsOfCurrencies ${listItemsOfCurrencies[id]}")
-//                Message.log("state listItemsOfCurrencies = ${listItemsOfCurrencies[id].isChecked} ")
             }
             StatesReportsRecycler.ShowCategories.name -> {
                 setCheckedTrue(listItemsOfCategories, id)
@@ -290,13 +197,6 @@ class ReportsViewModel(
         list[id].isChecked = false
     }
 
-    private fun printList(list: MutableSet<Int>) {
-        Message.log(list.toString())
-        //        for (i in list.indices){
-//            Message.log("${list[i]}")
-//        }
-    }
-
     private fun stateRecyclerMessage() {
         Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
     }
@@ -304,16 +204,13 @@ class ReportsViewModel(
     suspend fun updateReports() {
         runBlocking {
             val query = createQuery()
-
             val listMoneyMovingForReports = async { getListOfFullMoneyMovements(query) }
             if (!listMoneyMovingForReports.await().isNullOrEmpty()) {
                 _map.postValue(
                     listMoneyMovingForReports.await()
                         ?.let { ConvToList.moneyMovementListToMap(it) })
-
             }
         }
-
     }
 
     private fun createQuery(): SimpleSQLiteQuery {

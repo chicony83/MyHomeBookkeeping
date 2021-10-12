@@ -50,21 +50,9 @@ object ConvToList {
     }
 
     fun moneyMovementListToMap(list: List<FullMoneyMoving>): Map<String, Double> {
-//            Message.log(list.toString())
         return list
             .sortedBy { it.categoryNameValue }
             .groupBy { it.categoryNameValue }
             .mapValues { it.value.sumOf { it.amount } }
     }
-
-//    fun cashAccountListToList(
-//        cashAccountsList: List<CashAccount>
-//    ): List<Int> {
-//        val list: MutableList<Int> = mutableListOf()
-//        for (i in cashAccountsList.indices) {
-//            list.add(cashAccountsList[i].cashAccountId ?: i)
-//        }
-//        return list.toList()
-//    }
-
 }

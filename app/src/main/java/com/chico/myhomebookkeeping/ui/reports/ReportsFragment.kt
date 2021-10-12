@@ -135,12 +135,6 @@ class ReportsFragment : Fragment() {
         binding.hideRecyclerButton
     )
 
-
-    override fun onStart() {
-        super.onStart()
-//        reportsViewModel.setTextOnButtons()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
