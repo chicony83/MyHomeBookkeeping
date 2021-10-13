@@ -23,9 +23,12 @@ import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
-import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingCreteQuery
+import com.chico.myhomebookkeeping.db.simpleQuery.MoneyMovingCreateSimpleQuery
+import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
@@ -110,7 +113,7 @@ class ReportsViewModel(
         }
         launchIo {
             listItemsOfCategories = ConvToList.categoriesListToReportsItemsList(
-                CategoriesUseCase.getAllCategoriesSortNameAsc(dbCategory)
+                CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
             )
         }
         launchIo {
@@ -130,10 +133,18 @@ class ReportsViewModel(
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
-        return MoneyMovingUseCase.getSelectedMoneyMovement(
-            db,
-            query
+        Message.log("query = ${query.sql}, args = ${query.argCount}")
+
+        val result = MoneyMovingUseCase.getSelectedMoneyMovement(
+            db, query
         )
+
+
+        return result
+//        return MoneyMovingUseCase.getSelectedMoneyMovement(
+//            db,
+//            query
+//        )
     }
 
     fun setRecyclerState(name: String) {
@@ -204,7 +215,10 @@ class ReportsViewModel(
     suspend fun updateReports() {
         runBlocking {
             val query = createQuery()
-            val listMoneyMovingForReports = async { getListOfFullMoneyMovements(query) }
+            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
+                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
+
+            Message.log("size Full Money Moving list = ${listMoneyMovingForReports.await()?.size}")
             if (!listMoneyMovingForReports.await().isNullOrEmpty()) {
                 _map.postValue(
                     listMoneyMovingForReports.await()
@@ -214,12 +228,12 @@ class ReportsViewModel(
     }
 
     private fun createQuery(): SimpleSQLiteQuery {
-        return MoneyMovingCreteQuery.createSampleQueryForReports(
+        return ReportsCreateSimpleQuery.createSampleQueryForReports(
             startTimePeriodLongSP,
             endTimePeriodLongSP,
             listItemsOfCashAccounts,
             listItemsOfCurrencies,
-            listItemsOfCurrencies
+            listItemsOfCategories
         )
     }
 }

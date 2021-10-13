@@ -1,12 +1,13 @@
-package com.chico.myhomebookkeeping.ui.moneyMoving
+package com.chico.myhomebookkeeping.db.simpleQuery
 
 import android.util.Log
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.ui.reports.ReportsItem
 
 
-object MoneyMovingCreteQuery {
+object MoneyMovingCreateSimpleQuery {
 
     private const val argsIncome: String = Constants.FOR_QUERY_INCOME
     private const val argsSpending = Constants.FOR_QUERY_SPENDING
@@ -51,7 +52,7 @@ object MoneyMovingCreteQuery {
         queryString = addSortingByTimeStampDesc(queryString)
 
         Log.i("TAG", queryString)
-        val args = argsList.toArray()
+        val args: Array<Any> = argsList.toArray()
 
         return SimpleSQLiteQuery(queryString, args)
     }
@@ -96,7 +97,7 @@ object MoneyMovingCreteQuery {
 
         Log.i("TAG", queryString)
 
-        val args = argsList.toArray()
+        val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(queryString, args)
 
     }
@@ -256,19 +257,4 @@ object MoneyMovingCreteQuery {
 //        return " WHERE "
 //    }
 
-    fun createSampleQueryForReports(
-        startTimePeriodLong: Long,
-        endTimePeriodLong: Long,
-        listItemsOfCashAccounts: List<ReportsItem>,
-        listItemsOfCurrencies: List<ReportsItem>,
-        listItemsOfCurrencies1: List<ReportsItem>
-    ): SimpleSQLiteQuery {
-        var query = mainQueryFullMoneyMoving()
-        val argsList:ArrayList<Any> = arrayListOf()
-        com.chico.myhomebookkeeping.helpers.Message.log(query)
-
-
-        val args = argsList.toArray()
-        return SimpleSQLiteQuery(query,args)
-    }
 }

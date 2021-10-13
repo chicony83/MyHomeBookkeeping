@@ -18,15 +18,12 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.db.simpleQuery.MoneyMovingCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.*
 
 class MoneyMovingViewModel(
@@ -167,7 +164,7 @@ class MoneyMovingViewModel(
     }
 
     private suspend fun loadListOfMoneyMoving() = launchForResult {
-        val query = MoneyMovingCreteQuery.createQueryList(
+        val query = MoneyMovingCreateSimpleQuery.createQueryList(
             currencyIntSP,
             categoryIntSP,
             cashAccountIntSP,
@@ -206,7 +203,7 @@ class MoneyMovingViewModel(
             _selectedMoneyMoving.postValue(
                 MoneyMovingUseCase.getOneFullMoneyMoving(
                     db,
-                    MoneyMovingCreteQuery.createQueryOneLine(selectedId)
+                    MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)
                 )
             )
         }
