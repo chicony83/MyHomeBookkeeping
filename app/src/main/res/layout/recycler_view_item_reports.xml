@@ -17,7 +17,7 @@
 
         <CheckBox
             android:id="@+id/checkbox"
-            style="@style/WrapContent_WrapContent"
+            style="@style/ReportsItemCheckBox"
             tools:checked="true" />
 
         <TextView
