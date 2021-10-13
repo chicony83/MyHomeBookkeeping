@@ -71,6 +71,7 @@
                 android:id="@+id/recyclerView"
                 app:layoutManager="LinearLayoutManager"
                 android:layout_width="match_parent"
+                android:minHeight="50dp"
                 android:layout_height="200dp" />
 
             <Button
@@ -78,7 +79,7 @@
                 tools:visibility="visible"
                 android:id="@+id/hideRecyclerButton"
                 style="@style/ButtonFullWidth.AddAndSelect"
-                android:text="@string/text_on_button_submit" />
+                android:text="@string/text_on_button_hide" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"

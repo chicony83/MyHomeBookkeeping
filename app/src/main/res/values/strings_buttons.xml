@@ -13,6 +13,7 @@
 
     <string name="text_on_button_help">Help</string>
     <string name="text_on_button_submit">Submit</string>
+    <string name="text_on_button_hide">Hide</string>
     <string name="text_on_button_change">Change</string>
     <string name="text_on_button_save">Save</string>
     <string name="text_on_button_apply">Apply</string>

@@ -13,6 +13,7 @@
 
     <string name="text_on_button_help">Помощь</string>
     <string name="text_on_button_submit">Принять</string>
+    <string name="text_on_button_hide">Скрыть</string>
     <string name="text_on_button_change">Изменить</string>
     <string name="text_on_button_save">Сохранить</string>
     <string name="text_on_button_apply">Готово</string>
