@@ -47,6 +47,9 @@ class ReportsFragment : Fragment() {
         navControlHelper = NavControlHelper(control)
 
         with(reportsViewModel) {
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner,{
+                binding.selectTimePeriodButton.text = it
+            })
             getMap().observe(viewLifecycleOwner, { map ->
                 map?.let { it1 ->
                     val sortedMap: MutableMap<String, Double> = LinkedHashMap()

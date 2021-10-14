@@ -105,7 +105,7 @@ class MoneyMovingViewModel(
     val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
         get() = _selectedMoneyMoving
 
-    private val setTextOnButtons = SetTextOnButtons(app.resources)
+    private val setText = SetTextOnButtons(app.resources)
 
     fun getListFullMoneyMoving() {
         runBlocking {
@@ -124,7 +124,7 @@ class MoneyMovingViewModel(
     }
 
     private fun setTextOnButtons() {
-        with(setTextOnButtons) {
+        with(setText) {
             textOnCategoryButton(
                 _buttonTextOfQueryCategory,
                 dbCategory,

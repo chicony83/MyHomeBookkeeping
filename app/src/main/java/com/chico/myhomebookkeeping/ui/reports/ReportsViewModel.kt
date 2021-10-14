@@ -23,10 +23,10 @@ import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
-import com.chico.myhomebookkeeping.db.simpleQuery.MoneyMovingCreateSimpleQuery
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -89,7 +89,8 @@ class ReportsViewModel(
     private val _map = MutableLiveData<Map<String, Double>?>()
     val map: LiveData<Map<String, Double>?>
         get() = _map
-    private val setTextOnButtons = SetTextOnButtons(app.resources)
+
+    private val setText = SetTextOnButtons(app.resources)
 
     private val _itemsForReportsList = MutableLiveData<List<ReportsItem>>()
     val itemsListForRecycler: LiveData<List<ReportsItem>> get() = _itemsForReportsList
@@ -103,6 +104,17 @@ class ReportsViewModel(
     init {
         getTimePeriodsSP()
         getLists()
+        setTextOnButtons()
+    }
+
+    private fun setTextOnButtons() {
+        with(setText){
+            textOnTimePeriodButton(
+                _buttonTextOfTimePeriod,
+                startTimePeriodLongSP,
+                endTimePeriodLongSP
+            )
+        }
     }
 
     private fun getLists() {
@@ -125,7 +137,9 @@ class ReportsViewModel(
 
     private fun getTimePeriodsSP() {
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
+        Message.log("start time period = ${startTimePeriodLongSP.parseTimeFromMillisShortDate()}")
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
+        Message.log("end time period = ${endTimePeriodLongSP.parseTimeFromMillisShortDate()}")
     }
 
     fun getMap(): MutableLiveData<Map<String, Double>?> {
@@ -138,8 +152,6 @@ class ReportsViewModel(
         val result = MoneyMovingUseCase.getSelectedMoneyMovement(
             db, query
         )
-
-
         return result
 //        return MoneyMovingUseCase.getSelectedMoneyMovement(
 //            db,

@@ -41,8 +41,6 @@ object ReportsCreateSimpleQuery {
             }
         }
         if (countCategories > 1) {
-//            query += " AND (category = 1 OR category = 2 OR category = 3)"
-
             var counter = 0
             Message.log("many categories")
             query += addAnd()
@@ -53,16 +51,23 @@ object ReportsCreateSimpleQuery {
                     if (counter > 1) {
                         query += "OR"
                     }
-                    query += addCategory(i+1)
-//                    argsList.add(i + 1)
-//                    Message.log("add in argsList ${argsList.last()}")
+                    query += addCategory(i + 1)
                 }
             }
             query += ")"
         }
 
-//        query += " AND (category = 1 OR category = 2 )"
-
+        if ((startTimePeriodLong > 0) and (endTimePeriodLong > 0)) {
+            query += "AND time_stamp BETWEEN $startTimePeriodLong AND $endTimePeriodLong"
+        }
+        if ((startTimePeriodLong > 0) xor (endTimePeriodLong > 0)) {
+            if (startTimePeriodLong>0){
+                query += "AND time_stamp > $startTimePeriodLong"
+            }
+            if (endTimePeriodLong > 0){
+                query += "AND time_stamp < $endTimePeriodLong"
+            }
+        }
         Message.log(query)
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
@@ -72,20 +77,10 @@ object ReportsCreateSimpleQuery {
         return " category = $id "
     }
 
-//    private fun getArgs(list: List<ReportsItem>): Any {
-//        for (i in list.indices){
-//            if (list[i].isChecked){
-//
-//            }
-//        }
-//
-//    }
-
     private fun addCategory(): String {
         return " category = :category "
 
     }
-
 
     private fun countCategories(list: List<ReportsItem>): Int {
         var count = 0
