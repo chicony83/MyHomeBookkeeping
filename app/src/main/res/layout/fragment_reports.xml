@@ -23,25 +23,27 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/selectCurrencyButton"
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_currency" />
+                android:layout_height="match_parent"
+                android:text="@string/text_on_button_select_currency_2_rows" />
 
             <Button
                 android:id="@+id/selectCategoryButton"
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_category" />
+                android:layout_height="match_parent"
+                android:text="@string/text_on_button_select_category_2_rows" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/selectCashAccountButton"
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_cash_account" />
+                android:layout_height="match_parent"
+                android:text="@string/text_on_button_select_cash_account_2_rows" />
 
             <Button
                 android:id="@+id/selectTimePeriodButton"
@@ -71,8 +73,7 @@
                 android:id="@+id/recyclerView"
                 app:layoutManager="LinearLayoutManager"
                 android:layout_width="match_parent"
-                android:minHeight="50dp"
-                android:layout_height="200dp" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:visibility="gone"

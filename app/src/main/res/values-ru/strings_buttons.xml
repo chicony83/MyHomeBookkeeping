@@ -38,6 +38,10 @@
     <string name="text_on_button_select_currency">Выбрать валюту</string>
     <string name="text_on_button_select_category">Выбрать категорию</string>
 
+    <string name="text_on_button_select_cash_account_2_rows">Выберите\nсчёт</string>
+    <string name="text_on_button_select_currency_2_rows">Выберите\nвалюту</string>
+    <string name="text_on_button_select_category_2_rows">Выберите\nкатегории</string>
+
     <string name="text_on_button_save_and_select">Сохранить и выбрать</string>
 
     <string name="text_on_radio_button_income_category">Доходы</string>

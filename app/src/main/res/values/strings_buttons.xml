@@ -38,6 +38,10 @@
     <string name="text_on_button_select_currency">Select currency</string>
     <string name="text_on_button_select_category">Select category</string>
 
+    <string name="text_on_button_select_cash_account_2_rows">Select\ncash account</string>
+    <string name="text_on_button_select_currency_2_rows">Select\ncurrency</string>
+    <string name="text_on_button_select_category_2_rows">Select\ncategories</string>
+
     <string name="text_on_button_save_and_select">Save and select</string>
 
     <string name="text_on_radio_button_income_category">Income</string>
