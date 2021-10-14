@@ -8,7 +8,7 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportsBinding
 import com.chico.myhomebookkeeping.helpers.Message
 
 class ReportsAdapter(
-    private val itemsList: List<ReportsItem>,
+    private val itemsList: List<ReportsCategoriesItem>,
     val checkedListener: OnItemChecked
 ) : RecyclerView.Adapter<ReportsAdapter.ViewHolder>() {
 
@@ -35,18 +35,18 @@ class ReportsAdapter(
         private val binding: RecyclerViewItemReportsBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(reportsItem: ReportsItem) {
+        fun bind(reportsCategoriesItem: ReportsCategoriesItem) {
             with(binding) {
-                itemId.text = reportsItem.id.toString()
-                name.text = reportsItem.name
-                Message.log("loadItem reportsItem.id = ${reportsItem.id}, reportsItem.name = ${reportsItem.name}, reportsItem.isChecked = ${reportsItem.isChecked}")
-                if (reportsItem.isChecked){
+                itemId.text = reportsCategoriesItem.id.toString()
+                name.text = reportsCategoriesItem.name
+                Message.log("loadItem reportsItem.id = ${reportsCategoriesItem.id}, reportsItem.name = ${reportsCategoriesItem.name}, reportsItem.isChecked = ${reportsCategoriesItem.isChecked}")
+                if (reportsCategoriesItem.isChecked){
                     checkbox.isChecked = true
                 }
                 checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
                     run {
-                        if (isChecked) checkedListener.onChecked(reportsItem.id)
-                        if (!isChecked) checkedListener.onUnChecked(reportsItem.id)
+                        if (isChecked) checkedListener.onChecked(reportsCategoriesItem.id)
+                        if (!isChecked) checkedListener.onUnChecked(reportsCategoriesItem.id)
                     }
 
                 }

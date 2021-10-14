@@ -10,10 +10,10 @@ object ConvToList {
 
     fun categoriesListToReportsItemsList(
         categoriesList: List<Categories>
-    ): MutableList<ReportsItem> {
-        val list: MutableList<ReportsItem> = mutableListOf()
+    ): MutableList<ReportsCategoriesItem> {
+        val list: MutableList<ReportsCategoriesItem> = mutableListOf()
         for (i in categoriesList.indices) {
-            list.add(ReportsItem(i, categoriesList[i].categoryName, false))
+            list.add(ReportsCategoriesItem(i, categoriesList[i].categoryName, true))
             addToListMessage(list, i)
         }
         return list
@@ -21,10 +21,10 @@ object ConvToList {
 
     fun cashAccountsListToReportsItemsList(
         cashAccountsList: List<CashAccount>
-    ): MutableList<ReportsItem> {
-        val list: MutableList<ReportsItem> = mutableListOf()
+    ): MutableList<ReportsCategoriesItem> {
+        val list: MutableList<ReportsCategoriesItem> = mutableListOf()
         for (i in cashAccountsList.indices) {
-            list.add(ReportsItem(i, cashAccountsList[i].accountName, false))
+            list.add(ReportsCategoriesItem(i, cashAccountsList[i].accountName, false))
             addToListMessage(list, i)
         }
         return list
@@ -33,17 +33,17 @@ object ConvToList {
 
     fun currenciesListToReportsItemsList(
         currenciesList: List<Currencies>
-    ): MutableList<ReportsItem> {
-        val list: MutableList<ReportsItem> = mutableListOf()
+    ): MutableList<ReportsCategoriesItem> {
+        val list: MutableList<ReportsCategoriesItem> = mutableListOf()
         for (i in currenciesList.indices) {
-            list.add(ReportsItem(i, currenciesList[i].currencyName, false))
+            list.add(ReportsCategoriesItem(i, currenciesList[i].currencyName, false))
             addToListMessage(list, i)
         }
         return list
     }
 
     private fun addToListMessage(
-        list: MutableList<ReportsItem>,
+        list: MutableList<ReportsCategoriesItem>,
         i: Int
     ) {
         Message.log("add in List ${list[i].id}, name ${list[i].name}")

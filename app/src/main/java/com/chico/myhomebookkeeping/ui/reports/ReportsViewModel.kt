@@ -27,10 +27,7 @@ import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class ReportsViewModel(
     val app: Application
@@ -92,23 +89,33 @@ class ReportsViewModel(
 
     private val setText = SetTextOnButtons(app.resources)
 
-    private val _itemsForReportsList = MutableLiveData<List<ReportsItem>>()
-    val itemsListForRecycler: LiveData<List<ReportsItem>> get() = _itemsForReportsList
+    private val _itemsForReportsList = MutableLiveData<List<ReportsCategoriesItem>>()
+    val itemsListForRecycler: LiveData<List<ReportsCategoriesItem>> get() = _itemsForReportsList
 
     private var stateRecycler: String = StatesReportsRecycler.None.name
 
-    private lateinit var listItemsOfCashAccounts: List<ReportsItem>
-    private lateinit var listItemsOfCategories: List<ReportsItem>
-    private lateinit var listItemsOfCurrencies: List<ReportsItem>
+    private lateinit var listItemsOfCashAccounts: List<ReportsCategoriesItem>
+    private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
+    private lateinit var listItemsOfCurrencies: List<ReportsCategoriesItem>
 
     init {
         getTimePeriodsSP()
-        getLists()
         setTextOnButtons()
+        launchIo {
+            launchUi {
+                showReports()
+            }
+        }
+
+    }
+
+    private suspend fun showReports() = coroutineScope {
+        val result: Deferred<Boolean> = async { getLists() }
+        updateReports(result.await())
     }
 
     private fun setTextOnButtons() {
-        with(setText){
+        with(setText) {
             textOnTimePeriodButton(
                 _buttonTextOfTimePeriod,
                 startTimePeriodLongSP,
@@ -117,22 +124,27 @@ class ReportsViewModel(
         }
     }
 
-    private fun getLists() {
+    private fun getLists(): Boolean {
         launchIo {
             listItemsOfCashAccounts = ConvToList.cashAccountsListToReportsItemsList(
                 CashAccountsUseCase.getAllCashAccountsSortNameAsc(dbCashAccount)
             )
         }
         launchIo {
-            listItemsOfCategories = ConvToList.categoriesListToReportsItemsList(
-                CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
-            )
+            getCategoriesList()
         }
         launchIo {
             listItemsOfCurrencies = ConvToList.currenciesListToReportsItemsList(
                 CurrenciesUseCase.getAllCurrenciesSortNameAsc(dbCurrencies)
             )
         }
+        return true
+    }
+
+    private suspend fun getCategoriesList() {
+        listItemsOfCategories = ConvToList.categoriesListToReportsItemsList(
+            CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
+        )
     }
 
     private fun getTimePeriodsSP() {
@@ -197,7 +209,7 @@ class ReportsViewModel(
         }
     }
 
-    private fun setCheckedTrue(list: List<ReportsItem>, id: Int) {
+    private fun setCheckedTrue(list: List<ReportsCategoriesItem>, id: Int) {
         list[id].isChecked = true
     }
 
@@ -216,7 +228,7 @@ class ReportsViewModel(
         }
     }
 
-    private fun setCheckedFalse(list: List<ReportsItem>, id: Int) {
+    private fun setCheckedFalse(list: List<ReportsCategoriesItem>, id: Int) {
         list[id].isChecked = false
     }
 
@@ -224,7 +236,7 @@ class ReportsViewModel(
         Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
     }
 
-    suspend fun updateReports() {
+    suspend fun updateReports(await: Boolean) {
         runBlocking {
             val query = createQuery()
             val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =

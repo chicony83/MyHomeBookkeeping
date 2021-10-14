@@ -2,7 +2,7 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.reports.ReportsItem
+import com.chico.myhomebookkeeping.ui.reports.ReportsCategoriesItem
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(): String {
@@ -20,9 +20,9 @@ object ReportsCreateSimpleQuery {
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
-        listItemsOfCashAccounts: List<ReportsItem>,
-        listItemsOfCurrencies: List<ReportsItem>,
-        listItemsOfCategories: List<ReportsItem>,
+        listItemsOfCashAccounts: List<ReportsCategoriesItem>,
+        listItemsOfCurrencies: List<ReportsCategoriesItem>,
+        listItemsOfCategories: List<ReportsCategoriesItem>,
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving()
         val argsList: ArrayList<Any> = arrayListOf()
@@ -82,7 +82,7 @@ object ReportsCreateSimpleQuery {
 
     }
 
-    private fun countCategories(list: List<ReportsItem>): Int {
+    private fun countCategories(list: List<ReportsCategoriesItem>): Int {
         var count = 0
         for (i in list.indices) {
             if (list[i].isChecked) count++

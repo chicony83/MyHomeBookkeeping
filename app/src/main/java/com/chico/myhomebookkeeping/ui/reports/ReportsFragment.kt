@@ -20,7 +20,6 @@ import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
-import kotlinx.coroutines.runBlocking
 
 class ReportsFragment : Fragment() {
 
@@ -65,7 +64,7 @@ class ReportsFragment : Fragment() {
                         launchUi {
                             with(reportsViewModel) {
                                 itemChecked(id)
-                                updateReports()
+                                updateReports(true)
 
                             }
                         }
@@ -76,7 +75,7 @@ class ReportsFragment : Fragment() {
                         launchUi {
                             with(reportsViewModel) {
                                 itemUnchecked(id)
-                                updateReports()
+                                updateReports(true)
 
                             }
                         }

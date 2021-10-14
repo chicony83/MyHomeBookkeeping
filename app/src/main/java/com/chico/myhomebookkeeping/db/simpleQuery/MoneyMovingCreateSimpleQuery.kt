@@ -2,9 +2,7 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 
 import android.util.Log
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.ui.reports.ReportsItem
 
 
 object MoneyMovingCreateSimpleQuery {
