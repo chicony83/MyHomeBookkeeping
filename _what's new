@@ -1,5 +1,6 @@
 0.8.5
 select categories in reports
+when reports launch all categories selected
 
 0.8.4
 add button AddAndSelect in adding new items dialogs
