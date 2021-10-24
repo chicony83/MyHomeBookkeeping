@@ -76,7 +76,6 @@ class ReportsFragment : Fragment() {
                             with(reportsViewModel) {
                                 itemUnchecked(id)
                                 updateReports(true)
-
                             }
                         }
                     }
@@ -139,6 +138,12 @@ class ReportsFragment : Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        launchUi {
+            reportsViewModel.updateReports(true)
+        }
+    }
     private fun getButtonsListForColorButtons() = listOf(
         binding.hideRecyclerButton
     )
