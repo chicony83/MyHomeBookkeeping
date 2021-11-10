@@ -107,8 +107,9 @@ class NewMoneyMovingFragment : Fragment() {
     private fun launchDatePicker() {
         val builderDatePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText(getString(R.string.description_select_date))
-            .setSelection(MaterialDatePicker.thisMonthInUtcMilliseconds())
-        val datePicker = builderDatePicker.build()
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+        val datePicker = builderDatePicker
+            .build()
 
         datePicker.addOnPositiveButtonClickListener {
             newMoneyMovingViewModel.setDate(it)
