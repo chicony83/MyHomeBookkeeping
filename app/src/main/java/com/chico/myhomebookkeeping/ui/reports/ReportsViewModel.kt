@@ -260,4 +260,8 @@ class ReportsViewModel(
             listItemsOfCategories
         )
     }
+
+    suspend fun getNumbersOfCategories(): Int {
+        return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory).size
+    }
 }

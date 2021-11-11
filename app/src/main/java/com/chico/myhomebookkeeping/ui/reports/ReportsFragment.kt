@@ -17,6 +17,8 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -44,6 +46,10 @@ class ReportsFragment : Fragment() {
             ViewModelProvider(this).get(ReportsViewModel::class.java)
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
+
+        launchIo {
+            binding.recyclerView.setItemViewCacheSize(reportsViewModel.getNumbersOfCategories())
+        }
 
         with(reportsViewModel) {
             buttonTextOfTimePeriod.observe(viewLifecycleOwner,{
