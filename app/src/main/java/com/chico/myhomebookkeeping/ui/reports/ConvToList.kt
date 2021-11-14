@@ -16,8 +16,8 @@ object ConvToList {
     ): MutableList<ReportsCategoriesItem> {
         val list: MutableList<ReportsCategoriesItem> = mutableListOf()
         for (i in categoriesList.indices) {
-            list.add(ReportsCategoriesItem(i, categoriesList[i].categoryName, true))
-            addToListMessage(list, i)
+            list.add(ReportsCategoriesItem(i, categoriesList[i].categoryName, true,categoriesList[i].isIncome))
+//            addToListMessage(list, i)
         }
         return list
     }
