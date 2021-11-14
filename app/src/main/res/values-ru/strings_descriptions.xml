@@ -4,7 +4,7 @@
     <string name="description_spending">Расходы</string>
     <string name="description_balance">Баланс</string>
 
-    <string name="description_selected_entry">Выбрана запись</string>
+    <string name="description_selected_entry">Выбрана запись #</string>
     <string name="description_date_time_text">Дата/время</string>
     <string name="description_cash_account">Счет</string>
     <string name="description_currency">Валюта</string>

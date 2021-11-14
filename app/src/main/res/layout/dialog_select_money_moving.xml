@@ -15,6 +15,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/itemId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Header"
+        android:layout_marginStart="@dimen/margin_normal"
+        app:layout_constraintStart_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+         />
+
+    <TextView
         android:id="@+id/description_date_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

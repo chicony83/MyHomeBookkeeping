@@ -23,10 +23,10 @@ class MoneyMovingAdapter(
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolderMovingItem>() {
     private lateinit var plus: String
     private lateinit var minus: String
-    private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-
-    private var dayToday: Long = 0
-    private var dayYesterday: Long = 0
+//    private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//
+//    private var dayToday: Long = 0
+//    private var dayYesterday: Long = 0
     private lateinit var context: Context
     private val uiHelper = UiHelper()
 
@@ -89,6 +89,7 @@ class MoneyMovingAdapter(
 //                    dateSeparatorText.visibility = View.VISIBLE
 //                }
 //                dateSeparatorText.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
+
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
@@ -141,22 +142,20 @@ class MoneyMovingAdapter(
             }
         }
 
-        private fun changeArray(array: Array<String>): MutableList<String> {
-            val newArray = mutableListOf<String>()
-            for (item in 0..1) {
-                newArray.add(item, array[item])
-            }
-            newArray.add(2, "...")
-            return newArray
-        }
-
-        private fun textToArray(text: String): Array<String> {
-            return text.split("\n").toTypedArray()
-        }
-
-        private fun countLines(str: String): Int {
-            val lines: Array<String> = str.split("\n").toTypedArray()
-            return lines.size
-        }
+//        private fun changeArray(array: Array<String>): MutableList<String> {
+//            val newArray = mutableListOf<String>()
+//            for (item in 0..1) {
+//                newArray.add(item, array[item])
+//            }
+//            newArray.add(2, "...")
+//            return newArray
+//        }
+//        private fun textToArray(text: String): Array<String> {
+//            return text.split("\n").toTypedArray()
+//        }
+//        private fun countLines(str: String): Int {
+//            val lines: Array<String> = str.split("\n").toTypedArray()
+//            return lines.size
+//        }
     }
 }

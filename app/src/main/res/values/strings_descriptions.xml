@@ -5,7 +5,7 @@
 
     <string name="description_balance">Balance</string>
 
-    <string name="description_selected_entry">Selected entry</string>
+    <string name="description_selected_entry">Selected entry #</string>
     <string name="description_date_time_text">Date/time</string>
     <string name="description_cash_account">Cash account</string>
     <string name="description_currency">Currency</string>
