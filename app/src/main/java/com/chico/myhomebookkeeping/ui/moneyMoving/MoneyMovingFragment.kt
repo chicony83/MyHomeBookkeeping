@@ -92,6 +92,7 @@ class MoneyMovingFragment : Fragment() {
             })
             selectedMoneyMoving.observe(viewLifecycleOwner, {
                 with(binding.selectLayout) {
+                    itemId.text = it?.id.toString()
                     dateTimeText.text = it?.timeStamp?.parseTimeFromMillis()
                     if (it?.isIncome == true) {
                         amount.text = plus + it.amount.toString()
