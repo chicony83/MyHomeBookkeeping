@@ -49,13 +49,13 @@ class ReportsViewModel(
 
     private var startTimePeriodLongSP = minusOneLong
     private var endTimePeriodLongSP = minusOneLong
-    private var cashAccountIntSP = -1
-    private var currencyIntSP: Int = -1
-    private var categoryIntSP = -1
-    private var incomeSpendingStringSP: String = argsNone
-    private var reportsTypeStringSP = argsNone
+//    private var cashAccountIntSP = -1
+//    private var currencyIntSP: Int = -1
+//    private var categoryIntSP = -1
+//    private var incomeSpendingStringSP: String = argsNone
+//    private var reportsTypeStringSP = argsNone
 
-    private val modelCheck = ModelCheck()
+//    private val modelCheck = ModelCheck()
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
     private var getSP = GetSP(sharedPreferences)
