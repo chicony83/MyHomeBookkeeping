@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.`interface`.OnItemChecked
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportsBinding
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
 
 class ReportsAdapter(
     private val itemsList: List<ReportsCategoriesItem>,

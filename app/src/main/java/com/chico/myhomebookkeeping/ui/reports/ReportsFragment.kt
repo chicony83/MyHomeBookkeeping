@@ -12,12 +12,9 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemChecked
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.github.mikephil.charting.charts.HorizontalBarChart
@@ -62,7 +59,7 @@ class ReportsFragment : Fragment() {
                     charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
                 }
             })
-            itemsListForRecycler.observe(viewLifecycleOwner, {
+            listItemsOfCategoriesForRecycler.observe(viewLifecycleOwner, {
                 binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemChecked {
                     override fun onChecked(id: Int) {
                         launchUi {

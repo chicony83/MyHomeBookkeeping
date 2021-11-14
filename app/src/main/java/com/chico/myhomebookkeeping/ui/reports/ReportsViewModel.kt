@@ -24,9 +24,11 @@ import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
+import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
+import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
+import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.*
 
 class ReportsViewModel(
@@ -89,12 +91,22 @@ class ReportsViewModel(
 
     private val setText = SetTextOnButtons(app.resources)
 
-    private val _itemsForReportsList = MutableLiveData<List<ReportsCategoriesItem>>()
-    val itemsListForRecycler: LiveData<List<ReportsCategoriesItem>> get() = _itemsForReportsList
+    private val _listItemsOfCategoriesForRecycler = MutableLiveData<List<ReportsCategoriesItem>>()
+    val listItemsOfCategoriesForRecycler: LiveData<List<ReportsCategoriesItem>>
+        get() = _listItemsOfCategoriesForRecycler
+
+    private val _listItemsOfCashAccountsForRecycler =
+        MutableLiveData<List<ReportsCashAccountItem>>()
+    val listItemsOfCashAccountsForRecycler: LiveData<List<ReportsCashAccountItem>>
+        get() = _listItemsOfCashAccountsForRecycler
+
+    private val _listItemsOfCurrenciesForRecycler = MutableLiveData<List<ReportsCurrenciesItem>>()
+    val listItemsOfCurrenciesForRecycler:LiveData<List<ReportsCurrenciesItem>>
+            get() = _listItemsOfCurrenciesForRecycler
 
     private var stateRecycler: String = StatesReportsRecycler.None.name
 
-    private lateinit var listItemsOfCashAccounts: List<ReportsCategoriesItem>
+    private lateinit var listItemsOfCashAccounts: List<ReportsCashAccountItem>
     private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
     private lateinit var listItemsOfCurrencies: List<ReportsCategoriesItem>
 
@@ -175,19 +187,19 @@ class ReportsViewModel(
 
     fun postCategoriesList() {
         launchUi {
-            _itemsForReportsList.postValue(listItemsOfCategories)
+            _listItemsOfCategoriesForRecycler.postValue(listItemsOfCategories)
         }
     }
 
     fun postCashAccountsList() {
         launchUi {
-            _itemsForReportsList.postValue(listItemsOfCashAccounts)
+            _listItemsOfCashAccountsForRecycler.postValue(listItemsOfCashAccounts)
         }
     }
 
     fun postCurrenciesList() {
         launchUi {
-            _itemsForReportsList.postValue(listItemsOfCurrencies)
+            _listItemsOfCategoriesForRecycler.postValue(listItemsOfCurrencies)
         }
     }
 
@@ -200,7 +212,8 @@ class ReportsViewModel(
                 setCheckedTrue(listItemsOfCategories, id)
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
-                setCheckedTrue(listItemsOfCashAccounts, id)
+                listItemsOfCashAccounts[id].isChecked = true
+//                setCheckedTrue(listItemsOfCashAccounts, id)
             }
         }
     }
@@ -219,7 +232,8 @@ class ReportsViewModel(
                 setCheckedFalse(listItemsOfCategories, id)
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
-                setCheckedFalse(listItemsOfCashAccounts, id)
+                listItemsOfCashAccounts[id].isChecked = false
+//                setCheckedFalse(listItemsOfCashAccounts, id)
             }
         }
     }
@@ -250,10 +264,11 @@ class ReportsViewModel(
             startTimePeriodLongSP,
             endTimePeriodLongSP,
             listItemsOfCashAccounts,
-            listItemsOfCurrencies,
+//            listItemsOfCurrencies,
             listItemsOfCategories
         )
     }
+
     suspend fun getNumbersOfCategories(): Int {
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory).size
     }
