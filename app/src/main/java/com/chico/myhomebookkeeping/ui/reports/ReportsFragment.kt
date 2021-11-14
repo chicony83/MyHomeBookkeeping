@@ -66,7 +66,6 @@ class ReportsFragment : Fragment() {
             itemsListForRecycler.observe(viewLifecycleOwner, {
                 binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemChecked {
                     override fun onChecked(id: Int) {
-                        Message.log("checked Item = $id")
                         launchUi {
                             with(reportsViewModel) {
                                 itemChecked(id)
@@ -75,9 +74,7 @@ class ReportsFragment : Fragment() {
                             }
                         }
                     }
-
                     override fun onUnChecked(id: Int) {
-                        Message.log("un Checked Item = $id")
                         launchUi {
                             with(reportsViewModel) {
                                 itemUnchecked(id)
@@ -90,7 +87,6 @@ class ReportsFragment : Fragment() {
         }
         return binding.root
     }
-
 
     private fun hideUiElements() {
         binding.recyclerView.visibility = View.GONE
@@ -108,7 +104,6 @@ class ReportsFragment : Fragment() {
 
         pieChartView = binding.pieChart
         horizontalLineChartView = binding.horizontalBarChart
-//        horizontalLineChartView.setDrawGridBackground(false)
         with(binding) {
             selectCashAccountButton.setOnClickListener {
                 showUiElements()
@@ -139,9 +134,7 @@ class ReportsFragment : Fragment() {
                 hideUiElements()
             }
         }
-
         uiColors.setButtonsColor(getButtonsListForColorButtons())
-
     }
 
     override fun onStart() {

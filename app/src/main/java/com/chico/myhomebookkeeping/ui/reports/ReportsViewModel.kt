@@ -106,7 +106,6 @@ class ReportsViewModel(
                 showReports()
             }
         }
-
     }
 
     private suspend fun showReports() = coroutineScope {
@@ -149,9 +148,7 @@ class ReportsViewModel(
 
     private fun getTimePeriodsSP() {
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
-        Message.log("start time period = ${startTimePeriodLongSP.parseTimeFromMillisShortDate()}")
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
-        Message.log("end time period = ${endTimePeriodLongSP.parseTimeFromMillisShortDate()}")
     }
 
     fun getMap(): MutableLiveData<Map<String, Double>?> {
@@ -187,7 +184,6 @@ class ReportsViewModel(
             _itemsForReportsList.postValue(listItemsOfCashAccounts)
         }
     }
-
 
     fun postCurrenciesList() {
         launchUi {
@@ -241,8 +237,6 @@ class ReportsViewModel(
             val query = createQuery()
             val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
                 async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
-
-            Message.log("size Full Money Moving list = ${listMoneyMovingForReports.await()?.size}")
             if (!listMoneyMovingForReports.await().isNullOrEmpty()) {
                 _map.postValue(
                     listMoneyMovingForReports.await()
@@ -260,7 +254,6 @@ class ReportsViewModel(
             listItemsOfCategories
         )
     }
-
     suspend fun getNumbersOfCategories(): Int {
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory).size
     }

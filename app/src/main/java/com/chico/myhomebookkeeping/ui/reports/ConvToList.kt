@@ -30,7 +30,6 @@ object ConvToList {
         return list
     }
 
-
     fun currenciesListToReportsItemsList(
         currenciesList: List<Currencies>
     ): MutableList<ReportsCategoriesItem> {
