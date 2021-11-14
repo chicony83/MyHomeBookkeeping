@@ -108,7 +108,7 @@ class ReportsViewModel(
 
     private lateinit var listItemsOfCashAccounts: List<ReportsCashAccountItem>
     private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
-    private lateinit var listItemsOfCurrencies: List<ReportsCategoriesItem>
+    private lateinit var listItemsOfCurrencies: List<ReportsCurrenciesItem>
 
     init {
         getTimePeriodsSP()
@@ -199,14 +199,15 @@ class ReportsViewModel(
 
     fun postCurrenciesList() {
         launchUi {
-            _listItemsOfCategoriesForRecycler.postValue(listItemsOfCurrencies)
+            _listItemsOfCurrenciesForRecycler.postValue(listItemsOfCurrencies)
         }
     }
 
     fun itemChecked(id: Int) {
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
-                setCheckedTrue(listItemsOfCurrencies, id)
+                listItemsOfCurrencies[id].isChecked = true
+//                setCheckedTrue(listItemsOfCurrencies, id)
             }
             StatesReportsRecycler.ShowCategories.name -> {
                 setCheckedTrue(listItemsOfCategories, id)
@@ -226,7 +227,8 @@ class ReportsViewModel(
         stateRecyclerMessage()
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
-                setCheckedFalse(listItemsOfCurrencies, id)
+                listItemsOfCurrencies[id].isChecked = false
+//                setCheckedFalse(listItemsOfCurrencies, id)
             }
             StatesReportsRecycler.ShowCategories.name -> {
                 setCheckedFalse(listItemsOfCategories, id)

@@ -7,6 +7,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
+import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
 
 object ConvToList {
 
@@ -34,11 +35,11 @@ object ConvToList {
 
     fun currenciesListToReportsItemsList(
         currenciesList: List<Currencies>
-    ): MutableList<ReportsCategoriesItem> {
-        val list: MutableList<ReportsCategoriesItem> = mutableListOf()
+    ): MutableList<ReportsCurrenciesItem> {
+        val list: MutableList<ReportsCurrenciesItem> = mutableListOf()
         for (i in currenciesList.indices) {
-            list.add(ReportsCategoriesItem(i, currenciesList[i].currencyName, false))
-            addToListMessage(list, i)
+            list.add(ReportsCurrenciesItem(i, currenciesList[i].currencyName, false))
+//            addToListMessage(list, i)
         }
         return list
     }
