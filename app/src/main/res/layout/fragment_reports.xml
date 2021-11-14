@@ -75,13 +75,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
-            <Button
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:id="@+id/hideRecyclerButton"
-                style="@style/ButtonFullWidth.AddAndSelect"
-                android:text="@string/text_on_button_hide" />
-
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="400dp"

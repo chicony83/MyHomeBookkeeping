@@ -31,10 +31,9 @@ class ReportsFragment : Fragment() {
     private lateinit var pieChartView: PieChart
     private lateinit var horizontalLineChartView: HorizontalBarChart
     private val charts = Charts()
-    private val uiHelper = UiHelper()
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-    private val uiColors = UiColors()
+    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +69,6 @@ class ReportsFragment : Fragment() {
                             with(reportsViewModel) {
                                 itemChecked(id)
                                 updateReports(true)
-
                             }
                         }
                     }
@@ -88,16 +86,6 @@ class ReportsFragment : Fragment() {
         return binding.root
     }
 
-    private fun hideUiElements() {
-        binding.recyclerView.visibility = View.GONE
-        binding.hideRecyclerButton.visibility = View.GONE
-    }
-
-    private fun showUiElements() {
-        uiHelper.showUiElement(binding.recyclerView)
-        uiHelper.showUiElement(binding.hideRecyclerButton)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
@@ -106,21 +94,19 @@ class ReportsFragment : Fragment() {
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
             selectCashAccountButton.setOnClickListener {
-                showUiElements()
                 with(reportsViewModel) {
                     setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
                     postCashAccountsList()
                 }
             }
             selectCategoryButton.setOnClickListener {
-                showUiElements()
+                uiHelper.showUiElement(binding.recyclerView)
                 with(reportsViewModel) {
                     setRecyclerState(StatesReportsRecycler.ShowCategories.name)
                     postCategoriesList()
                 }
             }
             selectCurrencyButton.setOnClickListener {
-                showUiElements()
                 with(reportsViewModel) {
                     setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
                     postCurrenciesList()
@@ -129,12 +115,7 @@ class ReportsFragment : Fragment() {
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
             }
-            hideRecyclerButton.setOnClickListener {
-                reportsViewModel.setRecyclerState(StatesReportsRecycler.None.name)
-                hideUiElements()
-            }
         }
-        uiColors.setButtonsColor(getButtonsListForColorButtons())
     }
 
     override fun onStart() {
@@ -143,9 +124,6 @@ class ReportsFragment : Fragment() {
             reportsViewModel.updateReports(true)
         }
     }
-    private fun getButtonsListForColorButtons() = listOf(
-        binding.hideRecyclerButton
-    )
 
     override fun onDestroy() {
         super.onDestroy()
