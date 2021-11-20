@@ -114,16 +114,14 @@ class ReportsViewModel(
         getTimePeriodsSP()
         setTextOnButtons()
         launchIo {
-            launchUi {
-                showReports()
-            }
+            getLists()
         }
     }
 
-    private suspend fun showReports() = coroutineScope {
-        val result: Deferred<Boolean> = async { getLists() }
-        updateReports(result.await())
-    }
+//    private suspend fun showReports() = coroutineScope {
+//        val result: Deferred<Boolean> = async { getLists() }
+//        updateReports(result.await())
+//    }
 
     private fun setTextOnButtons() {
         with(setText) {
