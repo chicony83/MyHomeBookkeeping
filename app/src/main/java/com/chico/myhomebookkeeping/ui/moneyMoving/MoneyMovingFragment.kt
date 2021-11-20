@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +19,11 @@ import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.ui.moneyMoving.dialogs.MoneyMovingSelectDialogFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
@@ -72,9 +73,12 @@ class MoneyMovingFragment : Fragment() {
                     MoneyMovingAdapter(it1, object :
                         OnItemViewClickListenerLong {
                         override fun onClick(selectedId: Long) {
-                            uiHelper.showUiElement(binding.selectLayoutHolder)
-                            Log.i("TAG", "---moneyMoving id $selectedId---")
-                            moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
+//                            showDialog()
+                            showSelectDialog()
+//                            dialog.
+//                            uiHelper.showUiElement(binding.selectLayoutHolder)
+//                            Log.i("TAG", "---moneyMoving id $selectedId---")
+//                            moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
                             //                        selectedMoneyMovingId = selectedId
                         }
 
@@ -120,6 +124,24 @@ class MoneyMovingFragment : Fragment() {
             })
         }
         return binding.root
+    }
+
+    private fun showSelectDialog() {
+        val dialog = MoneyMovingSelectDialogFragment()
+//        MoneyMovingSelectDialogFragment().show(childFragmentManager,"show dialog")
+
+        dialog.show(childFragmentManager,"show dialog")
+
+//                my_cancel_btn = dialog!!.findViewById(R.id.datesetbtn) as Button
+    }
+
+    private fun showDialog() {
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(R.layout.dialog_select_money_moving)
+
+
+
+        dialog.show()
     }
 
     private fun setTextColor(amount: TextView, style: Int) {
