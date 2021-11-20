@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -37,25 +36,13 @@ class ReportsViewModel(
     private val spName = Constants.SP_NAME
     private val argsStartTimePeriodKey = Constants.FOR_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodKey = Constants.FOR_REPORTS_END_TIME_PERIOD
-    private val argsCashAccountKey = Constants.FOR_REPORTS_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_REPORTS_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_REPORTS_CATEGORY_KEY
-    private val argsIncomeSpendingKey = Constants.FOR_REPORTS_CATEGORIES_INCOME_SPENDING_KEY
-    private val argsNone = Constants.FOR_QUERY_NONE
-    private val argsReportType = Constants.REPORT_TYPE
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
     private var startTimePeriodLongSP = minusOneLong
     private var endTimePeriodLongSP = minusOneLong
-//    private var cashAccountIntSP = -1
-//    private var currencyIntSP: Int = -1
-//    private var categoryIntSP = -1
-//    private var incomeSpendingStringSP: String = argsNone
-//    private var reportsTypeStringSP = argsNone
 
-//    private val modelCheck = ModelCheck()
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
     private var getSP = GetSP(sharedPreferences)
@@ -118,11 +105,6 @@ class ReportsViewModel(
         }
     }
 
-//    private suspend fun showReports() = coroutineScope {
-//        val result: Deferred<Boolean> = async { getLists() }
-//        updateReports(result.await())
-//    }
-
     private fun setTextOnButtons() {
         with(setText) {
             textOnTimePeriodButton(
@@ -166,16 +148,12 @@ class ReportsViewModel(
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
-        Message.log("query = ${query.sql}, args = ${query.argCount}")
+//        Message.log("query = ${query.sql}, args = ${query.argCount}")
 
         val result = MoneyMovingUseCase.getSelectedMoneyMovement(
             db, query
         )
         return result
-//        return MoneyMovingUseCase.getSelectedMoneyMovement(
-//            db,
-//            query
-//        )
     }
 
     fun setRecyclerState(name: String) {
@@ -205,46 +183,37 @@ class ReportsViewModel(
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
                 listItemsOfCurrencies[id].isChecked = true
-//                setCheckedTrue(listItemsOfCurrencies, id)
             }
             StatesReportsRecycler.ShowCategories.name -> {
-                setCheckedTrue(listItemsOfCategories, id)
+                listItemsOfCategories[id].isChecked = true
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
                 listItemsOfCashAccounts[id].isChecked = true
-//                setCheckedTrue(listItemsOfCashAccounts, id)
             }
         }
     }
 
-    private fun setCheckedTrue(list: List<ReportsCategoriesItem>, id: Int) {
-        list[id].isChecked = true
-    }
+
 
     fun itemUnchecked(id: Int) {
-        stateRecyclerMessage()
+//        stateRecyclerMessage()
         when (stateRecycler) {
             StatesReportsRecycler.ShowCurrencies.name -> {
                 listItemsOfCurrencies[id].isChecked = false
-//                setCheckedFalse(listItemsOfCurrencies, id)
             }
             StatesReportsRecycler.ShowCategories.name -> {
-                setCheckedFalse(listItemsOfCategories, id)
+                listItemsOfCurrencies[id].isChecked = false
+
             }
             StatesReportsRecycler.ShowCashAccounts.name -> {
                 listItemsOfCashAccounts[id].isChecked = false
-//                setCheckedFalse(listItemsOfCashAccounts, id)
             }
         }
     }
 
-    private fun setCheckedFalse(list: List<ReportsCategoriesItem>, id: Int) {
-        list[id].isChecked = false
-    }
-
-    private fun stateRecyclerMessage() {
-        Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
-    }
+//    private fun stateRecyclerMessage() {
+//        Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
+//    }
 
     suspend fun updateReports(await: Boolean) {
         runBlocking {
