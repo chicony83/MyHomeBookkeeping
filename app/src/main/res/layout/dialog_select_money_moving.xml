@@ -120,27 +120,4 @@
         app:layout_constraintTop_toBottomOf="@id/description_of_description"
         tools:visibility="visible" />
 
-    <Button
-        android:id="@+id/change_button"
-        style="@style/DialogButtonLeft.Change"
-        android:text="@string/text_on_button_change"
-        app:layout_constraintEnd_toStartOf="@id/centerDialogSelectMoneyMoving"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description" />
-
-    <Button
-        android:id="@+id/cancel_button"
-        style="@style/DialogButtonRight.Negative"
-        android:text="@string/text_on_button_cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/centerDialogSelectMoneyMoving"
-        app:layout_constraintTop_toBottomOf="@id/description" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/centerDialogSelectMoneyMoving"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@ import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
@@ -198,16 +199,17 @@ class MoneyMovingViewModel(
 
     }
 
-    fun loadSelectedMoneyMoving(selectedId: Long) {
-        launchUi {
-            _selectedMoneyMoving.postValue(
-                MoneyMovingUseCase.getOneFullMoneyMoving(
-                    db,
-                    MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)
-                )
-            )
-        }
-    }
+
+//    fun loadSelectedMoneyMoving(selectedId: Long) {
+//        launchUi {
+//            _selectedMoneyMoving.postValue(
+//                MoneyMovingUseCase.getOneFullMoneyMoving(
+//                    db,
+//                    MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)
+//                )
+//            )
+//        }
+//    }
 
     fun saveMoneyMovingToChange() {
         setSP.setLong(argsIdMoneyMovingForChange, _selectedMoneyMoving.value?.id)
@@ -242,6 +244,15 @@ class MoneyMovingViewModel(
 
     private fun messageLog(text: String) {
         Log.i("TAG", text)
+    }
+
+    suspend fun loadSelectedMoneyMoving(selectedId: Long): FullMoneyMoving? {
+
+        return MoneyMovingUseCase.getOneFullMoneyMoving(
+            db,
+            MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)
+        )
+
     }
 
 }

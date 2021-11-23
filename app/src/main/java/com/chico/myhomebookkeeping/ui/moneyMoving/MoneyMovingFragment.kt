@@ -21,11 +21,10 @@ import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.ui.moneyMoving.dialogs.MoneyMovingSelectDialogFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+
 
 class MoneyMovingFragment : Fragment() {
 
@@ -73,13 +72,8 @@ class MoneyMovingFragment : Fragment() {
                     MoneyMovingAdapter(it1, object :
                         OnItemViewClickListenerLong {
                         override fun onClick(selectedId: Long) {
-//                            showDialog()
-                            showSelectDialog()
-//                            dialog.
-//                            uiHelper.showUiElement(binding.selectLayoutHolder)
-//                            Log.i("TAG", "---moneyMoving id $selectedId---")
-//                            moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
-                            //                        selectedMoneyMovingId = selectedId
+//                            getOneFullMoneyMoving(selectedId)
+                            showSelectDialog(selectedId)
                         }
 
                     })
@@ -94,54 +88,22 @@ class MoneyMovingFragment : Fragment() {
             totalBalance.observe(viewLifecycleOwner, {
                 binding.totalBalance.text = it.toString()
             })
-            selectedMoneyMoving.observe(viewLifecycleOwner, {
-                with(binding.selectLayout) {
-                    itemId.text = it?.id.toString()
-                    dateTimeText.text = it?.timeStamp?.parseTimeFromMillis()
-                    if (it?.isIncome == true) {
-                        amount.text = plus + it.amount.toString()
-                        setTextColor(binding.selectLayout.amount, R.style.Description_IncomeText)
-                    }
-                    if (it?.isIncome == false) {
-                        amount.text = minus + it.amount.toString()
-                        setTextColor(binding.selectLayout.amount, R.style.Description_SpendingText)
-                    }
-                    currency.text = it?.currencyNameValue
-                    category.text = it?.categoryNameValue
-                    cashAccount.text = it?.cashAccountNameValue
-
-                    if (!it?.description.isNullOrEmpty()) {
-                        binding.selectLayout.descriptionOfDescription.visibility = View.VISIBLE
-                        binding.selectLayout.description.visibility = View.VISIBLE
-                        description.text = it?.description
-                    }
-                    if (it?.description.isNullOrEmpty()) {
-                        description.text = null
-                        binding.selectLayout.descriptionOfDescription.visibility = View.GONE
-                        binding.selectLayout.description.visibility = View.GONE
-                    }
-                }
-            })
         }
         return binding.root
     }
 
-    private fun showSelectDialog() {
-        val dialog = MoneyMovingSelectDialogFragment()
-//        MoneyMovingSelectDialogFragment().show(childFragmentManager,"show dialog")
+//    private fun getOneFullMoneyMoving(selectedId: Long) {
+//        moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
+//    }
 
-        dialog.show(childFragmentManager,"show dialog")
-
-//                my_cancel_btn = dialog!!.findViewById(R.id.datesetbtn) as Button
-    }
-
-    private fun showDialog() {
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(R.layout.dialog_select_money_moving)
-
-
-
-        dialog.show()
+    private fun showSelectDialog(selectedId: Long) {
+        launchIo {
+            val fullMoneyMoving = moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
+            launchUi {
+                val dialog = MoneyMovingSelectDialogFragment(fullMoneyMoving)
+                dialog.show(childFragmentManager,"show dialog")
+            }
+        }
     }
 
     private fun setTextColor(amount: TextView, style: Int) {
@@ -177,20 +139,6 @@ class MoneyMovingFragment : Fragment() {
             }
             selectTimePeriod.setOnClickListener {
                 pressSelectButton(R.id.nav_time_period)
-            }
-            with(selectLayout) {
-                changeButton.setOnClickListener {
-                    runBlocking {
-                        moneyMovingViewModel.saveMoneyMovingToChange()
-                        pressSelectButton(R.id.nav_change_money_moving)
-                    }
-                }
-                cancelButton.setOnClickListener {
-                    uiHelper.hideUiElement(binding.selectLayoutHolder)
-                    if (selectedMoneyMovingId > 0) {
-                        selectedMoneyMovingId = 0
-                    }
-                }
             }
             with(firstLaunchDialog) {
                 submitFirstLaunchButton.setOnClickListener {
@@ -232,13 +180,10 @@ class MoneyMovingFragment : Fragment() {
 
     private fun getButtonsListForColorButtonText() = listOf(
         binding.firstLaunchDialog.submitFirstLaunchButton,
-        binding.firstLaunchDialog.cancelFirstLaunchButton,
-        binding.selectLayout.changeButton
+        binding.firstLaunchDialog.cancelFirstLaunchButton
     )
 
     private fun getButtonsListForColorButton() = listOf(
-        binding.selectLayout.changeButton,
-        binding.selectLayout.cancelButton,
         binding.firstLaunchDialog.submitFirstLaunchButton,
         binding.firstLaunchDialog.cancelFirstLaunchButton
     )
