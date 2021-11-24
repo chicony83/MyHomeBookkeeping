@@ -102,9 +102,9 @@ class MoneyMovingViewModel(
     val totalBalance: LiveData<String>
         get() = _totalBalance
 
-    private val _selectedMoneyMoving = MutableLiveData<FullMoneyMoving?>()
-    val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
-        get() = _selectedMoneyMoving
+//    private val _selectedMoneyMoving = MutableLiveData<FullMoneyMoving?>()
+//    val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
+//        get() = _selectedMoneyMoving
 
     private val setText = SetTextOnButtons(app.resources)
 
@@ -211,9 +211,9 @@ class MoneyMovingViewModel(
 //        }
 //    }
 
-    fun saveMoneyMovingToChange() {
-        setSP.setLong(argsIdMoneyMovingForChange, _selectedMoneyMoving.value?.id)
-    }
+//    fun saveMoneyMovingToChange() {
+//        setSP.setLong(argsIdMoneyMovingForChange, _selectedMoneyMoving.value?.id)
+//    }
 
     fun cleaningSP() {
         with(setSP) {
@@ -253,6 +253,10 @@ class MoneyMovingViewModel(
             MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)
         )
 
+    }
+
+    fun saveMoneyMovingToChange(selectedId: Long) {
+        setSP.saveToSP(argsIdMoneyMovingForChange,selectedId)
     }
 
 }

@@ -16,7 +16,7 @@ import java.lang.IllegalStateException
 
 class MoneyMovingSelectDialogFragment(
     val fullMoneyMoving: FullMoneyMoving?,
-    val onItemSelectedForChange: OnItemSelectedForChange
+    private val onItemSelectedForChange: OnItemSelectedForChange
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -29,19 +29,11 @@ class MoneyMovingSelectDialogFragment(
             bindLayout(layout)
 
             builder.setView(layout)
-//                .setPositiveButton(R.string.text_on_button_change) { _, _ ->
-//                    run {
-//                        fullMoneyMoving?.id?.toInt()
-//                            ?.let { it1 -> onItemSelectedForChange.onSelect(it1) }
-//                    }
-////                    Message.log("---change---")
-//                }
                 .setNeutralButton(R.string.text_on_button_change){_,_->
                     run {
                         fullMoneyMoving?.id?.toInt()
                             ?.let { it1 -> onItemSelectedForChange.onSelect(it1) }
                     }
-
                 }
                 .setNegativeButton(R.string.text_on_button_cancel) { _, _ ->
                     dialog?.cancel()
@@ -53,6 +45,7 @@ class MoneyMovingSelectDialogFragment(
     }
 
     private fun bindLayout(layout: View) {
+
         val itemId = layout.findViewById<TextView>(R.id.itemId)
         val dateTime = layout.findViewById<TextView>(R.id.date_time_text)
         val amount = layout.findViewById<TextView>(R.id.amount)
@@ -60,6 +53,7 @@ class MoneyMovingSelectDialogFragment(
         val category = layout.findViewById<TextView>(R.id.category)
         val cashAccount = layout.findViewById<TextView>(R.id.cash_account)
         val description = layout.findViewById<TextView>(R.id.description)
+
         if (fullMoneyMoving != null) {
             itemId.text = fullMoneyMoving.id.toString()
             dateTime.text = fullMoneyMoving.timeStamp.parseTimeFromMillis()

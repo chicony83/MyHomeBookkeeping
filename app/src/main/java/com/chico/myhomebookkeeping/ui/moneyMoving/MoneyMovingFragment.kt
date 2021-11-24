@@ -37,11 +37,7 @@ class MoneyMovingFragment : Fragment() {
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
     private var _binding: FragmentMoneyMovingBinding? = null
     private val binding get() = _binding!!
-    private val uiHelper = UiHelper()
     private lateinit var control: NavController
-    private val uiColors = UiColors()
-
-    private var selectedMoneyMovingId = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -94,10 +90,6 @@ class MoneyMovingFragment : Fragment() {
         return binding.root
     }
 
-//    private fun getOneFullMoneyMoving(selectedId: Long) {
-//        moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
-//    }
-
     private fun showSelectDialog(selectedId: Long) {
         launchIo {
             val fullMoneyMoving = moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
@@ -105,19 +97,13 @@ class MoneyMovingFragment : Fragment() {
                 val dialog = MoneyMovingSelectDialogFragment(fullMoneyMoving,object :OnItemSelectedForChange{
                     override fun onSelect(id: Int) {
 //                        Message.log("changing item id = $id")
-                        moneyMovingViewModel.saveMoneyMovingToChange()
+                        moneyMovingViewModel.saveMoneyMovingToChange(selectedId)
                         pressSelectButton(R.id.nav_change_money_moving)
                     }
 
                 })
                 dialog.show(childFragmentManager,"show dialog")
             }
-        }
-    }
-
-    private fun setTextColor(amount: TextView, style: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            amount.setTextAppearance(style)
         }
     }
 
@@ -149,17 +135,8 @@ class MoneyMovingFragment : Fragment() {
             selectTimePeriod.setOnClickListener {
                 pressSelectButton(R.id.nav_time_period)
             }
-            with(firstLaunchDialog) {
-                submitFirstLaunchButton.setOnClickListener {
-                    launchFragment(R.id.nav_first_launch_fragment)
-                }
-                cancelFirstLaunchButton.setOnClickListener {
-                    uiHelper.hideUiElement(binding.firstLaunchDialogHolder)
-                    moneyMovingViewModel.setIsFirstLaunchFalse()
-                }
-            }
+
         }
-        uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
 //        checkLinesFound()
         checkFirstLaunch()
         moneyMovingViewModel.cleaningSP()
@@ -175,10 +152,6 @@ class MoneyMovingFragment : Fragment() {
         _binding = null
     }
 
-    private fun launchFragment(fragment: Int) {
-        control.navigate(fragment)
-    }
-
     private fun checkFirstLaunch() {
         if (moneyMovingViewModel.isFirstLaunch()) {
 //            binding.firstLaunchDialogHolder.visibility = View.VISIBLE
@@ -186,21 +159,6 @@ class MoneyMovingFragment : Fragment() {
             control.navigate(R.id.nav_first_launch_fragment)
         }
     }
-
-    private fun getButtonsListForColorButtonText() = listOf(
-        binding.firstLaunchDialog.submitFirstLaunchButton,
-        binding.firstLaunchDialog.cancelFirstLaunchButton
-    )
-
-    private fun getButtonsListForColorButton() = listOf(
-        binding.firstLaunchDialog.submitFirstLaunchButton,
-        binding.firstLaunchDialog.cancelFirstLaunchButton
-    )
-
-    private fun getDialogsList() = listOf(
-        binding.selectLayout,
-        binding.firstLaunchDialog
-    )
 
 //    private fun checkLinesFound() {
 //        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()
@@ -215,12 +173,4 @@ class MoneyMovingFragment : Fragment() {
 //            message("найдено $numFoundedLines строк")
 //        }
 //    }
-
-
-    private fun message(text: String) {
-        launchUi {
-            delay(1000)
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-        }
-    }
 }
