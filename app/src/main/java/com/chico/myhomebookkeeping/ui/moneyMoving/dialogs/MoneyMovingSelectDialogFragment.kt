@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChange
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingViewModel
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
-import kotlinx.coroutines.runBlocking
 import java.lang.IllegalStateException
 
 
 class MoneyMovingSelectDialogFragment(
     val fullMoneyMoving: FullMoneyMoving?,
+    val onItemSelectedForChange: OnItemSelectedForChange
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -30,15 +29,22 @@ class MoneyMovingSelectDialogFragment(
             bindLayout(layout)
 
             builder.setView(layout)
+//                .setPositiveButton(R.string.text_on_button_change) { _, _ ->
+//                    run {
+//                        fullMoneyMoving?.id?.toInt()
+//                            ?.let { it1 -> onItemSelectedForChange.onSelect(it1) }
+//                    }
+////                    Message.log("---change---")
+//                }
+                .setNeutralButton(R.string.text_on_button_change){_,_->
+                    run {
+                        fullMoneyMoving?.id?.toInt()
+                            ?.let { it1 -> onItemSelectedForChange.onSelect(it1) }
+                    }
+
+                }
                 .setNegativeButton(R.string.text_on_button_cancel) { _, _ ->
                     dialog?.cancel()
-                }
-                .setPositiveButton(R.string.text_on_button_change) { _, _ ->
-                    Message.log("---change---")
-//                    runBlocking {
-//                        moneyMovingViewModel.saveMoneyMovingToChange()
-//                        control(R.id.nav_change_money_moving)
-//                    }
                 }
 
             builder.create()

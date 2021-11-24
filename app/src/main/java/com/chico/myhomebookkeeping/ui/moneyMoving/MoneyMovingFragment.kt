@@ -13,10 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChange
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.ui.moneyMoving.dialogs.MoneyMovingSelectDialogFragment
@@ -100,7 +102,14 @@ class MoneyMovingFragment : Fragment() {
         launchIo {
             val fullMoneyMoving = moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
             launchUi {
-                val dialog = MoneyMovingSelectDialogFragment(fullMoneyMoving)
+                val dialog = MoneyMovingSelectDialogFragment(fullMoneyMoving,object :OnItemSelectedForChange{
+                    override fun onSelect(id: Int) {
+//                        Message.log("changing item id = $id")
+                        moneyMovingViewModel.saveMoneyMovingToChange()
+                        pressSelectButton(R.id.nav_change_money_moving)
+                    }
+
+                })
                 dialog.show(childFragmentManager,"show dialog")
             }
         }
