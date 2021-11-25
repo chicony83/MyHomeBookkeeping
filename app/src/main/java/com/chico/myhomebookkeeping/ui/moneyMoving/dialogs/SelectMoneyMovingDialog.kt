@@ -14,7 +14,7 @@ import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import java.lang.IllegalStateException
 
 
-class MoneyMovingSelectDialogFragment(
+class SelectMoneyMovingDialog(
     val fullMoneyMoving: FullMoneyMoving?,
     private val onItemSelectedForChange: OnItemSelectedForChange
 ) : DialogFragment() {
@@ -41,7 +41,7 @@ class MoneyMovingSelectDialogFragment(
 
             builder.create()
 
-        } ?: throw IllegalStateException("Activity cant be null")
+        } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
 
     private fun bindLayout(layout: View) {

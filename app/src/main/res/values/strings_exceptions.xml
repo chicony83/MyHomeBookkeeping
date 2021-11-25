@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="exceptions_activity_cant_be_null" translatable="false">Activity cant be null</string>
+</resources>

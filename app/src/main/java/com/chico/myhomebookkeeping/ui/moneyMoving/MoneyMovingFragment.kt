@@ -1,13 +1,10 @@
 package com.chico.myhomebookkeeping.ui.moneyMoving
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -18,14 +15,10 @@ import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.helpers.UiColors
-import com.chico.myhomebookkeeping.helpers.UiHelper
-import com.chico.myhomebookkeeping.ui.moneyMoving.dialogs.MoneyMovingSelectDialogFragment
+import com.chico.myhomebookkeeping.ui.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.delay
 
 
 class MoneyMovingFragment : Fragment() {
@@ -94,7 +87,7 @@ class MoneyMovingFragment : Fragment() {
         launchIo {
             val fullMoneyMoving = moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
             launchUi {
-                val dialog = MoneyMovingSelectDialogFragment(fullMoneyMoving,object :OnItemSelectedForChange{
+                val dialog = SelectMoneyMovingDialog(fullMoneyMoving,object :OnItemSelectedForChange{
                     override fun onSelect(id: Int) {
 //                        Message.log("changing item id = $id")
                         moneyMovingViewModel.saveMoneyMovingToChange(selectedId)

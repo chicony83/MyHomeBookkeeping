@@ -22,8 +22,10 @@ import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.ui.currencies.dialogs.NewCurrencyDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CurrenciesFragment : Fragment() {
@@ -103,45 +105,47 @@ class CurrenciesFragment : Fragment() {
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
-                uiControl.showNewItemLayoutHolder()
-                view.showKeyboard()
-                val result = currenciesViewModel.getNamesList()
 
-                if (result is List<*>){
-                    val namesList:List<String> = result as List<String>
-                    binding.newCurrencyLayout.currencyName.addTextChangedListener(
-                        EditNameTextWatcher(
-                            namesList,
-                            binding.newCurrencyLayout.addNewCurrencyButton,
-                            binding.newCurrencyLayout.errorThisNameIsTaken
-                        )
-                    )
-                }
-
-                with(binding.newCurrencyLayout.currencyName) {
-                    requestFocus()
-                    setSelection(0)
-                }
+                showNewCurrencyDialog()
+//                uiControl.showNewItemLayoutHolder()
+//                view.showKeyboard()
+//                val result = currenciesViewModel.getNamesList()
+//
+//                if (result is List<*>){
+//                    val namesList:List<String> = result as List<String>
+//                    binding.newCurrencyLayout.currencyName.addTextChangedListener(
+//                        EditNameTextWatcher(
+//                            namesList,
+//                            binding.newCurrencyLayout.addNewCurrencyButton,
+//                            binding.newCurrencyLayout.errorThisNameIsTaken
+//                        )
+//                    )
+//                }
+//
+//                with(binding.newCurrencyLayout.currencyName) {
+//                    requestFocus()
+//                    setSelection(0)
+//                }
             }
-            with(newCurrencyLayout) {
-                addAndSelectNewItemButton.setOnClickListener {
-                    selectedCurrencyId = addNewCurrency(view)
-                    if (selectedCurrencyId>0){
-                        Message.log("selected Currency ID = $selectedCurrencyId")
-                        currenciesViewModel.saveData(navControlHelper,selectedCurrencyId)
-                        navControlHelper.moveToPreviousPage()
-                    }
-                }
-                addNewCurrencyButton.setOnClickListener {
-                    addNewCurrency(view)
-                }
-                cancelCreateButton.setOnClickListener {
-                    eraseUiElements()
-                    uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
-                    view.hideKeyboard()
-                    showUIControlElements()
-                }
-            }
+//            with(newCurrencyLayout) {
+//                addAndSelectNewItemButton.setOnClickListener {
+//                    selectedCurrencyId = addNewCurrency(view)
+//                    if (selectedCurrencyId>0){
+//                        Message.log("selected Currency ID = $selectedCurrencyId")
+//                        currenciesViewModel.saveData(navControlHelper,selectedCurrencyId)
+//                        navControlHelper.moveToPreviousPage()
+//                    }
+//                }
+//                addNewCurrencyButton.setOnClickListener {
+//                    addNewCurrency(view)
+//                }
+//                cancelCreateButton.setOnClickListener {
+//                    eraseUiElements()
+//                    uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
+//                    view.hideKeyboard()
+////                    showUIControlElements()
+//                }
+//            }
             with(confirmationLayout) {
                 selectButton.setOnClickListener {
                     if (selectedCurrencyId > 0) {
@@ -185,7 +189,7 @@ class CurrenciesFragment : Fragment() {
                     currenciesViewModel.resetCurrencyForChange()
                     uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                     view.hideKeyboard()
-                    showUIControlElements()
+//                    showUIControlElements()
                 }
                 saveChange.setOnClickListener {
                     if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
@@ -195,11 +199,19 @@ class CurrenciesFragment : Fragment() {
                         }
                         uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
                         view.hideKeyboard()
-                        showUIControlElements()
+//                        showUIControlElements()
                     }
                 }
             }
             uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
+        }
+    }
+
+    private fun showNewCurrencyDialog() {
+        launchUi {
+            val dialog = NewCurrencyDialog()
+
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 
@@ -212,7 +224,7 @@ class CurrenciesFragment : Fragment() {
                 eraseUiElements()
                 uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
                 view.hideKeyboard()
-                showUIControlElements()
+//                showUIControlElements()
                 return currenciesViewModel.addNewCurrency(newCurrency).toInt()
             } else {
                 showMessage(getString(R.string.message_too_short_name))
@@ -222,12 +234,12 @@ class CurrenciesFragment : Fragment() {
         else return -1
     }
 
-    private fun showUIControlElements() {
-        showHideDialogsController.showUIControlElements(
-            topButtonsHolder = binding.topButtonsHolder,
-            bottomButton = binding.showHideAddCurrencyFragmentButton
-        )
-    }
+//    private fun showUIControlElements() {
+//        showHideDialogsController.showUIControlElements(
+//            topButtonsHolder = binding.topButtonsHolder,
+//            bottomButton = binding.showHideAddCurrencyFragmentButton
+//        )
+//    }
 
     private fun putItemForChange() {
         uiControl.showChangeLayoutHolder()
@@ -245,15 +257,15 @@ class CurrenciesFragment : Fragment() {
     )
 
     private fun getDialogsList() = listOf(
-        binding.newCurrencyLayout,
+//        binding.newCurrencyLayout,
         binding.changeCurrencyLayout,
         binding.confirmationLayout
     )
 
     private fun getButtonsListForColorButton() = listOf(
-        binding.newCurrencyLayout.addAndSelectNewItemButton,
-        binding.newCurrencyLayout.addNewCurrencyButton,
-        binding.newCurrencyLayout.cancelCreateButton,
+//        binding.newCurrencyLayout.addAndSelectNewItemButton,
+//        binding.newCurrencyLayout.addNewCurrencyButton,
+//        binding.newCurrencyLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,
@@ -261,13 +273,13 @@ class CurrenciesFragment : Fragment() {
         binding.changeCurrencyLayout.cancelChange
     )
 
-    private fun setBackground(shape: Int) {
-        with(binding) {
-            newCurrencyLayout.root.setBackgroundResource(shape)
-            changeCurrencyLayout.root.setBackgroundResource(shape)
-            confirmationLayout.root.setBackgroundResource(shape)
-        }
-    }
+//    private fun setBackground(shape: Int) {
+//        with(binding) {
+//            newCurrencyLayout.root.setBackgroundResource(shape)
+//            changeCurrencyLayout.root.setBackgroundResource(shape)
+//            confirmationLayout.root.setBackgroundResource(shape)
+//        }
+//    }
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()

@@ -28,7 +28,7 @@
         <entry key="app/src/main/res/layout/dialog_first_launch.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_new_cash_account.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dialog_new_category.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/dialog_new_currency.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/dialog_new_currency.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_select_cash_account.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_select_category.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_select_currency.xml" value="0.4010416666666667" />
