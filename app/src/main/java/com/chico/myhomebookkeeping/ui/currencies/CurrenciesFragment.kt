@@ -1,9 +1,5 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
+import com.chico.myhomebookkeeping.`interface`.addItems.AddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -203,19 +199,35 @@ class CurrenciesFragment : Fragment() {
                     }
                 }
             }
-            uiColors.setColors(getDialogsList(),getButtonsListForColorButton(),getButtonsListForColorButtonText())
+            uiColors.setColors(
+                getDialogsList(),
+                getButtonsListForColorButton(),
+                getButtonsListForColorButtonText()
+            )
         }
     }
 
     private fun showNewCurrencyDialog() {
+        val result = currenciesViewModel.getNamesList()
         launchUi {
-            val dialog = NewCurrencyDialog()
+            val dialog = NewCurrencyDialog(result, object : AddNewCurrencyCallBack {
+                override fun add(name: String) {
+//                    Message.log("---CallBack TEXT name = $name---")
+                    val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
+                    if (result>0){
+                        showMessage("валюта добавлена")
+                    }
+                    if (result<=0){
+                        showMessage("не могу добавить валюту")
+                    }
+                }
+            })
 
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 
-    private fun addNewCurrency(view: View):Int {
+    private fun addNewCurrency(view: View): Int {
         if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
             if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
                 val name: String =
@@ -230,8 +242,7 @@ class CurrenciesFragment : Fragment() {
                 showMessage(getString(R.string.message_too_short_name))
                 return -1
             }
-        }
-        else return -1
+        } else return -1
     }
 
 //    private fun showUIControlElements() {
@@ -251,7 +262,7 @@ class CurrenciesFragment : Fragment() {
         uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
     }
 
-    private fun getButtonsListForColorButtonText()= listOf(
+    private fun getButtonsListForColorButtonText() = listOf(
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton
     )
