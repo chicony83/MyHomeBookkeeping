@@ -113,10 +113,11 @@ class CashAccountFragment : Fragment() {
 //                }
                 if (result is List<*>) {
                     val namesList: List<String> = result as List<String>
+
                     binding.newCashAccountLayout.cashAccountName.addTextChangedListener(
                         EditNameTextWatcher(
                             namesList,
-                            binding.newCashAccountLayout.addNewCashAccountButton,
+                            getListButtons(),
                             binding.newCashAccountLayout.errorThisNameIsTaken
 
                         )
@@ -279,7 +280,9 @@ class CashAccountFragment : Fragment() {
         binding.changeCashAccountLayout.saveChange,
         binding.changeCashAccountLayout.cancelChange
     )
-
+    private fun getListButtons() = listOf(
+        binding.newCashAccountLayout.addNewCashAccountButton,
+    )
     private fun getDialogsList() = listOf(
         binding.newCashAccountLayout,
         binding.changeCashAccountLayout,

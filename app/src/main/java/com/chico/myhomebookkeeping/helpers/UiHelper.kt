@@ -142,10 +142,12 @@ class UiHelper(
 
     fun disableButton(button: Button) {
         button.isEnabled = false
+        button.isActivated = false
     }
 
     fun enableButton(button: Button) {
         button.isEnabled = true
+        button.isActivated = true
     }
 
     fun showUiElement(recyclerView: RecyclerView) {

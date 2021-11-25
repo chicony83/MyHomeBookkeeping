@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import java.lang.IllegalStateException
@@ -38,13 +37,17 @@ class NewCurrencyDialog(
             if (result is List<*>) {
                 namesList = (result as List<String>).toMutableList()
             }
+            fun listButtons() = listOf(
+                addButton,addAndSelectButton
+            )
             editText.addTextChangedListener(
                 EditNameTextWatcher(
                     namesList,
-                    addButton,
+                    listButtons(),
                     errorTextView
                 )
             )
+
             addAndSelectButton.setOnClickListener {
                 val text = editText.getString()
                 if (text.isNotEmpty()) {
@@ -60,6 +63,7 @@ class NewCurrencyDialog(
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
+
             addButton.setOnClickListener {
                 val text = editText.getString()
                 if (text.isNotEmpty()) {
@@ -75,9 +79,11 @@ class NewCurrencyDialog(
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
+
             cancelButton.setOnClickListener {
                 dialogCancel()
             }
+
             builder.setView(layout)
             builder.create()
 

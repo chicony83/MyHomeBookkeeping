@@ -50,20 +50,21 @@
 
     <style name="ButtonFullWidth.AddAndSelect">
         <item name="android:text">@string/text_on_button_add_and_select</item>
-        <item name="backgroundTint">@null</item>
-        <item name="android:textColor">@color/colorSubmitButton</item>
+<!--        <item name="backgroundTint">@null</item>-->
+<!--        <item name="android:textColor">@color/colorSubmitButton</item>-->
     </style>
+
     <style name="DialogButtonLeft.Positive">
-        <item name="backgroundTint">@null</item>
+<!--        <item name="backgroundTint">@null</item>-->
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/colorSubmitButton</item>
+<!--        <item name="android:textColor">@color/colorSubmitButton</item>-->
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DialogButtonRight.Negative">
-        <item name="backgroundTint">@null</item>
+<!--        <item name="backgroundTint">@null</item>-->
         <item name="android:textColor">@color/colorCancelButton</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

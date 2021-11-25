@@ -166,7 +166,7 @@ class CategoriesFragment : Fragment() {
                     binding.newCategoryLayout.categoryName.addTextChangedListener(
                         EditNameTextWatcher(
                             namesList,
-                            binding.newCategoryLayout.addNewCategoryButton,
+                            getListButtons(),
                             binding.newCategoryLayout.errorThisNameIsTaken
                         )
                     )
@@ -278,6 +278,10 @@ class CategoriesFragment : Fragment() {
             getButtonsListForColorButtonText()
         )
     }
+
+    private fun getListButtons() = listOf(
+        binding.newCategoryLayout.addNewCategoryButton
+    )
 
     private fun addNewCategory(view: View): Int {
         if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
