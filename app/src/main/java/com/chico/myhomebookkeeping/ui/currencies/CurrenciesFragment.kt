@@ -96,13 +96,11 @@ class CurrenciesFragment : Fragment() {
                 val dialog = SelectCurrencyDialog(currencies,
                     object : OnItemSelectedForChangeCallBack {
                         override fun onSelect(id: Int) {
-                            Message.log("item for Changing id = $id")
                             showChangeCurrencyDialog(currencies)
                         }
                     },
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
-                            Message.log("item for Select id = $id")
                             currenciesViewModel.saveData(navControlHelper,id)
                             navControlHelper.moveToPreviousPage()
                         }
@@ -130,20 +128,20 @@ class CurrenciesFragment : Fragment() {
                 override fun add(name: String) {
                     val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
                     if (result > 0) {
-                        showMessage("валюта добавлена")
+                        showMessage(getString(R.string.message_currency_added))
                     }
                     if (result <= 0) {
-                        showMessage("не могу добавить валюту")
+                        showMessage(getString(R.string.message_currency_not_added))
                     }
                 }
 
                 override fun addAndSelect(name: String) {
                     val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
                     if (result > 0) {
-                        showMessage("валюта добавлена")
+                        showMessage(getString(R.string.message_currency_added))
                     }
                     if (result <= 0) {
-                        showMessage("не могу добавить валюту")
+                        showMessage(getString(R.string.message_currency_not_added))
                     }
                     currenciesViewModel.saveData(navControlHelper, result.toInt())
                     navControlHelper.moveToPreviousPage()

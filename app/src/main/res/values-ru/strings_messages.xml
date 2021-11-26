@@ -22,4 +22,7 @@
 
     <string name="message_you_have_latest_version">У вас последняя версия программы</string>
     <string name="message_you_can_update_the_program">Можно обновить программу</string>
+    
+    <string name="message_currency_added">Валюта добавлена</string>
+    <string name="message_currency_not_added">Ошибка\nВалюта не добавлена</string>
 </resources>
