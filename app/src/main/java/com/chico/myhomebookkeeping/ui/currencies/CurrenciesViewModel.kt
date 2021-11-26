@@ -37,14 +37,6 @@ class CurrenciesViewModel(
     val currenciesList: LiveData<List<Currencies>>
         get() = _currenciesList
 
-    private val _selectedCurrency = MutableLiveData<Currencies?>()
-    val selectedCurrency: MutableLiveData<Currencies?>
-        get() = _selectedCurrency
-
-    private var _changeCurrency = MutableLiveData<Currencies?>()
-    val changeCurrency: LiveData<Currencies?>
-        get() = _changeCurrency
-
     init {
         loadCurrencies()
     }
@@ -55,17 +47,6 @@ class CurrenciesViewModel(
         }
     }
 
-    fun saveData(navControlHelper: NavControlHelper) {
-//        Log.i("TAG","---currency value = ${_selectedCurrency.value?.currencyId}")
-        setSP.checkAndSaveToSP(
-            navControlHelper = navControlHelper,
-            argsForNew = argsForCreate,
-            argsForChange = argsForChange,
-            argsForQuery = argsForQuery,
-            id = _selectedCurrency.value?.currencyId
-        )
-    }
-
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
         setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
@@ -74,31 +55,10 @@ class CurrenciesViewModel(
             argsForQuery = argsForQuery,
             id = id
         )
-
     }
 
     suspend fun loadSelectedCurrency(selectedId: Int): Currencies? {
         return CurrenciesUseCase.getOneCurrency(db, selectedId)
-//        launchIo {
-//            _selectedCurrency.postValue(CurrenciesUseCase.getOneCurrency(db, selectedId))
-//        }
-    }
-
-    fun resetCurrencyForSelect() {
-        launchIo {
-            _selectedCurrency.postValue(null)
-        }
-    }
-
-    fun resetCurrencyForChange() {
-        launchIo {
-            _changeCurrency.postValue(null)
-        }
-    }
-
-    fun selectedToChange() {
-        _changeCurrency.postValue(_selectedCurrency.value)
-        resetCurrencyForSelect()
     }
 
     fun addNewCurrency(newCurrency: Currencies): Long = runBlocking {
@@ -133,17 +93,6 @@ class CurrenciesViewModel(
 
     private fun getItemsList(): List<Currencies>? {
         return currenciesList.value?.toList()
-    }
-
-    fun saveChangedCurrency(name: String) = runBlocking {
-        val save = async {
-            CurrenciesUseCase.changeCurrencyLine(
-                db = db,
-                id = _changeCurrency.value?.currencyId ?: 0,
-                name = name
-            )
-        }
-        reloadCurrencies(save.await().toLong())
     }
 
     fun saveChangedCurrency(id: Int, name: String) = runBlocking {
