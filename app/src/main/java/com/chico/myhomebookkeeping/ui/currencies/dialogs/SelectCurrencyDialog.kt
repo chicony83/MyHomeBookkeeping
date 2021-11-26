@@ -32,7 +32,11 @@ class SelectCurrencyDialog(
 
             currencies?.let { it1 -> name.text = it1.currencyName }
 //            name.text = currencies?.currencyName
-
+            name.setOnClickListener {
+                currencies?.currencyId?.let { it1 ->
+                    onItemSelectedForChangeCallBack.onSelect(it1)
+                }
+            }
             selectButton.setOnClickListener {
                 currencies?.currencyId?.let { it1 ->
                     onItemSelectForSelectCallBack.onSelect(

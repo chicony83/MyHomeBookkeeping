@@ -73,9 +73,6 @@ class CurrenciesFragment : Fragment() {
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
                             showSelectCurrencyDialog(selectedId)
-//                            uiControl.showSelectLayoutHolder()
-//                            currenciesViewModel.loadSelectedCurrency(selectedId)
-//                            selectedCurrencyId = selectedId
                             Log.i("TAG", "---$selectedId---")
                         }
                     })
@@ -95,12 +92,15 @@ class CurrenciesFragment : Fragment() {
                     object : OnItemSelectedForChangeCallBack {
                         override fun onSelect(id: Int) {
                             Message.log("item for Changing id = $id")
+//                            putItemForChange()
                         }
 
                     },
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
                             Message.log("item for Select id = $id")
+                            currenciesViewModel.saveData(navControlHelper,id)
+                            navControlHelper.moveToPreviousPage()
                         }
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -132,12 +132,12 @@ class CurrenciesFragment : Fragment() {
                 showNewCurrencyDialog()
             }
             with(confirmationLayout) {
-                selectButton.setOnClickListener {
-                    if (selectedCurrencyId > 0) {
-                        currenciesViewModel.saveData(navControlHelper)
-                        navControlHelper.moveToPreviousPage()
-                    }
-                }
+//                selectButton.setOnClickListener {
+//                    if (selectedCurrencyId > 0) {
+//                        currenciesViewModel.saveData(navControlHelper)
+//                        navControlHelper.moveToPreviousPage()
+//                    }
+//                }
                 selectedItemName.setOnClickListener {
                     if (selectedCurrencyId > 0) {
                         putItemForChange()
@@ -158,12 +158,12 @@ class CurrenciesFragment : Fragment() {
                         }
                     }
                 }
-                cancelButton.setOnClickListener {
-                    if (selectedCurrencyId > 0) {
-                        selectedCurrencyId = 0
-                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-                    }
-                }
+//                cancelButton.setOnClickListener {
+//                    if (selectedCurrencyId > 0) {
+//                        selectedCurrencyId = 0
+//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+//                    }
+//                }
             }
             with(changeCurrencyLayout) {
                 cancelChange.setOnClickListener {
