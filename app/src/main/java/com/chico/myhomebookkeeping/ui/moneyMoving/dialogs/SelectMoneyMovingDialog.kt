@@ -8,16 +8,15 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChange
+import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChangeCallBack
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import java.lang.IllegalStateException
 
 
 class SelectMoneyMovingDialog(
     val fullMoneyMoving: FullMoneyMoving?,
-    private val onItemSelectedForChange: OnItemSelectedForChange
+    private val onItemSelectedForChangeCallBack: OnItemSelectedForChangeCallBack
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -35,7 +34,7 @@ class SelectMoneyMovingDialog(
 
             changeButton.setOnClickListener {
                 fullMoneyMoving?.id?.toInt()
-                    ?.let { it1 -> onItemSelectedForChange.onSelect(it1) }
+                    ?.let { it1 -> onItemSelectedForChangeCallBack.onSelect(it1) }
             }
             cancelButton.setOnClickListener {
                 dialog?.cancel()

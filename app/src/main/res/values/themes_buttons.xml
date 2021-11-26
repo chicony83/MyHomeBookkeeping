@@ -71,7 +71,7 @@
     </style>
 
     <style name="DialogButtonCenter.Select">
-        <item name="backgroundTint">@null</item>
+<!--        <item name="backgroundTint">@null</item>-->
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

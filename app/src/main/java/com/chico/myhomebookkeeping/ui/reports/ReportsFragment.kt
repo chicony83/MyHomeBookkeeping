@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemChecked
+import com.chico.myhomebookkeeping.`interface`.OnItemCheckedCallBack
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
@@ -60,7 +60,7 @@ class ReportsFragment : Fragment() {
                 }
             })
             listItemsOfCategoriesForRecycler.observe(viewLifecycleOwner, {
-                binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemChecked {
+                binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemCheckedCallBack {
                     override fun onChecked(id: Int) {
                         launchUi {
                             with(reportsViewModel) {

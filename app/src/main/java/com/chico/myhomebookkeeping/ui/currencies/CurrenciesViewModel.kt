@@ -78,10 +78,11 @@ class CurrenciesViewModel(
 
     }
 
-    fun loadSelectedCurrency(selectedId: Int) {
-        launchIo {
-            _selectedCurrency.postValue(CurrenciesUseCase.getOneCurrency(db, selectedId))
-        }
+    suspend fun loadSelectedCurrency(selectedId: Int): Currencies? {
+        return CurrenciesUseCase.getOneCurrency(db,selectedId)
+//        launchIo {
+//            _selectedCurrency.postValue(CurrenciesUseCase.getOneCurrency(db, selectedId))
+//        }
     }
 
     fun resetCurrencyForSelect() {

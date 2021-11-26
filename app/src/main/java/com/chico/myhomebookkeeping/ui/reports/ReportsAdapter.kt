@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemChecked
+import com.chico.myhomebookkeeping.`interface`.OnItemCheckedCallBack
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportsBinding
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
 
 class ReportsAdapter(
     private val itemsList: List<ReportsCategoriesItem>,
-    val checkedListener: OnItemChecked
+    val checkedCallBackListener: OnItemCheckedCallBack
 ) : RecyclerView.Adapter<ReportsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -50,8 +50,8 @@ class ReportsAdapter(
                 }
                 checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
                     run {
-                        if (isChecked) checkedListener.onChecked(reportsCategoriesItem.id)
-                        if (!isChecked) checkedListener.onUnChecked(reportsCategoriesItem.id)
+                        if (isChecked) checkedCallBackListener.onChecked(reportsCategoriesItem.id)
+                        if (!isChecked) checkedCallBackListener.onUnChecked(reportsCategoriesItem.id)
                     }
 
                 }

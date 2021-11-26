@@ -1,6 +1,6 @@
 package com.chico.myhomebookkeeping.`interface`
 
-interface OnItemChecked {
+interface OnItemCheckedCallBack {
     fun onChecked(id: Int)
     fun onUnChecked(id:Int)
 }

@@ -28,12 +28,13 @@ class NewCurrencyDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_new_currency, null)
 
+            val editText = layout.findViewById<EditText>(R.id.currency_name)
+            var namesList = mutableListOf<String>()
+            val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
+
             val addButton = layout.findViewById<Button>(R.id.addNewCurrencyButton)
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelCreateButton)
-            val editText = layout.findViewById<EditText>(R.id.currency_name)
-            val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
-            var namesList = mutableListOf<String>()
 
             if (result is List<*>) {
                 namesList = (result as List<String>).toMutableList()

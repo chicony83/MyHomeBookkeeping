@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.`interface`.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChangeCallBack
 import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
 import com.chico.myhomebookkeeping.`interface`.addItems.AddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
@@ -19,6 +21,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.NewCurrencyDialog
+import com.chico.myhomebookkeeping.ui.currencies.dialogs.SelectCurrencyDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -69,9 +72,10 @@ class CurrenciesFragment : Fragment() {
                 binding.currenciesHolder.adapter =
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiControl.showSelectLayoutHolder()
-                            currenciesViewModel.loadSelectedCurrency(selectedId)
-                            selectedCurrencyId = selectedId
+                            showSelectCurrencyDialog(selectedId)
+//                            uiControl.showSelectLayoutHolder()
+//                            currenciesViewModel.loadSelectedCurrency(selectedId)
+//                            selectedCurrencyId = selectedId
                             Log.i("TAG", "---$selectedId---")
                         }
                     })
@@ -81,6 +85,28 @@ class CurrenciesFragment : Fragment() {
             })
         }
         return binding.root
+    }
+
+    private fun showSelectCurrencyDialog(selectedId: Int) {
+        launchIo {
+            val currencies: Currencies? = currenciesViewModel.loadSelectedCurrency(selectedId)
+            launchUi {
+                val dialog = SelectCurrencyDialog(currencies,
+                    object : OnItemSelectedForChangeCallBack {
+                        override fun onSelect(id: Int) {
+                            Message.log("item for Changing id = $id")
+                        }
+
+                    },
+                    object : OnItemSelectForSelectCallBack {
+                        override fun onSelect(id: Int) {
+                            Message.log("item for Select id = $id")
+                        }
+                    })
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            }
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,45 +130,7 @@ class CurrenciesFragment : Fragment() {
             showHideAddCurrencyFragmentButton.setOnClickListener {
 
                 showNewCurrencyDialog()
-//                uiControl.showNewItemLayoutHolder()
-//                view.showKeyboard()
-//                val result = currenciesViewModel.getNamesList()
-//
-//                if (result is List<*>){
-//                    val namesList:List<String> = result as List<String>
-//                    binding.newCurrencyLayout.currencyName.addTextChangedListener(
-//                        EditNameTextWatcher(
-//                            namesList,
-//                            binding.newCurrencyLayout.addNewCurrencyButton,
-//                            binding.newCurrencyLayout.errorThisNameIsTaken
-//                        )
-//                    )
-//                }
-//
-//                with(binding.newCurrencyLayout.currencyName) {
-//                    requestFocus()
-//                    setSelection(0)
-//                }
             }
-//            with(newCurrencyLayout) {
-//                addAndSelectNewItemButton.setOnClickListener {
-//                    selectedCurrencyId = addNewCurrency(view)
-//                    if (selectedCurrencyId>0){
-//                        Message.log("selected Currency ID = $selectedCurrencyId")
-//                        currenciesViewModel.saveData(navControlHelper,selectedCurrencyId)
-//                        navControlHelper.moveToPreviousPage()
-//                    }
-//                }
-//                addNewCurrencyButton.setOnClickListener {
-//                    addNewCurrency(view)
-//                }
-//                cancelCreateButton.setOnClickListener {
-//                    eraseUiElements()
-//                    uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
-//                    view.hideKeyboard()
-////                    showUIControlElements()
-//                }
-//            }
             with(confirmationLayout) {
                 selectButton.setOnClickListener {
                     if (selectedCurrencyId > 0) {
@@ -239,40 +227,11 @@ class CurrenciesFragment : Fragment() {
         }
     }
 
-//    private fun addNewCurrency(view: View): Int {
-//        if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
-//            if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
-//                val name: String =
-//                    binding.newCurrencyLayout.currencyName.text.toString()
-//                val newCurrency = Currencies(currencyName = name)
-//                eraseUiElements()
-//                uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
-//                view.hideKeyboard()
-////                showUIControlElements()
-//                return currenciesViewModel.addNewCurrency(newCurrency).toInt()
-//            } else {
-//                showMessage(getString(R.string.message_too_short_name))
-//                return -1
-//            }
-//        } else return -1
-//    }
-
-//    private fun showUIControlElements() {
-//        showHideDialogsController.showUIControlElements(
-//            topButtonsHolder = binding.topButtonsHolder,
-//            bottomButton = binding.showHideAddCurrencyFragmentButton
-//        )
-//    }
-
     private fun putItemForChange() {
         uiControl.showChangeLayoutHolder()
         currenciesViewModel.selectedToChange()
         selectedCurrencyId = 0
     }
-
-//    private fun eraseUiElements() {
-//        uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
-//    }
 
     private fun getButtonsListForColorButtonText() = listOf(
         binding.confirmationLayout.changeButton,
@@ -280,29 +239,20 @@ class CurrenciesFragment : Fragment() {
     )
 
     private fun getDialogsList() = listOf(
-//        binding.newCurrencyLayout,
         binding.changeCurrencyLayout,
-        binding.confirmationLayout
+//        binding.confirmationLayout
     )
 
     private fun getButtonsListForColorButton() = listOf(
 //        binding.newCurrencyLayout.addAndSelectNewItemButton,
 //        binding.newCurrencyLayout.addNewCurrencyButton,
 //        binding.newCurrencyLayout.cancelCreateButton,
-        binding.confirmationLayout.changeButton,
-        binding.confirmationLayout.selectButton,
-        binding.confirmationLayout.cancelButton,
+//        binding.confirmationLayout.changeButton,
+//        binding.confirmationLayout.selectButton,
+//        binding.confirmationLayout.cancelButton,
         binding.changeCurrencyLayout.saveChange,
         binding.changeCurrencyLayout.cancelChange
     )
-
-//    private fun setBackground(shape: Int) {
-//        with(binding) {
-//            newCurrencyLayout.root.setBackgroundResource(shape)
-//            changeCurrencyLayout.root.setBackgroundResource(shape)
-//            confirmationLayout.root.setBackgroundResource(shape)
-//        }
-//    }
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
