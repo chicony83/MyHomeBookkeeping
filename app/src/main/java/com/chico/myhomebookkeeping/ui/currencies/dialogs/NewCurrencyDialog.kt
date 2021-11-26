@@ -53,7 +53,7 @@ class NewCurrencyDialog(
                 if (text.isNotEmpty()) {
                     val isLengthChecked: Boolean = checkLengthText(text)
                     if (isLengthChecked) {
-                        addNewCurrencyCallBack.add(text)
+                        addNewCurrencyCallBack.addAndSelect(text)
                         dialogCancel()
                     }
                     if (!isLengthChecked) {

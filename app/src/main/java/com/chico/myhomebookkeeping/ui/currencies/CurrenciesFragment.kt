@@ -37,7 +37,8 @@ class CurrenciesFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
     private lateinit var uiControl: UiControl
-    private val showHideDialogsController = ShowHideDialogsController()
+
+    //    private val showHideDialogsController = ShowHideDialogsController()
     private val uiColors = UiColors()
 
     override fun onCreateView(
@@ -212,14 +213,25 @@ class CurrenciesFragment : Fragment() {
         launchUi {
             val dialog = NewCurrencyDialog(result, object : AddNewCurrencyCallBack {
                 override fun add(name: String) {
-//                    Message.log("---CallBack TEXT name = $name---")
                     val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
-                    if (result>0){
+                    if (result > 0) {
                         showMessage("валюта добавлена")
                     }
-                    if (result<=0){
+                    if (result <= 0) {
                         showMessage("не могу добавить валюту")
                     }
+                }
+
+                override fun addAndSelect(name: String) {
+                    val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
+                    if (result > 0) {
+                        showMessage("валюта добавлена")
+                    }
+                    if (result <= 0) {
+                        showMessage("не могу добавить валюту")
+                    }
+                    currenciesViewModel.saveData(navControlHelper, result.toInt())
+                    navControlHelper.moveToPreviousPage()
                 }
             })
 
@@ -227,23 +239,23 @@ class CurrenciesFragment : Fragment() {
         }
     }
 
-    private fun addNewCurrency(view: View): Int {
-        if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
-            if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
-                val name: String =
-                    binding.newCurrencyLayout.currencyName.text.toString()
-                val newCurrency = Currencies(currencyName = name)
-                eraseUiElements()
-                uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
-                view.hideKeyboard()
-//                showUIControlElements()
-                return currenciesViewModel.addNewCurrency(newCurrency).toInt()
-            } else {
-                showMessage(getString(R.string.message_too_short_name))
-                return -1
-            }
-        } else return -1
-    }
+//    private fun addNewCurrency(view: View): Int {
+//        if (uiHelper.isVisibleLayout(binding.newCurrencyLayoutHolder)) {
+//            if (uiHelper.isLengthStringMoThan(binding.newCurrencyLayout.currencyName.text)) {
+//                val name: String =
+//                    binding.newCurrencyLayout.currencyName.text.toString()
+//                val newCurrency = Currencies(currencyName = name)
+//                eraseUiElements()
+//                uiHelper.hideUiElement(binding.newCurrencyLayoutHolder)
+//                view.hideKeyboard()
+////                showUIControlElements()
+//                return currenciesViewModel.addNewCurrency(newCurrency).toInt()
+//            } else {
+//                showMessage(getString(R.string.message_too_short_name))
+//                return -1
+//            }
+//        } else return -1
+//    }
 
 //    private fun showUIControlElements() {
 //        showHideDialogsController.showUIControlElements(
@@ -258,9 +270,9 @@ class CurrenciesFragment : Fragment() {
         selectedCurrencyId = 0
     }
 
-    private fun eraseUiElements() {
-        uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
-    }
+//    private fun eraseUiElements() {
+//        uiHelper.clearUiElement(binding.newCurrencyLayout.currencyName)
+//    }
 
     private fun getButtonsListForColorButtonText() = listOf(
         binding.confirmationLayout.changeButton,
