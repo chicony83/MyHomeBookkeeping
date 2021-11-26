@@ -65,7 +65,7 @@
 
     <style name="DialogButtonRight.Negative">
 <!--        <item name="backgroundTint">@null</item>-->
-        <item name="android:textColor">@color/colorCancelButton</item>
+<!--        <item name="android:textColor">@color/colorCancelButton</item>-->
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -78,7 +78,7 @@
     </style>
 
     <style name="DialogButtonLeft.Change">
-        <item name="backgroundTint">@null</item>
+<!--        <item name="backgroundTint">@null</item>-->
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
