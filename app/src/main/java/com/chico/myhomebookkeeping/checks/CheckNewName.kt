@@ -11,16 +11,16 @@ object CheckNewName {
         s: Editable?,
         namesList: List<String>,
     ): Boolean {
-        Message.log("ищем")
-        for (i in namesList.indices) {
-            return if (s.toString().equals(namesList[i], ignoreCase = true)) {
-                //                    showMessage("найдено совпадение $s == ${namesList[i]}")
-                true
-            } else {
-                Message.log("$s != ${namesList[i]}")
-                false
+//        Message.log("ищем")
+//        Message.log("names list size = ${namesList.size}")
+        for (i in 0 until namesList.size) {
+//            Message.log("проверяется строка $i , ")
+            if (s.toString().equals(namesList[i], ignoreCase = true)) {
+//                Message.log("найдено совпадение $s == ${namesList[i]} !!! ")
+                return true
             }
         }
+//        Message.log("совпадений не найдено")
         return false
     }
 }

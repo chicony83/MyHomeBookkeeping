@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
 import com.chico.myhomebookkeeping.checks.CheckNewName
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.delay
@@ -32,6 +33,7 @@ class EditNameTextWatcher(
                         for (i in buttonList.indices){
                             disableButton(buttonList[i])
                         }
+                        Message.log("buttons disable")
                         showUiElement(errorMessage)
                     }
                 } else {
@@ -39,7 +41,9 @@ class EditNameTextWatcher(
                         for (i in buttonList.indices){
                             enableButton(buttonList[i])
                         }
+                        Message.log("buttons enable")
                         hideUiElement(errorMessage)
+
                     }
                 }
             }

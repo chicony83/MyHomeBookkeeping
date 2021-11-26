@@ -13,6 +13,7 @@ import java.lang.IllegalStateException
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.`interface`.addItems.AddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.helpers.CheckString
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.getString
 
 
@@ -36,6 +37,7 @@ class NewCurrencyDialog(
 
             if (result is List<*>) {
                 namesList = (result as List<String>).toMutableList()
+//                Message.log("names list size= ${namesList.size}")
             }
             fun listButtons() = listOf(
                 addButton,addAndSelectButton
