@@ -2,7 +2,6 @@ package com.chico.myhomebookkeeping.ui.cashAccount
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,13 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CashAccountFragment : Fragment() {
@@ -195,23 +193,23 @@ class CashAccountFragment : Fragment() {
                     view.hideKeyboard()
                     showUIControlElements()
                 }
-                saveChange.setOnClickListener {
-                    if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
-                        val name = binding.changeCashAccountLayout.cashAccountName.text.toString()
-                        val number =
-                            binding.changeCashAccountLayout.cashAccountNumber.text.toString()
-                        Log.i("TAG", " click name = $name, number = $number")
-                        launchIo {
-                            cashAccountViewModel.saveChangedCashAccount(
-                                name = name,
-                                number = number
-                            )
-                        }
-                        uiHelper.hideUiElement(changeCashAccountLayoutHolder)
-                        view.hideKeyboard()
-                        showUIControlElements()
-                    }
-                }
+//                saveChange.setOnClickListener {
+//                    if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
+//                        val name = binding.changeCashAccountLayout.cashAccountName.text.toString()
+//                        val number =
+//                            binding.changeCashAccountLayout.cashAccountNumber.text.toString()
+//                        Log.i("TAG", " click name = $name, number = $number")
+//                        launchIo {
+//                            cashAccountViewModel.saveChangedCashAccount(
+//                                name = name,
+//                                number = number
+//                            )
+//                        }
+//                        uiHelper.hideUiElement(changeCashAccountLayoutHolder)
+//                        view.hideKeyboard()
+//                        showUIControlElements()
+//                    }
+//                }
             }
         }
         uiColors.setColors(
@@ -277,7 +275,7 @@ class CashAccountFragment : Fragment() {
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,
-        binding.changeCashAccountLayout.saveChange,
+//        binding.changeCashAccountLayout.saveChange,
         binding.changeCashAccountLayout.cancelChange
     )
     private fun getListButtons() = listOf(

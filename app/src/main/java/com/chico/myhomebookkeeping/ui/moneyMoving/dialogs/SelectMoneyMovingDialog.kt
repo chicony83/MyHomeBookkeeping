@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectedForChangeCallBack
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import java.lang.IllegalStateException

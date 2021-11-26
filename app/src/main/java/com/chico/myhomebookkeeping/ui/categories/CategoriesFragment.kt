@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -21,7 +21,6 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CategoriesFragment : Fragment() {
@@ -241,35 +240,35 @@ class CategoriesFragment : Fragment() {
                     showUIControlElements()
                 }
 
-                saveChange.setOnClickListener {
-                    val name: String
-                    val isIncome: Boolean
-                    if (uiHelper.isLengthStringMoThan(binding.changeCategoryLayout.categoryName.text)) {
-                        name = binding.changeCategoryLayout.categoryName.text.toString()
-
-                        if (uiHelper.isCheckedRadioButton(binding.changeCategoryLayout.incomingRadioButton) or
-                            uiHelper.isCheckedRadioButton(binding.changeCategoryLayout.spendingRadioButton)
-                        ) {
-                            isIncome = isSelectedCategoryIncome(
-                                binding.changeCategoryLayout.incomingRadioButton,
-//                                binding.changeCategoryLayout.spendingRadioButton
-                            )
-                            launchIo {
-                                categoriesViewModel.saveChangedCategory(
-                                    name = name,
-                                    isIncome = isIncome
-                                )
-                            }
-                            uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
-                            view.hideKeyboard()
-                            showUIControlElements()
-                        } else {
-                            showMessage(getString(R.string.message_select_category))
-                        }
-                    } else {
-                        showMessage(getString(R.string.message_too_short_name))
-                    }
-                }
+//                saveChange.setOnClickListener {
+//                    val name: String
+//                    val isIncome: Boolean
+//                    if (uiHelper.isLengthStringMoThan(binding.changeCategoryLayout.categoryName.text)) {
+//                        name = binding.changeCategoryLayout.categoryName.text.toString()
+//
+//                        if (uiHelper.isCheckedRadioButton(binding.changeCategoryLayout.incomingRadioButton) or
+//                            uiHelper.isCheckedRadioButton(binding.changeCategoryLayout.spendingRadioButton)
+//                        ) {
+//                            isIncome = isSelectedCategoryIncome(
+//                                binding.changeCategoryLayout.incomingRadioButton,
+////                                binding.changeCategoryLayout.spendingRadioButton
+//                            )
+//                            launchIo {
+//                                categoriesViewModel.saveChangedCategory(
+//                                    name = name,
+//                                    isIncome = isIncome
+//                                )
+//                            }
+//                            uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
+//                            view.hideKeyboard()
+//                            showUIControlElements()
+//                        } else {
+//                            showMessage(getString(R.string.message_select_category))
+//                        }
+//                    } else {
+//                        showMessage(getString(R.string.message_too_short_name))
+//                    }
+//                }
             }
         }
         uiColors.setColors(
@@ -353,7 +352,7 @@ class CategoriesFragment : Fragment() {
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,
-        binding.changeCategoryLayout.saveChange,
+//        binding.changeCategoryLayout.saveChange,
         binding.changeCategoryLayout.cancelChange,
     )
 

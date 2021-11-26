@@ -3,18 +3,15 @@ package com.chico.myhomebookkeeping.ui.moneyMoving
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListenerLong
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
-import java.util.*
 
 
 class MoneyMovingAdapter(

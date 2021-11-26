@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemSelectForSelectCallBack
-import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectedForChangeCallBack
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import java.lang.IllegalStateException
 
@@ -36,6 +36,7 @@ class SelectCurrencyDialog(
                 currencies?.currencyId?.let { it1 ->
                     onItemSelectedForChangeCallBack.onSelect(it1)
                 }
+                closeDialog()
             }
             selectButton.setOnClickListener {
                 currencies?.currencyId?.let { it1 ->
@@ -43,6 +44,7 @@ class SelectCurrencyDialog(
                         it1
                     )
                 }
+                closeDialog()
             }
 
             changeButton.setOnClickListener {
@@ -51,14 +53,19 @@ class SelectCurrencyDialog(
                         it1
                     )
                 }
+                closeDialog()
             }
 
             cancelButton.setOnClickListener {
-                dialog?.cancel()
+                closeDialog()
             }
 
             builder.setView(layout)
             builder.create()
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun closeDialog() {
+        dialog?.cancel()
     }
 }

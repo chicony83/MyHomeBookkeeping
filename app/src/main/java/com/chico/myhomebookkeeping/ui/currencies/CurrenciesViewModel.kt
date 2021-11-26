@@ -17,7 +17,6 @@ import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-
 class CurrenciesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
@@ -79,7 +78,7 @@ class CurrenciesViewModel(
     }
 
     suspend fun loadSelectedCurrency(selectedId: Int): Currencies? {
-        return CurrenciesUseCase.getOneCurrency(db,selectedId)
+        return CurrenciesUseCase.getOneCurrency(db, selectedId)
 //        launchIo {
 //            _selectedCurrency.postValue(CurrenciesUseCase.getOneCurrency(db, selectedId))
 //        }
@@ -100,17 +99,6 @@ class CurrenciesViewModel(
     fun selectedToChange() {
         _changeCurrency.postValue(_selectedCurrency.value)
         resetCurrencyForSelect()
-    }
-
-    fun saveChangedCurrency(name: String) = runBlocking {
-        val save = async {
-            CurrenciesUseCase.changeCurrencyLine(
-                db = db,
-                id = _changeCurrency.value?.currencyId ?: 0,
-                name = name
-            )
-        }
-        reloadCurrencies(save.await().toLong())
     }
 
     fun addNewCurrency(newCurrency: Currencies): Long = runBlocking {
@@ -146,4 +134,25 @@ class CurrenciesViewModel(
     private fun getItemsList(): List<Currencies>? {
         return currenciesList.value?.toList()
     }
+
+    fun saveChangedCurrency(name: String) = runBlocking {
+        val save = async {
+            CurrenciesUseCase.changeCurrencyLine(
+                db = db,
+                id = _changeCurrency.value?.currencyId ?: 0,
+                name = name
+            )
+        }
+        reloadCurrencies(save.await().toLong())
+    }
+
+    fun saveChangedCurrency(id: Int, name: String) = runBlocking {
+        val save = async {
+            CurrenciesUseCase.changeCurrencyLine(
+                db = db, id = id, name = name
+            )
+        }
+        reloadCurrencies(save.await().toLong())
+    }
 }
+

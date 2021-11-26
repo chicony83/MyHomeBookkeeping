@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemCheckedCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportsBinding
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem

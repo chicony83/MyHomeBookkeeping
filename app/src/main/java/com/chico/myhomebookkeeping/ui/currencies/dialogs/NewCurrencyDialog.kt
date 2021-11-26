@@ -11,9 +11,8 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import java.lang.IllegalStateException
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.addItems.AddNewCurrencyCallBack
+import com.chico.myhomebookkeeping.interfaces.currencies.AddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.helpers.CheckString
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.getString
 
 
@@ -57,7 +56,7 @@ class NewCurrencyDialog(
                     val isLengthChecked: Boolean = checkLengthText(text)
                     if (isLengthChecked) {
                         addNewCurrencyCallBack.addAndSelect(text)
-                        dialogCancel()
+                        closeDialog()
                     }
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
@@ -73,7 +72,7 @@ class NewCurrencyDialog(
                     val isLengthChecked: Boolean = checkLengthText(text)
                     if (isLengthChecked) {
                         addNewCurrencyCallBack.add(text)
-                        dialogCancel()
+                        closeDialog()
                     }
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
@@ -84,7 +83,7 @@ class NewCurrencyDialog(
             }
 
             cancelButton.setOnClickListener {
-                dialogCancel()
+                closeDialog()
             }
 
             builder.setView(layout)
@@ -93,7 +92,7 @@ class NewCurrencyDialog(
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
 
-    private fun dialogCancel() {
+    private fun closeDialog() {
         dialog?.cancel()
     }
 

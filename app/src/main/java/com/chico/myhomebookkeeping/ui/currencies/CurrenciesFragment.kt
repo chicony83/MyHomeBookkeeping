@@ -11,21 +11,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.`interface`.OnItemSelectForSelectCallBack
-import com.chico.myhomebookkeeping.`interface`.OnItemSelectedForChangeCallBack
-import com.chico.myhomebookkeeping.`interface`.OnItemViewClickListener
-import com.chico.myhomebookkeeping.`interface`.addItems.AddNewCurrencyCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectedForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
+import com.chico.myhomebookkeeping.interfaces.currencies.AddNewCurrencyCallBack
+
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.interfaces.currencies.ChangeCurrencyCallBack
+import com.chico.myhomebookkeeping.ui.currencies.dialogs.ChangeCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.NewCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.SelectCurrencyDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CurrenciesFragment : Fragment() {
     private lateinit var currenciesViewModel: CurrenciesViewModel
@@ -42,7 +44,7 @@ class CurrenciesFragment : Fragment() {
     private lateinit var uiControl: UiControl
 
     //    private val showHideDialogsController = ShowHideDialogsController()
-    private val uiColors = UiColors()
+//    private val uiColors = UiColors()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,13 +57,13 @@ class CurrenciesFragment : Fragment() {
 
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
 
-        uiControl = UiControl(
-            topButtonsHolder = binding.topButtonsHolder,
-            bottomButton = binding.showHideAddCurrencyFragmentButton,
-            newItemLayoutHolder = binding.newCurrencyLayoutHolder,
-            confirmationLayoutHolder = binding.confirmationLayoutHolder,
-            changeItemLayoutHolder = binding.changeCurrencyLayoutHolder
-        )
+//        uiControl = UiControl(
+//            topButtonsHolder = binding.topButtonsHolder,
+//            bottomButton = binding.showHideAddCurrencyFragmentButton,
+//            newItemLayoutHolder = binding.newCurrencyLayoutHolder,
+//            confirmationLayoutHolder = binding.confirmationLayoutHolder,
+//            changeItemLayoutHolder = binding.changeCurrencyLayoutHolder
+//        )
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(currenciesViewModel) {
@@ -77,9 +79,9 @@ class CurrenciesFragment : Fragment() {
                         }
                     })
             })
-            changeCurrency.observe(viewLifecycleOwner, {
-                binding.changeCurrencyLayout.itemName.setText(it?.currencyName)
-            })
+//            changeCurrency.observe(viewLifecycleOwner, {
+//                binding.changeCurrencyLayout.itemName.setText(it?.currencyName)
+//            })
         }
         return binding.root
     }
@@ -92,9 +94,8 @@ class CurrenciesFragment : Fragment() {
                     object : OnItemSelectedForChangeCallBack {
                         override fun onSelect(id: Int) {
                             Message.log("item for Changing id = $id")
-//                            putItemForChange()
+                            showChangeCurrencyDialog(currencies)
                         }
-
                     },
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
@@ -107,6 +108,19 @@ class CurrenciesFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun showChangeCurrencyDialog(currency: Currencies?) {
+        launchIo {
+            val dialog = ChangeCurrencyDialog(currency,object:ChangeCurrencyCallBack{
+                override fun change(id:Int,name:String) {
+//                    Message.log("new currency name = ${currencies.currencyName}")
+                    currenciesViewModel.saveChangedCurrency(id,name)
+                }
+            })
+
+            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,26 +152,26 @@ class CurrenciesFragment : Fragment() {
 //                        navControlHelper.moveToPreviousPage()
 //                    }
 //                }
-                selectedItemName.setOnClickListener {
-                    if (selectedCurrencyId > 0) {
-                        putItemForChange()
-                        view.showKeyboard()
-                        with(binding.changeCurrencyLayout.itemName) {
-                            requestFocus()
-                            setSelection(0)
-                        }
-                    }
-                }
-                changeButton.setOnClickListener {
-                    if (selectedCurrencyId > 0) {
-                        putItemForChange()
-                        view.showKeyboard()
-                        with(binding.changeCurrencyLayout.itemName) {
-                            requestFocus()
-                            setSelection(0)
-                        }
-                    }
-                }
+//                selectedItemName.setOnClickListener {
+//                    if (selectedCurrencyId > 0) {
+//                        putItemForChange()
+//                        view.showKeyboard()
+//                        with(binding.changeCurrencyLayout.itemName) {
+//                            requestFocus()
+//                            setSelection(0)
+//                        }
+//                    }
+//                }
+//                changeButton.setOnClickListener {
+//                    if (selectedCurrencyId > 0) {
+//                        putItemForChange()
+//                        view.showKeyboard()
+//                        with(binding.changeCurrencyLayout.itemName) {
+//                            requestFocus()
+//                            setSelection(0)
+//                        }
+//                    }
+//                }
 //                cancelButton.setOnClickListener {
 //                    if (selectedCurrencyId > 0) {
 //                        selectedCurrencyId = 0
@@ -165,34 +179,34 @@ class CurrenciesFragment : Fragment() {
 //                    }
 //                }
             }
-            with(changeCurrencyLayout) {
-                cancelChange.setOnClickListener {
-                    if (selectedCurrencyId > 0) {
-                        selectedCurrencyId = 0
-                    }
-                    currenciesViewModel.resetCurrencyForSelect()
-                    currenciesViewModel.resetCurrencyForChange()
-                    uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
-                    view.hideKeyboard()
-//                    showUIControlElements()
-                }
-                saveChange.setOnClickListener {
-                    if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
-                        val name: String = binding.changeCurrencyLayout.itemName.text.toString()
-                        launchIo {
-                            currenciesViewModel.saveChangedCurrency(name = name)
-                        }
-                        uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
-                        view.hideKeyboard()
-//                        showUIControlElements()
-                    }
-                }
-            }
-            uiColors.setColors(
-                getDialogsList(),
-                getButtonsListForColorButton(),
-                getButtonsListForColorButtonText()
-            )
+//            with(changeCurrencyLayout) {
+//                cancelChange.setOnClickListener {
+//                    if (selectedCurrencyId > 0) {
+//                        selectedCurrencyId = 0
+//                    }
+//                    currenciesViewModel.resetCurrencyForSelect()
+//                    currenciesViewModel.resetCurrencyForChange()
+//                    uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
+//                    view.hideKeyboard()
+////                    showUIControlElements()
+//                }
+//                saveChange.setOnClickListener {
+//                    if (uiHelper.isLengthStringMoThan(binding.changeCurrencyLayout.itemName.text)) {
+//                        val name: String = binding.changeCurrencyLayout.itemName.text.toString()
+//                        launchIo {
+//                            currenciesViewModel.saveChangedCurrency(name = name)
+//                        }
+//                        uiHelper.hideUiElement(binding.changeCurrencyLayoutHolder)
+//                        view.hideKeyboard()
+////                        showUIControlElements()
+//                    }
+//                }
+//            }
+//            uiColors.setColors(
+//                getDialogsList(),
+//                getButtonsListForColorButton(),
+//                getButtonsListForColorButtonText()
+//            )
         }
     }
 
@@ -227,32 +241,32 @@ class CurrenciesFragment : Fragment() {
         }
     }
 
-    private fun putItemForChange() {
-        uiControl.showChangeLayoutHolder()
-        currenciesViewModel.selectedToChange()
-        selectedCurrencyId = 0
-    }
+//    private fun putItemForChange() {
+//        uiControl.showChangeLayoutHolder()
+//        currenciesViewModel.selectedToChange()
+//        selectedCurrencyId = 0
+//    }
 
-    private fun getButtonsListForColorButtonText() = listOf(
-        binding.confirmationLayout.changeButton,
-        binding.confirmationLayout.selectButton
-    )
-
-    private fun getDialogsList() = listOf(
-        binding.changeCurrencyLayout,
-//        binding.confirmationLayout
-    )
-
-    private fun getButtonsListForColorButton() = listOf(
-//        binding.newCurrencyLayout.addAndSelectNewItemButton,
-//        binding.newCurrencyLayout.addNewCurrencyButton,
-//        binding.newCurrencyLayout.cancelCreateButton,
+//    private fun getButtonsListForColorButtonText() = listOf(
 //        binding.confirmationLayout.changeButton,
-//        binding.confirmationLayout.selectButton,
-//        binding.confirmationLayout.cancelButton,
-        binding.changeCurrencyLayout.saveChange,
-        binding.changeCurrencyLayout.cancelChange
-    )
+//        binding.confirmationLayout.selectButton
+//    )
+
+//    private fun getDialogsList() = listOf(
+//        binding.changeCurrencyLayout,
+////        binding.confirmationLayout
+//    )
+
+//    private fun getButtonsListForColorButton() = listOf(
+////        binding.newCurrencyLayout.addAndSelectNewItemButton,
+////        binding.newCurrencyLayout.addNewCurrencyButton,
+////        binding.newCurrencyLayout.cancelCreateButton,
+////        binding.confirmationLayout.changeButton,
+////        binding.confirmationLayout.selectButton,
+////        binding.confirmationLayout.cancelButton,
+////        binding.changeCurrencyLayout.saveChange,
+////        binding.changeCurrencyLayout.cancelChange
+//    )
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
