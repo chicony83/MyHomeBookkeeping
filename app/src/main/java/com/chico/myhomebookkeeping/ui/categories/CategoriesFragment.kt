@@ -20,7 +20,9 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CategoriesFragment : Fragment() {
@@ -155,45 +157,46 @@ class CategoriesFragment : Fragment() {
                 popupMenu.show()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
-                uiControl.showNewItemLayoutHolder()
-                view.showKeyboard()
-
-                val result: Any = categoriesViewModel.getNamesList()
-
-                if (result is List<*>) {
-                    val namesList: List<String> = result as List<String>
-                    binding.newCategoryLayout.categoryName.addTextChangedListener(
-                        EditNameTextWatcher(
-                            namesList,
-                            getListButtons(),
-                            binding.newCategoryLayout.errorThisNameIsTaken
-                        )
-                    )
-                }
-                with(binding.newCategoryLayout.categoryName) {
-                    requestFocus()
-                    setSelection(0)
-                }
+                showNewCategoryDialog()
+//                uiControl.showNewItemLayoutHolder()
+//                view.showKeyboard()
+//
+//                val result: Any = categoriesViewModel.getNamesList()
+//
+//                if (result is List<*>) {
+//                    val namesList: List<String> = result as List<String>
+//                    binding.newCategoryLayout.categoryName.addTextChangedListener(
+//                        EditNameTextWatcher(
+//                            namesList,
+//                            getListButtons(),
+//                            binding.newCategoryLayout.errorThisNameIsTaken
+//                        )
+//                    )
+//                }
+//                with(binding.newCategoryLayout.categoryName) {
+//                    requestFocus()
+//                    setSelection(0)
+//                }
             }
-            with(newCategoryLayout) {
-                addAndSelectNewItemButton.setOnClickListener {
-                    selectedCategoryId = addNewCategory(view)
-                    if (selectedCategoryId > 0) {
-                        Message.log("selected Category ID = $selectedCategoryId")
-                        categoriesViewModel.saveData(navControlHelper, selectedCategoryId)
-                        navControlHelper.moveToPreviousPage()
-                    }
-                }
-                addNewCategoryButton.setOnClickListener {
-                    addNewCategory(view)
-                }
-                cancelCreateButton.setOnClickListener {
-                    clearingUiElements()
-                    uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
-                    view.hideKeyboard()
-                    showUIControlElements()
-                }
-            }
+//            with(newCategoryLayout) {
+//                addAndSelectNewItemButton.setOnClickListener {
+//                    selectedCategoryId = addNewCategory(view)
+//                    if (selectedCategoryId > 0) {
+//                        Message.log("selected Category ID = $selectedCategoryId")
+//                        categoriesViewModel.saveData(navControlHelper, selectedCategoryId)
+//                        navControlHelper.moveToPreviousPage()
+//                    }
+//                }
+//                addNewCategoryButton.setOnClickListener {
+//                    addNewCategory(view)
+//                }
+//                cancelCreateButton.setOnClickListener {
+//                    clearingUiElements()
+//                    uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
+//                    view.hideKeyboard()
+//                    showUIControlElements()
+//                }
+//            }
             with(confirmationLayout) {
                 selectButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
@@ -278,44 +281,51 @@ class CategoriesFragment : Fragment() {
         )
     }
 
-    private fun getListButtons() = listOf(
-        binding.newCategoryLayout.addNewCategoryButton
-    )
-
-    private fun addNewCategory(view: View): Int {
-        if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
-            if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
-                if ((uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
-                            or
-                            uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
-                            )
-                ) {
-                    val category =
-                        binding.newCategoryLayout.categoryName.text.toString()
-                    val isIncoming: Boolean = isSelectedCategoryIncome(
-                        binding.newCategoryLayout.incomingRadioButton,
-                        //                                    binding.newCategoryLayout.spendingRadioButton
-                    )
-                    val newCategory = Categories(
-                        categoryName = category,
-                        isIncome = isIncoming
-                    )
-                    clearingUiElements()
-                    uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
-                    view.hideKeyboard()
-                    showUIControlElements()
-                    return categoriesViewModel.addNewCategory(newCategory).toInt()
-                } else {
-                    showMessage(getString(R.string.message_select_type_of_category))
-                    return -1
-                }
-            } else {
-                showMessage(getString(R.string.message_too_short_name))
-                return -1
-            }
-        }
-        return -1
+    private fun showNewCategoryDialog() {
+        val result = categoriesViewModel.getNamesList()
+//        launchUi {
+//            val dialog = NewCategoryDialog(result,object :AddNew)
+//        }
     }
+
+//    private fun getListButtons() = listOf(
+//        binding.newCategoryLayout.addNewCategoryButton
+//    )
+
+//    private fun addNewCategory(view: View): Int {
+//        if (uiHelper.isVisibleLayout(binding.newCategoryLayoutHolder)) {
+//            if (uiHelper.isLengthStringMoThan(binding.newCategoryLayout.categoryName.text)) {
+//                if ((uiHelper.isCheckedRadioButton(binding.newCategoryLayout.incomingRadioButton)
+//                            or
+//                            uiHelper.isCheckedRadioButton(binding.newCategoryLayout.spendingRadioButton)
+//                            )
+//                ) {
+//                    val category =
+//                        binding.newCategoryLayout.categoryName.text.toString()
+//                    val isIncoming: Boolean = isSelectedCategoryIncome(
+//                        binding.newCategoryLayout.incomingRadioButton,
+//                        //                                    binding.newCategoryLayout.spendingRadioButton
+//                    )
+//                    val newCategory = Categories(
+//                        categoryName = category,
+//                        isIncome = isIncoming
+//                    )
+//                    clearingUiElements()
+//                    uiHelper.hideUiElement(binding.newCategoryLayoutHolder)
+//                    view.hideKeyboard()
+//                    showUIControlElements()
+//                    return categoriesViewModel.addNewCategory(newCategory).toInt()
+//                } else {
+//                    showMessage(getString(R.string.message_select_type_of_category))
+//                    return -1
+//                }
+//            } else {
+//                showMessage(getString(R.string.message_too_short_name))
+//                return -1
+//            }
+//        }
+//        return -1
+//    }
 
     private fun showUIControlElements() {
         showHideDialogsController.showUIControlElements(
@@ -330,15 +340,15 @@ class CategoriesFragment : Fragment() {
         selectedCategoryId = 0
     }
 
-    private fun clearingUiElements() {
-        uiHelper.clearUiListRadioButton(
-            listOf(
-                binding.newCategoryLayout.incomingRadioButton,
-                binding.newCategoryLayout.spendingRadioButton
-            )
-        )
-        uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
-    }
+//    private fun clearingUiElements() {
+//        uiHelper.clearUiListRadioButton(
+//            listOf(
+//                binding.newCategoryLayout.incomingRadioButton,
+//                binding.newCategoryLayout.spendingRadioButton
+//            )
+//        )
+//        uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
+//    }
 
     private fun getButtonsListForColorButtonText() = listOf(
         binding.confirmationLayout.changeButton,
@@ -346,9 +356,9 @@ class CategoriesFragment : Fragment() {
     )
 
     private fun getButtonsListForColorButton() = listOf(
-        binding.newCategoryLayout.addAndSelectNewItemButton,
-        binding.newCategoryLayout.addNewCategoryButton,
-        binding.newCategoryLayout.cancelCreateButton,
+//        binding.newCategoryLayout.addAndSelectNewItemButton,
+//        binding.newCategoryLayout.addNewCategoryButton,
+//        binding.newCategoryLayout.cancelCreateButton,
         binding.confirmationLayout.changeButton,
         binding.confirmationLayout.selectButton,
         binding.confirmationLayout.cancelButton,
@@ -357,7 +367,7 @@ class CategoriesFragment : Fragment() {
     )
 
     private fun getDialogsList() = listOf(
-        binding.newCategoryLayout,
+//        binding.newCategoryLayout,
         binding.changeCategoryLayout,
         binding.confirmationLayout,
     )
