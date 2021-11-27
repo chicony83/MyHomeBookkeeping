@@ -14,13 +14,13 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectedForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
-import com.chico.myhomebookkeeping.interfaces.currencies.AddNewCurrencyCallBack
+import com.chico.myhomebookkeeping.interfaces.currencies.OnAddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.*
-import com.chico.myhomebookkeeping.interfaces.currencies.ChangeCurrencyCallBack
+import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyCallBack
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.ChangeCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.NewCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.SelectCurrencyDialog
@@ -112,7 +112,7 @@ class CurrenciesFragment : Fragment() {
 
     private fun showChangeCurrencyDialog(currency: Currencies?) {
         launchIo {
-            val dialog = ChangeCurrencyDialog(currency,object:ChangeCurrencyCallBack{
+            val dialog = ChangeCurrencyDialog(currency,object: OnChangeCurrencyCallBack {
                 override fun change(id:Int,name:String) {
                     currenciesViewModel.saveChangedCurrency(id,name)
                 }
@@ -124,7 +124,7 @@ class CurrenciesFragment : Fragment() {
     private fun showNewCurrencyDialog() {
         val result = currenciesViewModel.getNamesList()
         launchUi {
-            val dialog = NewCurrencyDialog(result, object : AddNewCurrencyCallBack {
+            val dialog = NewCurrencyDialog(result, object : OnAddNewCurrencyCallBack {
                 override fun add(name: String) {
                     val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
                     if (result > 0) {

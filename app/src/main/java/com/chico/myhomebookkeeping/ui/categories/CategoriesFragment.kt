@@ -11,15 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -283,9 +282,21 @@ class CategoriesFragment : Fragment() {
 
     private fun showNewCategoryDialog() {
         val result = categoriesViewModel.getNamesList()
-//        launchUi {
-//            val dialog = NewCategoryDialog(result,object :AddNew)
-//        }
+        launchUi {
+            val dialog = NewCategoryDialog(result,object :OnAddNewCategoryCallBack{
+                override fun add(name: String, isIncome: Boolean) {
+                    Message.log("add button pressed")
+                    Message.log("new category name = $name, is Income = $isIncome")
+                }
+
+                override fun addAndSelect(name: String, isIncome: Boolean) {
+                    Message.log("addAndSelect button pressed")
+                    Message.log("new category name = $name, is Income = $isIncome")
+                }
+
+            })
+            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+        }
     }
 
 //    private fun getListButtons() = listOf(

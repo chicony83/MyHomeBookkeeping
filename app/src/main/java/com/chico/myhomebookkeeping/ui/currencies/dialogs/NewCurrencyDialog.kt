@@ -11,14 +11,14 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import java.lang.IllegalStateException
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.interfaces.currencies.AddNewCurrencyCallBack
+import com.chico.myhomebookkeeping.interfaces.currencies.OnAddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.utils.getString
 
 
 class NewCurrencyDialog(
     private val result: Any,
-    private val addNewCurrencyCallBack: AddNewCurrencyCallBack
+    private val onAddNewCurrencyCallBack: OnAddNewCurrencyCallBack
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -51,33 +51,33 @@ class NewCurrencyDialog(
             )
 
             addAndSelectButton.setOnClickListener {
-                val text = editText.getString()
-                if (text.isNotEmpty()) {
-                    val isLengthChecked: Boolean = checkLengthText(text)
+                if (editText.text.isNotEmpty()) {
+                    val name = editText.getString()
+                    val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
-                        addNewCurrencyCallBack.addAndSelect(text)
+                        onAddNewCurrencyCallBack.addAndSelect(name)
                         closeDialog()
                     }
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
                     }
-                } else if (text.isEmpty()) {
+                } else if (editText.text.isEmpty()) {
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
 
             addButton.setOnClickListener {
-                val text = editText.getString()
-                if (text.isNotEmpty()) {
-                    val isLengthChecked: Boolean = checkLengthText(text)
+                val name = editText.getString()
+                if (name.isNotEmpty()) {
+                    val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
-                        addNewCurrencyCallBack.add(text)
+                        onAddNewCurrencyCallBack.add(name)
                         closeDialog()
                     }
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
                     }
-                } else if (text.isEmpty()) {
+                } else if (name.isEmpty()) {
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
@@ -94,10 +94,6 @@ class NewCurrencyDialog(
 
     private fun closeDialog() {
         dialog?.cancel()
-    }
-
-    private fun checkLengthText(text: String): Boolean {
-        return CheckString.isLengthMoThan(text)
     }
 
     private fun showMessage(s: String) {

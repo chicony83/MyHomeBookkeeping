@@ -8,12 +8,12 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.interfaces.currencies.ChangeCurrencyCallBack
+import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyCallBack
 import java.lang.IllegalStateException
 
 class ChangeCurrencyDialog(
     val currency: Currencies?,
-    private val changeCurrencyCallBack: ChangeCurrencyCallBack
+    private val onChangeCurrencyCallBack: OnChangeCurrencyCallBack
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -29,7 +29,7 @@ class ChangeCurrencyDialog(
             name.setText(currency?.currencyName.toString())
 
             saveButton.setOnClickListener {
-                changeCurrencyCallBack.change(
+                onChangeCurrencyCallBack.change(
                     id = currency?.currencyId ?: 0,
                     name = name.text.toString()
                 )
