@@ -12,7 +12,9 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
+import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
@@ -107,7 +109,7 @@ class CategoriesViewModel(
 
     private fun setTextOnButton(string: String) {
         launchUi {
-            setTextOnButtons.setTextOnSortingCategoriesButton(_sortedByTextOnButton,string)
+            setTextOnButtons.setTextOnSortingCategoriesButton(_sortedByTextOnButton, string)
         }
     }
 
@@ -126,10 +128,11 @@ class CategoriesViewModel(
         }
     }
 
-    fun loadSelectedCategory(selectedId: Int) {
-        launchIo {
-            _selectedCategory.postValue(CategoriesUseCase.getOneCategory(db, selectedId))
-        }
+    suspend fun loadSelectedCategory(selectedId: Int): Categories? {
+        return CategoriesUseCase.getOneCategory(db, selectedId)
+        //        launchIo {
+//            _selectedCategory.postValue(CategoriesUseCase.getOneCategory(db, selectedId))
+//        }
     }
 
     fun resetCategoryForSelect() {
@@ -178,21 +181,21 @@ class CategoriesViewModel(
         resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsSpending)
         saveIsIncomeCategory()
-        saveData(navControlHelper,-1)
+        saveData(navControlHelper, -1)
     }
 
     fun selectIncomeCategory(navControlHelper: NavControlHelper) {
         resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsIncome)
         saveIsIncomeCategory()
-        saveData(navControlHelper,-1)
+        saveData(navControlHelper, -1)
     }
 
     fun selectAllCategories(navControlHelper: NavControlHelper) {
         isIncomeSpendingSetNone()
         resetCategoryForSelect()
         saveIsIncomeCategory()
-        saveData(navControlHelper,-1)
+        saveData(navControlHelper, -1)
     }
 
     fun selectIdCategory(navControlHelper: NavControlHelper) {

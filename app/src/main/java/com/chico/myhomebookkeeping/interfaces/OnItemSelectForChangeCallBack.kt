@@ -1,5 +1,5 @@
 package com.chico.myhomebookkeeping.interfaces
 
-interface  OnItemSelectedForChangeCallBack {
+interface  OnItemSelectForChangeCallBack {
     fun onSelect(id: Int)
 }

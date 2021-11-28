@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectedForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.currencies.OnAddNewCurrencyCallBack
 import com.chico.myhomebookkeeping.databinding.FragmentCurrenciesBinding
@@ -80,7 +80,7 @@ class CurrenciesFragment : Fragment() {
         view.hideKeyboard()
         with(binding) {
             selectAllButton.setOnClickListener {
-                currenciesViewModel.saveData(navControlHelper,-1)
+                currenciesViewModel.saveData(navControlHelper, -1)
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
@@ -94,14 +94,14 @@ class CurrenciesFragment : Fragment() {
             val currencies: Currencies? = currenciesViewModel.loadSelectedCurrency(selectedId)
             launchUi {
                 val dialog = SelectCurrencyDialog(currencies,
-                    object : OnItemSelectedForChangeCallBack {
+                    object : OnItemSelectForChangeCallBack {
                         override fun onSelect(id: Int) {
                             showChangeCurrencyDialog(currencies)
                         }
                     },
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
-                            currenciesViewModel.saveData(navControlHelper,id)
+                            currenciesViewModel.saveData(navControlHelper, id)
                             navControlHelper.moveToPreviousPage()
                         }
                     })
@@ -112,12 +112,12 @@ class CurrenciesFragment : Fragment() {
 
     private fun showChangeCurrencyDialog(currency: Currencies?) {
         launchIo {
-            val dialog = ChangeCurrencyDialog(currency,object: OnChangeCurrencyCallBack {
-                override fun change(id:Int,name:String) {
-                    currenciesViewModel.saveChangedCurrency(id,name)
+            val dialog = ChangeCurrencyDialog(currency, object : OnChangeCurrencyCallBack {
+                override fun change(id: Int, name: String) {
+                    currenciesViewModel.saveChangedCurrency(id, name)
                 }
             })
-            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 

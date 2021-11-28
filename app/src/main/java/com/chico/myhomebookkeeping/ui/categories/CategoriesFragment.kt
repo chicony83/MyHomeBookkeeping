@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,9 +18,13 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
+import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCurrencyDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.showKeyboard
 
@@ -56,16 +59,17 @@ class CategoriesFragment : Fragment() {
             selectedCategory.observe(viewLifecycleOwner, {
                 binding.confirmationLayout.selectedItemName.text = it?.categoryName
             })
-            sortedByTextOnButton.observe(viewLifecycleOwner,{
+            sortedByTextOnButton.observe(viewLifecycleOwner, {
                 binding.sortingCategoriesButton.text = it
             })
             categoriesList.observe(viewLifecycleOwner, {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiControl.showSelectLayoutHolder()
-                            categoriesViewModel.loadSelectedCategory(selectedId)
-                            selectedCategoryId = selectedId
+                            showSelectCategoryDialog(selectedId)
+//                            uiControl.showSelectLayoutHolder()
+//                            categoriesViewModel.loadSelectedCategory(selectedId)
+//                            selectedCategoryId = selectedId
                         }
                     })
             })
@@ -80,6 +84,28 @@ class CategoriesFragment : Fragment() {
             })
         }
         return binding.root
+    }
+
+    private fun showSelectCategoryDialog(selectedId: Int) {
+        launchIo {
+            val categories: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
+            launchUi {
+                val dialog = SelectCurrencyDialog(categories,
+                    object : OnItemSelectForChangeCallBack {
+                        override fun onSelect(id: Int) {
+                            showMessage("item select for change \n $id")
+                        }
+
+                    },
+                    object : OnItemSelectForSelectCallBack {
+                        override fun onSelect(id: Int) {
+                            showMessage("item select for select \n $id")
+                        }
+
+                    })
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -284,7 +310,7 @@ class CategoriesFragment : Fragment() {
     private fun showNewCategoryDialog() {
         val result = categoriesViewModel.getNamesList()
         launchUi {
-            val dialog = NewCategoryDialog(result,object :OnAddNewCategoryCallBack{
+            val dialog = NewCategoryDialog(result, object : OnAddNewCategoryCallBack {
 
                 override fun addAndSelect(name: String, isIncome: Boolean, isSelect: Boolean) {
 //                    Message.log("addAndSelect button pressed")
@@ -295,14 +321,14 @@ class CategoriesFragment : Fragment() {
                         isIncome = isIncome
                     )
                     val result: Long = categoriesViewModel.addNewCategory(category)
-                    if (isSelect){
+                    if (isSelect) {
 //                        Message.log("select after Add = $isSelect")
-                        categoriesViewModel.saveData(navControlHelper,result.toInt())
+                        categoriesViewModel.saveData(navControlHelper, result.toInt())
                         navControlHelper.moveToPreviousPage()
                     }
                 }
             })
-            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 
