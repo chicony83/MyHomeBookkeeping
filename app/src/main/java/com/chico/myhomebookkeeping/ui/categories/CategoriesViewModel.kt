@@ -178,21 +178,21 @@ class CategoriesViewModel(
         resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsSpending)
         saveIsIncomeCategory()
-        saveData(navControlHelper)
+        saveData(navControlHelper,-1)
     }
 
     fun selectIncomeCategory(navControlHelper: NavControlHelper) {
         resetCategoryForSelect()
         setIsIncomeCategoriesSelect(argsIncome)
         saveIsIncomeCategory()
-        saveData(navControlHelper)
+        saveData(navControlHelper,-1)
     }
 
     fun selectAllCategories(navControlHelper: NavControlHelper) {
         isIncomeSpendingSetNone()
         resetCategoryForSelect()
         saveIsIncomeCategory()
-        saveData(navControlHelper)
+        saveData(navControlHelper,-1)
     }
 
     fun selectIdCategory(navControlHelper: NavControlHelper) {

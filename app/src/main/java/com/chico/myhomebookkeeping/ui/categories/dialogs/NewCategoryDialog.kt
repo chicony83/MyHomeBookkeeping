@@ -39,61 +39,31 @@ class NewCategoryDialog(
             fun listButtons() = listOf(
                 addButton, addAndSelectButton
             )
-            editText.addTextChangedListener(EditNameTextWatcher(namesList,listButtons(),errorTextView))
+            editText.addTextChangedListener(
+                EditNameTextWatcher(
+                    namesList,
+                    listButtons(),
+                    errorTextView
+                )
+            )
 
             addAndSelectButton.setOnClickListener {
 
-                val name = editText.getString()
-                if (editText.text.isNotEmpty()) {
-                    val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
-                    val isTypeCategorySelected =
-                        isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
-
-                    if (isLengthChecked) {
-                        if (isTypeCategorySelected) {
-                            if (incomeRadioButton.isChecked) {
-                                onAddNewCategoryCallBack.addAndSelect(name = name, isIncome = true)
-                                closeDialog()
-                            } else if (spendingRadioButton.isChecked) {
-                                onAddNewCategoryCallBack.addAndSelect(name = name, isIncome = false)
-                                closeDialog()
-                            }
-                        } else if (!isTypeCategorySelected) {
-                            showMessage(getString(R.string.message_select_type_of_category))
-                        }
-                    } else if (!isLengthChecked) {
-                        showMessage(getString(R.string.message_too_short_name))
-                    }
-                } else if (editText.text.isEmpty()) {
-                    showMessage(getString(R.string.message_too_short_name))
-                }
+                checkAndAddCategory(
+                    editText,
+                    incomeRadioButton,
+                    spendingRadioButton,
+                    isSelectAfterAdd = true
+                )
             }
 
             addButton.setOnClickListener {
-                val name = editText.getString()
-                if (editText.text.isNotEmpty()) {
-                    val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
-                    val isTypeCategorySelected =
-                        isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
-
-                    if (isLengthChecked) {
-                        if (isTypeCategorySelected) {
-                            if (incomeRadioButton.isChecked) {
-                                onAddNewCategoryCallBack.add(name = name, isIncome = true)
-                                closeDialog()
-                            } else if (spendingRadioButton.isChecked) {
-                                onAddNewCategoryCallBack.add(name = name, isIncome = false)
-                                closeDialog()
-                            }
-                        } else if (!isTypeCategorySelected) {
-                            showMessage(getString(R.string.message_select_type_of_category))
-                        }
-                    } else if (!isLengthChecked) {
-                        showMessage(getString(R.string.message_too_short_name))
-                    }
-                } else if (editText.text.isEmpty()) {
-                    showMessage(getString(R.string.message_too_short_name))
-                }
+                checkAndAddCategory(
+                    editText,
+                    incomeRadioButton,
+                    spendingRadioButton,
+                    isSelectAfterAdd = false
+                )
             }
 
             cancelButton.setOnClickListener {
@@ -102,6 +72,46 @@ class NewCategoryDialog(
             builder.setView(layout)
             builder.create()
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun checkAndAddCategory(
+        editText: EditText,
+        incomeRadioButton: RadioButton,
+        spendingRadioButton: RadioButton,
+        isSelectAfterAdd: Boolean
+    ) {
+        val name = editText.getString()
+        if (editText.text.isNotEmpty()) {
+            val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
+            val isTypeCategorySelected =
+                isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
+
+            if (isLengthChecked) {
+                if (isTypeCategorySelected) {
+                    if (incomeRadioButton.isChecked) {
+                        onAddNewCategoryCallBack.addAndSelect(
+                            name = name,
+                            isIncome = true,
+                            isSelectAfterAdd
+                        )
+                        closeDialog()
+                    } else if (spendingRadioButton.isChecked) {
+                        onAddNewCategoryCallBack.addAndSelect(
+                            name = name,
+                            isIncome = false,
+                            isSelectAfterAdd
+                        )
+                        closeDialog()
+                    }
+                } else if (!isTypeCategorySelected) {
+                    showMessage(getString(R.string.message_select_type_of_category))
+                }
+            } else if (!isLengthChecked) {
+                showMessage(getString(R.string.message_too_short_name))
+            }
+        } else if (editText.text.isEmpty()) {
+            showMessage(getString(R.string.message_too_short_name))
+        }
     }
 
     private fun isSelectTypeOfCategory(

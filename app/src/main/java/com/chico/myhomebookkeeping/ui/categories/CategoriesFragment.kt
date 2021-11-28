@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
@@ -199,7 +200,7 @@ class CategoriesFragment : Fragment() {
             with(confirmationLayout) {
                 selectButton.setOnClickListener {
                     if (selectedCategoryId > 0) {
-                        categoriesViewModel.selectIdCategory(navControlHelper)
+//                        categoriesViewModel.selectIdCategory(navControlHelper)
                         navControlHelper.moveToPreviousPage()
                     }
                 }
@@ -284,18 +285,22 @@ class CategoriesFragment : Fragment() {
         val result = categoriesViewModel.getNamesList()
         launchUi {
             val dialog = NewCategoryDialog(result,object :OnAddNewCategoryCallBack{
-                override fun add(name: String, isIncome: Boolean) {
-                    Message.log("add button pressed")
-//                    Message.log("new category name = $name, is Income = $isIncome")
-                    showMessage("name of category $name, \n is category income = $isIncome")
-                }
 
-                override fun addAndSelect(name: String, isIncome: Boolean) {
-                    Message.log("addAndSelect button pressed")
+                override fun addAndSelect(name: String, isIncome: Boolean, isSelect: Boolean) {
+//                    Message.log("addAndSelect button pressed")
 //                    Message.log("new category name = $name, is Income = $isIncome")
-                    showMessage("name of category $name, \n is category income = $isIncome")
+//                    showMessage("name of category $name, \n is category income = $isIncome")
+                    val category = Categories(
+                        categoryName = name,
+                        isIncome = isIncome
+                    )
+                    val result: Long = categoriesViewModel.addNewCategory(category)
+                    if (isSelect){
+//                        Message.log("select after Add = $isSelect")
+                        categoriesViewModel.saveData(navControlHelper,result.toInt())
+                        navControlHelper.moveToPreviousPage()
+                    }
                 }
-
             })
             dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
         }
