@@ -286,12 +286,14 @@ class CategoriesFragment : Fragment() {
             val dialog = NewCategoryDialog(result,object :OnAddNewCategoryCallBack{
                 override fun add(name: String, isIncome: Boolean) {
                     Message.log("add button pressed")
-                    Message.log("new category name = $name, is Income = $isIncome")
+//                    Message.log("new category name = $name, is Income = $isIncome")
+                    showMessage("name of category $name, \n is category income = $isIncome")
                 }
 
                 override fun addAndSelect(name: String, isIncome: Boolean) {
                     Message.log("addAndSelect button pressed")
-                    Message.log("new category name = $name, is Income = $isIncome")
+//                    Message.log("new category name = $name, is Income = $isIncome")
+                    showMessage("name of category $name, \n is category income = $isIncome")
                 }
 
             })
@@ -383,12 +385,12 @@ class CategoriesFragment : Fragment() {
         binding.confirmationLayout,
     )
 
-    private fun isSelectedCategoryIncome(
-        incomingRadioButton: RadioButton,
-//        spendingRadioButton: RadioButton
-    ): Boolean {
-        return incomingRadioButton.isChecked
-    }
+//    private fun isSelectedCategoryIncome(
+//        incomingRadioButton: RadioButton,
+////        spendingRadioButton: RadioButton
+//    ): Boolean {
+//        return incomingRadioButton.isChecked
+//    }
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()

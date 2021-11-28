@@ -44,7 +44,7 @@ object Constants {
 
     const val SP_NAME = "SPNewMoneyMoving"
 
-    const val MIN_LENGTH_NAME = 1
+    const val MIN_LENGTH_NAME = 2
     const val SP_PASS = "pass"
 
     const val SP_PASS_PROMPT = "pass_prompt"

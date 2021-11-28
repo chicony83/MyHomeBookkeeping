@@ -27,8 +27,9 @@ class NewCurrencyDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_new_currency, null)
 
+            var namesList = listOf<String>()
+
             val editText = layout.findViewById<EditText>(R.id.currency_name)
-            var namesList = mutableListOf<String>()
             val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
 
             val addButton = layout.findViewById<Button>(R.id.addNewCurrencyButton)
@@ -36,11 +37,11 @@ class NewCurrencyDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelCreateButton)
 
             if (result is List<*>) {
-                namesList = (result as List<String>).toMutableList()
+                namesList = (result as List<String>)
 //                Message.log("names list size= ${namesList.size}")
             }
             fun listButtons() = listOf(
-                addButton,addAndSelectButton
+                addButton, addAndSelectButton
             )
             editText.addTextChangedListener(
                 EditNameTextWatcher(
@@ -51,11 +52,11 @@ class NewCurrencyDialog(
             )
 
             addAndSelectButton.setOnClickListener {
+                val name = editText.getString()
                 if (editText.text.isNotEmpty()) {
-                    val name = editText.getString()
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
-                        onAddNewCurrencyCallBack.addAndSelect(name)
+                        onAddNewCurrencyCallBack.addAndSelect(name = name)
                         closeDialog()
                     }
                     if (!isLengthChecked) {
