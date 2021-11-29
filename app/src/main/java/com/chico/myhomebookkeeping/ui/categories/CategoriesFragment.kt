@@ -113,10 +113,11 @@ class CategoriesFragment : Fragment() {
         launchIo {
             val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
                 override fun change(id: Int, name: String, isIncome: Boolean) {
-                    showMessage(
-                        "category for change \n" +
-                                "id= $id, name = $name, is Income = $isIncome"
-                    )
+                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
+//                    showMessage(
+//                        "category for change \n" +
+//                                "id= $id, name = $name, is Income = $isIncome"
+//                    )
                 }
             })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))

@@ -213,16 +213,6 @@ class CategoriesViewModel(
         resetCategoryForSelect()
     }
 
-    fun saveChangedCategory(name: String, isIncome: Boolean) = runBlocking {
-        val save: Deferred<Int> = async {
-            CategoriesUseCase.changeCategoryLine(
-                db, _changeCategory.value?.categoriesId ?: 0,
-                name, isIncome
-            )
-        }
-        reloadCategories(save.await().toLong())
-    }
-
     fun addNewCategory(newCategory: Categories): Long = runBlocking {
         val add = async {
             CategoriesUseCase.addNewCategory(
@@ -252,5 +242,24 @@ class CategoriesViewModel(
 
     fun setSortingCategories(sorting: String) {
         setSP.saveToSP(argsSortingCategories, sorting)
+    }
+
+    fun saveChangedCategory(name: String, isIncome: Boolean) = runBlocking {
+        val save = async {
+            CategoriesUseCase.changeCategoryLine(
+                db, _changeCategory.value?.categoriesId ?: 0,
+                name, isIncome
+            )
+        }
+        reloadCategories(save.await().toLong())
+    }
+
+    fun saveChangedCategory(id: Int, name: String, isIncome: Boolean) = runBlocking {
+        val save = async {
+            CategoriesUseCase.changeCategoryLine(
+                db = db, id = id, name = name, isIncome = isIncome
+            )
+        }
+        reloadCategories(save.await().toLong())
     }
 }

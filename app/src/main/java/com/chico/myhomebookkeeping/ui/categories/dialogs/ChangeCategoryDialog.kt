@@ -49,6 +49,7 @@ class ChangeCategoryDialog(
                         isIncome = isIncome
                     )
                 }
+                closeDialog()
             }
 
             cancelButton.setOnClickListener {
