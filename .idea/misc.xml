@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/layout/blur.xml" value="0.348731884057971" />
         <entry key="app/src/main/res/layout/blur_layout.xml" value="0.353713768115942" />
         <entry key="app/src/main/res/layout/dialog_change_cash_account.xml" value="0.2726449275362319" />
-        <entry key="app/src/main/res/layout/dialog_change_category.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/dialog_change_category.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_change_currency.xml" value="0.22509057971014493" />
         <entry key="app/src/main/res/layout/dialog_first_launch.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/dialog_new_cash_account.xml" value="0.25" />

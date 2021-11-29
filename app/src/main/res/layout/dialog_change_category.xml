@@ -4,7 +4,7 @@
     style="@style/DialogLayout">
 
     <EditText
-        android:id="@+id/categoryName"
+        android:id="@+id/name"
         android:hint="@string/hint_enter_name"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,16 +16,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryName">
+        app:layout_constraintTop_toBottomOf="@id/name">
 
         <RadioButton
-            android:id="@+id/incoming_radio_button"
+            android:id="@+id/incomeRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/text_on_button_income_category" />
 
         <RadioButton
-            android:id="@+id/spending_radio_button"
+            android:id="@+id/spendingRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_on_radio_button_spending_category" />
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
     <Button
-        android:id="@+id/cancelChange"
+        android:id="@+id/cancelButton"
         style="@style/DialogButtonRight.Negative"
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +52,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
