@@ -21,12 +21,13 @@ import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
+import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
+import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
-import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCurrencyDialog
+import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCategoryDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CategoriesFragment : Fragment() {
 
@@ -43,7 +44,7 @@ class CategoriesFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var uiControl: UiControl
     private val showHideDialogsController = ShowHideDialogsController()
-    private val uiColors = UiColors()
+//    private val uiColors = UiColors()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,9 +57,9 @@ class CategoriesFragment : Fragment() {
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
         with(categoriesViewModel) {
-            selectedCategory.observe(viewLifecycleOwner, {
-                binding.confirmationLayout.selectedItemName.text = it?.categoryName
-            })
+//            selectedCategory.observe(viewLifecycleOwner, {
+//                binding.confirmationLayout.selectedItemName.text = it?.categoryName
+//            })
             sortedByTextOnButton.observe(viewLifecycleOwner, {
                 binding.sortingCategoriesButton.text = it
             })
@@ -73,51 +74,65 @@ class CategoriesFragment : Fragment() {
                         }
                     })
             })
-            changeCategory.observe(viewLifecycleOwner, {
-                binding.changeCategoryLayout.categoryName.setText(it?.categoryName)
-                if (it?.isIncome == true) {
-                    uiHelper.setTrueOnRadioButton(binding.changeCategoryLayout.incomingRadioButton)
-                }
-                if (it?.isIncome == false) {
-                    uiHelper.setTrueOnRadioButton(binding.changeCategoryLayout.spendingRadioButton)
-                }
-            })
+//            changeCategory.observe(viewLifecycleOwner, {
+//                binding.changeCategoryLayout.categoryName.setText(it?.categoryName)
+//                if (it?.isIncome == true) {
+//                    uiHelper.setTrueOnRadioButton(binding.changeCategoryLayout.incomingRadioButton)
+//                }
+//                if (it?.isIncome == false) {
+//                    uiHelper.setTrueOnRadioButton(binding.changeCategoryLayout.spendingRadioButton)
+//                }
+//            })
         }
         return binding.root
     }
 
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
-            val categories: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
+            val category: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
             launchUi {
-                val dialog = SelectCurrencyDialog(categories,
+                val dialog = SelectCategoryDialog(category,
                     object : OnItemSelectForChangeCallBack {
                         override fun onSelect(id: Int) {
-                            showMessage("item select for change \n $id")
+                            showChangeCategoryDialog(category)
                         }
-
                     },
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
-                            showMessage("item select for select \n $id")
+//                            showMessage("item select for select \n $id")
+                            categoriesViewModel.saveData(navControlHelper, id)
+                            navControlHelper.moveToPreviousPage()
                         }
-
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }
     }
 
+    private fun showChangeCategoryDialog(category: Categories?) {
+        launchIo {
+            val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
+                override fun change(id: Int, name: String, isIncome: Boolean) {
+                    showMessage(
+                        "category for change \n" +
+                                "id= $id, name = $name, is Income = $isIncome"
+                    )
+                }
+            })
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        uiControl = UiControl(
-            topButtonsHolder = binding.topButtonsHolder,
-            bottomButton = binding.showHideAddCategoryFragmentButton,
-            newItemLayoutHolder = binding.newCategoryLayoutHolder,
-            confirmationLayoutHolder = binding.confirmationLayoutHolder,
-            changeItemLayoutHolder = binding.changeCategoryLayoutHolder
-        )
+//        uiControl = UiControl(
+//            topButtonsHolder = binding.topButtonsHolder,
+//            bottomButton = binding.showHideAddCategoryFragmentButton,
+//            newItemLayoutHolder = binding.newCategoryLayoutHolder,
+//            confirmationLayoutHolder = binding.confirmationLayoutHolder,
+//            changeItemLayoutHolder = binding.changeCategoryLayoutHolder
+//        )
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
@@ -178,8 +193,6 @@ class CategoriesFragment : Fragment() {
                     }
                     true
                 }
-
-
                 popupMenu.show()
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
@@ -223,51 +236,51 @@ class CategoriesFragment : Fragment() {
 //                    showUIControlElements()
 //                }
 //            }
-            with(confirmationLayout) {
-                selectButton.setOnClickListener {
-                    if (selectedCategoryId > 0) {
-//                        categoriesViewModel.selectIdCategory(navControlHelper)
-                        navControlHelper.moveToPreviousPage()
-                    }
-                }
-                selectedItemName.setOnClickListener {
-                    if (selectedCategoryId > 0) {
-                        putItemForChange()
-                        view.showKeyboard()
-                        with(binding.changeCategoryLayout.categoryName) {
-                            requestFocus()
-                            setSelection(0)
-                        }
-                    }
-                }
-                changeButton.setOnClickListener {
-                    if (selectedCategoryId > 0) {
-                        putItemForChange()
-                        view.showKeyboard()
-                        with(binding.changeCategoryLayout.categoryName) {
-                            requestFocus()
-                            setSelection(0)
-                        }
-                    }
-                }
-                cancelButton.setOnClickListener {
-                    if (selectedCategoryId > 0) {
-                        selectedCategoryId = 0
-                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-                    }
-                }
-            }
-            with(changeCategoryLayout) {
-                cancelChange.setOnClickListener {
-                    if (selectedCategoryId > 0) {
-                        selectedCategoryId = 0
-                    }
-                    categoriesViewModel.resetCategoryForSelect()
-                    categoriesViewModel.resetCategoryForChange()
-                    uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
-                    view.hideKeyboard()
-                    showUIControlElements()
-                }
+//            with(confirmationLayout) {
+//                selectButton.setOnClickListener {
+//                    if (selectedCategoryId > 0) {
+////                        categoriesViewModel.selectIdCategory(navControlHelper)
+//                        navControlHelper.moveToPreviousPage()
+//                    }
+//                }
+//                selectedItemName.setOnClickListener {
+//                    if (selectedCategoryId > 0) {
+//                        putItemForChange()
+//                        view.showKeyboard()
+//                        with(binding.changeCategoryLayout.categoryName) {
+//                            requestFocus()
+//                            setSelection(0)
+//                        }
+//                    }
+//                }
+//                changeButton.setOnClickListener {
+//                    if (selectedCategoryId > 0) {
+//                        putItemForChange()
+//                        view.showKeyboard()
+//                        with(binding.changeCategoryLayout.categoryName) {
+//                            requestFocus()
+//                            setSelection(0)
+//                        }
+//                    }
+//                }
+//                cancelButton.setOnClickListener {
+//                    if (selectedCategoryId > 0) {
+//                        selectedCategoryId = 0
+//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+//                    }
+//                }
+//            }
+//            with(changeCategoryLayout) {
+//                cancelChange.setOnClickListener {
+//                    if (selectedCategoryId > 0) {
+//                        selectedCategoryId = 0
+//                    }
+//                    categoriesViewModel.resetCategoryForSelect()
+//                    categoriesViewModel.resetCategoryForChange()
+//                    uiHelper.hideUiElement(binding.changeCategoryLayoutHolder)
+//                    view.hideKeyboard()
+////                    showUIControlElements()
+//                }
 
 //                saveChange.setOnClickListener {
 //                    val name: String
@@ -298,14 +311,14 @@ class CategoriesFragment : Fragment() {
 //                        showMessage(getString(R.string.message_too_short_name))
 //                    }
 //                }
-            }
         }
-        uiColors.setColors(
-            getDialogsList(),
-            getButtonsListForColorButton(),
-            getButtonsListForColorButtonText()
-        )
     }
+//        uiColors.setColors(
+//            getDialogsList(),
+//            getButtonsListForColorButton(),
+//            getButtonsListForColorButtonText()
+//        )
+//    }
 
     private fun showNewCategoryDialog() {
         val result = categoriesViewModel.getNamesList()
@@ -371,18 +384,18 @@ class CategoriesFragment : Fragment() {
 //        return -1
 //    }
 
-    private fun showUIControlElements() {
-        showHideDialogsController.showUIControlElements(
-            topButtonsHolder = binding.topButtonsHolder,
-            bottomButton = binding.showHideAddCategoryFragmentButton
-        )
-    }
+//    private fun showUIControlElements() {
+//        showHideDialogsController.showUIControlElements(
+//            topButtonsHolder = binding.topButtonsHolder,
+//            bottomButton = binding.showHideAddCategoryFragmentButton
+//        )
+//    }
 
-    private fun putItemForChange() {
-        uiControl.showChangeLayoutHolder()
-        categoriesViewModel.selectToChange()
-        selectedCategoryId = 0
-    }
+//    private fun putItemForChange() {
+//        uiControl.showChangeLayoutHolder()
+//        categoriesViewModel.selectToChange()
+//        selectedCategoryId = 0
+//    }
 
 //    private fun clearingUiElements() {
 //        uiHelper.clearUiListRadioButton(
@@ -394,27 +407,27 @@ class CategoriesFragment : Fragment() {
 //        uiHelper.clearUiElement(binding.newCategoryLayout.categoryName)
 //    }
 
-    private fun getButtonsListForColorButtonText() = listOf(
-        binding.confirmationLayout.changeButton,
-        binding.confirmationLayout.selectButton
-    )
+//    private fun getButtonsListForColorButtonText() = listOf(
+//        binding.confirmationLayout.changeButton,
+//        binding.confirmationLayout.selectButton
+//    )
 
-    private fun getButtonsListForColorButton() = listOf(
-//        binding.newCategoryLayout.addAndSelectNewItemButton,
-//        binding.newCategoryLayout.addNewCategoryButton,
-//        binding.newCategoryLayout.cancelCreateButton,
-        binding.confirmationLayout.changeButton,
-        binding.confirmationLayout.selectButton,
-        binding.confirmationLayout.cancelButton,
-//        binding.changeCategoryLayout.saveChange,
-        binding.changeCategoryLayout.cancelChange,
-    )
+//    private fun getButtonsListForColorButton() = listOf(
+////        binding.newCategoryLayout.addAndSelectNewItemButton,
+////        binding.newCategoryLayout.addNewCategoryButton,
+////        binding.newCategoryLayout.cancelCreateButton,
+//        binding.confirmationLayout.changeButton,
+//        binding.confirmationLayout.selectButton,
+//        binding.confirmationLayout.cancelButton,
+////        binding.changeCategoryLayout.saveChange,
+//        binding.changeCategoryLayout.cancelChange,
+//    )
 
-    private fun getDialogsList() = listOf(
-//        binding.newCategoryLayout,
-        binding.changeCategoryLayout,
-        binding.confirmationLayout,
-    )
+//    private fun getDialogsList() = listOf(
+////        binding.newCategoryLayout,
+//        binding.changeCategoryLayout,
+//        binding.confirmationLayout,
+//    )
 
 //    private fun isSelectedCategoryIncome(
 //        incomingRadioButton: RadioButton,

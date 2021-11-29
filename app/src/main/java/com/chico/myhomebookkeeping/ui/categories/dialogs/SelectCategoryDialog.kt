@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import java.lang.IllegalStateException
 
-class SelectCurrencyDialog(
+class SelectCategoryDialog(
     val categories: Categories?,
     private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
     private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack

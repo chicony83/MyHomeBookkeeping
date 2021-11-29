@@ -76,42 +76,6 @@
         app:layout_constraintTop_toBottomOf="@id/sortingCategoriesButton"
         tools:listitem="@layout/recycler_view_item_categories" />
 
-    <LinearLayout
-        android:id="@+id/confirmationLayoutHolder"
-        style="@style/DialogLayout.Holder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/confirmationLayout"
-            layout="@layout/dialog_select_category" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/newCategoryLayoutHolder"
-        style="@style/DialogLayout.Holder"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/changeCategoryLayoutHolder"
-        style="@style/DialogLayout.Holder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/changeCategoryLayout"
-            layout="@layout/dialog_change_category" />
-    </LinearLayout>
 
     <Button
         android:id="@+id/show_hide_add_category_fragment_button"
