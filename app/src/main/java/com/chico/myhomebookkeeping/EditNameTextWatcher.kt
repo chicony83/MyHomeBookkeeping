@@ -11,9 +11,9 @@ import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.delay
 
 class EditNameTextWatcher(
-    private val list: List<String>,
+    private val namesList: List<String>,
     private val buttonList: List<Button>,
-    private val errorMessage: TextView,
+    private val errorMessageTexView: TextView,
     private val uiHelper: UiHelper = UiHelper()
 ) : TextWatcher {
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -28,13 +28,13 @@ class EditNameTextWatcher(
         if (s.toString().isNotEmpty()) {
             launchUi {
                 delay(500)
-                if (CheckNewName.check(s, list)) {
+                if (CheckNewName.check(s, namesList)) {
                     with(uiHelper){
                         for (i in buttonList.indices){
                             disableButton(buttonList[i])
                         }
                         Message.log("buttons disable")
-                        showUiElement(errorMessage)
+                        showUiElement(errorMessageTexView)
                     }
                 } else {
                     with(uiHelper){
@@ -42,7 +42,7 @@ class EditNameTextWatcher(
                             enableButton(buttonList[i])
                         }
                         Message.log("buttons enable")
-                        hideUiElement(errorMessage)
+                        hideUiElement(errorMessageTexView)
 
                     }
                 }

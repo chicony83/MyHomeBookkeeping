@@ -24,7 +24,7 @@ class NewCategoryDialog(
 
             var namesList = listOf<String>()
 
-            val editText = layout.findViewById<EditText>(R.id.category_name)
+            val nameEditText = layout.findViewById<EditText>(R.id.category_name)
             val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
@@ -36,21 +36,20 @@ class NewCategoryDialog(
             if (result is List<*>) {
                 namesList = (result as List<String>)
             }
-            fun listButtons() = listOf(
+            fun buttonsList() = listOf(
                 addButton, addAndSelectButton
             )
-            editText.addTextChangedListener(
+            nameEditText.addTextChangedListener(
                 EditNameTextWatcher(
-                    namesList,
-                    listButtons(),
-                    errorTextView
+                    namesList = namesList,
+                    buttonList = buttonsList(),
+                    errorMessageTexView = errorTextView
                 )
             )
 
             addAndSelectButton.setOnClickListener {
-
                 checkAndAddCategory(
-                    editText,
+                    nameEditText,
                     incomeRadioButton,
                     spendingRadioButton,
                     isSelectAfterAdd = true
@@ -59,7 +58,7 @@ class NewCategoryDialog(
 
             addButton.setOnClickListener {
                 checkAndAddCategory(
-                    editText,
+                    nameEditText,
                     incomeRadioButton,
                     spendingRadioButton,
                     isSelectAfterAdd = false
@@ -67,7 +66,7 @@ class NewCategoryDialog(
             }
 
             cancelButton.setOnClickListener {
-                closeDialog()
+                dialogCancel()
             }
             builder.setView(layout)
             builder.create()
@@ -75,13 +74,13 @@ class NewCategoryDialog(
     }
 
     private fun checkAndAddCategory(
-        editText: EditText,
+        nameEditText: EditText,
         incomeRadioButton: RadioButton,
         spendingRadioButton: RadioButton,
         isSelectAfterAdd: Boolean
     ) {
-        val name = editText.getString()
-        if (editText.text.isNotEmpty()) {
+        val name = nameEditText.getString()
+        if (nameEditText.text.isNotEmpty()) {
             val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
             val isTypeCategorySelected =
                 isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
@@ -94,14 +93,14 @@ class NewCategoryDialog(
                             isIncome = true,
                             isSelectAfterAdd
                         )
-                        closeDialog()
+                        dialogCancel()
                     } else if (spendingRadioButton.isChecked) {
                         onAddNewCategoryCallBack.addAndSelect(
                             name = name,
                             isIncome = false,
                             isSelectAfterAdd
                         )
-                        closeDialog()
+                        dialogCancel()
                     }
                 } else if (!isTypeCategorySelected) {
                     showMessage(getString(R.string.message_select_type_of_category))
@@ -109,7 +108,7 @@ class NewCategoryDialog(
             } else if (!isLengthChecked) {
                 showMessage(getString(R.string.message_too_short_name))
             }
-        } else if (editText.text.isEmpty()) {
+        } else if (nameEditText.text.isEmpty()) {
             showMessage(getString(R.string.message_too_short_name))
         }
     }
@@ -121,12 +120,11 @@ class NewCategoryDialog(
         return incomeRadioButton.isChecked or spendingRadioButton.isChecked
     }
 
-    private fun closeDialog() {
+    private fun dialogCancel() {
         dialog?.cancel()
     }
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
-
 }

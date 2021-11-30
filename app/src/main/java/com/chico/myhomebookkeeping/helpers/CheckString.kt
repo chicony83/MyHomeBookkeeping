@@ -7,4 +7,8 @@ object CheckString {
     fun isLengthMoThan(text:String):Boolean{
         return text.length > minLength
     }
+
+    fun isLengthMoThan(text: String, length: Int): Boolean {
+        return text.length>length
+    }
 }
