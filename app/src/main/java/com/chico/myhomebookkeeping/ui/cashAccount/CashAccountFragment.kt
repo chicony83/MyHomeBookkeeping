@@ -39,7 +39,7 @@ class CashAccountFragment : Fragment() {
 
 //    private var selectedCashAccountId: Int = 0
 
-//    private val uiHelper = UiHelper()
+    //    private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
@@ -270,10 +270,18 @@ class CashAccountFragment : Fragment() {
         launchUi {
             val dialog = NewCashAccountDialog(result, object : OnAddNewCashAccountsCallBack {
                 override fun addAndSelect(name: String, number: String, isSelect: Boolean) {
-                    showMessage("name = $name, number = $number, \n is select after add $isSelect")
+
+                    val cashAccount = CashAccount(
+                        accountName = name,
+                        bankAccountNumber = number
+                    )
+                    val result:Long = cashAccountViewModel.addNewCashAccount(cashAccount)
+                    if (isSelect){
+                        cashAccountViewModel.saveData(navControlHelper,result.toInt())
+                        navControlHelper.moveToPreviousPage()
+                    }
                 }
             })
-
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
