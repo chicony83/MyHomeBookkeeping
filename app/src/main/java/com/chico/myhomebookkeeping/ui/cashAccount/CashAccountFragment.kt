@@ -140,7 +140,6 @@ class CashAccountFragment : Fragment() {
         }
     }
 
-
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }

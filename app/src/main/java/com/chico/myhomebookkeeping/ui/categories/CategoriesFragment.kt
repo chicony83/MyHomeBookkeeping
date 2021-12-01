@@ -50,6 +50,8 @@ class CategoriesFragment : Fragment() {
 
         categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+
         with(categoriesViewModel) {
             sortedByTextOnButton.observe(viewLifecycleOwner, {
                 binding.sortingCategoriesButton.text = it
@@ -66,42 +68,8 @@ class CategoriesFragment : Fragment() {
         return binding.root
     }
 
-    private fun showSelectCategoryDialog(selectedId: Int) {
-        launchIo {
-            val category: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
-            launchUi {
-                val dialog = SelectCategoryDialog(category,
-                    object : OnItemSelectForChangeCallBack {
-                        override fun onSelect(id: Int) {
-                            showChangeCategoryDialog(category)
-                        }
-                    },
-                    object : OnItemSelectForSelectCallBack {
-                        override fun onSelect(id: Int) {
-                            categoriesViewModel.saveData(navControlHelper, id)
-                            navControlHelper.moveToPreviousPage()
-                        }
-                    })
-                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-            }
-        }
-    }
-
-    private fun showChangeCategoryDialog(category: Categories?) {
-        launchIo {
-            val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
-                override fun change(id: Int, name: String, isIncome: Boolean) {
-                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
-                }
-            })
-            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         navControlHelper = NavControlHelper(control)
 
@@ -153,6 +121,38 @@ class CategoriesFragment : Fragment() {
             showHideAddCategoryFragmentButton.setOnClickListener {
                 showNewCategoryDialog()
             }
+        }
+    }
+
+    private fun showSelectCategoryDialog(selectedId: Int) {
+        launchIo {
+            val category: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
+            launchUi {
+                val dialog = SelectCategoryDialog(category,
+                    object : OnItemSelectForChangeCallBack {
+                        override fun onSelect(id: Int) {
+                            showChangeCategoryDialog(category)
+                        }
+                    },
+                    object : OnItemSelectForSelectCallBack {
+                        override fun onSelect(id: Int) {
+                            categoriesViewModel.saveData(navControlHelper, id)
+                            navControlHelper.moveToPreviousPage()
+                        }
+                    })
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            }
+        }
+    }
+
+    private fun showChangeCategoryDialog(category: Categories?) {
+        launchIo {
+            val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
+                override fun change(id: Int, name: String, isIncome: Boolean) {
+                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
+                }
+            })
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 
