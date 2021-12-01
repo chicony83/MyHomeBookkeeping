@@ -31,13 +31,14 @@ class SelectCurrencyDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
             currencies?.let { it1 -> name.text = it1.currencyName }
-//            name.text = currencies?.currencyName
+
             name.setOnClickListener {
                 currencies?.currencyId?.let { it1 ->
                     onItemSelectForChangeCallBack.onSelect(it1)
                 }
                 dialogCancel()
             }
+
             selectButton.setOnClickListener {
                 currencies?.currencyId?.let { it1 ->
                     onItemSelectForSelectCallBack.onSelect(

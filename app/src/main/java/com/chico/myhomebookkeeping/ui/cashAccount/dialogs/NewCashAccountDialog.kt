@@ -84,7 +84,6 @@ class NewCashAccountDialog(
         val number = numberEditText.getString()
         if (nameEditText.text.isNotEmpty()){
             val isLengthChecked = CheckString.isLengthMoThan(name)
-//            val isNumberEntered:Boolean = CheckString.isLengthMoThan(number,0)
             if (isLengthChecked){
                 onAddNewCashAccountsCallBack.addAndSelect(
                     name = name,

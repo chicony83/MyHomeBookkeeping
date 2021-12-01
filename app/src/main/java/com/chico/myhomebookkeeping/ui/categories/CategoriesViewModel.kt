@@ -127,22 +127,19 @@ class CategoriesViewModel(
 
     suspend fun loadSelectedCategory(selectedId: Int): Categories? {
         return CategoriesUseCase.getOneCategory(db, selectedId)
-        //        launchIo {
-//            _selectedCategory.postValue(CategoriesUseCase.getOneCategory(db, selectedId))
-//        }
     }
 
-    fun resetCategoryForSelect() {
+    private fun resetCategoryForSelect() {
         launchIo {
             _selectedCategory.postValue(null)
         }
     }
 
-    fun resetCategoryForChange() {
-        launchIo {
-            _changeCategory.postValue(null)
-        }
-    }
+//    fun resetCategoryForChange() {
+//        launchIo {
+//            _changeCategory.postValue(null)
+//        }
+//    }
 
     private fun setIsIncomeCategoriesSelect(value: String) {
         selectedIsIncomeSpending = value
@@ -154,15 +151,15 @@ class CategoriesViewModel(
         )
     }
 
-    private fun saveData(navControlHelper: NavControlHelper) {
-        setSP.checkAndSaveToSP(
-            navControlHelper = navControlHelper,
-            argsForNew = argsForCreate,
-            argsForChange = argsForChange,
-            argsForQuery = argsForQuery,
-            id = _selectedCategory.value?.categoriesId
-        )
-    }
+//    private fun saveData(navControlHelper: NavControlHelper) {
+//        setSP.checkAndSaveToSP(
+//            navControlHelper = navControlHelper,
+//            argsForNew = argsForCreate,
+//            argsForChange = argsForChange,
+//            argsForQuery = argsForQuery,
+//            id = _selectedCategory.value?.categoriesId
+//        )
+//    }
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
         setSP.checkAndSaveToSP(
@@ -195,19 +192,8 @@ class CategoriesViewModel(
         saveData(navControlHelper, -1)
     }
 
-    fun selectIdCategory(navControlHelper: NavControlHelper) {
-        isIncomeSpendingSetNone()
-        saveIsIncomeCategory()
-        saveData(navControlHelper)
-    }
-
     private fun isIncomeSpendingSetNone() {
         selectedIsIncomeSpending = argsNone
-    }
-
-    fun selectToChange() {
-        _changeCategory.postValue(_selectedCategory.value)
-        resetCategoryForSelect()
     }
 
     fun addNewCategory(newCategory: Categories): Long = runBlocking {
@@ -239,16 +225,6 @@ class CategoriesViewModel(
 
     fun setSortingCategories(sorting: String) {
         setSP.saveToSP(argsSortingCategories, sorting)
-    }
-
-    fun saveChangedCategory(name: String, isIncome: Boolean) = runBlocking {
-        val save = async {
-            CategoriesUseCase.changeCategoryLine(
-                db, _changeCategory.value?.categoriesId ?: 0,
-                name, isIncome
-            )
-        }
-        reloadCategories(save.await().toLong())
     }
 
     fun saveChangedCategory(id: Int, name: String, isIncome: Boolean) = runBlocking {

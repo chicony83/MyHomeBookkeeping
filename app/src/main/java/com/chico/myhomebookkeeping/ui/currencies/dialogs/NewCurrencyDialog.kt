@@ -38,7 +38,6 @@ class NewCurrencyDialog(
 
             if (result is List<*>) {
                 namesList = (result as List<String>)
-//                Message.log("names list size= ${namesList.size}")
             }
             fun listButtons() = listOf(
                 addButton, addAndSelectButton
