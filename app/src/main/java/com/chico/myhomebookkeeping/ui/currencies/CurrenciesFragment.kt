@@ -117,26 +117,14 @@ class CurrenciesFragment : Fragment() {
         val result = currenciesViewModel.getNamesList()
         launchUi {
             val dialog = NewCurrencyDialog(result, object : OnAddNewCurrencyCallBack {
-                override fun add(name: String) {
-                    val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
-                    if (result > 0) {
-                        showMessage(getString(R.string.message_currency_added))
-                    }
-                    if (result <= 0) {
-                        showMessage(getString(R.string.message_currency_not_added))
-                    }
-                }
+                override fun addAndSelect(name: String, isSelect: Boolean) {
+                    val currencies = Currencies(currencyName = name)
+                    val result = currenciesViewModel.addNewCurrency(currencies)
+                    if (isSelect) {
+                        currenciesViewModel.saveData(navControlHelper, result.toInt())
+                        navControlHelper.moveToPreviousPage()
 
-                override fun addAndSelect(name: String) {
-                    val result = currenciesViewModel.addNewCurrency(Currencies(currencyName = name))
-                    if (result > 0) {
-                        showMessage(getString(R.string.message_currency_added))
                     }
-                    if (result <= 0) {
-                        showMessage(getString(R.string.message_currency_not_added))
-                    }
-                    currenciesViewModel.saveData(navControlHelper, result.toInt())
-                    navControlHelper.moveToPreviousPage()
                 }
             })
 

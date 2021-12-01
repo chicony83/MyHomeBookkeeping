@@ -77,8 +77,8 @@ class CashAccountFragment : Fragment() {
 
         with(binding) {
             selectAllButton.setOnClickListener {
-                cashAccountViewModel.resetCashAccountForChange()
-                cashAccountViewModel.saveData(navControlHelper)
+//                cashAccountViewModel.resetCashAccountForChange()
+                cashAccountViewModel.saveData(navControlHelper,-1)
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
@@ -124,7 +124,6 @@ class CashAccountFragment : Fragment() {
         launchUi {
             val dialog = NewCashAccountDialog(result, object : OnAddNewCashAccountsCallBack {
                 override fun addAndSelect(name: String, number: String, isSelect: Boolean) {
-
                     val cashAccount = CashAccount(
                         accountName = name,
                         bankAccountNumber = number

@@ -51,35 +51,17 @@ class NewCurrencyDialog(
             )
 
             addAndSelectButton.setOnClickListener {
-                val name = nameEditText.getString()
-                if (nameEditText.text.isNotEmpty()) {
-                    val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
-                    if (isLengthChecked) {
-                        onAddNewCurrencyCallBack.addAndSelect(name = name)
-                        dialogCancel()
-                    }
-                    if (!isLengthChecked) {
-                        showMessage(getString(R.string.message_too_short_name))
-                    }
-                } else if (nameEditText.text.isEmpty()) {
-                    showMessage(getString(R.string.message_too_short_name))
-                }
+                checkAndAddCurrency(
+                    nameEditText,
+                    isSelectAfterAdd = true
+                )
             }
 
             addButton.setOnClickListener {
-                val name = nameEditText.getString()
-                if (name.isNotEmpty()) {
-                    val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
-                    if (isLengthChecked) {
-                        onAddNewCurrencyCallBack.add(name)
-                        dialogCancel()
-                    }
-                    if (!isLengthChecked) {
-                        showMessage(getString(R.string.message_too_short_name))
-                    }
-                } else if (name.isEmpty()) {
-                    showMessage(getString(R.string.message_too_short_name))
-                }
+                checkAndAddCurrency(
+                    nameEditText,
+                    isSelectAfterAdd = false
+                )
             }
 
             cancelButton.setOnClickListener {
@@ -90,6 +72,25 @@ class NewCurrencyDialog(
             builder.create()
 
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun checkAndAddCurrency(
+        nameEditText: EditText,
+        isSelectAfterAdd: Boolean
+    ) {
+        val name = nameEditText.getString()
+        if (name.isNotEmpty()) {
+            val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
+            if (isLengthChecked) {
+                onAddNewCurrencyCallBack.addAndSelect(name, isSelectAfterAdd)
+                dialogCancel()
+            }
+            if (!isLengthChecked) {
+                showMessage(getString(R.string.message_too_short_name))
+            }
+        } else if (name.isEmpty()) {
+            showMessage(getString(R.string.message_too_short_name))
+        }
     }
 
     private fun dialogCancel() {
