@@ -39,6 +39,7 @@ class CategoriesFragment : Fragment() {
 
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
+    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,6 +122,12 @@ class CategoriesFragment : Fragment() {
             showHideAddCategoryFragmentButton.setOnClickListener {
                 showNewCategoryDialog()
             }
+        }
+        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
+            or
+            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
+        ){
+            uiHelper.hideUiElement(binding.topButtonsHolder)
         }
     }
 
