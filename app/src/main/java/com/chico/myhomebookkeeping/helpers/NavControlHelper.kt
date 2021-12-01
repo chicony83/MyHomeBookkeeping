@@ -15,15 +15,22 @@ class NavControlHelper(private val controller: NavController) {
         }
     }
 
+    fun isPreviousFragmentJournal(): Boolean {
+    return isPreviousFragment(R.layout.fragment_money_moving)
+    }
+
     fun isPreviousFragment(fragment: Int): Boolean {
         return previousFragment == fragment
     }
+
     fun previousFragment(): Int? {
         return previousFragment
     }
-    fun moveToMoneyMovingFragment(){
+
+    fun moveToMoneyMovingFragment() {
         controller.navigate(R.id.nav_money_moving)
     }
+
     fun moveToSelectedFragment(toFragment: Int) {
         controller.navigate(toFragment)
     }

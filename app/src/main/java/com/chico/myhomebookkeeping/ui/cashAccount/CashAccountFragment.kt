@@ -39,6 +39,7 @@ class CashAccountFragment : Fragment() {
 
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
+    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,13 +78,21 @@ class CashAccountFragment : Fragment() {
 
         with(binding) {
             selectAllButton.setOnClickListener {
-//                cashAccountViewModel.resetCashAccountForChange()
-                cashAccountViewModel.saveData(navControlHelper,-1)
+                cashAccountViewModel.saveData(navControlHelper, -1)
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 showNewCashAccountDialog()
             }
+        }
+        if (navControlHelper.isPreviousFragment(
+                R.id.nav_new_money_moving
+            )
+            or navControlHelper.isPreviousFragment(
+                R.id.nav_change_money_moving
+            )
+        ) {
+            uiHelper.hideUiElement(binding.selectAllButton)
         }
     }
 

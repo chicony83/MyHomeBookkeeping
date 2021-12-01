@@ -37,6 +37,7 @@ class CurrenciesFragment : Fragment() {
 
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
+    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,6 +79,12 @@ class CurrenciesFragment : Fragment() {
             showHideAddCurrencyFragmentButton.setOnClickListener {
                 showNewCurrencyDialog()
             }
+        }
+        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving) or navControlHelper.isPreviousFragment(
+                R.id.nav_change_money_moving
+            )
+        ) {
+            uiHelper.hideUiElement(binding.selectAllButton)
         }
     }
 
