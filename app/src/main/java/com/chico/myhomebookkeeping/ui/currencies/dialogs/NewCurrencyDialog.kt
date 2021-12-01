@@ -29,7 +29,7 @@ class NewCurrencyDialog(
 
             var namesList = listOf<String>()
 
-            val editText = layout.findViewById<EditText>(R.id.currency_name)
+            val nameEditText = layout.findViewById<EditText>(R.id.currency_name)
             val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
 
             val addButton = layout.findViewById<Button>(R.id.addNewCurrencyButton)
@@ -43,7 +43,7 @@ class NewCurrencyDialog(
             fun listButtons() = listOf(
                 addButton, addAndSelectButton
             )
-            editText.addTextChangedListener(
+            nameEditText.addTextChangedListener(
                 EditNameTextWatcher(
                     namesList,
                     listButtons(),
@@ -52,8 +52,8 @@ class NewCurrencyDialog(
             )
 
             addAndSelectButton.setOnClickListener {
-                val name = editText.getString()
-                if (editText.text.isNotEmpty()) {
+                val name = nameEditText.getString()
+                if (nameEditText.text.isNotEmpty()) {
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
                         onAddNewCurrencyCallBack.addAndSelect(name = name)
@@ -62,13 +62,13 @@ class NewCurrencyDialog(
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
                     }
-                } else if (editText.text.isEmpty()) {
+                } else if (nameEditText.text.isEmpty()) {
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
 
             addButton.setOnClickListener {
-                val name = editText.getString()
+                val name = nameEditText.getString()
                 if (name.isNotEmpty()) {
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {

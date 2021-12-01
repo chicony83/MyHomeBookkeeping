@@ -20,6 +20,8 @@ import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnAddNewCashAccountsCallBack
+import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnChangeCashAccountCallBack
+import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.ChangeCashAccountDialog
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.NewCashAccountDialog
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.SelectCashAccountDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -35,15 +37,15 @@ class CashAccountFragment : Fragment() {
 
     private lateinit var db: CashAccountDao
 
-    private var selectedCashAccountId: Int = 0
+//    private var selectedCashAccountId: Int = 0
 
     private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
     private lateinit var uiControl: UiControl
-    private val showHideDialogsController = ShowHideDialogsController()
-    private val uiColors = UiColors()
+//    private val showHideDialogsController = ShowHideDialogsController()
+//    private val uiColors = UiColors()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,35 +73,48 @@ class CashAccountFragment : Fragment() {
                         }
                     })
             })
-            changeCashAccount.observe(viewLifecycleOwner, {
-                binding.changeCashAccountLayout.cashAccountName.setText(it?.accountName)
-                binding.changeCashAccountLayout.cashAccountNumber.setText(it?.bankAccountNumber.toString())
-            }
-            )
+//            changeCashAccount.observe(viewLifecycleOwner, {
+//                binding.changeCashAccountLayout.cashAccountName.setText(it?.accountName)
+//                binding.changeCashAccountLayout.cashAccountNumber.setText(it?.bankAccountNumber.toString())
+//            }
+//            )
         }
         return binding.root
     }
 
     private fun showSelectCashAccountDialog(selectedId: Int) {
         launchIo {
-            val cashAccount:CashAccount? = cashAccountViewModel.loadSelectedCashAccount(selectedId)
+            val cashAccount: CashAccount? = cashAccountViewModel.loadSelectedCashAccount(selectedId)
             launchUi {
                 val dialog = SelectCashAccountDialog(cashAccount,
-                object: OnItemSelectForChangeCallBack{
-                    override fun onSelect(id: Int) {
-                        showMessage("for change $id")
-                    }
+                    object : OnItemSelectForChangeCallBack {
+                        override fun onSelect(id: Int) {
+                            showMessage("for change $id")
+                            showChangeCashAccountDialog(cashAccount)
+                        }
 
-                },
-                object : OnItemSelectForSelectCallBack{
-                    override fun onSelect(id: Int) {
-                        showMessage("for select $id")
-                    }
+                    },
+                    object : OnItemSelectForSelectCallBack {
+                        override fun onSelect(id: Int) {
+                            showMessage("for select $id")
+                        }
 
-                })
+                    })
 
-                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
+        }
+    }
+
+    private fun showChangeCashAccountDialog(cashAccount: CashAccount?) {
+        launchIo {
+            val dialog = ChangeCashAccountDialog(cashAccount, object : OnChangeCashAccountCallBack {
+                override fun change(id: Int, name: String, number: String) {
+                    cashAccountViewModel.saveChangedCashAccount(id, name, number)
+                }
+
+            })
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 
@@ -158,108 +173,108 @@ class CashAccountFragment : Fragment() {
 //                    setSelection(0)
 //                }
             }
-            with(newCashAccountLayout) {
-                addAndSelectNewItemButton.setOnClickListener {
-//                    selectedCashAccountId = addNewCashAccount(view)
-                    if (selectedCashAccountId > 0) {
-//                        cashAccountViewModel.loadSelectedCashAccount(selectedCashAccountId)
-                        Message.log("selected cash Account ID = $selectedCashAccountId")
-                        cashAccountViewModel.saveData(navControlHelper,selectedCashAccountId)
-//                        cashAccountViewModel.saveData(navControlHelper)
-                        navControlHelper.moveToPreviousPage()
-                    }
-                }
-                addNewCashAccountButton.setOnClickListener {
-//                    addNewCashAccount(view)
-                }
-                cancelCreateButton.setOnClickListener {
-//                    eraseUiElements()
-                    uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
-                    view.hideKeyboard()
-                    showUIControlElements()
-                }
-            }
-            with(confirmationLayout) {
-                selectButton.setOnClickListener {
-                    if (selectedCashAccountId > 0) {
-                        cashAccountViewModel.saveData(navControlHelper)
-                        navControlHelper.moveToPreviousPage()
-                    }
-                }
-                selectedItemName.setOnClickListener {
-                    if (selectedCashAccountId > 0) {
-                        putItemForChange()
-                        view.showKeyboard()
-                        with(binding.changeCashAccountLayout.cashAccountName) {
-                            requestFocus()
-                            setSelection(0)
-                        }
-                    }
-                }
-                changeButton.setOnClickListener {
-                    if (selectedCashAccountId > 0) {
-                        putItemForChange()
-                        view.showKeyboard()
-                        with(binding.changeCashAccountLayout.cashAccountName) {
-                            requestFocus()
-                            setSelection(0)
-                        }
-                    }
-                }
-                cancelButton.setOnClickListener {
-                    if (selectedCashAccountId > 0) {
-                        selectedCashAccountId = 0
-                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
-                    }
-                }
-            }
-            with(changeCashAccountLayout) {
-                cancelChange.setOnClickListener {
-                    if (selectedCashAccountId > 0) {
-                        selectedCashAccountId = 0
-                    }
-                    cashAccountViewModel.resetCashAccountForChange()
-                    cashAccountViewModel.resetCashAccountForSelect()
-                    uiHelper.hideUiElement(binding.changeCashAccountLayoutHolder)
-                    view.hideKeyboard()
-                    showUIControlElements()
-                }
-//                saveChange.setOnClickListener {
-//                    if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
-//                        val name = binding.changeCashAccountLayout.cashAccountName.text.toString()
-//                        val number =
-//                            binding.changeCashAccountLayout.cashAccountNumber.text.toString()
-//                        Log.i("TAG", " click name = $name, number = $number")
-//                        launchIo {
-//                            cashAccountViewModel.saveChangedCashAccount(
-//                                name = name,
-//                                number = number
-//                            )
-//                        }
-//                        uiHelper.hideUiElement(changeCashAccountLayoutHolder)
-//                        view.hideKeyboard()
-//                        showUIControlElements()
+//            with(newCashAccountLayout) {
+//                addAndSelectNewItemButton.setOnClickListener {
+////                    selectedCashAccountId = addNewCashAccount(view)
+//                    if (selectedCashAccountId > 0) {
+////                        cashAccountViewModel.loadSelectedCashAccount(selectedCashAccountId)
+//                        Message.log("selected cash Account ID = $selectedCashAccountId")
+//                        cashAccountViewModel.saveData(navControlHelper,selectedCashAccountId)
+////                        cashAccountViewModel.saveData(navControlHelper)
+//                        navControlHelper.moveToPreviousPage()
 //                    }
 //                }
-            }
+//                addNewCashAccountButton.setOnClickListener {
+////                    addNewCashAccount(view)
+//                }
+//                cancelCreateButton.setOnClickListener {
+////                    eraseUiElements()
+//                    uiHelper.hideUiElement(binding.newCashAccountLayoutHolder)
+//                    view.hideKeyboard()
+//                    showUIControlElements()
+//                }
+//            }
+//            with(confirmationLayout) {
+//                selectButton.setOnClickListener {
+//                    if (selectedCashAccountId > 0) {
+//                        cashAccountViewModel.saveData(navControlHelper)
+//                        navControlHelper.moveToPreviousPage()
+//                    }
+//                }
+//                selectedItemName.setOnClickListener {
+//                    if (selectedCashAccountId > 0) {
+//                        putItemForChange()
+//                        view.showKeyboard()
+//                        with(binding.changeCashAccountLayout.cashAccountName) {
+//                            requestFocus()
+//                            setSelection(0)
+//                        }
+//                    }
+//                }
+//                changeButton.setOnClickListener {
+//                    if (selectedCashAccountId > 0) {
+//                        putItemForChange()
+//                        view.showKeyboard()
+//                        with(binding.changeCashAccountLayout.cashAccountName) {
+//                            requestFocus()
+//                            setSelection(0)
+//                        }
+//                    }
+//                }
+//                cancelButton.setOnClickListener {
+//                    if (selectedCashAccountId > 0) {
+//                        selectedCashAccountId = 0
+//                        uiHelper.hideUiElement(binding.confirmationLayoutHolder)
+//                    }
+//                }
+//            }
+//            with(changeCashAccountLayout) {
+//                cancelChange.setOnClickListener {
+//                    if (selectedCashAccountId > 0) {
+//                        selectedCashAccountId = 0
+//                    }
+//                    cashAccountViewModel.resetCashAccountForChange()
+//                    cashAccountViewModel.resetCashAccountForSelect()
+//                    uiHelper.hideUiElement(binding.changeCashAccountLayoutHolder)
+//                    view.hideKeyboard()
+//                    showUIControlElements()
+//                }
+////                saveChange.setOnClickListener {
+////                    if (uiHelper.isLengthStringMoThan(binding.changeCashAccountLayout.cashAccountName.text)) {
+////                        val name = binding.changeCashAccountLayout.cashAccountName.text.toString()
+////                        val number =
+////                            binding.changeCashAccountLayout.cashAccountNumber.text.toString()
+////                        Log.i("TAG", " click name = $name, number = $number")
+////                        launchIo {
+////                            cashAccountViewModel.saveChangedCashAccount(
+////                                name = name,
+////                                number = number
+////                            )
+////                        }
+////                        uiHelper.hideUiElement(changeCashAccountLayoutHolder)
+////                        view.hideKeyboard()
+////                        showUIControlElements()
+////                    }
+////                }
+//            }
         }
-        uiColors.setColors(
-            getDialogsList(),
-            getButtonsListForColorButton(),
-            getButtonsListForColorButtonText()
-        )
+//        uiColors.setColors(
+//            getDialogsList(),
+//            getButtonsListForColorButton(),
+//            getButtonsListForColorButtonText()
+//        )
     }
 
     private fun showNewCashAccountDialog() {
         val result = cashAccountViewModel.getNamesList()
         launchUi {
-            val dialog = NewCashAccountDialog(result,object :OnAddNewCashAccountsCallBack{
+            val dialog = NewCashAccountDialog(result, object : OnAddNewCashAccountsCallBack {
                 override fun addAndSelect(name: String, number: String, isSelect: Boolean) {
                     showMessage("name = $name, number = $number, \n is select after add $isSelect")
                 }
             })
 
-            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 
@@ -284,18 +299,18 @@ class CashAccountFragment : Fragment() {
 //        } else return -1
 //    }
 
-    private fun showUIControlElements() {
-        showHideDialogsController.showUIControlElements(
-            topButtonsHolder = binding.topButtonsHolder,
-            bottomButton = binding.showHideAddCashAccountFragmentButton
-        )
-    }
-
-    private fun putItemForChange() {
-        uiControl.showChangeLayoutHolder()
-        cashAccountViewModel.selectedToChange()
-        selectedCashAccountId = 0
-    }
+//    private fun showUIControlElements() {
+//        showHideDialogsController.showUIControlElements(
+//            topButtonsHolder = binding.topButtonsHolder,
+//            bottomButton = binding.showHideAddCashAccountFragmentButton
+//        )
+//    }
+//
+//    private fun putItemForChange() {
+//        uiControl.showChangeLayoutHolder()
+//        cashAccountViewModel.selectedToChange()
+//        selectedCashAccountId = 0
+//    }
 
 //    private fun eraseUiElements() {
 //        uiHelper.clearUiListEditText(
@@ -307,29 +322,29 @@ class CashAccountFragment : Fragment() {
 //    }
 
 
-    private fun getButtonsListForColorButtonText() = listOf(
-        binding.confirmationLayout.changeButton,
-        binding.confirmationLayout.selectButton
-    )
-
-    private fun getButtonsListForColorButton() = listOf(
-        binding.newCashAccountLayout.addAndSelectNewItemButton,
-        binding.newCashAccountLayout.addNewCashAccountButton,
-        binding.newCashAccountLayout.cancelCreateButton,
-        binding.confirmationLayout.changeButton,
-        binding.confirmationLayout.selectButton,
-        binding.confirmationLayout.cancelButton,
-//        binding.changeCashAccountLayout.saveChange,
-        binding.changeCashAccountLayout.cancelChange
-    )
-    private fun getListButtons() = listOf(
-        binding.newCashAccountLayout.addNewCashAccountButton,
-    )
-    private fun getDialogsList() = listOf(
-        binding.newCashAccountLayout,
-        binding.changeCashAccountLayout,
-        binding.confirmationLayout
-    )
+//    private fun getButtonsListForColorButtonText() = listOf(
+//        binding.confirmationLayout.changeButton,
+//        binding.confirmationLayout.selectButton
+//    )
+//
+//    private fun getButtonsListForColorButton() = listOf(
+//        binding.newCashAccountLayout.addAndSelectNewItemButton,
+//        binding.newCashAccountLayout.addNewCashAccountButton,
+//        binding.newCashAccountLayout.cancelCreateButton,
+//        binding.confirmationLayout.changeButton,
+//        binding.confirmationLayout.selectButton,
+//        binding.confirmationLayout.cancelButton,
+////        binding.changeCashAccountLayout.saveChange,
+//        binding.changeCashAccountLayout.cancelChange
+//    )
+//    private fun getListButtons() = listOf(
+//        binding.newCashAccountLayout.addNewCashAccountButton,
+//    )
+//    private fun getDialogsList() = listOf(
+//        binding.newCashAccountLayout,
+//        binding.changeCashAccountLayout,
+//        binding.confirmationLayout
+//    )
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()

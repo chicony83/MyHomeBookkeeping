@@ -67,6 +67,7 @@ class CashAccountViewModel(
             id = _selectedCashAccount.value?.cashAccountId
         )
     }
+
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
         saveARGS.checkAndSaveToSP(
             navControlHelper = navControlHelper,
@@ -77,8 +78,8 @@ class CashAccountViewModel(
         )
     }
 
-    suspend fun loadSelectedCashAccount(selectedId: Int):CashAccount? {
-        return CashAccountsUseCase.getOneCashAccount(db,selectedId)
+    suspend fun loadSelectedCashAccount(selectedId: Int): CashAccount? {
+        return CashAccountsUseCase.getOneCashAccount(db, selectedId)
 //        launchIo {
 //            _selectedCashAccount.postValue(CashAccountsUseCase.getOneCashAccount(db, selectedId))
 //        }
@@ -101,35 +102,24 @@ class CashAccountViewModel(
         resetCashAccountForSelect()
     }
 
-    fun addNewCashAccount(newCashAccount: CashAccount):Long = runBlocking {
+    fun addNewCashAccount(newCashAccount: CashAccount): Long = runBlocking {
         val add = async {
             CashAccountsUseCase.addNewCashAccount(
                 db,
                 newCashAccount
             )
         }
-        reloadCategories(add.await())
+        reloadCashAccounts(add.await())
         return@runBlocking add.await()
     }
 
-    private fun reloadCategories(long: Long) {
+    private fun reloadCashAccounts(long: Long) {
         if (long > 0) {
             loadCashAccounts()
             Log.i("TAG", "recycler reloaded")
         }
     }
 
-    fun saveChangedCashAccount(name: String, number: String) = runBlocking {
-        val add = async {
-            CashAccountsUseCase.changeCashAccountLine(
-                db = db,
-                id = _changeCashAccount.value?.cashAccountId ?: 0,
-                name = name,
-                number = number
-            )
-        }
-        reloadCategories(add.await().toLong())
-    }
 
     fun getNamesList(): Any {
         val items = getItemsList()
@@ -143,8 +133,32 @@ class CashAccountViewModel(
         return names
     }
 
+    fun saveChangedCashAccount(name: String, number: String) = runBlocking {
+        val change = async {
+            CashAccountsUseCase.changeCashAccountLine(
+                db = db,
+                id = _changeCashAccount.value?.cashAccountId ?: 0,
+                name = name,
+                number = number
+            )
+        }
+        reloadCashAccounts(change.await().toLong())
+    }
+
     private fun getItemsList(): List<CashAccount>? {
         return cashAccountList.value?.toList()
+    }
+
+    fun saveChangedCashAccount(id: Int, name: String, number: String) = runBlocking {
+        val change = async {
+            CashAccountsUseCase.changeCashAccountLine(
+                db = db,
+                id = id,
+                name = name,
+                number = number
+            )
+        }
+        reloadCashAccounts(change.await().toLong())
     }
 
 }

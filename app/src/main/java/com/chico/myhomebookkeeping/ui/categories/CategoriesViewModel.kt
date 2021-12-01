@@ -12,9 +12,7 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
@@ -23,7 +21,6 @@ import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
@@ -255,11 +252,11 @@ class CategoriesViewModel(
     }
 
     fun saveChangedCategory(id: Int, name: String, isIncome: Boolean) = runBlocking {
-        val save = async {
+        val change = async {
             CategoriesUseCase.changeCategoryLine(
                 db = db, id = id, name = name, isIncome = isIncome
             )
         }
-        reloadCategories(save.await().toLong())
+        reloadCategories(change.await().toLong())
     }
 }

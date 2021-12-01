@@ -5,7 +5,7 @@
 
     <EditText
         android:hint="@string/hint_enter_name"
-        android:id="@+id/cashAccountName"
+        android:id="@+id/name"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -13,14 +13,14 @@
          />
 
     <EditText
-        android:id="@+id/cashAccountNumber"
+        android:id="@+id/number"
         style="@style/DialogEditText"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:maxLength="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cashAccountName"
+        app:layout_constraintTop_toBottomOf="@id/name"
         android:hint="@string/hint_only_last_4_digits" />
 
     <Button
@@ -29,21 +29,21 @@
         android:text="@string/text_on_button_save"
         app:layout_constraintEnd_toStartOf="@id/centerDialogChangeCashAccount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cashAccountNumber" />
+        app:layout_constraintTop_toBottomOf="@id/number" />
 
     <Button
-        android:id="@+id/cancelChange"
+        android:id="@+id/cancelButton"
         style="@style/DialogButtonRight.Negative"
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/centerDialogChangeCashAccount"
-        app:layout_constraintTop_toBottomOf="@id/cashAccountNumber" />
+        app:layout_constraintTop_toBottomOf="@id/number" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerDialogChangeCashAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
