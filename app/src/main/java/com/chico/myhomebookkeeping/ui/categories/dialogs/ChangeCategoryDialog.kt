@@ -55,6 +55,7 @@ class ChangeCategoryDialog(
                                 isIncome = isIncome
                             )
                         }
+                        dialogCancel()
                     }
                     else if(!isLengthChecked){
                         showMessage(getString(R.string.message_too_short_name))
@@ -62,7 +63,6 @@ class ChangeCategoryDialog(
                 }else if(nameEditText.text.isEmpty()){
                     showMessage(getString(R.string.message_too_short_name))
                 }
-                dialogCancel()
             }
 
             cancelButton.setOnClickListener {

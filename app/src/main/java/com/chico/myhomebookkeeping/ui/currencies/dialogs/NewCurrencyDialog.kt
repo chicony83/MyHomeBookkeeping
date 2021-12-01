@@ -57,7 +57,7 @@ class NewCurrencyDialog(
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
                         onAddNewCurrencyCallBack.addAndSelect(name = name)
-                        closeDialog()
+                        dialogCancel()
                     }
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
@@ -73,7 +73,7 @@ class NewCurrencyDialog(
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
                         onAddNewCurrencyCallBack.add(name)
-                        closeDialog()
+                        dialogCancel()
                     }
                     if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
@@ -84,7 +84,7 @@ class NewCurrencyDialog(
             }
 
             cancelButton.setOnClickListener {
-                closeDialog()
+                dialogCancel()
             }
 
             builder.setView(layout)
@@ -93,7 +93,7 @@ class NewCurrencyDialog(
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
 
-    private fun closeDialog() {
+    private fun dialogCancel() {
         dialog?.cancel()
     }
 

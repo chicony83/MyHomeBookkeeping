@@ -39,17 +39,18 @@ class ChangeCurrencyDialog(
                             id = currency?.currencyId ?: 0,
                             name = name
                         )
+                        dialogCancel()
                     }else if (!isLengthChecked){
                         showMessage(getString(R.string.message_too_short_name))
                     }
                 }else if(nameEditText.text.isEmpty()){
                     showMessage(getString(R.string.message_too_short_name))
                 }
-                closeDialog()
+
             }
 
             cancelButton.setOnClickListener {
-                closeDialog()
+                dialogCancel()
             }
 
             builder.setView(layout)
@@ -61,7 +62,7 @@ class ChangeCurrencyDialog(
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
-    private fun closeDialog() {
+    private fun dialogCancel() {
         dialog?.cancel()
     }
 }

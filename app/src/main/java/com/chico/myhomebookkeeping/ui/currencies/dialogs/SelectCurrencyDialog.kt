@@ -36,7 +36,7 @@ class SelectCurrencyDialog(
                 currencies?.currencyId?.let { it1 ->
                     onItemSelectForChangeCallBack.onSelect(it1)
                 }
-                closeDialog()
+                dialogCancel()
             }
             selectButton.setOnClickListener {
                 currencies?.currencyId?.let { it1 ->
@@ -44,7 +44,7 @@ class SelectCurrencyDialog(
                         it1
                     )
                 }
-                closeDialog()
+                dialogCancel()
             }
 
             changeButton.setOnClickListener {
@@ -53,11 +53,11 @@ class SelectCurrencyDialog(
                         it1
                     )
                 }
-                closeDialog()
+                dialogCancel()
             }
 
             cancelButton.setOnClickListener {
-                closeDialog()
+                dialogCancel()
             }
 
             builder.setView(layout)
@@ -65,7 +65,7 @@ class SelectCurrencyDialog(
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
 
-    private fun closeDialog() {
+    private fun dialogCancel() {
         dialog?.cancel()
     }
 }

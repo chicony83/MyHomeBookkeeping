@@ -42,10 +42,12 @@ class ChangeCashAccountDialog(
                         name = nameEditText.text.toString(),
                         number = numberEditText.text.toString()
                     )
+                    dialogCancel()
                 }else if(nameEditText.text.isEmpty()){
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
+
             cancelButton.setOnClickListener {
                 dialogCancel()
             }
