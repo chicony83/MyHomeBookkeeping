@@ -39,11 +39,11 @@ class CashAccountFragment : Fragment() {
 
 //    private var selectedCashAccountId: Int = 0
 
-    private val uiHelper = UiHelper()
+//    private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
-    private lateinit var uiControl: UiControl
+//    private lateinit var uiControl: UiControl
 //    private val showHideDialogsController = ShowHideDialogsController()
 //    private val uiColors = UiColors()
 
@@ -123,23 +123,23 @@ class CashAccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
 
-        uiControl = UiControl(
-            topButtonsHolder = binding.topButtonsHolder,
-            bottomButton = binding.showHideAddCashAccountFragmentButton,
-            newItemLayoutHolder = binding.newCashAccountLayoutHolder,
-            confirmationLayoutHolder = binding.confirmationLayoutHolder,
-            changeItemLayoutHolder = binding.changeCashAccountLayoutHolder
-        )
+//        uiControl = UiControl(
+//            topButtonsHolder = binding.topButtonsHolder,
+//            bottomButton = binding.showHideAddCashAccountFragmentButton,
+//            newItemLayoutHolder = binding.newCashAccountLayoutHolder,
+//            confirmationLayoutHolder = binding.confirmationLayoutHolder,
+//            changeItemLayoutHolder = binding.changeCashAccountLayoutHolder
+//        )
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         navControlHelper = NavControlHelper(control)
 
-        if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
-            uiHelper.hideUiElement(binding.showHideAddCashAccountFragmentButton)
-            uiHelper.showUiElement(binding.selectAllButton)
-        } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
-            uiHelper.showUiElement(binding.selectAllButton)
-        }
+//        if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
+//            uiHelper.hideUiElement(binding.showHideAddCashAccountFragmentButton)
+//            uiHelper.showUiElement(binding.selectAllButton)
+//        } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
+//            uiHelper.showUiElement(binding.selectAllButton)
+//        }
         with(binding) {
             selectAllButton.setOnClickListener {
                 cashAccountViewModel.resetCashAccountForChange()
