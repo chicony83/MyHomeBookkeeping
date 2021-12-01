@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.categories.dialogs
+package com.chico.myhomebookkeeping.ui.cashAccount.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,21 +7,21 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import java.lang.IllegalStateException
 
-class SelectCategoryDialog(
-    private val categories: Categories?,
+class SelectCashAccountDialog(
+    private val cashAccount: CashAccount?,
     private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
     private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let { it ->
+        return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            val layout = inflater.inflate(R.layout.dialog_select_category, null)
+            val layout = inflater.inflate(R.layout.dialog_select_cash_account, null)
 
             val name = layout.findViewById<TextView>(R.id.selectedItemName)
 
@@ -29,22 +29,22 @@ class SelectCategoryDialog(
             val changeButton = layout.findViewById<Button>(R.id.changeButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
-            categories?.let { it1 -> name.text = it1.categoryName }
+            cashAccount?.let { it1->name.text = it1.accountName }
 
             name.setOnClickListener {
-                categories?.categoriesId?.let { it1 ->
+                cashAccount?.cashAccountId?.let { it1 ->
                     onItemSelectForChangeCallBack.onSelect(it1)
                 }
                 dialogCancel()
             }
             selectButton.setOnClickListener {
-                categories?.categoriesId?.let { it1 ->
+                cashAccount?.cashAccountId?.let { it1 ->
                     onItemSelectForSelectCallBack.onSelect(it1)
                 }
                 dialogCancel()
             }
             changeButton.setOnClickListener {
-                categories?.categoriesId?.let { it1 ->
+                cashAccount?.cashAccountId?.let { it1 ->
                     onItemSelectForChangeCallBack.onSelect(it1)
                 }
                 dialogCancel()
@@ -53,9 +53,9 @@ class SelectCategoryDialog(
                 dialogCancel()
             }
 
+
             builder.setView(layout)
             builder.create()
-
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
 

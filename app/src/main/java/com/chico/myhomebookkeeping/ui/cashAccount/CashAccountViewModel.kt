@@ -77,10 +77,11 @@ class CashAccountViewModel(
         )
     }
 
-    fun loadSelectedCashAccount(selectedId: Int) {
-        launchIo {
-            _selectedCashAccount.postValue(CashAccountsUseCase.getOneCashAccount(db, selectedId))
-        }
+    suspend fun loadSelectedCashAccount(selectedId: Int):CashAccount? {
+        return CashAccountsUseCase.getOneCashAccount(db,selectedId)
+//        launchIo {
+//            _selectedCashAccount.postValue(CashAccountsUseCase.getOneCashAccount(db, selectedId))
+//        }
     }
 
     fun resetCashAccountForChange() {

@@ -15,10 +15,15 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnAddNewCashAccountsCallBack
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.NewCashAccountDialog
+import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.SelectCashAccountDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.showKeyboard
 
@@ -59,9 +64,10 @@ class CashAccountFragment : Fragment() {
 
                     CashAccountAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
-                            uiControl.showSelectLayoutHolder()
-                            cashAccountViewModel.loadSelectedCashAccount(selectedId)
-                            selectedCashAccountId = selectedId
+                            showSelectCashAccountDialog(selectedId)
+//                            uiControl.showSelectLayoutHolder()
+//                            cashAccountViewModel.loadSelectedCashAccount(selectedId)
+//                            selectedCashAccountId = selectedId
                         }
                     })
             })
@@ -72,6 +78,29 @@ class CashAccountFragment : Fragment() {
             )
         }
         return binding.root
+    }
+
+    private fun showSelectCashAccountDialog(selectedId: Int) {
+        launchIo {
+            val cashAccount:CashAccount? = cashAccountViewModel.loadSelectedCashAccount(selectedId)
+            launchUi {
+                val dialog = SelectCashAccountDialog(cashAccount,
+                object: OnItemSelectForChangeCallBack{
+                    override fun onSelect(id: Int) {
+                        showMessage("for change $id")
+                    }
+
+                },
+                object : OnItemSelectForSelectCallBack{
+                    override fun onSelect(id: Int) {
+                        showMessage("for select $id")
+                    }
+
+                })
+
+                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+            }
+        }
     }
 
     @SuppressLint("ResourceType")
