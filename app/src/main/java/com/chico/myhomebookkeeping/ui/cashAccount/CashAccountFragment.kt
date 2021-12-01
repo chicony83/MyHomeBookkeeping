@@ -50,13 +50,14 @@ class CashAccountFragment : Fragment() {
 
         cashAccountViewModel = ViewModelProvider(this).get(CashAccountViewModel::class.java)
 
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+
         with(cashAccountViewModel) {
             selectedCashAccount.observe(viewLifecycleOwner, {
                 binding.confirmationLayout.selectedItemName.text = it?.accountName
             })
             cashAccountList.observe(viewLifecycleOwner, {
                 binding.cashAccountHolder.adapter =
-
                     CashAccountAdapter(it, object : OnItemViewClickListener {
                         override fun onClick(selectedId: Int) {
                             showSelectCashAccountDialog(selectedId)
@@ -67,46 +68,10 @@ class CashAccountFragment : Fragment() {
         return binding.root
     }
 
-    private fun showSelectCashAccountDialog(selectedId: Int) {
-        launchIo {
-            val cashAccount: CashAccount? = cashAccountViewModel.loadSelectedCashAccount(selectedId)
-            launchUi {
-                val dialog = SelectCashAccountDialog(cashAccount,
-                    object : OnItemSelectForChangeCallBack {
-                        override fun onSelect(id: Int) {
-                            showChangeCashAccountDialog(cashAccount)
-                        }
-
-                    },
-                    object : OnItemSelectForSelectCallBack {
-                        override fun onSelect(id: Int) {
-                        }
-
-                    })
-
-                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-            }
-        }
-    }
-
-    private fun showChangeCashAccountDialog(cashAccount: CashAccount?) {
-        launchIo {
-            val dialog = ChangeCashAccountDialog(cashAccount, object : OnChangeCashAccountCallBack {
-                override fun change(id: Int, name: String, number: String) {
-                    cashAccountViewModel.saveChangedCashAccount(id, name, number)
-                }
-
-            })
-            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-        }
-    }
-
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
-
-        control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         navControlHelper = NavControlHelper(control)
 
@@ -119,6 +84,38 @@ class CashAccountFragment : Fragment() {
             showHideAddCashAccountFragmentButton.setOnClickListener {
                 showNewCashAccountDialog()
             }
+        }
+    }
+
+    private fun showSelectCashAccountDialog(selectedId: Int) {
+        launchIo {
+            val cashAccount: CashAccount? = cashAccountViewModel.loadSelectedCashAccount(selectedId)
+            launchUi {
+                val dialog = SelectCashAccountDialog(cashAccount,
+                    object : OnItemSelectForChangeCallBack {
+                        override fun onSelect(id: Int) {
+                            showChangeCashAccountDialog(cashAccount)
+                        }
+                    },
+                    object : OnItemSelectForSelectCallBack {
+                        override fun onSelect(id: Int) {
+                            cashAccountViewModel.saveData(navControlHelper, id)
+                            navControlHelper.moveToPreviousPage()
+                        }
+                    })
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            }
+        }
+    }
+
+    private fun showChangeCashAccountDialog(cashAccount: CashAccount?) {
+        launchIo {
+            val dialog = ChangeCashAccountDialog(cashAccount, object : OnChangeCashAccountCallBack {
+                override fun change(id: Int, name: String, number: String) {
+                    cashAccountViewModel.saveChangedCashAccount(id, name, number)
+                }
+            })
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
 

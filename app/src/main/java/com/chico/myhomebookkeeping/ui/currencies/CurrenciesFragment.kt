@@ -35,7 +35,6 @@ class CurrenciesFragment : Fragment() {
 
     private lateinit var db: CurrenciesDao
 
-    private val uiHelper = UiHelper()
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
@@ -45,7 +44,6 @@ class CurrenciesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         db = dataBase.getDataBase(requireContext()).currenciesDao()
-
         _binding = FragmentCurrenciesBinding.inflate(inflater, container, false)
 
         currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
@@ -71,12 +69,6 @@ class CurrenciesFragment : Fragment() {
 
         navControlHelper = NavControlHelper(control)
 
-        if (navControlHelper.isPreviousFragment(R.id.nav_money_moving_query)) {
-            uiHelper.hideUiElement(binding.showHideAddCurrencyFragmentButton)
-            uiHelper.showUiElement(binding.selectAllButton)
-        } else if (navControlHelper.isPreviousFragment(R.id.nav_money_moving)) {
-            uiHelper.showUiElement(binding.selectAllButton)
-        }
         view.hideKeyboard()
         with(binding) {
             selectAllButton.setOnClickListener {
