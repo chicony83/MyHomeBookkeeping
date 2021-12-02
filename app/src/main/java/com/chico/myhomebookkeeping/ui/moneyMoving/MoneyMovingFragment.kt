@@ -113,7 +113,7 @@ class MoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
-        val bottomNavigation = binding.bottomNavigation
+//        val bottomNavigation = binding.bottomNavigation
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
@@ -132,14 +132,14 @@ class MoneyMovingFragment : Fragment() {
             }
         }
 
-        bottomNavigation.setOnNavigationItemSelectedListener {item ->
-            when(item.itemId){
-                R.id.add_money_moving->{control.navigate(R.id.nav_new_money_moving)}
-                R.id.reports->{control.navigate(R.id.nav_reports)}
-            }
-            true
-
-        }
+//        bottomNavigation.setOnNavigationItemSelectedListener {item ->
+//            when(item.itemId){
+//                R.id.add_money_moving->{control.navigate(R.id.nav_new_money_moving)}
+//                R.id.reports->{control.navigate(R.id.nav_reports)}
+//            }
+//            true
+//
+//        }
 //        checkLinesFound()
         checkIsFirstLaunch()
         moneyMovingViewModel.cleaningSP()

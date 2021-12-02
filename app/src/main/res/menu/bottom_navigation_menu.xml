@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    <item-->
-<!--        android:icon="@drawable/journal"-->
-<!--        android:id="@+id/journal_money_moving"-->
-<!--        android:enabled="true"-->
-<!--        android:title="журнал"/>-->
+    <item
+        android:icon="@drawable/journal"
+        android:id="@+id/journal_money_moving"
+        android:enabled="true"
+        android:title="журнал"/>
     <item
         android:icon="@drawable/ic_add_box"
         android:id="@+id/add_money_moving"

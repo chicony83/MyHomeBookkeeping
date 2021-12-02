@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spEditor: SharedPreferences.Editor
 
     private lateinit var navController: NavController
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 //        val fab: FloatingActionButton = findViewById(R.id.fab)
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -91,6 +93,23 @@ class MainActivity : AppCompatActivity() {
 //        fabSetOnClickListener(fab, navController)
 //
 //        hideFab(navController, fab)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.journal_money_moving -> {
+                    navController.navigate(R.id.nav_money_moving)
+                }
+                R.id.add_money_moving -> {
+                    navController.navigate(R.id.nav_new_money_moving)
+                }
+                R.id.reports -> {
+                    navController.navigate(R.id.nav_reports)
+                }
+            }
+            true
+
+        }
+
         hideToolbar(toolbar)
         eraseSP.eraseTempSP()
     }
@@ -148,6 +167,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+//        bottomNavigation.setOnNavigationItemSelectedListener {item ->
+//            when(item.itemId){
+//                R.id.add_money_moving->{control.navigate(R.id.nav_new_money_moving)}
+//                R.id.reports->{control.navigate(R.id.nav_reports)}
+//            }
+//            true
+//
+//        }
 
     private fun fabSetOnClickListener(
         fab: FloatingActionButton,

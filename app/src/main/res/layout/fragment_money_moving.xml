@@ -61,15 +61,6 @@
         app:layout_constraintBottom_toTopOf="@id/info"
         app:layout_constraintTop_toBottomOf="@+id/scrollViewButtons" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
-
     <LinearLayout
         android:id="@+id/info"
         android:layout_width="match_parent"
