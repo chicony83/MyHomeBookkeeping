@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,27 +19,16 @@ import com.chico.myhomebookkeeping.checks.CheckNightMode
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.SetSP
-import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
-
-import android.content.pm.PackageManager
-import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.AppUpdateType.FLEXIBLE
-import com.google.android.play.core.install.model.UpdateAvailability
-
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val uiHelper = UiHelper()
     private val spName = Constants.SP_NAME
     private val checkNightMode = CheckNightMode()
     private lateinit var sharedPreferences: SharedPreferences
@@ -66,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-//        val fab: FloatingActionButton = findViewById(R.id.fab)
         bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -90,9 +77,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-//        fabSetOnClickListener(fab, navController)
-//
-//        hideFab(navController, fab)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -107,9 +91,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             true
-
         }
-
         hideToolbar(toolbar)
         eraseSP.eraseTempSP()
     }
@@ -138,50 +120,6 @@ class MainActivity : AppCompatActivity() {
                     else -> toolbar.visibility = View.VISIBLE
                 }
             }
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    private fun hideFab(
-        navController: NavController,
-        fab: FloatingActionButton
-    ) {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.nav_change_money_moving -> uiHelper.hideUiElement(fab)
-                R.id.nav_currencies -> uiHelper.hideUiElement(fab)
-                R.id.nav_categories -> uiHelper.hideUiElement(fab)
-                R.id.nav_cash_account -> uiHelper.hideUiElement(fab)
-                R.id.nav_money_moving_query -> uiHelper.hideUiElement(fab)
-                R.id.nav_setting -> uiHelper.hideUiElement(fab)
-                R.id.nav_help_fragment -> uiHelper.hideUiElement(fab)
-                R.id.nav_new_money_moving -> uiHelper.hideUiElement(fab)
-                R.id.nav_first_launch_fragment -> uiHelper.hideUiElement(fab)
-                R.id.nav_time_period -> uiHelper.hideUiElement(fab)
-                R.id.nav_reports -> uiHelper.hideUiElement(fab)
-                R.id.nav_reports_menu -> uiHelper.hideUiElement(fab)
-                else -> uiHelper.showUiElement(fab)
-            }
-        }
-    }
-//        bottomNavigation.setOnNavigationItemSelectedListener {item ->
-//            when(item.itemId){
-//                R.id.add_money_moving->{control.navigate(R.id.nav_new_money_moving)}
-//                R.id.reports->{control.navigate(R.id.nav_reports)}
-//            }
-//            true
-//
-//        }
-
-    private fun fabSetOnClickListener(
-        fab: FloatingActionButton,
-        navController: NavController
-    ) {
-        fab.setOnClickListener {
-            navController.navigate(R.id.nav_new_money_moving)
         }
     }
 

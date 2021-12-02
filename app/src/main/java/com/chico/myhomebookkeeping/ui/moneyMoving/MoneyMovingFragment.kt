@@ -21,7 +21,6 @@ import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 
-
 class MoneyMovingFragment : Fragment() {
 
     private lateinit var plus: String
@@ -94,7 +93,6 @@ class MoneyMovingFragment : Fragment() {
                             moneyMovingViewModel.saveMoneyMovingToChange(selectedId)
                             pressSelectButton(R.id.nav_change_money_moving)
                         }
-
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
@@ -113,7 +111,6 @@ class MoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
-//        val bottomNavigation = binding.bottomNavigation
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
@@ -131,15 +128,6 @@ class MoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_time_period)
             }
         }
-
-//        bottomNavigation.setOnNavigationItemSelectedListener {item ->
-//            when(item.itemId){
-//                R.id.add_money_moving->{control.navigate(R.id.nav_new_money_moving)}
-//                R.id.reports->{control.navigate(R.id.nav_reports)}
-//            }
-//            true
-//
-//        }
 //        checkLinesFound()
         checkIsFirstLaunch()
         moneyMovingViewModel.cleaningSP()
@@ -175,8 +163,8 @@ class MoneyMovingFragment : Fragment() {
 //            message("найдено $numFoundedLines строк")
 //        }
 //    }
+
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
-
 }
