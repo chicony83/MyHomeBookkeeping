@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="56dp"
     tools:context=".ui.moneyMoving.MoneyMovingFragment">
 
     <HorizontalScrollView
@@ -93,6 +94,5 @@
             android:gravity="right"
             tools:text="0" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
