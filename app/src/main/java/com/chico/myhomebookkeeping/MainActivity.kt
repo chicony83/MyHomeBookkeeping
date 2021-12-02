@@ -29,6 +29,8 @@ import kotlinx.coroutines.runBlocking
 
 import android.content.pm.PackageManager
 import android.widget.Toast
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.AppUpdateType.FLEXIBLE
@@ -63,7 +65,9 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
+//        val fab: FloatingActionButton = findViewById(R.id.fab)
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         navController = findNavController(R.id.nav_host_fragment)
@@ -85,13 +89,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        fabSetOnClickListener(fab, navController)
-
-        hideFab(navController, fab)
+//        fabSetOnClickListener(fab, navController)
+//
+//        hideFab(navController, fab)
         hideToolbar(toolbar)
         eraseSP.eraseTempSP()
-
     }
 
     private fun uiMode() {

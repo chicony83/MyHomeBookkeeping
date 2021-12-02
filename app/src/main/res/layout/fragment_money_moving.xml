@@ -7,10 +7,10 @@
     tools:context=".ui.moneyMoving.MoneyMovingFragment">
 
     <HorizontalScrollView
-        android:scrollbars="none"
         android:id="@+id/scrollViewButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -58,32 +58,50 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/totalBalance"
+        app:layout_constraintBottom_toTopOf="@id/info"
         app:layout_constraintTop_toBottomOf="@+id/scrollViewButtons" />
 
-    <TextView
-        android:id="@+id/incomeBalance"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/info"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="0" />
+        app:menu="@menu/bottom_navigation_menu" />
 
-    <TextView
-        android:id="@+id/spendingBalance"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/totalBalance"
-        app:layout_constraintStart_toEndOf="@id/incomeBalance"
-        tools:text="0" />
-
-    <TextView
-        android:id="@+id/totalBalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="0" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/incomeBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/spendingBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/totalBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            tools:text="0" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
