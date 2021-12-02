@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
 //        val fab: FloatingActionButton = findViewById(R.id.fab)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         navController = findNavController(R.id.nav_host_fragment)

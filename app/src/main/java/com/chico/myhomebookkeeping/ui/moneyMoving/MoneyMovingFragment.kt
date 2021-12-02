@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -42,7 +43,6 @@ class MoneyMovingFragment : Fragment() {
         getStrings()
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
-
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
@@ -87,15 +87,16 @@ class MoneyMovingFragment : Fragment() {
         launchIo {
             val fullMoneyMoving = moneyMovingViewModel.loadSelectedMoneyMoving(selectedId)
             launchUi {
-                val dialog = SelectMoneyMovingDialog(fullMoneyMoving,object :OnItemSelectForChangeCallBack{
-                    override fun onSelect(id: Int) {
+                val dialog = SelectMoneyMovingDialog(fullMoneyMoving,
+                    object : OnItemSelectForChangeCallBack {
+                        override fun onSelect(id: Int) {
 //                        Message.log("changing item id = $id")
-                        moneyMovingViewModel.saveMoneyMovingToChange(selectedId)
-                        pressSelectButton(R.id.nav_change_money_moving)
-                    }
+                            moneyMovingViewModel.saveMoneyMovingToChange(selectedId)
+                            pressSelectButton(R.id.nav_change_money_moving)
+                        }
 
-                })
-                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                    })
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }
     }
@@ -112,6 +113,7 @@ class MoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
+        val bottomNavigation = binding.bottomNavigation
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
@@ -128,10 +130,18 @@ class MoneyMovingFragment : Fragment() {
             selectTimePeriod.setOnClickListener {
                 pressSelectButton(R.id.nav_time_period)
             }
+        }
+
+        bottomNavigation.setOnNavigationItemSelectedListener {item ->
+            when(item.itemId){
+                R.id.add_money_moving->{control.navigate(R.id.nav_new_money_moving)}
+                R.id.reports->{control.navigate(R.id.nav_reports)}
+            }
+            true
 
         }
 //        checkLinesFound()
-        checkFirstLaunch()
+        checkIsFirstLaunch()
         moneyMovingViewModel.cleaningSP()
     }
 
@@ -145,15 +155,14 @@ class MoneyMovingFragment : Fragment() {
         _binding = null
     }
 
-    private fun checkFirstLaunch() {
+    private fun checkIsFirstLaunch() {
         if (moneyMovingViewModel.isFirstLaunch()) {
-//            binding.firstLaunchDialogHolder.visibility = View.VISIBLE
             moneyMovingViewModel.setIsFirstLaunchFalse()
             control.navigate(R.id.nav_first_launch_fragment)
         }
     }
 
-//    private fun checkLinesFound() {
+    //    private fun checkLinesFound() {
 //        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()
 //        var temp = numFoundedLines
 //        launchUi {
@@ -166,4 +175,8 @@ class MoneyMovingFragment : Fragment() {
 //            message("найдено $numFoundedLines строк")
 //        }
 //    }
+    private fun showMessage(s: String) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
 }
