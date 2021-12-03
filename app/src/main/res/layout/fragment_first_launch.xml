@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/Fragment"
     tools:context=".ui.firstLaunch.FirstLaunchFragment">
 
     <ScrollView
@@ -23,7 +22,6 @@
             <TextView
                 style="@style/Description.first_launch_fragment"
                 android:text="@string/description_A_quick_setup_of_the_program_will_be_done_here" />
-
 
             <TextView
                 style="@style/MatchParent_WrapContent"

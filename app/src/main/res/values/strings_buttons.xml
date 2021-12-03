@@ -30,9 +30,9 @@
     <string name="text_on_button_income_category">Income</string>
     <string name="text_on_button_spending_category">Spending</string>
 
-    <string name="text_on_button_add_new_category">Add new category</string>
-    <string name="text_on_button_add_new_currency">Add new currency</string>
-    <string name="text_on_button_add_new_cash_account">Add new cash account</string>
+    <string name="text_on_button_add_new_category">New category</string>
+    <string name="text_on_button_add_new_currency">New currency</string>
+    <string name="text_on_button_add_new_cash_account">New cash account</string>
 
     <string name="text_on_button_select_cash_account">Select cash account</string>
     <string name="text_on_button_select_currency">Select currency</string>

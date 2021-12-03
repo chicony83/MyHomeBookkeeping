@@ -30,9 +30,9 @@
     <string name="text_on_button_income_category">Доходы</string>
     <string name="text_on_button_spending_category">Расходы</string>
 
-    <string name="text_on_button_add_new_category">Добавить новую категорию</string>
-    <string name="text_on_button_add_new_currency">Доавить новую валюту</string>
-    <string name="text_on_button_add_new_cash_account">Добавить новый счёт</string>
+    <string name="text_on_button_add_new_category">Доавить категорию</string>
+    <string name="text_on_button_add_new_currency">Доавить валюту</string>
+    <string name="text_on_button_add_new_cash_account">Добавить счёт</string>
 
     <string name="text_on_button_select_cash_account">Выбрать счёт</string>
     <string name="text_on_button_select_currency">Выбрать валюту</string>

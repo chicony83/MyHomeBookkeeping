@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.checks.CheckNightMode
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -39,7 +40,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spEditor: SharedPreferences.Editor
 
     private lateinit var navController: NavController
-    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var bottomNavigation: BottomNavigationView
+    private val uiHelper = UiHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigation = findViewById(R.id.bottom_navigation)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.journal_money_moving -> {
                     navController.navigate(R.id.nav_money_moving)
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        hideToolbar(toolbar)
+        hideToolbarAndBottomNavigation(toolbar)
         eraseSP.eraseTempSP()
     }
 
@@ -111,13 +113,28 @@ class MainActivity : AppCompatActivity() {
         Colors.setColors(resources)
     }
 
-    private fun hideToolbar(toolbar: Toolbar) {
+    private fun hideToolbarAndBottomNavigation(toolbar: Toolbar) {
         launchUi {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.nav_help_fragment -> toolbar.visibility = View.GONE
-                    R.id.nav_first_launch_fragment -> toolbar.visibility = View.GONE
-                    else -> toolbar.visibility = View.VISIBLE
+                    R.id.nav_help_fragment -> {
+                        uiHelper.hideUiElement(toolbar)
+                        uiHelper.hideUiElement(bottomNavigation)
+                    }
+                    R.id.nav_first_launch_fragment -> {
+                        uiHelper.hideUiElement(toolbar)
+                        uiHelper.hideUiElement(bottomNavigation)
+                    }
+//                    R.id.nav_new_money_moving->{
+//                        uiHelper.hideUiElement(bottomNavigation)
+//                    }
+                    R.id.nav_time_period->{
+                        uiHelper.hideUiElement(bottomNavigation)
+                    }
+                    else -> {
+                        uiHelper.showUiElement(toolbar)
+                        uiHelper.showUiElement(bottomNavigation)
+                    }
                 }
             }
         }

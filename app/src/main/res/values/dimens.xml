@@ -19,4 +19,5 @@
     <dimen name="H5">14sp</dimen>
     <dimen name="H6">12sp</dimen>
     <dimen name="H7">10sp</dimen>
+    <dimen name="bottom_navigation_height">56dp</dimen>
 </resources>
