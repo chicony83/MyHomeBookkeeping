@@ -70,6 +70,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:layout_marginStart="@dimen/margin_double"
             android:id="@+id/incomeBalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
 
         <TextView
             android:id="@+id/totalBalance"
+            android:layout_marginEnd="@dimen/margin_double"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
