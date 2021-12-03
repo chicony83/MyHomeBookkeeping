@@ -4,15 +4,15 @@
         android:icon="@drawable/journal"
         android:id="@+id/journal_money_moving"
         android:enabled="true"
-        android:title="журнал"/>
+        android:title="@string/fragment_label_money_moving"/>
     <item
         android:icon="@drawable/ic_add_box"
         android:id="@+id/add_money_moving"
         android:enabled="true"
-        android:title="новый платеж" />
+        android:title="@string/fragment_label_new_money_moving" />
     <item
         android:icon="@drawable/ic_menu_reports"
         android:id="@+id/reports"
         android:enabled="true"
-        android:title="отчеты"/>
+        android:title="@string/fragment_label_reports"/>
 </menu>
