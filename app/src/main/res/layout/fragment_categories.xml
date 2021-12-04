@@ -72,7 +72,6 @@
         app:layout_constraintTop_toBottomOf="@id/sortingCategoriesButton"
         tools:listitem="@layout/recycler_view_item_categories" />
 
-
     <Button
         android:id="@+id/show_hide_add_category_fragment_button"
         style="@style/ButtonFullWidth"
@@ -81,6 +80,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteX="16dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

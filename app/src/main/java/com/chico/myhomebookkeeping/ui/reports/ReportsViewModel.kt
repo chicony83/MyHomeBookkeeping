@@ -156,44 +156,42 @@ class ReportsViewModel(
         return result
     }
 
-    fun setRecyclerState(name: String) {
-        Message.log("set state RecyclerView $name")
-        stateRecycler = name
-    }
+//    fun setRecyclerState(name: String) {
+//        Message.log("set state RecyclerView $name")
+//        stateRecycler = name
+//    }
+//
+//    fun postCategoriesList() {
+//        launchUi {
+//            _listItemsOfCategoriesForRecycler.postValue(listItemsOfCategories)
+//        }
+//    }
+//
+//    fun postCashAccountsList() {
+//        launchUi {
+//            _listItemsOfCashAccountsForRecycler.postValue(listItemsOfCashAccounts)
+//        }
+//    }
 
-    fun postCategoriesList() {
-        launchUi {
-            _listItemsOfCategoriesForRecycler.postValue(listItemsOfCategories)
-        }
-    }
-
-    fun postCashAccountsList() {
-        launchUi {
-            _listItemsOfCashAccountsForRecycler.postValue(listItemsOfCashAccounts)
-        }
-    }
-
-    fun postCurrenciesList() {
-        launchUi {
-            _listItemsOfCurrenciesForRecycler.postValue(listItemsOfCurrencies)
-        }
-    }
-
-    fun itemChecked(id: Int) {
-        when (stateRecycler) {
-            StatesReportsRecycler.ShowCurrencies.name -> {
-                listItemsOfCurrencies[id].isChecked = true
-            }
-            StatesReportsRecycler.ShowCategories.name -> {
-                listItemsOfCategories[id].isChecked = true
-            }
-            StatesReportsRecycler.ShowCashAccounts.name -> {
-                listItemsOfCashAccounts[id].isChecked = true
-            }
-        }
-    }
-
-
+//    fun postCurrenciesList() {
+//        launchUi {
+//            _listItemsOfCurrenciesForRecycler.postValue(listItemsOfCurrencies)
+//        }
+//    }
+//
+//    fun itemChecked(id: Int) {
+//        when (stateRecycler) {
+//            StatesReportsRecycler.ShowCurrencies.name -> {
+//                listItemsOfCurrencies[id].isChecked = true
+//            }
+//            StatesReportsRecycler.ShowCategories.name -> {
+//                listItemsOfCategories[id].isChecked = true
+//            }
+//            StatesReportsRecycler.ShowCashAccounts.name -> {
+//                listItemsOfCashAccounts[id].isChecked = true
+//            }
+//        }
+//    }
 
     fun itemUnchecked(id: Int) {
 //        stateRecyclerMessage()
@@ -232,7 +230,7 @@ class ReportsViewModel(
         return ReportsCreateSimpleQuery.createSampleQueryForReports(
             startTimePeriodLongSP,
             endTimePeriodLongSP,
-            listItemsOfCashAccounts,
+//            listItemsOfCashAccounts,
 //            listItemsOfCurrencies,
             listItemsOfCategories
         )

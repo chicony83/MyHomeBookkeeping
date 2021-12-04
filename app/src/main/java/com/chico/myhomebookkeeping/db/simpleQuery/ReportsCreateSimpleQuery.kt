@@ -22,7 +22,7 @@ object ReportsCreateSimpleQuery {
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
-        listItemsOfCashAccounts: List<ReportsCashAccountItem>,
+//        listItemsOfCashAccounts: List<ReportsCashAccountItem>,
         listItemsOfCategories: List<ReportsCategoriesItem>,
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving()

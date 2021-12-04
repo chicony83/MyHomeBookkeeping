@@ -59,26 +59,26 @@ class ReportsFragment : Fragment() {
                     charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
                 }
             })
-            listItemsOfCategoriesForRecycler.observe(viewLifecycleOwner, {
-                binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemCheckedCallBack {
-                    override fun onChecked(id: Int) {
-                        launchUi {
-                            with(reportsViewModel) {
-                                itemChecked(id)
-                                updateReports(true)
-                            }
-                        }
-                    }
-                    override fun onUnChecked(id: Int) {
-                        launchUi {
-                            with(reportsViewModel) {
-                                itemUnchecked(id)
-                                updateReports(true)
-                            }
-                        }
-                    }
-                })
-            })
+//            listItemsOfCategoriesForRecycler.observe(viewLifecycleOwner, {
+//                binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemCheckedCallBack {
+//                    override fun onChecked(id: Int) {
+//                        launchUi {
+//                            with(reportsViewModel) {
+//                                itemChecked(id)
+//                                updateReports(true)
+//                            }
+//                        }
+//                    }
+//                    override fun onUnChecked(id: Int) {
+//                        launchUi {
+//                            with(reportsViewModel) {
+//                                itemUnchecked(id)
+//                                updateReports(true)
+//                            }
+//                        }
+//                    }
+//                })
+//            })
         }
         return binding.root
     }
@@ -90,25 +90,25 @@ class ReportsFragment : Fragment() {
         pieChartView = binding.pieChart
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
-            selectCashAccountButton.setOnClickListener {
-                with(reportsViewModel) {
-                    setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
-                    postCashAccountsList()
-                }
-            }
-            selectCategoryButton.setOnClickListener {
-                uiHelper.showUiElement(binding.recyclerView)
-                with(reportsViewModel) {
-                    setRecyclerState(StatesReportsRecycler.ShowCategories.name)
-                    postCategoriesList()
-                }
-            }
-            selectCurrencyButton.setOnClickListener {
-                with(reportsViewModel) {
-                    setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
-                    postCurrenciesList()
-                }
-            }
+//            selectCashAccountButton.setOnClickListener {
+//                with(reportsViewModel) {
+//                    setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
+//                    postCashAccountsList()
+//                }
+//            }
+//            selectCategoryButton.setOnClickListener {
+//                uiHelper.showUiElement(binding.recyclerView)
+//                with(reportsViewModel) {
+//                    setRecyclerState(StatesReportsRecycler.ShowCategories.name)
+//                    postCategoriesList()
+//                }
+//            }
+//            selectCurrencyButton.setOnClickListener {
+//                with(reportsViewModel) {
+//                    setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
+//                    postCurrenciesList()
+//                }
+//            }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
             }
