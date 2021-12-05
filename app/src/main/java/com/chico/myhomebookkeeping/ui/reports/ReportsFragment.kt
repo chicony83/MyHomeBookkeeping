@@ -9,11 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
-import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.ui.reports.dialogs.category.CategorySelectDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -96,13 +95,17 @@ class ReportsFragment : Fragment() {
 //                    postCashAccountsList()
 //                }
 //            }
-//            selectCategoryButton.setOnClickListener {
+            selectCategoryButton.setOnClickListener {
+                val dialog = CategorySelectDialog()
+
+                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+
 //                uiHelper.showUiElement(binding.recyclerView)
 //                with(reportsViewModel) {
 //                    setRecyclerState(StatesReportsRecycler.ShowCategories.name)
 //                    postCategoriesList()
 //                }
-//            }
+            }
 //            selectCurrencyButton.setOnClickListener {
 //                with(reportsViewModel) {
 //                    setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)

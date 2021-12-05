@@ -97,6 +97,8 @@ class ReportsViewModel(
     private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
     private lateinit var listItemsOfCurrencies: List<ReportsCurrenciesItem>
 
+    private lateinit var listFullMoneyMoving:Deferred<List<FullMoneyMoving>?>
+
     init {
         getTimePeriodsSP()
         setTextOnButtons()
@@ -216,11 +218,13 @@ class ReportsViewModel(
     suspend fun updateReports(await: Boolean) {
         runBlocking {
             val query = createQuery()
-            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
-                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
-            if (!listMoneyMovingForReports.await().isNullOrEmpty()) {
+
+            listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query)}
+//            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
+//                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
+            if (!listFullMoneyMoving.await().isNullOrEmpty()) {
                 _map.postValue(
-                    listMoneyMovingForReports.await()
+                    listFullMoneyMoving.await()
                         ?.let { ConvToList.moneyMovementListToMap(it) })
             }
         }
