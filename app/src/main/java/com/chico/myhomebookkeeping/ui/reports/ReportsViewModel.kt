@@ -13,6 +13,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
@@ -78,18 +79,18 @@ class ReportsViewModel(
 
     private val setText = SetTextOnButtons(app.resources)
 
-    private val _listItemsOfCategoriesForRecycler = MutableLiveData<List<ReportsCategoriesItem>>()
-    val listItemsOfCategoriesForRecycler: LiveData<List<ReportsCategoriesItem>>
-        get() = _listItemsOfCategoriesForRecycler
-
-    private val _listItemsOfCashAccountsForRecycler =
-        MutableLiveData<List<ReportsCashAccountItem>>()
-    val listItemsOfCashAccountsForRecycler: LiveData<List<ReportsCashAccountItem>>
-        get() = _listItemsOfCashAccountsForRecycler
-
-    private val _listItemsOfCurrenciesForRecycler = MutableLiveData<List<ReportsCurrenciesItem>>()
-    val listItemsOfCurrenciesForRecycler:LiveData<List<ReportsCurrenciesItem>>
-            get() = _listItemsOfCurrenciesForRecycler
+//    private val _listItemsOfCategoriesForRecycler = MutableLiveData<List<ReportsCategoriesItem>>()
+//    val listItemsOfCategoriesForRecycler: LiveData<List<ReportsCategoriesItem>>
+//        get() = _listItemsOfCategoriesForRecycler
+//
+//    private val _listItemsOfCashAccountsForRecycler =
+//        MutableLiveData<List<ReportsCashAccountItem>>()
+//    val listItemsOfCashAccountsForRecycler: LiveData<List<ReportsCashAccountItem>>
+//        get() = _listItemsOfCashAccountsForRecycler
+//
+//    private val _listItemsOfCurrenciesForRecycler = MutableLiveData<List<ReportsCurrenciesItem>>()
+//    val listItemsOfCurrenciesForRecycler:LiveData<List<ReportsCurrenciesItem>>
+//            get() = _listItemsOfCurrenciesForRecycler
 
     private var stateRecycler: String = StatesReportsRecycler.None.name
 
@@ -97,7 +98,7 @@ class ReportsViewModel(
     private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
     private lateinit var listItemsOfCurrencies: List<ReportsCurrenciesItem>
 
-    private lateinit var listFullMoneyMoving:Deferred<List<FullMoneyMoving>?>
+    private lateinit var listFullMoneyMoving: Deferred<List<FullMoneyMoving>?>
 
     init {
         getTimePeriodsSP()
@@ -147,6 +148,10 @@ class ReportsViewModel(
 
     fun getMap(): MutableLiveData<Map<String, Double>?> {
         return _map
+    }
+
+    suspend fun getListOfFullMoneyMovements(): List<FullMoneyMoving>? {
+        return listFullMoneyMoving.await()
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
@@ -219,7 +224,7 @@ class ReportsViewModel(
         runBlocking {
             val query = createQuery()
 
-            listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query)}
+            listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
 //            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
 //                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
             if (!listFullMoneyMoving.await().isNullOrEmpty()) {
@@ -242,5 +247,13 @@ class ReportsViewModel(
 
     suspend fun getNumbersOfCategories(): Int {
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory).size
+    }
+
+    fun getListOfCategoriesItems(): List<ReportsCategoriesItem> {
+        return listItemsOfCategories
+    }
+
+    suspend fun getListOfCategories(): List<Categories> {
+        return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
     }
 }

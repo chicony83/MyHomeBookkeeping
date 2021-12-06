@@ -16,7 +16,7 @@
             android:layout_height="wrap_content" />
 
         <CheckBox
-            android:id="@+id/checkbox"
+            android:id="@+id/isChecked"
             style="@style/ReportsItemCheckBox"
             tools:checked="true" />
 

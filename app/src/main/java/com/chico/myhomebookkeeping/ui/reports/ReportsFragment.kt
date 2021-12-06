@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
-import com.chico.myhomebookkeeping.ui.reports.dialogs.category.CategorySelectDialog
+import com.chico.myhomebookkeeping.ui.reports.dialogs.category.ReportsCategorySelectDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -47,7 +47,7 @@ class ReportsFragment : Fragment() {
         }
 
         with(reportsViewModel) {
-            buttonTextOfTimePeriod.observe(viewLifecycleOwner,{
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
                 binding.selectTimePeriodButton.text = it
             })
             getMap().observe(viewLifecycleOwner, { map ->
@@ -96,9 +96,12 @@ class ReportsFragment : Fragment() {
 //                }
 //            }
             selectCategoryButton.setOnClickListener {
-                val dialog = CategorySelectDialog()
+                launchUi {
+                    val dialog =
+                        ReportsCategorySelectDialog(reportsViewModel.getListOfCategories())
 
-                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                    dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+                }
 
 //                uiHelper.showUiElement(binding.recyclerView)
 //                with(reportsViewModel) {

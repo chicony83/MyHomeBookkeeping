@@ -46,15 +46,15 @@ class ReportsAdapter(
                 name.text = reportsCategoriesItem.name
                 Message.log("loadItem reportsItem.id = ${reportsCategoriesItem.id}, reportsItem.name = ${reportsCategoriesItem.name}, reportsItem.isChecked = ${reportsCategoriesItem.isChecked}")
                 if (reportsCategoriesItem.isChecked){
-                    checkbox.isChecked = true
+//                    checkbox.isChecked = true
                 }
-                checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-                    run {
-                        if (isChecked) checkedCallBackListener.onChecked(reportsCategoriesItem.id)
-                        if (!isChecked) checkedCallBackListener.onUnChecked(reportsCategoriesItem.id)
-                    }
-
-                }
+//                checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+//                    run {
+//                        if (isChecked) checkedCallBackListener.onChecked(reportsCategoriesItem.id)
+//                        if (!isChecked) checkedCallBackListener.onUnChecked(reportsCategoriesItem.id)
+//                    }
+//
+//                }
                 if (reportsCategoriesItem.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         itemView.setBackgroundColor(

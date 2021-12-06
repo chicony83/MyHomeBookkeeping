@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/RecyclerViewCard.ReportsItem"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/itemId"
+        style="@style/WrapContent_WrapContent"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/isChecked"
+        style="@style/ReportsItemCheckBox" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/MatchParent_WrapContent" />
+
+    <TextView
+        android:id="@+id/amount"
+        style="@style/MatchParent_WrapContent" />
+</LinearLayout>
