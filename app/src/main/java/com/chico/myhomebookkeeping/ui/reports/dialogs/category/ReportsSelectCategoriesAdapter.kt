@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.reports.dialogs.category
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,19 +41,34 @@ class ReportsSelectCategoriesAdapter(
             amountTextView = itemView.findViewById(R.id.amount)
         }
 
-        fun bind(categoriesList: Categories) {
+        fun bind(categories: Categories) {
+
+            if (categories.isIncome){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    itemView.setBackgroundColor(
+                        itemView.resources.getColor(R.color.incomeBackgroundColor,null)
+                    )
+                }
+            }
+            if (!categories.isIncome){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    itemView.setBackgroundColor(
+                        itemView.resources.getColor(R.color.spendingBackgroundColor,null)
+                    )
+                }
+            }
 
             isCheckedCheckBox?.setOnCheckedChangeListener { buttonView, isChecked ->
                 run {
-                    if (isChecked) categoriesList.categoriesId?.let {
+                    if (isChecked) categories.categoriesId?.let {
                         onItemCheckedCallBack.onChecked(it)
                     }
-                    if (!isChecked) categoriesList.categoriesId?.let {
+                    if (!isChecked) categories.categoriesId?.let {
                         onItemCheckedCallBack.onUnChecked(it)
                     }
                 }
             }
-            nameTextView?.text = categoriesList.categoryName
+            nameTextView?.text = categories.categoryName
 
         }
 
