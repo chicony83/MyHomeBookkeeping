@@ -123,7 +123,8 @@ class CurrenciesFragment : Fragment() {
     private fun showNewCurrencyDialog() {
         val result = currenciesViewModel.getNamesList()
         launchUi {
-            val dialog = NewCurrencyDialog(result, object : OnAddNewCurrencyCallBack {
+            val dialog = NewCurrencyDialog(result,
+                object : OnAddNewCurrencyCallBack {
                 override fun addAndSelect(name: String, isSelect: Boolean) {
                     val currencies = Currencies(currencyName = name)
                     val result = currenciesViewModel.addNewCurrency(currencies)

@@ -10,9 +10,13 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
+import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategoriesCallBack
 import java.lang.IllegalStateException
 
-class ReportsSelectCategoriesDialog(private val categoriesList: List<Categories>) : DialogFragment() {
+class ReportsSelectCategoriesDialog(
+    private val categoriesList: List<Categories>,
+    private val onSelectedCategoriesCallBack: OnSelectedCategoriesCallBack
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -46,6 +50,11 @@ class ReportsSelectCategoriesDialog(private val categoriesList: List<Categories>
                 }
 
             })
+
+            submitButton.setOnClickListener {
+                onSelectedCategoriesCallBack.select(reportsCategoriesViewModel.getCategoriesSet())
+                dialogCancel()
+            }
 
             cancelButton.setOnClickListener {
                 dialogCancel()

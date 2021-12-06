@@ -17,6 +17,10 @@ class ReportsSelectCategoriesViewModel(
     }
 
     private fun getSetToString() {
-        Message.log( " selected items ${selectedCategoriesSet.joinToString ()}")
+        Message.log(" selected items ${selectedCategoriesSet.joinToString()}")
+    }
+
+    fun getCategoriesSet(): Set<Int> {
+        return selectedCategoriesSet.sorted().toSet()
     }
 }

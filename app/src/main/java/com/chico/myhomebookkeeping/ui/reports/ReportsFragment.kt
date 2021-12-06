@@ -10,8 +10,10 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategoriesCallBack
 import com.chico.myhomebookkeeping.ui.reports.dialogs.category.ReportsSelectCategoriesDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -98,7 +100,16 @@ class ReportsFragment : Fragment() {
             selectCategoryButton.setOnClickListener {
                 launchUi {
                     val dialog =
-                        ReportsSelectCategoriesDialog(reportsViewModel.getListOfCategories())
+                        ReportsSelectCategoriesDialog(reportsViewModel.getListOfCategories(),
+                        object : OnSelectedCategoriesCallBack{
+                            override fun select(categoriesSet: Set<Int>) {
+                                Message.log(" categories set in reports = ${categoriesSet.joinToString ()}")
+                            }
+
+                        }
+                            )
+
+
                     dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
                 }
 
