@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 import java.lang.IllegalStateException
 
-class ReportsCategorySelectDialog(private val listOfCategories: List<Categories>) : DialogFragment() {
+class ReportsCategorySelectDialog(private val categoriesList: List<Categories>) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -29,9 +30,22 @@ class ReportsCategorySelectDialog(private val listOfCategories: List<Categories>
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
 
-            Message.log("--- size list of Categories items = ${listOfCategories.size}")
+            val reportsCategoriesViewModel = ReportsCategoriesViewModel()
 
-            recyclerView.adapter = ReportsCategoriesAdapter(listOfCategories)
+            recyclerView.setItemViewCacheSize(categoriesList.size)
+
+            recyclerView.adapter = ReportsCategoriesAdapter(categoriesList,object :OnItemCheckedCallBack{
+                override fun onChecked(id: Int) {
+                    Message.log("checked id = $id")
+                    reportsCategoriesViewModel.addCategoryInSetOfCategories(id)
+                }
+
+                override fun onUnChecked(id: Int) {
+                    Message.log("unchecked id = $id")
+                    reportsCategoriesViewModel.deleteCategoryInSetOfCategories(id)
+                }
+
+            })
 
             cancelButton.setOnClickListener {
                 dialogCancel()

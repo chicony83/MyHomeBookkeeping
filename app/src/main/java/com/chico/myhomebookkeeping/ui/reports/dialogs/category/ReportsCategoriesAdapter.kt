@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsCategoriesAdapter(
-    private val categoriesList: List<Categories>
+    private val categoriesList: List<Categories>,
+    private val onItemCheckedCallBack: OnItemCheckedCallBack
 ) :
     RecyclerView.Adapter<ReportsCategoriesAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,7 +41,19 @@ class ReportsCategoriesAdapter(
         }
 
         fun bind(categoriesList: Categories) {
+
+            isCheckedCheckBox?.setOnCheckedChangeListener { buttonView, isChecked ->
+                run {
+                    if (isChecked) categoriesList.categoriesId?.let {
+                        onItemCheckedCallBack.onChecked(it)
+                    }
+                    if (!isChecked) categoriesList.categoriesId?.let {
+                        onItemCheckedCallBack.onUnChecked(it)
+                    }
+                }
+            }
             nameTextView?.text = categoriesList.categoryName
+
         }
 
     }
