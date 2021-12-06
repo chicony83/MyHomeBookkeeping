@@ -59,21 +59,25 @@ class ReportsSelectCategoriesDialog(
 
             selectNoneButton.setOnClickListener {
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
+                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             selectAllButton.setOnClickListener {
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
                 stateCategoriesAdapter[stateSelectAll] = true
+                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             selectAllIncomeButton.setOnClickListener {
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
                 stateCategoriesAdapter[stateSelectAllIncome] = true
+                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             selectAllSpendingButton.setOnClickListener {
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
                 stateCategoriesAdapter[stateSelectAllSpending] = true
+                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             submitButton.setOnClickListener {

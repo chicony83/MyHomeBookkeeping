@@ -9,13 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsSelectCategoriesAdapter(
-    stateCategoriesAdapter: MutableMap<String, Boolean>,
+    private val stateCategoriesAdapter: MutableMap<String, Boolean>,
     private val categoriesList: List<Categories>,
     private val onItemCheckedCallBack: OnItemCheckedCallBack,
-
     ) :
     RecyclerView.Adapter<ReportsSelectCategoriesAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,6 +44,22 @@ class ReportsSelectCategoriesAdapter(
         }
 
         fun bind(categories: Categories) {
+            if (stateCategoriesAdapter[StatesReportsCategoriesAdapter.SelectNone.name] == true){
+                isCheckedCheckBox?.isChecked = false
+            }
+            if (stateCategoriesAdapter[StatesReportsCategoriesAdapter.SelectAll.name] == true){
+                isCheckedCheckBox?.isChecked = true
+            }
+            if (stateCategoriesAdapter[StatesReportsCategoriesAdapter.SelectAllIncome.name] == true){
+                if (categories.isIncome){
+                    isCheckedCheckBox?.isChecked = true
+                }
+            }
+            if (stateCategoriesAdapter[StatesReportsCategoriesAdapter.SelectAllSpending.name] == true){
+                if (!categories.isIncome){
+                    isCheckedCheckBox?.isChecked = true
+                }
+            }
             if (categories.isIncome){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     itemView.setBackgroundColor(
