@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 import java.lang.IllegalStateException
 
-class ReportsCategorySelectDialog(private val categoriesList: List<Categories>) : DialogFragment() {
+class ReportsSelectCategoriesDialog(private val categoriesList: List<Categories>) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -30,11 +30,11 @@ class ReportsCategorySelectDialog(private val categoriesList: List<Categories>) 
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
 
-            val reportsCategoriesViewModel = ReportsCategoriesViewModel()
+            val reportsCategoriesViewModel = ReportsSelectCategoriesViewModel()
 
             recyclerView.setItemViewCacheSize(categoriesList.size)
 
-            recyclerView.adapter = ReportsCategoriesAdapter(categoriesList,object :OnItemCheckedCallBack{
+            recyclerView.adapter = ReportsSelectCategoriesAdapter(categoriesList,object :OnItemCheckedCallBack{
                 override fun onChecked(id: Int) {
                     Message.log("checked id = $id")
                     reportsCategoriesViewModel.addCategoryInSetOfCategories(id)

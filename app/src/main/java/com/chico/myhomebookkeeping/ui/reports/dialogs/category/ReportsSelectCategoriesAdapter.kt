@@ -10,11 +10,11 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
-class ReportsCategoriesAdapter(
+class ReportsSelectCategoriesAdapter(
     private val categoriesList: List<Categories>,
     private val onItemCheckedCallBack: OnItemCheckedCallBack
 ) :
-    RecyclerView.Adapter<ReportsCategoriesAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ReportsSelectCategoriesAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_view_item_categories_for_reports, parent, false)

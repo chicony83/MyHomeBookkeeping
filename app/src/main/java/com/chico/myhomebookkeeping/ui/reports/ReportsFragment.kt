@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
-import com.chico.myhomebookkeeping.ui.reports.dialogs.category.ReportsCategorySelectDialog
+import com.chico.myhomebookkeeping.ui.reports.dialogs.category.ReportsSelectCategoriesDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -98,8 +98,7 @@ class ReportsFragment : Fragment() {
             selectCategoryButton.setOnClickListener {
                 launchUi {
                     val dialog =
-                        ReportsCategorySelectDialog(reportsViewModel.getListOfCategories())
-
+                        ReportsSelectCategoriesDialog(reportsViewModel.getListOfCategories())
                     dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
                 }
 

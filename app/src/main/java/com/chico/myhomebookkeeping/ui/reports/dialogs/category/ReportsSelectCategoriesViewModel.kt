@@ -2,7 +2,7 @@ package com.chico.myhomebookkeeping.ui.reports.dialogs.category
 
 import com.chico.myhomebookkeeping.helpers.Message
 
-class ReportsCategoriesViewModel(
+class ReportsSelectCategoriesViewModel(
     private var selectedCategoriesSet: MutableSet<Int> = mutableSetOf()
 ) {
 
