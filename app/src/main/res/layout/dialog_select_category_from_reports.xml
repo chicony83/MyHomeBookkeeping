@@ -31,6 +31,14 @@
         app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"
         app:layout_constraintTop_toBottomOf="@id/selectAllButton" />
 
+    <Button
+        android:id="@+id/selectNoneButton"
+        style="@style/ButtonFullWidth"
+        android:text="select none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectAllSpendingButton" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalCenterLayout"
         android:layout_width="wrap_content"
@@ -45,7 +53,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectAllSpendingButton" />
+        app:layout_constraintTop_toBottomOf="@id/selectNoneButton" />
 
     <Button
         android:id="@+id/submitButton"

@@ -12,9 +12,11 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsSelectCategoriesAdapter(
+    stateCategoriesAdapter: MutableMap<String, Boolean>,
     private val categoriesList: List<Categories>,
-    private val onItemCheckedCallBack: OnItemCheckedCallBack
-) :
+    private val onItemCheckedCallBack: OnItemCheckedCallBack,
+
+    ) :
     RecyclerView.Adapter<ReportsSelectCategoriesAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -42,7 +44,6 @@ class ReportsSelectCategoriesAdapter(
         }
 
         fun bind(categories: Categories) {
-
             if (categories.isIncome){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     itemView.setBackgroundColor(
