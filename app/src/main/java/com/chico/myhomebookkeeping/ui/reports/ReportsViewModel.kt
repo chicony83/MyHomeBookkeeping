@@ -100,7 +100,15 @@ class ReportsViewModel(
     private lateinit var selectedCategoriesSet: Set<Int>
 
     private lateinit var listFullMoneyMoving: Deferred<List<FullMoneyMoving>?>
-
+    private var numbersOfAllCategories = 0
+//    private val startTimePeriodName = ReportsParamsNames.StartTimePeriodLong.name
+//    private val endTimePeriodName = ReportsParamsNames.EndTimePeriodLong.name
+//    private val numbersOfCategoriesName = ReportsParamsNames.NumberOfCategories.name
+//    private var reportsParam = mutableMapOf<String,Int>(
+//        startTimePeriodName to 0,
+//        endTimePeriodName to 0,
+//        numbersOfCategoriesName to 0
+//    )
     init {
         getTimePeriodsSP()
         setTextOnButtons()
@@ -126,7 +134,7 @@ class ReportsViewModel(
             )
         }
         launchIo {
-            getCategoriesList()
+//            getCategoriesList()
             getCategoriesSet()
         }
         launchIo {
@@ -141,6 +149,8 @@ class ReportsViewModel(
         selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
             CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
         )
+        numbersOfAllCategories = selectedCategoriesSet.size
+//        Message.log(" number of all Categories = $numbersOfAllCategories")
     }
 
     private suspend fun getCategoriesList() {
@@ -258,7 +268,8 @@ class ReportsViewModel(
         return ReportsCreateSimpleQuery.createSampleQueryForReports(
             startTimePeriodLong = startTimePeriodLongSP,
             endTimePeriodLong = endTimePeriodLongSP,
-            setItemsOfCategories = selectedCategoriesSet
+            setItemsOfCategories = selectedCategoriesSet,
+            numbersOfAllCategories = numbersOfAllCategories
         )
     }
 

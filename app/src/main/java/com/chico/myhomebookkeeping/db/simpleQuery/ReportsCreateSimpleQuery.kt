@@ -106,33 +106,35 @@ object ReportsCreateSimpleQuery {
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
-        setItemsOfCategories: Set<Int>
+        setItemsOfCategories: Set<Int>,
+        numbersOfAllCategories: Int
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving()
         val argsList: ArrayList<Int> = arrayListOf()
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
 
-        if (countCategories == 1) {
-            query += addAnd()
-            query += addCategory()
-            for (i in listSelectedCategories.indices) {
-                argsList.add(listSelectedCategories[i])
-            }
-        }
-        if (countCategories > 1) {
-            var counter = 0
-            query += addAnd()
-            query += " ( "
-            for (i in listSelectedCategories.indices) {
-                counter++
-                if (counter > 1) {
-                    query += addOr()
+        if (setItemsOfCategories.size != numbersOfAllCategories) {
+            if (countCategories == 1) {
+                query += addAnd()
+                query += addCategory()
+                for (i in listSelectedCategories.indices) {
+                    argsList.add(listSelectedCategories[i])
                 }
-                query += addCategory(listSelectedCategories[i])
-//                argsList.add(listSelectedCategories[i])
             }
-            query += " ) "
+            if (countCategories > 1) {
+                var counter = 0
+                query += addAnd()
+                query += " ( "
+                for (i in listSelectedCategories.indices) {
+                    counter++
+                    if (counter > 1) {
+                        query += addOr()
+                    }
+                    query += addCategory(listSelectedCategories[i])
+                }
+                query += " ) "
+            }
         }
 
         query = checkTimePeriod(startTimePeriodLong, endTimePeriodLong, query)
@@ -147,6 +149,5 @@ object ReportsCreateSimpleQuery {
     private fun addOr(): String {
         return " OR "
     }
-
 
 }

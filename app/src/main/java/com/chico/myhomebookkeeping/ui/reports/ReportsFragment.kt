@@ -100,10 +100,12 @@ class ReportsFragment : Fragment() {
             selectCategoryButton.setOnClickListener {
                 launchUi {
                     val dialog =
-                        ReportsSelectCategoriesDialog(reportsViewModel.getListOfCategories(),
+                        ReportsSelectCategoriesDialog(
+                            reportsViewModel.getListOfCategories(),
                             object : OnSelectedCategoriesCallBack {
                                 override fun select(categoriesSet: Set<Int>) {
-                                    val result: Boolean = reportsViewModel.updateSelectedCategories(categoriesSet)
+                                    val result: Boolean =
+                                        reportsViewModel.updateSelectedCategories(categoriesSet)
                                     Message.log(" categories set transferred in reports = ${categoriesSet.joinToString()}")
                                     launchUi {
                                         reportsViewModel.updateReports(result)
