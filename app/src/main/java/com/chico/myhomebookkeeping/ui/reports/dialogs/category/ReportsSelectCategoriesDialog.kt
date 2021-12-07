@@ -37,7 +37,7 @@ class ReportsSelectCategoriesDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
 
-            val reportsCategoriesViewModel = ReportsSelectCategoriesViewModel()
+            val reportsCategoriesViewModel = ReportsSelectCategoriesViewModel(categoriesList)
 
             val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
             val stateSelectAll: String = StatesReportsCategoriesAdapter.SelectAll.name
@@ -54,34 +54,41 @@ class ReportsSelectCategoriesDialog(
 
             recyclerView.setItemViewCacheSize(categoriesList.size)
 
-
             recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
 
             selectNoneButton.setOnClickListener {
+                reportsCategoriesViewModel.eraseSelectedCategories()
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
-                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
+                recyclerView.adapter =
+                    getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             selectAllButton.setOnClickListener {
+                reportsCategoriesViewModel.addAllInSelectedCategories()
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
                 stateCategoriesAdapter[stateSelectAll] = true
-                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
+                recyclerView.adapter =
+                    getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             selectAllIncomeButton.setOnClickListener {
+                reportsCategoriesViewModel.addAllIncomeInSelectedCategories()
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
                 stateCategoriesAdapter[stateSelectAllIncome] = true
-                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
+                recyclerView.adapter =
+                    getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             selectAllSpendingButton.setOnClickListener {
+                reportsCategoriesViewModel.addAllSpendingInSelectedCategories()
                 resetStateCategoriesAdapter(stateCategoriesAdapter)
                 stateCategoriesAdapter[stateSelectAllSpending] = true
-                recyclerView.adapter = getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
+                recyclerView.adapter =
+                    getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
             }
 
             submitButton.setOnClickListener {
-                onSelectedCategoriesCallBack.select(reportsCategoriesViewModel.getCategoriesSet())
+                onSelectedCategoriesCallBack.select(reportsCategoriesViewModel.getSelectedCategoriesSet())
                 dialogCancel()
             }
 
@@ -111,16 +118,16 @@ class ReportsSelectCategoriesDialog(
     ) =
         ReportsSelectCategoriesAdapter(
             stateCategoriesAdapter,
-            categoriesList,
+            reportsCategoriesViewModel.getCategoriesList(),
             object : OnItemCheckedCallBack {
                 override fun onChecked(id: Int) {
                     Message.log("checked id = $id")
-                    reportsCategoriesViewModel.addCategoryInSetOfCategories(id)
+                    reportsCategoriesViewModel.addCategoryInCategoriesSet(id)
                 }
 
                 override fun onUnChecked(id: Int) {
                     Message.log("unchecked id = $id")
-                    reportsCategoriesViewModel.deleteCategoryInSetOfCategories(id)
+                    reportsCategoriesViewModel.deleteCategoryInCategoriesSet(id)
                 }
 
             })

@@ -75,7 +75,7 @@ class ReportsSelectCategoriesAdapter(
                 }
             }
 
-            isCheckedCheckBox?.setOnCheckedChangeListener { buttonView, isChecked ->
+            isCheckedCheckBox?.setOnCheckedChangeListener { _, isChecked ->
                 run {
                     if (isChecked) categories.categoriesId?.let {
                         onItemCheckedCallBack.onChecked(it)
@@ -86,8 +86,6 @@ class ReportsSelectCategoriesAdapter(
                 }
             }
             nameTextView?.text = categories.categoryName
-
         }
-
     }
 }

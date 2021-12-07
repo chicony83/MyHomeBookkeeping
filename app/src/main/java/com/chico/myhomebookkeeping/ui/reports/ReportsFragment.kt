@@ -101,13 +101,13 @@ class ReportsFragment : Fragment() {
                 launchUi {
                     val dialog =
                         ReportsSelectCategoriesDialog(reportsViewModel.getListOfCategories(),
-                        object : OnSelectedCategoriesCallBack{
-                            override fun select(categoriesSet: Set<Int>) {
-                                Message.log(" categories set in reports = ${categoriesSet.joinToString ()}")
-                            }
+                            object : OnSelectedCategoriesCallBack {
+                                override fun select(categoriesSet: Set<Int>) {
+                                    Message.log(" categories set in reports = ${categoriesSet.joinToString()}")
+                                }
 
-                        }
-                            )
+                            }
+                        )
 
 
                     dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
