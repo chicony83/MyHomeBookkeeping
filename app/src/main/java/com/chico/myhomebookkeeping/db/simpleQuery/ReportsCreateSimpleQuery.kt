@@ -19,18 +19,23 @@ object ReportsCreateSimpleQuery {
     private fun checkTimePeriod(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
-        query: String
+        query: String,
+        argsList: ArrayList<Any>
     ): String {
         var query1 = query
         if ((startTimePeriodLong > 0) and (endTimePeriodLong > 0)) {
-            query1 += "AND time_stamp BETWEEN $startTimePeriodLong AND $endTimePeriodLong"
+            query1 += " AND time_stamp BETWEEN :startTime AND :endTime "
+            argsList.add(startTimePeriodLong)
+            argsList.add(endTimePeriodLong)
         }
         if ((startTimePeriodLong > 0) xor (endTimePeriodLong > 0)) {
             if (startTimePeriodLong > 0) {
-                query1 += "AND time_stamp > $startTimePeriodLong"
+                query1 += " AND time_stamp > :startTime "
+                argsList.add(startTimePeriodLong)
             }
             if (endTimePeriodLong > 0) {
-                query1 += "AND time_stamp < $endTimePeriodLong"
+                query1 += " AND time_stamp < :endTime"
+                argsList.add(endTimePeriodLong)
             }
         }
         return query1
@@ -56,7 +61,7 @@ object ReportsCreateSimpleQuery {
         numbersOfAllCategories: Int
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving()
-        val argsList: ArrayList<Int> = arrayListOf()
+        val argsList: ArrayList<Any> = arrayListOf()
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
 
@@ -83,9 +88,9 @@ object ReportsCreateSimpleQuery {
             }
         }
 
-        query = checkTimePeriod(startTimePeriodLong, endTimePeriodLong, query)
+        query = checkTimePeriod(startTimePeriodLong, endTimePeriodLong, query, argsList)
 
-        Message.log("ARGS ${argsList.joinToString()}")
+        Message.log(" ARGS ${argsList.joinToString()}")
         Message.log(query)
 
         val args: Array<Any> = argsList.toArray()

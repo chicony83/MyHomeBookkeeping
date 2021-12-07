@@ -150,7 +150,7 @@ class ReportsViewModel(
 
             listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
 
-//            Message.log("result of get List fulMoneyMoving ${listFullMoneyMoving.await()?.joinToString()}")
+            Message.log("result of get List fulMoneyMoving ${listFullMoneyMoving.await()?.joinToString()}")
 //            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
 //                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
             if (!listFullMoneyMoving.await().isNullOrEmpty()) {
