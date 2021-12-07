@@ -57,4 +57,12 @@ object ConvToList {
             .groupBy { it.categoryNameValue }
             .mapValues { it.value.sumOf { it.amount } }
     }
+
+    fun categoriesListToSelectedCategoriesSet(categoriesList: List<Categories>): Set<Int> {
+        return categoriesList.map { it.categoriesId ?: 0 }.toSet()
+
+//        val newSet = mutableSetOf<Int>()
+//        categoriesList.forEach { newSet.add(it.categoriesId ?: 0) }
+//        return newSet
+    }
 }

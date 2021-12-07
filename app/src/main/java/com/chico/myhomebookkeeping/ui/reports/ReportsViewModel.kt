@@ -19,16 +19,15 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
 import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
 class ReportsViewModel(
@@ -98,6 +97,8 @@ class ReportsViewModel(
     private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
     private lateinit var listItemsOfCurrencies: List<ReportsCurrenciesItem>
 
+    private lateinit var selectedCategoriesSet: Set<Int>
+
     private lateinit var listFullMoneyMoving: Deferred<List<FullMoneyMoving>?>
 
     init {
@@ -126,6 +127,7 @@ class ReportsViewModel(
         }
         launchIo {
             getCategoriesList()
+            getCategoriesSet()
         }
         launchIo {
             listItemsOfCurrencies = ConvToList.currenciesListToReportsItemsList(
@@ -133,6 +135,12 @@ class ReportsViewModel(
             )
         }
         return true
+    }
+
+    private suspend fun getCategoriesSet() {
+        selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
+            CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
+        )
     }
 
     private suspend fun getCategoriesList() {
@@ -225,6 +233,8 @@ class ReportsViewModel(
             val query = createQuery()
 
             listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
+
+            Message.log("result of get List fulMoneyMoving ${listFullMoneyMoving.await()?.joinToString()}")
 //            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
 //                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
             if (!listFullMoneyMoving.await().isNullOrEmpty()) {
@@ -235,13 +245,20 @@ class ReportsViewModel(
         }
     }
 
+    //    private fun createQuery(): SimpleSQLiteQuery {
+//        return ReportsCreateSimpleQuery.createSampleQueryForReports(
+//            startTimePeriodLongSP,
+//            endTimePeriodLongSP,
+////            listItemsOfCashAccounts,
+////            listItemsOfCurrencies,
+//            listItemsOfCategories
+//        )
+//    }
     private fun createQuery(): SimpleSQLiteQuery {
         return ReportsCreateSimpleQuery.createSampleQueryForReports(
-            startTimePeriodLongSP,
-            endTimePeriodLongSP,
-//            listItemsOfCashAccounts,
-//            listItemsOfCurrencies,
-            listItemsOfCategories
+            startTimePeriodLong = startTimePeriodLongSP,
+            endTimePeriodLong = endTimePeriodLongSP,
+            setItemsOfCategories = selectedCategoriesSet
         )
     }
 
@@ -255,5 +272,10 @@ class ReportsViewModel(
 
     suspend fun getListOfCategories(): List<Categories> {
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
+    }
+
+    fun updateSelectedCategories(categoriesSet: Set<Int>): Boolean {
+        selectedCategoriesSet = categoriesSet
+        return true
     }
 }

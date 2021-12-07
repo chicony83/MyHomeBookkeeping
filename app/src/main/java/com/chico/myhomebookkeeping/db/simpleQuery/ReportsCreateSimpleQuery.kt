@@ -2,9 +2,7 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(): String {
@@ -27,7 +25,6 @@ object ReportsCreateSimpleQuery {
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving()
         val argsList: ArrayList<Any> = arrayListOf()
-
 
         val countCategories: Int = countCategories(listItemsOfCategories)
         Message.log("count categories = $countCategories")
@@ -94,5 +91,29 @@ object ReportsCreateSimpleQuery {
     private fun addAnd(): String {
         return " AND "
     }
+    fun createSampleQueryForReports(
+        startTimePeriodLong: Long,
+        endTimePeriodLong: Long,
+        setItemsOfCategories: Set<Int>
+    ): SimpleSQLiteQuery {
+        var query = mainQueryFullMoneyMoving()
+        val argsList:ArrayList<Int> = arrayListOf()
+        val listSelectedCategories = setItemsOfCategories.toList()
+        val countCategories = listSelectedCategories.size
+
+        if (countCategories == 1){
+            query += addAnd()
+            query += addCategory()
+            for (i in listSelectedCategories.indices){
+                argsList.add(listSelectedCategories[i])
+            }
+        }
+        Message.log("ARGS ${argsList.joinToString()}")
+        Message.log(query)
+
+        val args:Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query,args)
+    }
+
 
 }
