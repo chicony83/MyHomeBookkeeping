@@ -55,20 +55,31 @@ object ReportsCreateSimpleQuery {
             query += ")"
         }
 
-        if ((startTimePeriodLong > 0) and (endTimePeriodLong > 0)) {
-            query += "AND time_stamp BETWEEN $startTimePeriodLong AND $endTimePeriodLong"
-        }
-        if ((startTimePeriodLong > 0) xor (endTimePeriodLong > 0)) {
-            if (startTimePeriodLong>0){
-                query += "AND time_stamp > $startTimePeriodLong"
-            }
-            if (endTimePeriodLong > 0){
-                query += "AND time_stamp < $endTimePeriodLong"
-            }
-        }
+        query = checkTimePeriod(startTimePeriodLong, endTimePeriodLong, query)
+
         Message.log(query)
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
+    }
+
+    private fun checkTimePeriod(
+        startTimePeriodLong: Long,
+        endTimePeriodLong: Long,
+        query: String
+    ): String {
+        var query1 = query
+        if ((startTimePeriodLong > 0) and (endTimePeriodLong > 0)) {
+            query1 += "AND time_stamp BETWEEN $startTimePeriodLong AND $endTimePeriodLong"
+        }
+        if ((startTimePeriodLong > 0) xor (endTimePeriodLong > 0)) {
+            if (startTimePeriodLong > 0) {
+                query1 += "AND time_stamp > $startTimePeriodLong"
+            }
+            if (endTimePeriodLong > 0) {
+                query1 += "AND time_stamp < $endTimePeriodLong"
+            }
+        }
+        return query1
     }
 
     private fun addCategory(id: Int): String {
@@ -91,28 +102,50 @@ object ReportsCreateSimpleQuery {
     private fun addAnd(): String {
         return " AND "
     }
+
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
         setItemsOfCategories: Set<Int>
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving()
-        val argsList:ArrayList<Int> = arrayListOf()
+        val argsList: ArrayList<Int> = arrayListOf()
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
 
-        if (countCategories == 1){
+        if (countCategories == 1) {
             query += addAnd()
             query += addCategory()
-            for (i in listSelectedCategories.indices){
+            for (i in listSelectedCategories.indices) {
                 argsList.add(listSelectedCategories[i])
             }
         }
+        if (countCategories > 1) {
+            var counter = 0
+            query += addAnd()
+            query += " ( "
+            for (i in listSelectedCategories.indices) {
+                counter++
+                if (counter > 1) {
+                    query += addOr()
+                }
+                query += addCategory(listSelectedCategories[i])
+//                argsList.add(listSelectedCategories[i])
+            }
+            query += " ) "
+        }
+
+        query = checkTimePeriod(startTimePeriodLong, endTimePeriodLong, query)
+
         Message.log("ARGS ${argsList.joinToString()}")
         Message.log(query)
 
-        val args:Array<Any> = argsList.toArray()
-        return SimpleSQLiteQuery(query,args)
+        val args: Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query, args)
+    }
+
+    private fun addOr(): String {
+        return " OR "
     }
 
 
