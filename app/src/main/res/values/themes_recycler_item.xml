@@ -12,6 +12,14 @@
         <item name="android:paddingBottom">@dimen/margin_normal</item>
         <item name="cardElevation">@dimen/margin_half_normal</item>
     </style>
+    <style name="RecyclerViewCard.Dialogs">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="cardElevation">0dp</item>
+
+    </style>
 
     <style name="RecyclerViewCard.ReportsItem">
     </style>
@@ -43,6 +51,13 @@
         <item name="android:paddingEnd">@dimen/margin_double</item>
         <item name="android:paddingTop">@dimen/margin_normal</item>
         <item name="android:paddingBottom">@dimen/margin_normal</item>
+    </style>
+    <style name="RecyclerViewItem.Dialogs">
+        <item name="android:elevation">0dp</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+        <item name="android:paddingTop">@dimen/margin_half_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_half_normal</item>
     </style>
 
     <style name="RecyclerViewItem.MoneyMoving">

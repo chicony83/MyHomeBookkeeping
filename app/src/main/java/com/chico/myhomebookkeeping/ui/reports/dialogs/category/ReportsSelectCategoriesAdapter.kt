@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
@@ -62,20 +63,20 @@ class ReportsSelectCategoriesAdapter(
                     isCheckedCheckBox?.isChecked = true
                 }
             }
-            if (categories.isIncome){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    cardViewItem?.setBackgroundColor(
-                        itemView.resources.getColor(R.color.incomeBackgroundColor,null)
-                    )
-                }
-            }
-            if (!categories.isIncome){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    cardViewItem?.setBackgroundColor(
-                        itemView.resources.getColor(R.color.spendingBackgroundColor,null)
-                    )
-                }
-            }
+//            if (categories.isIncome){
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    nameTextView?.setBackgroundColor(
+//                        itemView.resources.getColor(R.color.incomeBackgroundColor,null)
+//                    )
+//                }
+//            }
+//            if (!categories.isIncome){
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    nameTextView?.setBackgroundColor(
+//                        itemView.resources.getColor(R.color.spendingBackgroundColor,null)
+//                    )
+//                }
+//            }
 
             isCheckedCheckBox?.setOnCheckedChangeListener { _, isChecked ->
                 run {

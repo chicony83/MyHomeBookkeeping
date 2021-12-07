@@ -20,6 +20,21 @@ class ReportsSelectCategoriesDialog(
     private val onSelectedCategoriesCallBack: OnSelectedCategoriesCallBack
 ) : DialogFragment() {
 
+    private lateinit var recyclerView: RecyclerView
+    private var reportsCategoriesViewModel = ReportsSelectCategoriesViewModel(categoriesList)
+    private val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
+    private val stateSelectAll: String = StatesReportsCategoriesAdapter.SelectAll.name
+    private val stateSelectAllIncome: String = StatesReportsCategoriesAdapter.SelectAllIncome.name
+    private val stateSelectAllSpending: String =
+        StatesReportsCategoriesAdapter.SelectAllSpending.name
+
+    private var stateCategoriesAdapter = mutableMapOf<String, Boolean>(
+        selectNone to false,
+        stateSelectAll to false,
+        stateSelectAllIncome to false,
+        stateSelectAllSpending to false
+    )
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->
 
@@ -27,7 +42,7 @@ class ReportsSelectCategoriesDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_select_category_from_reports, null)
 
-            val recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerView)
+            recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerView)
 
             val selectNoneButton = layout.findViewById<Button>(R.id.selectNoneButton)
             val selectAllButton = layout.findViewById<Button>(R.id.selectAllButton)
@@ -36,21 +51,6 @@ class ReportsSelectCategoriesDialog(
 
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
-
-            val reportsCategoriesViewModel = ReportsSelectCategoriesViewModel(categoriesList)
-
-            val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
-            val stateSelectAll: String = StatesReportsCategoriesAdapter.SelectAll.name
-            val stateSelectAllIncome: String = StatesReportsCategoriesAdapter.SelectAllIncome.name
-            val stateSelectAllSpending: String =
-                StatesReportsCategoriesAdapter.SelectAllSpending.name
-
-            var stateCategoriesAdapter = mutableMapOf<String, Boolean>(
-                selectNone to false,
-                stateSelectAll to false,
-                stateSelectAllIncome to false,
-                stateSelectAllSpending to false
-            )
 
             recyclerView.setItemViewCacheSize(categoriesList.size)
 
@@ -100,6 +100,14 @@ class ReportsSelectCategoriesDialog(
             builder.create()
 
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        resetStateCategoriesAdapter(stateCategoriesAdapter)
+        stateCategoriesAdapter[stateSelectAll] = true
+        recyclerView.adapter =
+            getAdapter(stateCategoriesAdapter, reportsCategoriesViewModel)
     }
 
     private fun resetStateCategoriesAdapter(stateCategoriesAdapter: MutableMap<String, Boolean>) {

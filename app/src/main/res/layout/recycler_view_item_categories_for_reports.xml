@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/RecyclerViewCard.Categories">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/RecyclerViewCard.Dialogs"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:id="@+id/categoriesItem"
-        style="@style/RecyclerViewItem"
+        style="@style/RecyclerViewItem.Dialogs"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/itemId"
             style="@style/WrapContent_WrapContent"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/isCheckedCheckBox"
-            style="@style/ReportsItemCheckBox"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/ReportsItemCheckBox" />
 
         <TextView
             android:id="@+id/nameTextView"
-            style="@style/MatchParent_WrapContent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/isCheckedCheckBox"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/MatchParent_WrapContent" />
 
         <TextView
             android:id="@+id/amount"
-            style="@style/WrapContent_WrapContent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/WrapContent_WrapContent" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
