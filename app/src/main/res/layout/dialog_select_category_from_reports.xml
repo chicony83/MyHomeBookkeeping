@@ -5,10 +5,23 @@
 
     <Button
         android:id="@+id/selectAllButton"
-        style="@style/ButtonFullWidth"
+        style="@style/DialogButtonRight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/text_on_button_select_all"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/verticalRightLayout"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:text="@string/text_on_button_reset"
+        android:id="@+id/selectNoneButton"
+        style="@style/DialogButtonRight"
+        android:textSize="@dimen/H6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/verticalRightLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -31,20 +44,19 @@
         app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"
         app:layout_constraintTop_toBottomOf="@id/selectAllButton" />
 
-    <Button
-        android:id="@+id/selectNoneButton"
-        style="@style/ButtonFullWidth"
-        android:text="select none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectAllSpendingButton" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalCenterLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalRightLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -53,7 +65,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectNoneButton" />
+        app:layout_constraintTop_toBottomOf="@id/selectAllIncomeButton" />
 
     <Button
         android:id="@+id/submitButton"
