@@ -4,7 +4,7 @@
     style="@style/DialogLayout">
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/nameTextView"
         android:hint="@string/hint_enter_name"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name">
+        app:layout_constraintTop_toBottomOf="@id/nameTextView">
 
         <RadioButton
             android:id="@+id/incomeRadioButton"

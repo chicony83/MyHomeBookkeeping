@@ -27,7 +27,7 @@ class NewCashAccountDialog(
 
             var namesList = listOf<String>()
 
-            val nameEditText = layout.findViewById<EditText>(R.id.name)
+            val nameEditText = layout.findViewById<EditText>(R.id.nameTextView)
             val numberEditText = layout.findViewById<EditText>(R.id.number)
             val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
 

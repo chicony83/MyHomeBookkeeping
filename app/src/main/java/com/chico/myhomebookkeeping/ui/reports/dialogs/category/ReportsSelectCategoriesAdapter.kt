@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
@@ -35,12 +36,13 @@ class ReportsSelectCategoriesAdapter(
         var isCheckedCheckBox: CheckBox? = null
         var nameTextView: TextView? = null
         var amountTextView: TextView? = null
-
+        var cardViewItem:LinearLayout? = null
         init {
             itemIdTextView = itemView.findViewById(R.id.itemId)
-            isCheckedCheckBox = itemView.findViewById(R.id.isChecked)
-            nameTextView = itemView.findViewById(R.id.name)
+            isCheckedCheckBox = itemView.findViewById(R.id.isCheckedCheckBox)
+            nameTextView = itemView.findViewById(R.id.nameTextView)
             amountTextView = itemView.findViewById(R.id.amount)
+            cardViewItem = itemView.findViewById(R.id.categoriesItem)
         }
 
         fun bind(categories: Categories) {
@@ -62,14 +64,14 @@ class ReportsSelectCategoriesAdapter(
             }
             if (categories.isIncome){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    itemView.setBackgroundColor(
+                    cardViewItem?.setBackgroundColor(
                         itemView.resources.getColor(R.color.incomeBackgroundColor,null)
                     )
                 }
             }
             if (!categories.isIncome){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    itemView.setBackgroundColor(
+                    cardViewItem?.setBackgroundColor(
                         itemView.resources.getColor(R.color.spendingBackgroundColor,null)
                     )
                 }

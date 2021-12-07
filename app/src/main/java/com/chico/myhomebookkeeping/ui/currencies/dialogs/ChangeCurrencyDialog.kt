@@ -23,7 +23,7 @@ class ChangeCurrencyDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_change_currency, null)
 
-            val nameEditText = layout.findViewById<EditText>(R.id.name)
+            val nameEditText = layout.findViewById<EditText>(R.id.nameTextView)
 
             val saveButton = layout.findViewById<Button>(R.id.saveButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)

@@ -23,7 +23,7 @@ class ChangeCashAccountDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_change_cash_account, null)
 
-            val nameEditText = layout.findViewById<EditText>(R.id.name)
+            val nameEditText = layout.findViewById<EditText>(R.id.nameTextView)
             val numberEditText = layout.findViewById<EditText>(R.id.number)
 
             val saveButton = layout.findViewById<Button>(R.id.saveButton)

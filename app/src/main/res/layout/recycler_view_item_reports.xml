@@ -16,12 +16,12 @@
             android:layout_height="wrap_content" />
 
         <CheckBox
-            android:id="@+id/isChecked"
+            android:id="@+id/isCheckedCheckBox"
             style="@style/ReportsItemCheckBox"
             tools:checked="true" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/nameTextView"
             style="@style/MatchParent_WrapContent"
             tools:text="income" />
     </LinearLayout>

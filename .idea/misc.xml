@@ -71,7 +71,7 @@
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/pop_up_menu.xml" value="0.3392210144927536" />
         <entry key="app/src/main/res/layout/recycler_view_item_cash_account.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recycler_view_item_categories_for_reports.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />

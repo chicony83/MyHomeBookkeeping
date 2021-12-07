@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/RecyclerViewCard.ReportsItem"
-    android:orientation="horizontal">
+<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/RecyclerViewCard.Categories">
 
-    <TextView
-        android:id="@+id/itemId"
-        style="@style/WrapContent_WrapContent"
-        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/categoriesItem"
+        style="@style/RecyclerViewItem"
+        android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/isChecked"
-        style="@style/ReportsItemCheckBox" />
+        <TextView
+            android:id="@+id/itemId"
+            style="@style/WrapContent_WrapContent"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/name"
-        style="@style/MatchParent_WrapContent" />
+        <CheckBox
+            android:id="@+id/isCheckedCheckBox"
+            style="@style/ReportsItemCheckBox"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/amount"
-        style="@style/MatchParent_WrapContent" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/nameTextView"
+            style="@style/MatchParent_WrapContent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/isCheckedCheckBox"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/amount"
+            style="@style/WrapContent_WrapContent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
