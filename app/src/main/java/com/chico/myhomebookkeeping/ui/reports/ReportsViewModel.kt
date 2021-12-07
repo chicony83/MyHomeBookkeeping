@@ -18,14 +18,12 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
-import com.chico.myhomebookkeeping.enums.StatesReportsRecycler
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.*
@@ -78,37 +76,14 @@ class ReportsViewModel(
 
     private val setText = SetTextOnButtons(app.resources)
 
-//    private val _listItemsOfCategoriesForRecycler = MutableLiveData<List<ReportsCategoriesItem>>()
-//    val listItemsOfCategoriesForRecycler: LiveData<List<ReportsCategoriesItem>>
-//        get() = _listItemsOfCategoriesForRecycler
-//
-//    private val _listItemsOfCashAccountsForRecycler =
-//        MutableLiveData<List<ReportsCashAccountItem>>()
-//    val listItemsOfCashAccountsForRecycler: LiveData<List<ReportsCashAccountItem>>
-//        get() = _listItemsOfCashAccountsForRecycler
-//
-//    private val _listItemsOfCurrenciesForRecycler = MutableLiveData<List<ReportsCurrenciesItem>>()
-//    val listItemsOfCurrenciesForRecycler:LiveData<List<ReportsCurrenciesItem>>
-//            get() = _listItemsOfCurrenciesForRecycler
-
-    private var stateRecycler: String = StatesReportsRecycler.None.name
-
     private lateinit var listItemsOfCashAccounts: List<ReportsCashAccountItem>
-    private lateinit var listItemsOfCategories: List<ReportsCategoriesItem>
     private lateinit var listItemsOfCurrencies: List<ReportsCurrenciesItem>
 
     private lateinit var selectedCategoriesSet: Set<Int>
 
     private lateinit var listFullMoneyMoving: Deferred<List<FullMoneyMoving>?>
     private var numbersOfAllCategories = 0
-//    private val startTimePeriodName = ReportsParamsNames.StartTimePeriodLong.name
-//    private val endTimePeriodName = ReportsParamsNames.EndTimePeriodLong.name
-//    private val numbersOfCategoriesName = ReportsParamsNames.NumberOfCategories.name
-//    private var reportsParam = mutableMapOf<String,Int>(
-//        startTimePeriodName to 0,
-//        endTimePeriodName to 0,
-//        numbersOfCategoriesName to 0
-//    )
+
     init {
         getTimePeriodsSP()
         setTextOnButtons()
@@ -134,7 +109,6 @@ class ReportsViewModel(
             )
         }
         launchIo {
-//            getCategoriesList()
             getCategoriesSet()
         }
         launchIo {
@@ -150,13 +124,6 @@ class ReportsViewModel(
             CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
         )
         numbersOfAllCategories = selectedCategoriesSet.size
-//        Message.log(" number of all Categories = $numbersOfAllCategories")
-    }
-
-    private suspend fun getCategoriesList() {
-        listItemsOfCategories = ConvToList.categoriesListToReportsItemsList(
-            CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
-        )
     }
 
     private fun getTimePeriodsSP() {
@@ -168,10 +135,6 @@ class ReportsViewModel(
         return _map
     }
 
-    suspend fun getListOfFullMoneyMovements(): List<FullMoneyMoving>? {
-        return listFullMoneyMoving.await()
-    }
-
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
 //        Message.log("query = ${query.sql}, args = ${query.argCount}")
 
@@ -181,70 +144,13 @@ class ReportsViewModel(
         return result
     }
 
-//    fun setRecyclerState(name: String) {
-//        Message.log("set state RecyclerView $name")
-//        stateRecycler = name
-//    }
-//
-//    fun postCategoriesList() {
-//        launchUi {
-//            _listItemsOfCategoriesForRecycler.postValue(listItemsOfCategories)
-//        }
-//    }
-//
-//    fun postCashAccountsList() {
-//        launchUi {
-//            _listItemsOfCashAccountsForRecycler.postValue(listItemsOfCashAccounts)
-//        }
-//    }
-
-//    fun postCurrenciesList() {
-//        launchUi {
-//            _listItemsOfCurrenciesForRecycler.postValue(listItemsOfCurrencies)
-//        }
-//    }
-//
-//    fun itemChecked(id: Int) {
-//        when (stateRecycler) {
-//            StatesReportsRecycler.ShowCurrencies.name -> {
-//                listItemsOfCurrencies[id].isChecked = true
-//            }
-//            StatesReportsRecycler.ShowCategories.name -> {
-//                listItemsOfCategories[id].isChecked = true
-//            }
-//            StatesReportsRecycler.ShowCashAccounts.name -> {
-//                listItemsOfCashAccounts[id].isChecked = true
-//            }
-//        }
-//    }
-
-    fun itemUnchecked(id: Int) {
-//        stateRecyclerMessage()
-        when (stateRecycler) {
-            StatesReportsRecycler.ShowCurrencies.name -> {
-                listItemsOfCurrencies[id].isChecked = false
-            }
-            StatesReportsRecycler.ShowCategories.name -> {
-                listItemsOfCurrencies[id].isChecked = false
-
-            }
-            StatesReportsRecycler.ShowCashAccounts.name -> {
-                listItemsOfCashAccounts[id].isChecked = false
-            }
-        }
-    }
-
-//    private fun stateRecyclerMessage() {
-//        Message.log("state recycler ${StatesReportsRecycler.ShowCurrencies.name}")
-//    }
-
     suspend fun updateReports(await: Boolean) {
         runBlocking {
             val query = createQuery()
 
             listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
 
-            Message.log("result of get List fulMoneyMoving ${listFullMoneyMoving.await()?.joinToString()}")
+//            Message.log("result of get List fulMoneyMoving ${listFullMoneyMoving.await()?.joinToString()}")
 //            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
 //                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
             if (!listFullMoneyMoving.await().isNullOrEmpty()) {
@@ -255,15 +161,6 @@ class ReportsViewModel(
         }
     }
 
-    //    private fun createQuery(): SimpleSQLiteQuery {
-//        return ReportsCreateSimpleQuery.createSampleQueryForReports(
-//            startTimePeriodLongSP,
-//            endTimePeriodLongSP,
-////            listItemsOfCashAccounts,
-////            listItemsOfCurrencies,
-//            listItemsOfCategories
-//        )
-//    }
     private fun createQuery(): SimpleSQLiteQuery {
         return ReportsCreateSimpleQuery.createSampleQueryForReports(
             startTimePeriodLong = startTimePeriodLongSP,
@@ -275,10 +172,6 @@ class ReportsViewModel(
 
     suspend fun getNumbersOfCategories(): Int {
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory).size
-    }
-
-    fun getListOfCategoriesItems(): List<ReportsCategoriesItem> {
-        return listItemsOfCategories
     }
 
     suspend fun getListOfCategories(): List<Categories> {

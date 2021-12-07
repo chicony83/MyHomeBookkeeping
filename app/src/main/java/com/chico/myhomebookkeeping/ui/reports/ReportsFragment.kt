@@ -10,9 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategoriesCallBack
 import com.chico.myhomebookkeeping.ui.reports.dialogs.category.ReportsSelectCategoriesDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -31,7 +29,6 @@ class ReportsFragment : Fragment() {
     private val charts = Charts()
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,26 +57,6 @@ class ReportsFragment : Fragment() {
                     charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
                 }
             })
-//            listItemsOfCategoriesForRecycler.observe(viewLifecycleOwner, {
-//                binding.recyclerView.adapter = ReportsAdapter(it, object : OnItemCheckedCallBack {
-//                    override fun onChecked(id: Int) {
-//                        launchUi {
-//                            with(reportsViewModel) {
-//                                itemChecked(id)
-//                                updateReports(true)
-//                            }
-//                        }
-//                    }
-//                    override fun onUnChecked(id: Int) {
-//                        launchUi {
-//                            with(reportsViewModel) {
-//                                itemUnchecked(id)
-//                                updateReports(true)
-//                            }
-//                        }
-//                    }
-//                })
-//            })
         }
         return binding.root
     }
@@ -91,12 +68,6 @@ class ReportsFragment : Fragment() {
         pieChartView = binding.pieChart
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
-//            selectCashAccountButton.setOnClickListener {
-//                with(reportsViewModel) {
-//                    setRecyclerState(StatesReportsRecycler.ShowCashAccounts.name)
-//                    postCashAccountsList()
-//                }
-//            }
             selectCategoryButton.setOnClickListener {
                 launchUi {
                     val dialog =
@@ -106,7 +77,7 @@ class ReportsFragment : Fragment() {
                                 override fun select(categoriesSet: Set<Int>) {
                                     val result: Boolean =
                                         reportsViewModel.updateSelectedCategories(categoriesSet)
-                                    Message.log(" categories set transferred in reports = ${categoriesSet.joinToString()}")
+//                                    Message.log(" categories set transferred in reports = ${categoriesSet.joinToString()}")
                                     launchUi {
                                         reportsViewModel.updateReports(result)
                                     }
@@ -115,19 +86,7 @@ class ReportsFragment : Fragment() {
                         )
                     dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
                 }
-
-//                uiHelper.showUiElement(binding.recyclerView)
-//                with(reportsViewModel) {
-//                    setRecyclerState(StatesReportsRecycler.ShowCategories.name)
-//                    postCategoriesList()
-//                }
             }
-//            selectCurrencyButton.setOnClickListener {
-//                with(reportsViewModel) {
-//                    setRecyclerState(StatesReportsRecycler.ShowCurrencies.name)
-//                    postCurrenciesList()
-//                }
-//            }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
             }

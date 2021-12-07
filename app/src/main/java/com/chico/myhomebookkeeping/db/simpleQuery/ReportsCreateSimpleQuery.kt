@@ -2,7 +2,6 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCategoriesItem
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(): String {
@@ -15,51 +14,6 @@ object ReportsCreateSimpleQuery {
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
                 "AND category == categoriesId"
-    }
-
-    fun createSampleQueryForReports(
-        startTimePeriodLong: Long,
-        endTimePeriodLong: Long,
-//        listItemsOfCashAccounts: List<ReportsCashAccountItem>,
-        listItemsOfCategories: List<ReportsCategoriesItem>,
-    ): SimpleSQLiteQuery {
-        var query = mainQueryFullMoneyMoving()
-        val argsList: ArrayList<Any> = arrayListOf()
-
-        val countCategories: Int = countCategories(listItemsOfCategories)
-        Message.log("count categories = $countCategories")
-        if (countCategories == 1) {
-            for (i in listItemsOfCategories.indices) {
-                if (listItemsOfCategories[i].isChecked) {
-//                    Message.log(" add one category")
-                    query += addAnd()
-                    query += addCategory()
-                    argsList.add(i + 1)
-                }
-            }
-        }
-        if (countCategories > 1) {
-            var counter = 0
-            Message.log("many categories")
-            query += addAnd()
-            query += "("
-            for (i in listItemsOfCategories.indices) {
-                if (listItemsOfCategories[i].isChecked) {
-                    counter++
-                    if (counter > 1) {
-                        query += "OR"
-                    }
-                    query += addCategory(i + 1)
-                }
-            }
-            query += ")"
-        }
-
-        query = checkTimePeriod(startTimePeriodLong, endTimePeriodLong, query)
-
-        Message.log(query)
-        val args: Array<Any> = argsList.toArray()
-        return SimpleSQLiteQuery(query, args)
     }
 
     private fun checkTimePeriod(
@@ -89,14 +43,6 @@ object ReportsCreateSimpleQuery {
     private fun addCategory(): String {
         return " category = :category "
 
-    }
-
-    private fun countCategories(list: List<ReportsCategoriesItem>): Int {
-        var count = 0
-        for (i in list.indices) {
-            if (list[i].isChecked) count++
-        }
-        return count
     }
 
     private fun addAnd(): String {
