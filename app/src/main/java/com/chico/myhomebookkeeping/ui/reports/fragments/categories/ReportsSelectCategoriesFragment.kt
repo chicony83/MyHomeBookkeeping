@@ -4,11 +4,15 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.databinding.FragmentReportsSelectCategoryBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
 import com.chico.myhomebookkeeping.helpers.Message
@@ -17,10 +21,25 @@ import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategori
 import java.lang.IllegalStateException
 
 class ReportsSelectCategoriesFragment(
-//    private val categoriesList: List<Categories>,
-//    private val onSelectedCategoriesCallBack: OnSelectedCategoriesCallBack
 ) : Fragment() {
 
+    private var _binding:FragmentReportsSelectCategoryBinding?=null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentReportsSelectCategoryBinding.inflate(inflater,container,false)
+
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 //    private lateinit var recyclerView: RecyclerView
 //    private var reportsCategoriesViewModel = ReportsSelectCategoriesViewModel(categoriesList)
 //    private val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name

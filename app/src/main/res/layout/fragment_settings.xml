@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-style="@style/Fragment.paddingBottom"
+    style="@style/Fragment.paddingBottom"
     tools:context=".ui.settings.SettingsFragment">
 
     <LinearLayout
@@ -15,9 +15,9 @@ style="@style/Fragment.paddingBottom"
 
         <TextView
             android:id="@+id/appVersion"
-            android:layout_marginTop="@dimen/margin_normal"
             style="@style/Description.ItemsSettings"
-            android:hint="@string/current_version"/>
+            android:layout_marginTop="@dimen/margin_normal"
+            android:hint="@string/current_version" />
 
         <Button
             android:id="@+id/checkNewVersionButton"
