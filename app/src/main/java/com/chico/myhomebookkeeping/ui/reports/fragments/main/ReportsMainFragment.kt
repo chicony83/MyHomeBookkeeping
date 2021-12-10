@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports
+package com.chico.myhomebookkeeping.ui.reports.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,16 +12,16 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategoriesCallBack
-import com.chico.myhomebookkeeping.ui.reports.dialogs.category.ReportsSelectCategoriesDialog
+import com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsSelectCategoriesFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
 
-class ReportsFragment : Fragment() {
+class ReportsMainFragment : Fragment() {
 
-    private lateinit var reportsViewModel: ReportsViewModel
+    private lateinit var reportsMainViewModel: ReportsMainViewModel
     private var _binding: FragmentReportsBinding? = null
     private val binding get() = _binding!!
     private lateinit var pieChartView: PieChart
@@ -36,16 +36,16 @@ class ReportsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentReportsBinding.inflate(inflater, container, false)
-        reportsViewModel =
-            ViewModelProvider(this).get(ReportsViewModel::class.java)
+        reportsMainViewModel =
+            ViewModelProvider(this).get(ReportsMainViewModel::class.java)
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
 
         launchIo {
-            binding.recyclerView.setItemViewCacheSize(reportsViewModel.getNumbersOfCategories())
+            binding.recyclerView.setItemViewCacheSize(reportsMainViewModel.getNumbersOfCategories())
         }
 
-        with(reportsViewModel) {
+        with(reportsMainViewModel) {
             buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
                 binding.selectTimePeriodButton.text = it
             })
@@ -69,23 +69,24 @@ class ReportsFragment : Fragment() {
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
             selectCategoryButton.setOnClickListener {
-                launchUi {
-                    val dialog =
-                        ReportsSelectCategoriesDialog(
-                            reportsViewModel.getListOfCategories(),
-                            object : OnSelectedCategoriesCallBack {
-                                override fun select(categoriesSet: Set<Int>) {
-                                    val result: Boolean =
-                                        reportsViewModel.updateSelectedCategories(categoriesSet)
-//                                    Message.log(" categories set transferred in reports = ${categoriesSet.joinToString()}")
-                                    launchUi {
-                                        reportsViewModel.updateReports(result)
-                                    }
-                                }
-                            }
-                        )
-                    dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-                }
+                control.navigate(R.id.nav_reports_categories)
+//                launchUi {
+//                    val dialog =
+//                        ReportsSelectCategoriesFragment(
+//                            reportsMainViewModel.getListOfCategories(),
+//                            object : OnSelectedCategoriesCallBack {
+//                                override fun select(categoriesSet: Set<Int>) {
+//                                    val result: Boolean =
+//                                        reportsMainViewModel.updateSelectedCategories(categoriesSet)
+////                                    Message.log(" categories set transferred in reports = ${categoriesSet.joinToString()}")
+//                                    launchUi {
+//                                        reportsMainViewModel.updateReports(result)
+//                                    }
+//                                }
+//                            }
+//                        )
+////                    dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+//                }
             }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
@@ -96,7 +97,7 @@ class ReportsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         launchUi {
-            reportsViewModel.updateReports(true)
+            reportsMainViewModel.updateReports(true)
         }
     }
 

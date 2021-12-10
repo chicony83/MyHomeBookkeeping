@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.dialogs.category
+package com.chico.myhomebookkeeping.ui.reports.fragments.categories
 
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.helpers.Message

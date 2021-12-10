@@ -1,6 +1,5 @@
-package com.chico.myhomebookkeeping.ui.reports
+package com.chico.myhomebookkeeping.ui.reports.fragments.main
 
-import android.graphics.Color
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.GenerateColor
 import com.github.mikephil.charting.charts.HorizontalBarChart
