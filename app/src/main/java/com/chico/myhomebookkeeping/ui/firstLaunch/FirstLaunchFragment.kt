@@ -11,8 +11,6 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.UiControl
-import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 
 class FirstLaunchFragment : Fragment() {
@@ -48,7 +46,7 @@ class FirstLaunchFragment : Fragment() {
                 addCategoryCredit(binding.addCategoryCredit)
             }
             firstLaunchViewModel.setIsFirstLaunchFalse()
-            navControlHelper.moveToPreviousPage()
+            navControlHelper.moveToPreviousFragment()
         }
     }
 

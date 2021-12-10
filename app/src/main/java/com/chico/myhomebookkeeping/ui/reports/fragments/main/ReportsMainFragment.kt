@@ -69,7 +69,7 @@ class ReportsMainFragment : Fragment() {
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
             selectCategoryButton.setOnClickListener {
-                control.navigate(R.id.nav_reports_categories)
+                navControlHelper.moveToSelectedFragment(R.id.nav_reports_categories)
 //                launchUi {
 //                    val dialog =
 //                        ReportsSelectCategoriesFragment(

@@ -92,7 +92,7 @@ class SelectPasswordFragment : Fragment() {
                     selectPasswordText.text.toString(),
                     promptText.text.toString()
                 )
-                navControlHelper.moveToPreviousPage()
+                navControlHelper.moveToPreviousFragment()
             }
 
         }

@@ -6,7 +6,7 @@ import com.chico.myhomebookkeeping.R
 class NavControlHelper(private val controller: NavController) {
     private val previousFragment = controller.previousBackStackEntry?.destination?.id
 
-    fun moveToPreviousPage() {
+    fun moveToPreviousFragment() {
         controller.previousBackStackEntry?.destination?.let {
             controller.navigate(
                 it.id

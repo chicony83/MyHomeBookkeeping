@@ -101,7 +101,7 @@ class CurrenciesFragment : Fragment() {
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
                             currenciesViewModel.saveData(navControlHelper, id)
-                            navControlHelper.moveToPreviousPage()
+                            navControlHelper.moveToPreviousFragment()
                         }
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -130,7 +130,7 @@ class CurrenciesFragment : Fragment() {
                     val result = currenciesViewModel.addNewCurrency(currencies)
                     if (isSelect) {
                         currenciesViewModel.saveData(navControlHelper, result.toInt())
-                        navControlHelper.moveToPreviousPage()
+                        navControlHelper.moveToPreviousFragment()
 
                     }
                 }

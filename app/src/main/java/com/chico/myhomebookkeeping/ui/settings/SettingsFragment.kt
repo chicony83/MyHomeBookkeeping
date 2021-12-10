@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.GetVersionCode
 import com.chico.myhomebookkeeping.databinding.FragmentSettingsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
@@ -43,7 +42,7 @@ class SettingsFragment : Fragment() {
             }
             submitButton.setOnClickListener {
                 message("настройки сохранены")
-                navControlHelper.moveToPreviousPage()
+                navControlHelper.moveToPreviousFragment()
             }
         }
         with(settingsViewModel){

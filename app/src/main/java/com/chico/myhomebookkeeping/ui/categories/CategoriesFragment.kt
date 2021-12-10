@@ -144,7 +144,7 @@ class CategoriesFragment : Fragment() {
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
                             categoriesViewModel.saveData(navControlHelper, id)
-                            navControlHelper.moveToPreviousPage()
+                            navControlHelper.moveToPreviousFragment()
                         }
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -176,7 +176,7 @@ class CategoriesFragment : Fragment() {
                     val result: Long = categoriesViewModel.addNewCategory(category)
                     if (isSelect) {
                         categoriesViewModel.saveData(navControlHelper, result.toInt())
-                        navControlHelper.moveToPreviousPage()
+                        navControlHelper.moveToPreviousFragment()
                     }
                 }
             })

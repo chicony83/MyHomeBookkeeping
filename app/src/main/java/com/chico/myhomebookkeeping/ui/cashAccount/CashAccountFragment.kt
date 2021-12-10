@@ -27,7 +27,6 @@ import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.SelectCashAccountDialo
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.showKeyboard
 
 class CashAccountFragment : Fragment() {
 
@@ -109,7 +108,7 @@ class CashAccountFragment : Fragment() {
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
                             cashAccountViewModel.saveData(navControlHelper, id)
-                            navControlHelper.moveToPreviousPage()
+                            navControlHelper.moveToPreviousFragment()
                         }
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -140,7 +139,7 @@ class CashAccountFragment : Fragment() {
                     val result: Long = cashAccountViewModel.addNewCashAccount(cashAccount)
                     if (isSelect) {
                         cashAccountViewModel.saveData(navControlHelper, result.toInt())
-                        navControlHelper.moveToPreviousPage()
+                        navControlHelper.moveToPreviousFragment()
                     }
                 }
             })

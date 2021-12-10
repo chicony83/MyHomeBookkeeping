@@ -1,30 +1,32 @@
 package com.chico.myhomebookkeeping.ui.reports.fragments.categories
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsSelectCategoryBinding
-import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
-import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
-import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategoriesCallBack
-import java.lang.IllegalStateException
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 class ReportsSelectCategoriesFragment(
 ) : Fragment() {
 
     private var _binding:FragmentReportsSelectCategoryBinding?=null
     private val binding get() = _binding!!
+    private lateinit var control: NavController
+    private lateinit var navControlHelper: NavControlHelper
+    private lateinit var reportsSelectCategoriesViewModel: ReportsSelectCategoriesViewModel
+    private val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
+    private val stateSelectAll: String = StatesReportsCategoriesAdapter.SelectAll.name
+    private val stateSelectAllIncome: String = StatesReportsCategoriesAdapter.SelectAllIncome.name
+    private val stateSelectAllSpending: String =
+        StatesReportsCategoriesAdapter.SelectAllSpending.name
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,20 +35,29 @@ class ReportsSelectCategoriesFragment(
     ): View {
         _binding = FragmentReportsSelectCategoryBinding.inflate(inflater,container,false)
 
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+        navControlHelper = NavControlHelper(control)
+
+        reportsSelectCategoriesViewModel = ViewModelProvider(this).get(ReportsSelectCategoriesViewModel::class.java)
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding){
+
+            submitButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
+
+            cancelButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-//    private lateinit var recyclerView: RecyclerView
-//    private var reportsCategoriesViewModel = ReportsSelectCategoriesViewModel(categoriesList)
-//    private val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
-//    private val stateSelectAll: String = StatesReportsCategoriesAdapter.SelectAll.name
-//    private val stateSelectAllIncome: String = StatesReportsCategoriesAdapter.SelectAllIncome.name
-//    private val stateSelectAllSpending: String =
-//        StatesReportsCategoriesAdapter.SelectAllSpending.name
 //
 //    private var stateCategoriesAdapter = mutableMapOf<String, Boolean>(
 //        selectNone to false,

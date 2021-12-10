@@ -141,7 +141,7 @@ class TimePeriodFragment : Fragment() {
 
     private fun pressSubmitButton() {
         timePeriodViewModel.saveARGStoSP(navControlHelper)
-        navControlHelper.moveToPreviousPage()
+        navControlHelper.moveToPreviousFragment()
     }
 
     override fun onDestroy() {

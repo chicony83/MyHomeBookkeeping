@@ -75,7 +75,7 @@ class HelpFragment : Fragment() {
 
 
     private fun presSubmitButton() {
-        navControlHelper.moveToPreviousPage()
+        navControlHelper.moveToPreviousFragment()
     }
 
     override fun onDestroy() {
