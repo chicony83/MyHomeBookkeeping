@@ -11,7 +11,9 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsSelectCategoryBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsSelectCategoriesFragment(
 ) : Fragment() {
@@ -23,6 +25,8 @@ class ReportsSelectCategoriesFragment(
         StatesReportsCategoriesAdapter.SelectAllSpending.name
 
     private var recyclerViewState = stateSelectAll
+
+    private var recyclerCashSize = 0
 
     private var _binding: FragmentReportsSelectCategoryBinding? = null
     private val binding get() = _binding!!
@@ -46,20 +50,35 @@ class ReportsSelectCategoriesFragment(
         with(reportsSelectCategoriesViewModel) {
             categoriesItemsList.observe(viewLifecycleOwner, {
                 binding.recyclerView.adapter =
-                    getAdapter(it, recyclerViewState)
+                    getAdapter(it)
+                getListSize(it)
             })
         }
 
         return binding.root
     }
 
-    private fun getAdapter(it: List<ReportsCategoriesItem>, recyclerViewState: String) =
-        ReportsSelectCategoriesAdapter(it, this.recyclerViewState)
+    private fun getListSize(it: List<ReportsCategoriesItem>) {
+        recyclerCashSize = it.size
+    }
+
+    private fun getAdapter(it: List<ReportsCategoriesItem>) =
+        ReportsSelectCategoriesAdapter(it, recyclerViewState, object :OnItemCheckedCallBack{
+            override fun onChecked(id: Int) {
+                Message.log("checked id = $id")
+            }
+
+            override fun onUnChecked(id: Int) {
+                Message.log("unchecked id = $id")
+            }
+        })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            recyclerView.setItemViewCacheSize(recyclerCashSize)
+
             resetButton.setOnClickListener {
                 recyclerViewState = stateSelectNone
                 updateAdapter()
@@ -86,7 +105,7 @@ class ReportsSelectCategoriesFragment(
     private fun updateAdapter() {
         reportsSelectCategoriesViewModel.categoriesItemsList.let {
             binding.recyclerView.adapter =
-                it.value?.let { it1 -> getAdapter(it = it1.toList(), recyclerViewState) }
+                it.value?.let { it1 -> getAdapter(it = it1.toList()) }
         }
     }
 
