@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/RecyclerViewCard.Dialogs"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RecyclerViewCard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
-    <LinearLayout
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categoriesItem"
         style="@style/RecyclerViewItem.Dialogs"
         android:orientation="horizontal">
@@ -14,18 +13,34 @@
         <TextView
             android:id="@+id/itemId"
             style="@style/WrapContent_WrapContent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:visibility="gone" />
 
         <CheckBox
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/isCheckedCheckBox"
             style="@style/ReportsItemCheckBox" />
 
         <TextView
+            tools:text="income"
             android:id="@+id/nameTextView"
-            style="@style/MatchParent_WrapContent" />
+            app:layout_constraintStart_toEndOf="@id/isCheckedCheckBox"
+            app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox"
+            app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
+            style="@style/WrapContent_WrapContent" />
 
         <TextView
+            tools:text="10 000"
+            android:layout_marginEnd="@dimen/margin_double"
+            app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
+            app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox"
+            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/amount"
             style="@style/WrapContent_WrapContent" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

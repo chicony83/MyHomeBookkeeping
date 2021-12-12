@@ -4,6 +4,7 @@ import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsCategoriesItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
 
@@ -39,4 +40,31 @@ object ConvToList {
     fun categoriesListToSelectedCategoriesSet(categoriesList: List<Categories>): Set<Int> {
         return categoriesList.map { it.categoriesId ?: 0 }.toSet()
     }
+
+    fun categoriesListToCategoriesItemsList(categoriesList: List<Categories>):
+            List<ReportsCategoriesItem> {
+        return categoriesList.map {
+            ReportsCategoriesItem(it.categoriesId ?: 0, it.categoryName, " ", it.isIncome, false)
+        }
+    }
+
+//    fun categoriesListToCategoriesItemsList(categoriesList: List<Categories>):
+//            List<ReportsCategoriesItem> {
+//        val categoriesItemsList = mutableListOf<ReportsCategoriesItem>()
+//        for (i in categoriesList.indices) {
+//            categoriesItemsList.add(
+//                ReportsCategoriesItem(
+//                    id = categoriesList[i].categoriesId ?: 0,
+//                    name = categoriesList[i].categoryName,
+//                    amount = " ",
+//                    isIncome = categoriesList[i].isIncome,
+//                    isChecked = false
+//                )
+//            )
+//        }
+//
+//        return categoriesItemsList
+//    }
+
+
 }

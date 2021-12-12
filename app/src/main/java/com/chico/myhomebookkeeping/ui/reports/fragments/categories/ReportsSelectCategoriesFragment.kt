@@ -16,7 +16,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 class ReportsSelectCategoriesFragment(
 ) : Fragment() {
 
-    private var _binding:FragmentReportsSelectCategoryBinding?=null
+    private var _binding: FragmentReportsSelectCategoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
@@ -33,12 +33,20 @@ class ReportsSelectCategoriesFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReportsSelectCategoryBinding.inflate(inflater,container,false)
+        _binding = FragmentReportsSelectCategoryBinding.inflate(inflater, container, false)
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
 
-        reportsSelectCategoriesViewModel = ViewModelProvider(this).get(ReportsSelectCategoriesViewModel::class.java)
+        reportsSelectCategoriesViewModel =
+            ViewModelProvider(this).get(ReportsSelectCategoriesViewModel::class.java)
+
+        with(reportsSelectCategoriesViewModel) {
+            categoriesItemsList.observe(viewLifecycleOwner, {
+                binding.recyclerView.adapter =
+                    ReportsSelectCategoriesAdapter(it)
+            })
+        }
 
         return binding.root
     }
@@ -46,13 +54,13 @@ class ReportsSelectCategoriesFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding){
-
+        with(binding) {
             submitButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
 
             cancelButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
