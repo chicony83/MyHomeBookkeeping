@@ -48,18 +48,22 @@ class ReportsSelectCategoriesAdapter(
                 when (recyclerState) {
                     StatesReportsCategoriesAdapter.SelectNone.name -> {
                         isCheckedCheckBox.isChecked = false
+                        setUnCheckOnItem(item.id)
                     }
                     StatesReportsCategoriesAdapter.SelectAll.name -> {
                         isCheckedCheckBox.isChecked = true
+                        setCheckOnItem(item.id)
                     }
                     StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
                         if (item.isIncome) {
                             isCheckedCheckBox.isChecked = true
+                            setCheckOnItem(item.id)
                         }
                     }
                     StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
                         if (!item.isIncome) {
                             isCheckedCheckBox.isChecked = true
+                            setCheckOnItem(item.id)
                         }
                     }
                 }
@@ -87,14 +91,22 @@ class ReportsSelectCategoriesAdapter(
                 isCheckedCheckBox.setOnCheckedChangeListener { _, isChecked ->
                     run {
                         if (isChecked) item.id.let {
-                            onItemCheckedCallBack.onChecked(it)
+                            setCheckOnItem(it)
                         }
                         if (!isChecked) item.id.let {
-                            onItemCheckedCallBack.onUnChecked(it)
+                            setUnCheckOnItem(it)
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun setUnCheckOnItem(id: Int) {
+        onItemCheckedCallBack.onUnChecked(id)
+    }
+
+    private fun setCheckOnItem(id: Int) {
+        onItemCheckedCallBack.onChecked(id)
     }
 }

@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsSelectCategoryBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
@@ -53,6 +52,7 @@ class ReportsSelectCategoriesFragment(
                     getAdapter(it)
                 getListSize(it)
             })
+//            printResult()
         }
 
         return binding.root
@@ -65,11 +65,14 @@ class ReportsSelectCategoriesFragment(
     private fun getAdapter(it: List<ReportsCategoriesItem>) =
         ReportsSelectCategoriesAdapter(it, recyclerViewState, object :OnItemCheckedCallBack{
             override fun onChecked(id: Int) {
-                Message.log("checked id = $id")
+                reportsSelectCategoriesViewModel.setCategoryChecked(id)
+//                reportsSelectCategoriesViewModel.printResult()
             }
 
             override fun onUnChecked(id: Int) {
-                Message.log("unchecked id = $id")
+//                Message.log("unchecked id = $id")
+                reportsSelectCategoriesViewModel.setCategoryUnChecked(id)
+//                reportsSelectCategoriesViewModel.printResult()
             }
         })
 
@@ -80,23 +83,33 @@ class ReportsSelectCategoriesFragment(
             recyclerView.setItemViewCacheSize(recyclerCashSize)
 
             resetButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectNone
                 updateAdapter()
+//                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllButton.setOnClickListener {
                 recyclerViewState = stateSelectAll
                 updateAdapter()
+//                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllIncomeButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectAllIncome
                 updateAdapter()
+//                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllSpendingButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectAllSpending
                 updateAdapter()
+//                reportsSelectCategoriesViewModel.printResult()
             }
 
-            submitButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
+            submitButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.saveSelectedCategories()
+                navControlHelper.moveToPreviousFragment()
+            }
 
             cancelButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
         }

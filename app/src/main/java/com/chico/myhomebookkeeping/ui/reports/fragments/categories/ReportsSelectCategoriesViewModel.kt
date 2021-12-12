@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
 import com.chico.myhomebookkeeping.utils.launchUi
 
@@ -33,6 +35,30 @@ class ReportsSelectCategoriesViewModel(
                     CategoriesUseCase.getAllCategoriesSortIdAsc(db)
                 )
             )
+        }
+    }
+
+    fun saveSelectedCategories() {
+
+    }
+
+    fun setCategoryChecked(id: Int) {
+        _categoriesItemsList.value?.get(id)?.isChecked = true
+    }
+
+    fun setCategoryUnChecked(id: Int) {
+        _categoriesItemsList.value?.get(id)?.isChecked = false
+    }
+
+    fun clearSelectedCategories() {
+        _categoriesItemsList.value?.forEach {
+            it.isChecked = false
+        }
+    }
+
+    fun printResult() {
+        _categoriesItemsList.value?.forEach {
+            Message.log("category id = ${it.id}, name = ${it.name}, isChecked = ${it.isChecked}")
         }
     }
 
