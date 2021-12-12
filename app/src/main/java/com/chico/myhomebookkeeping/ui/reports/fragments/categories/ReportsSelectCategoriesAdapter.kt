@@ -1,16 +1,16 @@
 package com.chico.myhomebookkeeping.ui.reports.fragments.categories
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesForReportsBinding
+import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
 
-class ReportsSelectCategoriesAdapter(private val list: List<ReportsCategoriesItem>) :
+class ReportsSelectCategoriesAdapter(
+    private val list: List<ReportsCategoriesItem>,
+    val recyclerState: String
+) :
     RecyclerView.Adapter<ReportsSelectCategoriesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -41,8 +41,26 @@ class ReportsSelectCategoriesAdapter(private val list: List<ReportsCategoriesIte
             with(binding) {
                 itemId.text = item.id.toString()
                 nameTextView.text = item.name.toString()
-                isCheckedCheckBox.isChecked = false
                 amount.text = "many"
+
+                when (recyclerState) {
+                    StatesReportsCategoriesAdapter.SelectNone.name -> {
+                        isCheckedCheckBox.isChecked = false
+                    }
+                    StatesReportsCategoriesAdapter.SelectAll.name -> {
+                        isCheckedCheckBox.isChecked = true
+                    }
+                    StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
+                        if (item.isIncome) {
+                            isCheckedCheckBox.isChecked = true
+                        }
+                    }
+                    StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
+                        if (!item.isIncome) {
+                            isCheckedCheckBox.isChecked = true
+                        }
+                    }
+                }
 
                 if (item.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -64,11 +82,8 @@ class ReportsSelectCategoriesAdapter(private val list: List<ReportsCategoriesIte
                         )
                     }
                 }
-
-
             }
         }
-
     }
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 //        val itemView = LayoutInflater.from(parent.context)

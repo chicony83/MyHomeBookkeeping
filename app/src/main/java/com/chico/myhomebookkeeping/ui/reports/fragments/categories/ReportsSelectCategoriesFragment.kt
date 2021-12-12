@@ -16,17 +16,19 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 class ReportsSelectCategoriesFragment(
 ) : Fragment() {
 
-    private var _binding: FragmentReportsSelectCategoryBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var control: NavController
-    private lateinit var navControlHelper: NavControlHelper
-    private lateinit var reportsSelectCategoriesViewModel: ReportsSelectCategoriesViewModel
-    private val selectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
+    private val stateSelectNone: String = StatesReportsCategoriesAdapter.SelectNone.name
     private val stateSelectAll: String = StatesReportsCategoriesAdapter.SelectAll.name
     private val stateSelectAllIncome: String = StatesReportsCategoriesAdapter.SelectAllIncome.name
     private val stateSelectAllSpending: String =
         StatesReportsCategoriesAdapter.SelectAllSpending.name
 
+    private var recyclerViewState = stateSelectAll
+
+    private var _binding: FragmentReportsSelectCategoryBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var control: NavController
+    private lateinit var navControlHelper: NavControlHelper
+    private lateinit var reportsSelectCategoriesViewModel: ReportsSelectCategoriesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,20 +46,47 @@ class ReportsSelectCategoriesFragment(
         with(reportsSelectCategoriesViewModel) {
             categoriesItemsList.observe(viewLifecycleOwner, {
                 binding.recyclerView.adapter =
-                    ReportsSelectCategoriesAdapter(it)
+                    getAdapter(it, recyclerViewState)
             })
         }
 
         return binding.root
     }
 
+    private fun getAdapter(it: List<ReportsCategoriesItem>, recyclerViewState: String) =
+        ReportsSelectCategoriesAdapter(it, this.recyclerViewState)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            resetButton.setOnClickListener {
+                recyclerViewState = stateSelectNone
+                updateAdapter()
+            }
+            selectAllButton.setOnClickListener {
+                recyclerViewState = stateSelectAll
+                updateAdapter()
+            }
+            selectAllIncomeButton.setOnClickListener {
+                recyclerViewState = stateSelectAllIncome
+                updateAdapter()
+            }
+            selectAllSpendingButton.setOnClickListener {
+                recyclerViewState = stateSelectAllSpending
+                updateAdapter()
+            }
+
             submitButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
 
             cancelButton.setOnClickListener { navControlHelper.moveToPreviousFragment() }
+        }
+    }
+
+    private fun updateAdapter() {
+        reportsSelectCategoriesViewModel.categoriesItemsList.let {
+            binding.recyclerView.adapter =
+                it.value?.let { it1 -> getAdapter(it = it1.toList(), recyclerViewState) }
         }
     }
 
