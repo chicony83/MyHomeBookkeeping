@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesForReportsBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsSelectCategoriesAdapter(
@@ -102,9 +103,11 @@ class ReportsSelectCategoriesAdapter(
                     run {
                         if (isChecked) item.id.let {
                             setCheckOnItem(it)
+                            Message.log("selected item $it")
                         }
                         if (!isChecked) item.id.let {
                             setUnCheckOnItem(it)
+                            Message.log("unselected item $it")
                         }
                     }
                 }

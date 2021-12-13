@@ -4,6 +4,7 @@ import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsCategoriesItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
@@ -44,7 +45,9 @@ object ConvToList {
     fun categoriesListToCategoriesItemsList(categoriesList: List<Categories>):
             List<ReportsCategoriesItem> {
         return categoriesList.map {
+            Message.log("line categories list id = ${it.categoriesId}")
             ReportsCategoriesItem(it.categoriesId ?: 0, it.categoryName, " ", it.isIncome, false)
+
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsSelectCategoryBinding
 import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
@@ -70,15 +71,15 @@ class ReportsSelectCategoriesFragment(
             object :OnItemCheckedCallBack{
             override fun onChecked(id: Int) {
                 reportsSelectCategoriesViewModel.setCategoryChecked(id)
-                recyclerViewState = stateSelectNone
-                reportsSelectCategoriesViewModel.printResult()
+//                recyclerViewState = stateSelectNone
+//                reportsSelectCategoriesViewModel.printResult()
             }
 
             override fun onUnChecked(id: Int) {
 //                Message.log("unchecked id = $id")
                 reportsSelectCategoriesViewModel.setCategoryUnChecked(id)
-                recyclerViewState = stateSelectNone
-                reportsSelectCategoriesViewModel.printResult()
+//                recyclerViewState = stateSelectNone
+//                reportsSelectCategoriesViewModel.printResult()
             }
         })
 
@@ -87,6 +88,7 @@ class ReportsSelectCategoriesFragment(
 
         with(binding) {
             recyclerView.setItemViewCacheSize(recyclerCashSize)
+
 
             resetButton.setOnClickListener {
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
@@ -130,10 +132,17 @@ class ReportsSelectCategoriesFragment(
             binding.recyclerView.adapter =
                 it.value?.let { it1 -> getAdapter(it = it1.toList()) }
         }
+        reportsSelectCategoriesViewModel.categoriesItemsList.value?.forEach {
+            Message.log("$it")
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 }
