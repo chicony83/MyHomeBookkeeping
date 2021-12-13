@@ -37,6 +37,8 @@ object Constants {
     const val FOR_REPORTS_SPENDING = "spendingForReports"
     const val FOR_REPORTS_AMOUNT_KEY = "amountForReports"
 
+    const val FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY = "reportsSelectedCategoriesList"
+
     const val FOR_QUERY_NONE = ""
 
     const val IS_FIRST_LAUNCH = "isFirstLaunch"

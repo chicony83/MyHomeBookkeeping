@@ -45,4 +45,8 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     fun getFloat(argsKey: String): Float {
         return sharedPreferences.getFloat(argsKey, (-1.0).toFloat())
     }
+
+    fun getSelectedCategoriesSet(argsSelectedCategoriesSetKey: String): MutableSet<String>? {
+        return sharedPreferences.getStringSet(argsSelectedCategoriesSetKey, mutableSetOf<String?>())
+    }
 }

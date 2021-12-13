@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.sp
 import android.content.SharedPreferences
 import android.util.Log
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
@@ -149,5 +150,12 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
                 saveToSP(argsEndTimePeriodForReports,endTimePeriodLong)
             }
         }
+    }
+
+    fun saveToSP(argsKey: String, setSelectedCategories: Set<String>) {
+        spEditor.putStringSet(argsKey, setSelectedCategories)
+        spCommit()
+        Message.log("setSelectedCategories.size = ${setSelectedCategories.size}")
+//        val transactionList: ArrayList<SurfaceControl.Transaction> = ArrayList()
     }
 }

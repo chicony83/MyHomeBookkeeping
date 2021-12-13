@@ -35,6 +35,7 @@ class ReportsMainViewModel(
     private val spName = Constants.SP_NAME
     private val argsStartTimePeriodKey = Constants.FOR_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodKey = Constants.FOR_REPORTS_END_TIME_PERIOD
+    private val argsSelectedCategoriesSetKey = Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
@@ -91,6 +92,13 @@ class ReportsMainViewModel(
         launchIo {
             getLists()
         }
+        launchIo {
+            getNumbersOfAllCategories()
+        }
+    }
+
+    private suspend fun getNumbersOfAllCategories() {
+        numbersOfAllCategories = CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory).size
     }
 
     private fun setTextOnButtons() {
@@ -121,10 +129,30 @@ class ReportsMainViewModel(
     }
 
     private suspend fun getCategoriesSet() {
-        selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
-            CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
-        )
-        numbersOfAllCategories = selectedCategoriesSet.size
+        val result: Set<String>? =
+            getSP.getSelectedCategoriesSet(argsSelectedCategoriesSetKey)?.toSet()
+        Message.log("---size of result = ${result?.size}")
+
+        if (result?.size!! > 0) {
+            val set: Set<Int> = result.map {
+                it.toInt()
+            }.toSet()
+            Message.log("---size of get selected categories = ${set.size}")
+
+            selectedCategoriesSet = set
+            Message.log("selectedSet = ${selectedCategoriesSet.joinToString()}")
+        }
+//            else if(result.size == 0){
+//                selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
+//                    CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
+//                )
+//            }
+        if (result.size == 0) {
+            selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
+                CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
+            )
+        }
+//        numbersOfAllCategories = selectedCategoriesSet.size
     }
 
     private fun getTimePeriodsSP() {
@@ -151,7 +179,11 @@ class ReportsMainViewModel(
 
             listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
 
-            Message.log("result of get List fulMoneyMoving ${listFullMoneyMoving.await()?.joinToString()}")
+            Message.log(
+                "result of get List fulMoneyMoving ${
+                    listFullMoneyMoving.await()?.joinToString()
+                }"
+            )
 //            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
 //                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
             if (!listFullMoneyMoving.await().isNullOrEmpty()) {

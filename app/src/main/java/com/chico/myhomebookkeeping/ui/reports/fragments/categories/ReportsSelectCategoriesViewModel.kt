@@ -1,14 +1,18 @@
 package com.chico.myhomebookkeeping.ui.reports.fragments.categories
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.sp.GetSP
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
 import com.chico.myhomebookkeeping.utils.launchUi
 
@@ -17,6 +21,16 @@ class ReportsSelectCategoriesViewModel(
 //    private val categoriesList: List<Categories>,
 //    private var selectedCategoriesSet: MutableSet<Int> = mutableSetOf()
 ) : AndroidViewModel(app) {
+
+    private val spName by lazy { Constants.SP_NAME }
+    private val argsSelectedCategoriesSetKey = Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY
+    private val sharedPreferences: SharedPreferences =
+        app.getSharedPreferences(spName, Context.MODE_PRIVATE)
+
+    private val spEditor = sharedPreferences.edit()
+
+    private val getSP = GetSP(sharedPreferences)
+    private val setSP = SetSP(spEditor)
 
     private val db: CategoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
 
@@ -40,6 +54,20 @@ class ReportsSelectCategoriesViewModel(
 
     fun saveSelectedCategories() {
 
+        setSP.saveToSP(argsSelectedCategoriesSetKey,getSetSelectedCategories())
+    }
+
+
+    private fun getSetSelectedCategories(): Set<String> {
+        val set = mutableSetOf<String>()
+        if (_categoriesItemsList.value?.isNotEmpty() == true){
+            for (i in _categoriesItemsList.value?.indices!!){
+                if (_categoriesItemsList.value!![i].isChecked){
+                    set.add(i.toString())
+                }
+            }
+        }
+        return set
     }
 
     fun setCategoryChecked(id: Int) {
