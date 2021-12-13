@@ -70,23 +70,6 @@ class ReportsMainFragment : Fragment() {
         with(binding) {
             selectCategoryButton.setOnClickListener {
                 navControlHelper.moveToSelectedFragment(R.id.nav_reports_categories)
-//                launchUi {
-//                    val dialog =
-//                        ReportsSelectCategoriesFragment(
-//                            reportsMainViewModel.getListOfCategories(),
-//                            object : OnSelectedCategoriesCallBack {
-//                                override fun select(categoriesSet: Set<Int>) {
-//                                    val result: Boolean =
-//                                        reportsMainViewModel.updateSelectedCategories(categoriesSet)
-////                                    Message.log(" categories set transferred in reports = ${categoriesSet.joinToString()}")
-//                                    launchUi {
-//                                        reportsMainViewModel.updateReports(result)
-//                                    }
-//                                }
-//                            }
-//                        )
-////                    dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-//                }
             }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()

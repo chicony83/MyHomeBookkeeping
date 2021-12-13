@@ -142,17 +142,11 @@ class ReportsMainViewModel(
             selectedCategoriesSet = set
             Message.log("selectedSet = ${selectedCategoriesSet.joinToString()}")
         }
-//            else if(result.size == 0){
-//                selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
-//                    CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
-//                )
-//            }
         if (result.isEmpty()) {
             selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
                 CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
             )
         }
-//        numbersOfAllCategories = selectedCategoriesSet.size
     }
 
     private fun getTimePeriodsSP() {
