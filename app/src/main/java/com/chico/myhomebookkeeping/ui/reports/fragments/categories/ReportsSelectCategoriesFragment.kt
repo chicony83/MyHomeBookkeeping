@@ -70,12 +70,14 @@ class ReportsSelectCategoriesFragment(
             object :OnItemCheckedCallBack{
             override fun onChecked(id: Int) {
                 reportsSelectCategoriesViewModel.setCategoryChecked(id)
+                recyclerViewState = stateSelectNone
 //                reportsSelectCategoriesViewModel.printResult()
             }
 
             override fun onUnChecked(id: Int) {
 //                Message.log("unchecked id = $id")
                 reportsSelectCategoriesViewModel.setCategoryUnChecked(id)
+                recyclerViewState = stateSelectNone
 //                reportsSelectCategoriesViewModel.printResult()
             }
         })
@@ -87,23 +89,27 @@ class ReportsSelectCategoriesFragment(
             recyclerView.setItemViewCacheSize(recyclerCashSize)
 
             resetButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectNone
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 recyclerViewState = stateSelectAll
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllIncomeButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectAllIncome
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllSpendingButton.setOnClickListener {
+                reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectAllSpending
                 updateAdapter()

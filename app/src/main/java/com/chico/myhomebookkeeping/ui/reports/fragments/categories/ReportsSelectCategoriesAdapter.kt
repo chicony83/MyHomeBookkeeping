@@ -47,37 +47,36 @@ class ReportsSelectCategoriesAdapter(
                 amount.text = " "
 
                 if (selectedCategoriesSet.isNotEmpty()) {
-
                     if (selectedCategoriesSet.contains(item.id)) {
                         isCheckedCheckBox.isChecked = true
                         setCheckOnItem(item.id)
                     }
-
                 }
-//                else if (selectedCategoriesSet.isEmpty()){
-//                    when (recyclerState) {
-//                        StatesReportsCategoriesAdapter.SelectNone.name -> {
-//                            isCheckedCheckBox.isChecked = false
-//                            setUnCheckOnItem(item.id)
-//                        }
-//                        StatesReportsCategoriesAdapter.SelectAll.name -> {
-//                            isCheckedCheckBox.isChecked = true
-//                            setCheckOnItem(item.id)
-//                        }
-//                        StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
-//                            if (item.isIncome) {
-//                                isCheckedCheckBox.isChecked = true
-//                                setCheckOnItem(item.id)
-//                            }
-//                        }
-//                        StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
-//                            if (!item.isIncome) {
-//                                isCheckedCheckBox.isChecked = true
-//                                setCheckOnItem(item.id)
-//                            }
-//                        }
-//                    }
-//                }
+
+                else if (selectedCategoriesSet.isEmpty()){
+                    when (recyclerState) {
+                        StatesReportsCategoriesAdapter.SelectNone.name -> {
+                            isCheckedCheckBox.isChecked = false
+                            setUnCheckOnItem(item.id)
+                        }
+                        StatesReportsCategoriesAdapter.SelectAll.name -> {
+                            isCheckedCheckBox.isChecked = true
+                            setCheckOnItem(item.id)
+                        }
+                        StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
+                            if (item.isIncome) {
+                                isCheckedCheckBox.isChecked = true
+                                setCheckOnItem(item.id)
+                            }
+                        }
+                        StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
+                            if (!item.isIncome) {
+                                isCheckedCheckBox.isChecked = true
+                                setCheckOnItem(item.id)
+                            }
+                        }
+                    }
+                }
 
                 if (item.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {

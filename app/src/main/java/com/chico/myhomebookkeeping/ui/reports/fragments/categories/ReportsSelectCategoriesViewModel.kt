@@ -106,6 +106,18 @@ class ReportsSelectCategoriesViewModel(
         return selectedCategoriesSetFromSp
     }
 
+    fun newSelectedCategoriesSetSp() {
+        selectedCategoriesSetFromSp = setOf<Int>()
+    }
+
+//    fun clearSelectedCategoriesFromSp() {
+//        for (i in selectedCategoriesSetFromSp.indices){
+//            selectedCategoriesSetFromSp.
+//        }
+//        selectedCategoriesSetFromSp
+//
+//    }
+
 //    fun getCategoriesList(): MutableLiveData<List<ReportsCategoriesItem>> {
 //        return _categoriesItemsList
 //    }
