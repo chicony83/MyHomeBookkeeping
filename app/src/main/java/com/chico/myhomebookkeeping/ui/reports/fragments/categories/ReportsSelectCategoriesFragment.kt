@@ -63,7 +63,11 @@ class ReportsSelectCategoriesFragment(
     }
 
     private fun getAdapter(it: List<ReportsCategoriesItem>) =
-        ReportsSelectCategoriesAdapter(it, recyclerViewState, object :OnItemCheckedCallBack{
+        ReportsSelectCategoriesAdapter(
+            it,
+            recyclerViewState,
+            reportsSelectCategoriesViewModel.getSelectedCategoriesFromSp(),
+            object :OnItemCheckedCallBack{
             override fun onChecked(id: Int) {
                 reportsSelectCategoriesViewModel.setCategoryChecked(id)
 //                reportsSelectCategoriesViewModel.printResult()

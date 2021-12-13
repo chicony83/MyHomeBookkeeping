@@ -38,8 +38,21 @@ class ReportsSelectCategoriesViewModel(
     val categoriesItemsList: LiveData<List<ReportsCategoriesItem>>
         get() = _categoriesItemsList
 
+    private var selectedCategoriesSetFromSp = setOf<Int>()
+
     init {
+        getSelectedCategoriesSetFromSp()
         loadCategories()
+    }
+
+    private fun getSelectedCategoriesSetFromSp() {
+        val result: MutableSet<String>? =
+            getSP.getSelectedCategoriesSet(argsSelectedCategoriesSetKey)
+        if (result?.size!! > 0) {
+            selectedCategoriesSetFromSp = result.map {
+                it.toInt()
+            }.toSet()
+        }
     }
 
     private fun loadCategories() {
@@ -53,16 +66,15 @@ class ReportsSelectCategoriesViewModel(
     }
 
     fun saveSelectedCategories() {
-
-        setSP.saveToSP(argsSelectedCategoriesSetKey,getSetSelectedCategories())
+        setSP.saveToSP(argsSelectedCategoriesSetKey, getSetSelectedCategories())
     }
 
 
     private fun getSetSelectedCategories(): Set<String> {
         val set = mutableSetOf<String>()
-        if (_categoriesItemsList.value?.isNotEmpty() == true){
-            for (i in _categoriesItemsList.value?.indices!!){
-                if (_categoriesItemsList.value!![i].isChecked){
+        if (_categoriesItemsList.value?.isNotEmpty() == true) {
+            for (i in _categoriesItemsList.value?.indices!!) {
+                if (_categoriesItemsList.value!![i].isChecked) {
                     set.add(i.toString())
                 }
             }
@@ -88,6 +100,10 @@ class ReportsSelectCategoriesViewModel(
         _categoriesItemsList.value?.forEach {
             Message.log("category id = ${it.id}, name = ${it.name}, isChecked = ${it.isChecked}")
         }
+    }
+
+    fun getSelectedCategoriesFromSp(): Set<Int> {
+        return selectedCategoriesSetFromSp
     }
 
 //    fun getCategoriesList(): MutableLiveData<List<ReportsCategoriesItem>> {

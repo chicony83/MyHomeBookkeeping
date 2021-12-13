@@ -10,8 +10,9 @@ import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsSelectCategoriesAdapter(
     private val list: List<ReportsCategoriesItem>,
-    val recyclerState: String,
-    val onItemCheckedCallBack: OnItemCheckedCallBack
+    private val recyclerState: String,
+    private val selectedCategoriesSet: Set<Int>,
+    private val onItemCheckedCallBack: OnItemCheckedCallBack
 ) :
     RecyclerView.Adapter<ReportsSelectCategoriesAdapter.ViewHolder>() {
 
@@ -45,28 +46,38 @@ class ReportsSelectCategoriesAdapter(
                 nameTextView.text = item.name.toString()
                 amount.text = " "
 
-                when (recyclerState) {
-                    StatesReportsCategoriesAdapter.SelectNone.name -> {
-                        isCheckedCheckBox.isChecked = false
-                        setUnCheckOnItem(item.id)
-                    }
-                    StatesReportsCategoriesAdapter.SelectAll.name -> {
+                if (selectedCategoriesSet.isNotEmpty()) {
+
+                    if (selectedCategoriesSet.contains(item.id)) {
                         isCheckedCheckBox.isChecked = true
                         setCheckOnItem(item.id)
                     }
-                    StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
-                        if (item.isIncome) {
-                            isCheckedCheckBox.isChecked = true
-                            setCheckOnItem(item.id)
-                        }
-                    }
-                    StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
-                        if (!item.isIncome) {
-                            isCheckedCheckBox.isChecked = true
-                            setCheckOnItem(item.id)
-                        }
-                    }
+
                 }
+//                else if (selectedCategoriesSet.isEmpty()){
+//                    when (recyclerState) {
+//                        StatesReportsCategoriesAdapter.SelectNone.name -> {
+//                            isCheckedCheckBox.isChecked = false
+//                            setUnCheckOnItem(item.id)
+//                        }
+//                        StatesReportsCategoriesAdapter.SelectAll.name -> {
+//                            isCheckedCheckBox.isChecked = true
+//                            setCheckOnItem(item.id)
+//                        }
+//                        StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
+//                            if (item.isIncome) {
+//                                isCheckedCheckBox.isChecked = true
+//                                setCheckOnItem(item.id)
+//                            }
+//                        }
+//                        StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
+//                            if (!item.isIncome) {
+//                                isCheckedCheckBox.isChecked = true
+//                                setCheckOnItem(item.id)
+//                            }
+//                        }
+//                    }
+//                }
 
                 if (item.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {

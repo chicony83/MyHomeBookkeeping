@@ -147,7 +147,7 @@ class ReportsMainViewModel(
 //                    CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
 //                )
 //            }
-        if (result.size == 0) {
+        if (result.isEmpty()) {
             selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
                 CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategory)
             )
