@@ -6,7 +6,7 @@
         <item name="android:layout_marginLeft">@dimen/margin_half_normal</item>
         <item name="android:layout_marginRight">@dimen/margin_half_normal</item>
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
-        <item name="android:layout_marginBottom">@dimen/margin_quarter_of_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
     </style>
 
 </resources>

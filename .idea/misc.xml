@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/dialog_seleect_category_reports.xml" value="0.353713768115942" />
         <entry key="app/src/main/res/layout/dialog_sorting_categories.xml" value="0.3392210144927536" />
         <entry key="app/src/main/res/layout/dialog_submit_delete_money_moving.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_blanks.xml" value="0.23177083333333334" />
         <entry key="app/src/main/res/layout/fragment_cash_account.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.22192028985507245" />
         <entry key="app/src/main/res/layout/fragment_change_cash_account.xml" value="0.3007246376811594" />
@@ -72,6 +73,7 @@
         <entry key="app/src/main/res/layout/money_moving_recycler_view_item.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/pop_up_menu.xml" value="0.3392210144927536" />
+        <entry key="app/src/main/res/layout/recycler_view_item_blank_new_money_moving.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/recycler_view_item_cash_account.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recycler_view_item_categories_for_reports.xml" value="0.33" />
