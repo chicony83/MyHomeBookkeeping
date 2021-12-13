@@ -84,36 +84,19 @@ class ReportsSelectCategoriesViewModel(
     }
 
     fun setCategoryChecked(id: Int) {
-//        Message.log("get id ${_categoriesItemsList.value?.get(id)?.id}")
-//        for (i in _categoriesItemsList.value?.indices!!){
-//            Message.log("num $i it id = ${_categoriesItemsList.value!![i].id}")
-//        }
-//        _categoriesItemsList.value?.contains( ReportsCategoriesItem(id))
-//        for (i in _categoriesItemsList.value?.indices!!){
-//            if (_categoriesItemsList.value?.get(i)?.id == id){
-//                _categoriesItemsList.value?.get(i)?.isChecked = true
-//            }
-//        }
         _categoriesItemsList.value!!.forEach {
             if (it.id == id){
                 it.isChecked = true
             }
         }
-//        _categoriesItemsList.value?.get(id)?.isChecked = true
     }
 
     fun setCategoryUnChecked(id: Int) {
-//        for (i in _categoriesItemsList.value?.indices!!){
-//            if (_categoriesItemsList.value?.get(i)?.id == id){
-//                _categoriesItemsList.value?.get(i)?.isChecked = false
-//            }
-//        }
         _categoriesItemsList.value!!.forEach {
             if (it.id == id){
                 it.isChecked = false
             }
         }
-//        _categoriesItemsList.value?.get(id)?.isChecked = false
     }
 
     fun clearSelectedCategories() {

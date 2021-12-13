@@ -45,29 +45,9 @@ object ConvToList {
     fun categoriesListToCategoriesItemsList(categoriesList: List<Categories>):
             List<ReportsCategoriesItem> {
         return categoriesList.map {
-            Message.log("line categories list id = ${it.categoriesId}")
+//            Message.log("line categories list id = ${it.categoriesId}")
             ReportsCategoriesItem(it.categoriesId ?: 0, it.categoryName, " ", it.isIncome, false)
 
         }
     }
-
-//    fun categoriesListToCategoriesItemsList(categoriesList: List<Categories>):
-//            List<ReportsCategoriesItem> {
-//        val categoriesItemsList = mutableListOf<ReportsCategoriesItem>()
-//        for (i in categoriesList.indices) {
-//            categoriesItemsList.add(
-//                ReportsCategoriesItem(
-//                    id = categoriesList[i].categoriesId ?: 0,
-//                    name = categoriesList[i].categoryName,
-//                    amount = " ",
-//                    isIncome = categoriesList[i].isIncome,
-//                    isChecked = false
-//                )
-//            )
-//        }
-//
-//        return categoriesItemsList
-//    }
-
-
 }

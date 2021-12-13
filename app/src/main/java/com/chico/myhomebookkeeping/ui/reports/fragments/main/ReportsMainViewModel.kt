@@ -131,16 +131,16 @@ class ReportsMainViewModel(
     private suspend fun getCategoriesSet() {
         val result: Set<String>? =
             getSP.getSelectedCategoriesSet(argsSelectedCategoriesSetKey)?.toSet()
-        Message.log("---size of result = ${result?.size}")
+//        Message.log("---size of result = ${result?.size}")
 
         if (result?.size!! > 0) {
             val set: Set<Int> = result.map {
                 it.toInt()
             }.toSet()
-            Message.log("---size of get selected categories = ${set.size}")
+//            Message.log("---size of get selected categories = ${set.size}")
 
             selectedCategoriesSet = set
-            Message.log("selectedSet = ${selectedCategoriesSet.joinToString()}")
+//            Message.log("selectedSet = ${selectedCategoriesSet.joinToString()}")
         }
         if (result.isEmpty()) {
             selectedCategoriesSet = ConvToList.categoriesListToSelectedCategoriesSet(
@@ -173,11 +173,12 @@ class ReportsMainViewModel(
 
             listFullMoneyMoving = async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
 
-            Message.log(
-                "result of get List fulMoneyMoving ${
-                    listFullMoneyMoving.await()?.joinToString()
-                }"
-            )
+//            Message.log(
+//                "result of get List fulMoneyMoving ${
+//                    listFullMoneyMoving.await()?.joinToString()
+//                }"
+//            )
+
 //            val listMoneyMovingForReports: Deferred<List<FullMoneyMoving>?> =
 //                async(Dispatchers.IO) { getListOfFullMoneyMovements(query) }
             if (!listFullMoneyMoving.await().isNullOrEmpty()) {
