@@ -43,7 +43,7 @@ class ReportsSelectCategoriesAdapter(
             with(binding) {
                 itemId.text = item.id.toString()
                 nameTextView.text = item.name.toString()
-                amount.text = "many"
+                amount.text = " "
 
                 when (recyclerState) {
                     StatesReportsCategoriesAdapter.SelectNone.name -> {
@@ -95,6 +95,15 @@ class ReportsSelectCategoriesAdapter(
                         }
                         if (!isChecked) item.id.let {
                             setUnCheckOnItem(it)
+                        }
+                    }
+                }
+                itemView.setOnClickListener {
+                    run {
+                        if (isCheckedCheckBox.isChecked) item.id.let {
+                            isCheckedCheckBox.isChecked = false
+                        } else if (!isCheckedCheckBox.isChecked) item.id.let {
+                            isCheckedCheckBox.isChecked = true
                         }
                     }
                 }
