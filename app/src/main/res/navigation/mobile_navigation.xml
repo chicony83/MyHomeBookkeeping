@@ -8,7 +8,7 @@
         android:id="@+id/nav_fast_money_movement_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastMoneyMovings.FastMoneyMovingFragment"
         android:label="@string/fragment_label_select_blank"
-        tools:layout="@layout/fragment_blanks" />
+        tools:layout="@layout/fragment_fast_money_moving" />
     <fragment
         android:id="@+id/nav_reports_categories_fragment"
         android:name="com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsSelectCategoriesFragment"
