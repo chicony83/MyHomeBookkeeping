@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.nav_reports)
                 }
                 R.id.nav_menu_blanks_button->{
-                    navController.navigate(R.id.nav_blanks_fragment)
+                    navController.navigate(R.id.nav_fast_money_movement_fragment)
                 }
             }
             true

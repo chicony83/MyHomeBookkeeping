@@ -15,7 +15,7 @@
         android:id="@+id/nav_menu_blanks_button"
         android:enabled="true"
         android:icon="@drawable/blanks"
-        android:title="Blanks" />
+        android:title="Fast payments" />
 
     <item
         android:id="@+id/reports"

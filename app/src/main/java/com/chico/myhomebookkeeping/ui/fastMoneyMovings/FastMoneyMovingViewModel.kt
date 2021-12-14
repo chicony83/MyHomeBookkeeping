@@ -14,7 +14,7 @@ class FastMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val db: FastMoneyMovementDao = dataBase.getDataBase(app.applicationContext).blankMoneyMovementDao()
+    private val db: FastMoneyMovementDao = dataBase.getDataBase(app.applicationContext).fastMoneyMovementDao()
 
     private val _fastMoneyMovementList = MutableLiveData<List<FastMoneyMovement>>()
     val fastMoneyMovementList:LiveData<List<FastMoneyMovement>> get() = _fastMoneyMovementList

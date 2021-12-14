@@ -27,7 +27,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun currenciesDao(): CurrenciesDao
     abstract fun moneyMovementDao(): MoneyMovementDao
-    abstract fun blankMoneyMovementDao(): FastMoneyMovementDao
+    abstract fun fastMoneyMovementDao(): FastMoneyMovementDao
     abstract fun iconsDao(): IconsDao
 }
 
@@ -39,7 +39,6 @@ object dataBase {
             "DataBase"
         )
             .addMigrations(migration_1_2)
-//            .addMigrations(migration_2_3)
             .build()
 }
 
@@ -49,9 +48,3 @@ object migration_1_2 : Migration(1, 2) {
         database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER , 'name' TEXT NOT NULL, 'icon_value' TEXT NOT NULL, PRIMARY KEY ('id'))")
     }
 }
-
-//object migration_2_3 : Migration(2, 3) {
-//    override fun migrate(database: SupportSQLiteDatabase) {
-//
-//    }
-//}
