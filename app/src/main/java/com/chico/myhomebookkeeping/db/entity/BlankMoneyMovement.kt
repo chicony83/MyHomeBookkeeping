@@ -6,15 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "blanks_table")
 data class BlankMoneyMovement(
-    @ColumnInfo(name = "name")
-    val blankName: String,
-    @ColumnInfo(name = "cash_account")
-    val cashAccountId: Int,
-    @ColumnInfo(name = "currency")
-    val currencyId: Int,
-    @ColumnInfo(name = "category")
-    val categoryId: Int,
-    @ColumnInfo(name = "description")
+    val name: String,
+    val cash_account: Int,
+    val currency: Int,
+    val category: Int,
     val description: String
 ) {
     @PrimaryKey(autoGenerate = true)
