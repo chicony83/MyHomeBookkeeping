@@ -42,6 +42,6 @@ object dataBase {
 
 object migration_1_2:Migration(1,2){
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE TABLE IF NOT EXISTS 'blanks_table' ('id' INTEGER, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'description' TEXT, PRIMARY KEY('id'))")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'blanks_table' ('id' INTEGER NOT NULL, 'name' TEXT NOT NULL, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'description' TEXT, PRIMARY KEY('id'))")
     }
 }
