@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
 
@@ -13,14 +15,18 @@ import com.chico.myhomebookkeeping.db.entity.*
         Categories::class,
         Currencies::class,
         MoneyMovement::class,
+        BlankMoneyMovement::class
     ],
-    version = 1
+    version = 2,
+    exportSchema = true,
+
 )
 abstract class DataBase : RoomDatabase() {
     abstract fun cashAccountDao(): CashAccountDao
     abstract fun categoryDao(): CategoryDao
     abstract fun currenciesDao(): CurrenciesDao
     abstract fun moneyMovementDao(): MoneyMovementDao
+    abstract fun blankMoneyMovementDao(): BlankMoneyMovementDao
 }
 
 object dataBase {
@@ -29,5 +35,13 @@ object dataBase {
             ctx,
             DataBase::class.java,
             "DataBase"
-        ).build()
+        )
+            .addMigrations(migration_1_2)
+            .build()
+}
+
+object migration_1_2:Migration(1,2){
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'blanks_table' ('id' INTEGER, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'description' TEXT, PRIMARY KEY('id'))")
+    }
 }
