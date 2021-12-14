@@ -15,7 +15,7 @@ import com.chico.myhomebookkeeping.db.entity.*
         Categories::class,
         Currencies::class,
         MoneyMovement::class,
-        FastMoneyMovement::class,
+        FastPayments::class,
         Icons::class
     ],
     version = 2,
@@ -27,7 +27,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun currenciesDao(): CurrenciesDao
     abstract fun moneyMovementDao(): MoneyMovementDao
-    abstract fun fastMoneyMovementDao(): FastMoneyMovementDao
+    abstract fun fastPaymentsDao(): FastPaymentsDao
     abstract fun iconsDao(): IconsDao
 }
 
@@ -44,7 +44,7 @@ object dataBase {
 
 object migration_1_2 : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE TABLE IF NOT EXISTS 'fast_movement_table' ('id' INTEGER , 'icon' INTEGER NOT NULL,'name' TEXT NOT NULL, 'rating' INTEGER NOT NULL, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'description' TEXT NOT NULL, PRIMARY KEY('id'))")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'fast_payments_table' ('id' INTEGER , 'icon' INTEGER NOT NULL,'name' TEXT NOT NULL, 'rating' INTEGER NOT NULL, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'description' TEXT NOT NULL, PRIMARY KEY('id'))")
         database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER , 'name' TEXT NOT NULL, 'icon_value' TEXT NOT NULL, PRIMARY KEY ('id'))")
     }
 }

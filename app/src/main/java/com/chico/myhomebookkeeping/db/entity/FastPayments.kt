@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "fast_movement_table")
-data class FastMoneyMovement(
+@Entity(tableName = "fast_payments_table")
+data class FastPayments(
     @ColumnInfo(name = "icon")
     val icon: Int,
     @ColumnInfo(name = "name")

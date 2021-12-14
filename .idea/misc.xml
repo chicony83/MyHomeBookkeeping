@@ -55,6 +55,7 @@
         <entry key="app/src/main/res/layout/fragment_help.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_money_moving.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_money_moving_query.xml" value="0.259963768115942" />
+        <entry key="app/src/main/res/layout/fragment_my_money_moving.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_new_cash_account.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_new_category.xml" value="0.16302083333333334" />
         <entry key="app/src/main/res/layout/fragment_new_currency.xml" value="0.22327898550724637" />
