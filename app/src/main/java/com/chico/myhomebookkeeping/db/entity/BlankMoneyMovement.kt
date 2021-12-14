@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "blanks_table")
 data class BlankMoneyMovement(
+
     @ColumnInfo(name = "name")
     val blankName: String,
     @ColumnInfo(name = "cash_account")

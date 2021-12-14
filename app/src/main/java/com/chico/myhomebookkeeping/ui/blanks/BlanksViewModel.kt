@@ -25,7 +25,7 @@ class BlanksViewModel(
 
     private fun getBlanksList() {
         launchIo {
-            val result = BlankMoneyMovingUseCase.getAllBlanks(db)
+            _blanksList.postValue(BlankMoneyMovingUseCase.getAllBlanks(db))
         }
     }
 }
