@@ -18,7 +18,7 @@ import com.chico.myhomebookkeeping.db.entity.*
         BlankMoneyMovement::class,
         Icons::class
     ],
-    version = 3,
+    version = 2,
     exportSchema = true,
 
     )
@@ -39,18 +39,19 @@ object dataBase {
             "DataBase"
         )
             .addMigrations(migration_1_2)
-            .addMigrations(migration_2_3)
+//            .addMigrations(migration_2_3)
             .build()
 }
 
 object migration_1_2 : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("CREATE TABLE IF NOT EXISTS 'blanks_table' ('id' INTEGER , 'icon' INTEGER NOT NULL,'name' TEXT NOT NULL, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'description' TEXT NOT NULL, PRIMARY KEY('id'))")
-    }
-}
-
-object migration_2_3 : Migration(2, 3) {
-    override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER , 'name' TEXT NOT NULL, 'icon_value' TEXT NOT NULL, PRIMARY KEY ('id'))")
     }
 }
+
+//object migration_2_3 : Migration(2, 3) {
+//    override fun migrate(database: SupportSQLiteDatabase) {
+//
+//    }
+//}
