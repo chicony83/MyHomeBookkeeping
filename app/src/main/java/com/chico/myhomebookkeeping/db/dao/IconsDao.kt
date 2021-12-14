@@ -7,5 +7,7 @@ import com.chico.myhomebookkeeping.db.entity.Icons
 
 @Dao
 interface IconsDao {
+    @Insert
+    suspend fun addNewIcon(newIcon: Icons): Long
 
 }
