@@ -10,8 +10,8 @@ data class FastMoneyMovement(
     val icon: Int,
     @ColumnInfo(name = "name")
     val blankName: String,
-    @ColumnInfo(name = "is_important")
-    val isImportant:Boolean,
+    @ColumnInfo(name = "rating")
+    val rating:Int,
     @ColumnInfo(name = "cash_account")
     val cashAccountId: Int,
     @ColumnInfo(name = "currency")
