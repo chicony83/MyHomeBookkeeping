@@ -21,5 +21,4 @@ data class BlankMoneyMovement(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
-
 }
