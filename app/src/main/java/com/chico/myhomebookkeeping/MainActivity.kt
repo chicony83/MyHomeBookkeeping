@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -90,6 +89,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.reports -> {
                     navController.navigate(R.id.nav_reports)
+                }
+                R.id.nav_menu_blanks_button->{
+                    navController.navigate(R.id.nav_blanks_fragment)
                 }
             }
             true

@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.blanks
+package com.chico.myhomebookkeeping.ui.fastMoneyMovings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.chico.myhomebookkeeping.databinding.FragmentBlanksBinding
 
-class BlanksFragment:Fragment() {
+class FastMoneyMovingFragment:Fragment() {
     private var _binding:FragmentBlanksBinding?=null
     private val binding get() = _binding!!
 
-    private lateinit var blanksViewModel:BlanksViewModel
+    private lateinit var fastMoneyMovingViewModel:FastMoneyMovingViewModel
 
 
     override fun onCreateView(
@@ -21,9 +21,6 @@ class BlanksFragment:Fragment() {
     ): View {
         _binding = FragmentBlanksBinding.inflate(inflater,container,false)
 
-        with(blanksViewModel){
-
-        }
 
         return binding.root
     }

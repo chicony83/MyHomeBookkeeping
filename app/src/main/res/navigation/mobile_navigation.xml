@@ -5,7 +5,12 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_money_moving">
     <fragment
-        android:id="@+id/nav_reports_categories"
+        android:id="@+id/nav_blanks_fragment"
+        android:name="com.chico.myhomebookkeeping.ui.fastMoneyMovings.FastMoneyMovingFragment"
+        android:label="@string/fragment_label_select_blank"
+        tools:layout="@layout/fragment_blanks" />
+    <fragment
+        android:id="@+id/nav_reports_categories_fragment"
         android:name="com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsSelectCategoriesFragment"
         android:label="@string/fragment_label_select_categories"
         tools:layout="@layout/fragment_reports_menu" />

@@ -11,8 +11,6 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.interfaces.reports.dialogs.OnSelectedCategoriesCallBack
-import com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsSelectCategoriesFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -69,7 +67,7 @@ class ReportsMainFragment : Fragment() {
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
             selectCategoryButton.setOnClickListener {
-                navControlHelper.moveToSelectedFragment(R.id.nav_reports_categories)
+                navControlHelper.moveToSelectedFragment(R.id.nav_reports_categories_fragment)
             }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
