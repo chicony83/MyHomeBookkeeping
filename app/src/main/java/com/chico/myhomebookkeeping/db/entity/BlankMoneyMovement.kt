@@ -10,6 +10,8 @@ data class BlankMoneyMovement(
     val icon: Int,
     @ColumnInfo(name = "name")
     val blankName: String,
+    @ColumnInfo(name = "is_important")
+    val isImportant:String,
     @ColumnInfo(name = "cash_account")
     val cashAccountId: Int,
     @ColumnInfo(name = "currency")
