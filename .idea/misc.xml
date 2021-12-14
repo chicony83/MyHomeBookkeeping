@@ -58,7 +58,8 @@
         <entry key="app/src/main/res/layout/fragment_new_cash_account.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_new_category.xml" value="0.16302083333333334" />
         <entry key="app/src/main/res/layout/fragment_new_currency.xml" value="0.22327898550724637" />
-        <entry key="app/src/main/res/layout/fragment_new_money_moving.xml" value="0.22418478260869565" />
+        <entry key="app/src/main/res/layout/fragment_new_fast_money_moving.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_new_money_moving.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_period_time.xml" value="0.12037037037037036" />
         <entry key="app/src/main/res/layout/fragment_reports.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/fragment_reports_holder.xml" value="0.35572916666666665" />

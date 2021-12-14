@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fragment_label_select_blank">Выберите плетеж</string>
+    <string name="fragment_label_new_fast_money_moving">Новый быстрый платёж</string>
+    <string name="fragment_label_select_blank">Выберите плетёж</string>
     <string name="fragment_label_select_categories">Выберите категории</string>
     <string name="fragment_label_time_period">Выберите период времени</string>
     <string name="fragment_label_new_money_moving">Новая запись</string>

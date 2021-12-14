@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Fragment">
+
+    <ScrollView
+        style="@style/MoneyMovingScrollView"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="about this fast money Movement" />
+
+            <EditText style="@style/EditTextDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextDescriptions"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:text="rating"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:scaleType="fitCenter"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/rating5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/description_cash_account" />
+
+            <Button
+                android:id="@+id/selectCashAccountButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_cash_account" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/description_currency" />
+
+            <Button
+                android:id="@+id/selectCurrenciesButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_currency" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/description_category" />
+
+            <Button
+                android:id="@+id/selectCategoryButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_category" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/description_amount" />
+
+            <EditText
+                android:id="@+id/amount"
+                style="@style/EditTextAmount" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:text="@string/description_description" />
+
+            <EditText
+                android:id="@+id/description"
+                style="@style/EditTextDescription"
+                android:hint="Descriptions of payment" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@style/ButtonFullWidth"
+        android:text="@string/text_on_button_submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
