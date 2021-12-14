@@ -11,5 +11,5 @@ interface BlankMoneyMovementDao {
     suspend fun addBlank(blank: BlankMoneyMovement):Long
 
     @Query("SELECT * FROM blanks_table")
-    suspend fun selectAllBlanks():List<BlankMoneyMovement>
+    suspend fun getAllBlanks():List<BlankMoneyMovement>
 }
