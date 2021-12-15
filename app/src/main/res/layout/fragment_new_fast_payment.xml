@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom">
 
     <ScrollView
@@ -20,7 +21,8 @@
                 style="@style/TextDescriptions"
                 android:text="@string/description_about_this_fast_payment" />
 
-            <EditText style="@style/EditTextDescription" />
+            <EditText style="@style/EditTextDescription"
+                tools:ignore="LabelFor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,7 +34,7 @@
                     style="@style/TextDescriptions"
                     android:layout_width="wrap_content"
                     android:layout_weight="2"
-                    android:text="rating of payment"
+                    android:text="@string/description_rating_payment"
                     android:layout_gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

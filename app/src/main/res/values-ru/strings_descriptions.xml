@@ -35,4 +35,5 @@
     
     <string name="description_quick_payment_description">Описание быстрого платежа</string>
     <string name="description_about_this_fast_payment">Описание этого платежа</string>
+    <string name="description_rating_payment">Рейтинг платежа</string>
 </resources>
