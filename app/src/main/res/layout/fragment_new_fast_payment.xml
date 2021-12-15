@@ -18,7 +18,7 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="about this fast money Movement" />
+                android:text="@string/description_about_this_fast_payment" />
 
             <EditText style="@style/EditTextDescription" />
 
