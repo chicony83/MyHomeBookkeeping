@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ImageRatingStars">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_weight">1</item>
+
+        <item name="android:layout_marginStart">@dimen/margin_quarter_of_normal</item>
+    </style>
+</resources>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DialogLayout">
+
+    <ImageView
+        android:id="@+id/ratingStarsImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/rating3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingStarsImageView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_normal"
+        android:weightSum="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekBar">
+
+        <TextView
+            android:id="@+id/setRatingOneTextView"
+            style="@style/TextDescriptionsRating"
+            android:text="@string/number_one" />
+
+        <TextView
+            android:id="@+id/setRatingTwoTextView"
+            style="@style/TextDescriptionsRating"
+            android:text="@string/number_two" />
+
+        <TextView
+            android:id="@+id/setRatingThreeTextView"
+            style="@style/TextDescriptionsRating"
+            android:text="@string/number_three" />
+
+        <TextView
+            android:id="@+id/setRatingFourTextView"
+            style="@style/TextDescriptionsRating"
+            android:text="@string/number_four" />
+
+        <TextView
+            android:id="@+id/setRatingFiveTextView"
+            style="@style/TextDescriptionsRating"
+            android:text="@string/number_five" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerGuidLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/centerGuidLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerGuidLine"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
