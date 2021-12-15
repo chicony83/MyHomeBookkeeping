@@ -4,7 +4,7 @@
     <string name="fragment_label_select_blank">Select payment</string>
     <string name="fragment_label_select_categories">Select categories</string>
     <string name="fragment_label_time_period">Select time period</string>
-    <string name="fragment_label_new_money_moving">New entry</string>
+    <string name="fragment_label_new_money_moving">Free payment</string>
     <string name="fragment_label_select_password">Password</string>
     <string name="fragment_label_money_moving_query">Query settings</string>
     <string name="fragment_label_money_moving">Journal</string>

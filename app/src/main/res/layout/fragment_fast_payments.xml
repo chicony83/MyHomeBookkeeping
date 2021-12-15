@@ -16,7 +16,7 @@
     <Button
         android:id="@+id/new_blank_button"
         style="@style/ButtonFullWidth"
-        android:text="new blank"
+        android:text="@string/text_on_button_new_fast_payment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

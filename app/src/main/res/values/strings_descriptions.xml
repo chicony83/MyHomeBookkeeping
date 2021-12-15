@@ -31,4 +31,6 @@
 
     <string name="current_version">Current version</string>
     <string name="description_sort_categories_as">Sorting categories as</string>
+
+    <string name="description_quick_payment_description">Quick payment description</string>
 </resources>

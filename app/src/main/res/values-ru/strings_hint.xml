@@ -4,4 +4,6 @@
     <string name="hint_enter_name">Введите название</string>
     <string name="hint_enter_amount">Введите сумму</string>
     <string name="hint_add_you_description">Добавьте ваше описание</string>
+    <string name="hint_enter_amount_be_inserted">Сумма (будет вставлена в платёж)</string>
+    <string name="hint_add_you_description_be_inserted">Добавьте ваше описание\n(будет вставлено в платёж)</string>
 </resources>

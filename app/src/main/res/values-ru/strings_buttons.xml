@@ -60,4 +60,6 @@
     <string name="text_on_button_sorting_as_alphabet_ASC">алфавит А->Я</string>
     <string name="text_on_button_sorting_as_alphabet_DESC">алфавит Я->А</string>
 
+    <string name="text_on_button_new_fast_payment">Новый быстрый платеж</string>
+
 </resources>

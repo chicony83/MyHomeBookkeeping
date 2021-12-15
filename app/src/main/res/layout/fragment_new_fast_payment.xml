@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Fragment">
+    style="@style/Fragment.paddingBottom">
 
     <ScrollView
         style="@style/MoneyMovingScrollView"
@@ -84,7 +84,8 @@
 
             <EditText
                 android:id="@+id/amount"
-                style="@style/EditTextAmount" />
+                style="@style/EditTextAmount"
+                android:hint="@string/hint_enter_amount_be_inserted"/>
 
             <TextView
                 style="@style/TextDescriptions"
@@ -93,7 +94,7 @@
             <EditText
                 android:id="@+id/description"
                 style="@style/EditTextDescription"
-                android:hint="Descriptions of payment" />
+                android:hint="@string/hint_add_you_description_be_inserted" />
 
         </LinearLayout>
     </ScrollView>
