@@ -3,24 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DialogLayout">
 
-    <ImageView
-        android:id="@+id/ratingStarsImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/rating3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:layout_marginBottom="@dimen/margin_normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingStarsImageView" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -32,34 +14,44 @@
         android:weightSum="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seekBar">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/setRatingOneTextView"
+        <ImageView
+            android:id="@+id/setRatingOneImg"
             style="@style/TextDescriptionsRating"
-            android:text="@string/number_one" />
+            android:src="@drawable/full_star" />
 
-        <TextView
-            android:id="@+id/setRatingTwoTextView"
+        <ImageView
+            android:id="@+id/setRatingTwoImg"
             style="@style/TextDescriptionsRating"
-            android:text="@string/number_two" />
+            android:src="@drawable/full_star" />
 
-        <TextView
-            android:id="@+id/setRatingThreeTextView"
+        <ImageView
+            android:id="@+id/setRatingThreeImg"
             style="@style/TextDescriptionsRating"
-            android:text="@string/number_three" />
+            android:src="@drawable/full_star" />
 
-        <TextView
-            android:id="@+id/setRatingFourTextView"
+        <ImageView
+            android:id="@+id/setRatingFourImg"
             style="@style/TextDescriptionsRating"
-            android:text="@string/number_four" />
+            android:src="@drawable/empty_star" />
 
-        <TextView
-            android:id="@+id/setRatingFiveTextView"
+        <ImageView
+            android:id="@+id/setRatingFiveImg"
             style="@style/TextDescriptionsRating"
-            android:text="@string/number_five" />
+            android:src="@drawable/empty_star" />
 
     </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerGuidLine"
@@ -75,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/centerGuidLine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@id/seekBar" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -84,7 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/centerGuidLine"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@id/seekBar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
