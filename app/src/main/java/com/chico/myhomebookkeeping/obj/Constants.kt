@@ -37,6 +37,14 @@ object Constants {
     const val FOR_REPORTS_SPENDING = "spendingForReports"
     const val FOR_REPORTS_AMOUNT_KEY = "amountForReports"
 
+    const val FOR_NEW_FAST_PAYMENTS_DESCRIPTION_ABOUT = "descriptionAboutNewFastPayment"
+    const val FOR_NEW_FAST_PAYMENT_RATING = "ratingNewFastPayment"
+    const val FOR_NEW_FAST_PAYMENT_CASH_ACCOUNT = "cashAccountNewFastPayment"
+    const val FOR_NEW_FAST_PAYMENT_CURRENCY = "currencyNewFastPayment"
+    const val FOR_NEW_FAST_PAYMENT_CATEGORY = "categoryNewFastPayment"
+    const val FOR_NEW_FAST_PAYMENT_AMOUNT_OF_PAYMENT = "amountOfPaymentNewFastPayment"
+    const val FOR_NEW_FAST_PAYMENT_DESCRIPTION_OF_PAYMENT = "descriptionOfPaymentNewFastPayment"
+
     const val FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY = "reportsSelectedCategoriesList"
 
     const val FOR_QUERY_NONE = ""

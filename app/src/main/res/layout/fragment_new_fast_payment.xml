@@ -47,7 +47,7 @@
                     android:layout_weight="3"
                     android:background="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/rating5"
+                    android:src="@drawable/rating3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
