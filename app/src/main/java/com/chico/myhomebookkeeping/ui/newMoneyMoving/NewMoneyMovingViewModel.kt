@@ -20,12 +20,12 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
+import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import com.chico.myhomebookkeeping.utils.parseTimeToMillis
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.util.*
 
 class NewMoneyMovingViewModel(
@@ -59,10 +59,9 @@ class NewMoneyMovingViewModel(
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
-    //    private val spEditor = sharedPreferences.edit()
-    private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
+    private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
-    private val spValues = GetSP(sharedPreferences)
+    private val getSP = GetSP(sharedPreferences)
 
     private val _dateTime = MutableLiveData<String>()
     val dataTime: LiveData<String>
@@ -118,38 +117,56 @@ class NewMoneyMovingViewModel(
 
     private fun getSharedPreferencesArgs() {
 //        idMoneyMovingForChange = viewModelCheck.getValueSPLong(argsIdMoneyMovingForChange)
-        dateTimeSPLong = spValues.getLong(argsDateTimeCreateKey)
-        cashAccountSPInt = spValues.getInt(argsCashAccountCreateKey)
-        currencySPInt = spValues.getInt(argsCurrencyCreateKey)
-        categorySPInt = spValues.getInt(argsCategoryCreateKey)
-        amountSPString = spValues.getString(argsAmountCreateKey).toString()
-        descriptionSPString = spValues.getString(argsDescriptionCreateKey).toString()
+        dateTimeSPLong = getSP.getLong(argsDateTimeCreateKey)
+        cashAccountSPInt = getSP.getInt(argsCashAccountCreateKey)
+        currencySPInt = getSP.getInt(argsCurrencyCreateKey)
+        categorySPInt = getSP.getInt(argsCategoryCreateKey)
+        amountSPString = getSP.getString(argsAmountCreateKey).toString()
+        descriptionSPString = getSP.getString(argsDescriptionCreateKey).toString()
     }
 
     private fun setValuesViewModel() {
         launchIo {
-            if (modelCheck.isPositiveValue(dateTimeSPLong)) postDateTime(dateTimeSPLong)
+            if (modelCheck.isPositiveValue(dateTimeSPLong)) launchUi {
+                postDateTime(
+                    dateTimeSPLong
+                )
+            }
         }
         launchIo {
-            if (modelCheck.isPositiveValue(cashAccountSPInt)) postCashAccount(cashAccountSPInt)
+            if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi {
+                postCashAccount(
+                    cashAccountSPInt
+                )
+            }
         }
         launchIo {
-            if (modelCheck.isPositiveValue(currencySPInt)) postCurrency(currencySPInt)
+            if (modelCheck.isPositiveValue(currencySPInt)) launchUi {
+                postCurrency(
+                    currencySPInt
+                )
+            }
         }
         launchIo {
-            if (modelCheck.isPositiveValue(categorySPInt)) postCategory(categorySPInt)
+            if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory(categorySPInt) }
         }
         launchIo {
-            if (modelCheck.isPositiveValue(amountSPString)) postAmount(
-                aroundDouble(amountSPString)
-            )
+            if (modelCheck.isPositiveValue(amountSPString)) launchUi {
+                postAmount(
+                    Around.double(amountSPString)
+                )
+            }
         }
         launchIo {
-            if (descriptionSPString.isNotEmpty()) postDescription(descriptionSPString)
+            if (descriptionSPString.isNotEmpty()) launchUi {
+                postDescription(
+                    descriptionSPString
+                )
+            }
         }
     }
 
-    private fun postAmount(amount:Double) {
+    private fun postAmount(amount: Double) {
         _enteredAmount.postValue(amount)
     }
 
@@ -180,7 +197,7 @@ class NewMoneyMovingViewModel(
     }
 
     fun saveDataToSP(amount: Double, description: String) {
-        with(saveARGS) {
+        with(setSP) {
             saveToSP(argsDateTimeCreateKey, _dateTime.value?.parseTimeToMillis())
 
             saveToSP(
@@ -195,7 +212,7 @@ class NewMoneyMovingViewModel(
                 argsCategoryCreateKey,
                 _selectedCategory.value?.categoriesId
             )
-            if (amount>0){
+            if (amount > 0) {
                 saveToSP(argsAmountCreateKey, amount.toString())
             }
             saveToSP(argsDescriptionCreateKey, description)
@@ -263,16 +280,11 @@ class NewMoneyMovingViewModel(
     }
 
     fun clearSPAfterSave() {
-        with(saveARGS) {
+        with(setSP) {
             saveToSP(argsDateTimeCreateKey, minusOneLong)
             saveToSP(argsAmountCreateKey, "")
             saveToSP(argsDescriptionCreateKey, "")
         }
     }
 
-    fun aroundDouble(text: String): Double {
-        return BigDecimal(text)
-            .setScale(2, RoundingMode.HALF_EVEN)
-            .toDouble()
-    }
 }
