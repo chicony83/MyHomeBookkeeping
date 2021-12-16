@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
+import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -61,7 +62,27 @@ class NewFastPaymentFragment:Fragment() {
 
         with(binding){
             ratingButton.setOnClickListener { showSelectRatingDialog() }
+            selectCashAccountButton.setOnClickListener { pressSelectButton() }
+        }
+    }
 
+    private fun pressSelectButton() {
+        var amount: Double = getAmount()
+        var descriptionOfPayment = getDescriptionOfPayment()
+
+    }
+
+    private fun getDescriptionOfPayment(): Any {
+        return binding.descriptionFastPaymentEditText.text.toString().let {
+            if (it.isNotEmpty()) it
+            else ""
+        }
+    }
+
+    private fun getAmount(): Double {
+        return binding.amount.text.toString().let {
+            if (it.isNotEmpty()) Around.double(it)
+            else 0.0
         }
     }
 
