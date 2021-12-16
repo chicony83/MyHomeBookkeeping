@@ -145,4 +145,36 @@ class NewFastPaymentViewModel(
         _rating.postValue(ratingSPInt)
     }
 
+    fun saveDataToSP(
+        descriptionFastPayment:String,
+        description:String,
+        amount:Double
+    ){
+        with(setSP){
+            saveToSP(argsDescriptionFastPaymentKey,descriptionFastPayment)
+            saveToSP(argsRatingKey,_rating.value?.toInt())
+            saveToSP(argsCashAccount,_cashAccount.value?.cashAccountId)
+            saveToSP(argsCurrency,_currency.value?.currencyId)
+            saveToSP(argsCategory,_category.value?.categoriesId)
+            saveToSP(amountSPString,amount.toString())
+            saveToSP(argsDescription,description)
+
+        }
+    }
+    fun clearSPAfterSave(){
+        with(setSP){
+            saveToSP(argsDescriptionFastPaymentKey,textNone)
+            saveToSP(argsRatingKey,minusOneInt)
+            saveToSP(argsCashAccount,minusOneInt)
+            saveToSP(argsCurrency,minusOneInt)
+            saveToSP(argsCategory,minusOneInt)
+            saveToSP(amountSPString,textNone)
+            saveToSP(argsDescription,textNone)
+        }
+    }
+
+    fun setRating(value: Int) {
+        _rating.postValue(value)
+    }
+
 }

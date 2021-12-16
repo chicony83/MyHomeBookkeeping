@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
@@ -17,6 +18,7 @@ import com.chico.myhomebookkeeping.utils.launchUi
 class NewFastPaymentFragment:Fragment() {
     private var _binding: FragmentNewFastPaymentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var newFastPaymentViewModel: NewFastPaymentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +26,9 @@ class NewFastPaymentFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNewFastPaymentBinding.inflate(inflater,container,false)
+
+        newFastPaymentViewModel = ViewModelProvider(this).get(NewFastPaymentViewModel::class.java)
+
         return binding.root
     }
 
@@ -39,7 +44,9 @@ class NewFastPaymentFragment:Fragment() {
         launchUi {
             val dialog = SelectRatingDialog(object:OnSelectRatingValueCallBack{
                 override fun select(value: Int) {
-                    Toast.makeText(requireContext(),"rating $value",Toast.LENGTH_SHORT).show()
+                    newFastPaymentViewModel.setRating(value)
+//                    Toast.makeText(requireContext(),"rating $value",Toast.LENGTH_SHORT).show()
+
                 }
             })
 

@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -164,7 +165,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun addNewMoneyMoving() {
-        val amount: Double = newMoneyMovingViewModel.aroundDouble(binding.amount.text.toString())
+        val amount: Double = Around.double(binding.amount.text.toString())
         val description = binding.description.text.toString()
         newMoneyMovingViewModel.saveDataToSP(amount, description)
         runBlocking {
@@ -209,7 +210,7 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressSelectButton(fragment: Int) {
         var amount = 0.0
         if (!binding.amount.text.isNullOrEmpty()) {
-            amount = newMoneyMovingViewModel.aroundDouble(binding.amount.text.toString())
+            amount = Around.double(binding.amount.text.toString())
         }
         var description = ""
         if (!binding.description.text.isNullOrEmpty()) {
