@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -24,8 +25,6 @@ import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import java.lang.StringBuilder
-import java.util.*
 
 class NewFastPaymentViewModel(
     val app: Application
@@ -129,16 +128,21 @@ class NewFastPaymentViewModel(
     }
 
     private suspend fun postCategory() {
-        _category.postValue(CategoriesUseCase.getOneCategory(dbCategory,categorySPInt))
+        _category.postValue(CategoriesUseCase.getOneCategory(dbCategory, categorySPInt))
 
     }
 
     private suspend fun postCurrency() {
-        _currency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies,currencySPInt))
+        _currency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies, currencySPInt))
     }
 
     private suspend fun postCashAccount() {
-        _cashAccount.postValue(CashAccountsUseCase.getOneCashAccount(dbCashAccount,cashAccountSPInt))
+        _cashAccount.postValue(
+            CashAccountsUseCase.getOneCashAccount(
+                dbCashAccount,
+                cashAccountSPInt
+            )
+        )
     }
 
     private fun postRating() {
@@ -146,35 +150,45 @@ class NewFastPaymentViewModel(
     }
 
     fun saveDataToSP(
-        descriptionFastPayment:String,
-        description:String,
-        amount:Double
-    ){
-        with(setSP){
-            saveToSP(argsDescriptionFastPaymentKey,descriptionFastPayment)
-            saveToSP(argsRatingKey,_rating.value?.toInt())
-            saveToSP(argsCashAccount,_cashAccount.value?.cashAccountId)
-            saveToSP(argsCurrency,_currency.value?.currencyId)
-            saveToSP(argsCategory,_category.value?.categoriesId)
-            saveToSP(amountSPString,amount.toString())
-            saveToSP(argsDescription,description)
-
-        }
-    }
-    fun clearSPAfterSave(){
-        with(setSP){
-            saveToSP(argsDescriptionFastPaymentKey,textNone)
-            saveToSP(argsRatingKey,minusOneInt)
-            saveToSP(argsCashAccount,minusOneInt)
-            saveToSP(argsCurrency,minusOneInt)
-            saveToSP(argsCategory,minusOneInt)
-            saveToSP(amountSPString,textNone)
-            saveToSP(argsDescription,textNone)
+        descriptionFastPayment: String,
+        description: String,
+        amount: Double
+    ) {
+        with(setSP) {
+            saveToSP(argsDescriptionFastPaymentKey, descriptionFastPayment)
+            saveToSP(argsRatingKey, _rating.value?.toInt())
+            saveToSP(argsCashAccount, _cashAccount.value?.cashAccountId)
+            saveToSP(argsCurrency, _currency.value?.currencyId)
+            saveToSP(argsCategory, _category.value?.categoriesId)
+            saveToSP(amountSPString, amount.toString())
+            saveToSP(argsDescription, description)
         }
     }
 
-    fun setRating(value: Int) {
-        _rating.postValue(value)
+    fun clearSPAfterSave() {
+        with(setSP) {
+            saveToSP(argsDescriptionFastPaymentKey, textNone)
+            saveToSP(argsRatingKey, minusOneInt)
+            saveToSP(argsCashAccount, minusOneInt)
+            saveToSP(argsCurrency, minusOneInt)
+            saveToSP(argsCategory, minusOneInt)
+            saveToSP(amountSPString, textNone)
+            saveToSP(argsDescription, textNone)
+        }
+    }
+
+    fun setRating(rating: Int) {
+        when (rating) {
+            in 0..9 -> postRatingImg(R.drawable.rating1)
+            in 10..19 -> postRatingImg(R.drawable.rating2)
+            in 20..29 -> postRatingImg(R.drawable.rating3)
+            in 30..39 -> postRatingImg(R.drawable.rating4)
+            in 40..50 -> postRatingImg(R.drawable.rating5)
+        }
+    }
+
+    private fun postRatingImg(ratingImg: Int) {
+        _rating.postValue(ratingImg)
     }
 
 }

@@ -21,7 +21,8 @@
                 style="@style/TextDescriptions"
                 android:text="@string/description_about_this_fast_payment" />
 
-            <EditText style="@style/EditTextDescription"
+            <EditText
+                android:id="@+id/descriptionFastPaymentEditText" style="@style/EditTextDescription"
                 tools:ignore="LabelFor" />
 
             <LinearLayout

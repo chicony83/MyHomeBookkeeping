@@ -29,6 +29,30 @@ class NewFastPaymentFragment:Fragment() {
 
         newFastPaymentViewModel = ViewModelProvider(this).get(NewFastPaymentViewModel::class.java)
 
+        with(newFastPaymentViewModel){
+            descriptionFastPayment.observe(viewLifecycleOwner,{
+                binding.descriptionFastPaymentEditText.setText(it.toString())
+            })
+            rating.observe(viewLifecycleOwner,{
+                binding.ratingButton.setImageResource(it)
+            })
+            cashAccount.observe(viewLifecycleOwner,{
+                binding.selectCashAccountButton.text = it.accountName
+            })
+            currency.observe(viewLifecycleOwner,{
+                binding.selectCurrenciesButton.text = it.currencyName
+            })
+            category.observe(viewLifecycleOwner,{
+                binding.selectCategoryButton.text = it.categoryName
+            })
+            amount.observe(viewLifecycleOwner,{
+                binding.amount.setText(it.toString())
+            })
+            description.observe(viewLifecycleOwner,{
+                binding.description.setText(it)
+            })
+        }
+
         return binding.root
     }
 
@@ -37,6 +61,7 @@ class NewFastPaymentFragment:Fragment() {
 
         with(binding){
             ratingButton.setOnClickListener { showSelectRatingDialog() }
+
         }
     }
 
@@ -44,14 +69,17 @@ class NewFastPaymentFragment:Fragment() {
         launchUi {
             val dialog = SelectRatingDialog(object:OnSelectRatingValueCallBack{
                 override fun select(value: Int) {
-                    newFastPaymentViewModel.setRating(value)
-//                    Toast.makeText(requireContext(),"rating $value",Toast.LENGTH_SHORT).show()
-
+                    setRatingValue(value)
+                    Toast.makeText(requireContext(),"rating $value",Toast.LENGTH_SHORT).show()
                 }
             })
 
             dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
         }
+    }
+
+    private fun setRatingValue(value: Int) {
+        newFastPaymentViewModel.setRating(value)
     }
 
     override fun onDestroy() {
