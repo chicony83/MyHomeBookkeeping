@@ -11,5 +11,5 @@ interface FastPaymentsDao {
     suspend fun addBlank(newFastPayment: FastPayments):Long
 
     @Query("SELECT * FROM fast_payments_table")
-    suspend fun getAllBlanks():List<FastPayments>
+    suspend fun getAllFastPayments():List<FastPayments>
 }

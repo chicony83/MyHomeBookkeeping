@@ -163,7 +163,6 @@ class NewFastPaymentFragment : Fragment() {
                     Toast.makeText(requireContext(), "rating $value", Toast.LENGTH_SHORT).show()
                 }
             })
-
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }

@@ -8,7 +8,7 @@ object NewFastPaymentsUseCase {
     suspend fun addNewFastPayment(db: FastPaymentsDao, newFastPayment: FastPayments): Long {
         return db.addBlank(newFastPayment)
     }
-    suspend fun getAllBlanks(db: FastPaymentsDao):List<FastPayments>{
-        return db.getAllBlanks()
+    suspend fun getAllFastPayments(db: FastPaymentsDao):List<FastPayments>{
+        return db.getAllFastPayments()
     }
 }

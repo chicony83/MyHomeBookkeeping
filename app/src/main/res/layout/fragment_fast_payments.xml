@@ -4,6 +4,7 @@
   style="@style/Fragment.paddingBottom">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         style="@style/RecyclerHolder"
         android:layout_width="match_parent"
         android:layout_height="0dp"

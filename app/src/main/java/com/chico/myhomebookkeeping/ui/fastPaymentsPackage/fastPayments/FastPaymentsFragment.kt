@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
@@ -27,16 +28,25 @@ class FastPaymentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFastPaymentsBinding.inflate(inflater, container, false)
-
         control = activity?.findNavController(R.id.nav_host_fragment)!!
-
         navControlHelper = NavControlHelper(controller = control)
+
+        fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
+        with(fastPaymentsViewModel) {
+            fastPaymentsList.observe(viewLifecycleOwner, {
+                binding.recyclerView.adapter = FastPaymentsAdapter(it)
+            })
+        }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_money_moving_fragment) }
         }
-
-        return binding.root
     }
 
     override fun onDestroyView() {
