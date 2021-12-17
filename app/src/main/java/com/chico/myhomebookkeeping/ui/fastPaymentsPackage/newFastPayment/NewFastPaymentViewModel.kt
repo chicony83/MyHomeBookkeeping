@@ -191,4 +191,23 @@ class NewFastPaymentViewModel(
         _rating.postValue(ratingImg)
     }
 
+    fun isCashAccountNotNull(): Boolean {
+        return _cashAccount.value != null
+    }
+
+    fun isCurrencyNotNull(): Boolean {
+        return _currency.value != null
+    }
+
+    fun isCategoryNotNull():Boolean{
+        return _category.value != null
+    }
+
+    fun addNewFastPayment(
+        descriptionFastPayment: String,
+        description: String,
+        amount: Double
+    ): Long {
+        return 1L
+    }
 }

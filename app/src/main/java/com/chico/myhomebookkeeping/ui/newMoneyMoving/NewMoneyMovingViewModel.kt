@@ -219,7 +219,7 @@ class NewMoneyMovingViewModel(
         }
     }
 
-    suspend fun addInMoneyMovingDB(
+    suspend fun addNewMoneyMoving(
         amount: Double,
         description: String
     ): Long {
@@ -267,15 +267,15 @@ class NewMoneyMovingViewModel(
         _submitButtonText.postValue(string)
     }
 
-    fun checkIsCashAccountSelected(): Boolean {
+    fun isCashAccountNotNull(): Boolean {
         return selectedCashAccount.value != null
     }
 
-    fun checkIsCurrencySelected(): Boolean {
+    fun isCurrencyNotNull(): Boolean {
         return selectedCurrency.value != null
     }
 
-    fun checkIsCategorySelected(): Boolean {
+    fun isCategoryNotNull(): Boolean {
         return selectedCategory.value != null
     }
 

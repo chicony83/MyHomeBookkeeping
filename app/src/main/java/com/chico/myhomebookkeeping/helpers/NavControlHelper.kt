@@ -31,7 +31,7 @@ class NavControlHelper(private val controller: NavController) {
         controller.navigate(R.id.nav_money_moving)
     }
 
-    fun moveToSelectedFragment(toFragment: Int) {
+    fun toSelectedFragment(toFragment: Int) {
         controller.navigate(toFragment)
     }
 

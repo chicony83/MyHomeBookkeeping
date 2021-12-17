@@ -67,7 +67,7 @@ class ReportsMainFragment : Fragment() {
         horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
             selectCategoryButton.setOnClickListener {
-                navControlHelper.moveToSelectedFragment(R.id.nav_reports_categories_fragment)
+                navControlHelper.toSelectedFragment(R.id.nav_reports_categories_fragment)
             }
             selectTimePeriodButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()

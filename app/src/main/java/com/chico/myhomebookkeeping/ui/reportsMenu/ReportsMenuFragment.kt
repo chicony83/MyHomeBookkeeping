@@ -49,7 +49,7 @@ class ReportsMenuFragment : Fragment() {
     }
 
     private fun pressSelectButton(fragment: Int) {
-        navControlHelper.moveToSelectedFragment(fragment)
+        navControlHelper.toSelectedFragment(fragment)
     }
 
     private fun selectSpendingCategoryPieReport() {
@@ -63,7 +63,7 @@ class ReportsMenuFragment : Fragment() {
     }
 
     private fun launchPieReport() {
-        navControlHelper.moveToSelectedFragment(R.id.nav_reports)
+        navControlHelper.toSelectedFragment(R.id.nav_reports)
     }
 
 

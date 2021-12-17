@@ -33,7 +33,7 @@ class FastPaymentsFragment : Fragment() {
         navControlHelper = NavControlHelper(controller = control)
 
         with(binding) {
-            newBlankButton.setOnClickListener { navControlHelper.moveToSelectedFragment(R.id.nav_new_fast_money_moving_fragment) }
+            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_money_moving_fragment) }
         }
 
         return binding.root

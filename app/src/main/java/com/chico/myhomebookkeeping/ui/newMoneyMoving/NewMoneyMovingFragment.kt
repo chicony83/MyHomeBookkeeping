@@ -53,7 +53,6 @@ class NewMoneyMovingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
-
         navControlHelper = NavControlHelper(controller = control)
 
         with(binding) {
@@ -140,13 +139,13 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
-        val checkCashAccount = newMoneyMovingViewModel.checkIsCashAccountSelected()
-        val checkCurrency = newMoneyMovingViewModel.checkIsCurrencySelected()
-        val checkCategory = newMoneyMovingViewModel.checkIsCategorySelected()
+        val isCashAccountNotNull = newMoneyMovingViewModel.isCashAccountNotNull()
+        val isCurrencyNotNull = newMoneyMovingViewModel.isCurrencyNotNull()
+        val isCategoryNotNull = newMoneyMovingViewModel.isCategoryNotNull()
         val checkAmount = uiHelper.isEntered(binding.amount.text)
-        if (checkCashAccount) {
-            if (checkCurrency) {
-                if (checkCategory) {
+        if (isCashAccountNotNull) {
+            if (isCurrencyNotNull) {
+                if (isCategoryNotNull) {
                     if (checkAmount) {
                         addNewMoneyMoving()
                     } else {
@@ -169,22 +168,21 @@ class NewMoneyMovingFragment : Fragment() {
         val description = binding.description.text.toString()
         newMoneyMovingViewModel.saveDataToSP(amount, description)
         runBlocking {
-            val result = newMoneyMovingViewModel.addInMoneyMovingDB(
+            val result = newMoneyMovingViewModel.addNewMoneyMoving(
                 amount = amount,
                 description = description
             )
             if (result > 0) {
-                uiHelper.clearUiListEditText(
-                    listOf(
-                        binding.amount, binding.description
-                    )
-                )
+//                uiHelper.clearUiListEditText(
+//                    listOf(
+//                        binding.amount, binding.description
+//                    )
+//                )
                 setBackgroundDefaultColor(binding.amount)
                 view?.hideKeyboard()
                 message(getString(R.string.message_entry_added))
                 control.navigate(R.id.nav_money_moving)
                 newMoneyMovingViewModel.clearSPAfterSave()
-
             }
         }
     }
@@ -208,16 +206,23 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(fragment: Int) {
-        var amount = 0.0
-        if (!binding.amount.text.isNullOrEmpty()) {
-            amount = Around.double(binding.amount.text.toString())
+        newMoneyMovingViewModel.saveDataToSP(getAmount(), getDescription())
+        navControlHelper.toSelectedFragment(fragment)
+//        control.navigate(fragment)
+    }
+
+    private fun getDescription(): String {
+        return binding.description.text.toString().let {
+            if (it.isNotEmpty()) it
+            else ""
         }
-        var description = ""
-        if (!binding.description.text.isNullOrEmpty()) {
-            description = binding.description.text.toString()
+    }
+
+    private fun getAmount(): Double {
+        return binding.amount.text.toString().let {
+            if (it.isNotEmpty()) Around.double(it)
+            else 0.0
         }
-        newMoneyMovingViewModel.saveDataToSP(amount, description)
-        control.navigate(fragment)
     }
 
     override fun onDestroyView() {
