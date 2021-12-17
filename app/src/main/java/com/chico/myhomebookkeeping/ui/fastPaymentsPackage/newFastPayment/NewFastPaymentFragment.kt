@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -76,7 +77,11 @@ class NewFastPaymentFragment : Fragment() {
             selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
             selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
             selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
-            submitButton.setOnClickListener { presSubmitButton() }
+            submitButton.setOnClickListener {
+//                presSubmitButton()
+//                message(navControlHelper.isCurrentFragment(R.id.nav_first_launch_fragment).toString())
+//                message(navControlHelper.isCurrentFragment(R.id.nav_new_fast_money_moving_fragment).toString())
+            }
         }
     }
 

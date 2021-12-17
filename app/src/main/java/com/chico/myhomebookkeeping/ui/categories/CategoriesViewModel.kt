@@ -36,9 +36,9 @@ class CategoriesViewModel(
 
     private val spEditor = sharedPreferences.edit()
 
-    private val argsForCreate = Constants.FOR_CREATE_CATEGORY_KEY
-    private val argsForQuery = Constants.FOR_QUERY_CATEGORY_KEY
-    private val argsForChange = Constants.FOR_CHANGE_CATEGORY_KEY
+//    private val argsForCreate = Constants.FOR_CREATE_CATEGORY_KEY
+//    private val argsForQuery = Constants.FOR_QUERY_CATEGORY_KEY
+//    private val argsForChange = Constants.FOR_CHANGE_CATEGORY_KEY
 
     private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
     private val argsIncome = Constants.FOR_QUERY_INCOME
@@ -164,11 +164,16 @@ class CategoriesViewModel(
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
         setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
-            argsForNew = argsForCreate,
-            argsForChange = argsForChange,
-            argsForQuery = argsForQuery,
             id = id
         )
+//
+//        setSP.checkAndSaveToSP(
+//            navControlHelper = navControlHelper,
+//            argsForNew = argsForCreate,
+//            argsForChange = argsForChange,
+//            argsForQuery = argsForQuery,
+//            id = id
+//        )
     }
 
     fun selectSpendingCategory(navControlHelper: NavControlHelper) {

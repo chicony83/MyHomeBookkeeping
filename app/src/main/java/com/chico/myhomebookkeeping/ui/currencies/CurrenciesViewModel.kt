@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+
 class CurrenciesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
@@ -27,9 +28,9 @@ class CurrenciesViewModel(
 
     private val spEditor = sharedPreferences.edit()
 
-    private val argsForCreate = Constants.FOR_CREATE_CURRENCY_KEY
-    private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsForChange = Constants.FOR_CHANGE_CURRENCY_KEY
+//    private val argsForCreate = Constants.FOR_CREATE_CURRENCY_KEY
+//    private val argsForQuery = Constants.FOR_QUERY_CURRENCY_KEY
+//    private val argsForChange = Constants.FOR_CHANGE_CURRENCY_KEY
 
     private val setSP = SetSP(spEditor)
 
@@ -48,13 +49,19 @@ class CurrenciesViewModel(
     }
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
+
         setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
-            argsForNew = argsForCreate,
-            argsForChange = argsForChange,
-            argsForQuery = argsForQuery,
             id = id
         )
+
+//        setSP.checkAndSaveToSP(
+//            navControlHelper = navControlHelper,
+//            argsForNew = argsForCreate,
+//            argsForChange = argsForChange,
+//            argsForQuery = argsForQuery,
+//            id = id
+//        )
     }
 
     suspend fun loadSelectedCurrency(selectedId: Int): Currencies? {

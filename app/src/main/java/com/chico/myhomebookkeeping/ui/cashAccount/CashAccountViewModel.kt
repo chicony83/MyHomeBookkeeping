@@ -30,11 +30,11 @@ class CashAccountViewModel(
 
     private val spEditor = sharedPreferences.edit()
 
-    private val argsForCreate = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
-    private val argsForQuery = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
-    private val argsForChange = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
+//    private val argsForCreate = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
+//    private val argsForQuery = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
+//    private val argsForChange = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
 
-    private val saveARGS = SetSP(spEditor)
+    private val setSP = SetSP(spEditor)
 
     private val _cashAccountsList = MutableLiveData<List<CashAccount>>()
     val cashAccountList: LiveData<List<CashAccount>>
@@ -58,24 +58,30 @@ class CashAccountViewModel(
         }
     }
 
-    fun saveData(navControlHelper: NavControlHelper) {
-        saveARGS.checkAndSaveToSP(
-            navControlHelper = navControlHelper,
-            argsForNew = argsForCreate,
-            argsForChange = argsForChange,
-            argsForQuery = argsForQuery,
-            id = _selectedCashAccount.value?.cashAccountId
-        )
-    }
+//    fun saveData(navControlHelper: NavControlHelper) {
+//        setSP.checkAndSaveToSP(
+//            navControlHelper = navControlHelper,
+//            argsForNew = argsForCreate,
+//            argsForChange = argsForChange,
+//            argsForQuery = argsForQuery,
+//            id = _selectedCashAccount.value?.cashAccountId
+//        )
+//    }
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
-        saveARGS.checkAndSaveToSP(
+//        saveARGS.checkAndSaveToSP(
+//            navControlHelper = navControlHelper,
+//            argsForNew = argsForCreate,
+//            argsForChange = argsForChange,
+//            argsForQuery = argsForQuery,
+//            id = id
+//        )
+        setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
-            argsForNew = argsForCreate,
-            argsForChange = argsForChange,
-            argsForQuery = argsForQuery,
             id = id
         )
+
+
     }
 
     suspend fun loadSelectedCashAccount(selectedId: Int): CashAccount? {

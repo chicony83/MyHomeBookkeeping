@@ -12,6 +12,9 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
+    private val navNewFastPayment = R.id.nav_new_fast_money_moving_fragment
+
+    private val navCategory = R.id.nav_categories
 
     private val navReportsMenu = R.id.nav_reports_menu
     private val navReports = R.id.nav_reports
@@ -22,9 +25,62 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val argsStartTimePeriodForReport = Constants.FOR_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodForReports = Constants.FOR_REPORTS_END_TIME_PERIOD
 
+    private val argsCreateCategory = Constants.FOR_CREATE_CATEGORY_KEY
+    private val argsQueryCategory = Constants.FOR_QUERY_CATEGORY_KEY
+    private val argsChangeCategory = Constants.FOR_CHANGE_CATEGORY_KEY
+    private val argsNewFastCategory = Constants.FOR_NEW_FAST_PAYMENT_CATEGORY
+
+    private val argsCreateCashAccount = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
+    private val argsQueryCashAccount = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
+    private val argsChangeCashAccount = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
+    private val argsNewFastCashAccount = Constants.FOR_NEW_FAST_PAYMENT_CASH_ACCOUNT
+
+    private val argsCreateCurrency = Constants.FOR_CREATE_CURRENCY_KEY
+    private val argsQueryCurrency = Constants.FOR_QUERY_CURRENCY_KEY
+    private val argsChangeCurrency = Constants.FOR_CHANGE_CURRENCY_KEY
+    private val argsNewFastCurrency: String = Constants.FOR_NEW_FAST_PAYMENT_CURRENCY
 
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
+
+
+    fun checkAndSaveToSP(
+        navControlHelper: NavControlHelper,
+        id: Int
+    ) {
+        var args = ""
+        when (navControlHelper.previousFragment()) {
+            navMoneyMoving -> {
+                when(navControlHelper.currentFragment()){
+                    R.id.nav_categories -> args = argsQueryCategory
+                    R.id.nav_cash_account-> args = argsQueryCashAccount
+                    R.id.nav_currencies-> args = argsQueryCurrency
+                }
+            }
+            navNewMoneyMoving -> {
+                when(navControlHelper.currentFragment()){
+                    R.id.nav_categories -> args = argsCreateCategory
+                    R.id.nav_cash_account-> args = argsCreateCashAccount
+                    R.id.nav_currencies-> args = argsCreateCurrency
+                }
+            }
+            navChangeMoneyMoving -> {
+                when(navControlHelper.currentFragment()){
+                    R.id.nav_categories -> args = argsChangeCategory
+                    R.id.nav_cash_account-> args = argsChangeCashAccount
+                    R.id.nav_currencies-> args = argsChangeCurrency
+                }
+            }
+            navNewFastPayment -> {
+                when (navControlHelper.currentFragment()) {
+                    R.id.nav_categories -> args = argsNewFastCategory
+                    R.id.nav_cash_account-> args = argsNewFastCashAccount
+                    R.id.nav_currencies-> args = argsNewFastCurrency
+                }
+            }
+        }
+        saveToSP(args,id)
+    }
 
     fun checkAndSaveToSP(
         navControlHelper: NavControlHelper,
@@ -45,6 +101,9 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
             }
             navChangeMoneyMoving -> {
                 saveToSP(argsForChange, id)
+            }
+            navNewFastPayment -> {
+
             }
         }
     }
@@ -136,18 +195,18 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
         startTimePeriodLong: Long,
         endTimePeriodLong: Long
     ) {
-        when(navControlHelper.previousFragment()){
-            navMoneyMoving ->{
-                saveToSP(argsStartTimePeriodForQuery,startTimePeriodLong)
-                saveToSP(argsEndTimePeriodForQuery,endTimePeriodLong)
+        when (navControlHelper.previousFragment()) {
+            navMoneyMoving -> {
+                saveToSP(argsStartTimePeriodForQuery, startTimePeriodLong)
+                saveToSP(argsEndTimePeriodForQuery, endTimePeriodLong)
             }
-            navReportsMenu ->{
-                saveToSP(argsStartTimePeriodForReport,startTimePeriodLong)
-                saveToSP(argsEndTimePeriodForReports,endTimePeriodLong)
+            navReportsMenu -> {
+                saveToSP(argsStartTimePeriodForReport, startTimePeriodLong)
+                saveToSP(argsEndTimePeriodForReports, endTimePeriodLong)
             }
-            navReports->{
-                saveToSP(argsStartTimePeriodForReport,startTimePeriodLong)
-                saveToSP(argsEndTimePeriodForReports,endTimePeriodLong)
+            navReports -> {
+                saveToSP(argsStartTimePeriodForReport, startTimePeriodLong)
+                saveToSP(argsEndTimePeriodForReports, endTimePeriodLong)
             }
         }
     }
