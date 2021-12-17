@@ -8,17 +8,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.db.dao.CashAccountDao
-import com.chico.myhomebookkeeping.db.dao.CategoryDao
-import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
-import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
+import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.domain.NewFastPaymentsUseCase
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -52,9 +51,11 @@ class NewFastPaymentViewModel(
     private var descriptionSPString = textNone
 
     private val modelCheck = ModelCheck()
+    private val dbNewFastPayment: FastPaymentsDao =
+        dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
-    private val dbMoneyMovement: MoneyMovementDao =
-        dataBase.getDataBase(app.applicationContext).moneyMovementDao()
+    //    private val dbMoneyMovement: MoneyMovementDao =
+//        dataBase.getDataBase(app.applicationContext).moneyMovementDao()
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCurrencies: CurrenciesDao =
@@ -199,15 +200,29 @@ class NewFastPaymentViewModel(
         return _currency.value != null
     }
 
-    fun isCategoryNotNull():Boolean{
+    fun isCategoryNotNull(): Boolean {
         return _category.value != null
     }
 
-    fun addNewFastPayment(
+    suspend fun addNewFastPayment(
         descriptionFastPayment: String,
         description: String,
         amount: Double
     ): Long {
-        return 1L
+
+        val newFastPayment = FastPayments(
+            icon = null,
+            aboutFastPayment = descriptionFastPayment,
+            rating = _rating.value?.toInt() ?: 0,
+            cashAccountId = _cashAccount.value?.cashAccountId ?: 0,
+            currencyId = _currency.value?.currencyId ?: 0,
+            categoryId = _category.value?.categoriesId ?: 0,
+            amount = amount,
+            description = description
+        )
+
+        return NewFastPaymentsUseCase.addNewFastPayment(
+            db = dbNewFastPayment, newFastPayment = newFastPayment)
+//        return 1L
     }
 }

@@ -78,9 +78,7 @@ class NewFastPaymentFragment : Fragment() {
             selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
             selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
             submitButton.setOnClickListener {
-//                presSubmitButton()
-//                message(navControlHelper.isCurrentFragment(R.id.nav_first_launch_fragment).toString())
-//                message(navControlHelper.isCurrentFragment(R.id.nav_new_fast_money_moving_fragment).toString())
+                presSubmitButton()
             }
         }
     }

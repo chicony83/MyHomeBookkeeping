@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
-import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.domain.NewFastPaymentsUseCase
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class FastPaymentsViewModel(
@@ -25,7 +25,7 @@ class FastPaymentsViewModel(
 
     private fun getBlanksList() {
         launchIo {
-            _fastMoneyMovementList.postValue(FastPaymentsUseCase.getAllBlanks(db))
+            _fastMoneyMovementList.postValue(NewFastPaymentsUseCase.getAllBlanks(db))
         }
     }
 }
