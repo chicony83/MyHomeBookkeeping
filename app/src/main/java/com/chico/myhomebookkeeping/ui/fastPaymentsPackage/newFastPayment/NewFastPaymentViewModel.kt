@@ -197,14 +197,6 @@ class NewFastPaymentViewModel(
         }
     }
 
-//    private fun setRatingValue(rating: Int) {
-////        _ratingVal = rating
-//    }
-//
-//    private fun postRatingImg(ratingImg: Int) {
-////        _ratingImg.postValue(ratingImg)
-//    }
-
     fun isCashAccountNotNull(): Boolean {
         return _cashAccount.value != null
     }

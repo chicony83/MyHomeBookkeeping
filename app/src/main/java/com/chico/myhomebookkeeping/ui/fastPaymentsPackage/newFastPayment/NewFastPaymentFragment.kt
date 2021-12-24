@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -149,7 +150,15 @@ class NewFastPaymentFragment : Fragment() {
 
     private fun getAmount(): Double {
         return binding.amount.text.toString().let {
-            if (!it.isNullOrEmpty()) Around.double(it)
+            if (!it.isNullOrEmpty()){
+                if (it.isDigitsOnly()){
+                    if (it.toDouble()>0){
+                        Around.double(it)
+                    }
+                    else  0.0
+                }
+                else 0.0
+            }
             else 0.0
         }
     }
