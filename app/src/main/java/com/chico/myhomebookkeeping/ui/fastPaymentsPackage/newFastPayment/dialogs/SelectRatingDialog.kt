@@ -10,23 +10,20 @@ import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCa
 import java.lang.IllegalStateException
 
 class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCallBack) :
-    DialogFragment(), SeekBar.OnSeekBarChangeListener {
+    DialogFragment() {
 
-
-    private lateinit var seekBar: SeekBar
     private lateinit var ratingOneImg: ImageView
     private lateinit var ratingTwoImg: ImageView
     private lateinit var ratingThreeImg: ImageView
     private lateinit var ratingFourImg: ImageView
     private lateinit var ratingFiveImg: ImageView
+    private var _rating = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_seleect_rating_of_fast_payment, null)
-
-            seekBar = layout.findViewById(R.id.seekBar)
 
             ratingOneImg = layout.findViewById<ImageView>(R.id.setRatingOneImg)
             ratingTwoImg = layout.findViewById<ImageView>(R.id.setRatingTwoImg)
@@ -37,18 +34,14 @@ class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCal
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
 
-            seekBar.max = 50
-            setSeekBarProgress(25)
-
-            seekBar.setOnSeekBarChangeListener(this)
-            ratingOneImg.setOnClickListener { setProgressAndImage(0) }
-            ratingTwoImg.setOnClickListener { setProgressAndImage(13) }
-            ratingThreeImg.setOnClickListener { setProgressAndImage(25) }
-            ratingFourImg.setOnClickListener { setProgressAndImage(37) }
-            ratingFiveImg.setOnClickListener { setProgressAndImage(50) }
+            ratingOneImg.setOnClickListener { setRatingAndImage(0) }
+            ratingTwoImg.setOnClickListener { setRatingAndImage(1) }
+            ratingThreeImg.setOnClickListener { setRatingAndImage(2) }
+            ratingFourImg.setOnClickListener { setRatingAndImage(3) }
+            ratingFiveImg.setOnClickListener { setRatingAndImage(4) }
 
             submitButton.setOnClickListener {
-                onSelectRatingValueCallBack.select(seekBar.progress)
+                onSelectRatingValueCallBack.select(_rating)
                 cancelDialog()
             }
             cancelButton.setOnClickListener {
@@ -65,28 +58,19 @@ class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCal
         dialog?.cancel()
     }
 
-    private fun setProgressAndImage(progress: Int) {
-        setSeekBarProgress(progress)
-        setImages(progress)
+    private fun setRatingAndImage(rating: Int) {
+        _rating = rating
+        setImages(_rating)
     }
 
-    private fun setSeekBarProgress(progress: Int) {
-        seekBar.progress = progress
-    }
-
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        setImages(progress)
-    }
-
-
-    private fun setImages(progress: Int) {
-        progress.let {
+    private fun setImages(rating: Int) {
+        rating.let {
             when (it) {
-                in 0..9 -> setRatingStars(1)
-                in 10..19 -> setRatingStars(2)
-                in 20..29 -> setRatingStars(3)
-                in 30..39 -> setRatingStars(4)
-                in 40..50 -> setRatingStars(5)
+                0 -> setRatingStars(1)
+                1 -> setRatingStars(2)
+                2 -> setRatingStars(3)
+                3 -> setRatingStars(4)
+                4 -> setRatingStars(5)
             }
         }
     }
@@ -105,13 +89,5 @@ class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCal
             else if (fullStarsNum <= 0) listImg[i].setImageResource(R.drawable.empty_star)
             fullStarsNum--
         }
-    }
-
-    override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-    }
-
-    override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
     }
 }

@@ -100,14 +100,12 @@ class NewFastPaymentFragment : Fragment() {
         } else {
             message(getString(R.string.message_cash_account_not_selected))
         }
-
     }
 
     private fun addNewFastPayment() {
         val descriptionFastPayment = getDescriptionOfPayment()
         val description = getDescription()
         val amount = getAmount()
-//        newFastPaymentViewModel.saveDataToSP()
         runBlocking {
             val result = newFastPaymentViewModel.addNewFastPayment(
                 descriptionFastPayment, description, amount
@@ -151,13 +149,10 @@ class NewFastPaymentFragment : Fragment() {
     private fun getAmount(): Double {
         return binding.amount.text.toString().let {
             if (!it.isNullOrEmpty()){
-                if (it.isDigitsOnly()){
                     if (it.toDouble()>0){
                         Around.double(it)
                     }
                     else  0.0
-                }
-                else 0.0
             }
             else 0.0
         }
