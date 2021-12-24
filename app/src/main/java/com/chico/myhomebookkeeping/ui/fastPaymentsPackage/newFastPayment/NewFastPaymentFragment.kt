@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -160,7 +159,9 @@ class NewFastPaymentFragment : Fragment() {
 
     private fun showSelectRatingDialog() {
         launchUi {
-            val dialog = SelectRatingDialog(object : OnSelectRatingValueCallBack {
+            val dialog = SelectRatingDialog(
+                newFastPaymentViewModel.rating.value?.rating,
+                object : OnSelectRatingValueCallBack {
                 override fun select(value: Int) {
                     setRatingValue(value)
                     Toast.makeText(requireContext(), "rating $value", Toast.LENGTH_SHORT).show()

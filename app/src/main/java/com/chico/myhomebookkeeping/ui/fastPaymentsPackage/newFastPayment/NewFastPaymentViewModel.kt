@@ -189,11 +189,11 @@ class NewFastPaymentViewModel(
 
     private fun getRatingImg(rating: Int): Int {
         return when (rating) {
-            in 0..9 -> R.drawable.rating1
-            in 10..19 -> R.drawable.rating2
-            in 20..29 -> R.drawable.rating3
-            in 30..39 -> R.drawable.rating4
-            in 40..50 -> R.drawable.rating5
+            0 -> R.drawable.rating1
+            1 -> R.drawable.rating2
+            2 -> R.drawable.rating3
+            3 -> R.drawable.rating4
+            4 -> R.drawable.rating5
             else -> R.drawable.rating1
         }
     }

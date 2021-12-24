@@ -9,7 +9,10 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
 import java.lang.IllegalStateException
 
-class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCallBack) :
+class SelectRatingDialog(
+    private val ratingFromParent: Int?,
+    private val onSelectRatingValueCallBack: OnSelectRatingValueCallBack
+) :
     DialogFragment() {
 
     private lateinit var ratingOneImg: ImageView
@@ -18,6 +21,10 @@ class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCal
     private lateinit var ratingFourImg: ImageView
     private lateinit var ratingFiveImg: ImageView
     private var _rating = 0
+
+//    init {
+//        setRatingAndImage(rating ?: 0)
+//    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -40,6 +47,8 @@ class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCal
             ratingFourImg.setOnClickListener { setRatingAndImage(3) }
             ratingFiveImg.setOnClickListener { setRatingAndImage(4) }
 
+            setRatingAndImage(ratingFromParent ?: 0)
+
             submitButton.setOnClickListener {
                 onSelectRatingValueCallBack.select(_rating)
                 cancelDialog()
@@ -47,6 +56,8 @@ class SelectRatingDialog(val onSelectRatingValueCallBack: OnSelectRatingValueCal
             cancelButton.setOnClickListener {
                 cancelDialog()
             }
+
+
 
             builder.setView(layout)
             builder.create()
