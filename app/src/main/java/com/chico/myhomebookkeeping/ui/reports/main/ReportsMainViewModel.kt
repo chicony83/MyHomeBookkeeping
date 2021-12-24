@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.fragments.main
+package com.chico.myhomebookkeeping.ui.reports.main
 
 import android.app.Application
 import android.content.Context
@@ -22,10 +22,9 @@ import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
+import com.chico.myhomebookkeeping.data.reports.ReportsCashAccountItem
+import com.chico.myhomebookkeeping.data.reports.ReportsCurrenciesItem
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.*
 

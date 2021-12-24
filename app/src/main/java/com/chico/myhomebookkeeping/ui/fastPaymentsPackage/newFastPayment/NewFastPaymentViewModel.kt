@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
+import com.chico.myhomebookkeeping.data.newFastPayment.Rating
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
@@ -19,6 +20,7 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.NewFastPaymentsUseCase
 import com.chico.myhomebookkeeping.helpers.Around
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -73,8 +75,10 @@ class NewFastPaymentViewModel(
     private val _descriptionFastPayment = MutableLiveData<String>()
     val descriptionFastPayment: LiveData<String> get() = _descriptionFastPayment
 
-    private val _rating = MutableLiveData<Int>()
-    val rating: LiveData<Int> get() = _rating
+    private val _rating = MutableLiveData<Rating>()
+    val rating: LiveData<Rating> get() = _rating
+
+//    private var _ratingVal = 0
 
     private val _cashAccount = MutableLiveData<CashAccount>()
     val cashAccount: LiveData<CashAccount> get() = _cashAccount
@@ -147,7 +151,11 @@ class NewFastPaymentViewModel(
     }
 
     private fun postRating() {
-        _rating.postValue(ratingSPInt)
+        _rating.postValue(Rating(ratingSPInt, getRatingImg(ratingSPInt)))
+    }
+
+    fun postRating(rating: Int) {
+        _rating.postValue(Rating(rating, getRatingImg(rating)))
     }
 
     fun saveDataToSP(
@@ -157,7 +165,7 @@ class NewFastPaymentViewModel(
     ) {
         with(setSP) {
             saveToSP(argsDescriptionFastPaymentKey, descriptionFastPayment)
-            saveToSP(argsRatingKey, _rating.value?.toInt())
+            saveToSP(argsRatingKey, _rating.value?.rating ?: 0)
             saveToSP(argsCashAccount, _cashAccount.value?.cashAccountId)
             saveToSP(argsCurrency, _currency.value?.currencyId)
             saveToSP(argsCategory, _category.value?.categoriesId)
@@ -178,19 +186,24 @@ class NewFastPaymentViewModel(
         }
     }
 
-    fun setRating(rating: Int) {
-        when (rating) {
-            in 0..9 -> postRatingImg(R.drawable.rating1)
-            in 10..19 -> postRatingImg(R.drawable.rating2)
-            in 20..29 -> postRatingImg(R.drawable.rating3)
-            in 30..39 -> postRatingImg(R.drawable.rating4)
-            in 40..50 -> postRatingImg(R.drawable.rating5)
+    private fun getRatingImg(rating: Int): Int {
+        return when (rating) {
+            in 0..9 -> R.drawable.rating1
+            in 10..19 -> R.drawable.rating2
+            in 20..29 -> R.drawable.rating3
+            in 30..39 -> R.drawable.rating4
+            in 40..50 -> R.drawable.rating5
+            else -> R.drawable.rating1
         }
     }
 
-    private fun postRatingImg(ratingImg: Int) {
-        _rating.postValue(ratingImg)
-    }
+//    private fun setRatingValue(rating: Int) {
+////        _ratingVal = rating
+//    }
+//
+//    private fun postRatingImg(ratingImg: Int) {
+////        _ratingImg.postValue(ratingImg)
+//    }
 
     fun isCashAccountNotNull(): Boolean {
         return _cashAccount.value != null
@@ -213,16 +226,19 @@ class NewFastPaymentViewModel(
         val newFastPayment = FastPayments(
             icon = null,
             aboutFastPayment = descriptionFastPayment,
-            rating = _rating.value?.toInt() ?: 0,
+            rating = _rating.value?.rating ?: 0,
             cashAccountId = _cashAccount.value?.cashAccountId ?: 0,
             currencyId = _currency.value?.currencyId ?: 0,
             categoryId = _category.value?.categoriesId ?: 0,
             amount = amount,
             description = description
         )
+        Message.log("rating Int value = 0")
+        Message.log("rating newFastPayment = ${newFastPayment.rating.toString()}")
 
         return NewFastPaymentsUseCase.addNewFastPayment(
-            db = dbNewFastPayment, newFastPayment = newFastPayment)
+            db = dbNewFastPayment, newFastPayment = newFastPayment
+        )
 //        return 1L
     }
 }

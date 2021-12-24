@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.fragments.categories
+package com.chico.myhomebookkeeping.ui.reports.selectCategories
 
 import android.app.Application
 import android.content.Context
@@ -14,7 +14,6 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
-import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 
 class ReportsSelectCategoriesViewModel(

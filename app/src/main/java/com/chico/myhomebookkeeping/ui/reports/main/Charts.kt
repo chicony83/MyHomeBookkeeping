@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.fragments.main
+package com.chico.myhomebookkeeping.ui.reports.main
 
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.GenerateColor

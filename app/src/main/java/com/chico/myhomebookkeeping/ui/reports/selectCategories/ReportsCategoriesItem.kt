@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.fragments.categories
+package com.chico.myhomebookkeeping.ui.reports.selectCategories
 
 data class ReportsCategoriesItem(
     val id: Int,

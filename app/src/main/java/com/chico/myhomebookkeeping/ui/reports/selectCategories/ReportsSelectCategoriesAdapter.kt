@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.fragments.categories
+package com.chico.myhomebookkeeping.ui.reports.selectCategories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

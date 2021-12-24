@@ -14,7 +14,6 @@ import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
-import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -44,7 +43,7 @@ class NewFastPaymentFragment : Fragment() {
                 binding.descriptionFastPaymentEditText.setText(it.toString())
             })
             rating.observe(viewLifecycleOwner, {
-                binding.ratingButton.setImageResource(it)
+                binding.ratingButton.setImageResource(it.img)
             })
             cashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccountButton.text = it.accountName
@@ -104,9 +103,9 @@ class NewFastPaymentFragment : Fragment() {
     }
 
     private fun addNewFastPayment() {
-        val descriptionFastPayment = binding.descriptionFastPaymentEditText.text.toString()
-        val description = binding.description.text.toString()
-        val amount = Around.double(binding.amount.text.toString())
+        val descriptionFastPayment = getDescriptionOfPayment()
+        val description = getDescription()
+        val amount = getAmount()
 //        newFastPaymentViewModel.saveDataToSP()
         runBlocking {
             val result = newFastPaymentViewModel.addNewFastPayment(
@@ -150,7 +149,7 @@ class NewFastPaymentFragment : Fragment() {
 
     private fun getAmount(): Double {
         return binding.amount.text.toString().let {
-            if (it.isNotEmpty()) Around.double(it)
+            if (!it.isNullOrEmpty()) Around.double(it)
             else 0.0
         }
     }
@@ -168,7 +167,7 @@ class NewFastPaymentFragment : Fragment() {
     }
 
     private fun setRatingValue(value: Int) {
-        newFastPaymentViewModel.setRating(value)
+        newFastPaymentViewModel.postRating(value)
     }
 
     override fun onDestroy() {

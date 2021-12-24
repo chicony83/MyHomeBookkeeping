@@ -4,10 +4,9 @@ import com.chico.myhomebookkeeping.db.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsCategoriesItem
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCashAccountItem
-import com.chico.myhomebookkeeping.ui.reports.items.ReportsCurrenciesItem
+import com.chico.myhomebookkeeping.ui.reports.selectCategories.ReportsCategoriesItem
+import com.chico.myhomebookkeeping.data.reports.ReportsCashAccountItem
+import com.chico.myhomebookkeeping.data.reports.ReportsCurrenciesItem
 
 object ConvToList {
 

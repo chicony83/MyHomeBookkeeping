@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
-    tools:context=".ui.reports.fragments.main.ReportsMainFragment">
+    tools:context=".ui.reports.main.ReportsMainFragment">
 
     <HorizontalScrollView
         android:id="@+id/scrollViewButtons"

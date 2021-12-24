@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_fast_payments" />
     <fragment
         android:id="@+id/nav_reports_categories_fragment"
-        android:name="com.chico.myhomebookkeeping.ui.reports.fragments.categories.ReportsSelectCategoriesFragment"
+        android:name="com.chico.myhomebookkeeping.ui.reports.selectCategories.ReportsSelectCategoriesFragment"
         android:label="@string/fragment_label_select_categories"
         tools:layout="@layout/fragment_reports_menu" />
     <fragment
@@ -102,7 +102,7 @@
         tools:layout="@layout/fragment_reports_menu" />
     <fragment
         android:id="@+id/nav_reports"
-        android:name="com.chico.myhomebookkeeping.ui.reports.fragments.main.ReportsMainFragment"
+        android:name="com.chico.myhomebookkeeping.ui.reports.main.ReportsMainFragment"
         android:label="@string/fragment_label_reports"
         tools:layout="@layout/fragment_reports" />
 

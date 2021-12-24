@@ -84,6 +84,7 @@
         <entry key="app/src/main/res/layout/recycler_view_item_categories.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recycler_view_item_categories_for_reports.xml" value="0.33" />
         <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_view_item_fast_payment.xml" value="0.5" />
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.35563380281690143" />
         <entry key="app/src/main/res/layout/recycler_view_item_reports.xml" value="0.282312925170068" />

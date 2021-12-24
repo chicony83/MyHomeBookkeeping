@@ -2,27 +2,58 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    style="@style/RecyclerViewCard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:visibility="gone"
+        <ImageView
+            android:id="@+id/iconImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/payments"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/itemId"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/descriptionFastPaymentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="продукты" />
+            tools:text="проценты бынка" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iconImg"
+            app:layout_constraintTop_toBottomOf="@id/descriptionFastPaymentTextView" />
+
+        <ImageView
+            android:id="@+id/ratingImg"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/rating3" />
+
+        <TextView
+            android:id="@+id/ratingVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/ratingImg"
+            app:layout_constraintStart_toStartOf="@id/ratingImg"
+            app:layout_constraintTop_toBottomOf="@id/ratingImg" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.reports.fragments.main
+package com.chico.myhomebookkeeping.ui.reports.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
