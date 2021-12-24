@@ -112,7 +112,8 @@ class NewFastPaymentViewModel(
 
     private fun setValuesViewModel() {
         launchIo { if (descriptionFastPaymentSPString.isNotEmpty()) launchUi { postDescriptionFastPayment() } }
-        launchIo { if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() } }
+        launchIo { if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() }
+        if(!modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating(0) }}
         launchIo { if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi { postCashAccount() } }
         launchIo { if (modelCheck.isPositiveValue(currencySPInt)) launchUi { postCurrency() } }
         launchIo { if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory() } }
