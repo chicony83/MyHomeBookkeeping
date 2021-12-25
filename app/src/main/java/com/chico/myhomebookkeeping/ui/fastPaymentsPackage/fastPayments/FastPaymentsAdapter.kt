@@ -38,9 +38,8 @@ class FastPaymentsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(fastPayments: FastPayments) {
             with(binding) {
-                descriptionFastPaymentTextView.text = fastPayments.aboutFastPayment
+                aboutFastPayment.text = fastPayments.aboutFastPayment
                 amount.text = fastPayments.amount.toString()
-                ratingVal.text = fastPayments.rating.toString()
                 ratingImg.setImageDrawable(getRatingImage(fastPayments.rating))
 
             }
@@ -48,18 +47,19 @@ class FastPaymentsAdapter(
 
         private fun getRatingImage(rating: Int): Drawable? {
             return when (rating) {
-                in 0..9 -> drawable(R.drawable.rating1)
-                in 10..19 -> drawable(R.drawable.rating2)
-                in 20..29 -> drawable(R.drawable.rating3)
-                in 30..39 -> drawable(R.drawable.rating4)
+                0 -> drawableRatingStars(R.drawable.rating1)
+                1 -> drawableRatingStars(R.drawable.rating2)
+                2 -> drawableRatingStars(R.drawable.rating3)
+                3 -> drawableRatingStars(R.drawable.rating4)
+                4 -> drawableRatingStars(R.drawable.rating5)
                 else -> {
-                    drawable(R.drawable.rating5)
+                    drawableRatingStars(R.drawable.rating1)
                 }
             }
         }
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        private fun drawable(img: Int) = context.getDrawable(img)
+        private fun drawableRatingStars(img: Int) = context.getDrawable(img)
 
     }
 }
