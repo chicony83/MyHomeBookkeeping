@@ -236,7 +236,7 @@ object MoneyMovingCreateSimpleQuery {
                 "currency_name AS currency_name_value," +
                 "category_name AS category_name_value, " +
                 "amount, is_income, description " +
-                "FROM money_moving_table,cash_account_table,currency_table,category_table " +
+                "FROM money_moving_table, cash_account_table, currency_table, category_table " +
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
                 "AND category == categoriesId"
