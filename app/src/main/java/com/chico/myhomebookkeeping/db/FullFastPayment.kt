@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.db
 import androidx.room.ColumnInfo
 
 class FullFastPayment(
-
     @ColumnInfo(name = "id")
     val id: Long,
 
@@ -13,13 +12,13 @@ class FullFastPayment(
     @ColumnInfo(name = "rating")
     val rating: Int,
 
-    @ColumnInfo(name = "cash_account")
+    @ColumnInfo(name = "cash_account_name_value")
     val cashAccountNameValue: String,
 
-    @ColumnInfo(name = "currency")
+    @ColumnInfo(name = "currency_name_value")
     val currencyNameValue:String,
 
-    @ColumnInfo(name = "category")
+    @ColumnInfo(name = "category_name_value")
     val categoryNameValue:String,
 
     @ColumnInfo(name = "is_income")

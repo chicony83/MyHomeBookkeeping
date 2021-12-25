@@ -18,7 +18,7 @@ import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.domain.NewFastPaymentsUseCase
+import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
@@ -229,7 +229,7 @@ class NewFastPaymentViewModel(
         Message.log("rating Int value = 0")
         Message.log("rating newFastPayment = ${newFastPayment.rating.toString()}")
 
-        return NewFastPaymentsUseCase.addNewFastPayment(
+        return FastPaymentsUseCase.addNewFastPayment(
             db = dbNewFastPayment, newFastPayment = newFastPayment
         )
 //        return 1L

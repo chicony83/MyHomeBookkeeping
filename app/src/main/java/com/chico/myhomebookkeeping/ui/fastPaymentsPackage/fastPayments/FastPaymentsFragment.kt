@@ -32,15 +32,20 @@ class FastPaymentsFragment : Fragment() {
         navControlHelper = NavControlHelper(controller = control)
 
         fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
+
         with(fastPaymentsViewModel) {
             fastPaymentsList.observe(viewLifecycleOwner, {
-                binding.recyclerView.adapter = FastPaymentsAdapter(it)
+                binding.recyclerView.adapter = it?.let { it1 -> FastPaymentsAdapter(it1) }
             })
         }
 
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        fastPaymentsViewModel.getFullFastPaymentsList()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

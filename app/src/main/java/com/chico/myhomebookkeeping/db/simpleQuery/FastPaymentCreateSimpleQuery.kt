@@ -12,14 +12,14 @@ object FastPaymentCreateSimpleQuery {
     }
 
     private fun mainQueryFastPayment(): String {
-        return "SELECT id, icon, rating," +
-                "cash_account_name AS cash_account_name_value," +
-                "currency_name AS currency_name_value" +
-                "category_name AS category_name_value" +
-                "is_income, amount, description" +
-                "FROM money_moving_table, cash_account_table, currency_table, category_table " +
+        return "SELECT id , icon , rating , " +
+                "cash_account_name AS cash_account_name_value, " +
+                "currency_name AS currency_name_value, " +
+                "category_name AS category_name_value, " +
+                "is_income, amount, description " +
+                "FROM fast_payments_table, cash_account_table, currency_table, category_table " +
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
-                "AND category == categoriesId"
+                "AND category == categoriesId "
     }
 }

@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBinding
-import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.db.FullFastPayment
 
 class FastPaymentsAdapter(
-    private val fastPaymentsList: List<FastPayments>
+    private val fullFastPaymentsList: List<FullFastPayment>
 ) : RecyclerView.Adapter<FastPaymentsAdapter.ViewHolderFastPaymentItem>() {
 
 
@@ -29,17 +29,17 @@ class FastPaymentsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolderFastPaymentItem, position: Int) {
-        holder.bind(fastPaymentsList[position])
+        holder.bind(fullFastPaymentsList[position])
     }
 
-    override fun getItemCount() = fastPaymentsList.size
+    override fun getItemCount() = fullFastPaymentsList.size
 
     inner class ViewHolderFastPaymentItem(private val binding: RecyclerViewItemFastPaymentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(fastPayments: FastPayments) {
+        fun bind(fastPayments: FullFastPayment) {
             with(binding) {
-                cashAccountName.text = fastPayments.cashAccountId.toString()
-                aboutFastPayment.text = fastPayments.aboutFastPayment
+                cashAccountName.text = fastPayments.cashAccountNameValue
+
                 amount.text = fastPayments.amount.toString()
                 ratingImg.setImageDrawable(getRatingImage(fastPayments.rating))
 
