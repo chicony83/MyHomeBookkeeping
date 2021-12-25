@@ -9,8 +9,8 @@ data class FastPayments(
     @ColumnInfo(name = "icon")
     val icon: Int?,
 
-    @ColumnInfo(name = "about_fast_payment")
-    val aboutFastPayment:String,
+    @ColumnInfo(name = "name_fast_payment")
+    val nameFastPayment:String,
 
     @ColumnInfo(name = "rating")
     val rating:Int,

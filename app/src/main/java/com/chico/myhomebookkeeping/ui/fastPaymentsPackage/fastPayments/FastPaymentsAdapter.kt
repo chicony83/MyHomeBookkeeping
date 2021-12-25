@@ -38,8 +38,11 @@ class FastPaymentsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(fastPayments: FullFastPayment) {
             with(binding) {
-                cashAccountName.text = fastPayments.cashAccountNameValue
 
+                cashAccountName.text = fastPayments.cashAccountNameValue
+                currencyName.text = fastPayments.currencyNameValue
+                categoryName.text = fastPayments.categoryNameValue
+                descriptionOfPayment.text = fastPayments.description
                 amount.text = fastPayments.amount.toString()
                 ratingImg.setImageDrawable(getRatingImage(fastPayments.rating))
 
