@@ -67,7 +67,6 @@ class FastPaymentsFragment : Fragment() {
                         override fun onSelect(id: Int) {
 
                         }
-
                     },
                     object : OnItemSelectForSelectCallBack {
                         override fun onSelect(id: Int) {
