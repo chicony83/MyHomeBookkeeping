@@ -12,7 +12,7 @@ object FastPaymentCreateSimpleQuery {
     }
 
     private fun mainQueryFastPayment(): String {
-        return "SELECT id , icon , rating , " +
+        return "SELECT id, icon, name_fast_payment, rating , " +
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value, " +
                 "category_name AS category_name_value, " +

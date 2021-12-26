@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
@@ -38,14 +39,26 @@ class FastPaymentsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(fastPayments: FullFastPayment) {
             with(binding) {
-
+                itemId.text = fastPayments.id.toString()
+                nameFastPayment.text = fastPayments.nameFastPayment
                 cashAccountName.text = fastPayments.cashAccountNameValue
                 currencyName.text = fastPayments.currencyNameValue
                 categoryName.text = fastPayments.categoryNameValue
                 descriptionOfPayment.text = fastPayments.description
-                amount.text = fastPayments.amount.toString()
                 ratingImg.setImageDrawable(getRatingImage(fastPayments.rating))
 
+                if (fastPayments.amount.toString().isNotEmpty()) {
+                    val number: Double = fastPayments.amount ?: 0.0
+                    if (number > 0) {
+                        amount.text = fastPayments.amount.toString()
+                    }
+                    if (number <= 0) {
+                        amount.text = "-"
+                    }
+                }
+                if (fastPayments.description?.isEmpty() == true){
+                    binding.descriptionOfPayment.visibility = View.GONE
+                }
             }
         }
 

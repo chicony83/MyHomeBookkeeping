@@ -28,7 +28,7 @@
 
         <TextView
             android:textSize="@dimen/H3"
-            android:id="@+id/about_fast_payment"
+            android:id="@+id/name_fast_payment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/description_cash_account"
             app:layout_constraintStart_toEndOf="@id/iconImg"
-            app:layout_constraintTop_toBottomOf="@id/about_fast_payment" />
+            app:layout_constraintTop_toBottomOf="@id/name_fast_payment" />
 
         <TextView
             android:id="@+id/description_currency"
@@ -94,7 +94,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/margin_half_normal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_fast_payment"
+            app:layout_constraintTop_toBottomOf="@id/name_fast_payment"
             tools:src="@drawable/rating3" />
 
         <TextView
@@ -111,9 +111,10 @@
             android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100.25"
             app:layout_constraintEnd_toEndOf="@id/ratingImg"
-            app:layout_constraintTop_toTopOf="@id/description_amount" />
+            app:layout_constraintStart_toEndOf="@+id/description_amount"
+            app:layout_constraintTop_toTopOf="@id/description_amount"
+            tools:text="100.25" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier_values"
@@ -125,6 +126,7 @@
 
         <TextView
             android:id="@+id/description_of_payment"
+            android:layout_marginTop="@dimen/margin_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

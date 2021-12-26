@@ -211,14 +211,14 @@ class NewFastPaymentViewModel(
     }
 
     suspend fun addNewFastPayment(
-        descriptionFastPayment: String,
+        nameFastPayment: String,
         description: String,
         amount: Double
     ): Long {
 
         val newFastPayment = FastPayments(
             icon = null,
-            aboutFastPayment = descriptionFastPayment,
+            nameFastPayment = nameFastPayment,
             rating = _rating.value?.rating ?: 0,
             cashAccountId = _cashAccount.value?.cashAccountId ?: 0,
             currencyId = _currency.value?.currencyId ?: 0,

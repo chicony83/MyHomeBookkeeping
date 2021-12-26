@@ -9,6 +9,9 @@ class FullFastPayment(
     @ColumnInfo(name = "icon")
     val icon: Int?,
 
+    @ColumnInfo(name = "name_fast_payment")
+    val nameFastPayment:String,
+
     @ColumnInfo(name = "rating")
     val rating: Int,
 
