@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBinding
 import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 
 class FastPaymentsAdapter(
-    private val fullFastPaymentsList: List<FullFastPayment>
+    private val fullFastPaymentsList: List<FullFastPayment>,
+    private val listener: OnItemViewClickListenerLong
 ) : RecyclerView.Adapter<FastPaymentsAdapter.ViewHolderFastPaymentItem>() {
 
 
@@ -58,6 +60,10 @@ class FastPaymentsAdapter(
                 }
                 if (fastPayments.description?.isEmpty() == true){
                     binding.descriptionOfPayment.visibility = View.GONE
+                }
+
+                fastPaymentItemId.setOnClickListener {
+                    fastPayments.id.let { listener.onClick(it) }
                 }
             }
         }

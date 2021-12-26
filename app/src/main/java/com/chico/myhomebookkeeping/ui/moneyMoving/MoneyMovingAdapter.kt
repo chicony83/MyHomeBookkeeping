@@ -16,7 +16,7 @@ import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 
 class MoneyMovingAdapter(
     private val moneyMovementList: List<FullMoneyMoving>,
-    val listener: OnItemViewClickListenerLong
+    private val listener: OnItemViewClickListenerLong
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolderMovingItem>() {
     private lateinit var plus: String
     private lateinit var minus: String

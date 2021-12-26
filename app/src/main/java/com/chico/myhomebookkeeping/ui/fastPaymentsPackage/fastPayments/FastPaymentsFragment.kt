@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -11,6 +12,7 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 
 class FastPaymentsFragment : Fragment() {
     private var _binding: FragmentFastPaymentsBinding? = null
@@ -35,7 +37,15 @@ class FastPaymentsFragment : Fragment() {
 
         with(fastPaymentsViewModel) {
             fastPaymentsList.observe(viewLifecycleOwner, {
-                binding.recyclerView.adapter = it?.let { it1 -> FastPaymentsAdapter(it1) }
+                binding.recyclerView.adapter = it?.let { it1 ->
+                    FastPaymentsAdapter(it1, object :
+                        OnItemViewClickListenerLong {
+                        override fun onClick(id: Long) {
+                            showMessage("id selected item $id")
+                        }
+
+                    })
+                }
             })
         }
 
@@ -46,6 +56,7 @@ class FastPaymentsFragment : Fragment() {
         super.onStart()
         fastPaymentsViewModel.getFullFastPaymentsList()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,4 +70,7 @@ class FastPaymentsFragment : Fragment() {
         _binding = null
     }
 
+    private fun showMessage(s: String) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
 }
