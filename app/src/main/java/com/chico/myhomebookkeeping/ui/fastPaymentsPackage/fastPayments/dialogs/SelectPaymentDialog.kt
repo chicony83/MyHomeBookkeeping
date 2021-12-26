@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
@@ -37,6 +39,12 @@ class SelectPaymentDialog(
     }
 
     private fun buildLayout(layout: View) {
+        val name = layout.findViewById<TextView>(R.id.name_fast_payment)
+        val cashAccount = layout.findViewById<TextView>(R.id.cashAccountName)
+        val currency = layout.findViewById<TextView>(R.id.currencyName)
+        val category = layout.findViewById<TextView>(R.id.categoryName)
+        val rating = layout.findViewById<ImageView>(R.id.ratingImg)
+        val amount = layout.findViewById<TextView>(R.id.amount)
 
     }
 }

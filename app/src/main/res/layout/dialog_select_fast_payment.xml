@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/name_fast_payment"
         style="@style/Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_marginTop="@dimen/margin_normal"
         android:text="@string/description_cash_account"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/name_fast_payment" />
 
     <TextView
         android:id="@+id/description_currency"
@@ -62,7 +62,7 @@
         tools:text="@string/quick_setup_name_Currency" />
 
     <TextView
-        android:id="@+id/category_name"
+        android:id="@+id/categoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/cashAccountName"
@@ -75,7 +75,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="@dimen/margin_half_normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/name_fast_payment"
         tools:src="@drawable/rating3" />
 
     <TextView
