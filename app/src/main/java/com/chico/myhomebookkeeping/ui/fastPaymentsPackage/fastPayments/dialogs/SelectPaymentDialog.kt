@@ -18,6 +18,8 @@ class SelectPaymentDialog : DialogFragment() {
             buildLayout(layout)
             builder.setView(layout)
 
+
+
             builder.create()
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
