@@ -13,6 +13,8 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
+import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
+import com.chico.myhomebookkeeping.utils.launchUi
 
 class FastPaymentsFragment : Fragment() {
     private var _binding: FragmentFastPaymentsBinding? = null
@@ -40,8 +42,9 @@ class FastPaymentsFragment : Fragment() {
                 binding.recyclerView.adapter = it?.let { it1 ->
                     FastPaymentsAdapter(it1, object :
                         OnItemViewClickListenerLong {
-                        override fun onClick(id: Long) {
-                            showMessage("id selected item $id")
+                        override fun onClick(selectedId: Long) {
+//                            showMessage("id selected item $id")
+                            showSelectDialog(selectedId)
                         }
 
                     })
@@ -50,6 +53,13 @@ class FastPaymentsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun showSelectDialog(selectedId: Long) {
+        launchUi {
+            val dialog = SelectPaymentDialog()
+            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+        }
     }
 
     override fun onStart() {
