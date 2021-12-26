@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/nav_new_money_moving"
-        android:name="com.chico.myhomebookkeeping.ui.newMoneyMoving.NewMoneyMovingFragment"
+        android:name="com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.NewMoneyMovingFragment"
         android:label="@string/fragment_label_new_money_moving"
         tools:layout="@layout/fragment_new_money_moving">
         <action
@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/nav_money_moving_query"
-        android:name="com.chico.myhomebookkeeping.ui.queryMoneyMoving.QueryMoneyMovingFragment"
+        android:name="com.chico.myhomebookkeeping.ui.paymentPackage.queryMoneyMoving.QueryMoneyMovingFragment"
         android:label="@string/fragment_label_money_moving_query"
         tools:layout="@layout/fragment_money_moving_query">
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_money_moving"
-        android:name="com.chico.myhomebookkeeping.ui.moneyMoving.MoneyMovingFragment"
+        android:name="com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.MoneyMovingFragment"
         android:label="@string/fragment_label_money_moving"
         tools:layout="@layout/fragment_money_moving">
         <action
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/nav_change_money_moving"
-        android:name="com.chico.myhomebookkeeping.ui.changeMoneyMoving.ChangeMoneyMovingFragment"
+        android:name="com.chico.myhomebookkeeping.ui.paymentPackage.changeMoneyMoving.ChangeMoneyMovingFragment"
         android:label="@string/fragment_label_change_money_moving"
         tools:layout="@layout/fragment_change_money_moving">
         <action

@@ -1,7 +1,6 @@
-package com.chico.myhomebookkeeping.ui.moneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import com.chico.myhomebookkeeping.db.FullMoneyMoving
-import kotlinx.coroutines.Deferred
 import java.math.BigDecimal
 import java.math.RoundingMode
 

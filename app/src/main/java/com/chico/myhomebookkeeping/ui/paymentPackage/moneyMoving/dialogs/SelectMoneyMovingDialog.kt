@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.moneyMoving.dialogs
+package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog

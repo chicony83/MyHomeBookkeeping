@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.queryMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.queryMoneyMoving
 
 import android.app.Application
 import android.content.Context

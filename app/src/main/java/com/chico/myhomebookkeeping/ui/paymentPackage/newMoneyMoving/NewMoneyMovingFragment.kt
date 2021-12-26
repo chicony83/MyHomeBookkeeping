@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
 
 import android.annotation.SuppressLint
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.changeMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.changeMoneyMoving
 
 import android.os.Build
 import android.os.Bundle

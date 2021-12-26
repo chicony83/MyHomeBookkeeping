@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.moneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
@@ -23,8 +23,6 @@ import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
 class MoneyMovingViewModel(

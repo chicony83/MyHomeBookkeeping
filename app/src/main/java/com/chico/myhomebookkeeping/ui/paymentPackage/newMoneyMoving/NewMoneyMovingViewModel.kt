@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
