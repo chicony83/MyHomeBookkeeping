@@ -11,13 +11,15 @@ object FastPaymentsUseCase {
     suspend fun addNewFastPayment(db: FastPaymentsDao, newFastPayment: FastPayments): Long {
         return db.addBlank(newFastPayment)
     }
-    suspend fun getListFastPayments(db: FastPaymentsDao):List<FastPayments>{
+
+    suspend fun getListFastPayments(db: FastPaymentsDao): List<FastPayments> {
         return db.getAllFastPayments()
     }
+
     suspend fun getListFullFastPayments(
         db: FastPaymentsDao,
-        query:SimpleSQLiteQuery
-    ):List<FullFastPayment>?{
+        query: SimpleSQLiteQuery
+    ): List<FullFastPayment>? {
         return launchForResult {
             db.getAllFullFastPayments(query)
         }
@@ -28,5 +30,11 @@ object FastPaymentsUseCase {
         query: SimpleSQLiteQuery
     ): FullFastPayment? {
         return db.getOneFullFastPayment(query)
+    }
+
+    suspend fun getOneFastPayment(id: Long, db: FastPaymentsDao): FastPayments? {
+        return launchForResult {
+            db.getOneSelectedFastPayment(id)
+        }
     }
 }

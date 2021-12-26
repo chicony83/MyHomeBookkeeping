@@ -21,4 +21,7 @@ interface FastPaymentsDao {
 
     @RawQuery
     fun getOneFullFastPayment(query: SimpleSQLiteQuery): FullFastPayment
+
+    @Query("SELECT * FROM fast_payments_table WHERE id = :id")
+    fun getOneSelectedFastPayment(id: Long):FastPayments
 }

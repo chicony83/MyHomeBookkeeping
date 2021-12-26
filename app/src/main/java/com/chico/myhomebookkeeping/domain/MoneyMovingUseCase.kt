@@ -7,6 +7,7 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.utils.launchForResult
 
 object MoneyMovingUseCase {
+
     suspend fun getOneMoneyMoving(db: MoneyMovementDao, id: Long): MoneyMovement? {
         return launchForResult {
             db.getOneMoneyMoving(id = id)

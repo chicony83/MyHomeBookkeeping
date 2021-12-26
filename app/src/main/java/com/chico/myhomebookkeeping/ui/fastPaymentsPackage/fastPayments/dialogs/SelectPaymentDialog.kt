@@ -2,7 +2,6 @@ package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -11,14 +10,18 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import java.lang.IllegalStateException
 
 class SelectPaymentDialog(
-    private val fastPayment: FullFastPayment?
+    private val fastPayment: FullFastPayment?,
+    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
+    private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
+        return activity?.let { it ->
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_select_fast_payment, null)
@@ -31,6 +34,16 @@ class SelectPaymentDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
             cancelButton.setOnClickListener { dialogCancel() }
+            selectButton.setOnClickListener {
+                fastPayment?.id.let { it1 ->
+                    onItemSelectForSelectCallBack.onSelect(it1?.toInt() ?: 0)
+                }
+            }
+            changeButton.setOnClickListener {
+                fastPayment?.id.let { it1 ->
+                    onItemSelectForChangeCallBack.onSelect(it1?.toInt() ?: 0)
+                }
+            }
 
             builder.create()
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
@@ -57,15 +70,15 @@ class SelectPaymentDialog(
             rating.setImageResource(getRatingImage())
 
             description.text = fastPayment.description
-            if (fastPayment.description.isNullOrEmpty()){
+            if (fastPayment.description.isNullOrEmpty()) {
                 description.visibility = View.GONE
             }
-            if (fastPayment.amount.toString().isNotEmpty()){
-                val number = fastPayment.amount?:0.0
-                if (number>0){
+            if (fastPayment.amount.toString().isNotEmpty()) {
+                val number = fastPayment.amount ?: 0.0
+                if (number > 0) {
                     amount.text = fastPayment.amount.toString()
                 }
-                if (number<=0){
+                if (number <= 0) {
                     amount.text = "-"
                 }
             }

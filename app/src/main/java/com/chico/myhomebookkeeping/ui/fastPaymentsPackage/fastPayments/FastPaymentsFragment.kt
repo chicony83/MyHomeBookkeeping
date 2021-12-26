@@ -12,6 +12,8 @@ import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -58,10 +60,23 @@ class FastPaymentsFragment : Fragment() {
 
     private fun showSelectDialog(selectedId: Long) {
         launchIo {
-            val fastPayment = fastPaymentsViewModel.loadSelectedFastPayment(selectedId)
+            val fastPayment = fastPaymentsViewModel.loadSelectedFullFastPayment(selectedId)
             launchUi {
-                val dialog = SelectPaymentDialog(fastPayment)
-                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                val dialog = SelectPaymentDialog(fastPayment,
+                    object : OnItemSelectForChangeCallBack {
+                        override fun onSelect(id: Int) {
+
+                        }
+
+                    },
+                    object : OnItemSelectForSelectCallBack {
+                        override fun onSelect(id: Int) {
+                            fastPaymentsViewModel.saveARGSForPay(fastPayment)
+                            navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
+                        }
+                    }
+                )
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }
     }
