@@ -247,7 +247,6 @@ class MoneyMovingViewModel(
     }
 
     suspend fun loadSelectedMoneyMoving(selectedId: Long): FullMoneyMoving? {
-
         return MoneyMovingUseCase.getOneFullMoneyMoving(
             db,
             MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)

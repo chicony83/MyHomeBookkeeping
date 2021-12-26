@@ -22,4 +22,11 @@ object FastPaymentsUseCase {
             db.getAllFullFastPayments(query)
         }
     }
+
+    suspend fun getOneFullFastPayment(
+        db: FastPaymentsDao,
+        query: SimpleSQLiteQuery
+    ): FullFastPayment? {
+        return db.getOneFullFastPayment(query)
+    }
 }

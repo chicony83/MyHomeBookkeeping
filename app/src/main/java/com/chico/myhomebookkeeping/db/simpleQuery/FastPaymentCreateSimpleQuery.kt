@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.db.simpleQuery
 
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.chico.myhomebookkeeping.helpers.Message
 
 object FastPaymentCreateSimpleQuery {
     fun createQueryList(): SimpleSQLiteQuery {
@@ -21,5 +22,24 @@ object FastPaymentCreateSimpleQuery {
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
                 "AND category == categoriesId "
+    }
+
+    fun createQueryOneFullFastPayment(id: Long): SimpleSQLiteQuery {
+        var queryString = mainQueryFastPayment()
+        val argsList:ArrayList<Any> = arrayListOf()
+
+        if (id>0){
+            queryString += addAnd()
+            queryString +=" id = :id "
+            argsList.add(id)
+        }
+
+        val args = argsList.toArray()
+        Message.log("query = $queryString")
+        return SimpleSQLiteQuery(queryString,args)
+    }
+
+    private fun addAnd(): String {
+        return " AND "
     }
 }

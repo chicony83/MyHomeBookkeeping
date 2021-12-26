@@ -37,12 +37,16 @@ class SelectMoneyMovingDialog(
                     ?.let { it1 -> onItemSelectForChangeCallBack.onSelect(it1) }
             }
             cancelButton.setOnClickListener {
-                dialog?.cancel()
+                dialogCancel()
             }
 
             builder.create()
 
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun dialogCancel() {
+        dialog?.cancel()
     }
 
     private fun bindLayout(layout: View) {

@@ -18,4 +18,7 @@ interface FastPaymentsDao {
 
     @RawQuery
     fun getAllFullFastPayments(query: SimpleSQLiteQuery):List<FullFastPayment>
+
+    @RawQuery
+    fun getOneFullFastPayment(query: SimpleSQLiteQuery): FullFastPayment
 }

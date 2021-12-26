@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 
 class FastPaymentsFragment : Fragment() {
@@ -56,9 +57,12 @@ class FastPaymentsFragment : Fragment() {
     }
 
     private fun showSelectDialog(selectedId: Long) {
-        launchUi {
-            val dialog = SelectPaymentDialog()
-            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+        launchIo {
+            val fastPayment = fastPaymentsViewModel.loadSelectedFastPayment(selectedId)
+            launchUi {
+                val dialog = SelectPaymentDialog(fastPayment)
+                dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+            }
         }
     }
 

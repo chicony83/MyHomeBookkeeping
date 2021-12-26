@@ -2,7 +2,6 @@ package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.db.FullFastPayment
@@ -11,7 +10,6 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -55,6 +53,13 @@ class FastPaymentsViewModel(
     private suspend fun getListFullFastPaymentsFromUseCase(query: SimpleSQLiteQuery): List<FullFastPayment>? {
         return FastPaymentsUseCase.getListFullFastPayments(
             db, query
+        )
+    }
+
+    suspend fun loadSelectedFastPayment(id: Long): FullFastPayment? {
+        return FastPaymentsUseCase.getOneFullFastPayment(
+            db,
+            FastPaymentCreateSimpleQuery.createQueryOneFullFastPayment(id)
         )
     }
 
