@@ -106,19 +106,28 @@
         tools:layout_editor_absoluteX="395dp" />
 
     <TextView
-        android:id="@+id/description_of_payment"
+        android:id="@+id/description_of_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_half_normal"
+        android:text="@string/description_description"
+        app:layout_constraintStart_toStartOf="@id/description_category"
+        app:layout_constraintTop_toBottomOf="@id/description_category" />
+
+    <TextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description_category" />
+        app:layout_constraintTop_toBottomOf="@id/description_of_description" />
 
     <Button
         android:id="@+id/selectButton"
         style="@style/ButtonFullWidth"
         android:text="@string/text_on_button_select"
-        app:layout_constraintTop_toBottomOf="@id/description_of_payment" />
+        app:layout_constraintTop_toBottomOf="@id/description" />
 
     <Button
         android:id="@+id/changeButton"
