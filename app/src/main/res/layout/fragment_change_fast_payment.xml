@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
-    tools:context=".ui.paymentPackage.changeMoneyMoving.ChangeMoneyMovingFragment">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         style="@style/MoneyMovingScrollView"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,30 +21,54 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/description_date_time_text" />
+                android:text="@string/description_about_this_fast_payment" />
 
-            <Button
-                android:id="@+id/selectDateTimeButton"
-                style="@style/ButtonFullWidth"
+            <EditText
+                android:id="@+id/descriptionFastPaymentEditText"
+                style="@style/EditTextDescription"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="horizontal"
+                android:weightSum="5">
 
+                <TextView
+                    style="@style/TextDescriptions"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="@string/description_rating_payment" />
+
+                <ImageButton
+                    android:id="@+id/ratingButton"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+
+                    android:layout_weight="3"
+                    android:background="@null"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/text_on_button_cash_account" />
+                android:text="@string/description_cash_account" />
 
             <Button
-
                 android:id="@+id/selectCashAccountButton"
                 style="@style/ButtonFullWidth"
                 android:text="@string/text_on_button_select_cash_account" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/text_on_button_currency" />
+                android:text="@string/description_currency" />
 
             <Button
                 android:id="@+id/selectCurrenciesButton"
@@ -53,7 +77,7 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/text_on_button_category" />
+                android:text="@string/description_category" />
 
             <Button
                 android:id="@+id/selectCategoryButton"
@@ -66,7 +90,8 @@
 
             <EditText
                 android:id="@+id/amount"
-                style="@style/EditTextAmount" />
+                style="@style/EditTextAmount"
+                android:hint="@string/hint_enter_amount_be_inserted" />
 
             <TextView
                 style="@style/TextDescriptions"
@@ -74,7 +99,8 @@
 
             <EditText
                 android:id="@+id/description"
-                style="@style/EditTextDescription" />
+                style="@style/EditTextDescription"
+                android:hint="@string/hint_add_you_description_be_inserted" />
 
         </LinearLayout>
     </ScrollView>
@@ -102,16 +128,4 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <LinearLayout
-        android:id="@+id/dialogSubmitDeleteMoneyMovingHolder"
-        style="@style/DialogLayout.Holder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/dialogSubmitDeleteMoneyMoving"
-            layout="@layout/dialog_submit_delete_money_moving" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
