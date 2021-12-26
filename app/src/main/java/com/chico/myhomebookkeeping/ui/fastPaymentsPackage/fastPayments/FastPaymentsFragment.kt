@@ -65,7 +65,7 @@ class FastPaymentsFragment : Fragment() {
                 val dialog = SelectPaymentDialog(fastPayment,
                     object : OnItemSelectForChangeCallBack {
                         override fun onSelect(id: Int) {
-
+                            navControlHelper.toSelectedFragment(R.id.nav_change_fast_payment_fragment)
                         }
                     },
                     object : OnItemSelectForSelectCallBack {

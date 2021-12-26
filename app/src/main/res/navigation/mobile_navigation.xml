@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_money_moving">
+
+    <fragment
+        android:id="@+id/nav_change_fast_payment_fragment"
+        android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.changeFastPayment.ChangeFastPaymentFragment"
+        android:label="@string/fragment_label_change_fast_payment"
+        tools:layout="@layout/fragment_change_fast_payment"/>
     <fragment
         android:id="@+id/nav_new_fast_money_moving_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.NewFastPaymentFragment"
