@@ -20,25 +20,25 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navReports = R.id.nav_reports
 
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
-    private val argsStartTimePeriodForQuery = Constants.FOR_QUERY_START_TIME_PERIOD
-    private val argsEndTimePeriodForQuery = Constants.FOR_QUERY_END_TIME_PERIOD
-    private val argsStartTimePeriodForReport = Constants.FOR_REPORTS_START_TIME_PERIOD
-    private val argsEndTimePeriodForReports = Constants.FOR_REPORTS_END_TIME_PERIOD
+    private val argsStartTimePeriodForQuery = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
+    private val argsEndTimePeriodForQuery = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
+    private val argsStartTimePeriodForReport = Constants.ARGS_REPORTS_START_TIME_PERIOD
+    private val argsEndTimePeriodForReports = Constants.ARGS_REPORTS_END_TIME_PERIOD
 
-    private val argsCreateCategory = Constants.FOR_CREATE_CATEGORY_KEY
-    private val argsQueryCategory = Constants.FOR_QUERY_CATEGORY_KEY
-    private val argsChangeCategory = Constants.FOR_CHANGE_CATEGORY_KEY
-    private val argsNewFastCategory = Constants.FOR_NEW_FAST_PAYMENT_CATEGORY
+    private val argsCreateCategory = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
+    private val argsQueryCategory = Constants.ARGS_QUERY_PAYMENT_CATEGORY_KEY
+    private val argsChangeCategory = Constants.ARGS_CHANGE_PAYMENT_CATEGORY_KEY
+    private val argsNewFastCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
 
-    private val argsCreateCashAccount = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
-    private val argsQueryCashAccount = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
-    private val argsChangeCashAccount = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
-    private val argsNewFastCashAccount = Constants.FOR_NEW_FAST_PAYMENT_CASH_ACCOUNT
+    private val argsCreateCashAccount = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsQueryCashAccount = Constants.ARGS_QUERY_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsChangeCashAccount = Constants.ARGS_CHANGE_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsNewFastCashAccount = Constants.ARGS_NEW_FAST_PAYMENT_CASH_ACCOUNT
 
-    private val argsCreateCurrency = Constants.FOR_CREATE_CURRENCY_KEY
-    private val argsQueryCurrency = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsChangeCurrency = Constants.FOR_CHANGE_CURRENCY_KEY
-    private val argsNewFastCurrency: String = Constants.FOR_NEW_FAST_PAYMENT_CURRENCY
+    private val argsCreateCurrency = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
+    private val argsQueryCurrency = Constants.ARGS_QUERY_PAYMENT_CURRENCY_KEY
+    private val argsChangeCurrency = Constants.ARGS_CHANGE_PAYMENT_CURRENCY_KEY
+    private val argsNewFastCurrency: String = Constants.ARGS_NEW_FAST_PAYMENT_CURRENCY
 
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT

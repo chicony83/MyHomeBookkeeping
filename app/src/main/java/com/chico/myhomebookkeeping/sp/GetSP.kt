@@ -6,8 +6,8 @@ import com.chico.myhomebookkeeping.obj.Constants
 
 class GetSP(private val sharedPreferences: SharedPreferences) {
     private val argsNone = Constants.FOR_QUERY_NONE
-    private val argsIncome = Constants.FOR_QUERY_INCOME
-    private val argsSpending = Constants.FOR_QUERY_SPENDING
+    private val argsIncome = Constants.ARGS_QUERY_PAYMENT_INCOME
+    private val argsSpending = Constants.ARGS_QUERY_PAYMENT_SPENDING
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 

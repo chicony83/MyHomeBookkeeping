@@ -9,6 +9,6 @@ class EraseSP(val spEditor: SharedPreferences.Editor) {
     }
 
     private fun eraseAmountCreateSP() {
-        spEditor.remove(Constants.FOR_CREATE_AMOUNT_KEY).commit()
+        spEditor.remove(Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY).commit()
     }
 }

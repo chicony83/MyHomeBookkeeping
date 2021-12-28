@@ -32,21 +32,24 @@ import java.util.*
 class ChangeMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val argsDateTimeChangeKey = Constants.FOR_CHANGE_DATE_TIME_KEY
-    private val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
-    private val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
-    private val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
-    private val argsDescriptionChangeKey = Constants.FOR_CHANGE_DESCRIPTION_KEY
-    private val argsAmountChangeKey = Constants.FOR_CHANGE_AMOUNT_KEY
+
+    private val argsIdMoneyMovingForChange = Constants.ARGS_CHANGE_PAYMENT_ID
+    private val argsDateTimeChangeKey = Constants.ARGS_CHANGE_PAYMENT_DATE_TIME_KEY
+    private val argsCashAccountChangeKey = Constants.ARGS_CHANGE_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsCurrencyChangeKey = Constants.ARGS_CHANGE_PAYMENT_CURRENCY_KEY
+    private val argsCategoryChangeKey = Constants.ARGS_CHANGE_PAYMENT_CATEGORY_KEY
+    private val argsDescriptionChangeKey = Constants.ARGS_CHANGE_PAYMENT_DESCRIPTION_KEY
+    private val argsAmountChangeKey = Constants.ARGS_CHANGE_PAYMENT_AMOUNT_KEY
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
+    private val textEmpty = Constants.TEXT_EMPTY
 
     private var dataTimeSPLong: Long = minusOneLong
     private var cashAccountSPInt: Int = minusOneInt
     private var currencySPInt: Int = minusOneInt
     private var categorySPInt: Int = minusOneInt
-    private var descriptionSPString: String = ""
+    private var descriptionSPString: String = textEmpty
     private var amountSPDouble: Double = minusOneInt.toDouble()
 
     private val spName = Constants.SP_NAME
@@ -57,7 +60,6 @@ class ChangeMoneyMovingViewModel(
     private val spValues = GetSP(sharedPreferences)
     private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
 
-    private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
     private var idMoneyMovingForChangeLong: Long = minusOneLong
 
     private val dbMoneyMovement: MoneyMovementDao =

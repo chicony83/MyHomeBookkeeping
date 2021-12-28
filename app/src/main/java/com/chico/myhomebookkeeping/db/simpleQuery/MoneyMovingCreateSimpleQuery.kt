@@ -7,8 +7,8 @@ import com.chico.myhomebookkeeping.obj.Constants
 
 object MoneyMovingCreateSimpleQuery {
 
-    private const val argsIncome: String = Constants.FOR_QUERY_INCOME
-    private const val argsSpending = Constants.FOR_QUERY_SPENDING
+    private const val argsIncome: String = Constants.ARGS_QUERY_PAYMENT_INCOME
+    private const val argsSpending = Constants.ARGS_QUERY_PAYMENT_SPENDING
     private const val argsNone = Constants.FOR_QUERY_NONE
 
     fun createQueryOneLine(id: Long): SimpleSQLiteQuery {

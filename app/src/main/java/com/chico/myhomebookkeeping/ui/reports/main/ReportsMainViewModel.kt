@@ -32,8 +32,8 @@ class ReportsMainViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
-    private val argsStartTimePeriodKey = Constants.FOR_REPORTS_START_TIME_PERIOD
-    private val argsEndTimePeriodKey = Constants.FOR_REPORTS_END_TIME_PERIOD
+    private val argsStartTimePeriodKey = Constants.ARGS_REPORTS_START_TIME_PERIOD
+    private val argsEndTimePeriodKey = Constants.ARGS_REPORTS_END_TIME_PERIOD
     private val argsSelectedCategoriesSetKey = Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT

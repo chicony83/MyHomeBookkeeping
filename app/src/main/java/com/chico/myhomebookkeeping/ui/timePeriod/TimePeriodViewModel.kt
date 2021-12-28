@@ -20,10 +20,10 @@ class TimePeriodViewModel(
 
     private val spName = Constants.SP_NAME
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
-    private val argsStartTimePeriodForQuery = Constants.FOR_QUERY_START_TIME_PERIOD
-    private val argsEndTimePeriodForQuery = Constants.FOR_QUERY_END_TIME_PERIOD
-    private val argsStartTimePeriodForReport = Constants.FOR_REPORTS_START_TIME_PERIOD
-    private val argsEndTimePeriodForReports = Constants.FOR_REPORTS_END_TIME_PERIOD
+    private val argsStartTimePeriodForQuery = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
+    private val argsEndTimePeriodForQuery = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
+    private val argsStartTimePeriodForReport = Constants.ARGS_REPORTS_START_TIME_PERIOD
+    private val argsEndTimePeriodForReports = Constants.ARGS_REPORTS_END_TIME_PERIOD
 
     private val sharedPreferences = app.getSharedPreferences(spName, MODE_PRIVATE)
     private val spEditor = sharedPreferences.edit()

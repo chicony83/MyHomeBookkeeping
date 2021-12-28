@@ -24,10 +24,10 @@ class QueryMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
-    private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
-    private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsCashAccountKey = Constants.ARGS_QUERY_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.ARGS_QUERY_PAYMENT_CURRENCY_KEY
+    private val argsCategoryKey = Constants.ARGS_QUERY_PAYMENT_CATEGORY_KEY
+    private val argsIncomeSpending = Constants.ARGS_QUERY_PAYMENT_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
 
     private val modelCheck = ModelCheck()

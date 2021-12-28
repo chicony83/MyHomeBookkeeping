@@ -30,15 +30,15 @@ class MoneyMovingViewModel(
 ) : AndroidViewModel(app) {
     private val space = " "
     private val spName = Constants.SP_NAME
-    private val argsCashAccountKey = Constants.FOR_QUERY_CASH_ACCOUNT_KEY
-    private val argsCurrencyKey = Constants.FOR_QUERY_CURRENCY_KEY
-    private val argsCategoryKey = Constants.FOR_QUERY_CATEGORY_KEY
-    private val argsIncomeSpendingKey = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsCashAccountKey = Constants.ARGS_QUERY_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsCurrencyKey = Constants.ARGS_QUERY_PAYMENT_CURRENCY_KEY
+    private val argsCategoryKey = Constants.ARGS_QUERY_PAYMENT_CATEGORY_KEY
+    private val argsIncomeSpendingKey = Constants.ARGS_QUERY_PAYMENT_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
-    private val argsIdMoneyMovingForChange = Constants.FOR_CHANGE_ID_MONEY_MOVING
+    private val argsIdMoneyMovingForChange = Constants.ARGS_CHANGE_PAYMENT_ID
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
-    private val argsStartTimePeriod = Constants.FOR_QUERY_START_TIME_PERIOD
-    private val argsEndTimePeriod = Constants.FOR_QUERY_END_TIME_PERIOD
+    private val argsStartTimePeriod = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
+    private val argsEndTimePeriod = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
@@ -215,12 +215,12 @@ class MoneyMovingViewModel(
 
     fun cleaningSP() {
         with(setSP) {
-            val argsDateTimeChangeKey = Constants.FOR_CHANGE_DATE_TIME_KEY
-            val argsCashAccountChangeKey = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
-            val argsCurrencyChangeKey = Constants.FOR_CHANGE_CURRENCY_KEY
-            val argsCategoryChangeKey = Constants.FOR_CHANGE_CATEGORY_KEY
-            val argsDescriptionChangeKey = Constants.FOR_CHANGE_DESCRIPTION_KEY
-            val argsAmountChangeKey = Constants.FOR_CHANGE_AMOUNT_KEY
+            val argsDateTimeChangeKey = Constants.ARGS_CHANGE_PAYMENT_DATE_TIME_KEY
+            val argsCashAccountChangeKey = Constants.ARGS_CHANGE_PAYMENT_CASH_ACCOUNT_KEY
+            val argsCurrencyChangeKey = Constants.ARGS_CHANGE_PAYMENT_CURRENCY_KEY
+            val argsCategoryChangeKey = Constants.ARGS_CHANGE_PAYMENT_CATEGORY_KEY
+            val argsDescriptionChangeKey = Constants.ARGS_CHANGE_PAYMENT_DESCRIPTION_KEY
+            val argsAmountChangeKey = Constants.ARGS_CHANGE_PAYMENT_AMOUNT_KEY
 
             saveToSP(argsDateTimeChangeKey, minusOneLong)
             saveToSP(argsCashAccountChangeKey, minusOneInt)

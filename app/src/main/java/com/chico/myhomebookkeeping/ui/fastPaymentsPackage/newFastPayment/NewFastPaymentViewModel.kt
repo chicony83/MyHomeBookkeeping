@@ -33,13 +33,13 @@ class NewFastPaymentViewModel(
     private val spName = Constants.SP_NAME
 
     private val argsDescriptionFastPaymentKey =
-        Constants.FOR_NEW_FAST_PAYMENTS_DESCRIPTION_FAST_PAYMENT
-    private val argsRatingKey = Constants.FOR_NEW_FAST_PAYMENT_RATING
-    private val argsCashAccount = Constants.FOR_NEW_FAST_PAYMENT_CASH_ACCOUNT
-    private val argsCurrency = Constants.FOR_NEW_FAST_PAYMENT_CURRENCY
-    private val argsCategory = Constants.FOR_NEW_FAST_PAYMENT_CATEGORY
-    private val argsAmount = Constants.FOR_NEW_FAST_PAYMENT_AMOUNT
-    private val argsDescription = Constants.FOR_NEW_FAST_PAYMENT_DESCRIPTION_OF_PAYMENT
+        Constants.ARGS_NEW_FAST_PAYMENTS_NAME
+    private val argsRatingKey = Constants.ARGS_NEW_FAST_PAYMENT_RATING
+    private val argsCashAccount = Constants.ARGS_NEW_FAST_PAYMENT_CASH_ACCOUNT
+    private val argsCurrency = Constants.ARGS_NEW_FAST_PAYMENT_CURRENCY
+    private val argsCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
+    private val argsAmount = Constants.ARGS_NEW_FAST_PAYMENT_AMOUNT
+    private val argsDescription = Constants.ARGS_NEW_FAST_PAYMENT_DESCRIPTION
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val textNone = Constants.TEXT_NONE

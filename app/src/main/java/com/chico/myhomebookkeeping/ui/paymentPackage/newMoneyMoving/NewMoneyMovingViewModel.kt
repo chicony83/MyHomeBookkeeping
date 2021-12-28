@@ -32,12 +32,12 @@ class NewMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val argsDateTimeCreateKey = Constants.FOR_CREATE_DATE_TIME_KEY
-    private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
-    private val argsCurrencyCreateKey = Constants.FOR_CREATE_CURRENCY_KEY
-    private val argsCategoryCreateKey = Constants.FOR_CREATE_CATEGORY_KEY
-    private val argsAmountCreateKey = Constants.FOR_CREATE_AMOUNT_KEY
-    private val argsDescriptionCreateKey = Constants.FOR_CREATE_DESCRIPTION_KEY
+    private val argsDateTimeCreateKey = Constants.ARGS_NEW_PAYMENT_DATE_TIME_KEY
+    private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
+    private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
+    private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
+    private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
 
     private val modelCheck = ModelCheck()

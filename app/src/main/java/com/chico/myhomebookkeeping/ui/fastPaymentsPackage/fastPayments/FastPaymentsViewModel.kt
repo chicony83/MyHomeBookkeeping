@@ -15,7 +15,6 @@ import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -25,11 +24,11 @@ class FastPaymentsViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val argsCashAccountCreateKey = Constants.FOR_CREATE_CASH_ACCOUNT_KEY
-    private val argsCurrencyCreateKey = Constants.FOR_CREATE_CURRENCY_KEY
-    private val argsCategoryCreateKey = Constants.FOR_CREATE_CATEGORY_KEY
-    private val argsAmountCreateKey = Constants.FOR_CREATE_AMOUNT_KEY
-    private val argsDescriptionCreateKey = Constants.FOR_CREATE_DESCRIPTION_KEY
+    private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
+    private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
+    private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
+    private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =

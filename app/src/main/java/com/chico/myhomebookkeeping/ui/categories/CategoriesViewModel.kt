@@ -40,9 +40,9 @@ class CategoriesViewModel(
 //    private val argsForQuery = Constants.FOR_QUERY_CATEGORY_KEY
 //    private val argsForChange = Constants.FOR_CHANGE_CATEGORY_KEY
 
-    private val argsIncomeSpending = Constants.FOR_QUERY_CATEGORIES_INCOME_SPENDING_KEY
-    private val argsIncome = Constants.FOR_QUERY_INCOME
-    private val argsSpending = Constants.FOR_QUERY_SPENDING
+    private val argsIncomeSpending = Constants.ARGS_QUERY_PAYMENT_CATEGORIES_INCOME_SPENDING_KEY
+    private val argsIncome = Constants.ARGS_QUERY_PAYMENT_INCOME
+    private val argsSpending = Constants.ARGS_QUERY_PAYMENT_SPENDING
     private val argsNone = Constants.FOR_QUERY_NONE
     private val argsSortingCategories = Constants.SORTING_CATEGORIES
 

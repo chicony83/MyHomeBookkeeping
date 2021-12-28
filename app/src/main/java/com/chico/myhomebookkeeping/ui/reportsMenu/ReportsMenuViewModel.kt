@@ -28,8 +28,8 @@ class ReportsMenuViewModel(
     private val getSP = GetSP(sharedPreferences)
 
     private val argsReportType = Constants.REPORT_TYPE
-    private val argsStartTimePeriod = Constants.FOR_REPORTS_START_TIME_PERIOD
-    private val argsEndTimePeriod = Constants.FOR_REPORTS_END_TIME_PERIOD
+    private val argsStartTimePeriod = Constants.ARGS_REPORTS_START_TIME_PERIOD
+    private val argsEndTimePeriod = Constants.ARGS_REPORTS_END_TIME_PERIOD
 
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
