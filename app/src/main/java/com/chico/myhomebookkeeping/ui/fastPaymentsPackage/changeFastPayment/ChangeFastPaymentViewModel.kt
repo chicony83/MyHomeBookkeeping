@@ -120,21 +120,27 @@ class ChangeFastPaymentViewModel(
     }
 
     private fun postDescription(fastPayments: FastPayments?) {
-        val postingDescription: String = if (modelCheck.isPositiveValue(descriptionSPString)) {
+        _paymentDescription.postValue(getPostingDescription(fastPayments))
+    }
+
+    private fun getPostingDescription(fastPayments: FastPayments?): String {
+        return if (modelCheck.isPositiveValue(descriptionSPString)) {
             descriptionSPString
         } else {
             fastPayments?.description ?: textEmpty
         }
-        _paymentDescription.postValue(postingDescription)
     }
 
-    private suspend fun postAmount(fastPayments: FastPayments?) {
-        val postingAmount: Double = if (modelCheck.isPositiveValue(amountSPDouble)) {
+    private fun postAmount(fastPayments: FastPayments?) {
+        _paymentAmount.postValue(getPostingAmount(fastPayments).toString())
+    }
+
+    private fun getPostingAmount(fastPayments: FastPayments?): Double {
+        return if (modelCheck.isPositiveValue(amountSPDouble)) {
             amountSPDouble
         } else {
             fastPayments?.amount ?: 0.0
         }
-        _paymentAmount.postValue(postingAmount.toString())
     }
 
     private suspend fun postCategory(fastPayments: FastPayments?) {
@@ -179,11 +185,14 @@ class ChangeFastPaymentViewModel(
     }
 
     private fun postName(fastPayments: FastPayments?) {
-        val postingName = if (modelCheck.isPositiveValue(nameSPString)) {
+        _paymentName.postValue(getPostingName(fastPayments))
+    }
+
+    private fun getPostingName(fastPayments: FastPayments?): String? {
+        return if (modelCheck.isPositiveValue(nameSPString)) {
             nameSPString
         } else {
             fastPayments?.nameFastPayment ?: textEmpty
         }
-        _paymentName.postValue(postingName)
     }
 }
