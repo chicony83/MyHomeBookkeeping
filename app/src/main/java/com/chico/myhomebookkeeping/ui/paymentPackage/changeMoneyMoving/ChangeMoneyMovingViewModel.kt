@@ -118,8 +118,8 @@ class ChangeMoneyMovingViewModel(
             }
 
         postDateTime(moneyMovement.await())
-        postCategory(moneyMovement.await())
         postCashAccount(moneyMovement.await())
+        postCategory(moneyMovement.await())
         postCurrency(moneyMovement.await())
         postDescription(moneyMovement.await())
         postAmount(moneyMovement.await())

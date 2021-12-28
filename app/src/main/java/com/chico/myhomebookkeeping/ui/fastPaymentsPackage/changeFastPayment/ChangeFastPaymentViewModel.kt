@@ -16,7 +16,11 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
+import com.chico.myhomebookkeeping.domain.CategoriesUseCase
+import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -107,6 +111,71 @@ class ChangeFastPaymentViewModel(
             FastPaymentsUseCase.getOneFastPayment(idFastMoneyMovingForChange, dbFastPayments)
         }
         postName(fastPayment.await())
+        postRating(fastPayment.await())
+        postCashAccount(fastPayment.await())
+        postCurrency(fastPayment.await())
+        postCategory(fastPayment.await())
+        postAmount(fastPayment.await())
+        postDescription(fastPayment.await())
+    }
+
+    private fun postDescription(fastPayments: FastPayments?) {
+        val postingDescription: String = if (modelCheck.isPositiveValue(descriptionSPString)) {
+            descriptionSPString
+        } else {
+            fastPayments?.description ?: textEmpty
+        }
+        _paymentDescription.postValue(postingDescription)
+    }
+
+    private suspend fun postAmount(fastPayments: FastPayments?) {
+        val postingAmount: Double = if (modelCheck.isPositiveValue(amountSPDouble)) {
+            amountSPDouble
+        } else {
+            fastPayments?.amount ?: 0.0
+        }
+        _paymentAmount.postValue(postingAmount.toString())
+    }
+
+    private suspend fun postCategory(fastPayments: FastPayments?) {
+        val postingId: Int = if (modelCheck.isPositiveValue(categorySPInt)) {
+            categorySPInt
+        } else {
+            fastPayments?.categoryId ?: 0
+        }
+        _paymentCategory.postValue(CategoriesUseCase.getOneCategory(dbCategory, postingId))
+    }
+
+    private suspend fun postCurrency(fastPayments: FastPayments?) {
+        val postingId: Int = if (modelCheck.isPositiveValue(currencySPInt)) {
+            currencySPInt
+        } else {
+            fastPayments?.currencyId ?: 0
+        }
+        _paymentCurrency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies, postingId))
+    }
+
+    private suspend fun postCashAccount(fastPayments: FastPayments?) {
+        val postingId: Int = if (modelCheck.isPositiveValue(cashAccountSPInt)) {
+            cashAccountSPInt
+        } else {
+            fastPayments?.cashAccountId ?: 0
+        }
+        _paymentCashAccount.postValue(
+            CashAccountsUseCase.getOneCashAccount(
+                dbCashAccount,
+                postingId
+            )
+        )
+    }
+
+    private fun postRating(fastPayments: FastPayments?) {
+        val postingRating = if (modelCheck.isPositiveValue(ratingSPInt)) {
+            ratingSPInt
+        } else {
+            fastPayments?.rating
+        }
+        Message.log("rating = $")
     }
 
     private fun postName(fastPayments: FastPayments?) {
