@@ -15,14 +15,20 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
+import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 
 class ChangeFastPaymentViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val argsIdChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
+
+    private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsNameChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_NAME
     private val argsRatingChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_RATING
     private val argsCashAccountChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_CASH_ACCOUNT
@@ -48,8 +54,8 @@ class ChangeFastPaymentViewModel(
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
 
-    private val spValues = GetSP(sharedPreferences)
-    private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
+    private val getSP = GetSP(sharedPreferences)
+    private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
     private val dbFastPayments: FastPaymentsDao =
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
@@ -81,4 +87,34 @@ class ChangeFastPaymentViewModel(
     private val _paymentDescription = MutableLiveData<String?>()
     val paymentDescription: LiveData<String?> get() = _paymentDescription
 
+    private var idFastMoneyMovingForChange: Long = minusOneLong
+
+    fun getFastPaymentForChange() {
+        idFastMoneyMovingForChange = getIDFastPaymentForChange()
+        if (modelCheck.isPositiveValue(idFastMoneyMovingForChange)) {
+            launchIo {
+                getFastPayment()
+            }
+        }
+    }
+
+    private fun getIDFastPaymentForChange(): Long {
+        return getSP.getLong(argsIdFastPaymentForChangeKey)
+    }
+
+    private suspend fun getFastPayment() = coroutineScope {
+        val fastPayment = async {
+            FastPaymentsUseCase.getOneFastPayment(idFastMoneyMovingForChange, dbFastPayments)
+        }
+        postName(fastPayment.await())
+    }
+
+    private fun postName(fastPayments: FastPayments?) {
+        val postingName = if (modelCheck.isPositiveValue(nameSPString)) {
+            nameSPString
+        } else {
+            fastPayments?.nameFastPayment ?: textEmpty
+        }
+        _paymentName.postValue(postingName)
+    }
 }

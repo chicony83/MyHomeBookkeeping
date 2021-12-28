@@ -90,7 +90,7 @@ class MoneyMovingFragment : Fragment() {
                     object : OnItemSelectForChangeCallBack {
                         override fun onSelect(id: Int) {
 //                        Message.log("changing item id = $id")
-                            moneyMovingViewModel.saveMoneyMovingToChange(selectedId)
+                            moneyMovingViewModel.saveIdMoneyMovingForChange(selectedId)
                             pressSelectButton(R.id.nav_change_money_moving)
                         }
                     })

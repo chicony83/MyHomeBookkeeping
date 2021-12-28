@@ -252,7 +252,7 @@ class MoneyMovingViewModel(
 
     }
 
-    fun saveMoneyMovingToChange(selectedId: Long) {
+    fun saveIdMoneyMovingForChange(selectedId: Long) {
         setSP.saveToSP(argsIdMoneyMovingForChange, selectedId)
     }
 

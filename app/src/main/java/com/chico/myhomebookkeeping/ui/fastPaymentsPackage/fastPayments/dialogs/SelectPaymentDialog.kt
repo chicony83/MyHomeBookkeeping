@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBackLong
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackLong
 import java.lang.IllegalStateException
 
 class SelectPaymentDialog(
     private val fastPayment: FullFastPayment?,
-    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack
+    private val onItemSelectForChangeCallBackLong: OnItemSelectForChangeCallBackLong,
+    private val onItemSelectForSelectCallBackLong: OnItemSelectForSelectCallBackLong
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -36,12 +36,12 @@ class SelectPaymentDialog(
             cancelButton.setOnClickListener { dialogCancel() }
             selectButton.setOnClickListener {
                 fastPayment?.id.let { it1 ->
-                    onItemSelectForSelectCallBack.onSelect(it1?.toInt() ?: 0)
+                    onItemSelectForSelectCallBackLong.onSelect(it1?:0)
                 }
             }
             changeButton.setOnClickListener {
                 fastPayment?.id.let { it1 ->
-                    onItemSelectForChangeCallBack.onSelect(it1?.toInt() ?: 0)
+                    onItemSelectForChangeCallBackLong.onSelect(it1 ?: 0)
                 }
             }
 

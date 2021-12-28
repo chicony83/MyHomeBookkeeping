@@ -24,6 +24,7 @@ class FastPaymentsViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
+    private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
     private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
@@ -93,6 +94,10 @@ class FastPaymentsViewModel(
             saveToSP(argsAmountCreateKey,fastPayments?.amount.toString())
             saveToSP(argsDescriptionCreateKey,fastPayments?.description)
         }
+    }
+
+    fun saveIdFastPaymentForChange(id: Long) {
+        setSP.saveToSP(argsIdFastPaymentForChangeKey,id)
     }
 
 //    private suspend fun loadSelectedFastPayment(id: Long): FastPayments? {

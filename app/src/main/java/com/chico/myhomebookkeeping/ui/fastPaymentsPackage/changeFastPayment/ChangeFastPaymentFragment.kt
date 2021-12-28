@@ -27,5 +27,15 @@ class ChangeFastPaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with(changeFastPaymentViewModel){
+            paymentName.observe(viewLifecycleOwner,{
+                binding.nameFastPayment.setText(it.toString())
+            })
+        }
+
+        with(changeFastPaymentViewModel){
+            getFastPaymentForChange()
+        }
     }
 }
