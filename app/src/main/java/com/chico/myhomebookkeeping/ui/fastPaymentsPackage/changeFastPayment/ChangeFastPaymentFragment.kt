@@ -58,15 +58,4 @@ class ChangeFastPaymentFragment : Fragment() {
             getFastPaymentForChange()
         }
     }
-
-    private fun getRatingImage(rating: Int?): Int {
-        return when (rating) {
-            0 -> R.drawable.rating1
-            1 -> R.drawable.rating2
-            2 -> R.drawable.rating3
-            3 -> R.drawable.rating4
-            4 -> R.drawable.rating5
-            else -> R.drawable.rating1
-        }
-    }
 }
