@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.dialogs
+package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog

@@ -14,7 +14,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
-import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.dialogs.SelectRatingDialog
+import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
@@ -164,7 +164,7 @@ class NewFastPaymentFragment : Fragment() {
                 object : OnSelectRatingValueCallBack {
                 override fun select(value: Int) {
                     setRatingValue(value)
-                    Toast.makeText(requireContext(), "rating $value", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "rating $value", Toast.LENGTH_SHORT).show()
                 }
             })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))

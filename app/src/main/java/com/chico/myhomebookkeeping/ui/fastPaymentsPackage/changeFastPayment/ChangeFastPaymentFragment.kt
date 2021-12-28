@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
+import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
+import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
+import com.chico.myhomebookkeeping.utils.launchUi
 
 class ChangeFastPaymentFragment : Fragment() {
 
@@ -29,6 +32,12 @@ class ChangeFastPaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with(binding){
+            ratingButton.setOnClickListener {
+                showSelectRatingDialog()
+            }
+        }
 
         with(changeFastPaymentViewModel) {
             paymentName.observe(viewLifecycleOwner, {
@@ -57,5 +66,23 @@ class ChangeFastPaymentFragment : Fragment() {
         with(changeFastPaymentViewModel) {
             getFastPaymentForChange()
         }
+    }
+
+    private fun showSelectRatingDialog() {
+        launchUi {
+            val dialog = SelectRatingDialog(
+                ratingFromParent = changeFastPaymentViewModel.paymentRating.value?.rating?:0,
+                object:OnSelectRatingValueCallBack{
+                    override fun select(value: Int) {
+                        setRatingValue(value)
+                    }
+                }
+            )
+            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+        }
+    }
+
+    private fun setRatingValue(value: Int) {
+        changeFastPaymentViewModel.postRatingValue(value)
     }
 }

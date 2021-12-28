@@ -218,4 +218,8 @@ class ChangeFastPaymentViewModel(
             fastPayments?.nameFastPayment ?: textEmpty
         }
     }
+
+    fun postRatingValue(value: Int) {
+        _paymentRating.postValue(Rating(value,getRatingImage(value)))
+    }
 }
