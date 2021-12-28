@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
+import com.chico.myhomebookkeeping.data.newFastPayment.Rating
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
@@ -20,7 +22,6 @@ import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -73,8 +74,8 @@ class ChangeFastPaymentViewModel(
     private val _paymentName = MutableLiveData<String>()
     val paymentName: LiveData<String> get() = _paymentName
 
-    private val _paymentRating = MutableLiveData<Int>()
-    val paymentRating: LiveData<Int> get() = _paymentRating
+    private val _paymentRating = MutableLiveData<Rating>()
+    val paymentRating: LiveData<Rating> get() = _paymentRating
 
     private val _paymentCurrency = MutableLiveData<Currencies>()
     val paymentCurrency: LiveData<Currencies> get() = _paymentCurrency
@@ -176,19 +177,41 @@ class ChangeFastPaymentViewModel(
     }
 
     private fun postRating(fastPayments: FastPayments?) {
-        val postingRating = if (modelCheck.isPositiveValue(ratingSPInt)) {
-            ratingSPInt
-        } else {
-            fastPayments?.rating
+//        val postingRating = if (modelCheck.isPositiveValue(ratingSPInt)) {
+//            ratingSPInt
+//        } else {
+//            fastPayments?.rating
+//        }
+//        Message.log("rating = $")
+        _paymentRating.postValue(getPostingRating(fastPayments))
+    }
+
+    private fun getPostingRating(fastPayments: FastPayments?): Rating {
+        return if (modelCheck.isPositiveValue(ratingSPInt)){
+            Rating(ratingSPInt,getRatingImage(ratingSPInt))
         }
-        Message.log("rating = $")
+        else{
+            val zeroRating = fastPayments?.rating?:0
+            Rating(zeroRating,getRatingImage(zeroRating))
+        }
+    }
+
+    private fun getRatingImage(rating: Int): Int {
+        return when (rating) {
+            0 -> R.drawable.rating1
+            1 -> R.drawable.rating2
+            2 -> R.drawable.rating3
+            3 -> R.drawable.rating4
+            4 -> R.drawable.rating5
+            else -> R.drawable.rating1
+        }
     }
 
     private fun postName(fastPayments: FastPayments?) {
         _paymentName.postValue(getPostingName(fastPayments))
     }
 
-    private fun getPostingName(fastPayments: FastPayments?): String? {
+    private fun getPostingName(fastPayments: FastPayments?): String {
         return if (modelCheck.isPositiveValue(nameSPString)) {
             nameSPString
         } else {

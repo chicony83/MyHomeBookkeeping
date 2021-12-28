@@ -35,7 +35,7 @@ class ChangeFastPaymentFragment : Fragment() {
                 binding.nameFastPayment.setText(it.toString())
             })
             paymentRating.observe(viewLifecycleOwner, {
-                binding.ratingButton.setImageResource(getRatingImage(it))
+                binding.ratingButton.setImageResource(it.img)
             })
             paymentCashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccountButton.text = it.accountName
