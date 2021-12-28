@@ -57,8 +57,8 @@ class ChangeMoneyMovingViewModel(
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
 
-    private val spValues = GetSP(sharedPreferences)
-    private val saveARGS = SetSP(spEditor = sharedPreferences.edit())
+    private val getSP = GetSP(sharedPreferences)
+    private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
     private var idMoneyMovingForChangeLong: Long = minusOneLong
 
@@ -99,8 +99,8 @@ class ChangeMoneyMovingViewModel(
     val descriptionText: LiveData<String?>
         get() = _descriptionText
 
-    fun getLineForChange() {
-        idMoneyMovingForChangeLong = getIdLine()
+    fun getPaymentForChange() {
+        idMoneyMovingForChangeLong = getIdPaymentForChange()
         if (modelCheck.isPositiveValue(idMoneyMovingForChangeLong)) {
             launchIo {
                 getMoneyMovement()
@@ -208,8 +208,8 @@ class ChangeMoneyMovingViewModel(
         _amountMoney.postValue(postingValue.toString())
     }
 
-    private fun getIdLine(): Long {
-        return spValues.getLong(argsIdMoneyMovingForChange)
+    private fun getIdPaymentForChange(): Long {
+        return getSP.getLong(argsIdMoneyMovingForChange)
     }
 
     fun setDate(it: Long?) {
@@ -231,7 +231,7 @@ class ChangeMoneyMovingViewModel(
     }
 
     fun saveDataToSp() {
-        with(saveARGS) {
+        with(setSP) {
             saveToSP(argsIdMoneyMovingForChange, idMoneyMovingForChangeLong)
             saveToSP(argsDateTimeChangeKey, _dateTime.value.toString().parseTimeToMillis())
             saveToSP(argsCashAccountChangeKey, _selectedCashAccount.value?.cashAccountId ?: -1)
@@ -243,12 +243,12 @@ class ChangeMoneyMovingViewModel(
     }
 
     fun getDataForChangeMoneyMovingLine() {
-        idMoneyMovingForChangeLong = spValues.getLong(argsDateTimeChangeKey)
-        dataTimeSPLong = spValues.getLong(argsDateTimeChangeKey)
-        cashAccountSPInt = spValues.getInt(argsCashAccountChangeKey)
-        currencySPInt = spValues.getInt(argsCurrencyChangeKey)
-        categorySPInt = spValues.getInt(argsCategoryChangeKey)
-        descriptionSPString = spValues.getString(argsDescriptionChangeKey).toString()
+        idMoneyMovingForChangeLong = getSP.getLong(argsDateTimeChangeKey)
+        dataTimeSPLong = getSP.getLong(argsDateTimeChangeKey)
+        cashAccountSPInt = getSP.getInt(argsCashAccountChangeKey)
+        currencySPInt = getSP.getInt(argsCurrencyChangeKey)
+        categorySPInt = getSP.getInt(argsCategoryChangeKey)
+        descriptionSPString = getSP.getString(argsDescriptionChangeKey).toString()
 //        amountSPDouble = spValues.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
     }
 

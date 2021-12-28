@@ -126,7 +126,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         }
         with(changeMoneyMovingViewModel) {
             getDataForChangeMoneyMovingLine()
-            getLineForChange()
+            getPaymentForChange()
         }
 
         uiColors.setColors(getDialogsList(), getButtonsListForColorButton(), getButtonsListForColorButtonText())

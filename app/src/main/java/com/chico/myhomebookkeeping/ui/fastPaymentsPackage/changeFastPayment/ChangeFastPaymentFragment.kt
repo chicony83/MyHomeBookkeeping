@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
 
 class ChangeFastPaymentFragment : Fragment() {
 
-//    private lateinit var changeFastPaymentViewModel:ChangeFa
+    private lateinit var changeFastPaymentViewModel: ChangeFastPaymentViewModel
     private var _binding: FragmentChangeFastPaymentBinding? = null
     val binding get() = _binding!!
 
@@ -19,7 +20,12 @@ class ChangeFastPaymentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChangeFastPaymentBinding.inflate(inflater, container, false)
-
+        changeFastPaymentViewModel =
+            ViewModelProvider(this).get(ChangeFastPaymentViewModel::class.java)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }
