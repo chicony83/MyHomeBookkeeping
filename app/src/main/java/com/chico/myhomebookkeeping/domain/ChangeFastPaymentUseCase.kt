@@ -28,4 +28,8 @@ object ChangeFastPaymentUseCase {
         )
 
     }
+
+    suspend fun deleteLine(db: FastPaymentsDao, id: Long): Int {
+        return db.deleteLine(id)
+    }
 }

@@ -14,11 +14,13 @@ import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.interfaces.OnItemSubmitForDeleteCallBack
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
 import com.chico.myhomebookkeeping.ui.dialogs.SubmitDeleteDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class ChangeFastPaymentFragment : Fragment() {
@@ -89,8 +91,28 @@ class ChangeFastPaymentFragment : Fragment() {
 
     private fun pressDeleteButton() {
         launchUi {
-            val dialog = SubmitDeleteDialog()
-            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+            val dialog = SubmitDeleteDialog(
+                object : OnItemSubmitForDeleteCallBack {
+                    override fun isDelete(isDelete: Boolean) {
+                        if (isDelete) {
+                            deleteEntry()
+                        }
+                    }
+                }
+            )
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+        }
+    }
+
+    private fun deleteEntry() {
+        runBlocking {
+            val result = async {
+                changeFastPaymentViewModel.deleteLine()
+            }
+            if (result.await() > 0) {
+                message(getString(R.string.message_entry_deleted))
+                control.navigate(R.id.nav_fast_money_movement_fragment)
+            }
         }
     }
 

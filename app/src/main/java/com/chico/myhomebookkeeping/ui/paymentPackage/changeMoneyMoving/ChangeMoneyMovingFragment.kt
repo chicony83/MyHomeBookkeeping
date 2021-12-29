@@ -140,10 +140,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         runBlocking {
             val result = async { changeMoneyMovingViewModel.deleteLine() }
             if (result.await() > 0) {
-                Toast.makeText(
-                    requireContext(), getString(R.string.message_entry_deleted),
-                    Toast.LENGTH_SHORT
-                ).show()
+                message(getString(R.string.message_entry_deleted))
                 control.navigate(R.id.nav_money_moving)
             }
         }

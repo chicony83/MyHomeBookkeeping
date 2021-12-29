@@ -272,4 +272,8 @@ class ChangeFastPaymentViewModel(
             description = description
         )
     }
+
+    suspend fun deleteLine():Int {
+        return ChangeFastPaymentUseCase.deleteLine(dbFastPayments,idFastMoneyMovingForChange)
+    }
 }

@@ -36,4 +36,7 @@ interface FastPaymentsDao {
         amount: Double,
         description: String
     ): Int
+
+    @Query("DELETE FROM fast_payments_table WHERE id = :id")
+    suspend fun deleteLine(id: Long): Int
 }
