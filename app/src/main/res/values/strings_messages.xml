@@ -4,10 +4,11 @@
     <string name="message_select_category">Select a category</string>
     <string name="message_select_type_of_category">Select type of category</string>
 
-    <string name="message_enter_amount">"Enter amount"</string>
-    <string name="message_category_not_selected">"Category not selected"</string>
-    <string name="message_currency_not_selected">"Currency not selected"</string>
-    <string name="message_cash_account_not_selected">"Cash account not selected"</string>
+    <string name="message_enter_amount">Enter amount</string>
+    <string name="message_name_not_entered">Enter name</string>
+    <string name="message_category_not_selected">Select category</string>
+    <string name="message_currency_not_selected">Select currency</string>
+    <string name="message_cash_account_not_selected">Select cash account</string>
     <string name="message_first_launch_dialog">"This is the first launch\nof the program,\enable quick setup?"</string>
 
     <string name="message_entry_changed">Entry changed</string>

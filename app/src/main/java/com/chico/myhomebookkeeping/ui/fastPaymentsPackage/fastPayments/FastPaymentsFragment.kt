@@ -90,6 +90,7 @@ class FastPaymentsFragment : Fragment() {
         with(binding) {
             newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_money_moving_fragment) }
         }
+        fastPaymentsViewModel.cleaningSP()
     }
 
     override fun onDestroyView() {

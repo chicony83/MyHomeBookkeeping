@@ -5,9 +5,10 @@
     <string name="message_too_short_name">Слишком короткое название</string>
 
     <string name="message_enter_amount">"Введите сумму"</string>
-    <string name="message_category_not_selected">"Категория не выбрана"</string>
-    <string name="message_currency_not_selected">"Валюта не выбрана"</string>
-    <string name="message_cash_account_not_selected">"Счет не выбран"</string>
+    <string name="message_name_not_entered">Введите название</string>
+    <string name="message_category_not_selected">Выберите категорию</string>
+    <string name="message_currency_not_selected">Выберите валюту</string>
+    <string name="message_cash_account_not_selected">Выберите счет</string>
     <string name="message_first_launch_dialog">"Это первый запуск программы\nвключить быструю настройку?"</string>
 
     <string name="message_entry_changed">Запись изменена</string>

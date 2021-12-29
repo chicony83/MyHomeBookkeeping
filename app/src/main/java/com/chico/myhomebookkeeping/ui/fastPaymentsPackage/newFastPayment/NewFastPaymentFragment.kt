@@ -40,7 +40,7 @@ class NewFastPaymentFragment : Fragment() {
 
         with(newFastPaymentViewModel) {
             descriptionFastPayment.observe(viewLifecycleOwner, {
-                binding.descriptionFastPaymentEditText.setText(it.toString())
+                binding.nameFastPaymentEditText.setText(it.toString())
             })
             rating.observe(viewLifecycleOwner, {
                 binding.ratingButton.setImageResource(it.img)
@@ -86,28 +86,32 @@ class NewFastPaymentFragment : Fragment() {
         val isCashAccountNotNull = newFastPaymentViewModel.isCashAccountNotNull()
         val isCurrencyNotNull = newFastPaymentViewModel.isCurrencyNotNull()
         val isCategoryNotNull = newFastPaymentViewModel.isCategoryNotNull()
-        if (isCashAccountNotNull) {
-            if (isCurrencyNotNull) {
-                if (isCategoryNotNull) {
-                    addNewFastPayment()
+        if (binding.nameFastPaymentEditText.text.isNotEmpty()) {
+            if (isCashAccountNotNull) {
+                if (isCurrencyNotNull) {
+                    if (isCategoryNotNull) {
+                        addNewFastPayment()
+                    } else {
+                        message(getString(R.string.message_category_not_selected))
+                    }
                 } else {
-                    message(getString(R.string.message_category_not_selected))
+                    message(getString(R.string.message_currency_not_selected))
                 }
             } else {
-                message(getString(R.string.message_currency_not_selected))
+                message(getString(R.string.message_cash_account_not_selected))
             }
         } else {
-            message(getString(R.string.message_cash_account_not_selected))
+            message(getString(R.string.message_name_not_entered))
         }
     }
 
     private fun addNewFastPayment() {
-        val descriptionFastPayment = getDescriptionOfPayment()
+        val nameFastPayment = getNameOfPayment()
         val description = getDescription()
         val amount = getAmount()
         runBlocking {
             val result = newFastPaymentViewModel.addNewFastPayment(
-                descriptionFastPayment, description, amount
+                nameFastPayment, description, amount
             )
             if (result > 0) {
                 view?.hideKeyboard()
@@ -124,7 +128,7 @@ class NewFastPaymentFragment : Fragment() {
 
     private fun pressSelectButton(fragment: Int) {
         newFastPaymentViewModel.saveDataToSP(
-            descriptionFastPayment = getDescriptionOfPayment(),
+            descriptionFastPayment = getNameOfPayment(),
             description = getDescription(),
             amount = getAmount()
         )
@@ -138,8 +142,8 @@ class NewFastPaymentFragment : Fragment() {
         }
     }
 
-    private fun getDescriptionOfPayment(): String {
-        return binding.descriptionFastPaymentEditText.text.toString().let {
+    private fun getNameOfPayment(): String {
+        return binding.nameFastPaymentEditText.text.toString().let {
             if (it.isNotEmpty()) it
             else ""
         }
@@ -147,13 +151,11 @@ class NewFastPaymentFragment : Fragment() {
 
     private fun getAmount(): Double {
         return binding.amount.text.toString().let {
-            if (!it.isNullOrEmpty()){
-                    if (it.toDouble()>0){
-                        Around.double(it)
-                    }
-                    else  0.0
-            }
-            else 0.0
+            if (!it.isNullOrEmpty()) {
+                if (it.toDouble() > 0) {
+                    Around.double(it)
+                } else 0.0
+            } else 0.0
         }
     }
 
@@ -162,11 +164,11 @@ class NewFastPaymentFragment : Fragment() {
             val dialog = SelectRatingDialog(
                 newFastPaymentViewModel.rating.value?.rating,
                 object : OnSelectRatingValueCallBack {
-                override fun select(value: Int) {
-                    setRatingValue(value)
+                    override fun select(value: Int) {
+                        setRatingValue(value)
 //                    Toast.makeText(requireContext(), "rating $value", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    }
+                })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }

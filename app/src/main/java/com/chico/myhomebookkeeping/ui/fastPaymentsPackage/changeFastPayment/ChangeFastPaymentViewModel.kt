@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.changeFastPayment
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,13 +19,11 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.FastPayments
-import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
+import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -241,7 +240,36 @@ class ChangeFastPaymentViewModel(
         cashAccountSPInt = getSP.getInt(argsCashAccountChangeKey)
         currencySPInt = getSP.getInt(argsCurrencyChangeKey)
         categorySPInt = getSP.getInt(argsCategoryChangeKey)
-        amountSPDouble = getSP.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
+        amountSPDouble = getSPAmount()
+
+//        amountSPDouble = getSP.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
         descriptionSPString = getSP.getString(argsDescriptionChangeKey) ?: textEmpty
+    }
+
+    private fun getSPAmount(): Double {
+        return if (!getSP.getString(argsAmountChangeKey).isNullOrEmpty()) {
+            if (getSP.getString(argsAmountChangeKey)!!.isDigitsOnly()) {
+                getSP.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
+            } else {
+                0.0
+            }
+        } else {
+            0.0
+        }
+//        getSP.getString(argsAmountChangeKey)
+    }
+
+    suspend fun changeFastPayment(name: String, amount: Double, description: String): Int {
+        return ChangeFastPaymentUseCase.changeFastPayment(
+            db = dbFastPayments,
+            id = idFastMoneyMovingForChange,
+            name = name,
+            rating = _paymentRating.value?.rating ?: 0,
+            cashAccount = _paymentCashAccount.value?.cashAccountId ?: 0,
+            currency = _paymentCurrency.value?.currencyId ?: 0,
+            category = _paymentCategory.value?.categoriesId ?: 0,
+            amount = amount,
+            description = description
+        )
     }
 }

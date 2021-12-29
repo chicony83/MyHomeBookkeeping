@@ -156,7 +156,7 @@ class ChangeMoneyMovingFragment : Fragment() {
                 val amount: Double = binding.amount.text.toString().toDouble()
                 val description = binding.description.text.toString()
                 changeMoneyMovingViewModel.saveDataToSp()
-                val result: Long =
+                val result: Int =
                     changeMoneyMovingViewModel.changeMoneyMovementInDB(amount, description)
                 if (result > 0) {
                     view?.hideKeyboard()

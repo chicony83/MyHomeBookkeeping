@@ -35,6 +35,10 @@ class FastPaymentsViewModel(
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
 
+    private val minusOneInt = Constants.MINUS_ONE_VAL_INT
+    private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
+    private val textEmpty = Constants.TEXT_EMPTY
+
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
@@ -98,6 +102,28 @@ class FastPaymentsViewModel(
 
     fun saveIdFastPaymentForChange(id: Long) {
         setSP.saveToSP(argsIdFastPaymentForChangeKey,id)
+    }
+
+    fun cleaningSP() {
+        with(setSP){
+            val argsId = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
+            val argsName = Constants.ARGS_CHANGE_FAST_PAYMENT_NAME
+            val argsRating = Constants.ARGS_CHANGE_FAST_PAYMENT_RATING
+            val argsCashAccount = Constants.ARGS_CHANGE_FAST_PAYMENT_CASH_ACCOUNT
+            val argsCurrency = Constants.ARGS_CHANGE_FAST_PAYMENT_CURRENCY
+            val argsCategory = Constants.ARGS_CHANGE_FAST_PAYMENT_CATEGORY
+            val argsAmount = Constants.ARGS_CHANGE_FAST_PAYMENT_AMOUNT
+            val argsDescription = Constants.ARGS_CHANGE_FAST_PAYMENT_DESCRIPTION
+
+            saveToSP(argsId,minusOneLong)
+            saveToSP(argsName,textEmpty)
+            saveToSP(argsRating,minusOneInt)
+            saveToSP(argsCashAccount,minusOneInt)
+            saveToSP(argsCurrency,minusOneInt)
+            saveToSP(argsCategory,minusOneInt)
+            saveToSP(argsAmount,textEmpty)
+            saveToSP(argsDescription,textEmpty)
+        }
     }
 
 //    private suspend fun loadSelectedFastPayment(id: Long): FastPayments? {

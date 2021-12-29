@@ -252,7 +252,7 @@ class ChangeMoneyMovingViewModel(
 //        amountSPDouble = spValues.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
     }
 
-    suspend fun changeMoneyMovementInDB(amount: Double, description: String): Long {
+    suspend fun changeMoneyMovementInDB(amount: Double, description: String): Int {
         val dateTimeVal = _dateTime.value?.parseTimeToMillis() ?: 0
         messageLog("amount = $amount")
         return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
@@ -264,7 +264,7 @@ class ChangeMoneyMovingViewModel(
             currencyId = _selectedCurrency.value?.currencyId ?: 0,
             amount = amount,
             description = description
-        ).toLong()
+        )
     }
 
     suspend fun deleteLine(): Int {

@@ -42,6 +42,7 @@ class MoneyMovingViewModel(
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
+    private val textEmpty = Constants.TEXT_EMPTY
 
     private var startTimePeriodLongSP = minusOneLong
     private var endTimePeriodLongSP = minusOneLong
@@ -226,8 +227,8 @@ class MoneyMovingViewModel(
             saveToSP(argsCashAccountChangeKey, minusOneInt)
             saveToSP(argsCurrencyChangeKey, minusOneInt)
             saveToSP(argsCategoryChangeKey, minusOneInt)
-            saveToSP(argsDescriptionChangeKey, "")
-            saveToSP(argsAmountChangeKey, "")
+            saveToSP(argsDescriptionChangeKey, textEmpty)
+            saveToSP(argsAmountChangeKey, textEmpty)
         }
     }
 

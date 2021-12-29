@@ -130,6 +130,7 @@ class MoneyMovingFragment : Fragment() {
         }
 //        checkLinesFound()
         checkIsFirstLaunch()
+
         moneyMovingViewModel.cleaningSP()
     }
 

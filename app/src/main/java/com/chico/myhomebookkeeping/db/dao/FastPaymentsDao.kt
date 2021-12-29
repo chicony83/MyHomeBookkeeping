@@ -11,17 +11,29 @@ import com.chico.myhomebookkeeping.db.entity.FastPayments
 @Dao
 interface FastPaymentsDao {
     @Insert
-    suspend fun addBlank(newFastPayment: FastPayments):Long
+    suspend fun addBlank(newFastPayment: FastPayments): Long
 
     @Query("SELECT * FROM fast_payments_table")
-    suspend fun getAllFastPayments():List<FastPayments>
+    suspend fun getAllFastPayments(): List<FastPayments>
 
     @RawQuery
-    fun getAllFullFastPayments(query: SimpleSQLiteQuery):List<FullFastPayment>
+    suspend fun getAllFullFastPayments(query: SimpleSQLiteQuery): List<FullFastPayment>
 
     @RawQuery
-    fun getOneFullFastPayment(query: SimpleSQLiteQuery): FullFastPayment
+    suspend fun getOneFullFastPayment(query: SimpleSQLiteQuery): FullFastPayment
 
     @Query("SELECT * FROM fast_payments_table WHERE id = :id")
-    fun getOneSelectedFastPayment(id: Long):FastPayments
+    suspend fun getOneSelectedFastPayment(id: Long): FastPayments
+
+    @Query("UPDATE fast_payments_table SET name_fast_payment = :name,rating = :rating, cash_account = :cashAccount,currency = :currency, category = :category, amount = :amount, description = :description WHERE id = :id")
+    suspend fun changeFastPayment(
+        id: Long,
+        name: String,
+        rating: Int,
+        cashAccount: Int,
+        currency: Int,
+        category: Int,
+        amount: Double,
+        description: String
+    ): Int
 }
