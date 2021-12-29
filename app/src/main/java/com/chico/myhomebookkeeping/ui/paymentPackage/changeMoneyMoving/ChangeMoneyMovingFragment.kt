@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -27,6 +28,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     private var _binding: FragmentChangeMoneyMovingBinding? = null
     private val binding get() = _binding!!
     private lateinit var control: NavController
+    private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
     private val uiColors = UiColors()
     private val datePicker =
@@ -59,6 +61,7 @@ class ChangeMoneyMovingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
+        navControlHelper = NavControlHelper(control)
 
         with(binding) {
             selectDateTimeButton.setOnClickListener {
@@ -125,7 +128,7 @@ class ChangeMoneyMovingFragment : Fragment() {
             }
         }
         with(changeMoneyMovingViewModel) {
-            getDataForChangeMoneyMovingLine()
+            getSPForChangeMoneyMovingLine()
             getPaymentForChange()
         }
 
@@ -175,7 +178,8 @@ class ChangeMoneyMovingFragment : Fragment() {
 
     private fun pressSelectButton(fragment: Int) {
         changeMoneyMovingViewModel.saveDataToSp()
-        control.navigate(fragment)
+//        control.navigate(fragment)
+        navControlHelper.toSelectedFragment(fragment)
     }
 
     override fun onDestroy() {

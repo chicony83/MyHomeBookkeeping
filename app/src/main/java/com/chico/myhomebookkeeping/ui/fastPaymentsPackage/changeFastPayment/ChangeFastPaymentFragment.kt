@@ -1,14 +1,16 @@
 package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.changeFastPayment
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -18,6 +20,8 @@ class ChangeFastPaymentFragment : Fragment() {
     private lateinit var changeFastPaymentViewModel: ChangeFastPaymentViewModel
     private var _binding: FragmentChangeFastPaymentBinding? = null
     val binding get() = _binding!!
+    private lateinit var control:NavController
+    private lateinit var navControlHelper: NavControlHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +36,16 @@ class ChangeFastPaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+        navControlHelper = NavControlHelper(control)
 
         with(binding){
             ratingButton.setOnClickListener {
                 showSelectRatingDialog()
             }
+            selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
+            selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
+            selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
         }
 
         with(changeFastPaymentViewModel) {
@@ -64,8 +73,19 @@ class ChangeFastPaymentFragment : Fragment() {
         }
 
         with(changeFastPaymentViewModel) {
+            getSPForChangeFastPayment()
             getFastPaymentForChange()
         }
+    }
+
+    private fun pressSelectButton(fragment: Int) {
+        changeFastPaymentViewModel.saveDataToSP(
+            binding.nameFastPayment.text.toString(),
+            binding.amount.text.toString(),
+            binding.description.text.toString()
+        )
+        navControlHelper.toSelectedFragment(fragment)
+
     }
 
     private fun showSelectRatingDialog() {

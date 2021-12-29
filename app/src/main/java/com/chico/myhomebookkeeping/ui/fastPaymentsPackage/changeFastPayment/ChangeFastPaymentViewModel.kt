@@ -187,12 +187,11 @@ class ChangeFastPaymentViewModel(
     }
 
     private fun getPostingRating(fastPayments: FastPayments?): Rating {
-        return if (modelCheck.isPositiveValue(ratingSPInt)){
-            Rating(ratingSPInt,getRatingImage(ratingSPInt))
-        }
-        else{
-            val zeroRating = fastPayments?.rating?:0
-            Rating(zeroRating,getRatingImage(zeroRating))
+        return if (modelCheck.isPositiveValue(ratingSPInt)) {
+            Rating(ratingSPInt, getRatingImage(ratingSPInt))
+        } else {
+            val zeroRating = fastPayments?.rating ?: 0
+            Rating(zeroRating, getRatingImage(zeroRating))
         }
     }
 
@@ -220,6 +219,29 @@ class ChangeFastPaymentViewModel(
     }
 
     fun postRatingValue(value: Int) {
-        _paymentRating.postValue(Rating(value,getRatingImage(value)))
+        _paymentRating.postValue(Rating(value, getRatingImage(value)))
+    }
+
+    fun saveDataToSP(name: String, amount: String, description: String) {
+        with(setSP) {
+            saveToSP(argsIdFastPaymentForChangeKey, idFastMoneyMovingForChange)
+            saveToSP(argsNameChangeKey, name)
+            saveToSP(argsRatingChangeKey, _paymentRating.value?.rating)
+            saveToSP(argsCashAccountChangeKey, _paymentCashAccount.value?.cashAccountId)
+            saveToSP(argsCurrencyChangeKey, _paymentCurrency.value?.currencyId)
+            saveToSP(argsCategoryChangeKey, _paymentCategory.value?.categoriesId)
+            saveToSP(argsAmountChangeKey, amount)
+            saveToSP(argsDescriptionChangeKey, description)
+        }
+    }
+
+    fun getSPForChangeFastPayment() {
+        nameSPString = getSP.getString(argsNameChangeKey) ?: textEmpty
+        ratingSPInt = getSP.getInt(argsRatingChangeKey)
+        cashAccountSPInt = getSP.getInt(argsCashAccountChangeKey)
+        currencySPInt = getSP.getInt(argsCurrencyChangeKey)
+        categorySPInt = getSP.getInt(argsCategoryChangeKey)
+        amountSPDouble = getSP.getString(argsAmountChangeKey)?.toDouble() ?: 0.0
+        descriptionSPString = getSP.getString(argsDescriptionChangeKey) ?: textEmpty
     }
 }

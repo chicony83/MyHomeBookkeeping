@@ -242,8 +242,8 @@ class ChangeMoneyMovingViewModel(
         }
     }
 
-    fun getDataForChangeMoneyMovingLine() {
-        idMoneyMovingForChangeLong = getSP.getLong(argsDateTimeChangeKey)
+    fun getSPForChangeMoneyMovingLine() {
+//        idMoneyMovingForChangeLong = getSP.getLong(argsDateTimeChangeKey)
         dataTimeSPLong = getSP.getLong(argsDateTimeChangeKey)
         cashAccountSPInt = getSP.getInt(argsCashAccountChangeKey)
         currencySPInt = getSP.getInt(argsCurrencyChangeKey)

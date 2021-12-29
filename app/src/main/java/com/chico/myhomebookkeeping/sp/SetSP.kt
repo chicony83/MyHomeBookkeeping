@@ -13,6 +13,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
     private val navNewFastPayment = R.id.nav_new_fast_money_moving_fragment
+    private val navChangeFastPayment = R.id.nav_change_fast_payment_fragment
 
     private val navCategory = R.id.nav_categories
 
@@ -28,17 +29,20 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val argsCreateCategory = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsQueryCategory = Constants.ARGS_QUERY_PAYMENT_CATEGORY_KEY
     private val argsChangeCategory = Constants.ARGS_CHANGE_PAYMENT_CATEGORY_KEY
-    private val argsNewFastCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
+    private val argsNewFastPaymentCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
+    private val argsChangeFastPaymentCategory = Constants.ARGS_CHANGE_FAST_PAYMENT_CATEGORY
 
     private val argsCreateCashAccount = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
     private val argsQueryCashAccount = Constants.ARGS_QUERY_PAYMENT_CASH_ACCOUNT_KEY
     private val argsChangeCashAccount = Constants.ARGS_CHANGE_PAYMENT_CASH_ACCOUNT_KEY
-    private val argsNewFastCashAccount = Constants.ARGS_NEW_FAST_PAYMENT_CASH_ACCOUNT
+    private val argsNewFastPaymentCashAccount = Constants.ARGS_NEW_FAST_PAYMENT_CASH_ACCOUNT
+    private val argsChangeFastPaymentCashAccount = Constants.ARGS_CHANGE_FAST_PAYMENT_CASH_ACCOUNT
 
     private val argsCreateCurrency = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
     private val argsQueryCurrency = Constants.ARGS_QUERY_PAYMENT_CURRENCY_KEY
     private val argsChangeCurrency = Constants.ARGS_CHANGE_PAYMENT_CURRENCY_KEY
-    private val argsNewFastCurrency: String = Constants.ARGS_NEW_FAST_PAYMENT_CURRENCY
+    private val argsNewFastPaymentCurrency: String = Constants.ARGS_NEW_FAST_PAYMENT_CURRENCY
+    private val argsChangeFastPaymentCurrency = Constants.ARGS_CHANGE_FAST_PAYMENT_CURRENCY
 
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
@@ -51,35 +55,43 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
         var args = ""
         when (navControlHelper.previousFragment()) {
             navMoneyMoving -> {
-                when(navControlHelper.currentFragment()){
+                when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsQueryCategory
-                    R.id.nav_cash_account-> args = argsQueryCashAccount
-                    R.id.nav_currencies-> args = argsQueryCurrency
+                    R.id.nav_cash_account -> args = argsQueryCashAccount
+                    R.id.nav_currencies -> args = argsQueryCurrency
                 }
             }
             navNewMoneyMoving -> {
-                when(navControlHelper.currentFragment()){
+                when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsCreateCategory
-                    R.id.nav_cash_account-> args = argsCreateCashAccount
-                    R.id.nav_currencies-> args = argsCreateCurrency
+                    R.id.nav_cash_account -> args = argsCreateCashAccount
+                    R.id.nav_currencies -> args = argsCreateCurrency
                 }
             }
             navChangeMoneyMoving -> {
-                when(navControlHelper.currentFragment()){
+                when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsChangeCategory
-                    R.id.nav_cash_account-> args = argsChangeCashAccount
-                    R.id.nav_currencies-> args = argsChangeCurrency
+                    R.id.nav_cash_account -> args = argsChangeCashAccount
+                    R.id.nav_currencies -> args = argsChangeCurrency
                 }
             }
             navNewFastPayment -> {
                 when (navControlHelper.currentFragment()) {
-                    R.id.nav_categories -> args = argsNewFastCategory
-                    R.id.nav_cash_account-> args = argsNewFastCashAccount
-                    R.id.nav_currencies-> args = argsNewFastCurrency
+                    R.id.nav_categories -> args = argsNewFastPaymentCategory
+                    R.id.nav_cash_account -> args = argsNewFastPaymentCashAccount
+                    R.id.nav_currencies -> args = argsNewFastPaymentCurrency
+                }
+            }
+            navChangeFastPayment -> {
+                Message.log("previous fragment nav change Fast payment")
+                when (navControlHelper.currentFragment()) {
+                    R.id.nav_categories -> args = argsChangeFastPaymentCategory
+                    R.id.nav_currencies -> args = argsChangeFastPaymentCurrency
+                    R.id.nav_cash_account -> args = argsChangeFastPaymentCashAccount
                 }
             }
         }
-        saveToSP(args,id)
+        saveToSP(args, id)
     }
 
     fun checkAndSaveToSP(
