@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DialogLayout">
+
+    <TextView
+        android:id="@+id/message"
+        style="@style/Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description_you_want_to_delete_the_entry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_yes"
+        app:layout_constraintEnd_toStartOf="@id/centerDialogCenterDeleteMoneyMoving"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerDialogCenterDeleteMoneyMoving"
+        app:layout_constraintTop_toBottomOf="@id/message" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerDialogCenterDeleteMoneyMoving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

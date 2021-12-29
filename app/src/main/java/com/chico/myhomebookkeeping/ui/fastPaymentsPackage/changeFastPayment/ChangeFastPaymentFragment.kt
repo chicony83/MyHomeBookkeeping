@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
+import com.chico.myhomebookkeeping.ui.dialogs.SubmitDeleteDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -53,7 +54,7 @@ class ChangeFastPaymentFragment : Fragment() {
             selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
             selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
             submitButton.setOnClickListener { pressSubmitButton() }
-//deleteButton
+            deleteButton.setOnClickListener { pressDeleteButton() }
         }
 
         with(changeFastPaymentViewModel) {
@@ -86,6 +87,13 @@ class ChangeFastPaymentFragment : Fragment() {
         }
     }
 
+    private fun pressDeleteButton() {
+        launchUi {
+            val dialog = SubmitDeleteDialog()
+            dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
+        }
+    }
+
     private fun pressSubmitButton() {
         if (binding.nameFastPayment.text.isNotEmpty()) {
             val name = binding.nameFastPayment.text.toString()
@@ -99,7 +107,7 @@ class ChangeFastPaymentFragment : Fragment() {
                 )
                 val result: Int =
                     changeFastPaymentViewModel.changeFastPayment(name, amount, description)
-                if (result>0){
+                if (result > 0) {
                     view?.hideKeyboard()
                     message(getString(R.string.message_entry_changed))
                     control.navigate(R.id.nav_fast_money_movement_fragment)
