@@ -33,6 +33,6 @@
     <string name="description_sort_categories_as">Sorting categories as</string>
 
     <string name="description_quick_payment_description">Quick payment description</string>
-    <string name="description_about_this_fast_payment">Description this fast payment</string>
+    <string name="name_fast_payment">Name fast payment</string>
     <string name="description_rating_payment">Rating of payment</string>
 </resources>

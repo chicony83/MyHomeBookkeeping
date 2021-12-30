@@ -13,12 +13,12 @@
     <fragment
         android:id="@+id/nav_new_fast_money_moving_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.NewFastPaymentFragment"
-        android:label="@string/fragment_label_new_fast_money_moving"
+        android:label="@string/fragment_label_new_fast_payment"
         tools:layout="@layout/fragment_new_fast_payment"/>
     <fragment
         android:id="@+id/nav_fast_money_movement_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.FastPaymentsFragment"
-        android:label="@string/fragment_label_select_blank"
+        android:label="@string/fragment_label_select_fast_payment"
         tools:layout="@layout/fragment_fast_payments" />
     <fragment
         android:id="@+id/nav_reports_categories_fragment"

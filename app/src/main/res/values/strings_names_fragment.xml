@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="fragment_label_change_fast_payment">Change fast payment</string>
-    <string name="fragment_label_new_fast_money_moving">New fast payment</string>
-    <string name="fragment_label_select_blank">Select payment</string>
+    <string name="fragment_label_new_fast_payment">New fast payment</string>
+    <string name="fragment_label_select_fast_payment">Select payment</string>
     <string name="fragment_label_select_categories">Select categories</string>
     <string name="fragment_label_time_period">Select time period</string>
     <string name="fragment_label_new_money_moving">Free payment</string>

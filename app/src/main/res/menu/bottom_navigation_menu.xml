@@ -4,22 +4,22 @@
         android:id="@+id/journal_money_moving"
         android:enabled="true"
         android:icon="@drawable/journal"
-        android:title="@string/fragment_label_money_moving" />
+        android:title="@string/bottom_navigation_journal" />
     <item
         android:id="@+id/add_money_moving"
         android:enabled="true"
         android:icon="@drawable/ic_add_box"
-        android:title="@string/fragment_label_new_money_moving" />
+        android:title="@string/bottom_navigation_free_fast_payment" />
 
     <item
         android:id="@+id/nav_menu_blanks_button"
         android:enabled="true"
         android:icon="@drawable/blanks"
-        android:title="Fast payments" />
+        android:title="@string/bottom_navigation_fast_payments" />
 
     <item
         android:id="@+id/reports"
         android:enabled="true"
         android:icon="@drawable/ic_menu_reports"
-        android:title="@string/fragment_label_reports" />
+        android:title="@string/bottom_navigation_reports" />
 </menu>

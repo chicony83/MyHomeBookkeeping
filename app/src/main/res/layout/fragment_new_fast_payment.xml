@@ -19,11 +19,12 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/description_about_this_fast_payment" />
+                android:text="@string/name_fast_payment" />
 
             <EditText
                 android:id="@+id/nameFastPaymentEditText"
                 style="@style/EditTextDescription"
+                android:hint="@string/hint_enter_name"
                 tools:ignore="LabelFor" />
 
             <LinearLayout
@@ -48,8 +49,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="3"
                     android:background="@null"
+                    android:contentDescription="@string/content_description_rating_stars"
                     android:scaleType="fitCenter"
-
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

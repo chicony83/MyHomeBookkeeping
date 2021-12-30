@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bottom_navigation_journal">Журнал</string>
+    <string name="bottom_navigation_free_fast_payment">Свободный</string>
+    <string name="bottom_navigation_fast_payments">Платежи</string>
+    <string name="bottom_navigation_reports">Отчеты</string>
+</resources>

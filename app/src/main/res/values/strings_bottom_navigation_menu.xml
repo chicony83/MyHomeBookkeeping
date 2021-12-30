@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bottom_navigation_journal">Journal</string>
+    <string name="bottom_navigation_free_fast_payment">Free</string>
+    <string name="bottom_navigation_fast_payments">Fast</string>
+    <string name="bottom_navigation_reports">Reports</string>
+</resources>
