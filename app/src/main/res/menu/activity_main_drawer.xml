@@ -20,6 +20,11 @@
             android:id="@+id/nav_new_money_moving"
             android:icon="@drawable/ic_add_box"
             android:title="@string/fragment_label_new_money_moving" />
+        <item
+            android:id="@+id/nav_fast_payments_fragment"
+            android:icon="@drawable/blanks"
+            android:title="@string/fragment_label_select_fast_payment"
+            />
     </group>
     <group android:id="@+id/reference_books"
         android:checkableBehavior="single">

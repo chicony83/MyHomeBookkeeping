@@ -118,7 +118,7 @@ class NewFastPaymentFragment : Fragment() {
                 message(getString(R.string.message_entry_added))
                 newFastPaymentViewModel.clearSPAfterSave()
             }
-            navControlHelper.toSelectedFragment(R.id.nav_fast_money_movement_fragment)
+            navControlHelper.toSelectedFragment(R.id.nav_fast_payments_fragment)
         }
     }
 

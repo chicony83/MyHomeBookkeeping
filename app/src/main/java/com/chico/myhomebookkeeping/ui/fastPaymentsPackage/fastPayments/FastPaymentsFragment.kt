@@ -84,7 +84,7 @@ class FastPaymentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_money_moving_fragment) }
+            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
         }
         fastPaymentsViewModel.cleaningSP()
     }

@@ -111,7 +111,7 @@ class ChangeFastPaymentFragment : Fragment() {
             }
             if (result.await() > 0) {
                 message(getString(R.string.message_entry_deleted))
-                control.navigate(R.id.nav_fast_money_movement_fragment)
+                control.navigate(R.id.nav_fast_payments_fragment)
             }
         }
     }
@@ -132,7 +132,7 @@ class ChangeFastPaymentFragment : Fragment() {
                 if (result > 0) {
                     view?.hideKeyboard()
                     message(getString(R.string.message_entry_changed))
-                    control.navigate(R.id.nav_fast_money_movement_fragment)
+                    control.navigate(R.id.nav_fast_payments_fragment)
                 }
             }
         } else {

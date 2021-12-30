@@ -12,7 +12,7 @@
         android:title="@string/bottom_navigation_free_fast_payment" />
 
     <item
-        android:id="@+id/nav_menu_blanks_button"
+        android:id="@+id/nav_fast_payments_fragment"
         android:enabled="true"
         android:icon="@drawable/blanks"
         android:title="@string/bottom_navigation_fast_payments" />

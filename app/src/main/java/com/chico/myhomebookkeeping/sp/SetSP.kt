@@ -12,7 +12,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
-    private val navNewFastPayment = R.id.nav_new_fast_money_moving_fragment
+    private val navNewFastPayment = R.id.nav_new_fast_payment_fragment
     private val navChangeFastPayment = R.id.nav_change_fast_payment_fragment
 
     private val navCategory = R.id.nav_categories
