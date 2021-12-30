@@ -36,7 +36,7 @@ class MoneyMovingViewModel(
     private val argsIncomeSpendingKey = Constants.ARGS_QUERY_PAYMENT_CATEGORIES_INCOME_SPENDING_KEY
     private val argsNone = Constants.FOR_QUERY_NONE
     private val argsIdMoneyMovingForChange = Constants.ARGS_CHANGE_PAYMENT_ID
-    private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
+//    private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
     private val argsStartTimePeriod = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
     private val argsEndTimePeriod = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
 
@@ -232,10 +232,10 @@ class MoneyMovingViewModel(
         }
     }
 
-    fun isFirstLaunch(): Boolean {
-        return getSP.getBoolean(argsIsFirstLaunch)
-//        return true
-    }
+//    fun isFirstLaunch(): Boolean {
+//        return getSP.getBoolean(argsIsFirstLaunch)
+////        return true
+//    }
 
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()

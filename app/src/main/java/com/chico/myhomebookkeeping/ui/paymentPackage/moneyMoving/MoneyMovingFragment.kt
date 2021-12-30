@@ -129,7 +129,7 @@ class MoneyMovingFragment : Fragment() {
             }
         }
 //        checkLinesFound()
-        checkIsFirstLaunch()
+//        checkIsFirstLaunch()
 
         moneyMovingViewModel.cleaningSP()
     }
@@ -144,12 +144,12 @@ class MoneyMovingFragment : Fragment() {
         _binding = null
     }
 
-    private fun checkIsFirstLaunch() {
-        if (moneyMovingViewModel.isFirstLaunch()) {
-            moneyMovingViewModel.setIsFirstLaunchFalse()
-            control.navigate(R.id.nav_first_launch_fragment)
-        }
-    }
+//    private fun checkIsFirstLaunch() {
+//        if (moneyMovingViewModel.isFirstLaunch()) {
+//            moneyMovingViewModel.setIsFirstLaunchFalse()
+//            control.navigate(R.id.nav_first_launch_fragment)
+//        }
+//    }
 
     //    private fun checkLinesFound() {
 //        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()

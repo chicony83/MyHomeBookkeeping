@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.checks.CheckNightMode
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.obj.Constants
@@ -99,6 +100,16 @@ class MainActivity : AppCompatActivity() {
 
         hideToolbarAndBottomNavigation(toolbar)
         eraseSP.eraseTempSP()
+
+        checkIsFirstLaunch()
+    }
+
+    private fun checkIsFirstLaunch() {
+        Message.log("---is first launch = ${getSP.getBoolean(Constants.IS_FIRST_LAUNCH)}")
+        if (getSP.getBoolean(Constants.IS_FIRST_LAUNCH)){
+            setSP.saveToSP(Constants.IS_FIRST_LAUNCH, false)
+
+        }
     }
 
     private fun uiMode() {
