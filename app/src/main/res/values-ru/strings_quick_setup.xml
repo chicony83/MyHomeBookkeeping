@@ -14,4 +14,6 @@
     <string name="quick_setup_name_Cellular_communication">Мобильная связь</string>
     <string name="quick_setup_name_Credit">Кредиты</string>
 
+    <string name="quick_setup_name_fast_payment">Платеж создан программой</string>
+
 </resources>

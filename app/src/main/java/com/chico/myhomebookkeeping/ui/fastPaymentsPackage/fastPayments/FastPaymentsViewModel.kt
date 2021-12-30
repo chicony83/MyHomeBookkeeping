@@ -6,15 +6,20 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
+import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -39,6 +44,7 @@ class FastPaymentsViewModel(
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val textEmpty = Constants.TEXT_EMPTY
 
+    private val getSP = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
@@ -46,12 +52,44 @@ class FastPaymentsViewModel(
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
+    init {
+        firstLaunch()
+    }
+
+    private fun firstLaunch() {
+        if (getSP.getBoolean(Constants.IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS)) {
+            Message.log("first launch")
+            launchIo {
+                addFreeFastPayment()
+            }
+            setSP.saveToSP(Constants.IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS, false)
+        }
+    }
+
+    private suspend fun addFreeFastPayment() {
+        Message.log("create payment")
+        FastPaymentsUseCase.addNewFastPayment(
+            db = db,
+            FastPayments(
+                null,
+                app.getString(R.string.quick_setup_name_fast_payment),
+                0,
+                1,
+                1,
+                1,
+                null,
+                null
+            )
+        )
+    }
+
     internal fun getFullFastPaymentsList() {
         runBlocking {
             val listFullFastPayments: Deferred<List<FullFastPayment>?> =
                 async(Dispatchers.IO) { loadListFullFastPayments() }
-
+            Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             postListFullFastPayments(listFullFastPayments.await())
+
 //            val query = FastPaymentCreateSimpleQuery.createQueryList()
 //            _fastPaymentsList.postValue(FastPaymentsUseCase.getListFullFastPayments(db,query))
         }
@@ -93,19 +131,19 @@ class FastPaymentsViewModel(
     private fun saveToSp(fastPayments: FastPayments?) {
         with(setSP) {
             saveToSP(argsCashAccountCreateKey, fastPayments?.cashAccountId)
-            saveToSP(argsCurrencyCreateKey,fastPayments?.currencyId)
-            saveToSP(argsCategoryCreateKey,fastPayments?.categoryId)
-            saveToSP(argsAmountCreateKey,fastPayments?.amount.toString())
-            saveToSP(argsDescriptionCreateKey,fastPayments?.description)
+            saveToSP(argsCurrencyCreateKey, fastPayments?.currencyId)
+            saveToSP(argsCategoryCreateKey, fastPayments?.categoryId)
+            saveToSP(argsAmountCreateKey, fastPayments?.amount.toString())
+            saveToSP(argsDescriptionCreateKey, fastPayments?.description)
         }
     }
 
     fun saveIdFastPaymentForChange(id: Long) {
-        setSP.saveToSP(argsIdFastPaymentForChangeKey,id)
+        setSP.saveToSP(argsIdFastPaymentForChangeKey, id)
     }
 
     fun cleaningSP() {
-        with(setSP){
+        with(setSP) {
             val argsId = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
             val argsName = Constants.ARGS_CHANGE_FAST_PAYMENT_NAME
             val argsRating = Constants.ARGS_CHANGE_FAST_PAYMENT_RATING
@@ -115,14 +153,14 @@ class FastPaymentsViewModel(
             val argsAmount = Constants.ARGS_CHANGE_FAST_PAYMENT_AMOUNT
             val argsDescription = Constants.ARGS_CHANGE_FAST_PAYMENT_DESCRIPTION
 
-            saveToSP(argsId,minusOneLong)
-            saveToSP(argsName,textEmpty)
-            saveToSP(argsRating,minusOneInt)
-            saveToSP(argsCashAccount,minusOneInt)
-            saveToSP(argsCurrency,minusOneInt)
-            saveToSP(argsCategory,minusOneInt)
-            saveToSP(argsAmount,textEmpty)
-            saveToSP(argsDescription,textEmpty)
+            saveToSP(argsId, minusOneLong)
+            saveToSP(argsName, textEmpty)
+            saveToSP(argsRating, minusOneInt)
+            saveToSP(argsCashAccount, minusOneInt)
+            saveToSP(argsCurrency, minusOneInt)
+            saveToSP(argsCategory, minusOneInt)
+            saveToSP(argsAmount, textEmpty)
+            saveToSP(argsDescription, textEmpty)
         }
     }
 

@@ -226,8 +226,8 @@ class NewFastPaymentViewModel(
             amount = amount,
             description = description
         )
-        Message.log("rating Int value = 0")
-        Message.log("rating newFastPayment = ${newFastPayment.rating.toString()}")
+//        Message.log("rating Int value = 0")
+//        Message.log("rating newFastPayment = ${newFastPayment.rating.toString()}")
 
         return FastPaymentsUseCase.addNewFastPayment(
             db = dbNewFastPayment, newFastPayment = newFastPayment
