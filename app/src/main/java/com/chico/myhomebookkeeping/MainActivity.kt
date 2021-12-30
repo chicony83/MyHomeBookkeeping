@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spEditor: SharedPreferences.Editor
 
     private lateinit var navController: NavController
-    private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var bottomNavigationView: BottomNavigationView
     private val uiHelper = UiHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        bottomNavigation = findViewById(R.id.bottom_navigation)
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.journal_money_moving -> {
                     navController.navigate(R.id.nav_money_moving)
@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
         hideToolbarAndBottomNavigation(toolbar)
         eraseSP.eraseTempSP()
     }
@@ -119,23 +120,27 @@ class MainActivity : AppCompatActivity() {
         launchUi {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
+//                    R.id.nav_fast_payments_fragment->{
+//                        bottomNavigationView.selectedItemId = R.id.nav_fast_payments_fragment
+//                    }
+
                     R.id.nav_help_fragment -> {
                         uiHelper.hideUiElement(toolbar)
-                        uiHelper.hideUiElement(bottomNavigation)
+                        uiHelper.hideUiElement(bottomNavigationView)
                     }
                     R.id.nav_first_launch_fragment -> {
                         uiHelper.hideUiElement(toolbar)
-                        uiHelper.hideUiElement(bottomNavigation)
+                        uiHelper.hideUiElement(bottomNavigationView)
                     }
 //                    R.id.nav_new_money_moving->{
 //                        uiHelper.hideUiElement(bottomNavigation)
 //                    }
                     R.id.nav_time_period->{
-                        uiHelper.hideUiElement(bottomNavigation)
+                        uiHelper.hideUiElement(bottomNavigationView)
                     }
                     else -> {
                         uiHelper.showUiElement(toolbar)
-                        uiHelper.showUiElement(bottomNavigation)
+                        uiHelper.showUiElement(bottomNavigationView)
                     }
                 }
             }

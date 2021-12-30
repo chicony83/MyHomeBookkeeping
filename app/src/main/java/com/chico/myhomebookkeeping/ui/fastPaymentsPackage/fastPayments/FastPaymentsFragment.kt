@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.interfaces.*
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FastPaymentsFragment : Fragment() {
     private var _binding: FragmentFastPaymentsBinding? = null

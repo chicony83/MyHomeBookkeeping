@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/journal_money_moving"
+        android:id="@+id/nav_fast_payments_fragment"
         android:enabled="true"
-        android:icon="@drawable/journal"
-        android:title="@string/bottom_navigation_journal" />
+        android:icon="@drawable/blanks"
+        android:title="@string/bottom_navigation_fast_payments" />
     <item
         android:id="@+id/add_money_moving"
         android:enabled="true"
         android:icon="@drawable/ic_add_box"
         android:title="@string/bottom_navigation_free_fast_payment" />
-
     <item
-        android:id="@+id/nav_fast_payments_fragment"
+        android:id="@+id/journal_money_moving"
         android:enabled="true"
-        android:icon="@drawable/blanks"
-        android:title="@string/bottom_navigation_fast_payments" />
-
+        android:icon="@drawable/journal"
+        android:title="@string/bottom_navigation_journal" />
     <item
         android:id="@+id/reports"
         android:enabled="true"
