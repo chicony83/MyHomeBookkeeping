@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.chico.myhomebookkeeping.checks.CheckNightMode
 import com.chico.myhomebookkeeping.helpers.Message
@@ -30,11 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val spName = Constants.SP_NAME
     private val checkNightMode = CheckNightMode()
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var getSP: GetSP
-    private lateinit var setSP: SetSP
     private lateinit var eraseSP: EraseSP
 
     private lateinit var spEditor: SharedPreferences.Editor
@@ -42,15 +39,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
     private val uiHelper = UiHelper()
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sharedPreferences = getSharedPreferences(spName, MODE_PRIVATE)
-        getSP = GetSP(sharedPreferences)
-        spEditor = sharedPreferences.edit()
-        setSP = SetSP(spEditor)
+        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
         eraseSP = EraseSP(spEditor)
         uiMode()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -99,17 +95,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         hideToolbarAndBottomNavigation(toolbar)
-        eraseSP.eraseTempSP()
+//        eraseSP.eraseTempSP()
 
-        checkIsFirstLaunch()
-    }
-
-    private fun checkIsFirstLaunch() {
-        Message.log("---is first launch = ${getSP.getBoolean(Constants.IS_FIRST_LAUNCH)}")
-        if (getSP.getBoolean(Constants.IS_FIRST_LAUNCH)){
-            setSP.saveToSP(Constants.IS_FIRST_LAUNCH, false)
-
-        }
+        mainActivityViewModel.checkIsFirstLaunch()
     }
 
     private fun uiMode() {
