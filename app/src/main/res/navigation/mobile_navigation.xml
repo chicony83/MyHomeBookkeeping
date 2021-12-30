@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_money_moving">
+    app:startDestination="@+id/nav_fast_payments_fragment">
 
     <fragment
         android:id="@+id/nav_change_fast_payment_fragment"
