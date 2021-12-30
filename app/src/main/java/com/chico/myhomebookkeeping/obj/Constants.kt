@@ -9,7 +9,6 @@ object Constants {
     const val ARGS_NEW_PAYMENT_AMOUNT_KEY = "amountForCreate"
     const val ARGS_NEW_PAYMENT_DESCRIPTION_KEY = "descriptionForCreate"
 
-
     const val ARGS_CHANGE_PAYMENT_ID = "id_money_moving_for_change"
     const val ARGS_CHANGE_PAYMENT_DATE_TIME_KEY = "dateTimeForChange"
     const val ARGS_CHANGE_PAYMENT_CASH_ACCOUNT_KEY = "cashAccountForChange"

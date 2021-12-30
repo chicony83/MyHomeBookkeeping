@@ -28,7 +28,7 @@ object FastPaymentsUseCase {
     suspend fun getOneFullFastPayment(
         db: FastPaymentsDao,
         query: SimpleSQLiteQuery
-    ): FullFastPayment? {
+    ): FullFastPayment {
         return db.getOneFullFastPayment(query)
     }
 

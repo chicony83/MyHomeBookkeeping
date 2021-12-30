@@ -26,7 +26,6 @@ class FastPaymentsFragment : Fragment() {
 
     private lateinit var fastPaymentsViewModel: FastPaymentsViewModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,15 +43,12 @@ class FastPaymentsFragment : Fragment() {
                     FastPaymentsAdapter(it1, object :
                         OnItemViewClickListenerLong {
                         override fun onClick(selectedId: Long) {
-//                            showMessage("id selected item $id")
                             showSelectDialog(selectedId)
                         }
-
                     })
                 }
             })
         }
-
         return binding.root
     }
 

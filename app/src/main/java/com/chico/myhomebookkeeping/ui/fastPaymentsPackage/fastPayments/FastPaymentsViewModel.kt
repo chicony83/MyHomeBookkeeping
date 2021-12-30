@@ -70,11 +70,9 @@ class FastPaymentsViewModel(
 
     private suspend fun addFreeFastPayments() {
         Message.log("create payment")
-
         launchIo {
             val categoriesList = CategoriesUseCase.getAllCategoriesSortIdAsc(db = dbCategory)
             for (i in categoriesList.indices) {
-
                 FastPaymentsUseCase.addNewFastPayment(
                     db = db,
                     FastPayments(
@@ -88,7 +86,6 @@ class FastPaymentsViewModel(
                         null
                     )
                 )
-
             }
         }
     }
