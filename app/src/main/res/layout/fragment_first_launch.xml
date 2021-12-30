@@ -62,7 +62,7 @@
                 style="@style/Description.IncomeText.FirstLaunch"
                 android:checked="true"
                 android:enabled="false"
-                android:text="@string/quick_setup_name_The_Salary" />
+                android:text="@string/quick_setup_name_The_Income" />
 
             <CheckBox
                 android:id="@+id/addCategoryProducts"

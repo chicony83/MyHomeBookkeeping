@@ -62,7 +62,7 @@ class FirstLaunchViewModel(
 
     fun addCategoryTheSalary(addCategoryTheSalary: CheckBox) {
         if (uiHelper.isCheckedCheckBox(addCategoryTheSalary)) {
-            addCategory(getString(R.string.quick_setup_name_The_Salary), true)
+            addCategory(getString(R.string.quick_setup_name_The_Income), true)
         }
     }
 

@@ -8,10 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
+import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
@@ -19,7 +21,6 @@ import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -48,6 +49,7 @@ class FastPaymentsViewModel(
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val dbCategory: CategoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
 
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
@@ -60,27 +62,35 @@ class FastPaymentsViewModel(
         if (getSP.getBoolean(Constants.IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS)) {
             Message.log("first launch")
             launchIo {
-                addFreeFastPayment()
+                addFreeFastPayments()
             }
             setSP.saveToSP(Constants.IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS, false)
         }
     }
 
-    private suspend fun addFreeFastPayment() {
+    private suspend fun addFreeFastPayments() {
         Message.log("create payment")
-        FastPaymentsUseCase.addNewFastPayment(
-            db = db,
-            FastPayments(
-                null,
-                app.getString(R.string.quick_setup_name_fast_payment),
-                0,
-                1,
-                1,
-                1,
-                null,
-                null
-            )
-        )
+
+        launchIo {
+            val categoriesList = CategoriesUseCase.getAllCategoriesSortIdAsc(db = dbCategory)
+            for (i in categoriesList.indices) {
+
+                FastPaymentsUseCase.addNewFastPayment(
+                    db = db,
+                    FastPayments(
+                        null,
+                        categoriesList[i].categoryName,
+                        0,
+                        1,
+                        1,
+                        categoriesList[i].categoriesId ?: 0,
+                        null,
+                        null
+                    )
+                )
+
+            }
+        }
     }
 
     internal fun getFullFastPaymentsList() {
