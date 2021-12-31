@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
-        eraseSP = EraseSP(spEditor)
+//        eraseSP = EraseSP(spEditor)
         uiMode()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.reports -> {
                     navController.navigate(R.id.nav_reports)
                 }
-                R.id.nav_fast_payments_fragment->{
+                R.id.nav_fast_payments_fragment -> {
                     navController.navigate(R.id.nav_fast_payments_fragment)
                 }
             }
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         hideToolbarAndBottomNavigation(toolbar)
 //        eraseSP.eraseTempSP()
 
-        mainActivityViewModel.checkIsFirstLaunch()
+        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_fragment)
     }
 
     private fun uiMode() {
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 //                    R.id.nav_new_money_moving->{
 //                        uiHelper.hideUiElement(bottomNavigation)
 //                    }
-                    R.id.nav_time_period->{
+                    R.id.nav_time_period -> {
                         uiHelper.hideUiElement(bottomNavigationView)
                     }
                     else -> {

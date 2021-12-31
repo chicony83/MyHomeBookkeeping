@@ -15,18 +15,15 @@ class MainActivityViewModel(
     val app:Application
 ):AndroidViewModel(app) {
 
-    private val dbCategory: CategoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
+//    private val dbCategory: CategoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
     private val spName = Constants.SP_NAME
     private var sharedPreferences: SharedPreferences = app.getSharedPreferences(spName,Context.MODE_PRIVATE)
     private var getSP = GetSP(sharedPreferences)
-    private var setSP = SetSP(sharedPreferences.edit())
+//    private var setSP = SetSP(sharedPreferences.edit())
 
-    fun checkIsFirstLaunch() {
+    fun checkIsFirstLaunch(): Boolean {
         Message.log("---is first launch = ${getSP.getBoolean(Constants.IS_FIRST_LAUNCH)}")
-        if (getSP.getBoolean(Constants.IS_FIRST_LAUNCH)){
-            setSP.saveToSP(Constants.IS_FIRST_LAUNCH, false)
-
-        }
+        return getSP.getBoolean(Constants.IS_FIRST_LAUNCH)
     }
 
 }
