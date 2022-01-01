@@ -47,6 +47,7 @@
     <string name="text_on_radio_button_income_category">Income</string>
     <string name="text_on_radio_button_spending_category">Spending</string>
 
+    <string name="text_on_button_make_payment">Make payment</string>
     <string name="text_on_button_select">Select</string>
     <string name="text_on_button_cancel">Cancel</string>
 

@@ -47,6 +47,7 @@
     <string name="text_on_radio_button_income_category">Доходы</string>
     <string name="text_on_radio_button_spending_category">Расходы</string>
 
+    <string name="text_on_button_make_payment">внести/оплатить</string>
     <string name="text_on_button_select">Выбрать</string>
     <string name="text_on_button_cancel">Отменить</string>
 
