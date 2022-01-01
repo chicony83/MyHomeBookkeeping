@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.delay
 
 class FirstLaunchFragment : Fragment() {
     private lateinit var firstLaunchViewModel: FirstLaunchViewModel
@@ -47,9 +48,8 @@ class FirstLaunchFragment : Fragment() {
                 )
             }
             firstLaunchViewModel.setIsFirstLaunchFalse()
-            navControlHelper.moveToPreviousFragment()
+            control.navigate(R.id.nav_fast_payments_fragment)
         }
-
     }
 
     private fun getListSpendingCategories(listCheckBoxes: List<CheckBox>): List<CheckBox> {

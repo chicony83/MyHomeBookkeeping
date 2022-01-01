@@ -88,6 +88,10 @@ class FastPaymentsFragment : Fragment() {
             newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
         }
         fastPaymentsViewModel.cleaningSP()
+
+        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)){
+            fastPaymentsViewModel.reloadRecycler()
+        }
     }
 
     override fun onDestroyView() {

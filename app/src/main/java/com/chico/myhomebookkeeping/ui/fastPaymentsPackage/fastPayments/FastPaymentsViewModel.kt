@@ -21,10 +21,7 @@ import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class FastPaymentsViewModel(
     val app: Application
@@ -127,6 +124,13 @@ class FastPaymentsViewModel(
             saveToSP(argsCategory, minusOneInt)
             saveToSP(argsAmount, textEmpty)
             saveToSP(argsDescription, textEmpty)
+        }
+    }
+
+    fun reloadRecycler() {
+        launchIo {
+            delay(1000)
+            getFullFastPaymentsList()
         }
     }
 }
