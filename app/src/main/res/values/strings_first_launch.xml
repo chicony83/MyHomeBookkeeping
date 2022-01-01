@@ -13,6 +13,8 @@
     <string name="quick_setup_name_Fuel_for_the_car">Fuel for the car</string>
     <string name="quick_setup_name_Cellular_communication">Cellular communication</string>
     <string name="quick_setup_name_Credit">Credit</string>
+    <string name="quick_setup_name_Medicines">Medicines</string>
+    <string name="quick_setup_name_Public_transport">Public transport</string>
 
     <string name="quick_setup_name_fast_payment">Payment created by the program</string>
 </resources>

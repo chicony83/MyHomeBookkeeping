@@ -45,50 +45,12 @@ class FastPaymentsViewModel(
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val textEmpty = Constants.TEXT_EMPTY
 
-    private val getSP = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
-    private val dbCategory: CategoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
 
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
-
-//    init {
-//        firstLaunch()
-//    }
-
-//    private fun firstLaunch() {
-//        if (getSP.getBoolean(Constants.IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS)) {
-//            Message.log("first launch")
-//            launchIo {
-//                addFreeFastPayments()
-//            }
-//            setSP.saveToSP(Constants.IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS, false)
-//        }
-//    }
-//
-//    private suspend fun addFreeFastPayments() {
-//        Message.log("create payment")
-//        launchIo {
-//            val categoriesList = CategoriesUseCase.getAllCategoriesSortIdAsc(db = dbCategory)
-//            for (i in categoriesList.indices) {
-//                FastPaymentsUseCase.addNewFastPayment(
-//                    db = db,
-//                    FastPayments(
-//                        null,
-//                        categoriesList[i].categoryName,
-//                        0,
-//                        1,
-//                        1,
-//                        categoriesList[i].categoriesId ?: 0,
-//                        null,
-//                        null
-//                    )
-//                )
-//            }
-//        }
-//    }
 
     internal fun getFullFastPaymentsList() {
         runBlocking {
@@ -96,9 +58,6 @@ class FastPaymentsViewModel(
                 async(Dispatchers.IO) { loadListFullFastPayments() }
             Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             postListFullFastPayments(listFullFastPayments.await())
-
-//            val query = FastPaymentCreateSimpleQuery.createQueryList()
-//            _fastPaymentsList.postValue(FastPaymentsUseCase.getListFullFastPayments(db,query))
         }
     }
 
@@ -118,7 +77,7 @@ class FastPaymentsViewModel(
         )
     }
 
-    suspend fun loadSelectedFullFastPayment(id: Long): FullFastPayment? {
+    suspend fun loadSelectedFullFastPayment(id: Long): FullFastPayment {
         return FastPaymentsUseCase.getOneFullFastPayment(
             db,
             FastPaymentCreateSimpleQuery.createQueryOneFullFastPayment(id)
@@ -170,15 +129,4 @@ class FastPaymentsViewModel(
             saveToSP(argsDescription, textEmpty)
         }
     }
-
-//    private suspend fun loadSelectedFastPayment(id: Long): FastPayments? {
-//        return FastPaymentsUseCase.getOneFastPayment(id,db)
-//    }
-
-//    private fun getFastPaymentsList() {
-//        launchIo {
-//            _fastPaymentsList.postValue(NewFastPaymentsUseCase.getAllFastPayments(db))
-////            Message.log(" size fast payments list = ${_fastPaymentsList.value?.size}")
-//        }
-//    }
 }

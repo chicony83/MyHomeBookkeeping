@@ -86,6 +86,16 @@
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:text="@string/quick_setup_name_Credit" />
 
+            <CheckBox
+                android:id="@+id/addCategoryMedicines"
+                style="@style/Description.SpendingText.FirstLaunch"
+                android:text="@string/quick_setup_name_Medicines" />
+
+            <CheckBox
+                android:id="@+id/addCategoryPublicTransport"
+                style="@style/Description.SpendingText.FirstLaunch"
+                android:text="@string/quick_setup_name_Public_transport" />
+
         </LinearLayout>
     </ScrollView>
 

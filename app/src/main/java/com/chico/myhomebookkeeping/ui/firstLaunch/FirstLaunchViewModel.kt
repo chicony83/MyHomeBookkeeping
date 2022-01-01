@@ -5,18 +5,23 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
+import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.domain.CategoriesUseCase
+import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.*
 
 class FirstLaunchViewModel(
     val app: Application
@@ -28,6 +33,8 @@ class FirstLaunchViewModel(
         dataBase.getDataBase(app.applicationContext).categoryDao()
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val dbFastPayments: FastPaymentsDao =
+        dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
@@ -35,69 +42,96 @@ class FirstLaunchViewModel(
     private val spEditor = sharedPreferences.edit()
     private val setSP = SetSP(spEditor)
 
-    //    private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
     private val uiHelper = UiHelper()
 
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
     }
 
-    fun addCashAccountCard(addCashAccountsCard: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCashAccountsCard)) {
-            addCashAccount(getString(R.string.quick_setup_name_Card))
-        }
-    }
+    fun addFirstLaunchElements(
+        listCashAccounts: List<CheckBox>,
+        listCurrencies: List<CheckBox>,
+        listIncomeCategories: List<CheckBox>,
+        listSpendingCategories: List<CheckBox>
+    ) = runBlocking {
+        val resultAddedIncomeCategories =
+            async(Dispatchers.IO) { addIncomeCategories(listIncomeCategories) }
+        val resultAddSpendingCategories =
+            async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
 
-    fun addCashAccountCash(addCashAccountsCash: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCashAccountsCash)) {
-            addCashAccount(getString(R.string.quick_setup_name_Cash))
-        }
-    }
+        val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listCashAccounts) }
+        val resultAddCurrencies = async(Dispatchers.IO) { addCurrencies(listCurrencies) }
 
-    fun addDefaultCurrency(addDefaultCurrency: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addDefaultCurrency)) {
-            addCurrency(getString(R.string.quick_setup_name_Currency))
-        }
-    }
+        val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
 
-    fun addCategoryTheSalary(addCategoryTheSalary: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCategoryTheSalary)) {
-            addCategory(getString(R.string.quick_setup_name_The_Income), true)
-        }
-    }
-
-    fun addCategoryProducts(addCategoryProducts: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCategoryProducts)) {
-            addCategory(getString(R.string.quick_setup_name_Products), false)
-        }
-    }
-
-    fun addCategoryFuelForTheCar(addCategoryFuelForTheCar: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCategoryFuelForTheCar)) {
-            addCategory(getString(R.string.quick_setup_name_Fuel_for_the_car), false)
-        }
-    }
-
-    fun addCategoryCellularCommunication(addCategoryCellularCommunication: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCategoryCellularCommunication)) {
-            addCategory(getString(R.string.quick_setup_name_Cellular_communication),false)
-        }
-    }
-
-    fun addCategoryCredit(addCategoryCredit: CheckBox) {
-        if (uiHelper.isCheckedCheckBox(addCategoryCredit)) {
-            addCategory(getString(R.string.quick_setup_name_Credit), false)
-        }
-    }
-
-    private fun addCashAccount(name: String) {
-        val cashAccount = CashAccount(
-            accountName = name,
-            bankAccountNumber = ""
-        )
         launchIo {
-            dbCashAccount.addCashAccount(cashAccount)
+            while (getCategoriesList().size < sizeCategoriesList) {
+                delay(100)
+                addFreeFastPayments()
+            }
         }
+    }
+
+    private suspend fun addFreeFastPayments() {
+        Message.log("create payment")
+        launchIo {
+            val categoriesList = CategoriesUseCase.getAllCategoriesSortIdAsc(db = dbCategories)
+            for (i in categoriesList.indices) {
+                FastPaymentsUseCase.addNewFastPayment(
+                    db = dbFastPayments,
+                    FastPayments(
+                        null,
+                        categoriesList[i].categoryName,
+                        0,
+                        1,
+                        1,
+                        categoriesList[i].categoriesId ?: 0,
+                        null,
+                        null
+                    )
+                )
+            }
+        }
+    }
+
+    private suspend fun getCategoriesList(
+
+    ): List<Categories> {
+
+        return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategories)
+    }
+
+    private fun addSpendingCategories(listSpendingCategories: List<CheckBox>): Long {
+        var result: Long = 0
+        launchIo {
+            for (i in listSpendingCategories.indices) {
+                result += addCategory(listSpendingCategories[i].text.toString(), false)
+            }
+        }
+        return result
+    }
+
+    private fun addIncomeCategories(listIncomeCategories: List<CheckBox>): Long {
+        var result: Long = 0
+        launchIo {
+            for (i in listIncomeCategories.indices) {
+                result += addCategory(listIncomeCategories[i].text.toString(), true)
+            }
+        }
+        return result
+    }
+
+    private suspend fun addCategory(name: String, isIncome: Boolean): Long {
+        return dbCategories.addCategory(Categories(name, isIncome))
+    }
+
+    private fun addCurrencies(listCurrencies: List<CheckBox>): Boolean {
+        for (i in listCurrencies.indices) {
+            if (uiHelper.isCheckedCheckBox(listCurrencies[i])) {
+                addCurrency(listCurrencies[i].text.toString())
+            }
+        }
+        return true
     }
 
     private fun addCurrency(name: String) {
@@ -109,17 +143,23 @@ class FirstLaunchViewModel(
         }
     }
 
-    private fun addCategory(name: String, isIncome: Boolean) {
-        val category = Categories(
-            categoryName = name,
-            isIncome = isIncome
-        )
-        launchIo {
-            dbCategories.addCategory(category)
+    private fun addCashAccounts(listCashAccounts: List<CheckBox>): Boolean {
+        for (i in listCashAccounts.indices) {
+            if (uiHelper.isCheckedCheckBox(listCashAccounts[i])) {
+                addCashAccount(listCashAccounts[i].text.toString())
+            }
         }
+        return true
     }
 
-
-    private fun getString(str: Int) = app.getString(str)
+    private fun addCashAccount(name: String) {
+        val cashAccount = CashAccount(
+            accountName = name,
+            bankAccountNumber = ""
+        )
+        launchIo {
+            dbCashAccount.addCashAccount(cashAccount)
+        }
+    }
 
 }
