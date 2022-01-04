@@ -41,6 +41,10 @@ class FastPaymentsFragment : Fragment() {
         fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
         with(fastPaymentsViewModel) {
+            sortedByTextOnButton.observe(viewLifecycleOwner,{
+                binding.sortingButton.text = it
+            })
+
             fastPaymentsList.observe(viewLifecycleOwner, {
                 binding.recyclerView.adapter = it?.let { it1 ->
                     FastPaymentsAdapter(it1, object :

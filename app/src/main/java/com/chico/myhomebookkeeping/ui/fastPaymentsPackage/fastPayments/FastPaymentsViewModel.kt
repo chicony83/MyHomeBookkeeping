@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
@@ -17,11 +18,13 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
 class FastPaymentsViewModel(
@@ -51,6 +54,11 @@ class FastPaymentsViewModel(
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
+    private val setTextOnButtons = SetTextOnButtons(app.resources)
+
+    private var _sortedByTextOnButton = MutableLiveData<String>()
+    val sortedByTextOnButton: LiveData<String> get() = _sortedByTextOnButton
+
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
@@ -69,25 +77,39 @@ class FastPaymentsViewModel(
 
     private suspend fun loadListFullFastPayments() = launchForResult {
 
-//        val query = FastPaymentCreateSimpleQuery.createQueryList()
-//        val query = when(sortingFastPaymentsSpString){
-          val query = when(getSorting()){
-            SortingFastPayments.AlphabetByAsc.toString()->{
-                FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
+        val query:SimpleSQLiteQuery
+        when (getSorting()) {
+            SortingFastPayments.AlphabetByAsc.toString() -> {
+                setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
+                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
             }
-            SortingFastPayments.AlphabetByDesc.toString()->{
-                FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
+            SortingFastPayments.AlphabetByDesc.toString() -> {
+                setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
+                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
             }
-            SortingFastPayments.RatingByAsc.toString()->{
-                FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
+            SortingFastPayments.RatingByAsc.toString() -> {
+                setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_ASC))
+                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
             }
-            SortingFastPayments.RatingByDesc.toString()->{
-                FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+            SortingFastPayments.RatingByDesc.toString() -> {
+                setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
+                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
             }
-            else -> FastPaymentCreateSimpleQuery.createQueryList()
+            else -> {
+                setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
+                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+            }
         }
         return@launchForResult getListFullFastPaymentsFromUseCase(query)
     }
+
+    private fun setTextOnButton(string: String) {
+        launchUi {
+            setTextOnButtons.setTextOnSortingCategoriesButton(_sortedByTextOnButton, string)
+        }
+    }
+
+    private fun getString(string: Int) = app.getString(string)
 
     private fun getSorting(): String? {
         return getSp.getString(argsSortingFastPayments)
@@ -160,6 +182,6 @@ class FastPaymentsViewModel(
     }
 
     fun setSortingCategories(sorting: String) {
-        setSP.saveToSP(argsSortingFastPayments,sorting)
+        setSP.saveToSP(argsSortingFastPayments, sorting)
     }
 }

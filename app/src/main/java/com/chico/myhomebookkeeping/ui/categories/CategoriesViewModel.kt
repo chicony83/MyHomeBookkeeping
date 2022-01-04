@@ -76,22 +76,18 @@ class CategoriesViewModel(
             when (sortingCategoriesStringSP) {
                 SortingCategories.NumbersByASC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdAsc(db))
-//                    _categoriesList.postValue(db.getAllCategoriesIdASC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_ASC))
                 }
                 SortingCategories.NumbersByDESC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdDesc(db))
-//                    _categoriesList.postValue(db.getAllCategoriesIdDESC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_DESC))
                 }
                 SortingCategories.AlphabetByASC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
-//                    _categoriesList.postValue(db.getAllCategoriesNameASC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
                 }
                 SortingCategories.AlphabetByDESC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameDesc(db))
-//                    _categoriesList.postValue(db.getAllCategoriesNameDESC())
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 }
                 else -> {
