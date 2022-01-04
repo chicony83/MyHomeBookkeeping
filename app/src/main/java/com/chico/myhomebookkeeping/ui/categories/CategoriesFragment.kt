@@ -96,22 +96,18 @@ class CategoriesFragment : Fragment() {
                     when (item.itemId) {
                         R.id.sort_by_numbers_ASC -> {
                             Message.log("sort by numbers ASC")
-                            categoriesViewModel.setSortingCategories(SortingCategories.NumbersByASC.toString())
-                            categoriesViewModel.reloadCategories()
+                            sortingCategories(SortingCategories.NumbersByASC.toString())
                         }
                         R.id.sort_by_numbers_DESC -> {
-                            categoriesViewModel.setSortingCategories(SortingCategories.NumbersByDESC.toString())
-                            categoriesViewModel.reloadCategories()
+                            sortingCategories(SortingCategories.NumbersByDESC.toString())
                             Message.log("Sort by numbers DESC")
                         }
                         R.id.sort_by_alphabet_ASC -> {
-                            categoriesViewModel.setSortingCategories(SortingCategories.AlphabetByASC.toString())
-                            categoriesViewModel.reloadCategories()
+                            sortingCategories(SortingCategories.AlphabetByASC.toString())
                             Message.log("Sorting by alphabet ASC")
                         }
                         R.id.sort_by_alphabet_DESC -> {
-                            categoriesViewModel.setSortingCategories(SortingCategories.AlphabetByDESC.toString())
-                            categoriesViewModel.reloadCategories()
+                            sortingCategories(SortingCategories.AlphabetByDESC.toString())
                             Message.log("Sorting by alphabet DESC")
                         }
                     }
@@ -128,6 +124,13 @@ class CategoriesFragment : Fragment() {
             navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
         ){
             uiHelper.hideUiElement(binding.topButtonsHolder)
+        }
+    }
+
+    private fun sortingCategories(sorting: String) {
+        with(categoriesViewModel){
+            setSortingCategories(sorting)
+            reloadCategories()
         }
     }
 

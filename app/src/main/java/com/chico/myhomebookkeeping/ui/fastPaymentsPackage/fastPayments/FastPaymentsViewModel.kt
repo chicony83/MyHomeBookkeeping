@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -34,6 +35,8 @@ class FastPaymentsViewModel(
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
+    private val argsSortingFastPayments = Constants.SORTING_FAST_PAYMENTS
+
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
@@ -42,7 +45,9 @@ class FastPaymentsViewModel(
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val textEmpty = Constants.TEXT_EMPTY
 
+    private val getSp = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
+//    private val sortingFastPaymentsSpString = getSorting()
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
@@ -63,9 +68,29 @@ class FastPaymentsViewModel(
     }
 
     private suspend fun loadListFullFastPayments() = launchForResult {
-        val query = FastPaymentCreateSimpleQuery.createQueryList()
 
+//        val query = FastPaymentCreateSimpleQuery.createQueryList()
+//        val query = when(sortingFastPaymentsSpString){
+          val query = when(getSorting()){
+            SortingFastPayments.AlphabetByAsc.toString()->{
+                FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
+            }
+            SortingFastPayments.AlphabetByDesc.toString()->{
+                FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
+            }
+            SortingFastPayments.RatingByAsc.toString()->{
+                FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
+            }
+            SortingFastPayments.RatingByDesc.toString()->{
+                FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+            }
+            else -> FastPaymentCreateSimpleQuery.createQueryList()
+        }
         return@launchForResult getListFullFastPaymentsFromUseCase(query)
+    }
+
+    private fun getSorting(): String? {
+        return getSp.getString(argsSortingFastPayments)
     }
 
     private suspend fun getListFullFastPaymentsFromUseCase(query: SimpleSQLiteQuery): List<FullFastPayment>? {
@@ -132,5 +157,9 @@ class FastPaymentsViewModel(
             delay(1000)
             getFullFastPaymentsList()
         }
+    }
+
+    fun setSortingCategories(sorting: String) {
+        setSP.saveToSP(argsSortingFastPayments,sorting)
     }
 }

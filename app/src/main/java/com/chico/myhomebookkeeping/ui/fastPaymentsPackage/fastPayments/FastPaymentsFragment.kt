@@ -12,13 +12,13 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
+import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.*
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FastPaymentsFragment : Fragment() {
     private var _binding: FragmentFastPaymentsBinding? = null
@@ -95,17 +95,21 @@ class FastPaymentsFragment : Fragment() {
                 )
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
-                        R.id.sort_by_alphabet_ASC->{
+                        R.id.sort_by_alphabet_ASC -> {
                             Message.log("sorting bu numbers ASC")
+                            sortingFastPayments(SortingFastPayments.AlphabetByAsc.toString())
                         }
-                        R.id.sort_by_alphabet_DESC->{
+                        R.id.sort_by_alphabet_DESC -> {
                             Message.log("sorting bu numbers DESC")
+                            sortingFastPayments(SortingFastPayments.AlphabetByDesc.toString())
                         }
-                        R.id.sort_by_numbers_ASC->{
+                        R.id.sort_by_rating_ASK -> {
                             Message.log("sorting bu rating ASC")
+                            sortingFastPayments(SortingFastPayments.RatingByAsc.toString())
                         }
-                        R.id.sort_by_rating_DESC->{
+                        R.id.sort_by_rating_DESC -> {
                             Message.log("sorting bu rating DESC")
+                            sortingFastPayments(SortingFastPayments.RatingByDesc.toString())
                         }
                     }
                     true
@@ -118,6 +122,13 @@ class FastPaymentsFragment : Fragment() {
 
         if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)) {
             fastPaymentsViewModel.reloadRecycler()
+        }
+    }
+
+    private fun sortingFastPayments(sorting: String) {
+        with(fastPaymentsViewModel) {
+            setSortingCategories(sorting)
+            reloadRecycler()
         }
     }
 

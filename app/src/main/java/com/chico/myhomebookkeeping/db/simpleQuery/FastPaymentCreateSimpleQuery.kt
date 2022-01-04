@@ -8,8 +8,46 @@ object FastPaymentCreateSimpleQuery {
         val query = mainQueryFastPayment()
         val argsList: ArrayList<Any> = arrayListOf()
 
-        val args:Array<Any> = argsList.toArray()
-        return SimpleSQLiteQuery(query,args)
+        val args: Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query, args)
+    }
+
+    fun createQuerySortingAlphabetByAsc(): SimpleSQLiteQuery {
+        var query = mainQueryFastPayment()
+        val argsList: ArrayList<Any> = arrayListOf()
+        query += " ORDER BY name_fast_payment ASC "
+        val args: Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query, args)
+    }
+
+    fun createQuerySortingAlphabetByDesc(): SimpleSQLiteQuery {
+        var query = mainQueryFastPayment()
+        val argsList: ArrayList<Any> = arrayListOf()
+
+        query += " ORDER BY name_fast_payment DESC "
+
+        val args: Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query, args)
+    }
+
+    fun createQuerySortingRatingByAsc(): SimpleSQLiteQuery {
+        var query = mainQueryFastPayment()
+        val argsList: ArrayList<Any> = arrayListOf()
+
+        query += " ORDER BY rating ASC "
+
+        val args: Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query, args)
+    }
+
+    fun createQuerySortingRatingByDesc(): SimpleSQLiteQuery {
+        var query = mainQueryFastPayment()
+        val argsList: ArrayList<Any> = arrayListOf()
+
+        query += " ORDER BY rating DESC "
+
+        val args: Array<Any> = argsList.toArray()
+        return SimpleSQLiteQuery(query, args)
     }
 
     private fun mainQueryFastPayment(): String {
@@ -26,17 +64,17 @@ object FastPaymentCreateSimpleQuery {
 
     fun createQueryOneFullFastPayment(id: Long): SimpleSQLiteQuery {
         var queryString = mainQueryFastPayment()
-        val argsList:ArrayList<Any> = arrayListOf()
+        val argsList: ArrayList<Any> = arrayListOf()
 
-        if (id>0){
+        if (id > 0) {
             queryString += addAnd()
-            queryString +=" id = :id "
+            queryString += " id = :id "
             argsList.add(id)
         }
 
         val args = argsList.toArray()
         Message.log("query = $queryString")
-        return SimpleSQLiteQuery(queryString,args)
+        return SimpleSQLiteQuery(queryString, args)
     }
 
     private fun addAnd(): String {
