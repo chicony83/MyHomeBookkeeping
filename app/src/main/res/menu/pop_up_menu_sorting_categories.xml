@@ -10,6 +10,6 @@
         android:id="@+id/sort_by_alphabet_ASC"
         android:title="@string/text_on_button_sorting_as_alphabet_ASC"/>
     <item
-        android:id="@+id/sorting_by_alphabet_DESC"
+        android:id="@+id/sort_by_alphabet_DESC"
         android:title="@string/text_on_button_sorting_as_alphabet_DESC"/>
 </menu>

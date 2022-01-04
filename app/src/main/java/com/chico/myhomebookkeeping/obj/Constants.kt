@@ -76,5 +76,7 @@ object Constants {
     const val LOCAL_ASSETS_URL = "file:///android_asset/"
 
     const val REPORT_TYPE = "report_type"
+
     const val SORTING_CATEGORIES = "sorting_categories"
+    const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
 }

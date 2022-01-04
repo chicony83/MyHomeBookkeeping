@@ -60,6 +60,8 @@
     <string name="text_on_button_sorting_as_numbers_DESC">numbers descending</string>
     <string name="text_on_button_sorting_as_alphabet_ASC">alphabet A->Z</string>
     <string name="text_on_button_sorting_as_alphabet_DESC">alphabet Z->A</string>
+    <string name="text_on_button_sorting_by_rating_ASC">rating ascending</string>
+    <string name="text_on_button_sorting_by_rating_DESC">rating descending</string>
 
     <string name="text_on_button_new_fast_payment">New fast payment</string>
 

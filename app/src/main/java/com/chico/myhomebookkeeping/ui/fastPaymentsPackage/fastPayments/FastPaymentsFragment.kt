@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.*
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
@@ -85,11 +87,36 @@ class FastPaymentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            sortingButton.setOnClickListener {
+                val popupMenu = PopupMenu(context, sortingButton)
+                popupMenu.menuInflater.inflate(
+                    R.menu.pop_up_menu_sorting_fast_payments,
+                    popupMenu.menu
+                )
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.sort_by_alphabet_ASC->{
+                            Message.log("sorting bu numbers ASC")
+                        }
+                        R.id.sort_by_alphabet_DESC->{
+                            Message.log("sorting bu numbers DESC")
+                        }
+                        R.id.sort_by_numbers_ASC->{
+                            Message.log("sorting bu rating ASC")
+                        }
+                        R.id.sort_by_rating_DESC->{
+                            Message.log("sorting bu rating DESC")
+                        }
+                    }
+                    true
+                }
+                popupMenu.show()
+            }
             newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
         }
         fastPaymentsViewModel.cleaningSP()
 
-        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)){
+        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)) {
             fastPaymentsViewModel.reloadRecycler()
         }
     }

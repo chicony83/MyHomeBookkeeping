@@ -55,7 +55,7 @@ class CategoriesFragment : Fragment() {
 
         with(categoriesViewModel) {
             sortedByTextOnButton.observe(viewLifecycleOwner, {
-                binding.sortingCategoriesButton.text = it
+                binding.sortingButton.text = it
             })
             categoriesList.observe(viewLifecycleOwner, {
                 binding.categoryHolder.adapter =
@@ -88,10 +88,10 @@ class CategoriesFragment : Fragment() {
                 categoriesViewModel.selectAllCategories(navControlHelper)
                 navControlHelper.moveToMoneyMovingFragment()
             }
-            sortingCategoriesButton.setOnClickListener {
+            sortingButton.setOnClickListener {
                 Message.log("click popup menu button")
-                val popupMenu = PopupMenu(context, sortingCategoriesButton)
-                popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
+                val popupMenu = PopupMenu(context, sortingButton)
+                popupMenu.menuInflater.inflate(R.menu.pop_up_menu_sorting_categories, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.sort_by_numbers_ASC -> {
@@ -109,7 +109,7 @@ class CategoriesFragment : Fragment() {
                             categoriesViewModel.reloadCategories()
                             Message.log("Sorting by alphabet ASC")
                         }
-                        R.id.sorting_by_alphabet_DESC -> {
+                        R.id.sort_by_alphabet_DESC -> {
                             categoriesViewModel.setSortingCategories(SortingCategories.AlphabetByDESC.toString())
                             categoriesViewModel.reloadCategories()
                             Message.log("Sorting by alphabet DESC")
