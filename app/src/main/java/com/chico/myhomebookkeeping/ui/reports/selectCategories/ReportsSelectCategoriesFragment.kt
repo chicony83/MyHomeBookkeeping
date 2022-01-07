@@ -94,12 +94,14 @@ class ReportsSelectCategoriesFragment(
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectNone
+                reportsSelectCategoriesViewModel.selectNone()
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }
             selectAllButton.setOnClickListener {
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 recyclerViewState = stateSelectAll
+                reportsSelectCategoriesViewModel.selectAllCategories()
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }
@@ -107,6 +109,7 @@ class ReportsSelectCategoriesFragment(
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectAllIncome
+                reportsSelectCategoriesViewModel.selectAllIncomeCategories()
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }
@@ -114,6 +117,7 @@ class ReportsSelectCategoriesFragment(
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
                 recyclerViewState = stateSelectAllSpending
+                reportsSelectCategoriesViewModel.selectAllSpendingCategories()
                 updateAdapter()
 //                reportsSelectCategoriesViewModel.printResult()
             }

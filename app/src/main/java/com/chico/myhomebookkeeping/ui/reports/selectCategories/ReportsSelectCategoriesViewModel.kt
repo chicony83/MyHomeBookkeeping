@@ -118,4 +118,30 @@ class ReportsSelectCategoriesViewModel(
     fun newSelectedCategoriesSetSp() {
         selectedCategoriesSetFromSp = setOf<Int>()
     }
+
+    fun selectAllCategories() {
+        _categoriesItemsList.value?.forEach{
+            it.isChecked = true
+        }
+    }
+
+    fun selectAllIncomeCategories() {
+        _categoriesItemsList.value?.forEach {
+            if (!it.isIncome) it.isChecked = false
+            if (it.isIncome) it.isChecked = true
+        }
+    }
+
+    fun selectAllSpendingCategories() {
+        _categoriesItemsList.value?.forEach {
+            if (!it.isIncome) it.isChecked = true
+            if (it.isIncome) it.isChecked = false
+        }
+    }
+
+    fun selectNone() {
+        _categoriesItemsList.value?.forEach {
+            it.isChecked = false
+        }
+    }
 }
