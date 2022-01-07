@@ -73,7 +73,8 @@ class ReportsSelectCategoriesViewModel(
         if (_categoriesItemsList.value?.isNotEmpty() == true) {
             for (i in _categoriesItemsList.value?.indices!!) {
                 if (_categoriesItemsList.value!![i].isChecked) {
-                    val id = i+1
+                    val id = _categoriesItemsList.value!![i].id
+                    //                    val id = i+1k
                     set.add(id.toString())
                     Message.log("add to save set $id")
                 }
@@ -84,7 +85,7 @@ class ReportsSelectCategoriesViewModel(
 
     fun setCategoryChecked(id: Int) {
         _categoriesItemsList.value!!.forEach {
-            if (it.id == id){
+            if (it.id == id) {
                 it.isChecked = true
             }
         }
@@ -92,7 +93,7 @@ class ReportsSelectCategoriesViewModel(
 
     fun setCategoryUnChecked(id: Int) {
         _categoriesItemsList.value!!.forEach {
-            if (it.id == id){
+            if (it.id == id) {
                 it.isChecked = false
             }
         }
