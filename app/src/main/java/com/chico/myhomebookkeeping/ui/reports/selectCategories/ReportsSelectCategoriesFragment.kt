@@ -49,18 +49,19 @@ class ReportsSelectCategoriesFragment(
 
         with(reportsSelectCategoriesViewModel) {
             categoriesItemsList.observe(viewLifecycleOwner, {
-                binding.recyclerView.adapter =
-                    getAdapter(it)
-                getListSize(it)
+                binding.recyclerView.adapter = getAdapter(it)
+//                getListSize(it)
+                binding.recyclerView.setItemViewCacheSize(it.size)
             })
 //            printResult()
         }
-
+//        binding.recyclerView.setItemViewCacheSize(recyclerCashSize)
         return binding.root
     }
 
     private fun getListSize(it: List<ReportsCategoriesItem>) {
         recyclerCashSize = it.size
+        Message.log(" size = $recyclerCashSize")
     }
 
     private fun getAdapter(it: List<ReportsCategoriesItem>) =
@@ -68,27 +69,26 @@ class ReportsSelectCategoriesFragment(
             it,
             recyclerViewState,
             reportsSelectCategoriesViewModel.getSelectedCategoriesFromSp(),
-            object :OnItemCheckedCallBack{
-            override fun onChecked(id: Int) {
-                reportsSelectCategoriesViewModel.setCategoryChecked(id)
+            object : OnItemCheckedCallBack {
+                override fun onChecked(id: Int) {
+                    reportsSelectCategoriesViewModel.setCategoryChecked(id)
 //                recyclerViewState = stateSelectNone
 //                reportsSelectCategoriesViewModel.printResult()
-            }
+                }
 
-            override fun onUnChecked(id: Int) {
+                override fun onUnChecked(id: Int) {
 //                Message.log("unchecked id = $id")
-                reportsSelectCategoriesViewModel.setCategoryUnChecked(id)
+                    reportsSelectCategoriesViewModel.setCategoryUnChecked(id)
 //                recyclerViewState = stateSelectNone
 //                reportsSelectCategoriesViewModel.printResult()
-            }
-        })
+                }
+            })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            recyclerView.setItemViewCacheSize(recyclerCashSize)
-
+//            recyclerView.setItemViewCacheSize(recyclerCashSize)
 
             resetButton.setOnClickListener {
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
