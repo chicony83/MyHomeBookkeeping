@@ -6,10 +6,12 @@
     <group android:id="@+id/main"
         android:checkableBehavior="single">
         <item
+            android:contentDescription="@string/fragment_label_money_moving"
             android:id="@+id/nav_money_moving"
             android:icon="@drawable/journal"
             android:title="@string/fragment_label_money_moving" />
         <item
+            android:contentDescription="@string/fragment_label_reports"
             android:id="@+id/nav_reports"
             android:icon="@drawable/ic_baseline_incomplete_circle_24"
             android:title="@string/fragment_label_reports" />
@@ -17,10 +19,12 @@
     <group android:id="@+id/new_money_moving"
         android:checkableBehavior="single">
         <item
+            android:contentDescription="@string/fragment_label_new_money_moving"
             android:id="@+id/nav_new_money_moving"
             android:icon="@drawable/ic_add_box"
             android:title="@string/fragment_label_new_money_moving" />
         <item
+            android:contentDescription="@string/fragment_label_select_fast_payment"
             android:id="@+id/nav_fast_payments_fragment"
             android:icon="@drawable/blanks"
             android:title="@string/fragment_label_select_fast_payment"
@@ -29,14 +33,17 @@
     <group android:id="@+id/reference_books"
         android:checkableBehavior="single">
         <item
+            android:contentDescription="@string/fragment_label_categories"
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_menu_category"
             android:title="@string/fragment_label_categories" />
         <item
+            android:contentDescription="@string/fragment_label_currencies"
             android:id="@+id/nav_currencies"
             android:icon="@drawable/ic_attach_money"
             android:title="@string/fragment_label_currencies" />
         <item
+            android:contentDescription="@string/fragment_label_cash_account"
             android:id="@+id/nav_cash_account"
             android:icon="@drawable/ic_credit_card"
             android:title="@string/fragment_label_cash_account" />
@@ -44,6 +51,7 @@
     <group android:id="@+id/settings"
         android:checkableBehavior="single">
         <item
+            android:contentDescription="@string/fragment_label_settings"
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings"
             android:title="@string/fragment_label_settings" />

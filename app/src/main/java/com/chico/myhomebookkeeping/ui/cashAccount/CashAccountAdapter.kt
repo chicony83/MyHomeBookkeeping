@@ -48,6 +48,7 @@ class CashAccountAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(cashAccount: CashAccount) {
             with(binding) {
+                root.contentDescription = cashAccount.accountName
                 nameCashAccount.text = cashAccount.accountName
 
                 if (cashAccount.bankAccountNumber.isEmpty()) {

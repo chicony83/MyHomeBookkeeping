@@ -33,6 +33,7 @@ class CurrenciesAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currencies: Currencies) {
             with(binding) {
+                root.contentDescription = currencies.currencyName
                 nameCurrency.text = currencies.currencyName
                 currenciesItem.setOnClickListener {
                     currencies.currencyId?.let { it1 -> listener.onClick(it1)}
