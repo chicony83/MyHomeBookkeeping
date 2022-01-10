@@ -39,6 +39,7 @@ object dataBase {
             "DataBase"
         )
             .addMigrations(migration_1_2)
+            .addMigrations(migration_2_to_3)
             .build()
 }
 
@@ -47,4 +48,14 @@ private object migration_1_2 : Migration(1, 2) {
         database.execSQL("CREATE TABLE IF NOT EXISTS 'fast_payments_table' ('id' INTEGER , 'icon' INTEGER, 'name_fast_payment' TEXT NOT NULL,'rating' INTEGER NOT NULL, 'cash_account' INTEGER NOT NULL, 'currency' INTEGER NOT NULL, 'category' INTEGER NOT NULL, 'amount' REAL,'description' TEXT, PRIMARY KEY('id'))")
         database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER , 'name' TEXT NOT NULL, 'icon_value' TEXT NOT NULL, PRIMARY KEY ('id'))")
     }
+}
+private object migration_2_to_3:Migration(2,3){
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER,'icon' TEXT NOT NULL, PRIMARY KEY('id'))")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'parents_categories_table' ('id' INTEGER, 'icon' INTEGER, 'name' TEXT NOT NULL, PRIMARY KEY ('id'))")
+        database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'icon' INTEGER ")
+        database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon' INTEGER ")
+        database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'icon' INTEGER ")
+    }
+
 }
