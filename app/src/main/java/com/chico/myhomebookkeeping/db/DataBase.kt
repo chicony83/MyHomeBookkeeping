@@ -21,8 +21,7 @@ import com.chico.myhomebookkeeping.db.entity.*
     ],
     version = 3,
     exportSchema = true,
-
-    )
+)
 abstract class DataBase : RoomDatabase() {
     abstract fun cashAccountDao(): CashAccountDao
     abstract fun categoryDao(): CategoryDao
@@ -30,7 +29,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun moneyMovementDao(): MoneyMovementDao
     abstract fun fastPaymentsDao(): FastPaymentsDao
     abstract fun iconsDao(): IconsDao
-    abstract fun parentCategories():ParentCategoriesDao
+    abstract fun parentCategories(): ParentCategoriesDao
 }
 
 object dataBase {
@@ -59,5 +58,4 @@ private object migration_2_to_3 : Migration(2, 3) {
         database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon_category' INTEGER ")
         database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'icon_cash_account' INTEGER ")
     }
-
 }
