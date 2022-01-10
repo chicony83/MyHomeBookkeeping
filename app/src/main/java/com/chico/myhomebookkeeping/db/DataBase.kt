@@ -51,7 +51,6 @@ private object migration_1_2 : Migration(1, 2) {
 }
 private object migration_2_to_3:Migration(2,3){
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER,'icon' TEXT NOT NULL, PRIMARY KEY('id'))")
         database.execSQL("CREATE TABLE IF NOT EXISTS 'parents_categories_table' ('id' INTEGER, 'icon' INTEGER, 'name' TEXT NOT NULL, PRIMARY KEY ('id'))")
         database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'icon' INTEGER ")
         database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon' INTEGER ")
