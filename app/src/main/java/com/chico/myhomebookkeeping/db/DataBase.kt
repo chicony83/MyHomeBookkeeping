@@ -16,9 +16,10 @@ import com.chico.myhomebookkeeping.db.entity.*
         Currencies::class,
         MoneyMovement::class,
         FastPayments::class,
-        Icons::class
+        Icons::class,
+        ParentCategories::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 
     )
@@ -29,6 +30,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun moneyMovementDao(): MoneyMovementDao
     abstract fun fastPaymentsDao(): FastPaymentsDao
     abstract fun iconsDao(): IconsDao
+    abstract fun parentCategories():ParentCategories
 }
 
 object dataBase {
@@ -49,9 +51,10 @@ private object migration_1_2 : Migration(1, 2) {
         database.execSQL("CREATE TABLE IF NOT EXISTS 'icons_table' ( 'id' INTEGER , 'name' TEXT NOT NULL, 'icon_value' TEXT NOT NULL, PRIMARY KEY ('id'))")
     }
 }
-private object migration_2_to_3:Migration(2,3){
+
+private object migration_2_to_3 : Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE TABLE IF NOT EXISTS 'parents_categories_table' ('id' INTEGER, 'icon' INTEGER, 'name' TEXT NOT NULL, PRIMARY KEY ('id'))")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'parent_categories_table' ('id' INTEGER, 'name' TEXT NOT NULL, 'icon' INTEGER, PRIMARY KEY ('id'))")
         database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'icon' INTEGER ")
         database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon' INTEGER ")
         database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'icon' INTEGER ")

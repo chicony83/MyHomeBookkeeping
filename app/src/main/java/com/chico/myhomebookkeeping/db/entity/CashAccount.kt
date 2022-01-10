@@ -9,7 +9,9 @@ data class CashAccount(
     @ColumnInfo(name = "cash_account_name")
     val accountName: String,
     @ColumnInfo(name = "cash_account_number")
-    val bankAccountNumber: String
+    val bankAccountNumber: String,
+    @ColumnInfo(name = "icon")
+    val icon:Int?
 ) {
     @PrimaryKey(autoGenerate = true)
     var cashAccountId: Int? = null
