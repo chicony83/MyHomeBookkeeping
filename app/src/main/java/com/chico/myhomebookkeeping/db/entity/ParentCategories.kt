@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 class ParentCategories(
     @ColumnInfo(name = "name")
     val name:String,
-    @ColumnInfo(name = "icon")
-    val icon:Int
+    @ColumnInfo(name = "icon_parent_category")
+    val icon:Int?
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Long? = null

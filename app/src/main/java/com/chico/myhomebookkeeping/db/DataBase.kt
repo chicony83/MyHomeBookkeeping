@@ -30,7 +30,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun moneyMovementDao(): MoneyMovementDao
     abstract fun fastPaymentsDao(): FastPaymentsDao
     abstract fun iconsDao(): IconsDao
-    abstract fun parentCategories():ParentCategories
+    abstract fun parentCategories():ParentCategoriesDao
 }
 
 object dataBase {
@@ -54,10 +54,10 @@ private object migration_1_2 : Migration(1, 2) {
 
 private object migration_2_to_3 : Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE TABLE IF NOT EXISTS 'parent_categories_table' ('id' INTEGER, 'name' TEXT NOT NULL, 'icon' INTEGER, PRIMARY KEY ('id'))")
-        database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'icon' INTEGER ")
-        database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon' INTEGER ")
-        database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'icon' INTEGER ")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'parent_categories_table' ('id' INTEGER, 'name' TEXT NOT NULL, 'icon_parent_category' INTEGER, PRIMARY KEY ('id'))")
+        database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'icon_currency' INTEGER ")
+        database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon_category' INTEGER ")
+        database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'icon_cash_account' INTEGER ")
     }
 
 }

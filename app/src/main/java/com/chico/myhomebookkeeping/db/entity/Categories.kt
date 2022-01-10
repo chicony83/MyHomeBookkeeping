@@ -10,7 +10,7 @@ data class Categories(
     val categoryName: String,
     @ColumnInfo(name = "is_income")
     val isIncome:Boolean,
-    @ColumnInfo(name = "icon")
+    @ColumnInfo(name = "icon_category")
     val icon:Int?
 ) {
     @PrimaryKey(autoGenerate = true)

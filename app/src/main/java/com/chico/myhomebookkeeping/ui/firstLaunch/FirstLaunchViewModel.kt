@@ -122,7 +122,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addCategory(name: String, isIncome: Boolean): Long {
-        return dbCategories.addCategory(Categories(name, isIncome))
+        return dbCategories.addCategory(Categories(name, isIncome,null))
     }
 
     private fun addCurrencies(listCurrencies: List<CheckBox>): Boolean {
@@ -136,7 +136,8 @@ class FirstLaunchViewModel(
 
     private fun addCurrency(name: String) {
         val currency = Currencies(
-            currencyName = name
+            currencyName = name,
+            icon = null
         )
         launchIo {
             dbCurrencies.addCurrency(currency)
@@ -155,7 +156,8 @@ class FirstLaunchViewModel(
     private fun addCashAccount(name: String) {
         val cashAccount = CashAccount(
             accountName = name,
-            bankAccountNumber = ""
+            bankAccountNumber = "",
+            icon = null
         )
         launchIo {
             dbCashAccount.addCashAccount(cashAccount)

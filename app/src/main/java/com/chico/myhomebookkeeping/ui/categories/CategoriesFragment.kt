@@ -174,7 +174,8 @@ class CategoriesFragment : Fragment() {
                 override fun addAndSelect(name: String, isIncome: Boolean, isSelect: Boolean) {
                     val category = Categories(
                         categoryName = name,
-                        isIncome = isIncome
+                        isIncome = isIncome,
+                        icon = null
                     )
                     val result: Long = categoriesViewModel.addNewCategory(category)
                     if (isSelect) {

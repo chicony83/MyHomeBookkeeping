@@ -125,16 +125,16 @@ class CurrenciesFragment : Fragment() {
         launchUi {
             val dialog = NewCurrencyDialog(result,
                 object : OnAddNewCurrencyCallBack {
-                override fun addAndSelect(name: String, isSelect: Boolean) {
-                    val currencies = Currencies(currencyName = name)
-                    val result = currenciesViewModel.addNewCurrency(currencies)
-                    if (isSelect) {
-                        currenciesViewModel.saveData(navControlHelper, result.toInt())
-                        navControlHelper.moveToPreviousFragment()
+                    override fun addAndSelect(name: String, isSelect: Boolean) {
+                        val currencies = Currencies(currencyName = name, icon = null)
+                        val result = currenciesViewModel.addNewCurrency(currencies)
+                        if (isSelect) {
+                            currenciesViewModel.saveData(navControlHelper, result.toInt())
+                            navControlHelper.moveToPreviousFragment()
 
+                        }
                     }
-                }
-            })
+                })
 
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }

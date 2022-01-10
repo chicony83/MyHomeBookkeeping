@@ -134,7 +134,8 @@ class CashAccountFragment : Fragment() {
                 override fun addAndSelect(name: String, number: String, isSelect: Boolean) {
                     val cashAccount = CashAccount(
                         accountName = name,
-                        bankAccountNumber = number
+                        bankAccountNumber = number,
+                        icon = null
                     )
                     val result: Long = cashAccountViewModel.addNewCashAccount(cashAccount)
                     if (isSelect) {

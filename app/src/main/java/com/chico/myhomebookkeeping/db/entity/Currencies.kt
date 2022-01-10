@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Currencies(
     @ColumnInfo(name = "currency_name")
     val currencyName: String,
-    @ColumnInfo(name = "icon")
+    @ColumnInfo(name = "icon_currency")
     val icon:Int?
 ){
     @PrimaryKey(autoGenerate = true)
