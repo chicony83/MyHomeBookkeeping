@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "icons_resources_table")
 data class IconsResource(
-    @ColumnInfo(name = "icons_categories")
+    @ColumnInfo(name = "icon_category")
     val iconCategory:Int?,
 
     @ColumnInfo(name = "icon_resources")
