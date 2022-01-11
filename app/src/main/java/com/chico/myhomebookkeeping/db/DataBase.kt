@@ -32,9 +32,9 @@ abstract class DataBase : RoomDatabase() {
     abstract fun fastPaymentsDao(): FastPaymentsDao
 
     //    abstract fun iconsDao(): IconsDao
-    abstract fun parentCategories(): ParentCategoriesDao
-    abstract fun iconResources(): IconResourcesDao
-    abstract fun iconCategory(): IconCategoryDao
+    abstract fun parentCategoriesDao(): ParentCategoriesDao
+    abstract fun iconResourcesDao(): IconResourcesDao
+    abstract fun iconCategoryDao(): IconCategoryDao
 }
 
 object dataBase {

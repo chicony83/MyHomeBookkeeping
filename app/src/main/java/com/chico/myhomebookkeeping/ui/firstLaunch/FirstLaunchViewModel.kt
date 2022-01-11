@@ -5,18 +5,14 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
+import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.db.dao.CashAccountDao
-import com.chico.myhomebookkeeping.db.dao.CategoryDao
-import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
-import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.db.entity.Categories
-import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
+import com.chico.myhomebookkeeping.enums.IconCategoriesNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -35,6 +31,8 @@ class FirstLaunchViewModel(
         dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbFastPayments: FastPaymentsDao =
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val dbIconCategories: IconCategoryDao =
+        dataBase.getDataBase(app.applicationContext).iconCategoryDao()
 
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
@@ -122,7 +120,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addCategory(name: String, isIncome: Boolean): Long {
-        return dbCategories.addCategory(Categories(name, isIncome,null))
+        return dbCategories.addCategory(Categories(name, isIncome, null))
     }
 
     private fun addCurrencies(listCurrencies: List<CheckBox>): Boolean {
@@ -161,6 +159,37 @@ class FirstLaunchViewModel(
         )
         launchIo {
             dbCashAccount.addCashAccount(cashAccount)
+        }
+    }
+
+    fun addIconCategories() {
+        val namesIconCategory = listOf<String>(
+            IconCategoriesNames.CashAccounts.name,
+            IconCategoriesNames.Categories.name,
+            IconCategoriesNames.Currencies.name
+        )
+        launchIo {
+            for (i in namesIconCategory.indices) {
+                IconCategoriesUseCase.addIconCategory(
+                    dbIconCategories,
+                    IconCategory(namesIconCategory[i])
+                )
+            }
+        }
+    }
+
+    fun addIconsResources() {
+        launchIo {
+            var iconCategories = listOf<IconCategory>()
+            while (iconCategories.size < 3) {
+                delay(100)
+                Message.log("--- get icon categories")
+                iconCategories = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
+                Message.log("--- size of Icon Categories ${iconCategories.size} ---")
+            }
+//            delay(1000)
+//            iconCategories = IconCategoriesUseCase.getNumOfAllIconCategories(dbIconCategories)
+//            Message.log("---size of Icon Categories $iconCategories ---")
         }
     }
 

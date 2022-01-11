@@ -61,6 +61,17 @@ class FirstLaunchFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        launchIo {
+            with(firstLaunchViewModel){
+                addIconCategories()
+                addIconsResources()
+            }
+
+        }
+    }
+
     private fun getListSpendingCategories(listCheckBoxes: List<CheckBox>): List<CheckBox> {
         return getListSelectedItems(listCheckBoxes)
     }
