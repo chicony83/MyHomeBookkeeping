@@ -4,12 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "icons_resources_table")
+@Entity(tableName = "icon_resource_table")
 data class IconsResource(
     @ColumnInfo(name = "icon_category")
     val iconCategory:Int?,
 
-    @ColumnInfo(name = "icon_resources")
+    @ColumnInfo(name = "icon_resource")
     val iconResources:Int
 ) {
     @PrimaryKey(autoGenerate = true)
