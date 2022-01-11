@@ -13,6 +13,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.delay
 
@@ -40,13 +41,21 @@ class FirstLaunchFragment : Fragment() {
 
         binding.submitButton.setOnClickListener {
             launchUi {
-                firstLaunchViewModel.addFirstLaunchElements(
-                    getListCashAccounts(),
-                    getListCurrencies(),
-                    getListIncomeCategories(getListIncomeCheckBoxes()),
-                    getListSpendingCategories(getListSpendingCheckBoxes())
-                )
+                val listCashAccounts = getListCashAccounts()
+                val listCurrencies = getListCurrencies()
+                val listIncomingCategories = getListIncomeCategories(getListIncomeCheckBoxes())
+                val listSpendingCategories = getListSpendingCategories(getListSpendingCheckBoxes())
+
+                launchIo {
+                    firstLaunchViewModel.addFirstLaunchElements(
+                        listCashAccounts,
+                        listCurrencies,
+                        listIncomingCategories,
+                        listSpendingCategories
+                    )
+                }
             }
+
             firstLaunchViewModel.setIsFirstLaunchFalse()
             control.navigate(R.id.nav_fast_payments_fragment)
         }
