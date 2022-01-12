@@ -1,10 +1,13 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dataBase
@@ -12,6 +15,7 @@ import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
+import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.IconCategoriesNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -33,6 +37,8 @@ class FirstLaunchViewModel(
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
     private val dbIconCategories: IconCategoryDao =
         dataBase.getDataBase(app.applicationContext).iconCategoryDao()
+    private val dbIconResources: IconResourcesDao =
+        dataBase.getDataBase(app.applicationContext).iconResourcesDao()
 
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
@@ -41,6 +47,8 @@ class FirstLaunchViewModel(
     private val setSP = SetSP(spEditor)
 
     private val uiHelper = UiHelper()
+
+    private val packageName = app.packageName
 
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
@@ -187,10 +195,60 @@ class FirstLaunchViewModel(
                 iconCategories = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
                 Message.log("--- size of Icon Categories ${iconCategories.size} ---")
             }
+            for (i in iconCategories.indices) {
+                when (iconCategories[i].iconCategoryName) {
+                    IconCategoriesNames.CashAccounts.name -> addCashAccountsIconsInDB(iconCategories[i])
+                    IconCategoriesNames.Categories.name -> addCategoriesIconsInDB(iconCategories[i])
+                }
+            }
+//            addCategoriesIconsInDB(iconCategories)
 //            delay(1000)
 //            iconCategories = IconCategoriesUseCase.getNumOfAllIconCategories(dbIconCategories)
 //            Message.log("---size of Icon Categories $iconCategories ---")
         }
+    }
+
+    private fun addCategoriesIconsInDB(iconCategory: IconCategory) {
+        Message.log("---Add categories icons---")
+    }
+
+    private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
+        Message.log("---Add Cash accounts icons---")
+        val cashAccountIconsList = listOf<Int>(
+            getDrawable(R.drawable.cash_account_card),
+            getDrawable(R.drawable.cash_account_money)
+        )
+        addIconsRecourseList(cashAccountIconsList, iconCategory)
+    }
+
+    private suspend fun addIconsRecourseList(
+        cashAccountIconsList: List<Int>,
+        iconCategory: IconCategory
+    ) {
+        for (i in cashAccountIconsList.indices) {
+            addIconResource(iconCategory.id, cashAccountIconsList[i])
+        }
+    }
+
+    private suspend fun addIconResource(iconCategory: Int?, iconResource: Int) {
+        launchIo {
+            IconResourcesUseCase.addNewIconResource(
+                dbIconResources,
+                IconsResource(
+                    iconCategory = iconCategory ?: 0,
+                    iconResources = iconResource
+                )
+            )
+            Message.log("---Add new icon resource---")
+        }
+    }
+
+    private fun getDrawable(drawable: Int): Int {
+        return app.resources.getIdentifier(
+            app.resources.getResourceName(drawable),
+            "drawable",
+            packageName
+        )
     }
 
 }
