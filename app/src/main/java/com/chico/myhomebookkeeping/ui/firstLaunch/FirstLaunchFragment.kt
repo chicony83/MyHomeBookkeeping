@@ -68,7 +68,6 @@ class FirstLaunchFragment : Fragment() {
                 addIconCategories()
                 addIconsResources()
             }
-
         }
     }
 
