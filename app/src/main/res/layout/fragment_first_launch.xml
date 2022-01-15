@@ -13,90 +13,153 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_double"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/header_title"
                 style="@style/Description.first_launch_fragment"
-                android:text="@string/description_A_quick_setup_of_the_program_will_be_done_here" />
+                android:text="@string/description_A_quick_setup_of_the_program_will_be_done_here"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/description_cash_account"
                 style="@style/MatchParent_WrapContent"
                 android:gravity="center"
-                android:text="@string/quick_setup_add_Cash_account" />
+                android:text="@string/quick_setup_add_Cash_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_title" />
 
             <CheckBox
                 android:id="@+id/addCashAccountsCard"
                 style="@style/Description.CashAccounts.FirstLaunch"
-                android:text="@string/quick_setup_name_Card" />
+                android:layout_width="0dp"
+                android:text="@string/quick_setup_name_Card"
+                app:layout_constraintEnd_toStartOf="@id/cashAccountCardIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_cash_account" />
+
+            <ImageView
+                android:id="@+id/cashAccountCardIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/cash_account_card"
+                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCashAccountsCard" />
 
             <CheckBox
                 android:id="@+id/addCashAccountsCash"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:checked="true"
                 android:enabled="false"
-                android:text="@string/quick_setup_name_Cash" />
+                android:layout_width="0dp"
+                android:text="@string/quick_setup_name_Cash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cashAccountCashIcon"
+                app:layout_constraintTop_toBottomOf="@id/addCashAccountsCard" />
+
+            <ImageView style="@style/ImageIcon"
+                android:id="@+id/cashAccountCashIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCashAccountsCash"
+                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCash"
+                android:src="@drawable/cash_account_cash"/>
 
             <TextView
+                android:id="@+id/description_currency"
                 style="@style/MatchParent_WrapContent"
                 android:gravity="center"
-                android:text="@string/quick_setup_add_Currency" />
+                android:text="@string/quick_setup_add_Currency"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addCashAccountsCash" />
 
             <CheckBox
                 android:id="@+id/addDefaultCurrency"
                 style="@style/Description.Currencies.FirstLaunch"
                 android:checked="true"
                 android:enabled="false"
-                android:text="@string/quick_setup_name_Currency" />
+                android:text="@string/quick_setup_name_Currency"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_currency" />
 
             <TextView
+                android:id="@+id/description_category"
                 style="@style/MatchParent_WrapContent"
                 android:gravity="center"
-                android:text="@string/quick_setup_add_Category" />
+                android:text="@string/quick_setup_add_Category"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDefaultCurrency" />
 
             <CheckBox
                 android:id="@+id/addCategoryTheSalary"
                 style="@style/Description.IncomeText.FirstLaunch"
                 android:checked="true"
                 android:enabled="false"
-                android:text="@string/quick_setup_name_The_Income" />
+                android:text="@string/quick_setup_name_The_Income"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_category" />
 
             <CheckBox
                 android:id="@+id/addCategoryProducts"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:checked="true"
                 android:enabled="false"
-                android:text="@string/quick_setup_name_Products" />
+                android:text="@string/quick_setup_name_Products"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addCategoryTheSalary" />
 
             <CheckBox
                 android:id="@+id/addCategoryFuelForTheCar"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Fuel_for_the_car" />
+                android:text="@string/quick_setup_name_Fuel_for_the_car"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addCategoryProducts" />
 
             <CheckBox
                 android:id="@+id/addCategoryCellularCommunication"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Cellular_communication" />
+                android:text="@string/quick_setup_name_Cellular_communication"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addCategoryFuelForTheCar" />
 
             <CheckBox
                 android:id="@+id/addCategoryCredit"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Credit" />
+                android:text="@string/quick_setup_name_Credit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addCategoryCellularCommunication" />
 
             <CheckBox
                 android:id="@+id/addCategoryMedicines"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Medicines" />
+                android:text="@string/quick_setup_name_Medicines"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addCategoryCredit" />
 
             <CheckBox
                 android:id="@+id/addCategoryPublicTransport"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Public_transport" />
+                android:text="@string/quick_setup_name_Public_transport"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addCategoryMedicines" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <Button

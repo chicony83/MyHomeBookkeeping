@@ -250,7 +250,7 @@ class FirstLaunchViewModel(
         Message.log("---Add Cash accounts icons---")
         val cashAccountIconsList = listOf<Int>(
             getDrawable(R.drawable.cash_account_card),
-            getDrawable(R.drawable.cash_account_money),
+            getDrawable(R.drawable.cash_account_cash),
             getDrawable(R.drawable.cash_account_credit_card_off)
         )
         addIconsRecourseList(cashAccountIconsList, iconCategory)
