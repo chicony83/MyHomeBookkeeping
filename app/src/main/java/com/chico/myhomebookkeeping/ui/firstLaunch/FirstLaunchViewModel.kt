@@ -1,10 +1,8 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
 import com.chico.myhomebookkeeping.R
@@ -208,25 +206,62 @@ class FirstLaunchViewModel(
         }
     }
 
-    private fun addCategoriesIconsInDB(iconCategory: IconCategory) {
+    private suspend fun addCategoriesIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add categories icons---")
+        val cashCategoriesIconsList = listOf<Int>(
+            getDrawable(R.drawable.category_airplane),
+            getDrawable(R.drawable.category_apartment),
+            getDrawable(R.drawable.category_arrows_horiz),
+            getDrawable(R.drawable.category_build),
+            getDrawable(R.drawable.category_bus),
+            getDrawable(R.drawable.category_cake),
+            getDrawable(R.drawable.category_car),
+            getDrawable(R.drawable.category_celebration),
+            getDrawable(R.drawable.category_child_friendly),
+            getDrawable(R.drawable.category_coffee),
+            getDrawable(R.drawable.category_computer),
+            getDrawable(R.drawable.category_gas_station),
+            getDrawable(R.drawable.category_house),
+            getDrawable(R.drawable.category_medical),
+            getDrawable(R.drawable.category_park),
+            getDrawable(R.drawable.category_pedal_bike),
+            getDrawable(R.drawable.category_people),
+            getDrawable(R.drawable.category_person),
+            getDrawable(R.drawable.category_pets),
+            getDrawable(R.drawable.category_phone),
+            getDrawable(R.drawable.category_phone_android),
+            getDrawable(R.drawable.category_phone_iphone),
+            getDrawable(R.drawable.category_restaurant),
+            getDrawable(R.drawable.category_salon),
+            getDrawable(R.drawable.category_school),
+            getDrawable(R.drawable.category_shopping_cart),
+            getDrawable(R.drawable.category_shopping_cart_add),
+            getDrawable(R.drawable.category_store),
+            getDrawable(R.drawable.category_subway),
+            getDrawable(R.drawable.category_two_wheeler)
+        )
+        addIconsRecourseList(
+            iconCategory = iconCategory,
+            iconsList = cashCategoriesIconsList
+        )
     }
 
     private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add Cash accounts icons---")
         val cashAccountIconsList = listOf<Int>(
             getDrawable(R.drawable.cash_account_card),
-            getDrawable(R.drawable.cash_account_money)
+            getDrawable(R.drawable.cash_account_money),
+            getDrawable(R.drawable.cash_account_credit_card_off)
         )
         addIconsRecourseList(cashAccountIconsList, iconCategory)
     }
 
     private suspend fun addIconsRecourseList(
-        cashAccountIconsList: List<Int>,
+        iconsList: List<Int>,
         iconCategory: IconCategory
     ) {
-        for (i in cashAccountIconsList.indices) {
-            addIconResource(iconCategory.id, cashAccountIconsList[i])
+        for (i in iconsList.indices) {
+            addIconResource(iconCategory.id, iconsList[i])
         }
     }
 
