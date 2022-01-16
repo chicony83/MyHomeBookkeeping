@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -15,7 +17,6 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.delay
 
 class FirstLaunchFragment : Fragment() {
     private lateinit var firstLaunchViewModel: FirstLaunchViewModel
@@ -23,6 +24,9 @@ class FirstLaunchFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
+    private var noImage = 0
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +34,28 @@ class FirstLaunchFragment : Fragment() {
     ): View {
         _binding = FragmentFirstLaunchBinding.inflate(inflater, container, false)
         firstLaunchViewModel = ViewModelProvider(this).get(FirstLaunchViewModel::class.java)
+        noImage = firstLaunchViewModel.getNoImageImage()
+        with(firstLaunchViewModel) {
+            cardCashAccountItem.observe(viewLifecycleOwner, {
+                setImageResourceOnIcon(binding.cardCashAccountIcon, cardCashAccountItem)
+            })
+            cashCashAccountItem.observe(viewLifecycleOwner, {
+                setImageResourceOnIcon(binding.cashCashAccountIcon, cashCashAccountItem)
+            })
+            salaryCategoryItem.observe(viewLifecycleOwner, {
+                setImageResourceOnIcon(binding.incomeMoneyIcon,salaryCategoryItem)
+            //                binding.incomeMoneyIcon.setImageResource(it.imageResource ?: noImage)
+            })
+        }
+
         return binding.root
+    }
+
+    private fun setImageResourceOnIcon(
+        imageView: ImageView,
+        item: LiveData<FirstLaunchViewModel.FirstLaunchItem>
+    ) {
+        imageView.setImageResource(item.value?.imageResource ?: noImage)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,12 +86,14 @@ class FirstLaunchFragment : Fragment() {
         }
     }
 
+
     override fun onStart() {
         super.onStart()
         launchIo {
-            with(firstLaunchViewModel){
+            with(firstLaunchViewModel) {
                 addIconCategories()
                 addIconsResources()
+                updateValues()
             }
         }
     }

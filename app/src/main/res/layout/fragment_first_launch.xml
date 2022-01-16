@@ -37,12 +37,13 @@
                 app:layout_constraintTop_toBottomOf="@id/header_title" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Card"
                 android:id="@+id/cardCashAccountIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/cash_account_card"
                 app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCard"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCashAccountsCard" />
+                app:layout_constraintTop_toTopOf="@id/addCashAccountsCard"
+                tools:src="@drawable/cash_account_card" />
 
             <CheckBox
                 android:id="@+id/addCashAccountsCard"
@@ -54,9 +55,10 @@
                 app:layout_constraintTop_toBottomOf="@id/description_cash_account" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Cash"
                 android:id="@+id/cashCashAccountIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/cash_account_cash"
+                tools:src="@drawable/cash_account_cash"
                 app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCash"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCashAccountsCash" />
@@ -101,9 +103,10 @@
                 app:layout_constraintTop_toBottomOf="@id/addDefaultCurrency" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_The_Income"
                 android:id="@+id/incomeMoneyIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_arrow_drop_up"
+                tools:src="@drawable/category_arrow_drop_up"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryTheSalary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCategoryTheSalary" />
@@ -120,9 +123,10 @@
                 app:layout_constraintTop_toBottomOf="@id/description_category" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Products"
                 android:id="@+id/productsCategoryIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_shopping_cart"
+                tools:src="@drawable/category_shopping_cart"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryProducts"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCategoryProducts" />
@@ -139,9 +143,10 @@
                 app:layout_constraintTop_toBottomOf="@id/addCategoryTheSalary" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Fuel_for_the_car"
                 android:id="@+id/fuelCategoryIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_gas_station"
+                tools:src="@drawable/category_gas_station"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryFuelForTheCar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCategoryFuelForTheCar" />
@@ -156,9 +161,10 @@
                 app:layout_constraintTop_toBottomOf="@id/addCategoryProducts" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Cellular_communication"
                 android:id="@+id/cellularCommunicationCategoryIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_phone_android"
+                tools:src="@drawable/category_phone_android"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryCellularCommunication"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCategoryCellularCommunication" />
@@ -173,9 +179,10 @@
                 app:layout_constraintTop_toBottomOf="@id/addCategoryFuelForTheCar" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Credit"
                 android:id="@+id/creditCategoryIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_bank"
+                tools:src="@drawable/category_bank"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryCredit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCategoryCredit" />
@@ -190,26 +197,28 @@
                 app:layout_constraintTop_toBottomOf="@id/addCategoryCellularCommunication" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Medicines"
                 android:id="@+id/medicalCategoryIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_medical"
+                tools:src="@drawable/category_medical"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryMedicines"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryMedicines"/>
+                app:layout_constraintTop_toTopOf="@id/addCategoryMedicines" />
 
             <CheckBox
                 android:id="@+id/addCategoryMedicines"
                 style="@style/Description.SpendingText.FirstLaunch"
-                android:text="@string/quick_setup_name_Medicines"
                 android:layout_width="0dp"
+                android:text="@string/quick_setup_name_Medicines"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/medicalCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCategoryCredit" />
 
             <ImageView
+                android:contentDescription="@string/quick_setup_name_Public_transport"
                 android:id="@+id/publicTransportCategoryIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/category_bus"
+                tools:src="@drawable/category_bus"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryPublicTransport"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/addCategoryPublicTransport" />

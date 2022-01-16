@@ -5,6 +5,8 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.obj.Constants
@@ -38,6 +40,35 @@ class FirstLaunchViewModel(
     private val dbIconResources: IconResourcesDao =
         dataBase.getDataBase(app.applicationContext).iconResourcesDao()
 
+    private val _cardCashAccountItem = MutableLiveData<FirstLaunchItem>()
+    val cardCashAccountItem: LiveData<FirstLaunchItem> get() = _cardCashAccountItem
+
+    private val _cashCashAccountItem = MutableLiveData<FirstLaunchItem>()
+    val cashCashAccountItem: LiveData<FirstLaunchItem> get() = _cashCashAccountItem
+
+    private val _salaryCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val salaryCategoryItem: LiveData<FirstLaunchItem> get() = _salaryCategoryItem
+
+    private val _productsCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val productsCategoryItem: LiveData<FirstLaunchItem> get() = _productsCategoryItem
+
+    private val _fuelForCarCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val fuelForCarCategoryItem: LiveData<FirstLaunchItem> get() = _fuelForCarCategoryItem
+
+    private val _cellularCommunicationCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val cellularCommunicationCategoryItem: LiveData<FirstLaunchItem> get() = _cellularCommunicationCategoryItem
+
+    private val _creditsCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val creditsCategoryItem: LiveData<FirstLaunchItem> get() = _creditsCategoryItem
+
+    private val _medicinesCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val medicinesCategoryItem: LiveData<FirstLaunchItem> get() = _medicinesCategoryItem
+
+    private val _publicTransportCategoryItem = MutableLiveData<FirstLaunchItem>()
+    val publicTransportCategoryItem: LiveData<FirstLaunchItem> get() = _publicTransportCategoryItem
+
+    //общественный транспорт
+
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
@@ -47,6 +78,51 @@ class FirstLaunchViewModel(
     private val uiHelper = UiHelper()
 
     private val packageName = app.packageName
+    private val categoryIconsList = getCategoriesIconsList()
+    private val cashAccountIconsList = getCashAccountIconsList()
+
+
+    private fun getCashAccountIconsList() = listOf<Int>(
+        getDrawable(R.drawable.cash_account_card),
+        getDrawable(R.drawable.cash_account_cash),
+        getDrawable(R.drawable.cash_account_credit_card_off)
+    )
+
+    private fun getCategoriesIconsList() = listOf<Int>(
+        getDrawable(R.drawable.category_apartment),
+        getDrawable(R.drawable.category_airplane),
+        getDrawable(R.drawable.category_arrows_horiz),
+        getDrawable(R.drawable.category_arrow_drop_down),
+        getDrawable(R.drawable.category_arrow_drop_up),
+        getDrawable(R.drawable.category_build),
+        getDrawable(R.drawable.category_bus),
+        getDrawable(R.drawable.category_cake),
+        getDrawable(R.drawable.category_car),
+        getDrawable(R.drawable.category_celebration),
+        getDrawable(R.drawable.category_child_friendly),
+        getDrawable(R.drawable.category_coffee),
+        getDrawable(R.drawable.category_computer),
+        getDrawable(R.drawable.category_gas_station),
+        getDrawable(R.drawable.category_house),
+        getDrawable(R.drawable.category_medical),
+        getDrawable(R.drawable.category_park),
+        getDrawable(R.drawable.category_pedal_bike),
+        getDrawable(R.drawable.category_people),
+        getDrawable(R.drawable.category_person),
+        getDrawable(R.drawable.category_pets),
+        getDrawable(R.drawable.category_phone),
+        getDrawable(R.drawable.category_phone_android),
+        getDrawable(R.drawable.category_phone_iphone),
+        getDrawable(R.drawable.category_restaurant),
+        getDrawable(R.drawable.category_salon),
+        getDrawable(R.drawable.category_school),
+        getDrawable(R.drawable.category_shopping_cart),
+        getDrawable(R.drawable.category_shopping_cart_add),
+        getDrawable(R.drawable.category_store),
+        getDrawable(R.drawable.category_subway),
+        getDrawable(R.drawable.category_two_wheeler)
+    )
+
 
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
@@ -208,52 +284,12 @@ class FirstLaunchViewModel(
 
     private suspend fun addCategoriesIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add categories icons---")
-        val cashCategoriesIconsList = listOf<Int>(
-            getDrawable(R.drawable.category_airplane),
-            getDrawable(R.drawable.category_apartment),
-            getDrawable(R.drawable.category_arrows_horiz),
-            getDrawable(R.drawable.category_build),
-            getDrawable(R.drawable.category_bus),
-            getDrawable(R.drawable.category_cake),
-            getDrawable(R.drawable.category_car),
-            getDrawable(R.drawable.category_celebration),
-            getDrawable(R.drawable.category_child_friendly),
-            getDrawable(R.drawable.category_coffee),
-            getDrawable(R.drawable.category_computer),
-            getDrawable(R.drawable.category_gas_station),
-            getDrawable(R.drawable.category_house),
-            getDrawable(R.drawable.category_medical),
-            getDrawable(R.drawable.category_park),
-            getDrawable(R.drawable.category_pedal_bike),
-            getDrawable(R.drawable.category_people),
-            getDrawable(R.drawable.category_person),
-            getDrawable(R.drawable.category_pets),
-            getDrawable(R.drawable.category_phone),
-            getDrawable(R.drawable.category_phone_android),
-            getDrawable(R.drawable.category_phone_iphone),
-            getDrawable(R.drawable.category_restaurant),
-            getDrawable(R.drawable.category_salon),
-            getDrawable(R.drawable.category_school),
-            getDrawable(R.drawable.category_shopping_cart),
-            getDrawable(R.drawable.category_shopping_cart_add),
-            getDrawable(R.drawable.category_store),
-            getDrawable(R.drawable.category_subway),
-            getDrawable(R.drawable.category_two_wheeler)
-        )
-        addIconsRecourseList(
-            iconCategory = iconCategory,
-            iconsList = cashCategoriesIconsList
-        )
+        addIconsRecourseList(iconCategory = iconCategory, iconsList = categoryIconsList)
     }
 
     private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add Cash accounts icons---")
-        val cashAccountIconsList = listOf<Int>(
-            getDrawable(R.drawable.cash_account_card),
-            getDrawable(R.drawable.cash_account_cash),
-            getDrawable(R.drawable.cash_account_credit_card_off)
-        )
-        addIconsRecourseList(cashAccountIconsList, iconCategory)
+        addIconsRecourseList(iconsList = cashAccountIconsList, iconCategory = iconCategory)
     }
 
     private suspend fun addIconsRecourseList(
@@ -286,4 +322,16 @@ class FirstLaunchViewModel(
         )
     }
 
+    fun getNoImageImage(): Int {
+        return getDrawable(R.drawable.no_image)
+    }
+
+    fun updateValues() {
+        _cardCashAccountItem.postValue(FirstLaunchItem("card", cashAccountIconsList[0]))
+        _cashCashAccountItem.postValue(FirstLaunchItem("cash", cashAccountIconsList[1]))
+//        _salaryCategoryItem.postValue(FirstLaunchItem("income money", categoryIconsList))
+    }
+
+
+    data class FirstLaunchItem(val name: String, val imageResource: Int?)
 }
