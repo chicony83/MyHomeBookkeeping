@@ -36,40 +36,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header_title" />
 
+            <ImageView
+                android:id="@+id/cardCashAccountIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/cash_account_card"
+                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCashAccountsCard" />
+
             <CheckBox
                 android:id="@+id/addCashAccountsCard"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Card"
-                app:layout_constraintEnd_toStartOf="@id/cashAccountCardIcon"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cardCashAccountIcon"
                 app:layout_constraintTop_toBottomOf="@id/description_cash_account" />
 
             <ImageView
-                android:id="@+id/cashAccountCardIcon"
+                android:id="@+id/cashCashAccountIcon"
                 style="@style/ImageIcon"
-                android:src="@drawable/cash_account_card"
-                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCard"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCashAccountsCard" />
+                android:src="@drawable/cash_account_cash"
+                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCash"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCashAccountsCash" />
 
             <CheckBox
                 android:id="@+id/addCashAccountsCash"
                 style="@style/Description.CashAccounts.FirstLaunch"
+                android:layout_width="0dp"
                 android:checked="true"
                 android:enabled="false"
-                android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Cash"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cashAccountCashIcon"
+                app:layout_constraintStart_toEndOf="@id/cashCashAccountIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCashAccountsCard" />
-
-            <ImageView style="@style/ImageIcon"
-                android:id="@+id/cashAccountCashIcon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCashAccountsCash"
-                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCash"
-                android:src="@drawable/cash_account_cash"/>
 
             <TextView
                 android:id="@+id/description_currency"
@@ -99,64 +100,127 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/addDefaultCurrency" />
 
+            <ImageView
+                android:id="@+id/incomeMoneyIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_arrow_drop_up"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryTheSalary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryTheSalary" />
+
             <CheckBox
                 android:id="@+id/addCategoryTheSalary"
                 style="@style/Description.IncomeText.FirstLaunch"
+                android:layout_width="0dp"
                 android:checked="true"
                 android:enabled="false"
                 android:text="@string/quick_setup_name_The_Income"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/incomeMoneyIcon"
                 app:layout_constraintTop_toBottomOf="@id/description_category" />
+
+            <ImageView
+                android:id="@+id/productsCategoryIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_shopping_cart"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryProducts"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryProducts" />
 
             <CheckBox
                 android:id="@+id/addCategoryProducts"
                 style="@style/Description.SpendingText.FirstLaunch"
+                android:layout_width="0dp"
                 android:checked="true"
                 android:enabled="false"
                 android:text="@string/quick_setup_name_Products"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/productsCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCategoryTheSalary" />
+
+            <ImageView
+                android:id="@+id/fuelCategoryIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_gas_station"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryFuelForTheCar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryFuelForTheCar" />
 
             <CheckBox
                 android:id="@+id/addCategoryFuelForTheCar"
                 style="@style/Description.SpendingText.FirstLaunch"
+                android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Fuel_for_the_car"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fuelCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCategoryProducts" />
+
+            <ImageView
+                android:id="@+id/cellularCommunicationCategoryIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_phone_android"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryCellularCommunication"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryCellularCommunication" />
 
             <CheckBox
                 android:id="@+id/addCategoryCellularCommunication"
                 style="@style/Description.SpendingText.FirstLaunch"
+                android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Cellular_communication"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cellularCommunicationCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCategoryFuelForTheCar" />
+
+            <ImageView
+                android:id="@+id/creditCategoryIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_bank"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryCredit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryCredit" />
 
             <CheckBox
                 android:id="@+id/addCategoryCredit"
                 style="@style/Description.SpendingText.FirstLaunch"
+                android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Credit"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/creditCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCategoryCellularCommunication" />
+
+            <ImageView
+                android:id="@+id/medicalCategoryIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_medical"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryMedicines"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryMedicines"/>
 
             <CheckBox
                 android:id="@+id/addCategoryMedicines"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:text="@string/quick_setup_name_Medicines"
+                android:layout_width="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/medicalCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@id/addCategoryCredit" />
+
+            <ImageView
+                android:id="@+id/publicTransportCategoryIcon"
+                style="@style/ImageIcon"
+                android:src="@drawable/category_bus"
+                app:layout_constraintBottom_toBottomOf="@id/addCategoryPublicTransport"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addCategoryPublicTransport" />
 
             <CheckBox
                 android:id="@+id/addCategoryPublicTransport"
                 style="@style/Description.SpendingText.FirstLaunch"
+                android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Public_transport"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/publicTransportCategoryIcon"
                 app:layout_constraintTop_toBottomOf="@+id/addCategoryMedicines" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
