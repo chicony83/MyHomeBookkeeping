@@ -79,13 +79,13 @@ class FirstLaunchViewModel(
 
     private val packageName = app.packageName
     private val categoryIconsList = getCategoriesIconsList()
-    private val cashAccountIconsList = getCashAccountIconsList()
+    private val cashAccountIconsMap: Map<String, Int> = getCashAccountIconsList()
 
 
-    private fun getCashAccountIconsList() = listOf<Int>(
-        getDrawable(R.drawable.cash_account_card),
-        getDrawable(R.drawable.cash_account_cash),
-        getDrawable(R.drawable.cash_account_credit_card_off)
+    private fun getCashAccountIconsList() = mapOf<String, Int>(
+        "card_cash_account" to getDrawable(R.drawable.cash_account_card),
+        "cash_cash_account" to getDrawable(R.drawable.cash_account_cash),
+        "card_off_cash_account" to getDrawable(R.drawable.cash_account_credit_card_off)
     )
 
     private fun getCategoriesIconsList() = listOf<Int>(
@@ -289,7 +289,10 @@ class FirstLaunchViewModel(
 
     private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add Cash accounts icons---")
-        addIconsRecourseList(iconsList = cashAccountIconsList, iconCategory = iconCategory)
+            addIconsRecourseList(
+                iconsList = cashAccountIconsMap.values.toList(),
+                iconCategory = iconCategory
+            )
     }
 
     private suspend fun addIconsRecourseList(
@@ -302,6 +305,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addIconResource(iconCategory: Int?, iconResource: Int) {
+        Message.log("---Add new icon resource---")
         launchIo {
             IconResourcesUseCase.addNewIconResource(
                 dbIconResources,
@@ -310,7 +314,6 @@ class FirstLaunchViewModel(
                     iconResources = iconResource
                 )
             )
-            Message.log("---Add new icon resource---")
         }
     }
 
@@ -327,8 +330,18 @@ class FirstLaunchViewModel(
     }
 
     fun updateValues() {
-        _cardCashAccountItem.postValue(FirstLaunchItem("card", cashAccountIconsList[0]))
-        _cashCashAccountItem.postValue(FirstLaunchItem("cash", cashAccountIconsList[1]))
+        _cardCashAccountItem.postValue(
+            FirstLaunchItem(
+                "card",
+                cashAccountIconsMap["card_cash_account"]
+            )
+        )
+        _cashCashAccountItem.postValue(
+            FirstLaunchItem(
+                "cash",
+                cashAccountIconsMap["cash_cash_account"]
+            )
+        )
 //        _salaryCategoryItem.postValue(FirstLaunchItem("income money", categoryIconsList))
     }
 
