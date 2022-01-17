@@ -119,7 +119,9 @@ class FirstLaunchViewModel(
         CategoryIconNames.ShoppingCartAdd.name to getDrawable(R.drawable.category_shopping_cart_add),
         CategoryIconNames.Store.name to getDrawable(R.drawable.category_store),
         CategoryIconNames.Subway.name to getDrawable(R.drawable.category_subway),
+        CategoryIconNames.Wallet.name to getDrawable(R.drawable.category_wallet),
         CategoryIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
+
     )
 
     fun setIsFirstLaunchFalse() {
@@ -337,7 +339,7 @@ class FirstLaunchViewModel(
 
     private fun updateValuesOfCategories() {
         _salaryCategoryItem.postValue(
-            CategoryIconNames.ArrowDropUp.name.let {
+            CategoryIconNames.Wallet.name.let {
                 ItemOfFirstLaunch(it, categoryIconsList[it])
             }
         )

@@ -33,5 +33,6 @@ enum class CategoryIconNames {
     Store,
     Subway,
     TwoWheeler,
-    Bank
+    Bank,
+    Wallet
 }
