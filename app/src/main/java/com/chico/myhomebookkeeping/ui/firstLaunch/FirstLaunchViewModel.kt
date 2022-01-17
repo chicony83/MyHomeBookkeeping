@@ -16,7 +16,9 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
-import com.chico.myhomebookkeeping.enums.IconCategoriesNames
+import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
+import com.chico.myhomebookkeeping.enums.icons.CategoriesIconNames
+import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -67,14 +69,11 @@ class FirstLaunchViewModel(
     private val _publicTransportCategoryItem = MutableLiveData<FirstLaunchItem>()
     val publicTransportCategoryItem: LiveData<FirstLaunchItem> get() = _publicTransportCategoryItem
 
-    //общественный транспорт
-
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
     private val spEditor = sharedPreferences.edit()
     private val setSP = SetSP(spEditor)
-
     private val uiHelper = UiHelper()
 
     private val packageName = app.packageName
@@ -83,44 +82,44 @@ class FirstLaunchViewModel(
 
 
     private fun getCashAccountIconsList() = mapOf<String, Int>(
-        "card_cash_account" to getDrawable(R.drawable.cash_account_card),
-        "cash_cash_account" to getDrawable(R.drawable.cash_account_cash),
-        "card_off_cash_account" to getDrawable(R.drawable.cash_account_credit_card_off)
+        CashAccountIconNames.Card.name to getDrawable(R.drawable.cash_account_card),
+        CashAccountIconNames.Cash.name to getDrawable(R.drawable.cash_account_cash),
+        CashAccountIconNames.CardOff.name to getDrawable(R.drawable.cash_account_credit_card_off)
     )
 
-    private fun getCategoriesIconsList() = listOf<Int>(
-        getDrawable(R.drawable.category_apartment),
-        getDrawable(R.drawable.category_airplane),
-        getDrawable(R.drawable.category_arrows_horiz),
-        getDrawable(R.drawable.category_arrow_drop_down),
-        getDrawable(R.drawable.category_arrow_drop_up),
-        getDrawable(R.drawable.category_build),
-        getDrawable(R.drawable.category_bus),
-        getDrawable(R.drawable.category_cake),
-        getDrawable(R.drawable.category_car),
-        getDrawable(R.drawable.category_celebration),
-        getDrawable(R.drawable.category_child_friendly),
-        getDrawable(R.drawable.category_coffee),
-        getDrawable(R.drawable.category_computer),
-        getDrawable(R.drawable.category_gas_station),
-        getDrawable(R.drawable.category_house),
-        getDrawable(R.drawable.category_medical),
-        getDrawable(R.drawable.category_park),
-        getDrawable(R.drawable.category_pedal_bike),
-        getDrawable(R.drawable.category_people),
-        getDrawable(R.drawable.category_person),
-        getDrawable(R.drawable.category_pets),
-        getDrawable(R.drawable.category_phone),
-        getDrawable(R.drawable.category_phone_android),
-        getDrawable(R.drawable.category_phone_iphone),
-        getDrawable(R.drawable.category_restaurant),
-        getDrawable(R.drawable.category_salon),
-        getDrawable(R.drawable.category_school),
-        getDrawable(R.drawable.category_shopping_cart),
-        getDrawable(R.drawable.category_shopping_cart_add),
-        getDrawable(R.drawable.category_store),
-        getDrawable(R.drawable.category_subway),
-        getDrawable(R.drawable.category_two_wheeler)
+    private fun getCategoriesIconsList() = mapOf<String, Int>(
+        CategoriesIconNames.Apartment.name to getDrawable(R.drawable.category_apartment),
+        CategoriesIconNames.Airplane.name to getDrawable(R.drawable.category_airplane),
+        CategoriesIconNames.ArrowsHorizontal.name to getDrawable(R.drawable.category_arrows_horizontal),
+        CategoriesIconNames.ArrowDropDown.name to getDrawable(R.drawable.category_arrow_drop_down),
+        CategoriesIconNames.ArrowDropUp.name to getDrawable(R.drawable.category_arrow_drop_up),
+        CategoriesIconNames.Build.name to getDrawable(R.drawable.category_build),
+        CategoriesIconNames.Bus.name to getDrawable(R.drawable.category_bus),
+        CategoriesIconNames.Cake.name to getDrawable(R.drawable.category_cake),
+        CategoriesIconNames.Car.name to getDrawable(R.drawable.category_car),
+        CategoriesIconNames.Celebration.name to getDrawable(R.drawable.category_celebration),
+        CategoriesIconNames.ChildFriendly.name to getDrawable(R.drawable.category_child_friendly),
+        CategoriesIconNames.Coffee.name to getDrawable(R.drawable.category_coffee),
+        CategoriesIconNames.Computer.name to getDrawable(R.drawable.category_computer),
+        CategoriesIconNames.GasStation.name to getDrawable(R.drawable.category_gas_station),
+        CategoriesIconNames.House.name to getDrawable(R.drawable.category_house),
+        CategoriesIconNames.Medical.name to getDrawable(R.drawable.category_medical),
+        CategoriesIconNames.Park.name to getDrawable(R.drawable.category_park),
+        CategoriesIconNames.PedalBike.name to getDrawable(R.drawable.category_pedal_bike),
+        CategoriesIconNames.People.name to getDrawable(R.drawable.category_people),
+        CategoriesIconNames.Person.name to getDrawable(R.drawable.category_person),
+        CategoriesIconNames.Pets.name to getDrawable(R.drawable.category_pets),
+        CategoriesIconNames.Phone.name to getDrawable(R.drawable.category_phone),
+        CategoriesIconNames.PhoneAndroid.name to getDrawable(R.drawable.category_phone_android),
+        CategoriesIconNames.PhoneIphone.name to getDrawable(R.drawable.category_phone_iphone),
+        CategoriesIconNames.Restaurant.name to getDrawable(R.drawable.category_restaurant),
+        CategoriesIconNames.Salon.name to getDrawable(R.drawable.category_salon),
+        CategoriesIconNames.School.name to getDrawable(R.drawable.category_school),
+        CategoriesIconNames.ShoppingCart.name to getDrawable(R.drawable.category_shopping_cart),
+        CategoriesIconNames.ShoppingCartAdd.name to getDrawable(R.drawable.category_shopping_cart_add),
+        CategoriesIconNames.Store.name to getDrawable(R.drawable.category_store),
+        CategoriesIconNames.Subway.name to getDrawable(R.drawable.category_subway),
+        CategoriesIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
     )
 
 
@@ -246,9 +245,9 @@ class FirstLaunchViewModel(
 
     fun addIconCategories() {
         val namesIconCategory = listOf<String>(
-            IconCategoriesNames.CashAccounts.name,
-            IconCategoriesNames.Categories.name,
-            IconCategoriesNames.Currencies.name
+            CategoriesOfIconsNames.CashAccounts.name,
+            CategoriesOfIconsNames.Categories.name,
+            CategoriesOfIconsNames.Currencies.name
         )
         launchIo {
             for (i in namesIconCategory.indices) {
@@ -271,8 +270,10 @@ class FirstLaunchViewModel(
             }
             for (i in iconCategories.indices) {
                 when (iconCategories[i].iconCategoryName) {
-                    IconCategoriesNames.CashAccounts.name -> addCashAccountsIconsInDB(iconCategories[i])
-                    IconCategoriesNames.Categories.name -> addCategoriesIconsInDB(iconCategories[i])
+                    CategoriesOfIconsNames.CashAccounts.name -> addCashAccountsIconsInDB(
+                        iconCategories[i]
+                    )
+                    CategoriesOfIconsNames.Categories.name -> addCategoriesIconsInDB(iconCategories[i])
                 }
             }
 //            addCategoriesIconsInDB(iconCategories)
@@ -284,15 +285,18 @@ class FirstLaunchViewModel(
 
     private suspend fun addCategoriesIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add categories icons---")
-        addIconsRecourseList(iconCategory = iconCategory, iconsList = categoryIconsList)
+        addIconsRecourseList(
+            iconsList = categoryIconsList.values.toList(),
+            iconCategory = iconCategory
+        )
     }
 
     private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
         Message.log("---Add Cash accounts icons---")
-            addIconsRecourseList(
-                iconsList = cashAccountIconsMap.values.toList(),
-                iconCategory = iconCategory
-            )
+        addIconsRecourseList(
+            iconsList = cashAccountIconsMap.values.toList(),
+            iconCategory = iconCategory
+        )
     }
 
     private suspend fun addIconsRecourseList(
