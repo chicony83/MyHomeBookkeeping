@@ -9,6 +9,10 @@
         style="@style/RecyclerViewItem"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/iconImg"
+            style="@style/ImageIcon" />
+
         <TextView
             android:id="@+id/id_categories"
             android:layout_width="wrap_content"

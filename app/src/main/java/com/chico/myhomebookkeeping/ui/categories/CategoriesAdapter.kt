@@ -34,15 +34,18 @@ class CategoriesAdapter(
         private val binding: RecyclerViewItemCategoriesBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(categories: Categories) {
+        fun bind(category: Categories) {
             with(binding) {
-                root.contentDescription = categories.categoryName
-                idCategories.text = categories.categoriesId.toString()
-                categoryCardViewText.text = categories.categoryName
-                categoriesItem.setOnClickListener {
-                    categories.categoriesId?.let { it1 -> listener.onClick(it1) }
+                category.icon.let {
+                    it?.let { it1-> iconImg.setImageResource(it1)}
                 }
-                if (categories.isIncome) {
+                root.contentDescription = category.categoryName
+                idCategories.text = category.categoriesId.toString()
+                categoryCardViewText.text = category.categoryName
+                categoriesItem.setOnClickListener {
+                    category.categoriesId?.let { it1 -> listener.onClick(it1) }
+                }
+                if (category.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoriesItem.setBackgroundColor(
                             itemView.resources.getColor(
@@ -52,7 +55,7 @@ class CategoriesAdapter(
                         )
                     }
                 }
-                if (!categories.isIncome) {
+                if (!category.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoriesItem.setBackgroundColor(
                             itemView.resources.getColor(
