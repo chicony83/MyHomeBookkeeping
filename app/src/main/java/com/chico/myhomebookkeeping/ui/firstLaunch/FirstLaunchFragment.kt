@@ -57,19 +57,19 @@ class FirstLaunchFragment : Fragment() {
                     cellularCommunicationCategoryItem
                 )
             })
-            creditsCategoryItem.observe(viewLifecycleOwner,{
+            creditsCategoryItem.observe(viewLifecycleOwner, {
                 setImageResourceOnIcon(
                     binding.creditCategoryIcon, creditsCategoryItem
                 )
             })
-            medicinesCategoryItem.observe(viewLifecycleOwner,{
+            medicinesCategoryItem.observe(viewLifecycleOwner, {
                 setImageResourceOnIcon(
                     binding.medicalCategoryIcon, medicinesCategoryItem
                 )
             })
-            publicTransportCategoryItem.observe(viewLifecycleOwner,{
+            publicTransportCategoryItem.observe(viewLifecycleOwner, {
                 setImageResourceOnIcon(
-                    binding.publicTransportCategoryIcon,publicTransportCategoryItem
+                    binding.publicTransportCategoryIcon, publicTransportCategoryItem
                 )
             })
         }
@@ -79,7 +79,7 @@ class FirstLaunchFragment : Fragment() {
 
     private fun setImageResourceOnIcon(
         imageView: ImageView,
-        item: LiveData<FirstLaunchViewModel.FirstLaunchItem>
+        item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>
     ) {
         imageView.setImageResource(item.value?.imageResource ?: noImage)
     }
@@ -155,9 +155,16 @@ class FirstLaunchFragment : Fragment() {
 
     private fun getListCurrencies() = listOf(binding.addDefaultCurrency)
 
-    private fun getListCashAccounts() = listOf(
-        binding.addCashAccountsCard,
-        binding.addCashAccountsCash
+    private fun getListCashAccounts() = listOf<SelectedItemOfCashAccount>(
+        SelectedItemOfCashAccount(
+            firstLaunchViewModel.cardCashAccountItem.value?.imageResource
+                ?: noImage,
+            binding.addCashAccountsCard
+        ),
+        SelectedItemOfCashAccount(
+            firstLaunchViewModel.cashCashAccountItem.value?.imageResource ?: noImage,
+            binding.addCashAccountsCash
+        )
     )
 
     override fun onDestroy() {
