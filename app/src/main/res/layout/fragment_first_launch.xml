@@ -40,13 +40,13 @@
                 android:contentDescription="@string/quick_setup_name_Card"
                 android:id="@+id/cardCashAccountIcon"
                 style="@style/ImageIcon"
-                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCard"
+                app:layout_constraintBottom_toBottomOf="@id/add_cash_accounts_card_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCashAccountsCard"
+                app:layout_constraintTop_toTopOf="@id/add_cash_accounts_card_check_box"
                 tools:src="@drawable/cash_account_card" />
 
             <CheckBox
-                android:id="@+id/addCashAccountsCard"
+                android:id="@+id/add_cash_accounts_card_check_box"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Card"
@@ -59,12 +59,12 @@
                 android:id="@+id/cashCashAccountIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/cash_account_cash"
-                app:layout_constraintBottom_toBottomOf="@id/addCashAccountsCash"
+                app:layout_constraintBottom_toBottomOf="@id/add_cash_accounts_cash_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCashAccountsCash" />
+                app:layout_constraintTop_toTopOf="@id/add_cash_accounts_cash_check_box" />
 
             <CheckBox
-                android:id="@+id/addCashAccountsCash"
+                android:id="@+id/add_cash_accounts_cash_check_box"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:layout_width="0dp"
                 android:checked="true"
@@ -72,7 +72,7 @@
                 android:text="@string/quick_setup_name_Cash"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cashCashAccountIcon"
-                app:layout_constraintTop_toBottomOf="@id/addCashAccountsCard" />
+                app:layout_constraintTop_toBottomOf="@id/add_cash_accounts_card_check_box" />
 
             <TextView
                 android:id="@+id/description_currency"
@@ -81,10 +81,10 @@
                 android:text="@string/quick_setup_add_Currency"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addCashAccountsCash" />
+                app:layout_constraintTop_toBottomOf="@id/add_cash_accounts_cash_check_box" />
 
             <CheckBox
-                android:id="@+id/addDefaultCurrency"
+                android:id="@+id/add_default_currency_check_box"
                 style="@style/Description.Currencies.FirstLaunch"
                 android:checked="true"
                 android:enabled="false"
@@ -100,7 +100,7 @@
                 android:text="@string/quick_setup_add_Category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addDefaultCurrency" />
+                app:layout_constraintTop_toBottomOf="@id/add_default_currency_check_box" />
 
             <ImageView
                 android:contentDescription="@string/quick_setup_name_The_Income"
@@ -127,12 +127,12 @@
                 android:id="@+id/productsCategoryIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/category_shopping_cart"
-                app:layout_constraintBottom_toBottomOf="@id/addCategoryProducts"
+                app:layout_constraintBottom_toBottomOf="@id/add_category_products_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryProducts" />
+                app:layout_constraintTop_toTopOf="@id/add_category_products_check_box" />
 
             <CheckBox
-                android:id="@+id/addCategoryProducts"
+                android:id="@+id/add_category_products_check_box"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:layout_width="0dp"
                 android:checked="true"
@@ -147,90 +147,90 @@
                 android:id="@+id/fuelCategoryIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/category_gas_station"
-                app:layout_constraintBottom_toBottomOf="@id/addCategoryFuelForTheCar"
+                app:layout_constraintBottom_toBottomOf="@id/add_category_fuel_for_the_car_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryFuelForTheCar" />
+                app:layout_constraintTop_toTopOf="@id/add_category_fuel_for_the_car_check_box" />
 
             <CheckBox
-                android:id="@+id/addCategoryFuelForTheCar"
+                android:id="@+id/add_category_fuel_for_the_car_check_box"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Fuel_for_the_car"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/fuelCategoryIcon"
-                app:layout_constraintTop_toBottomOf="@id/addCategoryProducts" />
+                app:layout_constraintTop_toBottomOf="@id/add_category_products_check_box" />
 
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Cellular_communication"
                 android:id="@+id/cellularCommunicationCategoryIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/category_phone_android"
-                app:layout_constraintBottom_toBottomOf="@id/addCategoryCellularCommunication"
+                app:layout_constraintBottom_toBottomOf="@id/add_category_cellular_communication_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryCellularCommunication" />
+                app:layout_constraintTop_toTopOf="@id/add_category_cellular_communication_check_box" />
 
             <CheckBox
-                android:id="@+id/addCategoryCellularCommunication"
+                android:id="@+id/add_category_cellular_communication_check_box"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Cellular_communication"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cellularCommunicationCategoryIcon"
-                app:layout_constraintTop_toBottomOf="@id/addCategoryFuelForTheCar" />
+                app:layout_constraintTop_toBottomOf="@id/add_category_fuel_for_the_car_check_box" />
 
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Credit"
                 android:id="@+id/creditCategoryIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/category_bank"
-                app:layout_constraintBottom_toBottomOf="@id/addCategoryCredit"
+                app:layout_constraintBottom_toBottomOf="@id/add_category_credit_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryCredit" />
+                app:layout_constraintTop_toTopOf="@id/add_category_credit_check_box" />
 
             <CheckBox
-                android:id="@+id/addCategoryCredit"
+                android:id="@+id/add_category_credit_check_box"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Credit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/creditCategoryIcon"
-                app:layout_constraintTop_toBottomOf="@id/addCategoryCellularCommunication" />
+                app:layout_constraintTop_toBottomOf="@id/add_category_cellular_communication_check_box" />
 
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Medicines"
                 android:id="@+id/medicalCategoryIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/category_medical"
-                app:layout_constraintBottom_toBottomOf="@id/addCategoryMedicines"
+                app:layout_constraintBottom_toBottomOf="@id/add_category_medicines_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryMedicines" />
+                app:layout_constraintTop_toTopOf="@id/add_category_medicines_check_box" />
 
             <CheckBox
-                android:id="@+id/addCategoryMedicines"
+                android:id="@+id/add_category_medicines_check_box"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Medicines"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/medicalCategoryIcon"
-                app:layout_constraintTop_toBottomOf="@id/addCategoryCredit" />
+                app:layout_constraintTop_toBottomOf="@id/add_category_credit_check_box" />
 
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Public_transport"
                 android:id="@+id/publicTransportCategoryIcon"
                 style="@style/ImageIcon"
                 tools:src="@drawable/category_bus"
-                app:layout_constraintBottom_toBottomOf="@id/addCategoryPublicTransport"
+                app:layout_constraintBottom_toBottomOf="@id/add_category_public_transport_check_box"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addCategoryPublicTransport" />
+                app:layout_constraintTop_toTopOf="@id/add_category_public_transport_check_box" />
 
             <CheckBox
-                android:id="@+id/addCategoryPublicTransport"
+                android:id="@+id/add_category_public_transport_check_box"
                 style="@style/Description.SpendingText.FirstLaunch"
                 android:layout_width="0dp"
                 android:text="@string/quick_setup_name_Public_transport"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/publicTransportCategoryIcon"
-                app:layout_constraintTop_toBottomOf="@+id/addCategoryMedicines" />
+                app:layout_constraintTop_toBottomOf="@+id/add_category_medicines_check_box" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

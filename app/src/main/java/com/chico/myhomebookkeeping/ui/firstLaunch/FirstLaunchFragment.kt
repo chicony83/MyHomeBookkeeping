@@ -145,27 +145,30 @@ class FirstLaunchFragment : Fragment() {
     private fun getListIncomeCheckBoxes() = listOf(binding.addCategoryTheSalary)
 
     private fun getListSpendingCheckBoxes() = listOf(
-        binding.addCategoryCellularCommunication,
-        binding.addCategoryCredit,
-        binding.addCategoryFuelForTheCar,
-        binding.addCategoryProducts,
-        binding.addCategoryMedicines,
-        binding.addCategoryPublicTransport
+        binding.addCategoryCellularCommunicationCheckBox,
+        binding.addCategoryCreditCheckBox,
+        binding.addCategoryFuelForTheCarCheckBox,
+        binding.addCategoryProductsCheckBox,
+        binding.addCategoryMedicinesCheckBox,
+        binding.addCategoryPublicTransportCheckBox
     )
 
-    private fun getListCurrencies() = listOf(binding.addDefaultCurrency)
+    private fun getListCurrencies() = listOf(binding.addDefaultCurrencyCheckBox)
 
     private fun getListCashAccounts() = listOf<SelectedItemOfCashAccount>(
-        SelectedItemOfCashAccount(
-            firstLaunchViewModel.cardCashAccountItem.value?.imageResource
-                ?: noImage,
-            binding.addCashAccountsCard
-        ),
-        SelectedItemOfCashAccount(
-            firstLaunchViewModel.cashCashAccountItem.value?.imageResource ?: noImage,
-            binding.addCashAccountsCash
-        )
+        getItem(firstLaunchViewModel.cardCashAccountItem,binding.addCashAccountsCardCheckBox),
+        getItem(firstLaunchViewModel.cashCashAccountItem,binding.addCashAccountsCashCheckBox)
     )
+
+    private fun getItem(
+        item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>,
+        checkBox: CheckBox
+    ): SelectedItemOfCashAccount {
+        return SelectedItemOfCashAccount(
+            item.value?.imageResource?:noImage,
+            checkBox
+        )
+    }
 
     override fun onDestroy() {
         super.onDestroy()
