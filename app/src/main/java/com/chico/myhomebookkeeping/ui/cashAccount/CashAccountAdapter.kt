@@ -48,6 +48,11 @@ class CashAccountAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(cashAccount: CashAccount) {
             with(binding) {
+
+                cashAccount.icon.let {
+                    it?.let { it1 -> iconImg.setImageResource(it1) }
+                }
+
                 root.contentDescription = cashAccount.accountName
                 nameCashAccount.text = cashAccount.accountName
 
