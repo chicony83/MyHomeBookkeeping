@@ -94,8 +94,8 @@ class FirstLaunchFragment : Fragment() {
             launchUi {
                 val listCashAccounts = getListCashAccounts()
                 val listCurrencies = getListCurrencies()
-                val listIncomingCategories = getListIncomeCategories(getListIncomeCheckBoxes())
-                val listSpendingCategories = getListSpendingCategories(getListSpendingCheckBoxes())
+                val listIncomingCategories = getListSelectedIncomeCategories(getListIncomeCheckBoxes())
+                val listSpendingCategories = getListSelectedSpendingCategories(getListSpendingCheckBoxes())
 
                 launchIo {
                     firstLaunchViewModel.addFirstLaunchElements(
@@ -124,48 +124,50 @@ class FirstLaunchFragment : Fragment() {
         }
     }
 
-    private fun getListSpendingCategories(listCheckBoxes: List<CheckBox>): List<CheckBox> {
+    private fun getListSelectedSpendingCategories(listCheckBoxes: List<SelectedItemOfImageAndCheckBox>): List<SelectedItemOfImageAndCheckBox> {
         return getListSelectedItems(listCheckBoxes)
     }
 
-    private fun getListIncomeCategories(listCheckBoxes: List<CheckBox>): List<CheckBox> {
+    private fun getListSelectedIncomeCategories(listCheckBoxes: List<SelectedItemOfImageAndCheckBox>): List<SelectedItemOfImageAndCheckBox> {
         return getListSelectedItems(listCheckBoxes)
     }
 
-    private fun getListSelectedItems(listCheckBoxes: List<CheckBox>): List<CheckBox> {
-        val listSelectedItems = mutableListOf<CheckBox>()
-        for (i in listCheckBoxes.indices) {
-            if (listCheckBoxes[i].isChecked) {
-                listSelectedItems.add(listCheckBoxes[i])
+    private fun getListSelectedItems(listOfItems: List<SelectedItemOfImageAndCheckBox>): List<SelectedItemOfImageAndCheckBox> {
+        val listSelectedItems = mutableListOf<SelectedItemOfImageAndCheckBox>()
+        for (i in listOfItems.indices) {
+            if (listOfItems[i].checkBox.isChecked) {
+                listSelectedItems.add(listOfItems[i])
             }
         }
         return listSelectedItems.toList()
     }
 
-    private fun getListIncomeCheckBoxes() = listOf(binding.addCategoryTheSalary)
+    private fun getListIncomeCheckBoxes() = listOf(
+        getItem(firstLaunchViewModel.salaryCategoryItem, binding.addCategoryTheSalary)
+    )
 
     private fun getListSpendingCheckBoxes() = listOf(
-        binding.addCategoryCellularCommunicationCheckBox,
-        binding.addCategoryCreditCheckBox,
-        binding.addCategoryFuelForTheCarCheckBox,
-        binding.addCategoryProductsCheckBox,
-        binding.addCategoryMedicinesCheckBox,
-        binding.addCategoryPublicTransportCheckBox
+        getItem(firstLaunchViewModel.cellularCommunicationCategoryItem,binding.addCategoryCellularCommunicationCheckBox),
+        getItem(firstLaunchViewModel.creditsCategoryItem,binding.addCategoryCreditCheckBox),
+        getItem(firstLaunchViewModel.fuelForCarCategoryItem,binding.addCategoryFuelForTheCarCheckBox),
+        getItem(firstLaunchViewModel.productsCategoryItem,binding.addCategoryProductsCheckBox),
+        getItem(firstLaunchViewModel.medicinesCategoryItem,binding.addCategoryMedicinesCheckBox),
+        getItem(firstLaunchViewModel.publicTransportCategoryItem,binding.addCategoryPublicTransportCheckBox)
     )
 
     private fun getListCurrencies() = listOf(binding.addDefaultCurrencyCheckBox)
 
-    private fun getListCashAccounts() = listOf<SelectedItemOfCashAccount>(
-        getItem(firstLaunchViewModel.cardCashAccountItem,binding.addCashAccountsCardCheckBox),
-        getItem(firstLaunchViewModel.cashCashAccountItem,binding.addCashAccountsCashCheckBox)
+    private fun getListCashAccounts() = listOf<SelectedItemOfImageAndCheckBox>(
+        getItem(firstLaunchViewModel.cardCashAccountItem, binding.addCashAccountsCardCheckBox),
+        getItem(firstLaunchViewModel.cashCashAccountItem, binding.addCashAccountsCashCheckBox)
     )
 
     private fun getItem(
         item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>,
         checkBox: CheckBox
-    ): SelectedItemOfCashAccount {
-        return SelectedItemOfCashAccount(
-            item.value?.imageResource?:noImage,
+    ): SelectedItemOfImageAndCheckBox {
+        return SelectedItemOfImageAndCheckBox(
+            item.value?.imageResource ?: noImage,
             checkBox
         )
     }

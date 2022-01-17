@@ -129,17 +129,17 @@ class FirstLaunchViewModel(
     }
 
     fun addFirstLaunchElements(
-        listCashAccounts: List<SelectedItemOfCashAccount>,
+        listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
         listCurrencies: List<CheckBox>,
-        listIncomeCategories: List<CheckBox>,
-        listSpendingCategories: List<CheckBox>
+        listIncomeCategories: List<SelectedItemOfImageAndCheckBox>,
+        listSpendingCategories: List<SelectedItemOfImageAndCheckBox>
     ) = runBlocking {
         val resultAddedIncomeCategories =
             async(Dispatchers.IO) { addIncomeCategories(listIncomeCategories) }
         val resultAddSpendingCategories =
             async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
 
-        val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listCashAccounts) }
+        val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes) }
         val resultAddCurrencies = async(Dispatchers.IO) { addCurrencies(listCurrencies) }
 
         val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
@@ -179,28 +179,31 @@ class FirstLaunchViewModel(
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategories)
     }
 
-    private fun addSpendingCategories(listSpendingCategories: List<CheckBox>): Long {
+    private fun addSpendingCategories(listSpendingCategories: List<SelectedItemOfImageAndCheckBox>): Long {
         var result: Long = 0
         launchIo {
             for (i in listSpendingCategories.indices) {
-                result += addCategory(listSpendingCategories[i].text.toString(), false)
+                result += addCategory(listSpendingCategories[i], false)
             }
         }
         return result
     }
 
-    private fun addIncomeCategories(listIncomeCategories: List<CheckBox>): Long {
+    private fun addIncomeCategories(listIncomeCategories: List<SelectedItemOfImageAndCheckBox>): Long {
         var result: Long = 0
         launchIo {
             for (i in listIncomeCategories.indices) {
-                result += addCategory(listIncomeCategories[i].text.toString(), true)
+                result += addCategory(listIncomeCategories[i], true)
             }
         }
         return result
     }
 
-    private suspend fun addCategory(name: String, isIncome: Boolean): Long {
-        return dbCategories.addCategory(Categories(name, isIncome, null))
+    private suspend fun addCategory(item: SelectedItemOfImageAndCheckBox, isIncome: Boolean): Long {
+        return dbCategories.addCategory(
+            Categories(
+                item.checkBox.text.toString(), isIncome, item.img
+            ))
     }
 
     private fun addCurrencies(listCurrencies: List<CheckBox>): Boolean {
@@ -222,16 +225,16 @@ class FirstLaunchViewModel(
         }
     }
 
-    private fun addCashAccounts(listCashAccounts: List<SelectedItemOfCashAccount>): Boolean {
-        for (i in listCashAccounts.indices) {
-            if (uiHelper.isCheckedCheckBox(listCashAccounts[i].checkBox)) {
-                addCashAccount(listCashAccounts[i])
+    private fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
+        for (i in listImageAndCheckBoxes.indices) {
+            if (uiHelper.isCheckedCheckBox(listImageAndCheckBoxes[i].checkBox)) {
+                addCashAccount(listImageAndCheckBoxes[i])
             }
         }
         return true
     }
 
-    private fun addCashAccount(item: SelectedItemOfCashAccount) {
+    private fun addCashAccount(item: SelectedItemOfImageAndCheckBox) {
         val cashAccount = CashAccount(
             accountName = item.checkBox.text.toString(),
             bankAccountNumber = "",
