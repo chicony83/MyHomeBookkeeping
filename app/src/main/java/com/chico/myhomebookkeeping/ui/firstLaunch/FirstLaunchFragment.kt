@@ -43,8 +43,34 @@ class FirstLaunchFragment : Fragment() {
                 setImageResourceOnIcon(binding.cashCashAccountIcon, cashCashAccountItem)
             })
             salaryCategoryItem.observe(viewLifecycleOwner, {
-                setImageResourceOnIcon(binding.incomeMoneyIcon,salaryCategoryItem)
-            //                binding.incomeMoneyIcon.setImageResource(it.imageResource ?: noImage)
+                setImageResourceOnIcon(binding.incomeMoneyIcon, salaryCategoryItem)
+            })
+            productsCategoryItem.observe(viewLifecycleOwner, {
+                setImageResourceOnIcon(binding.productsCategoryIcon, productsCategoryItem)
+            })
+            fuelForCarCategoryItem.observe(viewLifecycleOwner, {
+                setImageResourceOnIcon(binding.fuelCategoryIcon, fuelForCarCategoryItem)
+            })
+            cellularCommunicationCategoryItem.observe(viewLifecycleOwner, {
+                setImageResourceOnIcon(
+                    binding.cellularCommunicationCategoryIcon,
+                    cellularCommunicationCategoryItem
+                )
+            })
+            creditsCategoryItem.observe(viewLifecycleOwner,{
+                setImageResourceOnIcon(
+                    binding.creditCategoryIcon, creditsCategoryItem
+                )
+            })
+            medicinesCategoryItem.observe(viewLifecycleOwner,{
+                setImageResourceOnIcon(
+                    binding.medicalCategoryIcon, medicinesCategoryItem
+                )
+            })
+            publicTransportCategoryItem.observe(viewLifecycleOwner,{
+                setImageResourceOnIcon(
+                    binding.publicTransportCategoryIcon,publicTransportCategoryItem
+                )
             })
         }
 

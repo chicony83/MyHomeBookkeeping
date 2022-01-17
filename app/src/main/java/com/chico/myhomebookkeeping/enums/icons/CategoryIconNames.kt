@@ -1,6 +1,6 @@
 package com.chico.myhomebookkeeping.enums.icons
 
-enum class CategoriesIconNames {
+enum class CategoryIconNames {
     Apartment,
     Airplane,
     ArrowsHorizontal,
@@ -32,5 +32,6 @@ enum class CategoriesIconNames {
     ShoppingCartAdd,
     Store,
     Subway,
-    TwoWheeler
+    TwoWheeler,
+    Bank
 }

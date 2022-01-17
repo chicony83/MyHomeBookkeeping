@@ -17,7 +17,7 @@ import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
-import com.chico.myhomebookkeeping.enums.icons.CategoriesIconNames
+import com.chico.myhomebookkeeping.enums.icons.CategoryIconNames
 import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -88,38 +88,39 @@ class FirstLaunchViewModel(
     )
 
     private fun getCategoriesIconsList() = mapOf<String, Int>(
-        CategoriesIconNames.Apartment.name to getDrawable(R.drawable.category_apartment),
-        CategoriesIconNames.Airplane.name to getDrawable(R.drawable.category_airplane),
-        CategoriesIconNames.ArrowsHorizontal.name to getDrawable(R.drawable.category_arrows_horizontal),
-        CategoriesIconNames.ArrowDropDown.name to getDrawable(R.drawable.category_arrow_drop_down),
-        CategoriesIconNames.ArrowDropUp.name to getDrawable(R.drawable.category_arrow_drop_up),
-        CategoriesIconNames.Build.name to getDrawable(R.drawable.category_build),
-        CategoriesIconNames.Bus.name to getDrawable(R.drawable.category_bus),
-        CategoriesIconNames.Cake.name to getDrawable(R.drawable.category_cake),
-        CategoriesIconNames.Car.name to getDrawable(R.drawable.category_car),
-        CategoriesIconNames.Celebration.name to getDrawable(R.drawable.category_celebration),
-        CategoriesIconNames.ChildFriendly.name to getDrawable(R.drawable.category_child_friendly),
-        CategoriesIconNames.Coffee.name to getDrawable(R.drawable.category_coffee),
-        CategoriesIconNames.Computer.name to getDrawable(R.drawable.category_computer),
-        CategoriesIconNames.GasStation.name to getDrawable(R.drawable.category_gas_station),
-        CategoriesIconNames.House.name to getDrawable(R.drawable.category_house),
-        CategoriesIconNames.Medical.name to getDrawable(R.drawable.category_medical),
-        CategoriesIconNames.Park.name to getDrawable(R.drawable.category_park),
-        CategoriesIconNames.PedalBike.name to getDrawable(R.drawable.category_pedal_bike),
-        CategoriesIconNames.People.name to getDrawable(R.drawable.category_people),
-        CategoriesIconNames.Person.name to getDrawable(R.drawable.category_person),
-        CategoriesIconNames.Pets.name to getDrawable(R.drawable.category_pets),
-        CategoriesIconNames.Phone.name to getDrawable(R.drawable.category_phone),
-        CategoriesIconNames.PhoneAndroid.name to getDrawable(R.drawable.category_phone_android),
-        CategoriesIconNames.PhoneIphone.name to getDrawable(R.drawable.category_phone_iphone),
-        CategoriesIconNames.Restaurant.name to getDrawable(R.drawable.category_restaurant),
-        CategoriesIconNames.Salon.name to getDrawable(R.drawable.category_salon),
-        CategoriesIconNames.School.name to getDrawable(R.drawable.category_school),
-        CategoriesIconNames.ShoppingCart.name to getDrawable(R.drawable.category_shopping_cart),
-        CategoriesIconNames.ShoppingCartAdd.name to getDrawable(R.drawable.category_shopping_cart_add),
-        CategoriesIconNames.Store.name to getDrawable(R.drawable.category_store),
-        CategoriesIconNames.Subway.name to getDrawable(R.drawable.category_subway),
-        CategoriesIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
+        CategoryIconNames.Apartment.name to getDrawable(R.drawable.category_apartment),
+        CategoryIconNames.Airplane.name to getDrawable(R.drawable.category_airplane),
+        CategoryIconNames.ArrowsHorizontal.name to getDrawable(R.drawable.category_arrows_horizontal),
+        CategoryIconNames.ArrowDropDown.name to getDrawable(R.drawable.category_arrow_drop_down),
+        CategoryIconNames.ArrowDropUp.name to getDrawable(R.drawable.category_arrow_drop_up),
+        CategoryIconNames.Bank.name to getDrawable(R.drawable.category_bank),
+        CategoryIconNames.Build.name to getDrawable(R.drawable.category_build),
+        CategoryIconNames.Bus.name to getDrawable(R.drawable.category_bus),
+        CategoryIconNames.Cake.name to getDrawable(R.drawable.category_cake),
+        CategoryIconNames.Car.name to getDrawable(R.drawable.category_car),
+        CategoryIconNames.Celebration.name to getDrawable(R.drawable.category_celebration),
+        CategoryIconNames.ChildFriendly.name to getDrawable(R.drawable.category_child_friendly),
+        CategoryIconNames.Coffee.name to getDrawable(R.drawable.category_coffee),
+        CategoryIconNames.Computer.name to getDrawable(R.drawable.category_computer),
+        CategoryIconNames.GasStation.name to getDrawable(R.drawable.category_gas_station),
+        CategoryIconNames.House.name to getDrawable(R.drawable.category_house),
+        CategoryIconNames.Medical.name to getDrawable(R.drawable.category_medical),
+        CategoryIconNames.Park.name to getDrawable(R.drawable.category_park),
+        CategoryIconNames.PedalBike.name to getDrawable(R.drawable.category_pedal_bike),
+        CategoryIconNames.People.name to getDrawable(R.drawable.category_people),
+        CategoryIconNames.Person.name to getDrawable(R.drawable.category_person),
+        CategoryIconNames.Pets.name to getDrawable(R.drawable.category_pets),
+        CategoryIconNames.Phone.name to getDrawable(R.drawable.category_phone),
+        CategoryIconNames.PhoneAndroid.name to getDrawable(R.drawable.category_phone_android),
+        CategoryIconNames.PhoneIphone.name to getDrawable(R.drawable.category_phone_iphone),
+        CategoryIconNames.Restaurant.name to getDrawable(R.drawable.category_restaurant),
+        CategoryIconNames.Salon.name to getDrawable(R.drawable.category_salon),
+        CategoryIconNames.School.name to getDrawable(R.drawable.category_school),
+        CategoryIconNames.ShoppingCart.name to getDrawable(R.drawable.category_shopping_cart),
+        CategoryIconNames.ShoppingCartAdd.name to getDrawable(R.drawable.category_shopping_cart_add),
+        CategoryIconNames.Store.name to getDrawable(R.drawable.category_store),
+        CategoryIconNames.Subway.name to getDrawable(R.drawable.category_subway),
+        CategoryIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
     )
 
 
@@ -334,21 +335,61 @@ class FirstLaunchViewModel(
     }
 
     fun updateValues() {
-        _cardCashAccountItem.postValue(
-            FirstLaunchItem(
-                "card",
-                cashAccountIconsMap["card_cash_account"]
-            )
-        )
-        _cashCashAccountItem.postValue(
-            FirstLaunchItem(
-                "cash",
-                cashAccountIconsMap["cash_cash_account"]
-            )
-        )
+        updateValuesOfCashAccounts()
+        updateValuesOfCategories()
 //        _salaryCategoryItem.postValue(FirstLaunchItem("income money", categoryIconsList))
     }
 
+    private fun updateValuesOfCategories() {
+        _salaryCategoryItem.postValue(
+            CategoryIconNames.ArrowDropUp.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+        _productsCategoryItem.postValue(
+            CategoryIconNames.ShoppingCart.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+        _fuelForCarCategoryItem.postValue(
+            CategoryIconNames.GasStation.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+        _cellularCommunicationCategoryItem.postValue(
+            CategoryIconNames.PhoneAndroid.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+        _creditsCategoryItem.postValue(
+            CategoryIconNames.Bank.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+        _medicinesCategoryItem.postValue(
+            CategoryIconNames.Medical.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+        _publicTransportCategoryItem.postValue(
+            CategoryIconNames.Bus.name.let {
+                FirstLaunchItem(it,categoryIconsList[it])
+            }
+        )
+    }
+
+    private fun updateValuesOfCashAccounts() {
+        _cardCashAccountItem.postValue(
+            CashAccountIconNames.Card.name.let {
+                FirstLaunchItem(it, cashAccountIconsMap[it])
+            }
+        )
+        _cashCashAccountItem.postValue(
+            CashAccountIconNames.Cash.name.let {
+                FirstLaunchItem(it, cashAccountIconsMap[it])
+            }
+        )
+    }
 
     data class FirstLaunchItem(val name: String, val imageResource: Int?)
 }
