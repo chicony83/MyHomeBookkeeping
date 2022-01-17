@@ -80,7 +80,6 @@ class FirstLaunchViewModel(
     private val categoryIconsList = getCategoriesIconsList()
     private val cashAccountIconsMap: Map<String, Int> = getCashAccountIconsList()
 
-
     private fun getCashAccountIconsList() = mapOf<String, Int>(
         CashAccountIconNames.Card.name to getDrawable(R.drawable.cash_account_card),
         CashAccountIconNames.Cash.name to getDrawable(R.drawable.cash_account_cash),
@@ -123,7 +122,6 @@ class FirstLaunchViewModel(
         CategoryIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
     )
 
-
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
     }
@@ -153,7 +151,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addFreeFastPayments() {
-        Message.log("create payment")
+//        Message.log("create payment")
         launchIo {
             val categoriesList = CategoriesUseCase.getAllCategoriesSortIdAsc(db = dbCategories)
             for (i in categoriesList.indices) {
@@ -266,9 +264,9 @@ class FirstLaunchViewModel(
             var iconCategories = listOf<IconCategory>()
             while (iconCategories.size < 3) {
                 delay(100)
-                Message.log("--- get icon categories")
+//                Message.log("--- get icon categories")
                 iconCategories = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
-                Message.log("--- size of Icon Categories ${iconCategories.size} ---")
+//                Message.log("--- size of Icon Categories ${iconCategories.size} ---")
             }
             for (i in iconCategories.indices) {
                 when (iconCategories[i].iconCategoryName) {
@@ -282,7 +280,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addCategoriesIconsInDB(iconCategory: IconCategory) {
-        Message.log("---Add categories icons---")
+//        Message.log("---Add categories icons---")
         addIconsRecourseList(
             iconsList = categoryIconsList.values.toList(),
             iconCategory = iconCategory
@@ -290,7 +288,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
-        Message.log("---Add Cash accounts icons---")
+//        Message.log("---Add Cash accounts icons---")
         addIconsRecourseList(
             iconsList = cashAccountIconsMap.values.toList(),
             iconCategory = iconCategory
@@ -307,7 +305,7 @@ class FirstLaunchViewModel(
     }
 
     private suspend fun addIconResource(iconCategory: Int?, iconResource: Int) {
-        Message.log("---Add new icon resource---")
+//        Message.log("---Add new icon resource---")
         launchIo {
             IconResourcesUseCase.addNewIconResource(
                 dbIconResources,

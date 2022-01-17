@@ -36,11 +36,13 @@ class CategoriesAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Categories) {
             with(binding) {
+                root.contentDescription = category.categoryName
+                idCategories.text = category.categoriesId.toString()
+
                 category.icon.let {
                     it?.let { it1-> iconImg.setImageResource(it1)}
                 }
-                root.contentDescription = category.categoryName
-                idCategories.text = category.categoriesId.toString()
+
                 categoryCardViewText.text = category.categoryName
                 categoriesItem.setOnClickListener {
                     category.categoriesId?.let { it1 -> listener.onClick(it1) }
