@@ -39,7 +39,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Card"
                 android:id="@+id/cardCashAccountIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 app:layout_constraintBottom_toBottomOf="@id/add_cash_accounts_card_check_box"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/add_cash_accounts_card_check_box"
@@ -57,7 +57,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Cash"
                 android:id="@+id/cashCashAccountIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/cash_account_cash"
                 app:layout_constraintBottom_toBottomOf="@id/add_cash_accounts_cash_check_box"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_The_Income"
                 android:id="@+id/incomeMoneyIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_arrow_drop_up"
                 app:layout_constraintBottom_toBottomOf="@id/addCategoryTheSalary"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Products"
                 android:id="@+id/productsCategoryIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_shopping_cart"
                 app:layout_constraintBottom_toBottomOf="@id/add_category_products_check_box"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Fuel_for_the_car"
                 android:id="@+id/fuelCategoryIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_gas_station"
                 app:layout_constraintBottom_toBottomOf="@id/add_category_fuel_for_the_car_check_box"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +163,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Cellular_communication"
                 android:id="@+id/cellularCommunicationCategoryIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_phone_android"
                 app:layout_constraintBottom_toBottomOf="@id/add_category_cellular_communication_check_box"
                 app:layout_constraintStart_toStartOf="parent"
@@ -181,7 +181,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Credit"
                 android:id="@+id/creditCategoryIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_bank"
                 app:layout_constraintBottom_toBottomOf="@id/add_category_credit_check_box"
                 app:layout_constraintStart_toStartOf="parent"
@@ -199,7 +199,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Medicines"
                 android:id="@+id/medicalCategoryIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_medical"
                 app:layout_constraintBottom_toBottomOf="@id/add_category_medicines_check_box"
                 app:layout_constraintStart_toStartOf="parent"
@@ -217,7 +217,7 @@
             <ImageView
                 android:contentDescription="@string/quick_setup_name_Public_transport"
                 android:id="@+id/publicTransportCategoryIcon"
-                style="@style/ImageIcon"
+                style="@style/ImageIcon.FirstLaunch"
                 tools:src="@drawable/category_bus"
                 app:layout_constraintBottom_toBottomOf="@id/add_category_public_transport_check_box"
                 app:layout_constraintStart_toStartOf="parent"

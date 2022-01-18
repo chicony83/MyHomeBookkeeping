@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="content_description_rating_stars" translatable="false">Rating stars</string>
+    <string name="content_description_icon_item_of_cash_account" translatable="false">icon item of cash account</string>
+    <string name="content_description_icon_item_of_category" translatable="false">icon item of category</string>
 </resources>

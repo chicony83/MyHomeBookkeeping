@@ -10,8 +10,9 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:contentDescription="@string/content_description_icon_item_of_category"
             android:id="@+id/iconImg"
-            style="@style/ImageIcon" />
+            style="@style/ImageIcon.RecyclerView" />
 
         <TextView
             android:id="@+id/id_categories"

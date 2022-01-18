@@ -34,7 +34,7 @@
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
-    <style name="Description.IncomeText.FirstLaunch" >
+    <style name="Description.IncomeText.FirstLaunch">
         <item name="android:checked">true</item>
     </style>
 
@@ -44,7 +44,7 @@
 
     </style>
 
-    <style name="Description.SpendingText.FirstLaunch" >
+    <style name="Description.SpendingText.FirstLaunch">
         <item name="android:checked">true</item>
     </style>
 
@@ -61,4 +61,11 @@
         <item name="android:textSize">@dimen/H4</item>
     </style>
 
+    <style name="TextView" parent="WrapContent_WrapContent">
+
+    </style>
+
+    <style name="TextView.RecyclerViewHorizontalItem">
+        <item name="android:layout_marginStart">@dimen/margin_half_normal</item>
+    </style>
 </resources>
