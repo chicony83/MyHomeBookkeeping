@@ -13,9 +13,9 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:contentDescription="@string/content_description_icon_item_of_cash_account"
             android:id="@+id/iconImg"
             style="@style/ImageIcon.RecyclerView"
+            android:contentDescription="@string/content_description_icon_item_of_cash_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

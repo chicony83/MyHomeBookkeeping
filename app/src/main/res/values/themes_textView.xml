@@ -66,6 +66,6 @@
     </style>
 
     <style name="TextView.RecyclerViewHorizontalItem">
-        <item name="android:layout_marginStart">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
     </style>
 </resources>
