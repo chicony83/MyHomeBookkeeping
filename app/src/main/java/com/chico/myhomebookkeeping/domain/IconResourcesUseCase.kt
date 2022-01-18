@@ -10,4 +10,8 @@ object IconResourcesUseCase {
     ):Long{
         return db.addNewIcon(newIcon)
     }
+
+    suspend fun getIconsList(db: IconResourcesDao): List<IconsResource> {
+        return db.getListIcons()
+    }
 }

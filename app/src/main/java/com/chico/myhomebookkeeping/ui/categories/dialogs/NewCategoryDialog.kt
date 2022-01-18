@@ -7,15 +7,22 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
+import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
+import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
 import com.chico.myhomebookkeeping.utils.getString
+import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import java.lang.IllegalStateException
 
 class NewCategoryDialog(
     private val result: Any,
     private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack
 ) : DialogFragment() {
+//    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -70,7 +77,7 @@ class NewCategoryDialog(
                 )
             }
 
-            iconImg.setOnClickListener { }
+            iconImg.setOnClickListener { showSelectIconDialog()}
 
             cancelButton.setOnClickListener {
                 dialogCancel()
@@ -78,6 +85,17 @@ class NewCategoryDialog(
             builder.setView(layout)
             builder.create()
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun showSelectIconDialog() {
+        launchIo {
+            val db:IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
+            val iconsList = IconResourcesUseCase.getIconsList(db)
+            launchUi {
+                val dialog = SelectIconDialog(iconsList)
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            }
+        }
     }
 
     private fun checkAndAddCategory(
