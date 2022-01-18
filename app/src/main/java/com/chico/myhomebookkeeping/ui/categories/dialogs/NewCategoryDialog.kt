@@ -29,6 +29,8 @@ class NewCategoryDialog(
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
 
+            val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
+
             val addButton = layout.findViewById<Button>(R.id.addNewCategoryButton)
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelCreateButton)
@@ -39,6 +41,9 @@ class NewCategoryDialog(
             fun buttonsList() = listOf(
                 addButton, addAndSelectButton
             )
+
+            iconImg.setImageResource(R.drawable.no_image)
+
             nameEditText.addTextChangedListener(
                 EditNameTextWatcher(
                     namesList = namesList,
@@ -64,6 +69,8 @@ class NewCategoryDialog(
                     isSelectAfterAdd = false
                 )
             }
+
+            iconImg.setOnClickListener { }
 
             cancelButton.setOnClickListener {
                 dialogCancel()

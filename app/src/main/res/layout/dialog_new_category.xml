@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DialogLayout"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/category_name"
-        style="@style/DialogEnterNewName" />
+        style="@style/DialogEnterNewName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/error_this_name_is_taken"
         style="@style/Description.MessageOfBusyName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_name"
         tools:visibility="visible" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/verticalCenterOfDialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken">
 
         <RadioButton
             android:id="@+id/incoming_radio_button"
@@ -32,23 +42,48 @@
             android:text="@string/text_on_radio_button_spending_category" />
     </RadioGroup>
 
+    <ImageView
+        android:contentDescription="@string/content_description_icon_item_of_category"
+        android:id="@+id/iconImg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/addAndSelectNewItemButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/verticalCenterOfDialog"
+        app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken" />
+
     <Button
         android:id="@+id/addAndSelectNewItemButton"
-        style="@style/ButtonFullWidth.AddAndSelect" />
+        style="@style/ButtonFullWidth.AddAndSelect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
-    <LinearLayout style="@style/DialogLayout.PositiveNegativeButtons">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalCenterOfDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-        <Button
-            android:id="@+id/addNewCategoryButton"
-            style="@style/DialogButtonLeft.Positive"
-            android:layout_weight="1"
-            android:text="@string/text_on_button_add" />
 
-        <Button
-            android:id="@+id/cancelCreateButton"
-            style="@style/DialogButtonRight.Negative"
-            android:layout_weight="1"
-            android:text="@string/text_on_button_cancel" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/addNewCategoryButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:layout_weight="1"
+        android:text="@string/text_on_button_add"
+        app:layout_constraintEnd_toStartOf="@id/verticalCenterOfDialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addAndSelectNewItemButton" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/cancelCreateButton"
+        style="@style/DialogButtonRight.Negative"
+        android:layout_weight="1"
+        android:text="@string/text_on_button_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/verticalCenterOfDialog"
+        app:layout_constraintTop_toBottomOf="@id/addAndSelectNewItemButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
