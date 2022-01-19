@@ -100,6 +100,7 @@
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.35563380281690143" />
         <entry key="app/src/main/res/layout/recycler_view_item_reports.xml" value="0.282312925170068" />
+        <entry key="app/src/main/res/layout/row_icons_dialog.xml" value="0.409375" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35572916666666665" />

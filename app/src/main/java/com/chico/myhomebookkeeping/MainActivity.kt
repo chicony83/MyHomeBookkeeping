@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping
 
 import android.content.SharedPreferences
+import android.graphics.Point
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -46,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+//
+//        val display = windowManager.defaultDisplay
+//        val size = Point()
+//        display.getSize(size)
 
 //        eraseSP = EraseSP(spEditor)
         uiMode()
