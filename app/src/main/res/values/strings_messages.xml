@@ -27,4 +27,5 @@
     <string name="message_currency_added">Currency added</string>
     <string name="message_currency_not_added">Error\nCurrency not added</string>
 
+    <string name="message_icon_is_not_selected">Icon is not selected</string>
 </resources>

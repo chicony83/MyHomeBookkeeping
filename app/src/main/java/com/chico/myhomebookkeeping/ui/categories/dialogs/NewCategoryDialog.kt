@@ -11,6 +11,8 @@ import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
+import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
 import com.chico.myhomebookkeeping.utils.getString
@@ -92,7 +94,13 @@ class NewCategoryDialog(
             val db:IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
             val iconsList = IconResourcesUseCase.getIconsList(db)
             launchUi {
-                val dialog = SelectIconDialog(iconsList)
+                val dialog = SelectIconDialog(iconsList, object: OnItemSelectForSelectCallBackInt{
+                    override fun onSelect(id: Int) {
+                        Message.log("selected icon Id = $id")
+                    }
+
+                }
+                )
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }

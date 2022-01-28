@@ -18,7 +18,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnAddNewCashAccountsCallBack
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnChangeCashAccountCallBack
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.ChangeCashAccountDialog
@@ -105,7 +105,7 @@ class CashAccountFragment : Fragment() {
                             showChangeCashAccountDialog(cashAccount)
                         }
                     },
-                    object : OnItemSelectForSelectCallBack {
+                    object : OnItemSelectForSelectCallBackInt {
                         override fun onSelect(id: Int) {
                             cashAccountViewModel.saveData(navControlHelper, id)
                             navControlHelper.moveToPreviousFragment()

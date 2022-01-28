@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import java.lang.IllegalStateException
@@ -15,7 +15,7 @@ import java.lang.IllegalStateException
 class SelectCurrencyDialog(
     val currencies: Currencies?,
     private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) :
     DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -41,7 +41,7 @@ class SelectCurrencyDialog(
 
             selectButton.setOnClickListener {
                 currencies?.currencyId?.let { it1 ->
-                    onItemSelectForSelectCallBack.onSelect(
+                    onItemSelectForSelectCallBackInt.onSelect(
                         it1
                     )
                 }

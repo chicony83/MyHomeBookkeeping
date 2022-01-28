@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.currencies.OnAddNewCurrencyCallBack
@@ -98,7 +98,7 @@ class CurrenciesFragment : Fragment() {
                             showChangeCurrencyDialog(currencies)
                         }
                     },
-                    object : OnItemSelectForSelectCallBack {
+                    object : OnItemSelectForSelectCallBackInt {
                         override fun onSelect(id: Int) {
                             currenciesViewModel.saveData(navControlHelper, id)
                             navControlHelper.moveToPreviousFragment()

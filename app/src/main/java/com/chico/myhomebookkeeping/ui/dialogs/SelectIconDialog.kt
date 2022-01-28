@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.dialogs
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
-import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -13,15 +12,17 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import java.lang.IllegalStateException
 
 class SelectIconDialog(
-    private val iconsList: List<IconsResource>
+    private val iconsList: List<IconsResource>,
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) : DialogFragment() {
 
     @SuppressLint("NewApi")
     var displayWidth: Int = 0
-
+    var selectedIconId: Int = 0
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -35,6 +36,20 @@ class SelectIconDialog(
 
             val selectButton = layout.findViewById<Button>(R.id.selectButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
+
+            selectButton.setOnClickListener {
+                if (selectedIconId > 0) {
+                    onItemSelectForSelectCallBackInt.onSelect(selectedIconId)
+                    dialogCancel()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.message_icon_is_not_selected),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
 
             cancelButton.setOnClickListener {
                 dialogCancel()
@@ -81,7 +96,7 @@ class SelectIconDialog(
 
                 if (prevImgId > 0) {
                     Message.log("prev img ID = $prevImgId")
-                    val prevImg:ImageView = imageView.rootView.findViewById(prevImgId)
+                    val prevImg: ImageView = imageView.rootView.findViewById(prevImgId)
                     prevImg.background = nullBorder
                     prevImgId = imageView.id
                 }
@@ -89,6 +104,7 @@ class SelectIconDialog(
                     prevImgId = imageView.id
                     Message.log("set first prev img ID = ${prevImgId.toInt()}")
                 }
+                selectedIconId = imageView.id
             }
             parentLayout.addView(imageView, param)
         }

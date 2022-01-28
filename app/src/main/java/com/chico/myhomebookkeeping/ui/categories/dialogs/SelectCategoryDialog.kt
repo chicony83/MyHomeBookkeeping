@@ -9,13 +9,13 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import java.lang.IllegalStateException
 
 class SelectCategoryDialog(
     private val categories: Categories?,
     private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->
@@ -39,7 +39,7 @@ class SelectCategoryDialog(
             }
             selectButton.setOnClickListener {
                 categories?.categoriesId?.let { it1 ->
-                    onItemSelectForSelectCallBack.onSelect(it1)
+                    onItemSelectForSelectCallBackInt.onSelect(it1)
                 }
                 dialogCancel()
             }

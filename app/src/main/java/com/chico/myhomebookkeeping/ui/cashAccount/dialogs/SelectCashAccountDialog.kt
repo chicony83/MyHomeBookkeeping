@@ -9,13 +9,13 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import java.lang.IllegalStateException
 
 class SelectCashAccountDialog(
     private val cashAccount: CashAccount?,
     private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBack: OnItemSelectForSelectCallBack
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -39,7 +39,7 @@ class SelectCashAccountDialog(
             }
             selectButton.setOnClickListener {
                 cashAccount?.cashAccountId?.let { it1 ->
-                    onItemSelectForSelectCallBack.onSelect(it1)
+                    onItemSelectForSelectCallBackInt.onSelect(it1)
                 }
                 dialogCancel()
             }

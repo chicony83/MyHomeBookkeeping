@@ -19,7 +19,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.*
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBack
+import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
@@ -144,7 +144,7 @@ class CategoriesFragment : Fragment() {
                             showChangeCategoryDialog(category)
                         }
                     },
-                    object : OnItemSelectForSelectCallBack {
+                    object : OnItemSelectForSelectCallBackInt {
                         override fun onSelect(id: Int) {
                             categoriesViewModel.saveData(navControlHelper, id)
                             navControlHelper.moveToPreviousFragment()
