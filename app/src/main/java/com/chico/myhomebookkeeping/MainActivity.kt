@@ -47,12 +47,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
-//
-//        val display = windowManager.defaultDisplay
-//        val size = Point()
-//        display.getSize(size)
 
-//        eraseSP = EraseSP(spEditor)
         uiMode()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)

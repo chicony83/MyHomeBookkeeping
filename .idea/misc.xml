@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/border.xml" value="0.418974358974359" />
+        <entry key="app/src/main/res/drawable/border_null.xml" value="0.36615384615384616" />
         <entry key="app/src/main/res/drawable/button_background_color.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/button_day_background.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/button_night.xml" value="0.371875" />
