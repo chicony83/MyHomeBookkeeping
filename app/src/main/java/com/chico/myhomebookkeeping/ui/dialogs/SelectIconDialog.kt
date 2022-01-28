@@ -53,13 +53,12 @@ class SelectIconDialog(
     private fun buildLayout(layout: View) {
         val parentLayout = layout.findViewById<GridLayout>(R.id.iconsLayout)
 
-        val border = Paint()
-
         val height: Int = displayWidth / 8
         val width: Int = displayWidth / 8
 
         val param = RelativeLayout.LayoutParams(height, width)
         val margin = displayWidth / 32
+
         param.topMargin = margin
         param.leftMargin = margin
         param.bottomMargin = margin
@@ -70,23 +69,15 @@ class SelectIconDialog(
         for (i in iconsList.indices) {
             val imageView = ImageView(requireContext())
             imageView.setImageResource(iconsList[i].iconResources)
-//            imageView.contentDescription = iconsList[i].id.toString()
 
             val presetBorder = resources.getDrawable(R.drawable.border, null)
             val nullBorder = resources.getDrawable(R.drawable.border_null, null)
 
             imageView.id = iconsList[i].id?.toInt() ?: 0
 
-//            Message.log("image view tag = ${imageView.tag.toString()}")
-
             imageView.setOnClickListener {
                 imageView.background = presetBorder
-//                val some = 1
-//                val prevView:ImageView = imageView.rootView.findViewById(some)
-
-//                prevPressedViewTAG = imageView.tag.toString()
                 Message.log("pressed id  = ${imageView.id.toString()}")
-//                findPrevView(imageView, prevPressedViewTAG)
 
                 if (prevImgId > 0) {
                     Message.log("prev img ID = $prevImgId")
@@ -99,19 +90,7 @@ class SelectIconDialog(
                     Message.log("set first prev img ID = ${prevImgId.toInt()}")
                 }
             }
-
             parentLayout.addView(imageView, param)
         }
     }
-
-
-//    private fun initBorderPaint(border: Paint) {
-//        val strokeWidthFloat = 2F
-//        with(border) {
-//            isAntiAlias = true
-//            style = Paint.Style.STROKE
-//            color = Color.GRAY
-//            strokeWidth = strokeWidthFloat
-//        }
-//    }
 }
