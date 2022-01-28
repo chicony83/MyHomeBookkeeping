@@ -28,6 +28,7 @@ class NewCategoryDialog(
     ) : DialogFragment() {
     //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     private lateinit var iconImg: ImageView
+    private var selectedIconId = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -107,6 +108,7 @@ class NewCategoryDialog(
                                     iconImg.setImageResource(icon.iconResources)
                                 }
                             }
+                            selectedIconId = id
                         }
                     }
 
@@ -135,14 +137,16 @@ class NewCategoryDialog(
                         onAddNewCategoryCallBack.addAndSelect(
                             name = name,
                             isIncome = true,
-                            isSelectAfterAdd
+                            icon = selectedIconId,
+                            isSelect = isSelectAfterAdd
                         )
                         dialogCancel()
                     } else if (spendingRadioButton.isChecked) {
                         onAddNewCategoryCallBack.addAndSelect(
                             name = name,
                             isIncome = false,
-                            isSelectAfterAdd
+                            icon = selectedIconId,
+                            isSelect = isSelectAfterAdd
                         )
                         dialogCancel()
                     }

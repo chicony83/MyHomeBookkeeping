@@ -171,11 +171,16 @@ class CategoriesFragment : Fragment() {
         launchUi {
             val dialog = NewCategoryDialog(result, object : OnAddNewCategoryCallBack {
 
-                override fun addAndSelect(name: String, isIncome: Boolean, isSelect: Boolean) {
+                override fun addAndSelect(
+                    name: String,
+                    isIncome: Boolean,
+                    isSelect: Boolean,
+                    icon: Int
+                ) {
                     val category = Categories(
                         categoryName = name,
                         isIncome = isIncome,
-                        icon = null
+                        icon = icon
                     )
                     val result: Long = categoriesViewModel.addNewCategory(category)
                     if (isSelect) {
