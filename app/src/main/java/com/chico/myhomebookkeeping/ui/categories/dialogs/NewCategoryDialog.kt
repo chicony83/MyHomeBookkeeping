@@ -9,6 +9,7 @@ import com.chico.myhomebookkeeping.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.helpers.Message
@@ -22,9 +23,11 @@ import java.lang.IllegalStateException
 
 class NewCategoryDialog(
     private val result: Any,
-    private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack
-) : DialogFragment() {
-//    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
+    private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack,
+
+    ) : DialogFragment() {
+    //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
+    private lateinit var iconImg: ImageView
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -38,7 +41,7 @@ class NewCategoryDialog(
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
 
-            val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
+            iconImg = layout.findViewById<ImageView>(R.id.iconImg)
 
             val addButton = layout.findViewById<Button>(R.id.addNewCategoryButton)
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)
@@ -79,7 +82,7 @@ class NewCategoryDialog(
                 )
             }
 
-            iconImg.setOnClickListener { showSelectIconDialog()}
+            iconImg.setOnClickListener { showSelectIconDialog() }
 
             cancelButton.setOnClickListener {
                 dialogCancel()
@@ -91,12 +94,20 @@ class NewCategoryDialog(
 
     private fun showSelectIconDialog() {
         launchIo {
-            val db:IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
+            val db: IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
             val iconsList = IconResourcesUseCase.getIconsList(db)
             launchUi {
-                val dialog = SelectIconDialog(iconsList, object: OnItemSelectForSelectCallBackInt{
+                val dialog = SelectIconDialog(iconsList, object : OnItemSelectForSelectCallBackInt {
                     override fun onSelect(id: Int) {
                         Message.log("selected icon Id = $id")
+                        if (id > 0) {
+                            launchIo {
+                                val icon: IconsResource = IconResourcesUseCase.getIconById(db, id)
+                                launchUi {
+                                    iconImg.setImageResource(icon.iconResources)
+                                }
+                            }
+                        }
                     }
 
                 }

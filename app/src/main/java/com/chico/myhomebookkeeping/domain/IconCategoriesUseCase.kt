@@ -12,4 +12,5 @@ object IconCategoriesUseCase {
     suspend fun getAllIconCategories(db: IconCategoryDao): List<IconCategory> {
         return db.getAllIconCategories()
     }
+
 }

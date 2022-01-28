@@ -12,4 +12,7 @@ interface IconResourcesDao {
 
     @Query("SELECT * FROM icon_resource_table")
     suspend fun getListIcons(): List<IconsResource>
+
+    @Query("SELECT * FROM icon_resource_table WHERE id = :id")
+    suspend fun getIconById(id: Int): IconsResource
 }

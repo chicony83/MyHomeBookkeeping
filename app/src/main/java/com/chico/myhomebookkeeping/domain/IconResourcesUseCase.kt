@@ -14,4 +14,8 @@ object IconResourcesUseCase {
     suspend fun getIconsList(db: IconResourcesDao): List<IconsResource> {
         return db.getListIcons()
     }
+
+    suspend fun getIconById(db: IconResourcesDao, id: Int): IconsResource {
+        return db.getIconById(id)
+    }
 }
