@@ -12,17 +12,18 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
+import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import java.lang.IllegalStateException
 
 class SelectIconDialog(
     private val iconsList: List<IconsResource>,
-    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
+    private val onSelectIconCallBack: OnSelectIconCallBack
+//    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) : DialogFragment() {
 
     @SuppressLint("NewApi")
     var displayWidth: Int = 0
-    var selectedIconId: Int = 0
+    var selectedIconId: Long = 0
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -39,7 +40,14 @@ class SelectIconDialog(
 
             selectButton.setOnClickListener {
                 if (selectedIconId > 0) {
-                    onItemSelectForSelectCallBackInt.onSelect(selectedIconId)
+                    iconsList.find {
+                        Message.log("finding ")
+                        selectedIconId == it.id
+                    }?.let { it1 ->
+                        Message.log("find")
+                        onSelectIconCallBack.selectIcon(icon = it1)
+                    }
+//                    onItemSelectForSelectCallBackInt.onSelect(selectedIconId)
                     dialogCancel()
                 } else {
                     Toast.makeText(
@@ -79,7 +87,7 @@ class SelectIconDialog(
         param.bottomMargin = margin
         param.rightMargin = margin
 
-        var prevImgId: Int = 0
+        var prevImgId = 0
 
         for (i in iconsList.indices) {
             val imageView = ImageView(requireContext())
@@ -102,9 +110,10 @@ class SelectIconDialog(
                 }
                 if (prevImgId == 0) {
                     prevImgId = imageView.id
-                    Message.log("set first prev img ID = ${prevImgId.toInt()}")
+                    Message.log("set first prev img ID = ${prevImgId}")
                 }
-                selectedIconId = imageView.id
+                selectedIconId = imageView.id.toLong()
+
             }
             parentLayout.addView(imageView, param)
         }

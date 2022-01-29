@@ -13,7 +13,7 @@ import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
+import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
 import com.chico.myhomebookkeeping.utils.getString
@@ -28,7 +28,7 @@ class NewCategoryDialog(
     ) : DialogFragment() {
     //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     private lateinit var iconImg: ImageView
-    private var selectedIconId = 0
+    private lateinit var selectedIcon:IconsResource
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -98,19 +98,27 @@ class NewCategoryDialog(
             val db: IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
             val iconsList = IconResourcesUseCase.getIconsList(db)
             launchUi {
-                val dialog = SelectIconDialog(iconsList, object : OnItemSelectForSelectCallBackInt {
-                    override fun onSelect(id: Int) {
-                        Message.log("selected icon Id = $id")
-                        if (id > 0) {
-                            launchIo {
-                                val icon: IconsResource = IconResourcesUseCase.getIconById(db, id)
-                                launchUi {
-                                    iconImg.setImageResource(icon.iconResources)
-                                }
-                            }
-                            selectedIconId = id
-                        }
+                val dialog = SelectIconDialog(iconsList, object : OnSelectIconCallBack {
+                    override fun selectIcon(icon: IconsResource) {
+//                        val selectedIcon = icon
+                        Message.log("selected icon Id = ${icon.id}")
+                        selectedIcon = icon
+                        iconImg.setImageResource(icon.iconResources)
+
                     }
+
+//                    override fun onSelect(id: Int) {
+//                        Message.log("selected icon Id = $id")
+//                        if (id > 0) {
+//                            launchIo {
+//                                val icon: IconsResource = IconResourcesUseCase.getIconById(db, id)
+//                                launchUi {
+//                                    iconImg.setImageResource(icon.iconResources)
+//                                }
+//                            }
+//                            selectedIconId = id
+//                        }
+//                    }
 
                 }
                 )
@@ -137,7 +145,7 @@ class NewCategoryDialog(
                         onAddNewCategoryCallBack.addAndSelect(
                             name = name,
                             isIncome = true,
-                            icon = selectedIconId,
+                            icon = selectedIcon.iconResources,
                             isSelect = isSelectAfterAdd
                         )
                         dialogCancel()
@@ -145,7 +153,7 @@ class NewCategoryDialog(
                         onAddNewCategoryCallBack.addAndSelect(
                             name = name,
                             isIncome = false,
-                            icon = selectedIconId,
+                            icon = selectedIcon.iconResources,
                             isSelect = isSelectAfterAdd
                         )
                         dialogCancel()
