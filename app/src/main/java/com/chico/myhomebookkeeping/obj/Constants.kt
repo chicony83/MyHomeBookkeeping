@@ -67,7 +67,6 @@ object Constants {
     const val SP_PASS = "pass"
     const val SP_PASS_PROMPT = "pass_prompt"
 
-
     const val TEXT_EMPTY = ""
     const val TEXT_NONE = ""
     const val MINUS_ONE_VAL_INT: Int = -1
@@ -79,4 +78,6 @@ object Constants {
 
     const val SORTING_CATEGORIES = "sorting_categories"
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
+
+    const val WHATS_NEW_IN_LAST_VERSION = "whats_new_in_last_version"
 }

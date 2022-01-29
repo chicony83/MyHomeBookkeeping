@@ -54,6 +54,7 @@
         <entry key="app/src/main/res/layout/dialog_submit_delete.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/dialog_submit_delete_fast_payment.xml" value="0.4546875" />
         <entry key="app/src/main/res/layout/dialog_submit_delete_money_moving.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/dialog_what_new_in_last_version.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_blanks.xml" value="0.23177083333333334" />
         <entry key="app/src/main/res/layout/fragment_cash_account.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.22192028985507245" />
