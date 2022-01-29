@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.*
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
+import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 
@@ -85,6 +86,11 @@ class FastPaymentsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         fastPaymentsViewModel.getFullFastPaymentsList()
+        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()){
+            val dialog = WhatNewInLastVersionDialog()
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            fastPaymentsViewModel.setLastVersionChecked()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -183,5 +184,15 @@ class FastPaymentsViewModel(
 
     fun setSortingCategories(sorting: String) {
         setSP.saveToSP(argsSortingFastPayments, sorting)
+    }
+
+    fun isLastVersionOfProgramChecked(): Boolean {
+        val lastCheckedVersion = getSp.getInt(Constants.LAST_CHECKED_VERSION)
+        val currentVersion = BuildConfig.VERSION_CODE
+        return lastCheckedVersion == currentVersion
+    }
+
+    fun setLastVersionChecked() {
+        setSP.saveToSP(Constants.LAST_CHECKED_VERSION,BuildConfig.VERSION_CODE)
     }
 }
