@@ -89,26 +89,25 @@ class CategoriesFragment : Fragment() {
                 navControlHelper.moveToMoneyMovingFragment()
             }
             sortingButton.setOnClickListener {
-                Message.log("click popup menu button")
                 val popupMenu = PopupMenu(context, sortingButton)
                 popupMenu.menuInflater.inflate(R.menu.pop_up_menu_sorting_categories, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.sort_by_numbers_ASC -> {
-                            Message.log("sort by numbers ASC")
+//                            Message.log("sort by numbers ASC")
                             sortingCategories(SortingCategories.NumbersByASC.toString())
                         }
                         R.id.sort_by_numbers_DESC -> {
                             sortingCategories(SortingCategories.NumbersByDESC.toString())
-                            Message.log("Sort by numbers DESC")
+//                            Message.log("Sort by numbers DESC")
                         }
                         R.id.sort_by_alphabet_ASC -> {
                             sortingCategories(SortingCategories.AlphabetByASC.toString())
-                            Message.log("Sorting by alphabet ASC")
+//                            Message.log("Sorting by alphabet ASC")
                         }
                         R.id.sort_by_alphabet_DESC -> {
                             sortingCategories(SortingCategories.AlphabetByDESC.toString())
-                            Message.log("Sorting by alphabet DESC")
+//                            Message.log("Sorting by alphabet DESC")
                         }
                     }
                     true

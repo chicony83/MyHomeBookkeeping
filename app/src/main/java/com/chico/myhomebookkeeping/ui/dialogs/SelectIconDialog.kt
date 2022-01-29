@@ -41,10 +41,8 @@ class SelectIconDialog(
             selectButton.setOnClickListener {
                 if (selectedIconId > 0) {
                     iconsList.find {
-                        Message.log("finding ")
                         selectedIconId == it.id
                     }?.let { it1 ->
-                        Message.log("find")
                         onSelectIconCallBack.selectIcon(icon = it1)
                     }
 //                    onItemSelectForSelectCallBackInt.onSelect(selectedIconId)
@@ -70,7 +68,6 @@ class SelectIconDialog(
     private fun dialogCancel() {
         dialog?.cancel()
     }
-
 
     @SuppressLint("ResourceType", "UseCompatLoadingForDrawables")
     private fun buildLayout(layout: View) {
@@ -100,20 +97,15 @@ class SelectIconDialog(
 
             imageView.setOnClickListener {
                 imageView.background = presetBorder
-                Message.log("pressed id  = ${imageView.id.toString()}")
-
                 if (prevImgId > 0) {
-                    Message.log("prev img ID = $prevImgId")
                     val prevImg: ImageView = imageView.rootView.findViewById(prevImgId)
                     prevImg.background = nullBorder
                     prevImgId = imageView.id
                 }
                 if (prevImgId == 0) {
                     prevImgId = imageView.id
-                    Message.log("set first prev img ID = ${prevImgId}")
                 }
                 selectedIconId = imageView.id.toLong()
-
             }
             parentLayout.addView(imageView, param)
         }

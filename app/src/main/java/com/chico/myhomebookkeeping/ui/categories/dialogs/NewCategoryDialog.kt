@@ -28,7 +28,7 @@ class NewCategoryDialog(
     ) : DialogFragment() {
     //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     private lateinit var iconImg: ImageView
-    private lateinit var selectedIcon:IconsResource
+    private lateinit var selectedIcon: IconsResource
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -100,26 +100,11 @@ class NewCategoryDialog(
             launchUi {
                 val dialog = SelectIconDialog(iconsList, object : OnSelectIconCallBack {
                     override fun selectIcon(icon: IconsResource) {
-//                        val selectedIcon = icon
-                        Message.log("selected icon Id = ${icon.id}")
+//                        Message.log("selected icon Id = ${icon.id}")
                         selectedIcon = icon
                         iconImg.setImageResource(icon.iconResources)
 
                     }
-
-//                    override fun onSelect(id: Int) {
-//                        Message.log("selected icon Id = $id")
-//                        if (id > 0) {
-//                            launchIo {
-//                                val icon: IconsResource = IconResourcesUseCase.getIconById(db, id)
-//                                launchUi {
-//                                    iconImg.setImageResource(icon.iconResources)
-//                                }
-//                            }
-//                            selectedIconId = id
-//                        }
-//                    }
-
                 }
                 )
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))

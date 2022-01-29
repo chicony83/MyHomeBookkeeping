@@ -71,7 +71,7 @@ class CategoriesViewModel(
 
     private fun loadCategories() {
         sortingCategoriesStringSP = getSortingValueFromSP()
-        Message.log("get sortingCategoriesStringSP = $sortingCategoriesStringSP")
+//        Message.log("get sortingCategoriesStringSP = $sortingCategoriesStringSP")
         launchIo {
             when (sortingCategoriesStringSP) {
                 SortingCategories.NumbersByASC.toString() -> {
@@ -117,7 +117,7 @@ class CategoriesViewModel(
     private fun reloadCategories(long: Long) {
         if (long > 0) {
             loadCategories()
-            Log.i("TAG", "recycler reloaded")
+//            Log.i("TAG", "recycler reloaded")
         }
     }
 
