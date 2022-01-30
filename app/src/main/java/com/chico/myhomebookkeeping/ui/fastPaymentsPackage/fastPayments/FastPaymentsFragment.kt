@@ -86,11 +86,11 @@ class FastPaymentsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         fastPaymentsViewModel.getFullFastPaymentsList()
-//        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()){
+        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()){
             val dialog = WhatNewInLastVersionDialog()
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             fastPaymentsViewModel.setLastVersionChecked()
-//        }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
