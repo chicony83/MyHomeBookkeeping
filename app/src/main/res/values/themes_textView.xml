@@ -68,4 +68,17 @@
     <style name="TextView.RecyclerViewHorizontalItem">
         <item name="android:layout_marginStart">@dimen/margin_normal</item>
     </style>
+
+    <style name="Description.LastVersion">
+        <item name="android:textSize">@dimen/H4</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_normal</item>
+    </style>
+
+    <style name="Description.LastVersion.Header">
+        <item name="android:textSize">@dimen/H1</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
