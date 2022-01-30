@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="string_last_version_0_9_2"> это последняя версия</string>
+    <string name="string_last_version_title">Список изменений</string>
+    <string name="string_last_version_0_9_2">0.9.2\nВ категории добавлены иконки.</string>
+    <string name="string_last_version_0_9_1_1">0.9.1.1\nВ отчетах исправлены некоторые ошибки.</string>
+    <string name="string_last_version_0_9_1">0.9.1\nДобавлена сортировка в быстрых платежах.</string>
+    <string name="string_last_version_0_9_0">0.9.0\nДобавлены быстрые платежи.</string>
+    <string name="string_last_version_0_8_8_2">0.8.8.2\nНекоторые доработки в интерфейсе.</string>
+    <string name="string_last_version_0_8_8_1">0.8.8.1\nВозможность выбрать временной период в отчетах.</string>
+    <string name="string_last_version_0_8_8_0">0.8.8.0\nВ отчетах исправлены некоторые ошибки.</string>
+    <string name="string_last_version_0_8_6_0">0.8.6.0\nДобавлено быстрое переключение между окнами.</string>
 </resources>
