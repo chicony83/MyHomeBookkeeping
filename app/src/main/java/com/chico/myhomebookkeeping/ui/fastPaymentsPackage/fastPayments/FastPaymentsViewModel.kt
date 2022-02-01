@@ -10,13 +10,14 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.FullFastPayment
-import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
+import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
+import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
@@ -194,5 +195,12 @@ class FastPaymentsViewModel(
 
     fun setLastVersionChecked() {
         setSP.saveToSP(Constants.LAST_CHECKED_VERSION,BuildConfig.VERSION_CODE)
+    }
+
+    suspend fun addIconsInDataBase() {
+        val iconDb:IconResourcesDao = dataBase.getDataBase(app.applicationContext).iconResourcesDao()
+//        val iconCategoryDB:IconCategoryDao = dataBase.getDataBase(app.applicationContext).iconCategoryDao()
+//        val numOfIconsCategories =
+//        val numOfIcons = IconResourcesUseCase.getIconsList(iconDb)
     }
 }

@@ -24,7 +24,7 @@ class FirstLaunchFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-    private var noImage = 0
+//    private lateinit var noImage:Drawable
 
 
     override fun onCreateView(
@@ -34,7 +34,7 @@ class FirstLaunchFragment : Fragment() {
     ): View {
         _binding = FragmentFirstLaunchBinding.inflate(inflater, container, false)
         firstLaunchViewModel = ViewModelProvider(this).get(FirstLaunchViewModel::class.java)
-        noImage = firstLaunchViewModel.getNoImageImage()
+//        noImage = firstLaunchViewModel.getNoImageImage()!!
         with(firstLaunchViewModel) {
             cardCashAccountItem.observe(viewLifecycleOwner, {
                 setImageResourceOnIcon(binding.cardCashAccountIcon, cardCashAccountItem)
@@ -81,7 +81,7 @@ class FirstLaunchFragment : Fragment() {
         imageView: ImageView,
         item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>
     ) {
-        imageView.setImageResource(item.value?.imageResource ?: noImage)
+        imageView.setImageResource(item.value?.imageResource ?: R.drawable.no_image)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,8 +94,10 @@ class FirstLaunchFragment : Fragment() {
             launchUi {
                 val listCashAccounts = getListCashAccounts()
                 val listCurrencies = getListCurrencies()
-                val listIncomingCategories = getListSelectedIncomeCategories(getListIncomeCheckBoxes())
-                val listSpendingCategories = getListSelectedSpendingCategories(getListSpendingCheckBoxes())
+                val listIncomingCategories =
+                    getListSelectedIncomeCategories(getListIncomeCheckBoxes())
+                val listSpendingCategories =
+                    getListSelectedSpendingCategories(getListSpendingCheckBoxes())
 
                 launchIo {
                     firstLaunchViewModel.addFirstLaunchElements(
@@ -147,12 +149,21 @@ class FirstLaunchFragment : Fragment() {
     )
 
     private fun getListSpendingCheckBoxes() = listOf(
-        getItem(firstLaunchViewModel.cellularCommunicationCategoryItem,binding.addCategoryCellularCommunicationCheckBox),
-        getItem(firstLaunchViewModel.creditsCategoryItem,binding.addCategoryCreditCheckBox),
-        getItem(firstLaunchViewModel.fuelForCarCategoryItem,binding.addCategoryFuelForTheCarCheckBox),
-        getItem(firstLaunchViewModel.productsCategoryItem,binding.addCategoryProductsCheckBox),
-        getItem(firstLaunchViewModel.medicinesCategoryItem,binding.addCategoryMedicinesCheckBox),
-        getItem(firstLaunchViewModel.publicTransportCategoryItem,binding.addCategoryPublicTransportCheckBox)
+        getItem(
+            firstLaunchViewModel.cellularCommunicationCategoryItem,
+            binding.addCategoryCellularCommunicationCheckBox
+        ),
+        getItem(firstLaunchViewModel.creditsCategoryItem, binding.addCategoryCreditCheckBox),
+        getItem(
+            firstLaunchViewModel.fuelForCarCategoryItem,
+            binding.addCategoryFuelForTheCarCheckBox
+        ),
+        getItem(firstLaunchViewModel.productsCategoryItem, binding.addCategoryProductsCheckBox),
+        getItem(firstLaunchViewModel.medicinesCategoryItem, binding.addCategoryMedicinesCheckBox),
+        getItem(
+            firstLaunchViewModel.publicTransportCategoryItem,
+            binding.addCategoryPublicTransportCheckBox
+        )
     )
 
     private fun getListCurrencies() = listOf(binding.addDefaultCurrencyCheckBox)
@@ -166,8 +177,12 @@ class FirstLaunchFragment : Fragment() {
         item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>,
         checkBox: CheckBox
     ): SelectedItemOfImageAndCheckBox {
+
+//        val imgRes = item.value?.imageResource
+
+
         return SelectedItemOfImageAndCheckBox(
-            item.value?.imageResource ?: noImage,
+            item.value?.imageResource ?: R.drawable.no_image,
             checkBox
         )
     }

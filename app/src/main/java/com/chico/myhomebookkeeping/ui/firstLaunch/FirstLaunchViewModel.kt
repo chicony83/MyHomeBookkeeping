@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -7,7 +8,6 @@ import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dataBase
@@ -15,13 +15,12 @@ import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
-import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
-import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
-import com.chico.myhomebookkeeping.enums.icons.CategoryIconNames
 import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.icons.AddIconCategories
+import com.chico.myhomebookkeeping.icons.AddIcons
+//import com.chico.myhomebookkeeping.icons.IconsMaps
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.*
 
@@ -76,53 +75,13 @@ class FirstLaunchViewModel(
     private val setSP = SetSP(spEditor)
     private val uiHelper = UiHelper()
 
-    private val packageName = app.packageName
-    private val categoryIconsList = getCategoriesIconsList()
-    private val cashAccountIconsMap: Map<String, Int> = getCashAccountIconsList()
+    private val addIconCategories = AddIconCategories()
+    @SuppressLint("NewApi")
+    private val addIcons = AddIcons(dbIconResources,app.resources,app.opPackageName)
 
-    private fun getCashAccountIconsList() = mapOf<String, Int>(
-        CashAccountIconNames.Card.name to getDrawable(R.drawable.cash_account_card),
-        CashAccountIconNames.Cash.name to getDrawable(R.drawable.cash_account_cash),
-        CashAccountIconNames.CardOff.name to getDrawable(R.drawable.cash_account_credit_card_off)
-    )
-
-    private fun getCategoriesIconsList() = mapOf<String, Int>(
-        CategoryIconNames.Apartment.name to getDrawable(R.drawable.category_apartment),
-        CategoryIconNames.Airplane.name to getDrawable(R.drawable.category_airplane),
-        CategoryIconNames.ArrowsHorizontal.name to getDrawable(R.drawable.category_arrows_horizontal),
-        CategoryIconNames.ArrowDropDown.name to getDrawable(R.drawable.category_arrow_drop_down),
-        CategoryIconNames.ArrowDropUp.name to getDrawable(R.drawable.category_arrow_drop_up),
-        CategoryIconNames.Bank.name to getDrawable(R.drawable.category_bank),
-        CategoryIconNames.Build.name to getDrawable(R.drawable.category_build),
-        CategoryIconNames.Bus.name to getDrawable(R.drawable.category_bus),
-        CategoryIconNames.Cake.name to getDrawable(R.drawable.category_cake),
-        CategoryIconNames.Car.name to getDrawable(R.drawable.category_car),
-        CategoryIconNames.Celebration.name to getDrawable(R.drawable.category_celebration),
-        CategoryIconNames.ChildFriendly.name to getDrawable(R.drawable.category_child_friendly),
-        CategoryIconNames.Coffee.name to getDrawable(R.drawable.category_coffee),
-        CategoryIconNames.Computer.name to getDrawable(R.drawable.category_computer),
-        CategoryIconNames.GasStation.name to getDrawable(R.drawable.category_gas_station),
-        CategoryIconNames.House.name to getDrawable(R.drawable.category_house),
-        CategoryIconNames.Medical.name to getDrawable(R.drawable.category_medical),
-        CategoryIconNames.Park.name to getDrawable(R.drawable.category_park),
-        CategoryIconNames.PedalBike.name to getDrawable(R.drawable.category_pedal_bike),
-        CategoryIconNames.People.name to getDrawable(R.drawable.category_people),
-        CategoryIconNames.Person.name to getDrawable(R.drawable.category_person),
-        CategoryIconNames.Pets.name to getDrawable(R.drawable.category_pets),
-        CategoryIconNames.Phone.name to getDrawable(R.drawable.category_phone),
-        CategoryIconNames.PhoneAndroid.name to getDrawable(R.drawable.category_phone_android),
-        CategoryIconNames.PhoneIphone.name to getDrawable(R.drawable.category_phone_iphone),
-        CategoryIconNames.Restaurant.name to getDrawable(R.drawable.category_restaurant),
-        CategoryIconNames.Salon.name to getDrawable(R.drawable.category_salon),
-        CategoryIconNames.School.name to getDrawable(R.drawable.category_school),
-        CategoryIconNames.ShoppingCart.name to getDrawable(R.drawable.category_shopping_cart),
-        CategoryIconNames.ShoppingCartAdd.name to getDrawable(R.drawable.category_shopping_cart_add),
-        CategoryIconNames.Store.name to getDrawable(R.drawable.category_store),
-        CategoryIconNames.Subway.name to getDrawable(R.drawable.category_subway),
-        CategoryIconNames.Wallet.name to getDrawable(R.drawable.category_wallet),
-        CategoryIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
-
-    )
+//    private val packageName = app.packageName
+//    private val categoryIconsList = getCategoriesIconsList()
+//    private val cashAccountIconsMap: Map<String, Int> = getCashAccountIconsList()
 
     fun setIsFirstLaunchFalse() {
         setSP.setIsFirstLaunchFalse()
@@ -203,7 +162,8 @@ class FirstLaunchViewModel(
         return dbCategories.addCategory(
             Categories(
                 item.checkBox.text.toString(), isIncome, item.img
-            ))
+            )
+        )
     }
 
     private fun addCurrencies(listCurrencies: List<CheckBox>): Boolean {
@@ -246,19 +206,17 @@ class FirstLaunchViewModel(
     }
 
     fun addIconCategories() {
-        val namesIconCategory = listOf<String>(
-            CategoriesOfIconsNames.CashAccounts.name,
-            CategoriesOfIconsNames.Categories.name,
-            CategoriesOfIconsNames.Currencies.name
-        )
         launchIo {
-            for (i in namesIconCategory.indices) {
-                IconCategoriesUseCase.addIconCategory(
-                    dbIconCategories,
-                    IconCategory(namesIconCategory[i])
-                )
-            }
+            addIconCategories.add(dbIconCategories)
         }
+//        launchIo {
+//            for (i in namesIconCategory.indices) {
+//                IconCategoriesUseCase.addIconCategory(
+//                    dbIconCategories,
+//                    IconCategory(namesIconCategory[i])
+//                )
+//            }
+//        }
     }
 
     fun addIconsResources() {
@@ -281,55 +239,14 @@ class FirstLaunchViewModel(
         }
     }
 
-    private suspend fun addCategoriesIconsInDB(iconCategory: IconCategory) {
-//        Message.log("---Add categories icons---")
-        addIconsRecourseList(
-            iconsList = categoryIconsList.values.toList(),
-            iconCategory = iconCategory
-        )
+    private fun addCategoriesIconsInDB(iconCategory: IconCategory) {
+        addIcons.addCategoriesIconsInDB(iconCategory)
     }
 
-    private suspend fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
-//        Message.log("---Add Cash accounts icons---")
-        addIconsRecourseList(
-            iconsList = cashAccountIconsMap.values.toList(),
-            iconCategory = iconCategory
-        )
+    private fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
+        addIcons.addCashAccountsIconsInDB(iconCategory)
     }
 
-    private suspend fun addIconsRecourseList(
-        iconsList: List<Int>,
-        iconCategory: IconCategory
-    ) {
-        for (i in iconsList.indices) {
-            addIconResource(iconCategory.id, iconsList[i])
-        }
-    }
-
-    private suspend fun addIconResource(iconCategory: Int?, iconResource: Int) {
-//        Message.log("---Add new icon resource---")
-        launchIo {
-            IconResourcesUseCase.addNewIconResource(
-                dbIconResources,
-                IconsResource(
-                    iconCategory = iconCategory ?: 0,
-                    iconResources = iconResource
-                )
-            )
-        }
-    }
-
-    private fun getDrawable(drawable: Int): Int {
-        return app.resources.getIdentifier(
-            app.resources.getResourceName(drawable),
-            "drawable",
-            packageName
-        )
-    }
-
-    fun getNoImageImage(): Int {
-        return getDrawable(R.drawable.no_image)
-    }
 
     fun updateValues() {
         updateValuesOfCashAccounts()
@@ -338,54 +255,59 @@ class FirstLaunchViewModel(
     }
 
     private fun updateValuesOfCategories() {
-        _salaryCategoryItem.postValue(
-            CategoryIconNames.Wallet.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
-        _productsCategoryItem.postValue(
-            CategoryIconNames.ShoppingCart.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
-        _fuelForCarCategoryItem.postValue(
-            CategoryIconNames.GasStation.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
-        _cellularCommunicationCategoryItem.postValue(
-            CategoryIconNames.PhoneAndroid.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
-        _creditsCategoryItem.postValue(
-            CategoryIconNames.Bank.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
-        _medicinesCategoryItem.postValue(
-            CategoryIconNames.Medical.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
-        _publicTransportCategoryItem.postValue(
-            CategoryIconNames.Bus.name.let {
-                ItemOfFirstLaunch(it, categoryIconsList[it])
-            }
-        )
+//        val categoryIconsMap = IconsMaps().getCategoriesIconsMap()
+//
+//        _salaryCategoryItem.postValue(
+//            CategoryIconNames.Wallet.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+//        _productsCategoryItem.postValue(
+//            CategoryIconNames.ShoppingCart.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+//        _fuelForCarCategoryItem.postValue(
+//            CategoryIconNames.GasStation.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+//        _cellularCommunicationCategoryItem.postValue(
+//            CategoryIconNames.PhoneAndroid.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+//        _creditsCategoryItem.postValue(
+//            CategoryIconNames.Bank.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+//        _medicinesCategoryItem.postValue(
+//            CategoryIconNames.Medical.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+//        _publicTransportCategoryItem.postValue(
+//            CategoryIconNames.Bus.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
     }
 
     private fun updateValuesOfCashAccounts() {
-        _cardCashAccountItem.postValue(
-            CashAccountIconNames.Card.name.let {
-                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
-            }
-        )
-        _cashCashAccountItem.postValue(
-            CashAccountIconNames.Cash.name.let {
-                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
-            }
-        )
+//
+//        val cashAccountIconsMap = IconsMaps().getCashAccountIconsList()
+//
+//        _cardCashAccountItem.postValue(
+//            CashAccountIconNames.Card.name.let {
+//                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
+//            }
+//        )
+//        _cashCashAccountItem.postValue(
+//            CashAccountIconNames.Cash.name.let {
+//                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
+//            }
+//        )
     }
 
     data class ItemOfFirstLaunch(val name: String, val imageResource: Int?)

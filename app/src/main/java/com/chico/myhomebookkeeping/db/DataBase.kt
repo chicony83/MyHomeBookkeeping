@@ -60,7 +60,7 @@ private object migration_2_to_3 : Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("CREATE TABLE IF NOT EXISTS 'icon_category_table' ('id' INTEGER, 'name' TEXT NOT NULL, PRIMARY KEY('id'))")
         database.execSQL("CREATE TABLE IF NOT EXISTS 'parent_categories_table' ('id' INTEGER, 'name' TEXT NOT NULL, 'icon_parent_category' INTEGER, PRIMARY KEY ('id'))")
-        database.execSQL("CREATE TABLE IF NOT EXISTS 'icon_resource_table' ('id' INTEGER, 'icon_category' INTEGER, 'icon_resource' INTEGER NOT NULL, PRIMARY KEY ('id') ) ")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'icon_resource_table' ('id' INTEGER, 'icon_name'TEXT NOT NULL, 'icon_category' INTEGER, 'icon_resource' INTEGER NOT NULL, PRIMARY KEY ('id') ) ")
         database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'icon_currency' INTEGER ")
         database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'icon_category' INTEGER ")
         database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'icon_cash_account' INTEGER ")
