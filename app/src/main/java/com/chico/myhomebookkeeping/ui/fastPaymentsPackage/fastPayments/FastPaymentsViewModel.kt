@@ -9,15 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
-import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
-import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons

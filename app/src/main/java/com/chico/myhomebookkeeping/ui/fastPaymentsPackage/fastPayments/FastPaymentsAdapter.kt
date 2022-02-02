@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBinding
-import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 
 class FastPaymentsAdapter(

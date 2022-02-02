@@ -169,7 +169,7 @@ class ChangeMoneyMovingViewModel(
             moneyMovement?.cashAccount ?: 0
         }
         _selectedCashAccount.postValue(
-            CashAccountsUseCase.getOneCashAccount(
+            CashAccountsUseCase.getOneCashAccountById(
                 dbCashAccount,
                 postingId
             )

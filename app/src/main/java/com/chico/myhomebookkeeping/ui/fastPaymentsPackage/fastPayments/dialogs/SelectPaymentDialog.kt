@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBackLong
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackLong
 import java.lang.IllegalStateException

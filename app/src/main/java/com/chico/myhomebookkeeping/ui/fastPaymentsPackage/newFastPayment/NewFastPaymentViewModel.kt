@@ -20,7 +20,6 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.helpers.Around
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -144,7 +143,7 @@ class NewFastPaymentViewModel(
 
     private suspend fun postCashAccount() {
         _cashAccount.postValue(
-            CashAccountsUseCase.getOneCashAccount(
+            CashAccountsUseCase.getOneCashAccountById(
                 dbCashAccount,
                 cashAccountSPInt
             )

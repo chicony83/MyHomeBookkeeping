@@ -85,7 +85,7 @@ class CashAccountViewModel(
     }
 
     suspend fun loadSelectedCashAccount(selectedId: Int): CashAccount? {
-        return CashAccountsUseCase.getOneCashAccount(db, selectedId)
+        return CashAccountsUseCase.getOneCashAccountById(db, selectedId)
 //        launchIo {
 //            _selectedCashAccount.postValue(CashAccountsUseCase.getOneCashAccount(db, selectedId))
 //        }

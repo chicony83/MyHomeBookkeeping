@@ -6,6 +6,7 @@ import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class AddIcons(
@@ -13,9 +14,12 @@ class AddIcons(
     resources: Resources,
     opPackageName: String
 ) {
-    private val iconsMaps = IconsMaps(resources,opPackageName)
+    private val iconsMaps = IconsMaps(resources, opPackageName)
     private val categoryIconsMap = iconsMaps.getCategoriesIconsMap()
     private val cashAccountIconsMap = iconsMaps.getCashAccountIconsList()
+
+    private var numOfAddedIcon = 0
+    fun getNumOfAddedIcons() = numOfAddedIcon
 
     fun addCategoriesIconsInDB(iconCategory: IconCategory) {
 //        Message.log("---Add categories icons---")
@@ -44,6 +48,8 @@ class AddIcons(
                 iconCategory = iconCategory.id,
                 iconResource = iconRes
             )
+            numOfAddedIcon++
+            Message.log("added icon name $name number $numOfAddedIcon")
         }
 
 //        for (i in iconsMap.iterator()) {
@@ -53,7 +59,7 @@ class AddIcons(
 //        }
     }
 
-    private fun addIconResource(name:String,iconCategory: Int?, iconResource: Int) {
+    private fun addIconResource(name: String, iconCategory: Int?, iconResource: Int) {
 //        Message.log("---Add new icon resource---")
         launchIo {
             IconResourcesUseCase.addNewIconResource(

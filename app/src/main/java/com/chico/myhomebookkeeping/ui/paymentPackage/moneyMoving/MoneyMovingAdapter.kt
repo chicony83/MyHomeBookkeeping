@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
-import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate

@@ -1,7 +1,7 @@
 package com.chico.myhomebookkeeping.domain
 
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.db.FullFastPayment
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.utils.launchForResult

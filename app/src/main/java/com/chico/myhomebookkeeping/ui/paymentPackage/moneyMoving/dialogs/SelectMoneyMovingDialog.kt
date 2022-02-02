@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
-import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
 import java.lang.IllegalStateException
 

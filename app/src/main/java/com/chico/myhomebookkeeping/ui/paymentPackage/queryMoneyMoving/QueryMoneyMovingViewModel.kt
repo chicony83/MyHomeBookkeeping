@@ -118,7 +118,7 @@ class QueryMoneyMovingViewModel(
 
     private suspend fun postCashAccount(idNum: Int) {
         _selectedCashAccount.postValue(
-            CashAccountsUseCase.getOneCashAccount(dbCashAccount, idNum)
+            CashAccountsUseCase.getOneCashAccountById(dbCashAccount, idNum)
         )
     }
 

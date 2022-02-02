@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.db
+package com.chico.myhomebookkeeping.db.full
 
 import androidx.room.ColumnInfo
 

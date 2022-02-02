@@ -23,7 +23,6 @@ import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
-import com.chico.myhomebookkeeping.utils.launchForResult
 import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -168,7 +167,7 @@ class ChangeFastPaymentViewModel(
             fastPayments?.cashAccountId ?: 0
         }
         _paymentCashAccount.postValue(
-            CashAccountsUseCase.getOneCashAccount(
+            CashAccountsUseCase.getOneCashAccountById(
                 dbCashAccount,
                 postingId
             )

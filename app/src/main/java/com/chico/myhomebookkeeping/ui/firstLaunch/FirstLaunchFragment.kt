@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
+import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -79,9 +80,9 @@ class FirstLaunchFragment : Fragment() {
 
     private fun setImageResourceOnIcon(
         imageView: ImageView,
-        item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>
+        item: LiveData<Int>
     ) {
-        imageView.setImageResource(item.value?.imageResource ?: R.drawable.no_image)
+        imageView.setImageResource(item.value ?: R.drawable.no_image)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -174,15 +175,11 @@ class FirstLaunchFragment : Fragment() {
     )
 
     private fun getItem(
-        item: LiveData<FirstLaunchViewModel.ItemOfFirstLaunch>,
+        item: LiveData<Int>,
         checkBox: CheckBox
     ): SelectedItemOfImageAndCheckBox {
-
-//        val imgRes = item.value?.imageResource
-
-
         return SelectedItemOfImageAndCheckBox(
-            item.value?.imageResource ?: R.drawable.no_image,
+            item.value ?: R.drawable.no_image,
             checkBox
         )
     }

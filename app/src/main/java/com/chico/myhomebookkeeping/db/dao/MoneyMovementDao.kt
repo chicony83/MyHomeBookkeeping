@@ -2,7 +2,7 @@ package com.chico.myhomebookkeeping.db.dao
 
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 
 @Dao
@@ -27,7 +27,7 @@ interface MoneyMovementDao {
     suspend fun getSelectedFullMoneyMoving(query: SimpleSQLiteQuery):List<FullMoneyMoving>
 
     @RawQuery
-    suspend fun getOneFullMoneyMoving(query: SimpleSQLiteQuery):FullMoneyMoving
+    suspend fun getOneFullMoneyMoving(query: SimpleSQLiteQuery): FullMoneyMoving
 
     @Query("UPDATE money_moving_table SET description=:description,currency=:currencyId,category=:categoryId,cash_account=:cashAccountId,amount = :amount,time_stamp = :dateTime WHERE id = :id")
     suspend fun changeMoneyMovingLine(

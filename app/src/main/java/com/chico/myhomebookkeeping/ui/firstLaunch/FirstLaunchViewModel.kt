@@ -12,16 +12,17 @@ import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.*
-import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
-import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
+import com.chico.myhomebookkeeping.domain.*
+import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
 import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.icons.AddIconCategories
 import com.chico.myhomebookkeeping.icons.AddIcons
 //import com.chico.myhomebookkeeping.icons.IconsMaps
 import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
 class FirstLaunchViewModel(
@@ -41,32 +42,32 @@ class FirstLaunchViewModel(
     private val dbIconResources: IconResourcesDao =
         dataBase.getDataBase(app.applicationContext).iconResourcesDao()
 
-    private val _cardCashAccountItem = MutableLiveData<ItemOfFirstLaunch>()
-    val cardCashAccountItem: LiveData<ItemOfFirstLaunch> get() = _cardCashAccountItem
+    private val _cardCashAccountItem = MutableLiveData<Int>()
+    val cardCashAccountItem: LiveData<Int> get() = _cardCashAccountItem
 
-    private val _cashCashAccountItem = MutableLiveData<ItemOfFirstLaunch>()
-    val cashCashAccountItem: LiveData<ItemOfFirstLaunch> get() = _cashCashAccountItem
+    private val _cashCashAccountItem = MutableLiveData<Int>()
+    val cashCashAccountItem: LiveData<Int> get() = _cashCashAccountItem
 
-    private val _salaryCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val salaryCategoryItem: LiveData<ItemOfFirstLaunch> get() = _salaryCategoryItem
+    private val _salaryCategoryItem = MutableLiveData<Int>()
+    val salaryCategoryItem: LiveData<Int> get() = _salaryCategoryItem
 
-    private val _productsCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val productsCategoryItem: LiveData<ItemOfFirstLaunch> get() = _productsCategoryItem
+    private val _productsCategoryItem = MutableLiveData<Int>()
+    val productsCategoryItem: LiveData<Int> get() = _productsCategoryItem
 
-    private val _fuelForCarCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val fuelForCarCategoryItem: LiveData<ItemOfFirstLaunch> get() = _fuelForCarCategoryItem
+    private val _fuelForCarCategoryItem = MutableLiveData<Int>()
+    val fuelForCarCategoryItem: LiveData<Int> get() = _fuelForCarCategoryItem
 
-    private val _cellularCommunicationCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val cellularCommunicationCategoryItem: LiveData<ItemOfFirstLaunch> get() = _cellularCommunicationCategoryItem
+    private val _cellularCommunicationCategoryItem = MutableLiveData<Int>()
+    val cellularCommunicationCategoryItem: LiveData<Int> get() = _cellularCommunicationCategoryItem
 
-    private val _creditsCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val creditsCategoryItem: LiveData<ItemOfFirstLaunch> get() = _creditsCategoryItem
+    private val _creditsCategoryItem = MutableLiveData<Int>()
+    val creditsCategoryItem: LiveData<Int> get() = _creditsCategoryItem
 
-    private val _medicinesCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val medicinesCategoryItem: LiveData<ItemOfFirstLaunch> get() = _medicinesCategoryItem
+    private val _medicinesCategoryItem = MutableLiveData<Int>()
+    val medicinesCategoryItem: LiveData<Int> get() = _medicinesCategoryItem
 
-    private val _publicTransportCategoryItem = MutableLiveData<ItemOfFirstLaunch>()
-    val publicTransportCategoryItem: LiveData<ItemOfFirstLaunch> get() = _publicTransportCategoryItem
+    private val _publicTransportCategoryItem = MutableLiveData<Int>()
+    val publicTransportCategoryItem: LiveData<Int> get() = _publicTransportCategoryItem
 
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
@@ -76,8 +77,9 @@ class FirstLaunchViewModel(
     private val uiHelper = UiHelper()
 
     private val addIconCategories = AddIconCategories()
+
     @SuppressLint("NewApi")
-    private val addIcons = AddIcons(dbIconResources,app.resources,app.opPackageName)
+    private val addIcons = AddIcons(dbIconResources, app.resources, app.opPackageName)
 
 //    private val packageName = app.packageName
 //    private val categoryIconsList = getCategoriesIconsList()
@@ -209,17 +211,9 @@ class FirstLaunchViewModel(
         launchIo {
             addIconCategories.add(dbIconCategories)
         }
-//        launchIo {
-//            for (i in namesIconCategory.indices) {
-//                IconCategoriesUseCase.addIconCategory(
-//                    dbIconCategories,
-//                    IconCategory(namesIconCategory[i])
-//                )
-//            }
-//        }
     }
 
-    fun addIconsResources() {
+    suspend fun addIconsResources() {
         launchIo {
             var iconCategories = listOf<IconCategory>()
             while (iconCategories.size < 3) {
@@ -228,12 +222,15 @@ class FirstLaunchViewModel(
                 iconCategories = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
 //                Message.log("--- size of Icon Categories ${iconCategories.size} ---")
             }
+
             for (i in iconCategories.indices) {
                 when (iconCategories[i].iconCategoryName) {
                     CategoriesOfIconsNames.CashAccounts.name -> addCashAccountsIconsInDB(
                         iconCategories[i]
                     )
-                    CategoriesOfIconsNames.Categories.name -> addCategoriesIconsInDB(iconCategories[i])
+                    CategoriesOfIconsNames.Categories.name -> addCategoriesIconsInDB(
+                        iconCategories[i]
+                    )
                 }
             }
         }
@@ -249,12 +246,29 @@ class FirstLaunchViewModel(
 
 
     fun updateValues() {
-        updateValuesOfCashAccounts()
-        updateValuesOfCategories()
-//        _salaryCategoryItem.postValue(FirstLaunchItem("income money", categoryIconsList))
+        Message.log("update value")
+        launchIo {
+//            var listIconResources = listOf<IconsResource>()
+            var listIconResources = getListOfIconResources()
+
+            Message.log("listOfIconResources size = ${listIconResources.size}")
+
+            if (listIconResources.isEmpty()) {
+                listIconResources = getListOfIconResources()
+            }
+            updateValuesOfCashAccounts(listIconResources)
+            updateValuesOfCategories(listIconResources)
+        }
     }
 
-    private fun updateValuesOfCategories() {
+    private suspend fun getListOfIconResources(): List<IconsResource> {
+//        var listIconResources1 = listIconResources
+        delay(1000)
+        return IconResourcesUseCase.getIconsList(dbIconResources)
+//        return listIconResources1
+    }
+
+    private fun updateValuesOfCategories(listIconResource: List<IconsResource>) {
 //        val categoryIconsMap = IconsMaps().getCategoriesIconsMap()
 //
 //        _salaryCategoryItem.postValue(
@@ -294,15 +308,23 @@ class FirstLaunchViewModel(
 //        )
     }
 
-    private fun updateValuesOfCashAccounts() {
-//
-//        val cashAccountIconsMap = IconsMaps().getCashAccountIconsList()
-//
-//        _cardCashAccountItem.postValue(
-//            CashAccountIconNames.Card.name.let {
+    private fun updateValuesOfCashAccounts(listIconResource: List<IconsResource>) {
+
+        launchUi {
+            _cardCashAccountItem.postValue(
+                getIconResource(listIconResource, CashAccountIconNames.Card.name)
+            )
+            _cashCashAccountItem.postValue(
+                getIconResource(listIconResource, CashAccountIconNames.Cash.name)
+                //                postItemOfFirstLaunch(listIconResource, CashAccountIconNames.Cash.name)
+            )
+        }
+
+
+        //            CashAccountIconNames.Card.name.let {
 //                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
 //            }
-//        )
+
 //        _cashCashAccountItem.postValue(
 //            CashAccountIconNames.Cash.name.let {
 //                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
@@ -310,6 +332,21 @@ class FirstLaunchViewModel(
 //        )
     }
 
-    data class ItemOfFirstLaunch(val name: String, val imageResource: Int?)
-
+    private fun getIconResource(listIconResource: List<IconsResource>, name: String) =
+        listIconResource.find {
+            it.iconName == name
+        }?.iconResources
 }
+//    private fun postItemOfFirstLaunch(listIconResource: List<IconsResource>, name: String) =
+//
+//
+////        ItemOfFirstLaunch(
+////            name = name,
+////            imageResource = listIconResource.find {
+////                it.iconName == name
+////            }?.iconResources
+////        )
+//
+////    data class ItemOfFirstLaunch(val name: String, val imageResource: Int?)
+//
+//}

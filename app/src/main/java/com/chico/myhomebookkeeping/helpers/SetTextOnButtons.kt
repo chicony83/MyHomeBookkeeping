@@ -68,7 +68,7 @@ class SetTextOnButtons(val resources: Resources) {
         var nameCashAccount = ""
         if (modelCheck.isPositiveValue(cashAccountIntSP)) {
             launchIo {
-                nameCashAccount = CashAccountsUseCase.getOneCashAccount(
+                nameCashAccount = CashAccountsUseCase.getOneCashAccountById(
                     dbCashAccount,
                     cashAccountIntSP
                 )?.accountName.toString()

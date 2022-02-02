@@ -1,6 +1,6 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
-import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import java.math.BigDecimal
 import java.math.RoundingMode
 

@@ -1,7 +1,7 @@
 package com.chico.myhomebookkeeping.domain
 
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.db.FullMoneyMoving
+import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.utils.launchForResult
