@@ -105,8 +105,7 @@ class NewCategoryDialog(
                         iconImg.setImageResource(icon.iconResources)
 
                     }
-                }
-                )
+                })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }

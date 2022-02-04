@@ -12,7 +12,6 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import java.lang.IllegalStateException
-import java.util.zip.Inflater
 
 class SelectCategoryDialog(
     private val categories: Categories?,
@@ -37,7 +36,6 @@ class SelectCategoryDialog(
                 iconImg.setImageResource(it1.icon ?: R.drawable.no_image)
             }
 
-//            iconImg.
             name.setOnClickListener {
                 categories?.categoriesId?.let { it1 ->
                     onItemSelectForChangeCallBack.onSelect(it1)
