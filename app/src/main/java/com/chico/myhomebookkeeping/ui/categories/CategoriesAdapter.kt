@@ -39,7 +39,6 @@ class CategoriesAdapter(
                 root.contentDescription = category.categoryName
                 idCategories.text = category.categoriesId.toString()
 
-
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
 
                 categoryCardViewText.text = category.categoryName

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
@@ -11,6 +12,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import java.lang.IllegalStateException
+import java.util.zip.Inflater
 
 class SelectCategoryDialog(
     private val categories: Categories?,
@@ -23,14 +25,19 @@ class SelectCategoryDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_select_category, null)
 
+            val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
             val name = layout.findViewById<TextView>(R.id.selectedItemName)
 
             val selectButton = layout.findViewById<Button>(R.id.selectButton)
             val changeButton = layout.findViewById<Button>(R.id.changeButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
-            categories?.let { it1 -> name.text = it1.categoryName }
+            categories?.let { it1 ->
+                name.text = it1.categoryName
+                iconImg.setImageResource(it1.icon ?: R.drawable.no_image)
+            }
 
+//            iconImg.
             name.setOnClickListener {
                 categories?.categoriesId?.let { it1 ->
                     onItemSelectForChangeCallBack.onSelect(it1)
