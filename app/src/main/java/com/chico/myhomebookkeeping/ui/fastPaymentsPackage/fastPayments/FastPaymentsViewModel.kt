@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
@@ -22,6 +23,8 @@ import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
+import com.chico.myhomebookkeeping.icons.AddIconCategories
+import com.chico.myhomebookkeeping.icons.AddIcons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -36,12 +39,13 @@ class FastPaymentsViewModel(
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
-    private val argsCurrencyCreateKey = Constants        //        _publicTransportCategoryItem.postValue(
+    private val argsCurrencyCreateKey =
+        Constants        //        _publicTransportCategoryItem.postValue(
 //            CategoryIconNames.Bus.name.let {
 //                ItemOfFirstLaunch(it, categoryIconsMap[it])
 //            }
 //        )
-.ARGS_NEW_PAYMENT_CURRENCY_KEY
+            .ARGS_NEW_PAYMENT_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
@@ -85,7 +89,7 @@ class FastPaymentsViewModel(
 
     private suspend fun loadListFullFastPayments() = launchForResult {
 
-        val query:SimpleSQLiteQuery
+        val query: SimpleSQLiteQuery
         when (getSorting()) {
             SortingFastPayments.AlphabetByAsc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
@@ -200,21 +204,38 @@ class FastPaymentsViewModel(
     }
 
     fun setLastVersionChecked() {
-        setSP.saveToSP(Constants.LAST_CHECKED_VERSION,BuildConfig.VERSION_CODE)
+        setSP.saveToSP(Constants.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
     }
 
     suspend fun addIconsInDataBase() {
-        val iconDb:IconResourcesDao = dataBase.getDataBase(app.applicationContext).iconResourcesDao()
-        val iconCategoryDB: IconCategoryDao = dataBase.getDataBase(app.applicationContext).iconCategoryDao()
+        val iconResourcesDb: IconResourcesDao =
+            dataBase.getDataBase(app.applicationContext).iconResourcesDao()
+        val iconCategoryDB: IconCategoryDao =
+            dataBase.getDataBase(app.applicationContext).iconCategoryDao()
         val numOfIconsCategories = IconCategoriesUseCase.getAllIconCategories(iconCategoryDB)
-        val numOfIcons = IconResourcesUseCase.getIconsList(iconDb)
+        val numOfIcons = IconResourcesUseCase.getIconsList(iconResourcesDb)
+        val addIcons = AddIcons(
+            dbIconResources = iconResourcesDb,
+            resources = app.resources,
+            opPackageName = app.packageName
+        )
 
-        if (numOfIconsCategories.isEmpty()){
-            Message.log("Icon Categories is Empty")
+        if (numOfIconsCategories.isEmpty()) {
+            addIconCategories(iconCategoryDB)
         }
-        if (numOfIcons.isEmpty()){
-            Message.log("Icons is empty")
+        if (numOfIcons.isEmpty()) {
+            var iconCategoriesList = listOf<IconCategory>()
+            while (iconCategoriesList.size < 3) {
+                delay(100)
+                iconCategoriesList = IconCategoriesUseCase.getAllIconCategories(iconCategoryDB)
+            }
+            addIcons.addIconResources(iconCategoriesList = iconCategoriesList)
         }
+    }
 
+    private fun addIconCategories(iconCategoryDB: IconCategoryDao) {
+        launchIo {
+            AddIconCategories.add(iconCategoryDB)
+        }
     }
 }

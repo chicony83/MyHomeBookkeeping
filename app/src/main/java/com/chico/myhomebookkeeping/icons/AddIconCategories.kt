@@ -5,7 +5,7 @@ import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
 
-class AddIconCategories {
+object AddIconCategories {
 
     private val namesIconCategory = listOf<String>(
         CategoriesOfIconsNames.CashAccounts.name,

@@ -14,7 +14,6 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
-import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.enums.icons.CategoryIconNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -77,12 +76,16 @@ class FirstLaunchViewModel(
     private val setSP = SetSP(spEditor)
     private val uiHelper = UiHelper()
 
-    private val addIconCategories = AddIconCategories()
+//    private val addIconCategories = AddIconCategories()
 
     private var listIconResource = listOf<IconsResource>()
 
     @SuppressLint("NewApi")
-    private val addIcons = AddIcons(dbIconResources, app.resources, app.opPackageName)
+    private val addIcons = AddIcons(
+        dbIconResources = dbIconResources,
+        resources = app.resources,
+        opPackageName = app.opPackageName
+    )
 
 //    private val packageName = app.packageName
 //    private val categoryIconsList = getCategoriesIconsList()
@@ -212,40 +215,33 @@ class FirstLaunchViewModel(
 
     fun addIconCategories() {
         launchIo {
-            addIconCategories.add(dbIconCategories)
+            AddIconCategories.add(dbIconCategories)
         }
     }
 
     suspend fun addIconsResources() {
         launchIo {
-            var iconCategories = listOf<IconCategory>()
-            while (iconCategories.size < 3) {
+            var iconCategoriesList = listOf<IconCategory>()
+            while (iconCategoriesList.size < 3) {
                 delay(100)
 //                Message.log("--- get icon categories")
-                iconCategories = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
+                iconCategoriesList = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
 //                Message.log("--- size of Icon Categories ${iconCategories.size} ---")
             }
-
-            for (i in iconCategories.indices) {
-                when (iconCategories[i].iconCategoryName) {
-                    CategoriesOfIconsNames.CashAccounts.name -> addCashAccountsIconsInDB(
-                        iconCategories[i]
-                    )
-                    CategoriesOfIconsNames.Categories.name -> addCategoriesIconsInDB(
-                        iconCategories[i]
-                    )
-                }
-            }
+            addIcons.addIconResources(iconCategoriesList)
         }
     }
 
-    private fun addCategoriesIconsInDB(iconCategory: IconCategory) {
-        addIcons.addCategoriesIconsInDB(iconCategory)
-    }
+//    private fun res(iconCategories: List<IconCategory>) {
+//    }
 
-    private fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
-        addIcons.addCashAccountsIconsInDB(iconCategory)
-    }
+//    private fun addCategoriesIconsInDB(iconCategory: IconCategory) {
+//        addIcons.addCategoriesIconsInDB(iconCategory)
+//    }
+//
+//    private fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
+//        addIcons.addCashAccountsIconsInDB(iconCategory)
+//    }
 
     fun updateValues() {
         Message.log("update value")

@@ -6,6 +6,7 @@ import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
+import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.launchIo
 
@@ -21,7 +22,21 @@ class AddIcons(
     private var numOfAddedIcon = 0
     fun getNumOfAddedIcons() = numOfAddedIcon
 
-    fun addCategoriesIconsInDB(iconCategory: IconCategory) {
+    fun addIconResources(iconCategoriesList: List<IconCategory>) {
+        for (i in iconCategoriesList.indices) {
+            when (iconCategoriesList[i].iconCategoryName) {
+                CategoriesOfIconsNames.CashAccounts.name -> addCashAccountsIconsInDB(
+                    iconCategoriesList[i]
+                )
+                CategoriesOfIconsNames.Categories.name -> addCategoriesIconsInDB(
+                    iconCategoriesList[i]
+                )
+            }
+        }
+
+    }
+
+    private fun addCategoriesIconsInDB(iconCategory: IconCategory) {
 //        Message.log("---Add categories icons---")
         addIconsRecourseList(
             iconsMap = categoryIconsMap,
@@ -29,7 +44,7 @@ class AddIcons(
         )
     }
 
-    fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
+    private fun addCashAccountsIconsInDB(iconCategory: IconCategory) {
 //        Message.log("---Add Cash accounts icons---")
         addIconsRecourseList(
             iconsMap = cashAccountIconsMap,
@@ -51,12 +66,6 @@ class AddIcons(
             numOfAddedIcon++
             Message.log("added icon name $name number $numOfAddedIcon")
         }
-
-//        for (i in iconsMap.iterator()) {
-//            addIconResource(
-//                name = iconsMap[i]
-//                iconCategory.id, iconsMap[i])
-//        }
     }
 
     private fun addIconResource(name: String, iconCategory: Int?, iconResource: Int) {
