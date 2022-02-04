@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
 import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
+import com.chico.myhomebookkeeping.enums.icons.CategoryIconNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -77,6 +78,8 @@ class FirstLaunchViewModel(
     private val uiHelper = UiHelper()
 
     private val addIconCategories = AddIconCategories()
+
+    private var listIconResource = listOf<IconsResource>()
 
     @SuppressLint("NewApi")
     private val addIcons = AddIcons(dbIconResources, app.resources, app.opPackageName)
@@ -244,109 +247,66 @@ class FirstLaunchViewModel(
         addIcons.addCashAccountsIconsInDB(iconCategory)
     }
 
-
     fun updateValues() {
         Message.log("update value")
         launchIo {
 //            var listIconResources = listOf<IconsResource>()
-            var listIconResources = getListOfIconResources()
+            listIconResource = getListOfIconResources()
 
-            Message.log("listOfIconResources size = ${listIconResources.size}")
+            Message.log("listOfIconResources size = ${listIconResource.size}")
 
-            if (listIconResources.isEmpty()) {
-                listIconResources = getListOfIconResources()
+            if (listIconResource.isEmpty()) {
+                listIconResource = getListOfIconResources()
             }
-            updateValuesOfCashAccounts(listIconResources)
-            updateValuesOfCategories(listIconResources)
+            updateValuesOfCashAccounts()
+            updateValuesOfCategories()
         }
     }
 
     private suspend fun getListOfIconResources(): List<IconsResource> {
-//        var listIconResources1 = listIconResources
         delay(1000)
         return IconResourcesUseCase.getIconsList(dbIconResources)
-//        return listIconResources1
     }
 
-    private fun updateValuesOfCategories(listIconResource: List<IconsResource>) {
-//        val categoryIconsMap = IconsMaps().getCategoriesIconsMap()
-//
-//        _salaryCategoryItem.postValue(
-//            CategoryIconNames.Wallet.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-//        _productsCategoryItem.postValue(
-//            CategoryIconNames.ShoppingCart.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-//        _fuelForCarCategoryItem.postValue(
-//            CategoryIconNames.GasStation.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-//        _cellularCommunicationCategoryItem.postValue(
-//            CategoryIconNames.PhoneAndroid.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-//        _creditsCategoryItem.postValue(
-//            CategoryIconNames.Bank.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-//        _medicinesCategoryItem.postValue(
-//            CategoryIconNames.Medical.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-//        _publicTransportCategoryItem.postValue(
-//            CategoryIconNames.Bus.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
+    private fun updateValuesOfCategories() {
+
+        _salaryCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Wallet.name)
+        )
+        _productsCategoryItem.postValue(
+            getIconResource(CategoryIconNames.ShoppingCart.name)
+        )
+
+        _fuelForCarCategoryItem.postValue(
+            getIconResource(CategoryIconNames.GasStation.name)
+        )
+        _cellularCommunicationCategoryItem.postValue(
+            getIconResource(CategoryIconNames.PhoneAndroid.name)
+        )
+        _creditsCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Bank.name)
+        )
+        _medicinesCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Medical.name)
+        )
+        _publicTransportCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Bus.name)
+        )
     }
 
-    private fun updateValuesOfCashAccounts(listIconResource: List<IconsResource>) {
-
+    private fun updateValuesOfCashAccounts() {
         launchUi {
             _cardCashAccountItem.postValue(
-                getIconResource(listIconResource, CashAccountIconNames.Card.name)
+                getIconResource(CashAccountIconNames.Card.name)
             )
             _cashCashAccountItem.postValue(
-                getIconResource(listIconResource, CashAccountIconNames.Cash.name)
-                //                postItemOfFirstLaunch(listIconResource, CashAccountIconNames.Cash.name)
+                getIconResource(CashAccountIconNames.Cash.name)
             )
         }
-
-
-        //            CashAccountIconNames.Card.name.let {
-//                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
-//            }
-
-//        _cashCashAccountItem.postValue(
-//            CashAccountIconNames.Cash.name.let {
-//                ItemOfFirstLaunch(it, cashAccountIconsMap[it])
-//            }
-//        )
     }
 
-    private fun getIconResource(listIconResource: List<IconsResource>, name: String) =
+    private fun getIconResource(name: String) =
         listIconResource.find {
             it.iconName == name
         }?.iconResources
 }
-//    private fun postItemOfFirstLaunch(listIconResource: List<IconsResource>, name: String) =
-//
-//
-////        ItemOfFirstLaunch(
-////            name = name,
-////            imageResource = listIconResource.find {
-////                it.iconName == name
-////            }?.iconResources
-////        )
-//
-////    data class ItemOfFirstLaunch(val name: String, val imageResource: Int?)
-//
-//}

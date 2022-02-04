@@ -25,8 +25,6 @@ class FirstLaunchFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-//    private lateinit var noImage:Drawable
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
