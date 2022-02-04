@@ -11,11 +11,14 @@ import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
+import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
+import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
@@ -33,7 +36,12 @@ class FastPaymentsViewModel(
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
-    private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
+    private val argsCurrencyCreateKey = Constants        //        _publicTransportCategoryItem.postValue(
+//            CategoryIconNames.Bus.name.let {
+//                ItemOfFirstLaunch(it, categoryIconsMap[it])
+//            }
+//        )
+.ARGS_NEW_PAYMENT_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
@@ -197,8 +205,16 @@ class FastPaymentsViewModel(
 
     suspend fun addIconsInDataBase() {
         val iconDb:IconResourcesDao = dataBase.getDataBase(app.applicationContext).iconResourcesDao()
-//        val iconCategoryDB:IconCategoryDao = dataBase.getDataBase(app.applicationContext).iconCategoryDao()
-//        val numOfIconsCategories =
-//        val numOfIcons = IconResourcesUseCase.getIconsList(iconDb)
+        val iconCategoryDB: IconCategoryDao = dataBase.getDataBase(app.applicationContext).iconCategoryDao()
+        val numOfIconsCategories = IconCategoriesUseCase.getAllIconCategories(iconCategoryDB)
+        val numOfIcons = IconResourcesUseCase.getIconsList(iconDb)
+
+        if (numOfIconsCategories.isEmpty()){
+            Message.log("Icon Categories is Empty")
+        }
+        if (numOfIcons.isEmpty()){
+            Message.log("Icons is empty")
+        }
+
     }
 }
