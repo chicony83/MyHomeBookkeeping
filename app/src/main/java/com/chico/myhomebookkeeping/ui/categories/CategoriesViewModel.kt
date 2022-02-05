@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.ui.categories
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +13,6 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.enums.SortingCategories
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -228,12 +226,13 @@ class CategoriesViewModel(
         setSP.saveToSP(argsSortingCategories, sorting)
     }
 
-    fun saveChangedCategory(id: Int, name: String, isIncome: Boolean) = runBlocking {
-        val change = async {
-            CategoriesUseCase.changeCategoryLine(
-                db = db, id = id, name = name, isIncome = isIncome
-            )
+    fun saveChangedCategory(id: Int, name: String, isIncome: Boolean, iconResource: Int) =
+        runBlocking {
+            val change = async {
+                CategoriesUseCase.changeCategoryLine(
+                    db = db, id = id, name = name, isIncome = isIncome, iconResource
+                )
+            }
+            reloadCategories(change.await().toLong())
         }
-        reloadCategories(change.await().toLong())
-    }
 }

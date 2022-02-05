@@ -26,6 +26,6 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table WHERE categoriesId = :id")
     suspend fun getOneCategory(id:Int):Categories
 
-    @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome WHERE categoriesId = :id")
-    suspend fun changeLine(id: Int, name: String, isIncome: Boolean):Int
+    @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome, icon_category = :iconResource WHERE categoriesId = :id")
+    suspend fun changeLine(id: Int, name: String, isIncome: Boolean,iconResource:Int):Int
 }

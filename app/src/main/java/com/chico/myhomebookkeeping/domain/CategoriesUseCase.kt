@@ -25,9 +25,10 @@ object CategoriesUseCase {
         db: CategoryDao,
         id: Int,
         name: String,
-        isIncome: Boolean
+        isIncome: Boolean,
+        iconResource: Int
     ): Int {
-        return db.changeLine(id, name, isIncome)
+        return db.changeLine(id, name, isIncome,iconResource)
     }
 
     suspend fun getAllCategoriesSortIdDesc(db: CategoryDao): List<Categories> {

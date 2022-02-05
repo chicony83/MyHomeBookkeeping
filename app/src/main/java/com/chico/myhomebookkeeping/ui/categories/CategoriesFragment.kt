@@ -90,7 +90,10 @@ class CategoriesFragment : Fragment() {
             }
             sortingButton.setOnClickListener {
                 val popupMenu = PopupMenu(context, sortingButton)
-                popupMenu.menuInflater.inflate(R.menu.pop_up_menu_sorting_categories, popupMenu.menu)
+                popupMenu.menuInflater.inflate(
+                    R.menu.pop_up_menu_sorting_categories,
+                    popupMenu.menu
+                )
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.sort_by_numbers_ASC -> {
@@ -121,13 +124,13 @@ class CategoriesFragment : Fragment() {
         if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
             or
             navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
-        ){
+        ) {
             uiHelper.hideUiElement(binding.topButtonsHolder)
         }
     }
 
     private fun sortingCategories(sorting: String) {
-        with(categoriesViewModel){
+        with(categoriesViewModel) {
             setSortingCategories(sorting)
             reloadCategories()
         }
@@ -157,8 +160,17 @@ class CategoriesFragment : Fragment() {
     private fun showChangeCategoryDialog(category: Categories?) {
         launchIo {
             val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
-                override fun change(id: Int, name: String, isIncome: Boolean) {
-                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
+//                override fun changeWithoutIcon(id: Int, name: String, isIncome: Boolean) {
+//                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
+//                }
+
+                override fun changeWithIcon(
+                    id: Int,
+                    name: String,
+                    isIncome: Boolean,
+                    iconResource: Int
+                ) {
+                    categoriesViewModel.saveChangedCategory(id, name, isIncome,iconResource)
                 }
             })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
