@@ -125,7 +125,13 @@ class CategoriesFragment : Fragment() {
             or
             navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
         ) {
-            uiHelper.hideUiElement(binding.topButtonsHolder)
+            with(uiHelper){
+                hideUiElement(binding.selectAllButton)
+                hideUiElement(binding.selectAllIncomeButton)
+                hideUiElement(binding.selectAllSpendingButton)
+            }
+
+
         }
     }
 

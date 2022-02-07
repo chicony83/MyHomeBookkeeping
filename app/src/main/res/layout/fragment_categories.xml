@@ -6,63 +6,56 @@
     style="@style/Fragment.paddingBottom"
     tools:context=".ui.categories.CategoriesFragment">
 
-    <LinearLayout
-        android:id="@+id/topButtonsHolder"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalCenterLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/allIncomeSpendingLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
-
-            <Button
-                android:contentDescription="@string/text_on_button_all_income"
-                android:id="@+id/selectAllIncomeButton"
-                style="@style/DialogButtonLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/text_on_button_all_income" />
-
-            <Button
-                android:contentDescription="@string/text_on_button_all_spending"
-                android:id="@+id/selectAllSpendingButton"
-                style="@style/DialogButtonRight"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/text_on_button_all_spending" />
-        </LinearLayout>
-
-        <Button
-            android:contentDescription="@string/text_on_button_select_all"
-            android:id="@+id/selectAllButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/text_on_button_select_all"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/allIncomeSpendingLayout"
-            tools:visibility="visible" />
-    </LinearLayout>
+        app:layout_constraintGuide_percent="0.5" />
 
     <Button
-        android:contentDescription="@string/text_on_button_sorting_as"
-        android:id="@+id/sortingButton"
+        android:id="@+id/selectAllIncomeButton"
+        style="@style/DialogButtonLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/text_on_button_all_income"
+        android:text="@string/text_on_button_all_income"
+        app:layout_constraintEnd_toStartOf="@id/verticalCenterLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/selectAllSpendingButton"
+        style="@style/DialogButtonRight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/text_on_button_all_spending"
+        android:text="@string/text_on_button_all_spending"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/selectAllButton"
         style="@style/ButtonFullWidth"
-        android:text="@string/text_on_button_sorting_as"
+        android:contentDescription="@string/text_on_button_select_all"
+        android:text="@string/text_on_button_select_all"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topButtonsHolder" />
+        app:layout_constraintTop_toBottomOf="@id/selectAllIncomeButton"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/sortingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/H6"
+        android:contentDescription="@string/text_on_button_sorting_as"
+        android:text="@string/text_on_button_sorting_as"
+        app:layout_constraintTop_toTopOf="@id/categoryHolder"
+        app:layout_constraintEnd_toEndOf="@id/categoryHolder"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoryHolder"
@@ -73,13 +66,13 @@
         app:layout_constraintBottom_toTopOf="@id/show_hide_add_category_fragment_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sortingButton"
+        app:layout_constraintTop_toBottomOf="@id/selectAllButton"
         tools:listitem="@layout/recycler_view_item_categories" />
 
     <Button
-        android:contentDescription="@string/text_on_button_add_new_category"
         android:id="@+id/show_hide_add_category_fragment_button"
         style="@style/ButtonFullWidth"
+        android:contentDescription="@string/text_on_button_add_new_category"
         android:text="@string/text_on_button_add_new_category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
