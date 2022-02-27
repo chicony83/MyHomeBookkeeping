@@ -49,4 +49,8 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     fun getSelectedCategoriesSet(argsSelectedCategoriesSetKey: String): MutableSet<String>? {
         return sharedPreferences.getStringSet(argsSelectedCategoriesSetKey, mutableSetOf<String?>())
     }
+
+    fun getBooleanDefFalse(args: String): Boolean {
+        return sharedPreferences.getBoolean(args,false)
+    }
 }

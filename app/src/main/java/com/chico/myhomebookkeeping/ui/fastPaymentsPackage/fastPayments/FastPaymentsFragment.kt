@@ -86,18 +86,22 @@ class FastPaymentsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         fastPaymentsViewModel.getFullFastPaymentsList()
+
         if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()){
-            addIconsInDataBase()
+
+            val updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
+            updateViewModel.update()
+//            addIconsInDataBase()
             showWhatsNewDialog()
             fastPaymentsViewModel.setLastVersionChecked()
         }
     }
 
-    private fun addIconsInDataBase() {
-        launchIo {
-            fastPaymentsViewModel.addIconsInDataBase()
-        }
-    }
+//    private fun addIconsInDataBase() {
+//        launchIo {
+//            fastPaymentsViewModel.addIconsInDataBase()
+//        }
+//    }
 
     private fun showWhatsNewDialog() {
         val dialog = WhatNewInLastVersionDialog()

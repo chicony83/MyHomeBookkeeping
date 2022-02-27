@@ -26,6 +26,7 @@ import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.icons.AddIconCategories
 import com.chico.myhomebookkeeping.icons.AddIcons
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
@@ -198,44 +199,12 @@ class FastPaymentsViewModel(
     }
 
     fun isLastVersionOfProgramChecked(): Boolean {
-        val lastCheckedVersion = getSp.getInt(Constants.LAST_CHECKED_VERSION)
+        val lastCheckedVersion = getSp.getInt(ConstantsOfUpdate.LAST_CHECKED_VERSION)
         val currentVersion = BuildConfig.VERSION_CODE
         return lastCheckedVersion == currentVersion
     }
 
     fun setLastVersionChecked() {
-        setSP.saveToSP(Constants.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
-    }
-
-    suspend fun addIconsInDataBase() {
-        val iconResourcesDb: IconResourcesDao =
-            dataBase.getDataBase(app.applicationContext).iconResourcesDao()
-        val iconCategoryDB: IconCategoryDao =
-            dataBase.getDataBase(app.applicationContext).iconCategoryDao()
-        val numOfIconsCategories = IconCategoriesUseCase.getAllIconCategories(iconCategoryDB)
-        val numOfIcons = IconResourcesUseCase.getIconsList(iconResourcesDb)
-        val addIcons = AddIcons(
-            dbIconResources = iconResourcesDb,
-            resources = app.resources,
-            opPackageName = app.packageName
-        )
-
-        if (numOfIconsCategories.isEmpty()) {
-            addIconCategories(iconCategoryDB)
-        }
-        if (numOfIcons.isEmpty()) {
-            var iconCategoriesList = listOf<IconCategory>()
-            while (iconCategoriesList.size < 3) {
-                delay(100)
-                iconCategoriesList = IconCategoriesUseCase.getAllIconCategories(iconCategoryDB)
-            }
-            addIcons.addIconResources(iconCategoriesList = iconCategoriesList)
-        }
-    }
-
-    private fun addIconCategories(iconCategoryDB: IconCategoryDao) {
-        launchIo {
-            AddIconCategories.add(iconCategoryDB)
-        }
+        setSP.saveToSP(ConstantsOfUpdate.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
     }
 }

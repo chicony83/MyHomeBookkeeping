@@ -79,5 +79,4 @@ object Constants {
     const val SORTING_CATEGORIES = "sorting_categories"
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
 
-    const val LAST_CHECKED_VERSION = "last_checked_version"
 }
