@@ -9,6 +9,7 @@
     <EditText
         android:id="@+id/category_name"
         style="@style/DialogEnterNewName"
+        android:layout_margin="@dimen/margin_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -16,6 +17,7 @@
     <TextView
         android:id="@+id/error_this_name_is_taken"
         style="@style/Description.MessageOfBusyName"
+        android:layout_margin="@dimen/margin_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/category_name"
@@ -25,6 +27,7 @@
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_normal"
         app:layout_constraintEnd_toStartOf="@id/verticalCenterOfDialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken">
@@ -43,14 +46,16 @@
     </RadioGroup>
 
     <ImageView
-        android:contentDescription="@string/content_description_icon_item_of_category"
         android:id="@+id/iconImg"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_normal"
+        android:contentDescription="@string/content_description_icon_item_of_category"
         app:layout_constraintBottom_toTopOf="@id/addAndSelectNewItemButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/verticalCenterOfDialog"
-        app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken" />
+        app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken"
+        tools:src="@drawable/no_image" />
 
     <Button
         android:id="@+id/addAndSelectNewItemButton"
