@@ -21,7 +21,7 @@
     <string name="description_select_time">Select time</string>
 
     <string name="description_selected_cash_account">Selected cash account</string>
-    <string name="description_selected_category">Selected category</string>
+    <string name="description_selected_category">Category</string>
     <string name="description_selected_currency">Selected currency</string>
 
     <string name="description_this_name_is_taken">This name is taken</string>
