@@ -27,7 +27,7 @@
 
     <TextView
         android:gravity="center"
-        android:maxWidth="220dp"
+        android:maxWidth="200dp"
         android:id="@+id/selectedItemName"
         style="@style/Description"
         android:layout_width="wrap_content"
