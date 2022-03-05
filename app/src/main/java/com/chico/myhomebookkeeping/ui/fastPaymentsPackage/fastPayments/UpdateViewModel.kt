@@ -29,7 +29,7 @@ class UpdateViewModel(
 
     private fun update_44_to_45() {
         val updateKey = ConstantsOfUpdate.UPDATE_44_TO_45
-        if (!getSP.getBoolean(updateKey)){
+        if (!getSP.getBooleanDefFalse(updateKey)){
             launchIo {
                 val update44To45 = Update44To45()
                 update44To45.update(app)

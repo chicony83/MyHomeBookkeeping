@@ -42,7 +42,6 @@ class Update43To44 {
         }
 
         Message.log("...updating 43 ne 44 complete...")
-
     }
 
     private fun addIconCategories(iconCategoryDB: IconCategoryDao) {
