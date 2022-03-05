@@ -24,13 +24,14 @@ import java.lang.IllegalStateException
 class NewCategoryDialog(
     private val result: Any,
     private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack,
-
-    ) : DialogFragment() {
+) : DialogFragment() {
     //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     private lateinit var iconImg: ImageView
     private lateinit var selectedIcon: IconsResource
+    private lateinit var db: IconResourcesDao
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
+            db = dataBase.getDataBase(requireContext()).iconResourcesDao()
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_new_category, null)
@@ -55,7 +56,12 @@ class NewCategoryDialog(
                 addButton, addAndSelectButton
             )
 
-            iconImg.setImageResource(R.drawable.no_image)
+//            iconImg.setImageResource(R.drawable.no_image)
+
+            launchIo {
+
+
+            }
 
             nameEditText.addTextChangedListener(
                 EditNameTextWatcher(
@@ -95,7 +101,6 @@ class NewCategoryDialog(
 
     private fun showSelectIconDialog() {
         launchIo {
-            val db: IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
             val iconsList = IconResourcesUseCase.getIconsList(db)
             launchUi {
                 val dialog = SelectIconDialog(iconsList, object : OnSelectIconCallBack {
