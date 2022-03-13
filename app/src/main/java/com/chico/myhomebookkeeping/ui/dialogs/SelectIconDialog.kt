@@ -71,15 +71,17 @@ class SelectIconDialog(
 
     @SuppressLint("ResourceType", "UseCompatLoadingForDrawables")
     private fun buildLayout(layout: View) {
-        val parentLayout = layout.findViewById<GridLayout>(R.id.iconsLayout)
+
+        Message.log("icons list size in select icon dialog = ${iconsList.size}")
+        val parentLayout = layout.findViewById<GridLayout>(R.id.iconsHolderLayout)
 
         val height: Int = displayWidth / 8
         val width: Int = displayWidth / 8
 
         val param = RelativeLayout.LayoutParams(height, width)
-        val margin = displayWidth / 32
+        val margin: Int = displayWidth / 32
 
-        param.topMargin = margin
+//        param.topMargin = margin
         param.leftMargin = margin
         param.bottomMargin = margin
         param.rightMargin = margin
@@ -87,6 +89,7 @@ class SelectIconDialog(
         var prevImgId = 0
 
         for (i in iconsList.indices) {
+            Message.log("---drawing icon $i")
             val imageView = ImageView(requireContext())
             imageView.setImageResource(iconsList[i].iconResources)
 
