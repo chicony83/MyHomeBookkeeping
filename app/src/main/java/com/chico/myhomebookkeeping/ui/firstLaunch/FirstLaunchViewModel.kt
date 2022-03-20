@@ -84,7 +84,7 @@ class FirstLaunchViewModel(
     private val addIcons = AddIcons(
         dbIconResources = dbIconResources,
         resources = app.resources,
-        opPackageName = app.opPackageName
+        appPackageName = app.opPackageName
     )
 
 //    private val packageName = app.packageName

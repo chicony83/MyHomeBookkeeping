@@ -26,7 +26,7 @@ class Update43To44 {
         val addIcons = AddIcons(
             dbIconResources = iconResourcesDb,
             resources = app.resources,
-            opPackageName = app.packageName
+            appPackageName = app.packageName
         )
 
         if (numOfIconsCategories.isEmpty()) {

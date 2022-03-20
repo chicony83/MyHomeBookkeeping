@@ -5,22 +5,25 @@ import android.content.res.Resources
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.db.entity.IconsResource
+import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
+import com.chico.myhomebookkeeping.enums.icons.NoCategoryNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class AddIcons(
     private val dbIconResources: IconResourcesDao,
     resources: Resources,
-    opPackageName: String
+    appPackageName: String
 ) {
-    private val iconsMaps = IconsMaps(resources, opPackageName)
+    private val iconsMaps = IconsMaps(resources, appPackageName)
     private val categoryIconsMap = iconsMaps.getCategoriesIconsMap()
     private val cashAccountIconsMap = iconsMaps.getCashAccountIconsList()
+    private val noImageIconsMap = iconsMaps.getNoCategoryIconsList()
 
     private var numOfAddedIcon = 0
-    fun getNumOfAddedIcons() = numOfAddedIcon
+//    fun getNumOfAddedIcons() = numOfAddedIcon
 
     fun addIconResources(iconCategoriesList: List<IconCategory>) {
         for (i in iconCategoriesList.indices) {
@@ -52,6 +55,15 @@ class AddIcons(
         )
     }
 
+    fun addNoCategoryIconInDb(iconCategory: IconCategory) {
+        addIconsRecourseList(
+            iconsMap = noImageIconsMap,
+            iconCategory = iconCategory
+        )
+
+
+    }
+
     @SuppressLint("NewApi")
     private fun addIconsRecourseList(
         iconsMap: Map<String, Int>,
@@ -81,6 +93,4 @@ class AddIcons(
             )
         }
     }
-
-
 }

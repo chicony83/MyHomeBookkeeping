@@ -13,4 +13,7 @@ interface IconCategoryDao {
 
     @Query("SELECT * FROM icon_category_table")
     suspend fun getAllIconCategories(): List<IconCategory>
+
+    @Query("SELECT * FROM icon_category_table WHERE id = :selectedId")
+    suspend fun getIconCategoryById(selectedId: Int): IconCategory
 }

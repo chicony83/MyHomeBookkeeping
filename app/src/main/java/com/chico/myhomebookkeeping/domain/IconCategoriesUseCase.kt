@@ -13,4 +13,8 @@ object IconCategoriesUseCase {
         return db.getAllIconCategories()
     }
 
+    suspend fun getIconCategoryById(db: IconCategoryDao, id: Int): IconCategory {
+        return db.getIconCategoryById(id)
+    }
+
 }
