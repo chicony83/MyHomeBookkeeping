@@ -18,4 +18,8 @@ object IconResourcesUseCase {
     suspend fun getIconById(db: IconResourcesDao, id: Int): IconsResource {
         return db.getIconById(id)
     }
+
+    suspend fun getIconByName(db: IconResourcesDao,name:String): IconsResource {
+        return db.getIconByName(name)
+    }
 }

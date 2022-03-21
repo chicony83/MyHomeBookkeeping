@@ -11,8 +11,8 @@ import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
+import com.chico.myhomebookkeeping.enums.icon.names.NoCategoryNames
 import com.chico.myhomebookkeeping.helpers.CheckString
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
@@ -44,6 +44,12 @@ class NewCategoryDialog(
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
 
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
+
+            launchIo {
+                selectedIcon = IconResourcesUseCase.getIconByName(db,NoCategoryNames.NoImage.name)
+//                iconImg = ImageView()
+                iconImg.setImageResource(selectedIcon.iconResources)
+            }
 
             val addButton = layout.findViewById<Button>(R.id.addNewCategoryButton)
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)

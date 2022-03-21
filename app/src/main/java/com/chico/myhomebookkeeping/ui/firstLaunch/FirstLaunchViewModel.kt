@@ -13,8 +13,8 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.*
-import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
-import com.chico.myhomebookkeeping.enums.icons.CategoryIconNames
+import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
+import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper

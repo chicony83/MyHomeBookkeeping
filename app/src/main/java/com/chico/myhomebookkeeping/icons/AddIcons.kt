@@ -5,10 +5,8 @@ import android.content.res.Resources
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.db.entity.IconsResource
-import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
-import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
-import com.chico.myhomebookkeeping.enums.icons.NoCategoryNames
+import com.chico.myhomebookkeeping.enums.icon.names.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.utils.launchIo
 

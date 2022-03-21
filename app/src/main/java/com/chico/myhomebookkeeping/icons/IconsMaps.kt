@@ -5,9 +5,9 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.enums.icons.CashAccountIconNames
-import com.chico.myhomebookkeeping.enums.icons.CategoryIconNames
-import com.chico.myhomebookkeeping.enums.icons.NoCategoryNames
+import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
+import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
+import com.chico.myhomebookkeeping.enums.icon.names.NoCategoryNames
 
 class IconsMaps(private val resources: Resources, private val opPackageName: String) {
 //    val app: Application = Application()

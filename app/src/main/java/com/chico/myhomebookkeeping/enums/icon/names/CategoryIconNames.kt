@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.enums.icons
+package com.chico.myhomebookkeeping.enums.icon.names
 
 enum class CategoryIconNames {
     Apartment,

@@ -3,9 +3,8 @@ package com.chico.myhomebookkeeping.icons
 import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
 import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
-import com.chico.myhomebookkeeping.enums.icons.CategoriesOfIconsNames
+import com.chico.myhomebookkeeping.enums.icon.names.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.utils.launchForResult
-import com.chico.myhomebookkeeping.utils.launchIo
 
 object AddIconCategories {
 
