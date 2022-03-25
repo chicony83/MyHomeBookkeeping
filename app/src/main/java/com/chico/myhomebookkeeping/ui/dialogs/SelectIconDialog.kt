@@ -81,7 +81,7 @@ class SelectIconDialog(
         val param = RelativeLayout.LayoutParams(height, width)
         val margin: Int = displayWidth / 32
 
-//        param.topMargin = margin
+        //param.topMargin = margin
         param.leftMargin = margin
         param.bottomMargin = margin
         param.rightMargin = margin
