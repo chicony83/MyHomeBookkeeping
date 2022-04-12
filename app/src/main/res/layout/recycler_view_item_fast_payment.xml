@@ -6,15 +6,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fastPaymentItemId"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_normal">
 
         <ImageView
-            android:contentDescription="iconPayment"
             android:id="@+id/iconImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:contentDescription="iconPayment"
             android:src="@drawable/payments"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +68,13 @@
             app:layout_constraintStart_toStartOf="@id/description_cash_account"
             app:layout_constraintTop_toBottomOf="@id/description_currency" />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/category_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="description_category,category_name" />
+
         <TextView
             android:id="@+id/cashAccountName"
             android:layout_width="wrap_content"
@@ -97,33 +104,35 @@
 
         <TextView
             android:id="@+id/category_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="@dimen/margin_double"
+            android:hyphenationFrequency="full"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_category"
             tools:text="@string/description_category" />
 
         <ImageView
-            android:contentDescription="@string/description_rating_payment"
             android:id="@+id/ratingImg"
             android:layout_width="50dp"
             android:layout_height="10dp"
+            android:contentDescription="@string/description_rating_payment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/rating3" />
 
         <TextView
-            android:textSize="@dimen/H6"
             android:id="@+id/description_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_normal"
             android:text="@string/description_amount"
+            android:textSize="@dimen/H6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_category" />
+            app:layout_constraintTop_toBottomOf="@id/category_barrier" />
 
         <TextView
             android:id="@+id/amount"
