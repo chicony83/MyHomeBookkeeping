@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
@@ -41,12 +42,17 @@ class FastPaymentsFragment : Fragment() {
 
         fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
+        val layoutManager =  GridLayoutManager(activity, 2)
+
         with(fastPaymentsViewModel) {
             sortedByTextOnButton.observe(viewLifecycleOwner,{
                 binding.sortingButton.text = it
             })
 
             fastPaymentsList.observe(viewLifecycleOwner, {
+
+                binding.recyclerView.layoutManager = layoutManager
+
                 binding.recyclerView.adapter = it?.let { it1 ->
                     FastPaymentsAdapter(it1, object :
                         OnItemViewClickListenerLong {

@@ -45,9 +45,11 @@ class FastPaymentsAdapter(
                 nameFastPayment.text = fastPayments.nameFastPayment
                 cashAccountName.text = fastPayments.cashAccountNameValue
                 currencyName.text = fastPayments.currencyNameValue
-                categoryName.text = fastPayments.categoryNameValue
                 descriptionOfPayment.text = fastPayments.description
                 ratingImg.setImageDrawable(getRatingImage(fastPayments.rating))
+
+                categoryName.text = fastPayments.categoryNameValue
+//                if (fastPayments.)
 
                 if (fastPayments.amount.toString().isNotEmpty()) {
                     val number: Double = fastPayments.amount ?: 0.0

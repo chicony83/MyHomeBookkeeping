@@ -24,6 +24,9 @@ class FullFastPayment(
     @ColumnInfo(name = "category_name_value")
     val categoryNameValue:String,
 
+    @ColumnInfo(name = "icon_resource_value")
+    val categoryResourceValue:Int?,
+
     @ColumnInfo(name = "is_income")
     val isIncome:Boolean,
 

@@ -6,11 +6,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fastPaymentItemId"
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_normal">
 
         <ImageView
+            android:contentDescription="iconPayment"
             android:id="@+id/iconImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -28,14 +29,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:textSize="@dimen/H3"
             android:id="@+id/name_fast_payment"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_half_normal"
+            android:textSize="@dimen/H4"
             app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="проценты бынка" />
+            tools:text="проценты банка" />
 
         <TextView
             android:id="@+id/description_cash_account"
@@ -43,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/description_cash_account"
+            android:textSize="@dimen/H6"
             app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toBottomOf="@id/name_fast_payment" />
 
@@ -50,8 +52,9 @@
             android:id="@+id/description_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_half_normal"
+            android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/description_currency"
+            android:textSize="@dimen/H6"
             app:layout_constraintStart_toStartOf="@id/description_cash_account"
             app:layout_constraintTop_toBottomOf="@id/description_cash_account" />
 
@@ -59,8 +62,9 @@
             android:id="@+id/description_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_half_normal"
+            android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/description_category"
+            android:textSize="@dimen/H6"
             app:layout_constraintStart_toStartOf="@id/description_cash_account"
             app:layout_constraintTop_toBottomOf="@id/description_currency" />
 
@@ -68,7 +72,7 @@
             android:id="@+id/cashAccountName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_double"
             app:layout_constraintStart_toEndOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_cash_account"
             tools:text="@string/quick_setup_name_Cash" />
@@ -77,61 +81,74 @@
             android:id="@+id/currencyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/cashAccountName"
+            android:layout_marginStart="@dimen/margin_double"
+            app:layout_constraintStart_toEndOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_currency"
             tools:text="@string/quick_setup_name_Currency" />
+
+        <ImageView
+            android:id="@+id/iconCategory"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/barrier_values"
+            app:layout_constraintTop_toTopOf="@id/description_category"
+            tools:src="@drawable/no_image" />
 
         <TextView
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/cashAccountName"
+
+            android:layout_marginStart="@dimen/margin_double"
+            app:layout_constraintStart_toStartOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_category"
             tools:text="@string/description_category" />
 
         <ImageView
+            android:contentDescription="@string/description_rating_payment"
             android:id="@+id/ratingImg"
-            android:layout_width="110dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="@dimen/margin_half_normal"
+            android:layout_width="50dp"
+            android:layout_height="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name_fast_payment"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/rating3" />
 
         <TextView
+            android:textSize="@dimen/H6"
             android:id="@+id/description_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_normal"
             android:text="@string/description_amount"
-            app:layout_constraintStart_toStartOf="@id/ratingImg"
-            app:layout_constraintTop_toBottomOf="@id/ratingImg" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_category" />
 
         <TextView
             android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/ratingImg"
-            app:layout_constraintStart_toEndOf="@+id/description_amount"
+            android:layout_marginStart="@dimen/margin_double"
+            app:layout_constraintStart_toStartOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_amount"
             tools:text="100.25" />
 
         <androidx.constraintlayout.widget.Barrier
+
             android:id="@+id/barrier_values"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="right"
-            app:constraint_referenced_ids="description_cash_account,description_currency,description_category"
-            tools:layout_editor_absoluteX="395dp" />
+            app:constraint_referenced_ids="description_cash_account,description_currency,description_category" />
 
         <TextView
             android:id="@+id/description_of_payment"
-            android:layout_marginTop="@dimen/margin_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_category" />
+            app:layout_constraintTop_toBottomOf="@id/description_amount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
