@@ -60,7 +60,7 @@ class FastPaymentsAdapter(
                         amount.text = "-"
                     }
                 }
-                if (fastPayments.description?.isEmpty() == true){
+                if (fastPayments.description?.toString().isNullOrEmpty()){
                     binding.descriptionOfPayment.visibility = View.GONE
                 }
 
