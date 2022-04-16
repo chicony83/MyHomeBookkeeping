@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.db.simpleQuery
 
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 
 object FastPaymentCreateSimpleQuery {
@@ -12,42 +13,52 @@ object FastPaymentCreateSimpleQuery {
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingAlphabetByAsc(): SimpleSQLiteQuery {
+    fun createQuerySortingAlphabetByAsc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
+        val type = getStringQueryFromType(typeOfFastPayments)
+        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY name_fast_payment ASC "
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingAlphabetByDesc(): SimpleSQLiteQuery {
+    fun createQuerySortingAlphabetByDesc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
+        val type = getStringQueryFromType(typeOfFastPayments)
+        query += type
         val argsList: ArrayList<Any> = arrayListOf()
-
         query += " ORDER BY name_fast_payment DESC "
-
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingRatingByAsc(): SimpleSQLiteQuery {
+    fun createQuerySortingRatingByAsc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
+        val type = getStringQueryFromType(typeOfFastPayments)
+        query += type
         val argsList: ArrayList<Any> = arrayListOf()
-
         query += " ORDER BY rating ASC "
-
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingRatingByDesc(): SimpleSQLiteQuery {
+    fun createQuerySortingRatingByDesc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
+        val type = getStringQueryFromType(typeOfFastPayments)
+        query += type
         val argsList: ArrayList<Any> = arrayListOf()
-
         query += " ORDER BY rating DESC "
-
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
+    }
+    private fun getStringQueryFromType(typeOfFastPayments: String): String {
+        return when (typeOfFastPayments) {
+            StateRecyclerFastPaymentByType.Income.name -> "AND is_income == true"
+            StateRecyclerFastPaymentByType.Spending.name -> "AND is_income == false"
+            StateRecyclerFastPaymentByType.All.name -> ""
+            else -> ""
+        }
     }
 
     private fun mainQueryFastPayment(): String {

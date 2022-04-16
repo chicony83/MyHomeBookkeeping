@@ -11,21 +11,14 @@ import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
-import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
-import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
-import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
-import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
-import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
-import com.chico.myhomebookkeeping.icons.AddIconCategories
-import com.chico.myhomebookkeeping.icons.AddIcons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -75,7 +68,7 @@ class FastPaymentsViewModel(
         val typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
         runBlocking {
             val listFullFastPayments: Deferred<List<FullFastPayment>?> =
-                async(Dispatchers.IO) { loadListFullFastPayments() }
+                async(Dispatchers.IO) { loadListFullFastPayments(typeOfFastPayments) }
             Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             postListFullFastPayments(listFullFastPayments.await())
         }
@@ -89,32 +82,33 @@ class FastPaymentsViewModel(
         _fastPaymentsList.postValue(list)
     }
 
-    private suspend fun loadListFullFastPayments() = launchForResult {
+    private suspend fun loadListFullFastPayments(typeOfFastPayments: String) = launchForResult {
 
         val query: SimpleSQLiteQuery
 
         when (getSorting()) {
             SortingFastPayments.AlphabetByAsc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
-                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
+                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc(typeOfFastPayments)
             }
             SortingFastPayments.AlphabetByDesc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
-                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
+                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc(typeOfFastPayments)
             }
             SortingFastPayments.RatingByAsc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_ASC))
-                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
+                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc(typeOfFastPayments)
             }
             SortingFastPayments.RatingByDesc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
-                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
             }
             else -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
-                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
             }
         }
+        Message.log(query.sql)
         return@launchForResult getListFullFastPaymentsFromUseCase(query)
     }
 
@@ -208,5 +202,20 @@ class FastPaymentsViewModel(
 
     fun setLastVersionChecked() {
         setSP.saveToSP(ConstantsOfUpdate.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
+    }
+
+    fun getAllFastPayments() {
+        setSP.saveToSP(argsStateRecyclerFastPaymentByType,StateRecyclerFastPaymentByType.All.name)
+        getFullFastPaymentsList()
+    }
+
+    fun getIncomeFastPayments() {
+        setSP.saveToSP(argsStateRecyclerFastPaymentByType,StateRecyclerFastPaymentByType.Income.name)
+        getFullFastPaymentsList()
+    }
+
+    fun getSpendingFastPayments() {
+        setSP.saveToSP(argsStateRecyclerFastPaymentByType,StateRecyclerFastPaymentByType.Spending.name)
+        getFullFastPaymentsList()
     }
 }

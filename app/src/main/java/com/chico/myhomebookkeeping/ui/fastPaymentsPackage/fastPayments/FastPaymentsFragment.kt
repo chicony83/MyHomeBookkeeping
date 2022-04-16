@@ -118,6 +118,16 @@ class FastPaymentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            selectAllButton.setOnClickListener {
+                fastPaymentsViewModel.getAllFastPayments()
+            }
+            selectAllIncomeButton.setOnClickListener {
+                fastPaymentsViewModel.getIncomeFastPayments()
+            }
+            selectAllSpendingButton.setOnClickListener {
+                fastPaymentsViewModel.getSpendingFastPayments()
+            }
+
             sortingButton.setOnClickListener {
                 val popupMenu = PopupMenu(context, sortingButton)
                 popupMenu.menuInflater.inflate(
