@@ -18,15 +18,15 @@
     <string name="text_on_button_save">Сохранить</string>
     <string name="text_on_button_apply">Готово</string>
     <string name="text_on_button_reset">Сбросить</string>
-    <string name="text_on_button_select_all">Выбрать все</string>
+    <string name="text_on_button_select_all">Все</string>
     <string name="text_on_button_add_and_select">Добавить и Выбрать</string>
     <string name="text_on_button_add">Добавить</string>
     <string name="text_on_button_delete">Удалить</string>
     <string name="text_on_button_yes">Да</string>
     <string name="text_on_button_no">Нет</string>
 
-    <string name="text_on_button_all_income">Все доходы</string>
-    <string name="text_on_button_all_spending">Все расходы</string>
+    <string name="text_on_button_all_income">Доходы</string>
+    <string name="text_on_button_all_spending">Расходы</string>
     <string name="text_on_button_income_category">Доходы</string>
     <string name="text_on_button_spending_category">Расходы</string>
 

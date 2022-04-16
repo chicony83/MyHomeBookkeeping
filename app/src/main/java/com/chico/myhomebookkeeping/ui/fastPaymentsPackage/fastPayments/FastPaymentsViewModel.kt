@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
+import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.icons.AddIconCategories
@@ -40,18 +41,13 @@ class FastPaymentsViewModel(
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
-    private val argsCurrencyCreateKey =
-        Constants        //        _publicTransportCategoryItem.postValue(
-//            CategoryIconNames.Bus.name.let {
-//                ItemOfFirstLaunch(it, categoryIconsMap[it])
-//            }
-//        )
-            .ARGS_NEW_PAYMENT_CURRENCY_KEY
+    private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
     private val argsSortingFastPayments = Constants.SORTING_FAST_PAYMENTS
+    private val argsStateRecyclerFastPaymentByType = Constants.ARGS_GET_FAST_PAYMENTS_BY_TYPE
 
     private val spName = Constants.SP_NAME
     private val sharedPreferences: SharedPreferences =
@@ -76,12 +72,17 @@ class FastPaymentsViewModel(
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
     internal fun getFullFastPaymentsList() {
+        val typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
         runBlocking {
             val listFullFastPayments: Deferred<List<FullFastPayment>?> =
                 async(Dispatchers.IO) { loadListFullFastPayments() }
             Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             postListFullFastPayments(listFullFastPayments.await())
         }
+    }
+
+    private fun getStateRecyclerFastPaymentByTypeFromSp(): String {
+        return getSp.getString(argsStateRecyclerFastPaymentByType)?: StateRecyclerFastPaymentByType.All.name
     }
 
     private fun postListFullFastPayments(list: List<FullFastPayment>?) {
@@ -91,6 +92,7 @@ class FastPaymentsViewModel(
     private suspend fun loadListFullFastPayments() = launchForResult {
 
         val query: SimpleSQLiteQuery
+
         when (getSorting()) {
             SortingFastPayments.AlphabetByAsc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
