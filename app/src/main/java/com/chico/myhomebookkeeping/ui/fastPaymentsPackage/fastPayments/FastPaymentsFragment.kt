@@ -45,9 +45,9 @@ class FastPaymentsFragment : Fragment() {
         val layoutManager =  GridLayoutManager(activity, 2)
 
         with(fastPaymentsViewModel) {
-            sortedByTextOnButton.observe(viewLifecycleOwner,{
-                binding.sortingButton.text = it
-            })
+//            sortedByTextOnButton.observe(viewLifecycleOwner,{
+////                binding.sortingButton.text = it
+//            })
 
             fastPaymentsList.observe(viewLifecycleOwner, {
 
