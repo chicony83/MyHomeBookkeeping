@@ -5,26 +5,34 @@
 
     <Button
         android:id="@+id/selectAllIncomeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/FastPaymentsTopButtons.Left"
+        android:layout_marginTop="@dimen/margin_half_normal"
+        android:background="@drawable/fast_payment_bottom_left_button"
         android:text="@string/text_on_button_all_income"
         android:textSize="@dimen/H6"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/selectAllSpendingButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/selectAllSpendingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_half_normal"
+        android:background="@drawable/fast_payment_bottom_center_button"
         android:text="@string/text_on_button_all_spending"
         android:textSize="@dimen/H6"
-        app:layout_constraintStart_toEndOf="@id/selectAllIncomeButton"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+
         android:id="@+id/selectAllButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_half_normal"
+        android:background="@drawable/fast_payment_bottom_right_button"
         android:text="@string/text_on_button_select_all"
         android:textSize="@dimen/H6"
         app:layout_constraintStart_toEndOf="@id/selectAllSpendingButton"
