@@ -58,6 +58,7 @@ class FastPaymentsViewModel(
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
+
     internal fun getFullFastPaymentsList() {
         val typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
         runBlocking {
@@ -69,7 +70,8 @@ class FastPaymentsViewModel(
     }
 
     private fun getStateRecyclerFastPaymentByTypeFromSp(): String {
-        return getSp.getString(argsStateRecyclerFastPaymentByType)?: StateRecyclerFastPaymentByType.All.name
+        return getSp.getString(argsStateRecyclerFastPaymentByType)
+            ?: StateRecyclerFastPaymentByType.All.name
     }
 
     private fun postListFullFastPayments(list: List<FullFastPayment>?) {
@@ -82,19 +84,24 @@ class FastPaymentsViewModel(
 
         when (getSorting()) {
             SortingFastPayments.AlphabetByAsc.toString() -> {
-                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc(typeOfFastPayments)
+                query =
+                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc(typeOfFastPayments)
             }
             SortingFastPayments.AlphabetByDesc.toString() -> {
-                query = FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc(typeOfFastPayments)
+                query =
+                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc(typeOfFastPayments)
             }
             SortingFastPayments.RatingByAsc.toString() -> {
-                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc(typeOfFastPayments)
+                query =
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc(typeOfFastPayments)
             }
             SortingFastPayments.RatingByDesc.toString() -> {
-                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
+                query =
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
             }
             else -> {
-                query = FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
+                query =
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
             }
         }
         Message.log(query.sql)
@@ -186,17 +193,27 @@ class FastPaymentsViewModel(
     }
 
     fun getAllFastPayments() {
-        setSP.saveToSP(argsStateRecyclerFastPaymentByType,StateRecyclerFastPaymentByType.All.name)
+        setSP.saveToSP(argsStateRecyclerFastPaymentByType, StateRecyclerFastPaymentByType.All.name)
         getFullFastPaymentsList()
     }
 
     fun getIncomeFastPayments() {
-        setSP.saveToSP(argsStateRecyclerFastPaymentByType,StateRecyclerFastPaymentByType.Income.name)
+        setSP.saveToSP(
+            argsStateRecyclerFastPaymentByType,
+            StateRecyclerFastPaymentByType.Income.name
+        )
         getFullFastPaymentsList()
     }
 
     fun getSpendingFastPayments() {
-        setSP.saveToSP(argsStateRecyclerFastPaymentByType,StateRecyclerFastPaymentByType.Spending.name)
+        setSP.saveToSP(
+            argsStateRecyclerFastPaymentByType,
+            StateRecyclerFastPaymentByType.Spending.name
+        )
         getFullFastPaymentsList()
+    }
+
+    fun getSelectedTypeOfFastPayment(): String {
+        return getStateRecyclerFastPaymentByTypeFromSp()
     }
 }

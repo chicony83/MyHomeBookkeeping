@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
+import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.*
@@ -42,13 +43,35 @@ class FastPaymentsFragment : Fragment() {
 
         fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
-        val layoutManager =  GridLayoutManager(activity, 2)
+        val layoutManager = GridLayoutManager(activity, 2)
 
         with(fastPaymentsViewModel) {
 //            sortedByTextOnButton.observe(viewLifecycleOwner,{
 ////                binding.sortingButton.text = it
 //            })
+            when (fastPaymentsViewModel.getSelectedTypeOfFastPayment()) {
+                StateRecyclerFastPaymentByType.Income.name -> setStateButtons(
+                    isSelectIncome = false,
+                    isSelectSpending = true,
+                    isSelectAll = true
+                )
+                StateRecyclerFastPaymentByType.Spending.name -> setStateButtons(
+                    isSelectIncome = true,
+                    isSelectSpending = false,
+                    isSelectAll = true
+                )
+                StateRecyclerFastPaymentByType.All.name -> setStateButtons(
+                    isSelectIncome = true,
+                    isSelectSpending = true,
+                    isSelectAll = false
+                )
+                else -> setStateButtons(
+                    isSelectIncome = true,
+                    isSelectSpending = true,
+                    isSelectAll = false
+                )
 
+            }
             fastPaymentsList.observe(viewLifecycleOwner, {
 
                 binding.recyclerView.layoutManager = layoutManager
@@ -93,7 +116,7 @@ class FastPaymentsFragment : Fragment() {
         super.onStart()
         fastPaymentsViewModel.getFullFastPaymentsList()
 
-        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()){
+        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()) {
 
             val updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
             updateViewModel.update()
@@ -120,12 +143,28 @@ class FastPaymentsFragment : Fragment() {
         with(binding) {
             selectAllButton.setOnClickListener {
                 fastPaymentsViewModel.getAllFastPayments()
+                setStateButtons(
+                    isSelectAll = false,
+                    isSelectIncome = true,
+                    isSelectSpending = true
+                )
             }
             selectAllIncomeButton.setOnClickListener {
                 fastPaymentsViewModel.getIncomeFastPayments()
+                setStateButtons(
+                    isSelectAll = true,
+                    isSelectIncome = false,
+                    isSelectSpending = true
+                )
             }
             selectAllSpendingButton.setOnClickListener {
                 fastPaymentsViewModel.getSpendingFastPayments()
+                setStateButtons(
+                    isSelectAll = true,
+                    isSelectIncome = true,
+                    isSelectSpending = false
+                )
+
             }
 
             sortingButton.setOnClickListener {
@@ -164,6 +203,16 @@ class FastPaymentsFragment : Fragment() {
         if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)) {
             fastPaymentsViewModel.reloadRecycler()
         }
+    }
+
+    private fun setStateButtons(
+        isSelectAll: Boolean,
+        isSelectIncome: Boolean,
+        isSelectSpending: Boolean
+    ) {
+        binding.selectAllButton.isEnabled = isSelectAll
+        binding.selectAllIncomeButton.isEnabled = isSelectIncome
+        binding.selectAllSpendingButton.isEnabled = isSelectSpending
     }
 
     private fun sortingFastPayments(sorting: String) {
