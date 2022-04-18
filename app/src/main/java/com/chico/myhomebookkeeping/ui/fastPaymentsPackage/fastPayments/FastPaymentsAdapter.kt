@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBinding
@@ -27,18 +28,31 @@ class FastPaymentsAdapter(
             false
         )
         context = parent.context
-
+//        val modifyFullFastPayment = fullFastPaymentsList.toMutableList()
+//        modifyFullFastPayment.add(FullFastPayment())
         return ViewHolderFastPaymentItem(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolderFastPaymentItem, position: Int) {
-        holder.bind(fullFastPaymentsList[position])
+        if (position <fullFastPaymentsList.size){
+            holder.bind(fullFastPaymentsList[position])
+        }
+        else{
+            holder.bindAddButton()
+        }
     }
 
-    override fun getItemCount() = fullFastPaymentsList.size
+    override fun getItemCount() = fullFastPaymentsList.size+1
 
     inner class ViewHolderFastPaymentItem(private val binding: RecyclerViewItemFastPaymentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun bindAddButton() {
+            with(binding){
+                fastPaymentItemId.visibility = View.GONE
+                addNewElement.visibility = View.VISIBLE
+            }
+        }
+
         fun bind(fastPayments: FullFastPayment) {
             with(binding) {
                 itemId.text = fastPayments.id.toString()
