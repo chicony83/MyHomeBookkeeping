@@ -4,13 +4,13 @@
     style="@style/Fragment.paddingBottom">
 
     <Button
-        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/selectAllIncomeButton"
         style="@style/FastPaymentsTopButtons.Left"
         android:layout_marginTop="@dimen/margin_half_normal"
         android:background="@drawable/fast_payment_bottom_left_button"
         android:text="@string/text_on_button_all_income"
         android:textSize="@dimen/H6"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
