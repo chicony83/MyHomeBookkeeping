@@ -6,16 +6,18 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBinding
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
+import com.chico.myhomebookkeeping.interfaces.OnPressCreateNewElement
 
 class FastPaymentsAdapter(
     private val fullFastPaymentsList: List<FullFastPayment>,
-    private val listener: OnItemViewClickListenerLong
+    private val listener: OnItemViewClickListenerLong,
+    private val pressCreateNewElement: OnPressCreateNewElement
 ) : RecyclerView.Adapter<FastPaymentsAdapter.ViewHolderFastPaymentItem>() {
 
 
@@ -49,7 +51,12 @@ class FastPaymentsAdapter(
         fun bindAddButton() {
             with(binding){
                 fastPaymentItemId.visibility = View.GONE
-                addNewElement.visibility = View.VISIBLE
+                addNewElementLayout.visibility = View.VISIBLE
+
+                addNewElementLayout.setOnClickListener {
+                    pressCreateNewElement.onPress()
+                    Message.log("---PreSSEd---")
+                }
             }
         }
 
@@ -63,7 +70,6 @@ class FastPaymentsAdapter(
                 ratingImg.setImageDrawable(getRatingImage(fastPayments.rating))
 
                 categoryName.text = fastPayments.categoryNameValue
-//                if (fastPayments.)
 
                 if (fastPayments.amount.toString().isNotEmpty()) {
                     val number: Double = fastPayments.amount ?: 0.0

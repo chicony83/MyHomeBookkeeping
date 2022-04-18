@@ -72,19 +72,25 @@ class FastPaymentsFragment : Fragment() {
                 )
 
             }
-            fastPaymentsList.observe(viewLifecycleOwner, {
+            fastPaymentsList.observe(viewLifecycleOwner) {
 
                 binding.recyclerView.layoutManager = layoutManager
 
                 binding.recyclerView.adapter = it?.let { it1 ->
-                    FastPaymentsAdapter(it1, object :
-                        OnItemViewClickListenerLong {
-                        override fun onClick(selectedId: Long) {
-                            showSelectDialog(selectedId)
-                        }
-                    })
+                    FastPaymentsAdapter(it1,
+                        object : OnItemViewClickListenerLong {
+                            override fun onClick(selectedId: Long) {
+                                showSelectDialog(selectedId)
+                            }
+                        },
+                        object : OnPressCreateNewElement {
+                            override fun onPress() {
+                                navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment)
+                                Message.log("PRESS")
+                            }
+                        })
                 }
-            })
+            }
         }
         return binding.root
     }
@@ -196,7 +202,7 @@ class FastPaymentsFragment : Fragment() {
                 }
                 popupMenu.show()
             }
-            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
+//            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
         }
         fastPaymentsViewModel.cleaningSP()
 
