@@ -52,7 +52,6 @@ class FastPaymentsViewModel(
 
     private val getSp = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
-//    private val sortingFastPaymentsSpString = getSorting()
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
@@ -68,7 +67,7 @@ class FastPaymentsViewModel(
         val typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
         runBlocking {
             val listFullFastPayments: Deferred<List<FullFastPayment>?> =
-                async(Dispatchers.IO) { loadListFullFastPayments(typeOfFastPayments) }
+                async(Dispatchers.IO) { loadListFullFastPayments() }
             Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             val result =
                 selectTargetingTypeOfFastPayment(listFullFastPayments.await(), typeOfFastPayments)
@@ -119,7 +118,7 @@ class FastPaymentsViewModel(
         _fastPaymentsList.postValue(list)
     }
 
-    private suspend fun loadListFullFastPayments(typeOfFastPayments: String) = launchForResult {
+    private suspend fun loadListFullFastPayments() = launchForResult {
 
         val query: SimpleSQLiteQuery
 
@@ -127,27 +126,27 @@ class FastPaymentsViewModel(
             SortingFastPayments.AlphabetByAsc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc(typeOfFastPayments)
+                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
             }
             SortingFastPayments.AlphabetByDesc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc(typeOfFastPayments)
+                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
             }
             SortingFastPayments.RatingByAsc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_ASC))
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc(typeOfFastPayments)
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
             }
             SortingFastPayments.RatingByDesc.toString() -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
             }
             else -> {
                 setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(typeOfFastPayments)
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
             }
         }
         Message.log(query.sql)

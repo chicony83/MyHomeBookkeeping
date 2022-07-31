@@ -13,54 +13,37 @@ object FastPaymentCreateSimpleQuery {
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingAlphabetByAsc(typeOfFastPayments: String): SimpleSQLiteQuery {
+    fun createQuerySortingAlphabetByAsc(): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-//        val type = getStringQueryFromType(typeOfFastPayments)
-//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY name_fast_payment ASC "
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingAlphabetByDesc(typeOfFastPayments: String): SimpleSQLiteQuery {
+    fun createQuerySortingAlphabetByDesc(): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-//        val type = getStringQueryFromType(typeOfFastPayments)
-//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY name_fast_payment DESC "
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingRatingByAsc(typeOfFastPayments: String): SimpleSQLiteQuery {
+    fun createQuerySortingRatingByAsc(): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-//        val type = getStringQueryFromType(typeOfFastPayments)
-//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY rating ASC "
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
 
-    fun createQuerySortingRatingByDesc(typeOfFastPayments: String): SimpleSQLiteQuery {
+    fun createQuerySortingRatingByDesc(): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-//        val type = getStringQueryFromType(typeOfFastPayments)
-//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY rating DESC "
         val args: Array<Any> = argsList.toArray()
         return SimpleSQLiteQuery(query, args)
     }
-    private fun getStringQueryFromType(typeOfFastPayments: String): String {
-        return when (typeOfFastPayments) {
-            StateRecyclerFastPaymentByType.Income.name -> "AND is_income == true"
-            StateRecyclerFastPaymentByType.Spending.name -> "AND is_income == false"
-            StateRecyclerFastPaymentByType.All.name -> ""
-            else -> ""
-        }
-    }
-
     private fun mainQueryFastPayment(): String {
         return "SELECT id, icon, name_fast_payment, rating , " +
                 "cash_account_name AS cash_account_name_value, " +
