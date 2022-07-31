@@ -24,7 +24,12 @@
         <entry key="app/src/main/res/drawable/dialog_background.xml" value="0.290625" />
         <entry key="app/src/main/res/drawable/dialog_background_day.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/dialog_background_night.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/fast_payment_bottom_center_button.xml" value="0.1015" />
+        <entry key="app/src/main/res/drawable/fast_payment_bottom_left_button.xml" value="0.206" />
+        <entry key="app/src/main/res/drawable/fast_payment_bottom_right_button.xml" value="0.206" />
         <entry key="app/src/main/res/drawable/ic_add_box.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_add_circle.xml" value="0.1015" />
+        <entry key="app/src/main/res/drawable/ic_baseline_sort.xml" value="0.1015" />
         <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/item_shadow.xml" value="0.371875" />

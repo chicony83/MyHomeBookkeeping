@@ -15,8 +15,8 @@ object FastPaymentCreateSimpleQuery {
 
     fun createQuerySortingAlphabetByAsc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-        val type = getStringQueryFromType(typeOfFastPayments)
-        query += type
+//        val type = getStringQueryFromType(typeOfFastPayments)
+//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY name_fast_payment ASC "
         val args: Array<Any> = argsList.toArray()
@@ -25,8 +25,8 @@ object FastPaymentCreateSimpleQuery {
 
     fun createQuerySortingAlphabetByDesc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-        val type = getStringQueryFromType(typeOfFastPayments)
-        query += type
+//        val type = getStringQueryFromType(typeOfFastPayments)
+//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY name_fast_payment DESC "
         val args: Array<Any> = argsList.toArray()
@@ -35,8 +35,8 @@ object FastPaymentCreateSimpleQuery {
 
     fun createQuerySortingRatingByAsc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-        val type = getStringQueryFromType(typeOfFastPayments)
-        query += type
+//        val type = getStringQueryFromType(typeOfFastPayments)
+//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY rating ASC "
         val args: Array<Any> = argsList.toArray()
@@ -45,8 +45,8 @@ object FastPaymentCreateSimpleQuery {
 
     fun createQuerySortingRatingByDesc(typeOfFastPayments: String): SimpleSQLiteQuery {
         var query = mainQueryFastPayment()
-        val type = getStringQueryFromType(typeOfFastPayments)
-        query += type
+//        val type = getStringQueryFromType(typeOfFastPayments)
+//        query += type
         val argsList: ArrayList<Any> = arrayListOf()
         query += " ORDER BY rating DESC "
         val args: Array<Any> = argsList.toArray()
