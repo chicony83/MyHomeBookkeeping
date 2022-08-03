@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.chico.myhomebookkeeping"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 45
-        versionName "0.9.3"
+        targetSdkVersion 32
+        versionCode 48
+        versionName "0.9.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
