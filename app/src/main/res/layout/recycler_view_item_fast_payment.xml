@@ -97,11 +97,11 @@
             android:id="@+id/iconCategory"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:contentDescription="@string/content_description_icon_item_of_category"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_category"
-            tools:src="@drawable/no_image"
-            android:contentDescription="@string/content_description_icon_item_of_category" />
+            tools:src="@drawable/no_image" />
 
         <TextView
             android:id="@+id/category_name"
@@ -161,13 +161,22 @@
             app:layout_constraintTop_toBottomOf="@id/description_amount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_new_element_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="200dp"
-        android:src="@drawable/ic_add_circle"
-        android:visibility="gone"
-        android:contentDescription="@string/content_description_icon_add_new_element" />
+        android:visibility="gone">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/content_description_icon_add_new_element"
+            android:src="@drawable/ic_add_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

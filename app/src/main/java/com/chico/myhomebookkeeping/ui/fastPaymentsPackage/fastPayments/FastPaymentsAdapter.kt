@@ -52,6 +52,7 @@ class FastPaymentsAdapter(
                 fastPaymentItemId.visibility = View.GONE
                 addNewElementLayout.visibility = View.VISIBLE
 
+                addNewElementLayout.background = null
                 addNewElementLayout.setOnClickListener {
                     pressCreateNewElement.onPress()
                     Message.log("---PreSSEd---")
