@@ -32,13 +32,25 @@ class FastPaymentsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolderFastPaymentItem, position: Int) {
-        holder.bind(fullFastPaymentsList[position])
+        if (position <fullFastPaymentsList.size){
+            holder.bind(fullFastPaymentsList[position])
+        }
+        else{
+            holder.bindAddButton()
+        }
     }
 
-    override fun getItemCount() = fullFastPaymentsList.size
+    override fun getItemCount() = fullFastPaymentsList.size +1
 
     inner class ViewHolderFastPaymentItem(private val binding: RecyclerViewItemFastPaymentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun bindAddButton() {
+            with(binding){
+                fastPaymentItemId.visibility = View.GONE
+                addNewElementLayout.visibility = View.VISIBLE
+            }
+        }
+
         fun bind(fastPayments: FullFastPayment) {
             with(binding) {
                 itemId.text = fastPayments.id.toString()

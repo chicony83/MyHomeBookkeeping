@@ -100,15 +100,16 @@
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_category"
-            tools:src="@drawable/no_image" />
+            tools:src="@drawable/no_image"
+            android:contentDescription="@string/content_description_icon_item_of_category" />
 
         <TextView
             android:id="@+id/category_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_double"
-            android:hyphenationFrequency="full"
             android:gravity="start"
+            android:hyphenationFrequency="full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_category"
@@ -144,7 +145,6 @@
             tools:text="100.25" />
 
         <androidx.constraintlayout.widget.Barrier
-
             android:id="@+id/barrier_values"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,4 +160,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_amount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/add_new_element_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="200dp"
+        android:src="@drawable/ic_add_circle"
+        android:visibility="gone"
+        android:contentDescription="@string/content_description_icon_add_new_element" />
+
 </androidx.cardview.widget.CardView>
