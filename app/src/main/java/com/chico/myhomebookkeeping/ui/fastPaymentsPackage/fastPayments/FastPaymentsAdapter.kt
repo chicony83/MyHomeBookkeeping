@@ -10,11 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBinding
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
+import com.chico.myhomebookkeeping.interfaces.OnPressCreateNewElement
 
 class FastPaymentsAdapter(
     private val fullFastPaymentsList: List<FullFastPayment>,
-    private val listener: OnItemViewClickListenerLong
+    private val listener: OnItemViewClickListenerLong,
+    private val pressCreateNewElement: OnPressCreateNewElement
 ) : RecyclerView.Adapter<FastPaymentsAdapter.ViewHolderFastPaymentItem>() {
 
 
@@ -40,7 +43,7 @@ class FastPaymentsAdapter(
         }
     }
 
-    override fun getItemCount() = fullFastPaymentsList.size +1
+    override fun getItemCount() = fullFastPaymentsList.size+1
 
     inner class ViewHolderFastPaymentItem(private val binding: RecyclerViewItemFastPaymentBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,6 +51,11 @@ class FastPaymentsAdapter(
             with(binding){
                 fastPaymentItemId.visibility = View.GONE
                 addNewElementLayout.visibility = View.VISIBLE
+
+                addNewElementLayout.setOnClickListener {
+                    pressCreateNewElement.onPress()
+                    Message.log("---PreSSEd---")
+                }
             }
         }
 

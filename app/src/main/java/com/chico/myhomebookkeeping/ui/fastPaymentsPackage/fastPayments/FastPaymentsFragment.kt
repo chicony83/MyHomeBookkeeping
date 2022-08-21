@@ -42,26 +42,32 @@ class FastPaymentsFragment : Fragment() {
 
         fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
-        val layoutManager =  GridLayoutManager(activity, 2)
+        val layoutManager = GridLayoutManager(activity, 2)
 
         with(fastPaymentsViewModel) {
-            sortedByTextOnButton.observe(viewLifecycleOwner,{
+            sortedByTextOnButton.observe(viewLifecycleOwner, {
                 binding.sortingButton.text = it
             })
 
-            fastPaymentsList.observe(viewLifecycleOwner, {
+            fastPaymentsList.observe(viewLifecycleOwner) {
 
                 binding.recyclerView.layoutManager = layoutManager
 
                 binding.recyclerView.adapter = it?.let { it1 ->
-                    FastPaymentsAdapter(it1, object :
-                        OnItemViewClickListenerLong {
-                        override fun onClick(selectedId: Long) {
-                            showSelectDialog(selectedId)
-                        }
-                    })
+                    FastPaymentsAdapter(it1,
+                        object : OnItemViewClickListenerLong {
+                            override fun onClick(selectedId: Long) {
+                                showSelectDialog(selectedId)
+                            }
+                        },
+                        object : OnPressCreateNewElement {
+                            override fun onPress() {
+                                navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment)
+                                Message.log("PRESS")
+                            }
+                        })
                 }
-            })
+            }
         }
         return binding.root
     }
@@ -93,7 +99,7 @@ class FastPaymentsFragment : Fragment() {
         super.onStart()
         fastPaymentsViewModel.getFullFastPaymentsList()
 
-        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()){
+        if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()) {
 
             val updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
             updateViewModel.update()
