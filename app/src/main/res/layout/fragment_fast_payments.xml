@@ -40,7 +40,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/new_blank_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectAllIncomeButton"
@@ -54,11 +54,11 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
     </ScrollView>
 
-    <Button
-        android:id="@+id/new_blank_button"
-        style="@style/ButtonFullWidth"
-        android:text="@string/text_on_button_new_fast_payment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/new_blank_button"-->
+<!--        style="@style/ButtonFullWidth"-->
+<!--        android:text="@string/text_on_button_new_fast_payment"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

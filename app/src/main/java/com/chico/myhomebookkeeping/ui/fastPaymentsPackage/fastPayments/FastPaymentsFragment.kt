@@ -163,7 +163,7 @@ class FastPaymentsFragment : Fragment() {
                 }
                 popupMenu.show()
             }
-            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
+//            newBlankButton.setOnClickListener { navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment) }
         }
         fastPaymentsViewModel.cleaningSP()
 
