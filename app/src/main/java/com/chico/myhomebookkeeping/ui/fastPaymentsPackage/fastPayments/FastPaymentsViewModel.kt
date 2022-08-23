@@ -63,8 +63,10 @@ class FastPaymentsViewModel(
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
+    private var typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
+
     internal fun getFullFastPaymentsList() {
-        val typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
+        typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
         runBlocking {
             val listFullFastPayments: Deferred<List<FullFastPayment>?> =
                 async(Dispatchers.IO) { loadListFullFastPayments() }
@@ -83,9 +85,17 @@ class FastPaymentsViewModel(
         val size: Int = list?.size?.minus(1) ?: 0
         Message.log("size of full list ${list?.size}")
         if (size > 0) {
-            when(typeOfFastPayments){
-                StateRecyclerFastPaymentByType.Income.name -> getTargetingLines(list,resultList,true)
-                StateRecyclerFastPaymentByType.Spending.name -> getTargetingLines(list,resultList,false)
+            when (typeOfFastPayments) {
+                StateRecyclerFastPaymentByType.Income.name -> getTargetingLines(
+                    list,
+                    resultList,
+                    true
+                )
+                StateRecyclerFastPaymentByType.Spending.name -> getTargetingLines(
+                    list,
+                    resultList,
+                    false
+                )
                 StateRecyclerFastPaymentByType.All.name -> resultList = list?.toMutableList()!!
                 else -> resultList = list?.toMutableList()!!
             }
@@ -101,7 +111,7 @@ class FastPaymentsViewModel(
         boolean: Boolean
     ): MutableList<FullFastPayment> {
         list?.forEach { it ->
-            if (it.isIncome == boolean){
+            if (it.isIncome == boolean) {
                 resultList.add(it)
                 Message.log("add")
             }
@@ -264,5 +274,9 @@ class FastPaymentsViewModel(
             StateRecyclerFastPaymentByType.Spending.name
         )
         getFullFastPaymentsList()
+    }
+
+    fun getTypeOfRecycler(): String {
+        return typeOfFastPayments
     }
 }

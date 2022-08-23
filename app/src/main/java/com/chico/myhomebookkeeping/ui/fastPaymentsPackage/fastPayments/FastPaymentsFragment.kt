@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
+import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.*
@@ -50,9 +52,7 @@ class FastPaymentsFragment : Fragment() {
             })
 
             fastPaymentsList.observe(viewLifecycleOwner) {
-
                 binding.recyclerView.layoutManager = layoutManager
-
                 binding.recyclerView.adapter = it?.let { it1 ->
                     FastPaymentsAdapter(it1,
                         object : OnItemViewClickListenerLong {
@@ -100,12 +100,30 @@ class FastPaymentsFragment : Fragment() {
         fastPaymentsViewModel.getFullFastPaymentsList()
 
         if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()) {
-
             val updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
             updateViewModel.update()
 //            addIconsInDataBase()
             showWhatsNewDialog()
             fastPaymentsViewModel.setLastVersionChecked()
+        }
+        updateIncomeSpendingAllButtons()
+    }
+
+    private fun updateIncomeSpendingAllButtons() {
+
+        when (fastPaymentsViewModel.getTypeOfRecycler()) {
+            StateRecyclerFastPaymentByType.Spending.name -> {
+                setPressedSelectSpendingButton()
+            }
+            StateRecyclerFastPaymentByType.Income.name -> {
+                setPressedSelectIncomeButton()
+            }
+            StateRecyclerFastPaymentByType.All.name -> {
+                setPressedSelectAllButton()
+            }
+            else -> {
+                setPressedSelectAllButton()
+            }
         }
     }
 
@@ -126,12 +144,15 @@ class FastPaymentsFragment : Fragment() {
         with(binding) {
             selectAllButton.setOnClickListener {
                 fastPaymentsViewModel.getAllFastPayments()
+                setPressedSelectAllButton()
             }
             selectAllIncomeButton.setOnClickListener {
                 fastPaymentsViewModel.getIncomeFastPayments()
+                setPressedSelectIncomeButton()
             }
             selectAllSpendingButton.setOnClickListener {
                 fastPaymentsViewModel.getSpendingFastPayments()
+                setPressedSelectSpendingButton()
             }
 
             sortingButton.setOnClickListener {
@@ -169,6 +190,32 @@ class FastPaymentsFragment : Fragment() {
 
         if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)) {
             fastPaymentsViewModel.reloadRecycler()
+        }
+    }
+
+    private fun setPressedSelectSpendingButton() {
+        setPressed(binding.selectAllSpendingButton)
+        setUnpressed(listOf(binding.selectAllIncomeButton, binding.selectAllButton))
+    }
+
+    private fun setPressedSelectIncomeButton() {
+        setPressed(binding.selectAllIncomeButton)
+        setUnpressed(listOf(binding.selectAllButton, binding.selectAllSpendingButton))
+    }
+
+    private fun setPressedSelectAllButton() {
+        setPressed(binding.selectAllButton)
+        setUnpressed(listOf(binding.selectAllIncomeButton, binding.selectAllSpendingButton))
+    }
+
+    private fun setPressed(pressedButton: Button) {
+        pressedButton.isEnabled = false
+    }
+
+    private fun setUnpressed(listOfButtons: List<Button>) {
+        for (i in listOfButtons.indices) {
+            listOfButtons[i].isEnabled = true
+
         }
     }
 
