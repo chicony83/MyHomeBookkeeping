@@ -5,5 +5,6 @@
     <string name="content_description_icon_item_of_category" translatable="false">icon item of category</string>
     <string name="content_description_icon_add_new_element" translatable="false">add new element</string>
     <string name="content_description_icon_fast_payment" translatable="false">icon fast payment</string>
+    <string name="content_description_icon_sorting" translatable="false">sorting icon</string>
 
 </resources>

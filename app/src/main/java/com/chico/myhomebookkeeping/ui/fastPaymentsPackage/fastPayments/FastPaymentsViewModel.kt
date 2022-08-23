@@ -55,11 +55,6 @@ class FastPaymentsViewModel(
 
     private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
-    private val setTextOnButtons = SetTextOnButtons(app.resources)
-
-    private var _sortedByTextOnButton = MutableLiveData<String>()
-    val sortedByTextOnButton: LiveData<String> get() = _sortedByTextOnButton
-
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
@@ -134,39 +129,28 @@ class FastPaymentsViewModel(
 
         when (getSorting()) {
             SortingFastPayments.AlphabetByAsc.toString() -> {
-                setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
                 query =
                     FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
             }
             SortingFastPayments.AlphabetByDesc.toString() -> {
-                setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 query =
                     FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
             }
             SortingFastPayments.RatingByAsc.toString() -> {
-                setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_ASC))
                 query =
                     FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
             }
             SortingFastPayments.RatingByDesc.toString() -> {
-                setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
                 query =
                     FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
             }
             else -> {
-                setTextOnButton(getString(R.string.text_on_button_sorting_by_rating_DESC))
                 query =
                     FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
             }
         }
         Message.log(query.sql)
         return@launchForResult getListFullFastPaymentsFromUseCase(query)
-    }
-
-    private fun setTextOnButton(string: String) {
-        launchUi {
-            setTextOnButtons.setTextOnSortingCategoriesButton(_sortedByTextOnButton, string)
-        }
     }
 
     private fun getString(string: Int) = app.getString(string)
