@@ -13,11 +13,14 @@ import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.interfaces.OnPressCreateNewElement
+import com.chico.myhomebookkeeping.interfaces.fastPayments.OnLongClickListenerCallBack
 
 class FastPaymentsAdapter(
     private val fullFastPaymentsList: List<FullFastPayment>,
     private val listener: OnItemViewClickListenerLong,
-    private val pressCreateNewElement: OnPressCreateNewElement
+    private val pressCreateNewElement: OnPressCreateNewElement,
+    private val onLongClickListener: OnLongClickListenerCallBack
+
 ) : RecyclerView.Adapter<FastPaymentsAdapter.ViewHolderFastPaymentItem>() {
 
 
@@ -35,20 +38,19 @@ class FastPaymentsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolderFastPaymentItem, position: Int) {
-        if (position <fullFastPaymentsList.size){
+        if (position < fullFastPaymentsList.size) {
             holder.bind(fullFastPaymentsList[position])
-        }
-        else{
+        } else {
             holder.bindAddButton()
         }
     }
 
-    override fun getItemCount() = fullFastPaymentsList.size+1
+    override fun getItemCount() = fullFastPaymentsList.size + 1
 
     inner class ViewHolderFastPaymentItem(private val binding: RecyclerViewItemFastPaymentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindAddButton() {
-            with(binding){
+            with(binding) {
                 fastPaymentItemId.visibility = View.GONE
                 addNewElementLayout.visibility = View.VISIBLE
 
@@ -81,13 +83,28 @@ class FastPaymentsAdapter(
                         amount.text = "-"
                     }
                 }
-                if (fastPayments.description?.toString().isNullOrEmpty()){
+                if (fastPayments.description?.toString().isNullOrEmpty()) {
                     binding.descriptionOfPayment.visibility = View.GONE
                 }
 
-                fastPaymentItemId.setOnClickListener {
-                    fastPayments.id.let { listener.onClick(it) }
+                fastPaymentItemId.setOnClickListener { _ ->
+                    fastPayments.id.let { it ->
+                        listener.onClick(it)
+                    }
                 }
+                fastPaymentItemId.setOnLongClickListener {
+                    onLongClickListener.longClick(fastPayments.id)
+
+                    //                    fastPayments.id.let {long->
+//                        onLongClickListener.longClick(long.toLong())
+//                    }
+
+                }
+//                fastPaymentItemId.setOnLongClickListener {it1->
+//                    fastPayments.id.let {it->
+//                        onLongClickListener.onLongClick(it1)
+//                    }
+//                }
             }
         }
 

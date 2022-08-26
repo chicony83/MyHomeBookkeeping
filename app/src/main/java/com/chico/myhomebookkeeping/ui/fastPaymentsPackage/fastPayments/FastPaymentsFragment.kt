@@ -19,6 +19,7 @@ import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.*
+import com.chico.myhomebookkeeping.interfaces.fastPayments.OnLongClickListenerCallBack
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -54,10 +55,13 @@ class FastPaymentsFragment : Fragment() {
             fastPaymentsList.observe(viewLifecycleOwner) {
                 binding.recyclerView.layoutManager = layoutManager
                 binding.recyclerView.adapter = it?.let { it1 ->
-                    FastPaymentsAdapter(it1,
+                    FastPaymentsAdapter(
+                        it1,
                         object : OnItemViewClickListenerLong {
                             override fun onClick(selectedId: Long) {
-                                showSelectDialog(selectedId)
+                                Message.log("---Short click detected---")
+                                fastPaymentsViewModel.saveIdFastPaymentForPay(selectedId)
+                                navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
                             }
                         },
                         object : OnPressCreateNewElement {
@@ -65,7 +69,19 @@ class FastPaymentsFragment : Fragment() {
                                 navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment)
                                 Message.log("PRESS")
                             }
-                        })
+                        },
+                        object : OnLongClickListenerCallBack {
+                            override fun longClick(long: Long): Boolean {
+                                Message.log("---LONG click detected  on ${long}---")
+                                showSelectDialog(long)
+                                return true
+                            }
+
+                            override fun onLongClick(p0: View?): Boolean {
+                                return true
+                            }
+                        }
+                    )
                 }
             }
         }

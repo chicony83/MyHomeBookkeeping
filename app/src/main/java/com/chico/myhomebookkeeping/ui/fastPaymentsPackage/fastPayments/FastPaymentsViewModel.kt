@@ -263,4 +263,13 @@ class FastPaymentsViewModel(
     fun getTypeOfRecycler(): String {
         return typeOfFastPayments
     }
+
+    fun saveIdFastPaymentForPay(id: Long) {
+        runBlocking {
+            val selectedFastPayment: Deferred<FastPayments?> = async(Dispatchers.IO) {
+                FastPaymentsUseCase.getOneFastPayment(id, db)
+            }
+            saveToSp(selectedFastPayment.await())
+        }
+    }
 }
