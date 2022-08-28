@@ -55,6 +55,8 @@ object Constants {
 
     const val FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY = "reportsSelectedCategoriesList"
 
+    const val ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED = "newEntryOfMoneyMovingInDbIsAdded"
+
     const val FOR_QUERY_NONE = ""
     const val IS_FIRST_LAUNCH = "isFirstLaunch"
     const val IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS = "isFirstLaunchFastPaymentAddFreeFastPayment"

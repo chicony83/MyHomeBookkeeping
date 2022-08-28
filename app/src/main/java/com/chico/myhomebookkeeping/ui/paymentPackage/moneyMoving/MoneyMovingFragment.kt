@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.ui.dialogs.EntryAddedDialog
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -137,6 +138,18 @@ class MoneyMovingFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         moneyMovingViewModel.getListFullMoneyMoving()
+        newEntryAdded()
+
+    }
+
+    private fun newEntryAdded() {
+        if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()){
+            launchUi {
+                val dialog = EntryAddedDialog()
+                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+            }
+            moneyMovingViewModel.dialogOfNewEntryAddedIsShowing()
+        }
     }
 
     override fun onDestroy() {

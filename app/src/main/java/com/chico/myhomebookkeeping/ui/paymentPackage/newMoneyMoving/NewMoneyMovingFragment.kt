@@ -18,10 +18,15 @@ import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.ui.dialogs.EntryAddedDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
+import com.chico.myhomebookkeeping.utils.showCustomToastWhitsButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -178,9 +183,12 @@ class NewMoneyMovingFragment : Fragment() {
 //                        binding.amount, binding.description
 //                    )
 //                )
-                setBackgroundDefaultColor(binding.amount)
+//                setBackgroundDefaultColor(binding.amount)
                 view?.hideKeyboard()
-                message(getString(R.string.message_entry_added))
+
+//                Toast(context).showCustomToastWhitsButton(requireActivity())
+//                message(getString(R.string.message_entry_added))
+                newMoneyMovingViewModel.saveSPOfNewEntryIsAdded()
                 control.navigate(R.id.nav_money_moving)
                 newMoneyMovingViewModel.clearSPAfterSave()
             }
@@ -231,6 +239,8 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun message(text: String) {
+
+
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 }

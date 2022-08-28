@@ -23,7 +23,10 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     fun getString(argsKey: String): String? {
         return sharedPreferences.getString(argsKey, argsNone)
     }
-    fun getBoolean(argsKey:String):Boolean{
+    fun getBooleanElseReturnTrue(argsKey:String):Boolean{
+        return sharedPreferences.getBoolean(argsKey,true)
+    }
+    fun getBooleanElseReturnFalse(argsKey:String):Boolean{
         return sharedPreferences.getBoolean(argsKey,true)
     }
 

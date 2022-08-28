@@ -39,6 +39,7 @@ class NewMoneyMovingViewModel(
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
+    private val argsNewEntryOfMoneyMovingInDbIsAdded = Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
 
     private val modelCheck = ModelCheck()
 
@@ -285,6 +286,10 @@ class NewMoneyMovingViewModel(
             saveToSP(argsAmountCreateKey, "")
             saveToSP(argsDescriptionCreateKey, "")
         }
+    }
+
+    fun saveSPOfNewEntryIsAdded() {
+        setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded,true)
     }
 
 }

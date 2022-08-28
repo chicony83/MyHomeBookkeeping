@@ -40,6 +40,8 @@ class MoneyMovingViewModel(
     private val argsStartTimePeriod = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
     private val argsEndTimePeriod = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
 
+    private val argsNewEntryOfMoneyMovingInDbIsAdded = Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
+
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
     private val textEmpty = Constants.TEXT_EMPTY
@@ -255,6 +257,14 @@ class MoneyMovingViewModel(
 
     fun saveIdMoneyMovingForChange(selectedId: Long) {
         setSP.saveToSP(argsIdMoneyMovingForChange, selectedId)
+    }
+
+    fun isTheEntryOfMoneyMovingAdded() :Boolean {
+        return getSP.getBooleanElseReturnFalse(argsNewEntryOfMoneyMovingInDbIsAdded)
+    }
+
+    fun dialogOfNewEntryAddedIsShowing() {
+        setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded,false)
     }
 
 }
