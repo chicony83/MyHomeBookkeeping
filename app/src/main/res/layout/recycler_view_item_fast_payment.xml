@@ -109,7 +109,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_double"
             android:gravity="start"
-            android:hyphenationFrequency="full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/barrier_values"
             app:layout_constraintTop_toTopOf="@id/description_category"
@@ -171,6 +170,7 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="?android:selectableItemBackground"
             android:contentDescription="@string/content_description_icon_add_new_element"
             android:src="@drawable/ic_add_circle"
             app:layout_constraintBottom_toBottomOf="parent"

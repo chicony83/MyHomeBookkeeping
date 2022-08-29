@@ -6,5 +6,6 @@
     <string name="content_description_icon_add_new_element" translatable="false">add new element</string>
     <string name="content_description_icon_fast_payment" translatable="false">icon fast payment</string>
     <string name="content_description_icon_sorting" translatable="false">sorting icon</string>
+    <string name="content_description_erase_button" translatable="false">erase button</string>
 
 </resources>

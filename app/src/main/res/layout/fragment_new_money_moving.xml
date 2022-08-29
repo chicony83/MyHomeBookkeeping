@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-style="@style/Fragment.paddingBottom"
+    style="@style/Fragment.paddingBottom"
     tools:context=".ui.paymentPackage.newMoneyMoving.NewMoneyMovingFragment">
 
     <ScrollView
@@ -57,9 +57,27 @@ style="@style/Fragment.paddingBottom"
                 style="@style/TextDescriptions"
                 android:text="@string/description_amount" />
 
-            <EditText
-                android:id="@+id/amount"
-                style="@style/EditTextAmount" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/amount"
+                    style="@style/EditTextAmount"
+                    android:layout_weight="9" />
+
+                <ImageButton
+                    android:contentDescription="@string/content_description_erase_button"
+                    android:id="@+id/eraseButton"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_baseline_clear_24"
+                    android:background="?android:selectableItemBackground"
+                    android:layout_weight="1"
+                     />
+            </LinearLayout>
 
             <TextView
                 style="@style/TextDescriptions"
