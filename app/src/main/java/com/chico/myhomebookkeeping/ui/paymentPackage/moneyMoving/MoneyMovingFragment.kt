@@ -153,11 +153,10 @@ class MoneyMovingFragment : Fragment() {
                     }
                 )
                 entryIsAddedBottomSheet.show(childFragmentManager,getString(R.string.tag_show_dialog))
-                launchIo {
-                    delay(3500)
-                    entryIsAddedBottomSheet.dismiss()
-                }
-
+//                launchIo {
+//                    delay(3500)
+//                    entryIsAddedBottomSheet.dismiss()
+//                }
             }
             moneyMovingViewModel.dialogOfNewEntryAddedIsShowed()
         }

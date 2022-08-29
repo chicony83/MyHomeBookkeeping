@@ -69,6 +69,9 @@ class NewMoneyMovingFragment : Fragment() {
             selectCategoryButton.setOnClickListener {
                 pressSelectButton(R.id.nav_categories)
             }
+            eraseButton.setOnClickListener {
+                eraseAmountEditText()
+            }
             submitButton.setOnClickListener {
                 pressSubmitButton()
             }
@@ -102,6 +105,10 @@ class NewMoneyMovingFragment : Fragment() {
         newMoneyMovingViewModel.getAndCheckArgsSp()
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun eraseAmountEditText() {
+        binding.amount.setText("")
     }
 
     private fun launchDatePicker() {
