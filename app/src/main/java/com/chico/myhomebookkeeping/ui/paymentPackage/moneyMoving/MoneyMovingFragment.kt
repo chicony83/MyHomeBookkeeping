@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectM
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.delay
 
 class MoneyMovingFragment : Fragment() {
 
@@ -152,6 +153,11 @@ class MoneyMovingFragment : Fragment() {
                     }
                 )
                 entryIsAddedBottomSheet.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                launchIo {
+                    delay(3500)
+                    entryIsAddedBottomSheet.dismiss()
+                }
+
             }
             moneyMovingViewModel.dialogOfNewEntryAddedIsShowed()
         }

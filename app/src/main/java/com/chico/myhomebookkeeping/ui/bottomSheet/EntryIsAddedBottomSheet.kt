@@ -8,7 +8,9 @@ import android.widget.Button
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
+import com.chico.myhomebookkeeping.utils.launchIo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.delay
 
 class EntryIsAddedBottomSheet(
     private val onNextEntryButtonClickedCallBack: OnNextEntryButtonClickedCallBack
@@ -27,9 +29,7 @@ class EntryIsAddedBottomSheet(
         }
 
         return layout
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 }
