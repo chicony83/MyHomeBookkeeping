@@ -18,15 +18,10 @@ import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 import com.chico.myhomebookkeeping.helpers.UiHelper
-import com.chico.myhomebookkeeping.ui.dialogs.EntryAddedDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.showCustomToastWhitsButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.util.*
 

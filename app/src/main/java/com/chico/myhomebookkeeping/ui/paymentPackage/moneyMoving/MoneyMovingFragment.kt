@@ -2,9 +2,7 @@ package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +14,9 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.ui.dialogs.EntryAddedDialog
+import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
+import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -139,16 +139,21 @@ class MoneyMovingFragment : Fragment() {
         super.onStart()
         moneyMovingViewModel.getListFullMoneyMoving()
         newEntryAdded()
-
     }
 
     private fun newEntryAdded() {
         if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()){
             launchUi {
-                val dialog = EntryAddedDialog()
-                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+                val entryIsAddedBottomSheet = EntryIsAddedBottomSheet(
+                    object : OnNextEntryButtonClickedCallBack{
+                        override fun onClick() {
+                            control.navigate(R.id.nav_fast_payments_fragment)
+                        }
+                    }
+                )
+                entryIsAddedBottomSheet.show(childFragmentManager,getString(R.string.tag_show_dialog))
             }
-            moneyMovingViewModel.dialogOfNewEntryAddedIsShowing()
+            moneyMovingViewModel.dialogOfNewEntryAddedIsShowed()
         }
     }
 

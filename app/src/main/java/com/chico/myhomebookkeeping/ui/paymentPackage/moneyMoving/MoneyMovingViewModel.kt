@@ -263,7 +263,7 @@ class MoneyMovingViewModel(
         return getSP.getBooleanElseReturnFalse(argsNewEntryOfMoneyMovingInDbIsAdded)
     }
 
-    fun dialogOfNewEntryAddedIsShowing() {
+    fun dialogOfNewEntryAddedIsShowed() {
         setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded,false)
     }
 
