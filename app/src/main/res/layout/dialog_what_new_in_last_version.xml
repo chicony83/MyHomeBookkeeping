@@ -24,6 +24,11 @@
             style="@style/MatchParent_WrapContent"
             android:orientation="vertical">
 
+
+            <TextView
+                style="@style/Description.LastVersion"
+                android:text="@string/string_last_version_0_9_6" />
+
             <TextView
                 style="@style/Description.LastVersion"
                 android:text="@string/string_last_version_0_9_5" />
