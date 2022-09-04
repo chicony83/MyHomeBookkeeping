@@ -59,10 +59,10 @@
     <string name="text_on_button_sorting_as">отсортировано:</string>
     <string name="text_on_button_sorting_as_numbers_ASC">номера по возростанию</string>
     <string name="text_on_button_sorting_as_numbers_DESC">номера по убыванию</string>
-    <string name="text_on_button_sorting_as_alphabet_ASC">алфавит А->Я</string>
-    <string name="text_on_button_sorting_as_alphabet_DESC">алфавит Я->А</string>
-    <string name="text_on_button_sorting_by_rating_ASC">рейтинг по возрастанию</string>
-    <string name="text_on_button_sorting_by_rating_DESC">рейтинг по убыванию</string>
+    <string name="text_on_button_sorting_as_alphabet_ASC">↑ А->Я</string>
+    <string name="text_on_button_sorting_as_alphabet_DESC">↓ Я->А</string>
+    <string name="text_on_button_sorting_by_rating_ASC">рейтинг ↑</string>
+    <string name="text_on_button_sorting_by_rating_DESC">рейтинг ↓</string>
 
     <string name="text_on_button_new_fast_payment">Новый быстрый платеж</string>
 

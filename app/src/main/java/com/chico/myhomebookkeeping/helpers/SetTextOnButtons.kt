@@ -151,6 +151,11 @@ class SetTextOnButtons(val resources: Resources) {
         return text + separator + name
     }
 
+    private fun createButtonText(text: String): String {
+//        val separator: String = getNewLineSeparator()
+        return text
+    }
+
     private fun getResourceText(string: Int): String {
         return resources.getString(string)
     }
@@ -162,10 +167,9 @@ class SetTextOnButtons(val resources: Resources) {
     fun setTextOnSortingCategoriesButton(
         textOnButton: MutableLiveData<String>,
         additionalTextForTheButton: String,
-
         ) {
-        val nameButton = getResourceText(R.string.text_on_button_sorting_as)
-        textOnButton.postValue(createButtonText(nameButton,additionalTextForTheButton))
+//        val nameButton = getResourceText(R.string.text_on_button_sorting_as)
+        textOnButton.postValue(createButtonText(additionalTextForTheButton))
     }
 
 }

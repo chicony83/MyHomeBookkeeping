@@ -2,7 +2,7 @@
 <resources>
     <string name="fragment_label_change_fast_payment">Change fast payment</string>
     <string name="fragment_label_new_fast_payment">New fast payment</string>
-    <string name="fragment_label_select_fast_payment">Payments</string>
+    <string name="fragment_label_select_fast_payment">Fast payment</string>
     <string name="fragment_label_select_categories">Select categories</string>
     <string name="fragment_label_time_period">Select time period</string>
     <string name="fragment_label_new_money_moving">Entering</string>

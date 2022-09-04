@@ -12,6 +12,8 @@
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_double">16dp</dimen>
 
+    <dimen name="radius_normal">16dp</dimen>
+
     <dimen name="H1">24sp</dimen>
     <dimen name="H2">20sp</dimen>
     <dimen name="H3">18sp</dimen>
