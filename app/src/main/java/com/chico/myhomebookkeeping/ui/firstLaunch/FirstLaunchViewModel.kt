@@ -186,6 +186,7 @@ class FirstLaunchViewModel(
     private fun addCurrency(name: String) {
         val currency = Currencies(
             currencyName = name,
+            isCurrencyDefault = false,
             icon = null
         )
         launchIo {
@@ -206,6 +207,7 @@ class FirstLaunchViewModel(
         val cashAccount = CashAccount(
             accountName = item.checkBox.text.toString(),
             bankAccountNumber = "",
+            isCashAccountDefault = false,
             icon = item.img
         )
         launchIo {

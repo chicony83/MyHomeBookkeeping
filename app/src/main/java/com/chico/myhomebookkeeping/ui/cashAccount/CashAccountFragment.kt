@@ -135,6 +135,7 @@ class CashAccountFragment : Fragment() {
                     val cashAccount = CashAccount(
                         accountName = name,
                         bankAccountNumber = number,
+                        isCashAccountDefault = false,
                         icon = null
                     )
                     val result: Long = cashAccountViewModel.addNewCashAccount(cashAccount)
