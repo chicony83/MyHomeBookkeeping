@@ -71,7 +71,7 @@ private object migration_2_to_3 : Migration(2, 3) {
 
 private object migration_3_to_4 : Migration(3, 4) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'is_currency_default' INTEGER")
-        database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'is_cash_account_default' INTEGER")
+        database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'is_currency_default' INTEGER ")
+        database.execSQL("ALTER TABLE 'cash_account_table' ADD COLUMN 'is_cash_account_default' INTEGER ")
     }
 }

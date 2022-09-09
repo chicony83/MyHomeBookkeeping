@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey
 data class Currencies(
     @ColumnInfo(name = "currency_name")
     val currencyName: String,
-    @ColumnInfo(name = "is_currency_default")
-    val isCurrencyDefault: Boolean,
     @ColumnInfo(name = "icon_currency")
-    val icon: Int?
-) {
+    val icon: Int?,
+    @ColumnInfo(name = "is_currency_default")
+    val isCurrencyDefault: Boolean?
+    ) {
     @PrimaryKey(autoGenerate = true)
     var currencyId: Int? = null
 }
