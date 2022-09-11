@@ -14,7 +14,7 @@
             android:id="@+id/iconImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="iconPayment"
+            android:contentDescription="@string/content_description_icon_fast_payment"
             android:src="@drawable/payments"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
@@ -165,11 +165,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="200dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/add_new_element_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="?android:selectableItemBackground"
             android:contentDescription="@string/content_description_icon_add_new_element"
             android:src="@drawable/ic_add_circle"

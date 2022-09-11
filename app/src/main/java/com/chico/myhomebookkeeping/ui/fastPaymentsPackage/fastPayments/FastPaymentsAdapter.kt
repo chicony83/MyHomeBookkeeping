@@ -55,7 +55,7 @@ class FastPaymentsAdapter(
                 addNewElementLayout.visibility = View.VISIBLE
 
                 addNewElementLayout.background = null
-                addNewElementLayout.setOnClickListener {
+                addNewElementImg.setOnClickListener {
                     pressCreateNewElement.onPress()
                     Message.log("---PreSSEd---")
                 }
@@ -83,7 +83,7 @@ class FastPaymentsAdapter(
                         amount.text = "-"
                     }
                 }
-                if (fastPayments.description?.toString().isNullOrEmpty()) {
+                if (fastPayments.description.isNullOrEmpty()) {
                     binding.descriptionOfPayment.visibility = View.GONE
                 }
 
