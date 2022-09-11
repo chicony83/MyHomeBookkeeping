@@ -27,7 +27,7 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getBoolean(argsKey,true)
     }
     fun getBooleanElseReturnFalse(argsKey:String):Boolean{
-        return sharedPreferences.getBoolean(argsKey,true)
+        return sharedPreferences.getBoolean(argsKey,false)
     }
 
     fun isIncomeSpendingNone(argsIncomeSpending: String): Boolean {
