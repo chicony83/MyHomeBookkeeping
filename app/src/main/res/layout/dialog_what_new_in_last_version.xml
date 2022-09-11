@@ -27,6 +27,10 @@
 
             <TextView
                 style="@style/Description.LastVersion"
+                android:text="@string/string_last_version_0_9_6_1" />
+
+            <TextView
+                style="@style/Description.LastVersion"
                 android:text="@string/string_last_version_0_9_6" />
 
             <TextView
