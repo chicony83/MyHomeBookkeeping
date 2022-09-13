@@ -172,6 +172,7 @@
             android:id="@+id/add_new_element_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="200dp"
             android:background="?android:selectableItemBackground"
             android:contentDescription="@string/content_description_icon_add_new_element"
             android:src="@drawable/ic_add_circle"
