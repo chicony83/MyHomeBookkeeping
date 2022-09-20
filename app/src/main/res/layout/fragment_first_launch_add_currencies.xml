@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/selectCurrenciesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/text_view_first_launch_select_you_currencies" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/recycler_view_item_first_launch_currency"
+        android:id="@+id/currenciesHolder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintEnd_toStartOf="@id/centerDialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectCurrenciesTextView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/recycler_view_item_first_launch_currency_selected"
+        android:id="@+id/addedCurrenciesHolder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/centerDialog"
+        app:layout_constraintTop_toBottomOf="@id/selectCurrenciesTextView" />
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@style/ButtonFullWidth"
+        android:text="@string/text_on_button_submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

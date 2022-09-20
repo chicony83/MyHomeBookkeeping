@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_view_first_launch_select_you_currencies">Select you currencies</string>
+    <string name="text_view_arrow_to_the_left" translatable="false">&lt;&lt;</string>
+    <string name="text_view_arrow_to_the_right" translatable="false">&gt;&gt;</string>
+</resources>
