@@ -146,5 +146,10 @@
         android:name="com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchFragment"
         android:label="first_launch"
         tools:layout="@layout/fragment_first_launch" />
+    <fragment
+        android:id="@+id/nav_first_launch_select_currencies_fragment"
+        android:name="com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFragment.FirstLaunchSelectCurrenciesFragment"
+        android:label="@string/fragment_label_first_launch_select_currencies"
+        tools:layout="@layout/fragment_first_launch_select_currencies"/>
 
 </navigation>

@@ -17,8 +17,9 @@ class MainActivityViewModel(
     private var getSP = GetSP(sharedPreferences)
 
     fun checkIsFirstLaunch(): Boolean {
-        Message.log("---is first launch = ${getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)}")
-        return getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
+//        Message.log("---is first launch = ${getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)}")
+//        return getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
+        return true
     }
 
 }

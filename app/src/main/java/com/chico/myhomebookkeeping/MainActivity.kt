@@ -97,7 +97,8 @@ class MainActivity : AppCompatActivity() {
         hideToolbarAndBottomNavigation(toolbar)
 //        eraseSP.eraseTempSP()
 
-        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_fragment)
+        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_select_currencies_fragment)
+//        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_fragment)
     }
 
     private fun uiMode() {
