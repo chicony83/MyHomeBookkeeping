@@ -123,7 +123,10 @@ class MainActivity : AppCompatActivity() {
 //                    R.id.nav_fast_payments_fragment->{
 //                        bottomNavigationView.selectedItemId = R.id.nav_fast_payments_fragment
 //                    }
-
+                    R.id.nav_first_launch_select_currencies_fragment->{
+                        uiHelper.hideUiElement(toolbar)
+                        uiHelper.hideUiElement(bottomNavigationView)
+                    }
                     R.id.nav_help_fragment -> {
                         uiHelper.hideUiElement(toolbar)
                         uiHelper.hideUiElement(bottomNavigationView)
