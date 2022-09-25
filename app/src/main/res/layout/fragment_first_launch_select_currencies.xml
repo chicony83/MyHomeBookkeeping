@@ -15,8 +15,8 @@
         android:text="@string/text_view_first_launch_select_you_currencies" />
 
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/recycler_view_item_first_launch_currency"
-        android:id="@+id/currenciesHolder"
+        tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency"
+        android:id="@+id/currenciesForSelectHolder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/submitButton"
@@ -32,8 +32,8 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/recycler_view_item_first_launch_currency_selected"
-        android:id="@+id/addedCurrenciesHolder"
+        tools:listitem="@layout/recycler_view_item_first_launch_selected_currency"
+        android:id="@+id/selectedCurrenciesHolder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/submitButton"
