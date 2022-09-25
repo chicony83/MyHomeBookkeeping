@@ -128,6 +128,7 @@ class CurrenciesFragment : Fragment() {
                     override fun addAndSelect(name: String, isSelect: Boolean) {
                         val currencies = Currencies(
                             currencyName = name,
+                            currencyNameShort = null,
                             isCurrencyDefault = false,
                             icon = null
                         )

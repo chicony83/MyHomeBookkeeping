@@ -186,6 +186,7 @@ class FirstLaunchViewModel(
     private fun addCurrency(name: String) {
         val currency = Currencies(
             currencyName = name,
+            currencyNameShort = null,
             isCurrencyDefault = false,
             icon = null
         )
