@@ -188,7 +188,8 @@ class FirstLaunchViewModel(
             currencyName = name,
             currencyNameShort = null,
             isCurrencyDefault = false,
-            icon = null
+            icon = null,
+            iso4217 = null
         )
         launchIo {
             dbCurrencies.addCurrency(currency)

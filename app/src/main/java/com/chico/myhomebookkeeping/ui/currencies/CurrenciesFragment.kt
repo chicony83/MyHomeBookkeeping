@@ -130,7 +130,8 @@ class CurrenciesFragment : Fragment() {
                             currencyName = name,
                             currencyNameShort = null,
                             isCurrencyDefault = false,
-                            icon = null
+                            icon = null,
+                            iso4217 = null,
                         )
                         val result = currenciesViewModel.addNewCurrency(currencies)
                         if (isSelect) {
