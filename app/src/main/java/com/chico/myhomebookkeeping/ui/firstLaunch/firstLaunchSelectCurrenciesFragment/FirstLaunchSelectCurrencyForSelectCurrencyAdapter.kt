@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFirstLaunchForSelectCurrencyBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.helpers.Message
 
 class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
     private val currenciesForSelectList: List<Currencies>
@@ -23,18 +24,18 @@ class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
         holder.bind(currenciesForSelectList[position])
     }
 
-    override fun getItemCount() = currenciesForSelectList.size
+    override fun getItemCount(): Int {
+        Message.log("----size of currencies for select list = ${currenciesForSelectList.size}")
+    return currenciesForSelectList.size
+    }
 
     inner class ViewHolder(
         private val binding: RecyclerViewItemFirstLaunchForSelectCurrencyBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currencies: Currencies) {
             with(binding){
-
+                nameCurrency.text = currencies.currencyName
             }
         }
-
     }
-
-
 }

@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenciesBinding
+import com.chico.myhomebookkeeping.helpers.Message
 
-class FirstLaunchSelectCurrenciesFragment:Fragment() {
-    private var _binding:FragmentFirstLaunchSelectCurrenciesBinding? = null
+class FirstLaunchSelectCurrenciesFragment : Fragment() {
+    private var _binding: FragmentFirstLaunchSelectCurrenciesBinding? = null
     private val binding get() = _binding!!
     private lateinit var firstLaunchSelectCurrenciesViewModel: FirstLaunchSelectCurrenciesViewModel
     override fun onCreateView(
@@ -19,8 +20,18 @@ class FirstLaunchSelectCurrenciesFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFirstLaunchSelectCurrenciesBinding.inflate(inflater, container, false)
-        firstLaunchSelectCurrenciesViewModel = ViewModelProvider(this).get(FirstLaunchSelectCurrenciesViewModel::class.java)
-
+        firstLaunchSelectCurrenciesViewModel =
+            ViewModelProvider(this).get(FirstLaunchSelectCurrenciesViewModel::class.java)
+        Message.log("--- size of currencies list = ${firstLaunchSelectCurrenciesViewModel.firstLaunchCurrenciesList}")
+        with(firstLaunchSelectCurrenciesViewModel) {
+            firstLaunchCurrenciesList.observe(viewLifecycleOwner, {
+                binding.currenciesForSelectHolder.adapter =
+                    FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
+                        it
+                    )
+                Message.log("--- size of getFirstLaunchList ${it.size}")
+            })
+        }
 
 
         return binding.root

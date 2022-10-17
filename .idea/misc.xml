@@ -78,15 +78,13 @@
         <entry key="app/src/main/res/layout/fragment_change_currency.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/fragment_change_fast_payment.xml" value="0.2536231884057971" />
         <entry key="app/src/main/res/layout/fragment_change_money_moving.xml" value="0.2617753623188406" />
-        <entry key="app/src/main/res/layout/fragment_currencies.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_currencies.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_fast_money_moving.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_fast_payments.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_first_launch.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_first_launch_add_currencies.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/fragment_first_launch_currencies.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_first_launch_diallog.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_first_launch_dialog.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_first_launch_select_currencies.xml" value="0.1109375" />
+        <entry key="app/src/main/res/layout/fragment_first_launch_select_currencies.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/fragment_help.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_money_moving.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_money_moving_query.xml" value="0.259963768115942" />
@@ -120,8 +118,7 @@
         <entry key="app/src/main/res/layout/recycler_view_item_currencies.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_fast_payment.xml" value="0.22" />
         <entry key="app/src/main/res/layout/recycler_view_item_fast_payment_3_in_1.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/recycler_view_item_first_launch_currency.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/recycler_view_item_first_launch_currency_selected.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/recycler_view_item_first_launch_for_select_currency.xml" value="0.2980072463768116" />
         <entry key="app/src/main/res/layout/recycler_view_item_journal_date.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_view_item_money_moving.xml" value="0.35563380281690143" />
         <entry key="app/src/main/res/layout/recycler_view_item_reports.xml" value="0.282312925170068" />

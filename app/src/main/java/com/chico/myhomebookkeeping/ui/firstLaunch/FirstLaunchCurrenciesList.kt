@@ -1,8 +1,8 @@
-package com.chico.myhomebookkeeping.currencies
+package com.chico.myhomebookkeeping.ui.firstLaunch
 
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
-class CurrenciesList {
+object FirstLaunchCurrenciesList {
     private val currenciesList = listOf<Currencies>(
         Currencies("Azərbaycan manatı", "man.", "AZN", null, false),      //Азербальджан
         Currencies("Հայկական դրամ", "֏", "AMD", null, false),          //Армения
@@ -21,4 +21,5 @@ class CurrenciesList {
         Currencies("Franc suisse", "₣", "CFH", null, false),                    //Швейцария
         Currencies("Pound Sterling", "£", "GBP", null, false)
     )
+    fun getCurrenciesList(): List<Currencies> = currenciesList
 }
