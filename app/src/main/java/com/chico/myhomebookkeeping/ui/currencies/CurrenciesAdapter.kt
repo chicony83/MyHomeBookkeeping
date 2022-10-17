@@ -36,7 +36,9 @@ class CurrenciesAdapter(
                 root.contentDescription = currencies.currencyName
                 nameCurrency.text = currencies.currencyName
                 currenciesItem.setOnClickListener {
-                    currencies.currencyId?.let { it1 -> listener.onClick(it1)}
+                    currencies.currencyId?.let {
+                            it1 -> listener.onClick(it1)
+                    }
                 }
             }
         }

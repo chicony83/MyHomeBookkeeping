@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFirstLaunchForSelectCurrencyBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
 
 class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-    private val currenciesForSelectList: List<Currencies>
+    private val currenciesForSelectList: List<Currencies>,
+    private val listener: OnChangeCurrencyByTextCallBack
 ) : RecyclerView.Adapter<FirstLaunchSelectCurrencyForSelectCurrencyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,6 +37,11 @@ class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
         fun bind(currencies: Currencies) {
             with(binding){
                 nameCurrency.text = currencies.currencyName
+                firstLaunchCurrencyItem.setOnClickListener {
+                    currencies.iso4217?.let {
+                        it1->listener.onClick(it1)
+                    }
+                }
             }
         }
     }
