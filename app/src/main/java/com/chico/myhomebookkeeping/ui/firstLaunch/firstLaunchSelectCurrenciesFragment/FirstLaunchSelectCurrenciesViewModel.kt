@@ -24,29 +24,39 @@ class FirstLaunchSelectCurrenciesViewModel(
     init {
         launchIo {
             _firstLaunchCurrenciesList.postValue(FirstLaunchCurrenciesList.getCurrenciesList())
+            _selectedCurrenciesList.postValue(
+                listOf<Currencies>(
+                )
+            )
         }
     }
 
     fun moveCurrencyToSelectList(iso4217: String) {
-
-        var selectedCurrency: Currencies?
-
-
-
         if (_firstLaunchCurrenciesList.value?.isNotEmpty() == true) {
-            var findingId = 0
+            var id = 0
+            var currencyForAdd: Currencies = Currencies("", "", "", null, null)
+
             for (i in 0 until _firstLaunchCurrenciesList.value!!.size) {
                 if (_firstLaunchCurrenciesList.value?.get(i)?.iso4217?.equals(iso4217) == true) {
-                    val id: Currencies? = _firstLaunchCurrenciesList.value?.get(i)
-//                    Message.log("$i")
-//                    Message.log("$id")
-                    findingId = i
+                    id = i
                 }
             }
+
             _firstLaunchCurrenciesList.value =
                 _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
-                    removeAt(findingId)
+                    currencyForAdd = this[id]
+                    Message.log(currencyForAdd.toString())
+                    removeAt(id)
                 }
+
+            val listForPost: MutableList<Currencies>? =
+                _selectedCurrenciesList.value?.toMutableList()
+
+
+            Message.log("-- size of list${listForPost?.size}")
+            listForPost?.add(currencyForAdd)
+            _selectedCurrenciesList.postValue(listForPost!!)
+                        Message.log("size after add ${_selectedCurrenciesList.value?.size }")
         }
     }
 }
