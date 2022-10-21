@@ -24,38 +24,42 @@ class FirstLaunchSelectCurrenciesViewModel(
     init {
         launchIo {
             _firstLaunchCurrenciesList.postValue(FirstLaunchCurrenciesList.getCurrenciesList())
-            _selectedCurrenciesList.postValue(
-                listOf<Currencies>(
-                )
-            )
+            _selectedCurrenciesList.postValue(listOf<Currencies>())
         }
     }
 
     fun moveCurrencyToSelectList(iso4217: String) {
         if (_firstLaunchCurrenciesList.value?.isNotEmpty() == true) {
-//            var id = 0
+
             var currencyForAdd: Currencies = Currencies("", "", "", null, null)
-
-            val id = getSelectedId(iso4217)
-
-            currencyForAdd = findSelectedCurrencyInFirstLaunchCurrenciesList(currencyForAdd, id)
-            removeSelectedCurrencyFromFirstLaunchCurrenciesList(id)
+            _firstLaunchCurrenciesList.apply {
+                val firstLaunchCurrenciesListAsList = _firstLaunchCurrenciesList.value?.toMutableList()
+                val id = getSelectedId(iso4217,firstLaunchCurrenciesListAsList)
+                currencyForAdd = findSelectedCurrencyInFirstLaunchCurrenciesList(id,firstLaunchCurrenciesListAsList) ?: currencyForAdd
+                removeSelectedCurrencyFromFirstLaunchCurrenciesList(id,firstLaunchCurrenciesListAsList)
+            }
             postingSelectedCurrenciesList(currencyForAdd)
         }
     }
 
     private fun findSelectedCurrencyInFirstLaunchCurrenciesList(
-        currencyForAdd: Currencies,
-        id: Int
-    ): Currencies {
-        return _firstLaunchCurrenciesList.value?.get(id) ?: currencyForAdd
+        id: Int,
+        list: MutableList<Currencies>?
+    ): Currencies? {
+        return list?.get(id)
     }
 
-    private fun removeSelectedCurrencyFromFirstLaunchCurrenciesList(id: Int) {
-        _firstLaunchCurrenciesList.value =
-            _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
-                removeAt(id)
-            }
+    private fun removeSelectedCurrencyFromFirstLaunchCurrenciesList(
+        id: Int,
+        list: MutableList<Currencies>?
+    ) {
+
+        list?.apply { removeAt(id) }
+        _firstLaunchCurrenciesList.postValue(list!!)
+//        _firstLaunchCurrenciesList.value =
+//            _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
+//                removeAt(id)
+//            }
     }
 
 
@@ -68,13 +72,20 @@ class FirstLaunchSelectCurrenciesViewModel(
         Message.log("size after add ${_selectedCurrenciesList.value?.size}")
     }
 
-    private fun getSelectedId(iso4217: String): Int {
+    private fun getSelectedId(
+        iso4217: String,
+        list: MutableList<Currencies>?
+    ): Int {
         var id = 0
-        for (i in 0 until _firstLaunchCurrenciesList.value!!.size) {
-            if (_firstLaunchCurrenciesList.value?.get(i)?.iso4217?.equals(iso4217) == true) {
+        for (i in 0 until list?.size!!) {
+            if (list[i].iso4217?.equals(iso4217) == true) {
                 id = i
             }
         }
         return id
+    }
+
+    fun moveCurrencyToFirstLaunchCurrenciesList(string: String) {
+//        Message.log("move back")
     }
 }

@@ -29,15 +29,24 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                     FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
                         it, object : OnChangeCurrencyByTextCallBack {
                             override fun onClick(string: String) {
-                                firstLaunchSelectCurrenciesViewModel.moveCurrencyToSelectList(string)
+                                firstLaunchSelectCurrenciesViewModel
+                                    .moveCurrencyToSelectList(string)
                             }
                         }
                     )
                 Message.log("--- size of getFirstLaunchList ${it.size}")
             }
-            selectedCurrenciesList.observe(viewLifecycleOwner){
+            selectedCurrenciesList.observe(viewLifecycleOwner) {
                 binding.selectedCurrenciesHolder.adapter =
-                    FirstLaunchSelectCurrencySelectedCurrencyAdapter(it)
+                    FirstLaunchSelectCurrencySelectedCurrencyAdapter(
+                        it, object : OnChangeCurrencyByTextCallBack {
+                            override fun onClick(string: String) {
+                                Message.log("remove $string")
+                                firstLaunchSelectCurrenciesViewModel
+                                    .moveCurrencyToFirstLaunchCurrenciesList(string)
+                            }
+                        }
+                    )
             }
         }
 
