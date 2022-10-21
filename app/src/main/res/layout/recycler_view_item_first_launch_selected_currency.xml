@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/firstLaunchSelectedCurrencyItem"
+    android:id="@+id/firstLaunchSelectedCurrencyCardView"
     style="@style/RecyclerViewCard">
 
     <LinearLayout
+        android:id="@+id/firstLaunchSelectedCurrencyItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -12,6 +13,7 @@
         android:paddingEnd="@dimen/margin_normal">
 
         <TextView
+            android:id="@+id/remButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_half_normal"
@@ -19,7 +21,7 @@
 
         <TextView
             android:gravity="center"
-            android:id="@+id/nameSelectedCurrency"
+            android:id="@+id/name_currency"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_half_normal"

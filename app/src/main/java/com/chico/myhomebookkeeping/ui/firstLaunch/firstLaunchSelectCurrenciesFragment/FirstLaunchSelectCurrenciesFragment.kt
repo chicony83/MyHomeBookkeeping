@@ -35,6 +35,10 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                     )
                 Message.log("--- size of getFirstLaunchList ${it.size}")
             }
+            selectedCurrenciesList.observe(viewLifecycleOwner){
+                binding.selectedCurrenciesHolder.adapter =
+                    FirstLaunchSelectCurrencySelectedCurrencyAdapter(it)
+            }
         }
 
 

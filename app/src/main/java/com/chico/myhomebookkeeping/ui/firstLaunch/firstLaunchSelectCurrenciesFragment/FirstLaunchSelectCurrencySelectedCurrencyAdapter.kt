@@ -5,20 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFirstLaunchSelectedCurrencyBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.helpers.Message
 
 class FirstLaunchSelectCurrencySelectedCurrencyAdapter(
     private val selectedCurrenciesList: List<Currencies>
 ) : RecyclerView.Adapter<FirstLaunchSelectCurrencySelectedCurrencyAdapter.ViewHolder>() {
-    inner class ViewHolder(
-        private val binding: RecyclerViewItemFirstLaunchSelectedCurrencyBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(currencies: Currencies) {
-            with(binding) {
-
-            }
-        }
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = RecyclerViewItemFirstLaunchSelectedCurrencyBinding.inflate(
@@ -34,4 +25,21 @@ class FirstLaunchSelectCurrencySelectedCurrencyAdapter(
     }
 
     override fun getItemCount() = selectedCurrenciesList.size
+
+    inner class ViewHolder(
+        private val binding: RecyclerViewItemFirstLaunchSelectedCurrencyBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(currencies: Currencies) {
+            with(binding) {
+                nameCurrency.text = currencies.currencyName
+                firstLaunchSelectedCurrencyItem.setOnClickListener {
+                    currencies.iso4217?.let {
+//                        it->Message.log("iso - $it")
+                    }
+                }
+            }
+        }
+
+    }
+
 }
