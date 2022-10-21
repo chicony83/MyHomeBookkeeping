@@ -29,11 +29,11 @@ class FirstLaunchSelectCurrenciesViewModel(
     }
 
     fun moveCurrencyToSelectList(iso4217: String) {
-        if (_firstLaunchCurrenciesList.value?.isNotEmpty() == true) {
+        if (!_firstLaunchCurrenciesList.value.isNullOrEmpty()) {
 
             var currencyForAdd: Currencies = Currencies("", "", "", null, null)
             _firstLaunchCurrenciesList.apply {
-                val firstLaunchCurrenciesListAsList = _firstLaunchCurrenciesList.value?.toMutableList()
+                val firstLaunchCurrenciesListAsList = _firstLaunchCurrenciesList.value!!.toMutableList()
                 val id = getSelectedId(iso4217,firstLaunchCurrenciesListAsList)
                 currencyForAdd = findSelectedCurrencyInFirstLaunchCurrenciesList(id,firstLaunchCurrenciesListAsList) ?: currencyForAdd
                 removeSelectedCurrencyFromFirstLaunchCurrenciesList(id,firstLaunchCurrenciesListAsList)
@@ -44,18 +44,18 @@ class FirstLaunchSelectCurrenciesViewModel(
 
     private fun findSelectedCurrencyInFirstLaunchCurrenciesList(
         id: Int,
-        list: MutableList<Currencies>?
-    ): Currencies? {
-        return list?.get(id)
+        list: MutableList<Currencies>
+    ): Currencies {
+        return list[id]
     }
 
     private fun removeSelectedCurrencyFromFirstLaunchCurrenciesList(
         id: Int,
-        list: MutableList<Currencies>?
+        list: MutableList<Currencies>
     ) {
 
-        list?.apply { removeAt(id) }
-        _firstLaunchCurrenciesList.postValue(list!!)
+        list.apply { removeAt(id) }
+        _firstLaunchCurrenciesList.postValue(list)
 //        _firstLaunchCurrenciesList.value =
 //            _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
 //                removeAt(id)
@@ -74,10 +74,10 @@ class FirstLaunchSelectCurrenciesViewModel(
 
     private fun getSelectedId(
         iso4217: String,
-        list: MutableList<Currencies>?
+        list: MutableList<Currencies>
     ): Int {
         var id = 0
-        for (i in 0 until list?.size!!) {
+        for (i in 0 until list.size!!) {
             if (list[i].iso4217?.equals(iso4217) == true) {
                 id = i
             }
@@ -87,5 +87,9 @@ class FirstLaunchSelectCurrenciesViewModel(
 
     fun moveCurrencyToFirstLaunchCurrenciesList(string: String) {
 //        Message.log("move back")
+        if (_selectedCurrenciesList.value.isNullOrEmpty()){
+
+        }
+
     }
 }
