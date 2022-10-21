@@ -33,30 +33,48 @@ class FirstLaunchSelectCurrenciesViewModel(
 
     fun moveCurrencyToSelectList(iso4217: String) {
         if (_firstLaunchCurrenciesList.value?.isNotEmpty() == true) {
-            var id = 0
+//            var id = 0
             var currencyForAdd: Currencies = Currencies("", "", "", null, null)
 
-            for (i in 0 until _firstLaunchCurrenciesList.value!!.size) {
-                if (_firstLaunchCurrenciesList.value?.get(i)?.iso4217?.equals(iso4217) == true) {
-                    id = i
-                }
-            }
+            val id = getSelectedId(iso4217)
 
-            _firstLaunchCurrenciesList.value =
-                _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
-                    currencyForAdd = this[id]
-                    Message.log(currencyForAdd.toString())
-                    removeAt(id)
-                }
-
-            val listForPost: MutableList<Currencies>? =
-                _selectedCurrenciesList.value?.toMutableList()
-
-
-            Message.log("-- size of list${listForPost?.size}")
-            listForPost?.add(currencyForAdd)
-            _selectedCurrenciesList.postValue(listForPost!!)
-                        Message.log("size after add ${_selectedCurrenciesList.value?.size }")
+            currencyForAdd = findSelectedCurrencyInFirstLaunchCurrenciesList(currencyForAdd, id)
+            removeSelectedCurrencyFromFirstLaunchCurrenciesList(id)
+            postingSelectedCurrenciesList(currencyForAdd)
         }
+    }
+
+    private fun findSelectedCurrencyInFirstLaunchCurrenciesList(
+        currencyForAdd: Currencies,
+        id: Int
+    ): Currencies {
+        return _firstLaunchCurrenciesList.value?.get(id) ?: currencyForAdd
+    }
+
+    private fun removeSelectedCurrencyFromFirstLaunchCurrenciesList(id: Int) {
+        _firstLaunchCurrenciesList.value =
+            _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
+                removeAt(id)
+            }
+    }
+
+
+    private fun postingSelectedCurrenciesList(currencyForAdd: Currencies) {
+        val listForPost: MutableList<Currencies>? =
+            _selectedCurrenciesList.value?.toMutableList()
+        Message.log("-- size of list${listForPost?.size}")
+        listForPost?.add(currencyForAdd)
+        _selectedCurrenciesList.postValue(listForPost!!)
+        Message.log("size after add ${_selectedCurrenciesList.value?.size}")
+    }
+
+    private fun getSelectedId(iso4217: String): Int {
+        var id = 0
+        for (i in 0 until _firstLaunchCurrenciesList.value!!.size) {
+            if (_firstLaunchCurrenciesList.value?.get(i)?.iso4217?.equals(iso4217) == true) {
+                id = i
+            }
+        }
+        return id
     }
 }
