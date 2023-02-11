@@ -21,5 +21,7 @@ object FirstLaunchCurrenciesList {
         Currencies("Franc suisse", "₣", "CFH", null, false),                    //Швейцария
         Currencies("Pound Sterling", "£", "GBP", null, false)
     )
-    fun getCurrenciesList(): List<Currencies> = currenciesList
+    fun getCurrenciesList(): List<Currencies> = currenciesList.sortedBy {
+        it.iso4217
+    }
 }

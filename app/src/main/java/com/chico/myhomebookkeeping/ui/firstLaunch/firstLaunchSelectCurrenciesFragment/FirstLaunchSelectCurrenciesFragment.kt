@@ -34,14 +34,14 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                             }
                         }
                     )
-                Message.log("--- size of getFirstLaunchList ${it.size}")
+//                Message.log("--- size of getFirstLaunchList ${it.size}")
             }
             selectedCurrenciesList.observe(viewLifecycleOwner) {
                 binding.selectedCurrenciesHolder.adapter =
                     FirstLaunchSelectCurrencySelectedCurrencyAdapter(
                         it, object : OnChangeCurrencyByTextCallBack {
                             override fun onClick(string: String) {
-                                Message.log("remove $string")
+                                Message.log("press to remove $string")
                                 firstLaunchSelectCurrenciesViewModel
                                     .moveCurrencyToFirstLaunchCurrenciesList(string)
                             }
