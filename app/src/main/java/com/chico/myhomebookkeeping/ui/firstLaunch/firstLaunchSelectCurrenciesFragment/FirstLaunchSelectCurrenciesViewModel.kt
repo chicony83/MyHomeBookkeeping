@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
+import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchCurrenciesList
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -12,6 +15,9 @@ import com.chico.myhomebookkeeping.utils.launchIo
 class FirstLaunchSelectCurrenciesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
+
+    private val dbCurrencies: CurrenciesDao =
+        dataBase.getDataBase(app.applicationContext).currenciesDao()
 
     private val _firstLaunchCurrenciesList = MutableLiveData<List<Currencies>>()
     val firstLaunchCurrenciesList: LiveData<List<Currencies>>
@@ -124,12 +130,16 @@ class FirstLaunchSelectCurrenciesViewModel(
         return listForPost.sortedBy { it.iso4217 }
     }
 
-    fun isCurrenciesListNotEmpty() :Boolean{
+    fun isCurrenciesListNotEmpty(): Boolean {
         return !_selectedCurrenciesList.value.isNullOrEmpty()
     }
 
-    fun addingCurrenciesToDB() {
+    suspend fun addingCurrenciesToDB() {
+        val listOfCurrencies = _selectedCurrenciesList.value?.toList()
+        listOfCurrencies?.indices!!.forEach {
+            CurrenciesUseCase.addNewCurrency(dbCurrencies, listOfCurrencies[it])
 
+//                it-> dbCurrencies.addCurrency(listOfCurrencies[it])
+        }
     }
-
 }

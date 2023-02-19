@@ -7,14 +7,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenciesBinding
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
+import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.chico.myhomebookkeeping.utils.launchIo
 
 class FirstLaunchSelectCurrenciesFragment : Fragment() {
     private var _binding: FragmentFirstLaunchSelectCurrenciesBinding? = null
     private val binding get() = _binding!!
     private lateinit var firstLaunchSelectCurrenciesViewModel: FirstLaunchSelectCurrenciesViewModel
+    private lateinit var control: NavController
+    private lateinit var navControlHelper: NavControlHelper
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,16 +60,27 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             }
         }
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.hideKeyboard()
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
+        navControlHelper = NavControlHelper(control)
         binding.submitButton.setOnClickListener {
 //            Toast.makeText(context, "adding", Toast.LENGTH_LONG).show()
             when (firstLaunchSelectCurrenciesViewModel.isCurrenciesListNotEmpty()) {
                 true -> {
                     Toast.makeText(context, "list ADDING", Toast.LENGTH_LONG).show()
-                    firstLaunchSelectCurrenciesViewModel.addingCurrenciesToDB()
+
+                    launchIo {
+                        firstLaunchSelectCurrenciesViewModel.addingCurrenciesToDB()
+                    }
+                    navControlHelper.toSelectedFragment(R.id.nav_first_launch_fragment)
                 }
-                false -> Toast.makeText(context,"list is EMPTY", Toast.LENGTH_LONG).show()
+                false -> Toast.makeText(context, "list is EMPTY", Toast.LENGTH_LONG).show()
             }
         }
-        return binding.root
     }
 }
