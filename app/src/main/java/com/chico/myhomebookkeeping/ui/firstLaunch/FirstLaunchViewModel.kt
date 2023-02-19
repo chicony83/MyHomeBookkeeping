@@ -107,7 +107,7 @@ class FirstLaunchViewModel(
             async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
 
         val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes) }
-        val resultAddCurrencies = async(Dispatchers.IO) { addCurrencies(listCurrencies) }
+//        val resultAddCurrencies = async(Dispatchers.IO) { addCurrencies(listCurrencies) }
 
         val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
 
