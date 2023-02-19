@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
-import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -92,7 +91,6 @@ class FirstLaunchFragment : Fragment() {
         binding.submitButton.setOnClickListener {
             launchUi {
                 val listCashAccounts = getListCashAccounts()
-                val listCurrencies = getListCurrencies()
                 val listIncomingCategories =
                     getListSelectedIncomeCategories(getListIncomeCheckBoxes())
                 val listSpendingCategories =
@@ -101,7 +99,6 @@ class FirstLaunchFragment : Fragment() {
                 launchIo {
                     firstLaunchViewModel.addFirstLaunchElements(
                         listCashAccounts,
-                        listCurrencies,
                         listIncomingCategories,
                         listSpendingCategories
                     )
@@ -164,8 +161,6 @@ class FirstLaunchFragment : Fragment() {
             binding.addCategoryPublicTransportCheckBox
         )
     )
-
-    private fun getListCurrencies() = listOf(binding.addDefaultCurrencyCheckBox)
 
     private fun getListCashAccounts() = listOf<SelectedItemOfImageAndCheckBox>(
         getItem(firstLaunchViewModel.cardCashAccountItem, binding.addCashAccountsCardCheckBox),

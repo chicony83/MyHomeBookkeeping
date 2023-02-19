@@ -75,32 +75,13 @@
                 app:layout_constraintTop_toBottomOf="@id/add_cash_accounts_card_check_box" />
 
             <TextView
-                android:id="@+id/description_currency"
-                style="@style/MatchParent_WrapContent"
-                android:gravity="center"
-                android:text="@string/quick_setup_add_Currency"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_cash_accounts_cash_check_box" />
-
-            <CheckBox
-                android:id="@+id/add_default_currency_check_box"
-                style="@style/Description.Currencies.FirstLaunch"
-                android:checked="true"
-                android:enabled="false"
-                android:text="@string/quick_setup_name_Currency"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description_currency" />
-
-            <TextView
                 android:id="@+id/description_category"
                 style="@style/MatchParent_WrapContent"
                 android:gravity="center"
                 android:text="@string/quick_setup_add_Category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_default_currency_check_box" />
+                app:layout_constraintTop_toBottomOf="@id/add_cash_accounts_cash_check_box" />
 
             <ImageView
                 android:contentDescription="@string/quick_setup_name_The_Income"

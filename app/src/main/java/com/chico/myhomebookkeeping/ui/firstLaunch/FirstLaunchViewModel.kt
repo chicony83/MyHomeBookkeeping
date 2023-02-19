@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,8 +32,6 @@ class FirstLaunchViewModel(
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCategories: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
-    private val dbCurrencies: CurrenciesDao =
-        dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbFastPayments: FastPaymentsDao =
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
     private val dbIconCategories: IconCategoryDao =
@@ -97,7 +94,6 @@ class FirstLaunchViewModel(
 
     fun addFirstLaunchElements(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
-        listCurrencies: List<CheckBox>,
         listIncomeCategories: List<SelectedItemOfImageAndCheckBox>,
         listSpendingCategories: List<SelectedItemOfImageAndCheckBox>
     ) = runBlocking {
@@ -107,7 +103,6 @@ class FirstLaunchViewModel(
             async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
 
         val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes) }
-//        val resultAddCurrencies = async(Dispatchers.IO) { addCurrencies(listCurrencies) }
 
         val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
 
@@ -172,28 +167,6 @@ class FirstLaunchViewModel(
                 item.checkBox.text.toString(), isIncome, item.img
             )
         )
-    }
-
-    private fun addCurrencies(listCurrencies: List<CheckBox>): Boolean {
-        for (i in listCurrencies.indices) {
-            if (uiHelper.isCheckedCheckBox(listCurrencies[i])) {
-                addCurrency(listCurrencies[i].text.toString())
-            }
-        }
-        return true
-    }
-
-    private fun addCurrency(name: String) {
-        val currency = Currencies(
-            currencyName = name,
-            currencyNameShort = null,
-            isCurrencyDefault = false,
-            icon = null,
-            iso4217 = null
-        )
-        launchIo {
-            dbCurrencies.addCurrency(currency)
-        }
     }
 
     private fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
