@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenciesBinding
@@ -22,7 +23,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         _binding = FragmentFirstLaunchSelectCurrenciesBinding.inflate(inflater, container, false)
         firstLaunchSelectCurrenciesViewModel =
             ViewModelProvider(this).get(FirstLaunchSelectCurrenciesViewModel::class.java)
-        Message.log("--- size of currencies list = ${firstLaunchSelectCurrenciesViewModel.firstLaunchCurrenciesList}")
+
         with(firstLaunchSelectCurrenciesViewModel) {
             firstLaunchCurrenciesList.observe(viewLifecycleOwner) {
                 binding.currenciesForSelectHolder.adapter =
@@ -50,7 +51,16 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             }
         }
 
-
+        binding.submitButton.setOnClickListener {
+//            Toast.makeText(context, "adding", Toast.LENGTH_LONG).show()
+            when (firstLaunchSelectCurrenciesViewModel.isCurrenciesListNotEmpty()) {
+                true -> {
+                    Toast.makeText(context, "list ADDING", Toast.LENGTH_LONG).show()
+                    firstLaunchSelectCurrenciesViewModel.addingCurrenciesToDB()
+                }
+                false -> Toast.makeText(context,"list is EMPTY", Toast.LENGTH_LONG).show()
+            }
+        }
         return binding.root
     }
 }

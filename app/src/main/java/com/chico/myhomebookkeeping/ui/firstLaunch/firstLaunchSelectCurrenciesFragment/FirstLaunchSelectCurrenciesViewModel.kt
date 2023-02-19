@@ -114,13 +114,22 @@ class FirstLaunchSelectCurrenciesViewModel(
     }
 
     private fun postingFirstLaunchCurrenciesList(currencyForAdd: Currencies) {
-        val listForPost:MutableList<Currencies>? = _firstLaunchCurrenciesList.value?.toMutableList()
+        val listForPost: MutableList<Currencies>? =
+            _firstLaunchCurrenciesList.value?.toMutableList()
         listForPost?.add(currencyForAdd)
         _firstLaunchCurrenciesList.postValue(sortedByISO(listForPost!!))
     }
 
     private fun sortedByISO(listForPost: MutableList<Currencies>): List<Currencies> {
         return listForPost.sortedBy { it.iso4217 }
+    }
+
+    fun isCurrenciesListNotEmpty() :Boolean{
+        return !_selectedCurrenciesList.value.isNullOrEmpty()
+    }
+
+    fun addingCurrenciesToDB() {
+
     }
 
 }
