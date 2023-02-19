@@ -56,4 +56,8 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     fun getBooleanDefFalse(args: String): Boolean {
         return sharedPreferences.getBoolean(args,false)
     }
+
+    fun getBoolean(args: String): Boolean {
+        return sharedPreferences.getBoolean(args,false)
+    }
 }

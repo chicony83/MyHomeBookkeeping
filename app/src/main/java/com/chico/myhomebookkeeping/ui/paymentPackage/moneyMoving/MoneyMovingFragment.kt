@@ -14,14 +14,12 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.delay
 
 class MoneyMovingFragment : Fragment() {
 
@@ -131,7 +129,7 @@ class MoneyMovingFragment : Fragment() {
             }
         }
 //        checkLinesFound()
-//        checkIsFirstLaunch()
+        checkIsFirstLaunch()
 
         moneyMovingViewModel.cleaningSP()
     }
@@ -167,12 +165,12 @@ class MoneyMovingFragment : Fragment() {
         _binding = null
     }
 
-//    private fun checkIsFirstLaunch() {
-//        if (moneyMovingViewModel.isFirstLaunch()) {
-//            moneyMovingViewModel.setIsFirstLaunchFalse()
-//            control.navigate(R.id.nav_first_launch_fragment)
-//        }
-//    }
+    private fun checkIsFirstLaunch() {
+        if (moneyMovingViewModel.isFirstLaunch()) {
+            moneyMovingViewModel.setIsFirstLaunchFalse()
+            control.navigate(R.id.nav_first_launch_select_currencies_fragment)
+        }
+    }
 
     //    private fun checkLinesFound() {
 //        var numFoundedLines = moneyMovingViewModel.getNumFoundLines()
