@@ -9,8 +9,11 @@ import android.widget.GridLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.db.entity.Currencies
 
-class SelectCurrencyAsDefaultDialog : DialogFragment() {
+class SelectCurrencyAsDefaultDialog(
+    private var selectedCurrencies: List<Currencies>
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->

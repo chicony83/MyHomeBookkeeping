@@ -76,7 +76,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                     Toast.makeText(context, "select default currency", Toast.LENGTH_LONG).show()
 
                     launchUi {
-                        val dialog = SelectCurrencyAsDefaultDialog()
+                        val dialog = SelectCurrencyAsDefaultDialog(firstLaunchSelectCurrenciesViewModel.getSelectedCurrencies())
                         dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
                     }
 //                    launchIo {

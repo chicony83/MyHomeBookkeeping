@@ -142,4 +142,8 @@ class FirstLaunchSelectCurrenciesViewModel(
 //                it-> dbCurrencies.addCurrency(listOfCurrencies[it])
         }
     }
+
+    fun getSelectedCurrencies(): List<Currencies> {
+        return selectedCurrenciesList.value?.toList()!!
+    }
 }
