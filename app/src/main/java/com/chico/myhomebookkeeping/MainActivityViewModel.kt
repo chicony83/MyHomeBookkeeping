@@ -18,8 +18,8 @@ class MainActivityViewModel(
 
     fun checkIsFirstLaunch(): Boolean {
         Message.log("---is first launch = ${getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)}")
-        return getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
-//        return true
+//        return getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
+        return true
     }
 
 }

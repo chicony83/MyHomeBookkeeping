@@ -14,8 +14,9 @@ import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenci
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
+import com.chico.myhomebookkeeping.ui.dialogs.selectAsDefault.SelectCurrencyAsDefaultDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
+import com.chico.myhomebookkeeping.utils.launchUi
 
 class FirstLaunchSelectCurrenciesFragment : Fragment() {
     private var _binding: FragmentFirstLaunchSelectCurrenciesBinding? = null
@@ -69,15 +70,19 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
         binding.submitButton.setOnClickListener {
-//            Toast.makeText(context, "adding", Toast.LENGTH_LONG).show()
+
             when (firstLaunchSelectCurrenciesViewModel.isCurrenciesListNotEmpty()) {
                 true -> {
-                    Toast.makeText(context, "list ADDING", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "select default currency", Toast.LENGTH_LONG).show()
 
-                    launchIo {
-                        firstLaunchSelectCurrenciesViewModel.addingCurrenciesToDB()
+                    launchUi {
+                        val dialog = SelectCurrencyAsDefaultDialog()
+                        dialog.show(childFragmentManager,getString(R.string.tag_show_dialog))
                     }
-                    navControlHelper.toSelectedFragment(R.id.nav_first_launch_fragment)
+//                    launchIo {
+//                        firstLaunchSelectCurrenciesViewModel.addingCurrenciesToDB()
+//                    }
+//                    navControlHelper.toSelectedFragment(R.id.nav_first_launch_fragment)
                 }
                 false -> Toast.makeText(context, "list is EMPTY", Toast.LENGTH_LONG).show()
             }
