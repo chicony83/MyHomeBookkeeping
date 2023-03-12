@@ -9,7 +9,6 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchCurrenciesList
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class FirstLaunchSelectCurrenciesViewModel(

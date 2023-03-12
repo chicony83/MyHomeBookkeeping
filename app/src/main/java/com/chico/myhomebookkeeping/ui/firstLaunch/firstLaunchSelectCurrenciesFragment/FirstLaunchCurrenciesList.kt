@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.firstLaunch
+package com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFragment
 
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
@@ -18,7 +18,7 @@ object FirstLaunchCurrenciesList {
         Currencies("Türkmen Manaty", " \tm", "TMT", null, false),            //Туркменистан
         Currencies("So‘m", "So'm", "UZS", null, false),                     //узбекистан
         Currencies("Гривня", "₴", "UAH", null, false),                       //Украина
-        Currencies("Franc suisse", "₣", "CFH", null, false),                    //Швейцария
+//        Currencies("Franc suisse", "₣", "CFH", null, false),                    //Швейцария
         Currencies("Pound Sterling", "£", "GBP", null, false)
     )
     fun getCurrenciesList(): List<Currencies> = currenciesList.sortedBy {
