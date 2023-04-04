@@ -14,7 +14,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenci
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
-import com.chico.myhomebookkeeping.ui.dialogs.selectAsDefault.SelectCurrencyAsDefaultDialog
+import com.chico.myhomebookkeeping.ui.dialogs.selectAsDefault.currency.SelectCurrencyAsDefaultDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
 

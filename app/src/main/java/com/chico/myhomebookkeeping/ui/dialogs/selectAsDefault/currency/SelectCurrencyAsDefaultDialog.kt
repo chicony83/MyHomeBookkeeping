@@ -1,13 +1,13 @@
-package com.chico.myhomebookkeeping.ui.dialogs.selectAsDefault
+package com.chico.myhomebookkeeping.ui.dialogs.selectAsDefault.currency
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.GridLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
@@ -34,7 +34,7 @@ class SelectCurrencyAsDefaultDialog(
     }
 
     private fun buildLayout(layout: View) {
-        val parentLayout = layout.findViewById<GridLayout>(R.id.iconsHolderLayout)
-
+        val holder = layout.findViewById<RecyclerView>(R.id.iconsHolderLayout)
+        holder.adapter = SelectCurrencyAsDefaultDialogAdapter(selectedCurrencies)
     }
 }
