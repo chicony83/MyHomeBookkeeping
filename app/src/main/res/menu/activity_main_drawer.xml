@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/main"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:contentDescription="@string/fragment_label_money_moving"
             android:id="@+id/nav_money_moving"
@@ -16,8 +15,7 @@
             android:icon="@drawable/ic_baseline_incomplete_circle_24"
             android:title="@string/fragment_label_reports" />
     </group>
-    <group android:id="@+id/new_money_moving"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:contentDescription="@string/fragment_label_new_money_moving"
             android:id="@+id/nav_new_money_moving"
@@ -30,8 +28,7 @@
             android:title="@string/fragment_label_select_fast_payment"
             />
     </group>
-    <group android:id="@+id/reference_books"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:contentDescription="@string/fragment_label_categories"
             android:id="@+id/nav_categories"
@@ -48,8 +45,7 @@
             android:icon="@drawable/ic_credit_card"
             android:title="@string/fragment_label_cash_account" />
     </group>
-    <group android:id="@+id/settings"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:contentDescription="@string/fragment_label_settings"
             android:id="@+id/nav_setting"

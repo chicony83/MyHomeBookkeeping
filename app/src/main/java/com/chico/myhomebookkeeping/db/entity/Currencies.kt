@@ -20,7 +20,7 @@ data class Currencies(
     val icon: Int?,
 
     @ColumnInfo(name = "is_currency_default")
-    val isCurrencyDefault: Boolean?
+    var isCurrencyDefault: Boolean?
 
     ) {
 

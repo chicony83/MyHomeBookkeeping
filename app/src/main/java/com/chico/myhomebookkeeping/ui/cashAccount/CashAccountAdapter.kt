@@ -13,7 +13,7 @@ import com.chico.myhomebookkeeping.helpers.UiHelper
 
 class CashAccountAdapter(
     private var cashAccountList: List<CashAccount>,
-    val listener: OnItemViewClickListener
+    val listener: OnItemViewClickListener,
 ) :
     RecyclerView.Adapter<CashAccountAdapter.ViewHolder>() {
     val uiHelper = UiHelper()
@@ -62,8 +62,12 @@ class CashAccountAdapter(
                 } else {
                     numberCashAccount.text = "$textCardNumber  ${cashAccount.bankAccountNumber}"
                 }
+                cashAccountItem.setOnLongClickListener {
+                    cashAccount.cashAccountId?.let { it1 -> listener.onLongClick(it1) }
+                    true
+                }
                 cashAccountItem.setOnClickListener {
-                    cashAccount.cashAccountId?.let { it1 -> listener.onClick(it1) }
+                    cashAccount.cashAccountId?.let { it1 -> listener.onShortClick(it1) }
                 }
             }
         }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="message_select_type_of_category">Выберите тип категории</string>
-    <string name="message_select_category">Выберите категорию</string>
     <string name="message_too_short_name">Слишком короткое название</string>
 
     <string name="message_enter_amount">"Введите сумму"</string>
@@ -9,7 +8,6 @@
     <string name="message_category_not_selected">Выберите категорию</string>
     <string name="message_currency_not_selected">Выберите валюту</string>
     <string name="message_cash_account_not_selected">Выберите счет</string>
-    <string name="message_first_launch_dialog">"Это первый запуск программы\nвключить быструю настройку?"</string>
 
     <string name="message_entry_changed">Запись изменена</string>
     <string name="message_entry_added">Запись добавлена</string>
@@ -23,9 +21,8 @@
 
     <string name="message_you_have_latest_version">У вас последняя версия программы</string>
     <string name="message_you_can_update_the_program">Можно обновить программу</string>
-    
-    <string name="message_currency_added">Валюта добавлена</string>
-    <string name="message_currency_not_added">Ошибка\nВалюта не добавлена</string>
 
     <string name="message_icon_is_not_selected">Иконка не выбрана</string>
+
+    <string name="message_select_default_currency">Выберите валюту по умолчанию</string>
 </resources>

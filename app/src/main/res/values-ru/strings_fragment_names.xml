@@ -17,6 +17,5 @@
     <string name="fragment_label_cash_account">Счета</string>
     <string name="fragment_label_settings">Настройки</string>
     <string name="fragment_label_help">Помощь</string>
-    <string name="fragment_label_first_launch">Первый запуск</string>
     <string name="fragment_label_first_launch_select_currencies">Выберите валюты</string>
 </resources>

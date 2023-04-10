@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -22,10 +23,9 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.sp.SetSP
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
-import com.chico.myhomebookkeeping.utils.parseTimeToMillis
+import com.chico.myhomebookkeeping.utils.*
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import java.util.*
 
 class NewMoneyMovingViewModel(
@@ -39,7 +39,8 @@ class NewMoneyMovingViewModel(
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
-    private val argsNewEntryOfMoneyMovingInDbIsAdded = Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
+    private val argsNewEntryOfMoneyMovingInDbIsAdded =
+        Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
 
     private val modelCheck = ModelCheck()
 
@@ -98,6 +99,9 @@ class NewMoneyMovingViewModel(
     private val _submitButtonText = MutableLiveData<String>()
     val submitButton: LiveData<String>
         get() = _submitButtonText
+
+    private var _onCalcAmountSelected = MutableStateFlow("")
+    val onCalcAmountSelected: StateFlow<String> = _onCalcAmountSelected
 
     //    private var idMoneyMovingForChange: Long = -1
 
@@ -289,7 +293,16 @@ class NewMoneyMovingViewModel(
     }
 
     fun saveSPOfNewEntryIsAdded() {
-        setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded,true)
+        setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded, true)
     }
 
+    fun setCalcSelectedAmount(amount: String) {
+        viewModelScope.launch {
+            if (amount.hasExpression()) {
+                _onCalcAmountSelected.value = ""
+            } else {
+                _onCalcAmountSelected.value = amount
+            }
+        }
+    }
 }

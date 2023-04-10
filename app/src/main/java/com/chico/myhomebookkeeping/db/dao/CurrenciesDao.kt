@@ -10,14 +10,17 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 interface CurrenciesDao {
 
     @Insert
-    suspend fun addCurrency(currency: Currencies):Long
+    suspend fun addCurrency(currency: Currencies): Long
+
+    @Insert
+    suspend fun addCurrencies(currencies: List<Currencies>)
 
     @Query("SELECT * FROM currency_table ORDER BY currency_name ASC")
-    suspend fun getAllCurrenciesSortNameAsc():List<Currencies>
+    suspend fun getAllCurrenciesSortNameAsc(): List<Currencies>
 
     @Query("SELECT * FROM currency_table WHERE currencyId = :id")
-    suspend fun getOneCurrency(id:Int):Currencies
+    suspend fun getOneCurrency(id: Int): Currencies
 
     @Query("UPDATE currency_table SET currency_name = :name WHERE currencyId = :id")
-    suspend fun changeLine(id: Int, name: String):Int
+    suspend fun changeLine(id: Int, name: String): Int
 }

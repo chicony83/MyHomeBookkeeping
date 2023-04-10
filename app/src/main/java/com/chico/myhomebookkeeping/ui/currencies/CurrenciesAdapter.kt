@@ -35,10 +35,12 @@ class CurrenciesAdapter(
             with(binding) {
                 root.contentDescription = currencies.currencyName
                 nameCurrency.text = currencies.currencyName
+                currenciesItem.setOnLongClickListener {
+                    currencies.currencyId?.let { it1 -> listener.onLongClick(it1) }
+                    true
+                }
                 currenciesItem.setOnClickListener {
-                    currencies.currencyId?.let {
-                            it1 -> listener.onClick(it1)
-                    }
+                    currencies.currencyId?.let { it1 -> listener.onShortClick(it1) }
                 }
             }
         }

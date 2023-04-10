@@ -13,7 +13,6 @@
 
     <string name="text_on_button_help">Help</string>
     <string name="text_on_button_submit">Submit</string>
-    <string name="text_on_button_hide">Hide</string>
     <string name="text_on_button_change">Change</string>
     <string name="text_on_button_save">Save</string>
     <string name="text_on_button_apply">Apply</string>
@@ -29,7 +28,6 @@
     <string name="text_on_button_all_income">Income</string>
     <string name="text_on_button_all_spending">Spending</string>
     <string name="text_on_button_income_category">Income</string>
-    <string name="text_on_button_spending_category">Spending</string>
 
     <string name="text_on_button_add_new_category">New category</string>
     <string name="text_on_button_add_new_currency">New currency</string>
@@ -43,8 +41,6 @@
     <string name="text_on_button_select_currency_2_rows">Select\ncurrency</string>
     <string name="text_on_button_select_category_2_rows">Select\ncategories</string>
 
-    <string name="text_on_button_save_and_select">Save and select</string>
-
     <string name="text_on_radio_button_income_category">Income</string>
     <string name="text_on_radio_button_spending_category">Spending</string>
 
@@ -54,7 +50,6 @@
 
     <string name="text_on_button_all_text">All</string>
     <string name="text_on_button_check_update">Check new version</string>
-    <string name="text_on_button_launch_quick_setup">Launch quick setup</string>
 
     <string name="text_on_button_sorting_as">Sorted by:</string>
     <string name="text_on_button_sorting_as_numbers_ASC">numbers ascending</string>
@@ -63,7 +58,5 @@
     <string name="text_on_button_sorting_as_alphabet_DESC">↓ Z->A</string>
     <string name="text_on_button_sorting_by_rating_ASC">rating ↑</string>
     <string name="text_on_button_sorting_by_rating_DESC">rating ↓</string>
-
-    <string name="text_on_button_new_fast_payment">New fast payment</string>
 
 </resources>

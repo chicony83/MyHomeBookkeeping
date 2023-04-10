@@ -24,7 +24,7 @@ import com.chico.myhomebookkeeping.db.entity.*
     version = 5,
     exportSchema = true,
 )
-abstract class DataBase : RoomDatabase() {
+abstract class RoomDataBase : RoomDatabase() {
     abstract fun cashAccountDao(): CashAccountDao
     abstract fun categoryDao(): CategoryDao
     abstract fun currenciesDao(): CurrenciesDao
@@ -41,7 +41,7 @@ object dataBase {
     fun getDataBase(ctx: Context) =
         Room.databaseBuilder(
             ctx,
-            DataBase::class.java,
+            RoomDataBase::class.java,
             "DataBase"
         )
             .addMigrations(migration_1_to_2)
