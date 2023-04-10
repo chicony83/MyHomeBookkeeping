@@ -31,9 +31,6 @@
 
     <string name="current_version">Текущая версия</string>
 
-    <string name="description_sort_categories_as">Отсортировать категории по</string>
-    
-    <string name="description_quick_payment_description">Описание быстрого платежа</string>
     <string name="name_fast_payment">Название платежа</string>
     <string name="description_rating_payment">Рейтинг платежа</string>
 </resources>

@@ -12,32 +12,33 @@ import com.chico.myhomebookkeeping.enums.icon.names.NoCategoryNames
 class IconsMaps(private val resources: Resources, private val opPackageName: String) {
 //    val app: Application = Application()
 
-    fun getNoCategoryIconsList():Map<String,Int>{
+    fun getNoCategoryIconsList(): Map<String, Int> {
         return noCategoryIconsList()
     }
 
     @SuppressLint("NewApi")
-    private fun noCategoryIconsList() = mapOf (
+    private fun noCategoryIconsList() = mapOf(
         NoCategoryNames.NoImage.name to getDrawable(R.drawable.no_image)
     )
 
     fun getCashAccountIconsList(): Map<String, Int> {
-        return iconsCashAccountMapList()
+        return iconsCashAccountMap()
     }
-//    @SuppressLint("NewApi")
+
+    //    @SuppressLint("NewApi")
 //    fun getCashAccountIconsList() = mapOf(
 //        CashAccountIconNames.Card.name to getDrawable(R.drawable.cash_account_card),
 //        CashAccountIconNames.Cash.name to getDrawable(R.drawable.cash_account_cash),
 //        CashAccountIconNames.CardOff.name to getDrawable(R.drawable.cash_account_credit_card_off)
 //    )
     @SuppressLint("NewApi")
-    private fun iconsCashAccountMapList() = mapOf(
+    private fun iconsCashAccountMap() = mapOf(
         CashAccountIconNames.Card.name to getDrawable(R.drawable.cash_account_card),
         CashAccountIconNames.Cash.name to getDrawable(R.drawable.cash_account_cash),
         CashAccountIconNames.CardOff.name to getDrawable(R.drawable.cash_account_credit_card_off)
     )
 
-    fun getCategoriesIconsMap():Map<String,Int>{
+    fun getCategoriesIconsMap(): Map<String, Int> {
         return iconsCategoriesMap()
     }
 
@@ -87,5 +88,4 @@ class IconsMaps(private val resources: Resources, private val opPackageName: Str
             opPackageName
         )
     }
-
 }

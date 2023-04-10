@@ -4,7 +4,8 @@ interface OnItemViewClickListenerLong {
     fun onClick(selectedId: Long)
 
 }
-interface OnItemViewClickListener {
-    fun onClick(selectedId: Int)
 
+interface OnItemViewClickListener {
+    fun onShortClick(selectedId: Int)
+    fun onLongClick(selectedId: Int)
 }

@@ -30,9 +30,7 @@
     <string name="description_A_quick_setup_of_the_program_will_be_done_here">A quick setup of the program.\n The following items will be added</string>
 
     <string name="current_version">Current version</string>
-    <string name="description_sort_categories_as">Sorting categories as</string>
 
-    <string name="description_quick_payment_description">Quick payment description</string>
     <string name="name_fast_payment">Name fast payment</string>
     <string name="description_rating_payment">Rating of payment</string>
 </resources>

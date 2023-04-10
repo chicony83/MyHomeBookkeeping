@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="message_too_short_name">Too short name</string>
-    <string name="message_select_category">Select a category</string>
     <string name="message_select_type_of_category">Select type of category</string>
 
     <string name="message_enter_amount">Enter amount</string>
@@ -9,7 +8,6 @@
     <string name="message_category_not_selected">Select category</string>
     <string name="message_currency_not_selected">Select currency</string>
     <string name="message_cash_account_not_selected">Select cash account</string>
-    <string name="message_first_launch_dialog">"This is the first launch\nof the program,\enable quick setup?"</string>
 
     <string name="message_entry_changed">Entry changed</string>
     <string name="message_entry_added">Entry added</string>
@@ -24,8 +22,7 @@
     <string name="message_you_have_latest_version">You have latest version</string>
     <string name="message_you_can_update_the_program">You can update the program</string>
 
-    <string name="message_currency_added">Currency added</string>
-    <string name="message_currency_not_added">Error\nCurrency not added</string>
-
     <string name="message_icon_is_not_selected">Icon is not selected</string>
+
+    <string name="message_select_default_currency">Select default currency</string>
 </resources>

@@ -23,11 +23,17 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     fun getString(argsKey: String): String? {
         return sharedPreferences.getString(argsKey, argsNone)
     }
-    fun getBooleanElseReturnTrue(argsKey:String):Boolean{
-        return sharedPreferences.getBoolean(argsKey,true)
+
+    fun getBooleanElseReturnTrue(argsKey: String): Boolean {
+        return sharedPreferences.getBoolean(argsKey, true)
     }
-    fun getBooleanElseReturnFalse(argsKey:String):Boolean{
-        return sharedPreferences.getBoolean(argsKey,false)
+
+    fun setBoolean(argsKey: String, flag: Boolean) {
+        sharedPreferences.edit().putBoolean(argsKey, flag).apply()
+    }
+
+    fun getBooleanElseReturnFalse(argsKey: String): Boolean {
+        return sharedPreferences.getBoolean(argsKey, false)
     }
 
     fun isIncomeSpendingNone(argsIncomeSpending: String): Boolean {
@@ -41,8 +47,9 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     fun isCategorySpending(argsIncomeSpending: String): Boolean {
         return sharedPreferences.getString(argsIncomeSpending, argsNone).toString() == argsSpending
     }
-    fun messageLog(text:String){
-        Log.i("TAG",text)
+
+    fun messageLog(text: String) {
+        Log.i("TAG", text)
     }
 
     fun getFloat(argsKey: String): Float {
@@ -54,10 +61,10 @@ class GetSP(private val sharedPreferences: SharedPreferences) {
     }
 
     fun getBooleanDefFalse(args: String): Boolean {
-        return sharedPreferences.getBoolean(args,false)
+        return sharedPreferences.getBoolean(args, false)
     }
 
     fun getBoolean(args: String): Boolean {
-        return sharedPreferences.getBoolean(args,false)
+        return sharedPreferences.getBoolean(args, false)
     }
 }

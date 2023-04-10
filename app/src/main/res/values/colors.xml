@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
+    <color name="light_gray">#BFBFBF</color>
 
     <color name="incomeTextColor">#BF00C300</color>
     <color name="spendingTextColor">#BFC30000</color>
@@ -37,7 +33,12 @@
     <color name="colorSecondaryNight">#B8D9C6</color>
     <color name="colorSecondaryVariantNight">#6AA695</color>
 
-    <color name="colorCancelButton">#640000</color>
-    <color name="colorSubmitButton">#006400</color>
+    <color name="calculation_error_color">#F44B3F</color>
+
+    <!-- Normal Theme -->
+    <color name="text_color">#000</color>
+    <color name="text_second_color">#595959</color>
+
+    <!-- AMOLED Theme -->
 
 </resources>

@@ -4,7 +4,6 @@
     <string name="quick_setup_name_Card">Карточка</string>
     <string name="quick_setup_name_Cash">Наличные</string>
 
-    <string name="quick_setup_add_Currency">Валюта</string>
     <string name="quick_setup_name_Currency">Рубли</string>
 
     <string name="quick_setup_add_Category">Категории</string>
@@ -15,7 +14,5 @@
     <string name="quick_setup_name_Credit">Кредиты</string>
     <string name="quick_setup_name_Medicines">Медикоменты</string>
     <string name="quick_setup_name_Public_transport">Общественный транспорт</string>
-
-    <string name="quick_setup_name_fast_payment">Платеж создан программой</string>
 
 </resources>

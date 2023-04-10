@@ -4,13 +4,18 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchCurrenciesList
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class FirstLaunchSelectCurrenciesViewModel(
     val app: Application
@@ -27,10 +32,13 @@ class FirstLaunchSelectCurrenciesViewModel(
     val selectedCurrenciesList: LiveData<List<Currencies>>
         get() = _selectedCurrenciesList
 
+    private val _onDefaultCurrencyAdded = MutableSharedFlow<Unit>()
+    val onDefaultCurrencyAdded: SharedFlow<Unit> = _onDefaultCurrencyAdded.asSharedFlow()
+
     private val emptyCurrency = Currencies("", "", "", null, null)
 
     init {
-        launchIo {
+        viewModelScope.launch {
             _firstLaunchCurrenciesList.postValue(FirstLaunchCurrenciesList.getCurrenciesList())
             _selectedCurrenciesList.postValue(listOf<Currencies>())
         }
@@ -134,12 +142,14 @@ class FirstLaunchSelectCurrenciesViewModel(
         return !_selectedCurrenciesList.value.isNullOrEmpty()
     }
 
-    suspend fun addingCurrenciesToDB() {
-        val listOfCurrencies = _selectedCurrenciesList.value?.toList()
-        listOfCurrencies?.indices!!.forEach {
-            CurrenciesUseCase.addNewCurrency(dbCurrencies, listOfCurrencies[it])
-
-//                it-> dbCurrencies.addCurrency(listOfCurrencies[it])
+    fun addCurrenciesToDB(currencies: List<Currencies>) {
+        viewModelScope.launch {
+            CurrenciesUseCase.addCurrencies(dbCurrencies, currencies)
+            _onDefaultCurrencyAdded.emit(Unit)
         }
+    }
+
+    fun getSelectedCurrencies(): List<Currencies> {
+        return selectedCurrenciesList.value.orEmpty()
     }
 }

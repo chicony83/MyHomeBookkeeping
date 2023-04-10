@@ -58,8 +58,6 @@ class AddIcons(
             iconsMap = noImageIconsMap,
             iconCategory = iconCategory
         )
-
-
     }
 
     @SuppressLint("NewApi")

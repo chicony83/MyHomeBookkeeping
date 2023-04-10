@@ -21,6 +21,7 @@ class SubmitDeleteDialog(
             val layout = inflater.inflate(R.layout.dialog_submit_delete, null)
             buildLayout(layout)
             builder.setView(layout)
+
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
