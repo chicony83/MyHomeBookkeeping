@@ -1,12 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 
 android {
     compileSdkVersion 32
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "32"
 
     defaultConfig {
         applicationId "com.chico.myhomebookkeeping"
@@ -20,7 +21,7 @@ android {
 
     buildFeatures {
         dataBinding true
-        viewBinding = true
+        viewBinding true
     }
 
     buildTypes {
@@ -28,7 +29,8 @@ android {
             applicationIdSuffix ".debug"
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -45,6 +47,10 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 dependencies {
+    def afollestad_dialogs_version = "3.3.0"
+    def gson_version = "2.9.1"
+    def sliding_up_panel_version = "4.4.1"
+
     implementation 'com.llollox:androidtoggleswitch:2.0.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -58,6 +64,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.github.hannesa2:AndroidSlidingUpPanel:$sliding_up_panel_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.webkit:webkit:1.4.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
@@ -66,9 +74,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //roomDataBase
-    implementation "androidx.room:room-runtime:2.2.6"
-    implementation "androidx.room:room-ktx:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
+    implementation "androidx.room:room-runtime:2.4.1"
+    implementation "androidx.room:room-ktx:2.4.1"
+    kapt "androidx.room:room-compiler:2.4.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
     implementation "android.arch.persistence.room:runtime:1.1.1"
 
@@ -83,4 +91,7 @@ dependencies {
 
     //MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //Dialogs
+    implementation "com.afollestad.material-dialogs:core:$afollestad_dialogs_version"
 }

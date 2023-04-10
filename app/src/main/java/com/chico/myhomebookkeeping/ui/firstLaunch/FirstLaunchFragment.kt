@@ -34,42 +34,42 @@ class FirstLaunchFragment : Fragment() {
         firstLaunchViewModel = ViewModelProvider(this).get(FirstLaunchViewModel::class.java)
 //        noImage = firstLaunchViewModel.getNoImageImage()!!
         with(firstLaunchViewModel) {
-            cardCashAccountItem.observe(viewLifecycleOwner, {
+            cardCashAccountItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(binding.cardCashAccountIcon, cardCashAccountItem)
-            })
-            cashCashAccountItem.observe(viewLifecycleOwner, {
+            }
+            cashCashAccountItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(binding.cashCashAccountIcon, cashCashAccountItem)
-            })
-            salaryCategoryItem.observe(viewLifecycleOwner, {
+            }
+            salaryCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(binding.incomeMoneyIcon, salaryCategoryItem)
-            })
-            productsCategoryItem.observe(viewLifecycleOwner, {
+            }
+            productsCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(binding.productsCategoryIcon, productsCategoryItem)
-            })
-            fuelForCarCategoryItem.observe(viewLifecycleOwner, {
+            }
+            fuelForCarCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(binding.fuelCategoryIcon, fuelForCarCategoryItem)
-            })
-            cellularCommunicationCategoryItem.observe(viewLifecycleOwner, {
+            }
+            cellularCommunicationCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(
                     binding.cellularCommunicationCategoryIcon,
                     cellularCommunicationCategoryItem
                 )
-            })
-            creditsCategoryItem.observe(viewLifecycleOwner, {
+            }
+            creditsCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(
                     binding.creditCategoryIcon, creditsCategoryItem
                 )
-            })
-            medicinesCategoryItem.observe(viewLifecycleOwner, {
+            }
+            medicinesCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(
                     binding.medicalCategoryIcon, medicinesCategoryItem
                 )
-            })
-            publicTransportCategoryItem.observe(viewLifecycleOwner, {
+            }
+            publicTransportCategoryItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(
                     binding.publicTransportCategoryIcon, publicTransportCategoryItem
                 )
-            })
+            }
         }
 
         return binding.root

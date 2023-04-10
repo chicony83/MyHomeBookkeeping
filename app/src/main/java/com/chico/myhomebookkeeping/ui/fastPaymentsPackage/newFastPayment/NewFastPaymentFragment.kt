@@ -39,27 +39,27 @@ class NewFastPaymentFragment : Fragment() {
         newFastPaymentViewModel = ViewModelProvider(this).get(NewFastPaymentViewModel::class.java)
 
         with(newFastPaymentViewModel) {
-            descriptionFastPayment.observe(viewLifecycleOwner, {
+            descriptionFastPayment.observe(viewLifecycleOwner) {
                 binding.nameFastPaymentEditText.setText(it.toString())
-            })
-            rating.observe(viewLifecycleOwner, {
+            }
+            rating.observe(viewLifecycleOwner) {
                 binding.ratingButton.setImageResource(it.img)
-            })
-            cashAccount.observe(viewLifecycleOwner, {
+            }
+            cashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccountButton.text = it.accountName
-            })
-            currency.observe(viewLifecycleOwner, {
+            }
+            currency.observe(viewLifecycleOwner) {
                 binding.selectCurrenciesButton.text = it.currencyName
-            })
-            category.observe(viewLifecycleOwner, {
+            }
+            category.observe(viewLifecycleOwner) {
                 binding.selectCategoryButton.text = it.categoryName
-            })
-            amount.observe(viewLifecycleOwner, {
+            }
+            amount.observe(viewLifecycleOwner) {
                 binding.amount.setText(it.toString())
-            })
-            description.observe(viewLifecycleOwner, {
+            }
+            description.observe(viewLifecycleOwner) {
                 binding.description.setText(it)
-            })
+            }
         }
 
         return binding.root

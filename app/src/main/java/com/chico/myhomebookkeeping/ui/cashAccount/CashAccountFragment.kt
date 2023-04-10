@@ -53,17 +53,24 @@ class CashAccountFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(cashAccountViewModel) {
-            selectedCashAccount.observe(viewLifecycleOwner, {
+            selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.confirmationLayout.selectedItemName.text = it?.accountName
-            })
-            cashAccountList.observe(viewLifecycleOwner, {
+            }
+            cashAccountList.observe(viewLifecycleOwner) {
                 binding.cashAccountHolder.adapter =
-                    CashAccountAdapter(it, object : OnItemViewClickListener {
-                        override fun onClick(selectedId: Int) {
-                            showSelectCashAccountDialog(selectedId)
-                        }
-                    })
-            })
+                    CashAccountAdapter(
+                        cashAccountList = it,
+                        listener = object : OnItemViewClickListener {
+                            override fun onShortClick(selectedId: Int) {
+                                cashAccountViewModel.saveData(navControlHelper, selectedId)
+                                navControlHelper.moveToPreviousFragment()
+                            }
+
+                            override fun onLongClick(selectedId: Int) {
+                                showSelectCashAccountDialog(selectedId)
+                            }
+                        })
+            }
         }
         return binding.root
     }

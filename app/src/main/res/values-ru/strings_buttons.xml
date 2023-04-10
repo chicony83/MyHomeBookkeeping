@@ -13,7 +13,6 @@
 
     <string name="text_on_button_help">Помощь</string>
     <string name="text_on_button_submit">Принять</string>
-    <string name="text_on_button_hide">Скрыть</string>
     <string name="text_on_button_change">Изменить</string>
     <string name="text_on_button_save">Сохранить</string>
     <string name="text_on_button_apply">Готово</string>
@@ -29,10 +28,9 @@
     <string name="text_on_button_all_income">Доходы</string>
     <string name="text_on_button_all_spending">Расходы</string>
     <string name="text_on_button_income_category">Доходы</string>
-    <string name="text_on_button_spending_category">Расходы</string>
 
-    <string name="text_on_button_add_new_category">Доавить категорию</string>
-    <string name="text_on_button_add_new_currency">Доавить валюту</string>
+    <string name="text_on_button_add_new_category">Добавить категорию</string>
+    <string name="text_on_button_add_new_currency">Добавить валюту</string>
     <string name="text_on_button_add_new_cash_account">Добавить счёт</string>
 
     <string name="text_on_button_select_cash_account">Выбрать счёт</string>
@@ -43,8 +41,6 @@
     <string name="text_on_button_select_currency_2_rows">Выберите\nвалюту</string>
     <string name="text_on_button_select_category_2_rows">Выберите\nкатегории</string>
 
-    <string name="text_on_button_save_and_select">Сохранить и выбрать</string>
-
     <string name="text_on_radio_button_income_category">Доходы</string>
     <string name="text_on_radio_button_spending_category">Расходы</string>
 
@@ -54,7 +50,6 @@
 
     <string name="text_on_button_all_text">Все</string>
     <string name="text_on_button_check_update">Проверить новую версию</string>
-    <string name="text_on_button_launch_quick_setup">Запустить быструю настройку</string>
 
     <string name="text_on_button_sorting_as">отсортировано:</string>
     <string name="text_on_button_sorting_as_numbers_ASC">номера по возростанию</string>
@@ -63,7 +58,5 @@
     <string name="text_on_button_sorting_as_alphabet_DESC">↓ Я->А</string>
     <string name="text_on_button_sorting_by_rating_ASC">рейтинг ↑</string>
     <string name="text_on_button_sorting_by_rating_DESC">рейтинг ↓</string>
-
-    <string name="text_on_button_new_fast_payment">Новый быстрый платеж</string>
 
 </resources>

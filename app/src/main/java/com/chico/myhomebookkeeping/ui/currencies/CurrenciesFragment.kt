@@ -52,15 +52,20 @@ class CurrenciesFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(currenciesViewModel) {
-            currenciesList.observe(viewLifecycleOwner, {
+            currenciesList.observe(viewLifecycleOwner) {
                 binding.currenciesHolder.adapter =
                     CurrenciesAdapter(it, object : OnItemViewClickListener {
-                        override fun onClick(selectedId: Int) {
+                        override fun onShortClick(selectedId: Int) {
+                            currenciesViewModel.saveData(navControlHelper, selectedId)
+                            navControlHelper.moveToPreviousFragment()
+                        }
+
+                        override fun onLongClick(selectedId: Int) {
                             showSelectCurrencyDialog(selectedId)
                             Log.i("TAG", "---$selectedId---")
                         }
                     })
-            })
+            }
         }
         return binding.root
     }

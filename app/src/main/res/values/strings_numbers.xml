@@ -1,8 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="number_one" translatable="false">1</string>
-    <string name="number_two" translatable="false">2</string>
-    <string name="number_three" translatable="false">3</string>
-    <string name="number_four" translatable="false">4</string>
-    <string name="number_five" translatable="false">5</string>
-</resources>
+<resources></resources>

@@ -13,6 +13,11 @@ object CurrenciesUseCase {
         return db.addCurrency(newCurrency)
     }
 
+    suspend fun addCurrencies(
+        db: CurrenciesDao,
+        currencies: List<Currencies>,
+    ) = db.addCurrencies(currencies)
+
     suspend fun getOneCurrency(
         db: CurrenciesDao, id: Int
     ): Currencies? {

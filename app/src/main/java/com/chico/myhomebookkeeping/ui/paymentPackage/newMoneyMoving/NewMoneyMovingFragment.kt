@@ -9,25 +9,29 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.android.synthetic.main.fragment_change_money_moving.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
+
 class NewMoneyMovingFragment : Fragment() {
 
-    private lateinit var newMoneyMovingViewModel: NewMoneyMovingViewModel
+    private val viewModel: NewMoneyMovingViewModel by viewModels()
     private var _binding: FragmentNewMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
@@ -43,8 +47,6 @@ class NewMoneyMovingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNewMoneyMovingBinding.inflate(inflater, container, false)
-
-        newMoneyMovingViewModel = ViewModelProvider(this).get(NewMoneyMovingViewModel::class.java)
 
         return binding.root
     }
@@ -75,36 +77,49 @@ class NewMoneyMovingFragment : Fragment() {
             submitButton.setOnClickListener {
                 pressSubmitButton()
             }
+            calcButton.setOnClickListener {
+
+                val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
+                    amount.text.toString()
+                )
+                calcFragment.show(childFragmentManager, "dialog")
+            }
         }
-        with(newMoneyMovingViewModel) {
-            dataTime.observe(viewLifecycleOwner, {
+        with(viewModel) {
+            dataTime.observe(viewLifecycleOwner) {
                 binding.selectDateTimeButton.text = it.toString()
-            })
-            selectedCashAccount.observe(viewLifecycleOwner, {
+            }
+            selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccountButton.text = it.accountName
-            })
-            selectedCurrency.observe(viewLifecycleOwner, {
+            }
+            selectedCurrency.observe(viewLifecycleOwner) {
                 binding.selectCurrenciesButton.text = it.currencyName
-            })
-            selectedCategory.observe(viewLifecycleOwner, {
+            }
+            selectedCategory.observe(viewLifecycleOwner) {
                 binding.selectCategoryButton.text = it.categoryName
-            })
+            }
 
             setDateTimeOnButton(currentDateTimeMillis)
 
-            enteredAmount.observe(viewLifecycleOwner, {
+            enteredAmount.observe(viewLifecycleOwner) {
                 binding.amount.setText(it.toString())
-            })
-            enteredDescription.observe(viewLifecycleOwner, {
+            }
+            enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
-            })
-            submitButton.observe(viewLifecycleOwner, {
+            }
+            submitButton.observe(viewLifecycleOwner) {
                 binding.submitButton.text = it.toString()
-            })
+            }
         }
-        newMoneyMovingViewModel.getAndCheckArgsSp()
+        viewModel.getAndCheckArgsSp()
 
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.onCalcAmountSelected.collectLatest {
+               binding.amount.setText(it)
+            }
+        }
     }
 
     private fun eraseAmountEditText() {
@@ -119,7 +134,7 @@ class NewMoneyMovingFragment : Fragment() {
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            newMoneyMovingViewModel.setDate(it)
+            viewModel.setDate(it)
             launchTimePicker()
         }
         datePicker.show(parentFragmentManager, "TAG")
@@ -134,7 +149,7 @@ class NewMoneyMovingFragment : Fragment() {
         timePicker.addOnPositiveButtonClickListener {
             val hour: Int = timePicker.hour
             val minute = timePicker.minute
-            with(newMoneyMovingViewModel) {
+            with(viewModel) {
                 setTime(
                     hour = hour,
                     minute = minute
@@ -146,9 +161,9 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
-        val isCashAccountNotNull = newMoneyMovingViewModel.isCashAccountNotNull()
-        val isCurrencyNotNull = newMoneyMovingViewModel.isCurrencyNotNull()
-        val isCategoryNotNull = newMoneyMovingViewModel.isCategoryNotNull()
+        val isCashAccountNotNull = viewModel.isCashAccountNotNull()
+        val isCurrencyNotNull = viewModel.isCurrencyNotNull()
+        val isCategoryNotNull = viewModel.isCategoryNotNull()
         val checkAmount = uiHelper.isEntered(binding.amount.text)
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
@@ -173,9 +188,9 @@ class NewMoneyMovingFragment : Fragment() {
     private fun addNewMoneyMoving() {
         val amount: Double = Around.double(binding.amount.text.toString())
         val description = binding.description.text.toString()
-        newMoneyMovingViewModel.saveDataToSP(amount, description)
+        viewModel.saveDataToSP(amount, description)
         runBlocking {
-            val result = newMoneyMovingViewModel.addNewMoneyMoving(
+            val result = viewModel.addNewMoneyMoving(
                 amount = amount,
                 description = description
             )
@@ -190,9 +205,9 @@ class NewMoneyMovingFragment : Fragment() {
 
 //                Toast(context).showCustomToastWhitsButton(requireActivity())
 //                message(getString(R.string.message_entry_added))
-                newMoneyMovingViewModel.saveSPOfNewEntryIsAdded()
+                viewModel.saveSPOfNewEntryIsAdded()
                 control.navigate(R.id.nav_money_moving)
-                newMoneyMovingViewModel.clearSPAfterSave()
+                viewModel.clearSPAfterSave()
             }
         }
     }
@@ -216,7 +231,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSelectButton(fragment: Int) {
-        newMoneyMovingViewModel.saveDataToSP(getAmount(), getDescription())
+        viewModel.saveDataToSP(getAmount(), getDescription())
         navControlHelper.toSelectedFragment(fragment)
 //        control.navigate(fragment)
     }

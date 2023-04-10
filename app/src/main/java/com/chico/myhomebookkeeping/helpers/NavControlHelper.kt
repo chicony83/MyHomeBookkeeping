@@ -1,6 +1,8 @@
 package com.chico.myhomebookkeeping.helpers
 
+import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.chico.myhomebookkeeping.R
 
 class NavControlHelper(private val controller: NavController) {
@@ -43,6 +45,10 @@ class NavControlHelper(private val controller: NavController) {
 
     fun toSelectedFragment(toFragment: Int) {
         controller.navigate(toFragment)
+    }
+
+    fun toSelectedFragment(toFragment: Int, args: Bundle? = null, navOptions: NavOptions? = null) {
+        controller.navigate(toFragment, args, navOptions)
     }
 
     fun moveToSelectTimePeriod() {

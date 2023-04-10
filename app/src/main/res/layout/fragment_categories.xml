@@ -46,6 +46,27 @@
         app:layout_constraintTop_toBottomOf="@id/selectAllIncomeButton"
         tools:visibility="visible" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_til"
+        android:layout_marginHorizontal="@dimen/margin_normal"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_category"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="1dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintBottom_toBottomOf="@+id/selectAllButton"
+        app:layout_constraintEnd_toEndOf="@+id/selectAllButton"
+        app:layout_constraintStart_toStartOf="@+id/selectAllButton"
+        app:layout_constraintTop_toTopOf="@id/selectAllButton">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/sortingButton"
         android:layout_width="wrap_content"
@@ -62,6 +83,7 @@
         style="@style/RecyclerHolder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_normal"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/show_hide_add_category_fragment_button"
         app:layout_constraintEnd_toEndOf="parent"
