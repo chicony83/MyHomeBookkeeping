@@ -16,6 +16,7 @@ import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Button
+import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.DialogCalcMainBinding
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.NewMoneyMovingViewModel
+import com.chico.myhomebookkeeping.utils.removeWhitespacesAndCommas
 import com.sothree.slidinguppanel.PanelSlideListener
 import com.sothree.slidinguppanel.PanelState
 import kotlinx.coroutines.Dispatchers
@@ -67,16 +69,18 @@ class CalcDialogFragment : DialogFragment() {
         builder.setPositiveButton(
             R.string.text_on_button_submit
         ) { _, _ ->
+            val inputText = dialog?.findViewById<EditText>(R.id.input)?.text.toString()
+            val resultText = dialog?.findViewById<EditText>(R.id.resultDisplay)?.text.toString()
+
+            viewModel.setCalcSelectedAmount(resultText.ifEmpty { inputText },decimalSeparatorSymbol)
         }
 
         binding.input.showSoftInputOnFocus = false
         binding.input.setText(initialAmount)
-        viewModel.setCalcSelectedAmount(initialAmount)
 
         binding.backspaceButton.setOnLongClickListener {
             binding.input.setText("")
             binding.resultDisplay.setText("")
-            viewModel.setCalcSelectedAmount("")
             true
         }
 
@@ -412,20 +416,16 @@ class CalcDialogFragment : DialogFragment() {
                         withContext(Dispatchers.Main) {
                             if (formattedResult != calculation) {
                                 binding.resultDisplay.setText(formattedResult)
-                                viewModel.setCalcSelectedAmount(formattedResult)
                             } else {
                                 binding.resultDisplay.setText("")
-                                viewModel.setCalcSelectedAmount("")
                             }
                         }
                     } else {
                         withContext(Dispatchers.Main) {
                             if (formattedResult != calculation) {
                                 binding.resultDisplay.setText(formattedResult)
-                                viewModel.setCalcSelectedAmount(formattedResult)
                             } else {
                                 binding.resultDisplay.setText("")
-                                viewModel.setCalcSelectedAmount("")
                             }
                         }
                     }
@@ -433,22 +433,18 @@ class CalcDialogFragment : DialogFragment() {
                     if (result.isInfinite() && !division_by_0 && !domain_error) {
                         if (result < 0) {
                             binding.resultDisplay.setText("-" + getString(R.string.infinity))
-                            viewModel.setCalcSelectedAmount("")
                         } else {
                             binding.resultDisplay.setText(getString(R.string.value_too_large))
-                            viewModel.setCalcSelectedAmount("")
                         }
                     } else {
                         withContext(Dispatchers.Main) {
                             binding.resultDisplay.setText("")
-                            viewModel.setCalcSelectedAmount("")
                         }
                     }
                 }
             } else {
                 withContext(Dispatchers.Main) {
                     binding.resultDisplay.setText("")
-                    viewModel.setCalcSelectedAmount("")
                 }
             }
         }
@@ -563,7 +559,6 @@ class CalcDialogFragment : DialogFragment() {
         keyVibration(view)
         binding.input.setText("")
         binding.resultDisplay.setText("")
-        viewModel.setCalcSelectedAmount("")
     }
 
     @SuppressLint("SetTextI18n")
@@ -624,7 +619,6 @@ class CalcDialogFragment : DialogFragment() {
 
                         // Clear resultDisplay
                         binding.resultDisplay.setText("")
-                        viewModel.setCalcSelectedAmount("")
                     }
 
                     if (calculation != formattedResult) {
@@ -677,30 +671,23 @@ class CalcDialogFragment : DialogFragment() {
                         if (syntax_error) {
                             setErrorColor(true)
                             binding.resultDisplay.setText(getString(R.string.syntax_error))
-                            viewModel.setCalcSelectedAmount("")
                         } else if (domain_error) {
                             setErrorColor(true)
                             binding.resultDisplay.setText(getString(R.string.domain_error))
-                            viewModel.setCalcSelectedAmount("")
                         } else if (result.isInfinite()) {
                             if (division_by_0) {
                                 setErrorColor(true)
                                 binding.resultDisplay.setText(getString(R.string.division_by_0))
-                                viewModel.setCalcSelectedAmount("")
                             } else if (result < 0) {
                                 binding.resultDisplay.setText("-" + getString(R.string.infinity))
-                                viewModel.setCalcSelectedAmount("")
                             } else {
                                 binding.resultDisplay.setText(getString(R.string.value_too_large))
-                                viewModel.setCalcSelectedAmount("")
                             }
                         } else if (result.isNaN()) {
                             setErrorColor(true)
                             binding.resultDisplay.setText(getString(R.string.math_error))
-                            viewModel.setCalcSelectedAmount("")
                         } else {
                             binding.resultDisplay.setText(formattedResult)
-                            viewModel.setCalcSelectedAmount(formattedResult)
                             isEqualLastAction =
                                 true // Do not clear the calculation (if you click into a number) if there is an error
                         }
@@ -710,7 +697,6 @@ class CalcDialogFragment : DialogFragment() {
             } else {
                 withContext(Dispatchers.Main) {
                     binding.resultDisplay.setText("")
-                    viewModel.setCalcSelectedAmount("")
                 }
             }
         }
@@ -813,7 +799,6 @@ class CalcDialogFragment : DialogFragment() {
             appLanguage = Locale.getDefault()
             binding.input.setText("")
             binding.resultDisplay.setText("")
-            viewModel.setCalcSelectedAmount("")
         }
 
         val historySize = MyPreferences(requireContext()).historySize!!.toInt()

@@ -23,10 +23,7 @@ import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.sp.SetSP
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.parseTimeFromMillis
-import com.chico.myhomebookkeeping.utils.parseTimeToMillis
+import com.chico.myhomebookkeeping.utils.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -299,9 +296,14 @@ class NewMoneyMovingViewModel(
         setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded, true)
     }
 
-    fun setCalcSelectedAmount(amount: String) {
+    fun setCalcSelectedAmount(amount: String, decimalSeparatorSymbol: String) {
+        val clearedAmount = removeWhitespacesAndCommas(amount,decimalSeparatorSymbol)
         viewModelScope.launch {
-            _onCalcAmountSelected.value = amount.filter { it.isDigit() }
+            if (clearedAmount.hasExpression()) {
+                _onCalcAmountSelected.value = ""
+            } else {
+                _onCalcAmountSelected.value = clearedAmount
+            }
         }
     }
 }

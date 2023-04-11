@@ -78,7 +78,7 @@ class NewMoneyMovingFragment : Fragment() {
                 pressSubmitButton()
             }
             calcButton.setOnClickListener {
-
+                requireView().hideKeyboard()
                 val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
                     amount.text.toString()
                 )

@@ -5,7 +5,7 @@ import java.math.RoundingMode
 
 object Around {
     fun double(text: String): Double {
-        return BigDecimal(text)
+        return BigDecimal(text.replace(",","."))
             .setScale(2, RoundingMode.HALF_EVEN)
             .toDouble()
     }
