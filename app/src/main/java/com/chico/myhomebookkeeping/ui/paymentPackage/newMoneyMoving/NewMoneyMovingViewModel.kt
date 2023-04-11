@@ -296,12 +296,13 @@ class NewMoneyMovingViewModel(
         setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded, true)
     }
 
-    fun setCalcSelectedAmount(amount: String) {
+    fun setCalcSelectedAmount(amount: String, decimalSeparatorSymbol: String) {
+        val clearedAmount = removeWhitespacesAndCommas(amount,decimalSeparatorSymbol)
         viewModelScope.launch {
-            if (amount.hasExpression()) {
+            if (clearedAmount.hasExpression()) {
                 _onCalcAmountSelected.value = ""
             } else {
-                _onCalcAmountSelected.value = amount
+                _onCalcAmountSelected.value = clearedAmount
             }
         }
     }

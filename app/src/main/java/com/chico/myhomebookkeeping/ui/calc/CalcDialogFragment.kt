@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.DialogCalcMainBinding
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.NewMoneyMovingViewModel
-import com.chico.myhomebookkeeping.utils.removeWhitespaces
+import com.chico.myhomebookkeeping.utils.removeWhitespacesAndCommas
 import com.sothree.slidinguppanel.PanelSlideListener
 import com.sothree.slidinguppanel.PanelState
 import kotlinx.coroutines.Dispatchers
@@ -69,9 +69,10 @@ class CalcDialogFragment : DialogFragment() {
         builder.setPositiveButton(
             R.string.text_on_button_submit
         ) { _, _ ->
-            val inputText =  dialog?.findViewById<EditText>(R.id.input)?.text.toString().removeWhitespaces()
-            val resultText =  dialog?.findViewById<EditText>(R.id.resultDisplay)?.text.toString().removeWhitespaces()
-            viewModel.setCalcSelectedAmount(resultText.ifEmpty { inputText })
+            val inputText = dialog?.findViewById<EditText>(R.id.input)?.text.toString()
+            val resultText = dialog?.findViewById<EditText>(R.id.resultDisplay)?.text.toString()
+
+            viewModel.setCalcSelectedAmount(resultText.ifEmpty { inputText },decimalSeparatorSymbol)
         }
 
         binding.input.showSoftInputOnFocus = false
