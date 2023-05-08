@@ -1,29 +1,35 @@
 package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.google.android.material.chip.Chip
 import kotlinx.coroutines.runBlocking
 
 
 class NewFastPaymentFragment : Fragment() {
     private var _binding: FragmentNewFastPaymentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var newFastPaymentViewModel: NewFastPaymentViewModel
+    private val newFastPaymentViewModel: NewFastPaymentViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
@@ -36,8 +42,6 @@ class NewFastPaymentFragment : Fragment() {
     ): View {
         _binding = FragmentNewFastPaymentBinding.inflate(inflater, container, false)
 
-        newFastPaymentViewModel = ViewModelProvider(this).get(NewFastPaymentViewModel::class.java)
-
         with(newFastPaymentViewModel) {
             descriptionFastPayment.observe(viewLifecycleOwner) {
                 binding.nameFastPaymentEditText.setText(it.toString())
@@ -49,7 +53,7 @@ class NewFastPaymentFragment : Fragment() {
                 binding.selectCashAccountButton.text = it.accountName
             }
             currency.observe(viewLifecycleOwner) {
-                binding.selectCurrenciesButton.text = it.currencyName
+//                binding.selectCurrenciesButton.text = it.currencyName
             }
             category.observe(viewLifecycleOwner) {
                 binding.selectCategoryButton.text = it.categoryName
@@ -60,9 +64,32 @@ class NewFastPaymentFragment : Fragment() {
             description.observe(viewLifecycleOwner) {
                 binding.description.setText(it)
             }
+            currenciesList.observe(viewLifecycleOwner) { currenciesList ->
+                buildCurrencyChips(currenciesList,selectedCurrency.value)
+            }
         }
 
         return binding.root
+    }
+
+    private fun buildCurrencyChips(
+        currenciesList: List<Currencies>,
+        selectedCurrency: Currencies? = null
+    ) {
+        binding.selectCurrenciesCg.removeAllViews()
+        val currencyModels = currenciesList.map { currency ->
+            val chipView = LayoutInflater.from(requireContext()).inflate(R.layout.item_currency,binding.selectCurrenciesCg,false) as Chip
+
+            chipView.apply {
+                text = currency.iso4217
+                isCheckable = true
+                isChecked = if (selectedCurrency == null) currency.isCurrencyDefault
+                    ?: false else selectedCurrency.currencyId == currency.currencyId
+            }
+        }
+        currencyModels.forEach {
+            binding.selectCurrenciesCg.addView(it)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,9 +99,17 @@ class NewFastPaymentFragment : Fragment() {
         navControlHelper = NavControlHelper(controller = control)
 
         with(binding) {
+            selectCurrenciesCg.setOnCheckedChangeListener { group, checkedId ->
+                newFastPaymentViewModel.postCurrency(
+                    newFastPaymentViewModel.currenciesList.value?.firstOrNull {
+                        it.iso4217 == group.findViewById<Chip>(checkedId)?.text.toString()
+                    }?.currencyId
+                )
+            }
+
             ratingButton.setOnClickListener { showSelectRatingDialog() }
             selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
-            selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
+//            selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
             selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
             submitButton.setOnClickListener {
                 presSubmitButton()

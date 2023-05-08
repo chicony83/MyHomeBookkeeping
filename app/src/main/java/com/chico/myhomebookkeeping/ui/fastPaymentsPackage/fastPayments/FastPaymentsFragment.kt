@@ -8,9 +8,11 @@ import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
@@ -32,7 +34,9 @@ class FastPaymentsFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
 
-    private lateinit var fastPaymentsViewModel: FastPaymentsViewModel
+    private val fastPaymentsViewModel: FastPaymentsViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,10 +44,8 @@ class FastPaymentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFastPaymentsBinding.inflate(inflater, container, false)
-        control = activity?.findNavController(R.id.nav_host_fragment)!!
+        control = findNavController()
         navControlHelper = NavControlHelper(controller = control)
-
-        fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
         val layoutManager = GridLayoutManager(activity, 2)
 
@@ -204,7 +206,7 @@ class FastPaymentsFragment : Fragment() {
         }
         fastPaymentsViewModel.cleaningSP()
 
-        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)) {
+        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_select_currencies_fragment)) {
             fastPaymentsViewModel.reloadRecycler()
         }
     }

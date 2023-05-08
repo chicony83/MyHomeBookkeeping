@@ -39,6 +39,8 @@ class NewMoneyMovingViewModel(
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
+    private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
+
     private val argsNewEntryOfMoneyMovingInDbIsAdded =
         Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
 
@@ -103,6 +105,12 @@ class NewMoneyMovingViewModel(
     private var _onCalcAmountSelected = MutableStateFlow("")
     val onCalcAmountSelected: StateFlow<String> = _onCalcAmountSelected
 
+    private val _currenciesList = MutableLiveData<List<Currencies>>()
+    val currenciesList: LiveData<List<Currencies>> = _currenciesList
+
+    private val _selectedCurrencyChip = MutableLiveData<Currencies>()
+    val selectedCurrencyChip: LiveData<Currencies> = _selectedCurrencyChip
+
     //    private var idMoneyMovingForChange: Long = -1
 
     private var dateTimeSPLong = minusOneLong
@@ -113,11 +121,21 @@ class NewMoneyMovingViewModel(
     private var descriptionSPString = ""
 //    var id: Long = -1
 
+    init {
+        loadCurrencies()
+    }
+
     fun getAndCheckArgsSp() {
 
         getSharedPreferencesArgs()
         setSubmitButtonText(app.getString(R.string.text_on_button_add))
         setValuesViewModel()
+    }
+
+    private fun loadCurrencies() {
+        launchIo {
+            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
+        }
     }
 
     private fun getSharedPreferencesArgs() {
@@ -189,10 +207,10 @@ class NewMoneyMovingViewModel(
         )
     }
 
-    private suspend fun postCurrency(idNum: Int) {
-        _selectedCurrency.postValue(
-            CurrenciesUseCase.getOneCurrency(dbCurrencies, idNum)
-        )
+
+    fun postCurrency(currencyId: Int?) {
+        _selectedCurrencyChip.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
+        _selectedCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
     }
 
     private suspend fun postCashAccount(idNum: Int) {

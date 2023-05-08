@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.data.newFastPayment.Rating
@@ -25,11 +26,13 @@ import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.launch
 
 class NewFastPaymentViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
+    private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
 
     private val argsDescriptionFastPaymentKey =
         Constants.ARGS_NEW_FAST_PAYMENTS_NAME
@@ -94,9 +97,22 @@ class NewFastPaymentViewModel(
     private val _description = MutableLiveData<String>()
     val description: LiveData<String> get() = _description
 
+    private val _currenciesList = MutableLiveData<List<Currencies>>()
+    val currenciesList: LiveData<List<Currencies>> = _currenciesList
+
+    private val _selectedCurrency = MutableLiveData<Currencies>()
+    val selectedCurrency: LiveData<Currencies> = _selectedCurrency
+
     init {
         getSPValues()
         setValuesViewModel()
+        loadCurrencies()
+    }
+
+    private fun loadCurrencies() {
+        launchIo {
+            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
+        }
     }
 
     private fun getSPValues() {
@@ -111,10 +127,12 @@ class NewFastPaymentViewModel(
 
     private fun setValuesViewModel() {
         launchIo { if (descriptionFastPaymentSPString.isNotEmpty()) launchUi { postDescriptionFastPayment() } }
-        launchIo { if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() }
-        if(!modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating(0) }}
+        launchIo {
+            if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() }
+            if (!modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating(0) }
+        }
         launchIo { if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi { postCashAccount() } }
-        launchIo { if (modelCheck.isPositiveValue(currencySPInt)) launchUi { postCurrency() } }
+//        launchIo { if (modelCheck.isPositiveValue(currencySPInt)) launchUi { postCurrency() } }
         launchIo { if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory() } }
         launchIo { if (modelCheck.isPositiveValue(amountSPString)) launchUi { postAmount() } }
         launchIo { if (descriptionSPString.isNotEmpty()) launchUi { postDescription() } }
@@ -137,8 +155,9 @@ class NewFastPaymentViewModel(
 
     }
 
-    private suspend fun postCurrency() {
-        _currency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies, currencySPInt))
+    fun postCurrency(currencyId: Int?) {
+        _selectedCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
+        _currency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
     }
 
     private suspend fun postCashAccount() {

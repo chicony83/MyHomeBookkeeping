@@ -24,12 +24,15 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 
 class ChangeFastPaymentViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
+    private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsNameChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_NAME
@@ -92,6 +95,25 @@ class ChangeFastPaymentViewModel(
 
     private var idFastMoneyMovingForChange: Long = minusOneLong
 
+    private val _currenciesList = MutableLiveData<List<Currencies>>()
+    val currenciesList: LiveData<List<Currencies>> = _currenciesList
+
+    private val _selectedCurrency = MutableLiveData<Currencies>()
+    val selectedCurrency: LiveData<Currencies> = _selectedCurrency
+
+    private val _loadedCurrencyId = MutableLiveData<Currencies>()
+    val loadedCurrencyId: LiveData<Currencies> = _loadedCurrencyId
+
+    init {
+        loadCurrencies()
+    }
+
+    private fun loadCurrencies() {
+        launchIo {
+            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
+        }
+    }
+
     fun getFastPaymentForChange() {
         idFastMoneyMovingForChange = getIDFastPaymentForChange()
         if (modelCheck.isPositiveValue(idFastMoneyMovingForChange)) {
@@ -112,7 +134,10 @@ class ChangeFastPaymentViewModel(
         postName(fastPayment.await())
         postRating(fastPayment.await())
         postCashAccount(fastPayment.await())
-        postCurrency(fastPayment.await())
+        withContext(Dispatchers.Main) {
+            _loadedCurrencyId.value =
+                currenciesList.value?.firstOrNull { it.currencyId == fastPayment.await()?.currencyId }
+        }
         postCategory(fastPayment.await())
         postAmount(fastPayment.await())
         postDescription(fastPayment.await())
@@ -151,13 +176,9 @@ class ChangeFastPaymentViewModel(
         _paymentCategory.postValue(CategoriesUseCase.getOneCategory(dbCategory, postingId))
     }
 
-    private suspend fun postCurrency(fastPayments: FastPayments?) {
-        val postingId: Int = if (modelCheck.isPositiveValue(currencySPInt)) {
-            currencySPInt
-        } else {
-            fastPayments?.currencyId ?: 0
-        }
-        _paymentCurrency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies, postingId))
+    fun postCurrency(currencyId: Int?) {
+        _selectedCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
+        _paymentCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
     }
 
     private suspend fun postCashAccount(fastPayments: FastPayments?) {
@@ -272,7 +293,7 @@ class ChangeFastPaymentViewModel(
         )
     }
 
-    suspend fun deleteLine():Int {
-        return ChangeFastPaymentUseCase.deleteLine(dbFastPayments,idFastMoneyMovingForChange)
+    suspend fun deleteLine(): Int {
+        return ChangeFastPaymentUseCase.deleteLine(dbFastPayments, idFastMoneyMovingForChange)
     }
 }

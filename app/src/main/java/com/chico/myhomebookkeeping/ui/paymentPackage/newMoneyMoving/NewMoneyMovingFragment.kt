@@ -15,11 +15,13 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -31,7 +33,9 @@ import java.util.*
 
 class NewMoneyMovingFragment : Fragment() {
 
-    private val viewModel: NewMoneyMovingViewModel by viewModels()
+    private val viewModel: NewMoneyMovingViewModel  by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
     private var _binding: FragmentNewMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
@@ -59,15 +63,23 @@ class NewMoneyMovingFragment : Fragment() {
 
         with(binding) {
 
+            selectCurrenciesCg.setOnCheckedChangeListener { group, checkedId ->
+                viewModel.postCurrency(
+                    viewModel.currenciesList.value?.firstOrNull {
+                        it.iso4217 == group.findViewById<Chip>(checkedId)?.text.toString()
+                    }?.currencyId
+                )
+            }
+
             selectDateTimeButton.setOnClickListener {
                 launchDatePicker()
             }
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
-            selectCurrenciesButton.setOnClickListener {
-                pressSelectButton(R.id.nav_currencies)
-            }
+//            selectCurrenciesButton.setOnClickListener {
+//                pressSelectButton(R.id.nav_currencies)
+//            }
             selectCategoryButton.setOnClickListener {
                 pressSelectButton(R.id.nav_categories)
             }
@@ -92,9 +104,9 @@ class NewMoneyMovingFragment : Fragment() {
             selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccountButton.text = it.accountName
             }
-            selectedCurrency.observe(viewLifecycleOwner) {
-                binding.selectCurrenciesButton.text = it.currencyName
-            }
+//            selectedCurrency.observe(viewLifecycleOwner) {
+//                binding.selectCurrenciesButton.text = it.currencyName
+//            }
             selectedCategory.observe(viewLifecycleOwner) {
                 binding.selectCategoryButton.text = it.categoryName
             }
@@ -110,6 +122,9 @@ class NewMoneyMovingFragment : Fragment() {
             submitButton.observe(viewLifecycleOwner) {
                 binding.submitButton.text = it.toString()
             }
+            currenciesList.observe(viewLifecycleOwner) { currenciesList ->
+                buildCurrencyChips(currenciesList,selectedCurrencyChip.value)
+            }
         }
         viewModel.getAndCheckArgsSp()
 
@@ -124,6 +139,26 @@ class NewMoneyMovingFragment : Fragment() {
 
     private fun eraseAmountEditText() {
         binding.amount.setText("")
+    }
+
+    private fun buildCurrencyChips(
+        currenciesList: List<Currencies>,
+        selectedCurrency: Currencies? = null
+    ) {
+        binding.selectCurrenciesCg.removeAllViews()
+        val currencyModels = currenciesList.map { currency ->
+            val chipView = LayoutInflater.from(requireContext()).inflate(R.layout.item_currency,binding.selectCurrenciesCg,false) as Chip
+
+            chipView.apply {
+                text = currency.iso4217
+                isCheckable = true
+                isChecked = if (selectedCurrency == null) currency.isCurrencyDefault
+                    ?: false else selectedCurrency.currencyId == currency.currencyId
+            }
+        }
+        currencyModels.forEach {
+            binding.selectCurrenciesCg.addView(it)
+        }
     }
 
     private fun launchDatePicker() {

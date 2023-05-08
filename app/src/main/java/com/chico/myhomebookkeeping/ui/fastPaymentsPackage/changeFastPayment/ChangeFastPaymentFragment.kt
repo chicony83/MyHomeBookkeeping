@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -20,12 +22,15 @@ import com.chico.myhomebookkeeping.ui.dialogs.SubmitDeleteDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.google.android.material.chip.Chip
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class ChangeFastPaymentFragment : Fragment() {
 
-    private lateinit var changeFastPaymentViewModel: ChangeFastPaymentViewModel
+    private val changeFastPaymentViewModel: ChangeFastPaymentViewModel by viewModels(
+    ownerProducer = { requireParentFragment() }
+    )
     private var _binding: FragmentChangeFastPaymentBinding? = null
     val binding get() = _binding!!
     private lateinit var control: NavController
@@ -38,8 +43,7 @@ class ChangeFastPaymentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChangeFastPaymentBinding.inflate(inflater, container, false)
-        changeFastPaymentViewModel =
-            ViewModelProvider(this).get(ChangeFastPaymentViewModel::class.java)
+
         return binding.root
     }
 
@@ -49,12 +53,20 @@ class ChangeFastPaymentFragment : Fragment() {
         navControlHelper = NavControlHelper(control)
 
         with(binding) {
+            selectCurrenciesCg.setOnCheckedChangeListener { group, checkedId ->
+                changeFastPaymentViewModel.postCurrency(
+                    changeFastPaymentViewModel.currenciesList.value?.firstOrNull {
+                        it.iso4217 == group.findViewById<Chip>(checkedId)?.text.toString()
+                    }?.currencyId
+                )
+            }
+
             ratingButton.setOnClickListener {
                 showSelectRatingDialog()
             }
             selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
             selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
-            selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
+//            selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
             submitButton.setOnClickListener { pressSubmitButton() }
             deleteButton.setOnClickListener { pressDeleteButton() }
         }
@@ -69,9 +81,9 @@ class ChangeFastPaymentFragment : Fragment() {
             paymentCashAccount.observe(viewLifecycleOwner, {
                 binding.selectCashAccountButton.text = it.accountName
             })
-            paymentCurrency.observe(viewLifecycleOwner, {
-                binding.selectCurrenciesButton.text = it.currencyName
-            })
+//            paymentCurrency.observe(viewLifecycleOwner, {
+//                binding.selectCurrenciesButton.text = it.currencyName
+//            })
             paymentCategory.observe(viewLifecycleOwner, {
                 binding.selectCategoryButton.text = it.categoryName
             })
@@ -81,11 +93,38 @@ class ChangeFastPaymentFragment : Fragment() {
             paymentDescription.observe(viewLifecycleOwner, {
                 binding.description.setText(it)
             })
+            currenciesList.observe(viewLifecycleOwner) { currenciesList ->
+                buildCurrencyChips(currenciesList,selectedCurrency.value)
+            }
+            loadedCurrencyId.observe(viewLifecycleOwner) { currency ->
+                buildCurrencyChips(currenciesList.value?: emptyList(),currency)
+            }
         }
 
         with(changeFastPaymentViewModel) {
             getSPForChangeFastPayment()
             getFastPaymentForChange()
+        }
+    }
+
+    private fun buildCurrencyChips(
+        currenciesList: List<Currencies>,
+        selectedCurrency: Currencies? = null
+    ) {
+        binding.selectCurrenciesCg.removeAllViews()
+        val currencyModels = currenciesList.map { currency ->
+
+            val chipView = LayoutInflater.from(requireContext()).inflate(R.layout.item_currency,binding.selectCurrenciesCg,false) as Chip
+
+            chipView.apply {
+                text = currency.iso4217
+                isCheckable = true
+                isChecked = if (selectedCurrency == null) currency.isCurrencyDefault
+                    ?: false else selectedCurrency.currencyId == currency.currencyId
+            }
+        }
+        currencyModels.forEach {
+            binding.selectCurrenciesCg.addView(it)
         }
     }
 
