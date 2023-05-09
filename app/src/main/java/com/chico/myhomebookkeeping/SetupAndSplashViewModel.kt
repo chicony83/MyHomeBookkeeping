@@ -16,11 +16,13 @@ import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.icons.AddIconCategories
 import com.chico.myhomebookkeeping.icons.AddIcons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.ui.firstLaunch.SelectedItemOfImageAndCheckBox
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -33,10 +35,7 @@ class SetupAndSplashViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val spName = Constants.SP_NAME
-    private var sharedPreferences: SharedPreferences =
-        app.getSharedPreferences(spName, Context.MODE_PRIVATE)
-    private var getSP = GetSP(sharedPreferences)
+    private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
 
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
@@ -76,9 +75,15 @@ class SetupAndSplashViewModel(
     private val _publicTransportCategoryItem = MutableLiveData<Int>()
     val publicTransportCategoryItem: LiveData<Int> get() = _publicTransportCategoryItem
 
-    private var listIconResource = listOf<IconsResource>()
-
+    private val spName = Constants.SP_NAME
+    private val sharedPreferences: SharedPreferences =
+        app.getSharedPreferences(spName, Context.MODE_PRIVATE)
+    private val spEditor = sharedPreferences.edit()
+    private val setSP = SetSP(spEditor)
+    private var getSP = GetSP(sharedPreferences)
     private val uiHelper = UiHelper()
+
+    private var listIconResource = listOf<IconsResource>()
 
     @SuppressLint("NewApi")
     private val addIcons = AddIcons(
@@ -90,82 +95,6 @@ class SetupAndSplashViewModel(
     fun checkIsFirstLaunch(): Boolean {
         return getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
     }
-
-    fun addIconCategories() {
-        launchIo {
-            AddIconCategories.add(dbIconCategories)
-        }
-    }
-
-    suspend fun addIconsResources() {
-        launchIo {
-            var iconCategoriesList = listOf<IconCategory>()
-            while (iconCategoriesList.size < 3) {
-                delay(100)
-                iconCategoriesList = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
-            }
-            addIcons.addIconResources(iconCategoriesList)
-        }
-    }
-
-    fun updateValues() {
-        launchIo {
-            listIconResource = getListOfIconResources()
-
-            if (listIconResource.isEmpty()) {
-                listIconResource = getListOfIconResources()
-            }
-            updateValuesOfCashAccounts()
-            updateValuesOfCategories()
-        }
-    }
-
-    private suspend fun getListOfIconResources(): List<IconsResource> {
-        delay(1000)
-        return IconResourcesUseCase.getIconsList(dbIconResources)
-    }
-
-    private fun updateValuesOfCashAccounts() {
-        launchUi {
-            _cardCashAccountItem.postValue(
-                getIconResource(CashAccountIconNames.Card.name)
-            )
-            _cashCashAccountItem.postValue(
-                getIconResource(CashAccountIconNames.Cash.name)
-            )
-        }
-    }
-
-    private fun updateValuesOfCategories() {
-
-        _salaryCategoryItem.postValue(
-            getIconResource(CategoryIconNames.Wallet.name)
-        )
-        _productsCategoryItem.postValue(
-            getIconResource(CategoryIconNames.ShoppingCart.name)
-        )
-
-        _fuelForCarCategoryItem.postValue(
-            getIconResource(CategoryIconNames.GasStation.name)
-        )
-        _cellularCommunicationCategoryItem.postValue(
-            getIconResource(CategoryIconNames.PhoneAndroid.name)
-        )
-        _creditsCategoryItem.postValue(
-            getIconResource(CategoryIconNames.Bank.name)
-        )
-        _medicinesCategoryItem.postValue(
-            getIconResource(CategoryIconNames.Medical.name)
-        )
-        _publicTransportCategoryItem.postValue(
-            getIconResource(CategoryIconNames.Bus.name)
-        )
-    }
-
-    private fun getIconResource(name: String) =
-        listIconResource.find {
-            it.iconName == name
-        }?.iconResources
 
     fun addFirstLaunchElements(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
@@ -188,50 +117,6 @@ class SetupAndSplashViewModel(
             }
         }
     }
-
-    private fun addIncomeCategories(listIncomeCategories: List<SelectedItemOfImageAndCheckBox>): Long {
-        var result: Long = 0
-        launchIo {
-            for (i in listIncomeCategories.indices) {
-                result += addCategory(listIncomeCategories[i], true)
-            }
-        }
-        return result
-    }
-
-
-    private fun addSpendingCategories(listSpendingCategories: List<SelectedItemOfImageAndCheckBox>): Long {
-        var result: Long = 0
-        launchIo {
-            for (i in listSpendingCategories.indices) {
-                result += addCategory(listSpendingCategories[i], false)
-            }
-        }
-        return result
-    }
-
-
-    private fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
-        for (i in listImageAndCheckBoxes.indices) {
-            if (uiHelper.isCheckedCheckBox(listImageAndCheckBoxes[i].checkBox)) {
-                addCashAccount(listImageAndCheckBoxes[i])
-            }
-        }
-        return true
-    }
-
-    private fun addCashAccount(item: SelectedItemOfImageAndCheckBox) {
-        val cashAccount = CashAccount(
-            accountName = item.checkBox.text.toString(),
-            bankAccountNumber = "",
-            isCashAccountDefault = false,
-            icon = item.img
-        )
-        launchIo {
-            dbCashAccount.addCashAccount(cashAccount)
-        }
-    }
-
 
     private suspend fun addFreeFastPayments() {
 //        Message.log("create payment")
@@ -260,6 +145,26 @@ class SetupAndSplashViewModel(
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategories)
     }
 
+    private fun addSpendingCategories(listSpendingCategories: List<SelectedItemOfImageAndCheckBox>): Long {
+        var result: Long = 0
+        launchIo {
+            for (i in listSpendingCategories.indices) {
+                result += addCategory(listSpendingCategories[i], false)
+            }
+        }
+        return result
+    }
+
+    private fun addIncomeCategories(listIncomeCategories: List<SelectedItemOfImageAndCheckBox>): Long {
+        var result: Long = 0
+        launchIo {
+            for (i in listIncomeCategories.indices) {
+                result += addCategory(listIncomeCategories[i], true)
+            }
+        }
+        return result
+    }
+
     private suspend fun addCategory(item: SelectedItemOfImageAndCheckBox, isIncome: Boolean): Long {
         return dbCategories.addCategory(
             Categories(
@@ -267,4 +172,106 @@ class SetupAndSplashViewModel(
             )
         )
     }
+
+    private fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
+        for (i in listImageAndCheckBoxes.indices) {
+            if (uiHelper.isCheckedCheckBox(listImageAndCheckBoxes[i].checkBox)) {
+                addCashAccount(listImageAndCheckBoxes[i])
+            }
+        }
+        return true
+    }
+
+    private fun addCashAccount(item: SelectedItemOfImageAndCheckBox) {
+        val cashAccount = CashAccount(
+            accountName = item.checkBox.text.toString(),
+            bankAccountNumber = "",
+            isCashAccountDefault = false,
+            icon = item.img
+        )
+        launchIo {
+            dbCashAccount.addCashAccount(cashAccount)
+        }
+    }
+
+    fun addIconCategories() {
+        launchIo {
+            AddIconCategories.add(dbIconCategories)
+        }
+    }
+
+    suspend fun addIconsResources() {
+        launchIo {
+            var iconCategoriesList = listOf<IconCategory>()
+            while (iconCategoriesList.size < 3) {
+                delay(100)
+//                Message.log("--- get icon categories")
+                iconCategoriesList = IconCategoriesUseCase.getAllIconCategories(dbIconCategories)
+//                Message.log("--- size of Icon Categories ${iconCategories.size} ---")
+            }
+            addIcons.addIconResources(iconCategoriesList)
+        }
+    }
+
+    fun updateValues() {
+        Message.log("update value")
+        launchIo {
+            listIconResource = getListOfIconResources()
+
+            Message.log("listOfIconResources size = ${listIconResource.size}")
+
+            if (listIconResource.isEmpty()) {
+                listIconResource = getListOfIconResources()
+            }
+            updateValuesOfCashAccounts()
+            updateValuesOfCategories()
+        }
+    }
+
+    private suspend fun getListOfIconResources(): List<IconsResource> {
+        delay(1000)
+        return IconResourcesUseCase.getIconsList(dbIconResources)
+    }
+
+    private fun updateValuesOfCategories() {
+
+        _salaryCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Wallet.name)
+        )
+        _productsCategoryItem.postValue(
+            getIconResource(CategoryIconNames.ShoppingCart.name)
+        )
+
+        _fuelForCarCategoryItem.postValue(
+            getIconResource(CategoryIconNames.GasStation.name)
+        )
+        _cellularCommunicationCategoryItem.postValue(
+            getIconResource(CategoryIconNames.PhoneAndroid.name)
+        )
+        _creditsCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Bank.name)
+        )
+        _medicinesCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Medical.name)
+        )
+        _publicTransportCategoryItem.postValue(
+            getIconResource(CategoryIconNames.Bus.name)
+        )
+    }
+
+    private fun updateValuesOfCashAccounts() {
+        launchUi {
+            _cardCashAccountItem.postValue(
+                getIconResource(CashAccountIconNames.Card.name)
+            )
+            _cashCashAccountItem.postValue(
+                getIconResource(CashAccountIconNames.Cash.name)
+            )
+        }
+    }
+
+    private fun getIconResource(name: String) =
+        listIconResource.find {
+            it.iconName == name
+        }?.iconResources
 }

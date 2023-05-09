@@ -35,6 +35,7 @@ class SetupAndSplashActivity : AppCompatActivity() {
                     addIconsResources()
                     updateValues()
                 }
+                delay(2500)
 
                 val listCashAccounts = getListCashAccounts()
                 val listIncomingCategories =
@@ -48,7 +49,6 @@ class SetupAndSplashActivity : AppCompatActivity() {
                     listSpendingCategories
                 )
 
-                delay(1500)
                 startActivity(Intent(this@SetupAndSplashActivity, MainActivity::class.java))
                 finish()
             }
@@ -62,8 +62,14 @@ class SetupAndSplashActivity : AppCompatActivity() {
     }
 
     private fun getListCashAccounts() = listOf<SelectedItemOfImageAndCheckBox>(
-        getItem(viewModel.cardCashAccountItem, CheckBox(this).apply { isChecked = true }),
-        getItem(viewModel.cashCashAccountItem, CheckBox(this).apply { isChecked = true })
+        getItem(viewModel.cardCashAccountItem, CheckBox(this).apply {
+            isChecked = true
+            text = getString(R.string.quick_setup_name_Card)
+        }),
+        getItem(viewModel.cashCashAccountItem, CheckBox(this).apply {
+            isChecked = true
+            text = getString(R.string.quick_setup_name_Cash)
+        })
     )
 
 
@@ -92,24 +98,45 @@ class SetupAndSplashActivity : AppCompatActivity() {
     }
 
     private fun getListIncomeCheckBoxes() = listOf(
-        getItem(viewModel.salaryCategoryItem, CheckBox(this).apply { isChecked = true })
+        getItem(viewModel.salaryCategoryItem, CheckBox(this).apply {
+            isChecked = true
+            text = getString(R.string.quick_setup_name_The_Income)
+        })
     )
 
     private fun getListSpendingCheckBoxes() = listOf(
         getItem(
             viewModel.cellularCommunicationCategoryItem,
-            CheckBox(this).apply { isChecked = true }
+            CheckBox(this).apply {
+                isChecked = true
+                text = getString(R.string.quick_setup_name_Cellular_communication)
+            }
         ),
-        getItem(viewModel.creditsCategoryItem, CheckBox(this).apply { isChecked = true }),
+        getItem(viewModel.creditsCategoryItem, CheckBox(this).apply {
+            isChecked = true
+            text = getString(R.string.quick_setup_name_Credit)
+        }),
         getItem(
             viewModel.fuelForCarCategoryItem,
-            CheckBox(this).apply { isChecked = true }
+            CheckBox(this).apply {
+                isChecked = true
+                text = getString(R.string.quick_setup_name_Fuel_for_the_car)
+            }
         ),
-        getItem(viewModel.productsCategoryItem, CheckBox(this).apply { isChecked = true }),
-        getItem(viewModel.medicinesCategoryItem, CheckBox(this).apply { isChecked = true }),
+        getItem(viewModel.productsCategoryItem, CheckBox(this).apply {
+            isChecked = true
+            text = getString(R.string.quick_setup_name_Products)
+        }),
+        getItem(viewModel.medicinesCategoryItem, CheckBox(this).apply {
+            isChecked = true
+            text = getString(R.string.quick_setup_name_Medicines)
+        }),
         getItem(
             viewModel.publicTransportCategoryItem,
-            CheckBox(this).apply { isChecked = true }
+            CheckBox(this).apply {
+                isChecked = true
+                text = getString(R.string.quick_setup_name_Public_transport)
+            }
         )
     )
 

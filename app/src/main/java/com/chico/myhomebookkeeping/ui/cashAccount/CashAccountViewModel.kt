@@ -80,8 +80,6 @@ class CashAccountViewModel(
             navControlHelper = navControlHelper,
             id = id
         )
-
-
     }
 
     suspend fun loadSelectedCashAccount(selectedId: Int): CashAccount? {
