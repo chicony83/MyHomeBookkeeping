@@ -14,7 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper(
 ) {
-    
+
 //    private val minLength: Int = Constants.MIN_LENGTH_NAME
 
     fun clearUiElement(editText: EditText) {
@@ -140,6 +140,10 @@ class UiHelper(
 
     fun isEntered(text: Editable): Boolean {
         return text.isNotEmpty()
+    }
+
+    fun isEnteredAndNotNull(text: String): Boolean {
+        return text.isNotEmpty() && text.toDoubleOrNull() != null && text.toDoubleOrNull() != 0.0
     }
 
     fun disableButton(button: Button) {

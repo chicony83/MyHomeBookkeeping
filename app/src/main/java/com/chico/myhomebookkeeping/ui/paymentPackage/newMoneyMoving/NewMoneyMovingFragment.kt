@@ -33,7 +33,7 @@ import java.util.*
 
 class NewMoneyMovingFragment : Fragment() {
 
-    private val viewModel: NewMoneyMovingViewModel  by viewModels(
+    private val viewModel: NewMoneyMovingViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
     private var _binding: FragmentNewMoneyMovingBinding? = null
@@ -114,7 +114,7 @@ class NewMoneyMovingFragment : Fragment() {
             setDateTimeOnButton(currentDateTimeMillis)
 
             enteredAmount.observe(viewLifecycleOwner) {
-                binding.amount.setText(it.toString())
+                binding.amount.setText(if (it == 0.0) "" else it.toString())
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -123,7 +123,7 @@ class NewMoneyMovingFragment : Fragment() {
                 binding.submitButton.text = it.toString()
             }
             currenciesList.observe(viewLifecycleOwner) { currenciesList ->
-                buildCurrencyChips(currenciesList,selectedCurrencyChip.value)
+                buildCurrencyChips(currenciesList, selectedCurrencyChip.value)
             }
         }
         viewModel.getAndCheckArgsSp()
@@ -132,7 +132,7 @@ class NewMoneyMovingFragment : Fragment() {
 
         lifecycleScope.launchWhenResumed {
             viewModel.onCalcAmountSelected.collectLatest {
-               binding.amount.setText(it)
+                binding.amount.setText(it)
             }
         }
     }
@@ -147,7 +147,8 @@ class NewMoneyMovingFragment : Fragment() {
     ) {
         binding.selectCurrenciesCg.removeAllViews()
         val currencyModels = currenciesList.map { currency ->
-            val chipView = LayoutInflater.from(requireContext()).inflate(R.layout.item_currency,binding.selectCurrenciesCg,false) as Chip
+            val chipView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_currency, binding.selectCurrenciesCg, false) as Chip
 
             chipView.apply {
                 text = currency.iso4217
@@ -199,7 +200,7 @@ class NewMoneyMovingFragment : Fragment() {
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
         val isCategoryNotNull = viewModel.isCategoryNotNull()
-        val checkAmount = uiHelper.isEntered(binding.amount.text)
+        val checkAmount = uiHelper.isEnteredAndNotNull(binding.amount.text.toString())
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
                 if (isCategoryNotNull) {
@@ -291,8 +292,6 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun message(text: String) {
-
-
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 }

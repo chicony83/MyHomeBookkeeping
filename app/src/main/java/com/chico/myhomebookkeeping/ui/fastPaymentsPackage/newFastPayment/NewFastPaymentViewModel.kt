@@ -103,7 +103,7 @@ class NewFastPaymentViewModel(
     private val _selectedCurrency = MutableLiveData<Currencies>()
     val selectedCurrency: LiveData<Currencies> = _selectedCurrency
 
-    init {
+    fun loadInitData() {
         getSPValues()
         setValuesViewModel()
         loadCurrencies()

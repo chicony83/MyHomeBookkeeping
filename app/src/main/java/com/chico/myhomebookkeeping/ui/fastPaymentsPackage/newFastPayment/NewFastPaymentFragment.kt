@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -65,7 +66,7 @@ class NewFastPaymentFragment : Fragment() {
                 binding.description.setText(it)
             }
             currenciesList.observe(viewLifecycleOwner) { currenciesList ->
-                buildCurrencyChips(currenciesList,selectedCurrency.value)
+                buildCurrencyChips(currenciesList, selectedCurrency.value)
             }
         }
 
@@ -78,7 +79,8 @@ class NewFastPaymentFragment : Fragment() {
     ) {
         binding.selectCurrenciesCg.removeAllViews()
         val currencyModels = currenciesList.map { currency ->
-            val chipView = LayoutInflater.from(requireContext()).inflate(R.layout.item_currency,binding.selectCurrenciesCg,false) as Chip
+            val chipView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_currency, binding.selectCurrenciesCg, false) as Chip
 
             chipView.apply {
                 text = currency.iso4217
@@ -121,11 +123,15 @@ class NewFastPaymentFragment : Fragment() {
         val isCashAccountNotNull = newFastPaymentViewModel.isCashAccountNotNull()
         val isCurrencyNotNull = newFastPaymentViewModel.isCurrencyNotNull()
         val isCategoryNotNull = newFastPaymentViewModel.isCategoryNotNull()
+        val isAmountNotNull = UiHelper().isEnteredAndNotNull(binding.amount.text.toString())
         if (binding.nameFastPaymentEditText.text.isNotEmpty()) {
             if (isCashAccountNotNull) {
                 if (isCurrencyNotNull) {
                     if (isCategoryNotNull) {
-                        addNewFastPayment()
+                        if (isAmountNotNull) {
+                            addNewFastPayment()
+                        } else
+                            message(getString(R.string.message_enter_amount))
                     } else {
                         message(getString(R.string.message_category_not_selected))
                     }
@@ -215,5 +221,10 @@ class NewFastPaymentFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        newFastPaymentViewModel.loadInitData()
     }
 }
