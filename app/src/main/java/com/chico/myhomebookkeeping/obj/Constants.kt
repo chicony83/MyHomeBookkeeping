@@ -6,6 +6,7 @@ object Constants {
     const val ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY = "cashAccountForCreate"
     const val ARGS_NEW_PAYMENT_CURRENCY_KEY = "currencyForCreate"
     const val ARGS_NEW_PAYMENT_CATEGORY_KEY = "categoryForCreate"
+    const val ARGS_NEW_PAYMENT_CHILD_CATEGORY_KEY = "categoryForChildCreate"
     const val ARGS_NEW_PAYMENT_AMOUNT_KEY = "amountForCreate"
     const val ARGS_NEW_PAYMENT_DESCRIPTION_KEY = "descriptionForCreate"
 

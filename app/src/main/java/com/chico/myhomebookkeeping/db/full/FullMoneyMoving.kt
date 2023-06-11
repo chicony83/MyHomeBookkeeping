@@ -2,9 +2,9 @@ package com.chico.myhomebookkeeping.db.full
 
 import androidx.room.ColumnInfo
 
-class FullMoneyMoving (
+data class FullMoneyMoving(
     @ColumnInfo(name = "id")
-    val id:Long,
+    val id: Long,
 
     @ColumnInfo(name = "time_stamp")
     val timeStamp: Long,
@@ -16,14 +16,17 @@ class FullMoneyMoving (
     val cashAccountNameValue: String,
 
     @ColumnInfo(name = "currency_name_value")
-    val currencyNameValue:String,
+    val currencyNameValue: String,
 
     @ColumnInfo(name = "category_name_value")
-    val categoryNameValue:String,
+    val categoryNameValue: String,
+
+    @ColumnInfo(name = "child_category_name_value")
+    val childCategoryNameValue: String? = null,
 
     @ColumnInfo(name = "is_income")
-    val isIncome:Boolean,
+    val isIncome: Boolean,
 
-    val description:String?
+    val description: String?
 
 )

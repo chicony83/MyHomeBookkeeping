@@ -9,8 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.db.dao.ChildCategoriesDao
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
+import com.chico.myhomebookkeeping.db.dao.ParentCategoriesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
@@ -53,7 +55,9 @@ class FastPaymentsViewModel(
     private val getSp = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
-    private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val fastPaymentsDao: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val parentCategoriesDao: ParentCategoriesDao = dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
+    private val childCategoriesDao: ChildCategoriesDao = dataBase.getDataBase(app.applicationContext).childCategoriesDao()
 
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
@@ -161,13 +165,13 @@ class FastPaymentsViewModel(
 
     private suspend fun getListFullFastPaymentsFromUseCase(query: SimpleSQLiteQuery): List<FullFastPayment>? {
         return FastPaymentsUseCase.getListFullFastPayments(
-            db, query
+            fastPaymentsDao, query
         )
     }
 
     suspend fun loadSelectedFullFastPayment(id: Long): FullFastPayment {
         return FastPaymentsUseCase.getOneFullFastPayment(
-            db,
+            fastPaymentsDao,
             FastPaymentCreateSimpleQuery.createQueryOneFullFastPayment(id)
         )
     }
@@ -176,7 +180,7 @@ class FastPaymentsViewModel(
         runBlocking {
             val id = fastPayment?.id ?: 0
             val selectedFastPayment: Deferred<FastPayments?> = async(Dispatchers.IO) {
-                FastPaymentsUseCase.getOneFastPayment(id, db)
+                FastPaymentsUseCase.getOneFastPayment(id, fastPaymentsDao)
             }
             saveToSp(selectedFastPayment.await())
         }
@@ -267,7 +271,7 @@ class FastPaymentsViewModel(
     fun saveIdFastPaymentForPay(id: Long) {
         runBlocking {
             val selectedFastPayment: Deferred<FastPayments?> = async(Dispatchers.IO) {
-                FastPaymentsUseCase.getOneFastPayment(id, db)
+                FastPaymentsUseCase.getOneFastPayment(id, fastPaymentsDao)
             }
             saveToSp(selectedFastPayment.await())
         }

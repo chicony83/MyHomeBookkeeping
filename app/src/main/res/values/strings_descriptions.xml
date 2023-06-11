@@ -10,6 +10,8 @@
     <string name="description_cash_account">Cash account</string>
     <string name="description_currency">Currency</string>
     <string name="description_category">Category</string>
+    <string name="description_main_category">Main Category</string>
+    <string name="description_child_category">Child Category</string>
     <string name="description_amount">Amount</string>
     <string name="description_description">Description</string>
 

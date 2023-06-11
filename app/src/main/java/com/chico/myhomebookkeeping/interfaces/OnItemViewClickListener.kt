@@ -1,8 +1,10 @@
 package com.chico.myhomebookkeeping.interfaces
 
-interface OnItemViewClickListenerLong {
-    fun onClick(selectedId: Long)
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 
+interface OnItemViewClickListenerLong {
+    fun onClick(fullFastPayment: FullFastPayment, childCategory: ChildCategory)
 }
 
 interface OnItemViewClickListener {

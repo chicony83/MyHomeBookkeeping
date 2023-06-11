@@ -35,19 +35,19 @@ class SetupAndSplashActivity : AppCompatActivity() {
                     addIconsResources()
                     updateValues()
                 }
-                delay(2500)
+                delay(5000)
 
                 val listCashAccounts = getListCashAccounts()
-                val listIncomingCategories =
-                    getListSelectedIncomeCategories(getListIncomeCheckBoxes())
-                val listSpendingCategories =
-                    getListSelectedSpendingCategories(getListSpendingCheckBoxes())
+//                val listIncomingCategories =
+//                    getListSelectedIncomeCategories(getListIncomeCheckBoxes())
+//                val listSpendingCategories =
+//                    getListSelectedSpendingCategories(getListSpendingCheckBoxes())
 
-                viewModel.addFirstLaunchElements(
-                    listCashAccounts,
-                    listIncomingCategories,
-                    listSpendingCategories
-                )
+
+                viewModel.addFirstLaunchAccounts(listCashAccounts)
+                viewModel.populateParentCategories()
+                viewModel.populateChildCategories()
+                viewModel.populateFreeFastPayments(this@SetupAndSplashActivity)
 
                 startActivity(Intent(this@SetupAndSplashActivity, MainActivity::class.java))
                 finish()

@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.free
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 
-class NewMoneyMovingViewModel(
+class FreeMoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
@@ -142,6 +142,16 @@ class NewMoneyMovingViewModel(
         _selectedChildCategory.value = childCategory
     }
 
+    fun setParentCategory(parentCategory: ParentCategory?) {
+        _selectedCategory.value = parentCategory
+    }
+    fun resetParentCategory() {
+        _selectedCategory.value = null
+    }
+    fun resetChildCategory() {
+        _selectedChildCategory.value = null
+    }
+
     fun loadAndSetParentCategory(fullFastPayment: FullFastPayment) {
         viewModelScope.launch {
             val parentCategories = dbParentCategory.getAllParentCategoriesSortNameASC()
@@ -173,13 +183,13 @@ class NewMoneyMovingViewModel(
                 )
             }
         }
-        launchIo {
-            if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi {
-                postCashAccount(
-                    cashAccountSPInt
-                )
-            }
-        }
+//        launchIo {
+//            if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi {
+//                postCashAccount(
+//                    cashAccountSPInt
+//                )
+//            }
+//        }
         launchIo {
             if (modelCheck.isPositiveValue(currencySPInt)) launchUi {
                 postCurrency(
@@ -235,6 +245,10 @@ class NewMoneyMovingViewModel(
         _selectedCashAccount.postValue(
             CashAccountsUseCase.getOneCashAccountById(dbCashAccount, idNum)
         )
+    }
+
+    fun setSelectedCashAccount(cashAccount: CashAccount) {
+        _selectedCashAccount.value = cashAccount
     }
 
     fun saveDataToSP(amount: Double, description: String) {

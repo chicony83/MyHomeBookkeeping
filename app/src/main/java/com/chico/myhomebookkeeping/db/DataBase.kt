@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
+import com.chico.myhomebookkeeping.db.typeconverter.DbConverters
 
 @Database(
     entities = [
@@ -17,13 +19,15 @@ import com.chico.myhomebookkeeping.db.entity.*
         MoneyMovement::class,
         FastPayments::class,
 //        Icons::class,
-        ParentCategories::class,
+        ParentCategory::class,
         IconsResource::class,
-        IconCategory::class
+        IconCategory::class,
+        ChildCategory::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
+@TypeConverters(DbConverters::class)
 abstract class RoomDataBase : RoomDatabase() {
     abstract fun cashAccountDao(): CashAccountDao
     abstract fun categoryDao(): CategoryDao
@@ -33,6 +37,7 @@ abstract class RoomDataBase : RoomDatabase() {
 
     //    abstract fun iconsDao(): IconsDao
     abstract fun parentCategoriesDao(): ParentCategoriesDao
+    abstract fun childCategoriesDao(): ChildCategoriesDao
     abstract fun iconResourcesDao(): IconResourcesDao
     abstract fun iconCategoryDao(): IconCategoryDao
 }
@@ -48,6 +53,7 @@ object dataBase {
             .addMigrations(migration_2_to_3)
             .addMigrations(migration_3_to_4)
             .addMigrations(migration_4_to_5)
+            .fallbackToDestructiveMigration()
             .build()
 }
 

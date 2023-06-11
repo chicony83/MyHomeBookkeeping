@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
@@ -29,7 +30,7 @@ import kotlinx.coroutines.runBlocking
 class ChangeFastPaymentFragment : Fragment() {
 
     private val changeFastPaymentViewModel: ChangeFastPaymentViewModel by viewModels(
-    ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireParentFragment() }
     )
     private var _binding: FragmentChangeFastPaymentBinding? = null
     val binding get() = _binding!!
@@ -94,10 +95,10 @@ class ChangeFastPaymentFragment : Fragment() {
                 binding.description.setText(it)
             })
             currenciesList.observe(viewLifecycleOwner) { currenciesList ->
-                buildCurrencyChips(currenciesList,selectedCurrency.value)
+                buildCurrencyChips(currenciesList, selectedCurrency.value)
             }
             loadedCurrencyId.observe(viewLifecycleOwner) { currency ->
-                buildCurrencyChips(currenciesList.value?: emptyList(),currency)
+                buildCurrencyChips(currenciesList.value ?: emptyList(), currency)
             }
         }
 
@@ -114,7 +115,8 @@ class ChangeFastPaymentFragment : Fragment() {
         binding.selectCurrenciesCg.removeAllViews()
         val currencyModels = currenciesList.map { currency ->
 
-            val chipView = LayoutInflater.from(requireContext()).inflate(R.layout.item_currency,binding.selectCurrenciesCg,false) as Chip
+            val chipView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_currency, binding.selectCurrenciesCg, false) as Chip
 
             chipView.apply {
                 text = currency.iso4217

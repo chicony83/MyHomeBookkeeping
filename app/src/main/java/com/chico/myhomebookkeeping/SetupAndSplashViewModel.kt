@@ -14,6 +14,8 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
 import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
+import com.chico.myhomebookkeeping.enums.ChildCategoriesEnum
+import com.chico.myhomebookkeeping.enums.ParentCategoriesEnum
 import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
 import com.chico.myhomebookkeeping.helpers.Message
@@ -27,9 +29,9 @@ import com.chico.myhomebookkeeping.ui.firstLaunch.SelectedItemOfImageAndCheckBox
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class SetupAndSplashViewModel(
     val app: Application
@@ -41,6 +43,10 @@ class SetupAndSplashViewModel(
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCategories: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
+    private val parentCategoryDao: ParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
+    private val childCategoryDao: ChildCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).childCategoriesDao()
     private val dbFastPayments: FastPaymentsDao =
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
     private val dbIconCategories: IconCategoryDao =
@@ -96,47 +102,70 @@ class SetupAndSplashViewModel(
         return getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
     }
 
-    fun addFirstLaunchElements(
+   suspend fun addFirstLaunchAccounts(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
-        listIncomeCategories: List<SelectedItemOfImageAndCheckBox>,
-        listSpendingCategories: List<SelectedItemOfImageAndCheckBox>
-    ) = runBlocking {
-        val resultAddedIncomeCategories =
-            async(Dispatchers.IO) { addIncomeCategories(listIncomeCategories) }
-        val resultAddSpendingCategories =
-            async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
+    ) {
+        addCashAccounts(listImageAndCheckBoxes)
 
-        val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes) }
+//        val resultAddedIncomeCategories =
+//            async(Dispatchers.IO) { addIncomeCategories(listIncomeCategories) }
+//        val resultAddSpendingCategories =
+//            async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
 
-        val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
+//        val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
 
-        launchIo {
-            while (getCategoriesList().size < sizeCategoriesList) {
-                delay(100)
-                addFreeFastPayments()
-            }
-        }
+//        launchIo {
+//            while (getCategoriesList().size < sizeCategoriesList) {
+//                delay(100)
+//                addFreeFastPayments()
+//            }
+//        }
     }
 
-    private suspend fun addFreeFastPayments() {
-//        Message.log("create payment")
-        launchIo {
-            val categoriesList = CategoriesUseCase.getAllCategoriesSortIdAsc(db = dbCategories)
-            for (i in categoriesList.indices) {
-                FastPaymentsUseCase.addNewFastPayment(
-                    db = dbFastPayments,
-                    FastPayments(
-                        null,
-                        categoriesList[i].categoryName,
-                        0,
-                        1,
-                        1,
-                        categoriesList[i].categoriesId ?: 0,
-                        null,
-                        null
-                    )
+    suspend fun populateParentCategories() {
+        val categories = ParentCategoriesEnum.values().map {
+            ParentCategory(
+                nameRes = it.nameRes,
+                isIncome = it == ParentCategoriesEnum.INCOME,
+                iconRes = null
+            )
+        }
+        parentCategoryDao.addParentCategories(categories)
+    }
+
+    suspend fun populateChildCategories() {
+        val categories = ChildCategoriesEnum.values().map {
+            ChildCategory(
+                nameRes = it.nameRes,
+                parentNameRes = it.parentCategory.nameRes,
+                iconRes = null
+            )
+        }
+        childCategoryDao.addChildCategories(categories)
+    }
+
+    suspend fun populateFreeFastPayments(ctx:Context) {
+        ParentCategoriesEnum.values().forEach { parent->
+            FastPaymentsUseCase.addNewFastPayment(
+                db = dbFastPayments,
+                FastPayments(
+                    icon = null,
+                    description = null,
+                    amount = null,
+                    cashAccountId = 1,
+                    categoryId = parent.categoryId,
+                    nameFastPayment = ctx.getString(parent.nameRes),
+                    currencyId = 1,
+                    rating = 0,
+                    childCategories = ChildCategoriesEnum.values().map {child->
+                        ChildCategory(
+                            nameRes = child.nameRes,
+                            parentNameRes = child.parentCategory.nameRes,
+                            iconRes = null
+                        )
+                    }.filter { it.parentNameRes==parent.nameRes }
                 )
-            }
+            )
         }
     }
 
@@ -173,7 +202,7 @@ class SetupAndSplashViewModel(
         )
     }
 
-    private fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
+    private suspend fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
         for (i in listImageAndCheckBoxes.indices) {
             if (uiHelper.isCheckedCheckBox(listImageAndCheckBoxes[i].checkBox)) {
                 addCashAccount(listImageAndCheckBoxes[i])
@@ -182,16 +211,14 @@ class SetupAndSplashViewModel(
         return true
     }
 
-    private fun addCashAccount(item: SelectedItemOfImageAndCheckBox) {
+    private suspend fun addCashAccount(item: SelectedItemOfImageAndCheckBox) {
         val cashAccount = CashAccount(
             accountName = item.checkBox.text.toString(),
             bankAccountNumber = "",
             isCashAccountDefault = false,
             icon = item.img
         )
-        launchIo {
-            dbCashAccount.addCashAccount(cashAccount)
-        }
+        dbCashAccount.addCashAccount(cashAccount)
     }
 
     fun addIconCategories() {

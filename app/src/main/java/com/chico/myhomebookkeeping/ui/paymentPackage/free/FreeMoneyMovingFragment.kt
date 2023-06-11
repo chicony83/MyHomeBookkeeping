@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.free
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -33,6 +33,8 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PAREN
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogViewModel
+import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
+import com.chico.myhomebookkeeping.ui.categories.CategoriesViewModel
 import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
 import com.chico.myhomebookkeeping.utils.hideBottomNavigation
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -45,12 +47,18 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
-class NewMoneyMovingFragment : Fragment() {
+class FreeMoneyMovingFragment : Fragment() {
 
-    private val viewModel: NewMoneyMovingViewModel by viewModels(
+    private val viewModel: FreeMoneyMovingViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
     private val childCategoriesViewModel: ChildCategoriesViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
+    private val cashAccountViewModel: CashAccountViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
+    private val parentCategoriesViewModel: CategoriesViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
     private val calcDialogViewModel: CalcDialogViewModel by viewModels(
@@ -98,16 +106,16 @@ class NewMoneyMovingFragment : Fragment() {
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
-//            selectCurrenciesButton.setOnClickListener {
-//                pressSelectButton(R.id.nav_currencies)
-//            }
+            selectCategoryButton.setOnClickListener {
+                viewModel.resetChildCategory()
+                childCategoriesViewModel.resetSelectedChildCategory()
+                findNavController().navigate(R.id.nav_categories)
+            }
             selectChildCategoryButton.setOnClickListener {
-                Log.e("!!!", viewModel.fullFastPayment.value?.id?.toInt().toString())
                 findNavController().navigate(
                     R.id.nav_child_categories,
                     bundleOf(
-                        ARGS_PARENT_CATEGORY_NAME_RES to viewModel.fullFastPayment.value?.id?.toInt()
-                            ?.toParentCategoriesEnum()?.nameRes
+                        ARGS_PARENT_CATEGORY_NAME_RES to viewModel.selectedCategory.value?.nameRes
                     )
                 )
             }
@@ -135,17 +143,23 @@ class NewMoneyMovingFragment : Fragment() {
             selectedCategory.observe(viewLifecycleOwner) {
                 binding.selectChildCategoryButton.isVisible = it != null
                 binding.childCategoryTitle.isVisible = it != null
-                binding.selectCategoryButton.text = it?.nameRes?.let { it1 ->
-                    requireContext().getString(
-                        it1
-                    )
+                if (it != null) {
+                    binding.selectCategoryButton.text = it.nameRes.let { it1 ->
+                        requireContext().getString(
+                            it1
+                        )
+                    }
                 }
             }
             selectedChildCategory.observe(viewLifecycleOwner) {
-                binding.selectChildCategoryButton.text = it?.nameRes?.let { it1 ->
-                    requireContext().getString(
-                        it1
-                    )
+                if (it != null) {
+                    binding.selectChildCategoryButton.text = it.nameRes.let { it1 ->
+                        requireContext().getString(
+                            it1
+                        )
+                    }
+                }else{
+                    binding.selectChildCategoryButton.text = getString(R.string.message_category_not_selected)
                 }
             }
 
@@ -175,22 +189,26 @@ class NewMoneyMovingFragment : Fragment() {
         )
         viewModel.setChildCategory(arguments?.getParcelable<ChildCategory>(ARGS_CHILD_CATEGORY))
 
-//        lifecycleScope.launchWhenStarted {
-//            viewModel.onCalcAmountSelected.collectLatest {
-//                binding.amount.setText(it)
-//            }
-//        }
+        super.onViewCreated(view, savedInstanceState)
+
+
         calcDialogViewModel.onCalcAmountSelected.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.amount.setText(it)
                 calcDialogViewModel.resetCalcSelectedAmount()
             }
         }
+        parentCategoriesViewModel.selectedCategory.observe(viewLifecycleOwner) {
+            if (it != null) {
+                viewModel.setParentCategory(it)
+            }
+        }
         childCategoriesViewModel.selectedChildCategory.observe(viewLifecycleOwner) {
             if (it != null) viewModel.setChildCategory(it)
         }
-
-        super.onViewCreated(view, savedInstanceState)
+        cashAccountViewModel.selectedCashAccount.observe(viewLifecycleOwner) {
+            if (it != null) viewModel.setSelectedCashAccount(it)
+        }
     }
 
     private fun eraseAmountEditText() {
@@ -298,6 +316,10 @@ class NewMoneyMovingFragment : Fragment() {
 //                Toast(context).showCustomToastWhitsButton(requireActivity())
 //                message(getString(R.string.message_entry_added))
                 viewModel.saveSPOfNewEntryIsAdded()
+                parentCategoriesViewModel.resetCategoryForSelect()
+                childCategoriesViewModel.resetSelectedChildCategory()
+                cashAccountViewModel.resetCashAccountForSelect()
+                viewModel.resetParentCategory()
                 control.navigate(R.id.nav_money_moving)
                 viewModel.clearSPAfterSave()
             }
@@ -350,8 +372,12 @@ class NewMoneyMovingFragment : Fragment() {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
+        parentCategoriesViewModel.resetCategoryForSelect()
         childCategoriesViewModel.resetSelectedChildCategory()
-        super.onStop()
+        cashAccountViewModel.resetCashAccountForSelect()
+        viewModel.resetParentCategory()
+        super.onDestroy()
     }
+
 }

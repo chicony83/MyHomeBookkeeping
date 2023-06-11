@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.FragmentCashAccountBinding
@@ -24,13 +26,16 @@ import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnChangeCashAccountCa
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.ChangeCashAccountDialog
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.NewCashAccountDialog
 import com.chico.myhomebookkeeping.ui.cashAccount.dialogs.SelectCashAccountDialog
+import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 
 class CashAccountFragment : Fragment() {
 
-    private lateinit var cashAccountViewModel: CashAccountViewModel
+    private val viewModel: CashAccountViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
     private var _binding: FragmentCashAccountBinding? = null
     private val binding get() = _binding!!
 
@@ -48,11 +53,9 @@ class CashAccountFragment : Fragment() {
         db = dataBase.getDataBase(requireContext()).cashAccountDao()
         _binding = FragmentCashAccountBinding.inflate(inflater, container, false)
 
-        cashAccountViewModel = ViewModelProvider(this).get(CashAccountViewModel::class.java)
-
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
-        with(cashAccountViewModel) {
+        with(viewModel) {
             selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.confirmationLayout.selectedItemName.text = it?.accountName
             }
@@ -62,8 +65,9 @@ class CashAccountFragment : Fragment() {
                         cashAccountList = it,
                         listener = object : OnItemViewClickListener {
                             override fun onShortClick(selectedId: Int) {
-                                cashAccountViewModel.saveData(navControlHelper, selectedId)
-                                navControlHelper.moveToPreviousFragment()
+                                viewModel.setSelectedCashAccount(it.firstOrNull { it.cashAccountId == selectedId })
+                                viewModel.saveData(navControlHelper, selectedId)
+                                findNavController().popBackStack()
                             }
 
                             override fun onLongClick(selectedId: Int) {
@@ -84,7 +88,7 @@ class CashAccountFragment : Fragment() {
 
         with(binding) {
             selectAllButton.setOnClickListener {
-                cashAccountViewModel.saveData(navControlHelper, -1)
+                viewModel.saveData(navControlHelper, -1)
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCashAccountFragmentButton.setOnClickListener {
@@ -104,7 +108,7 @@ class CashAccountFragment : Fragment() {
 
     private fun showSelectCashAccountDialog(selectedId: Int) {
         launchIo {
-            val cashAccount: CashAccount? = cashAccountViewModel.loadSelectedCashAccount(selectedId)
+            val cashAccount: CashAccount? = viewModel.loadSelectedCashAccount(selectedId)
             launchUi {
                 val dialog = SelectCashAccountDialog(cashAccount,
                     object : OnItemSelectForChangeCallBack {
@@ -114,7 +118,7 @@ class CashAccountFragment : Fragment() {
                     },
                     object : OnItemSelectForSelectCallBackInt {
                         override fun onSelect(id: Int) {
-                            cashAccountViewModel.saveData(navControlHelper, id)
+                            viewModel.saveData(navControlHelper, id)
                             navControlHelper.moveToPreviousFragment()
                         }
                     })
@@ -127,7 +131,7 @@ class CashAccountFragment : Fragment() {
         launchIo {
             val dialog = ChangeCashAccountDialog(cashAccount, object : OnChangeCashAccountCallBack {
                 override fun change(id: Int, name: String, number: String) {
-                    cashAccountViewModel.saveChangedCashAccount(id, name, number)
+                    viewModel.saveChangedCashAccount(id, name, number)
                 }
             })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -135,7 +139,7 @@ class CashAccountFragment : Fragment() {
     }
 
     private fun showNewCashAccountDialog() {
-        val result = cashAccountViewModel.getNamesList()
+        val result = viewModel.getNamesList()
         launchUi {
             val dialog = NewCashAccountDialog(result, object : OnAddNewCashAccountsCallBack {
                 override fun addAndSelect(name: String, number: String, isSelect: Boolean) {
@@ -145,9 +149,9 @@ class CashAccountFragment : Fragment() {
                         isCashAccountDefault = false,
                         icon = null
                     )
-                    val result: Long = cashAccountViewModel.addNewCashAccount(cashAccount)
+                    val result: Long = viewModel.addNewCashAccount(cashAccount)
                     if (isSelect) {
-                        cashAccountViewModel.saveData(navControlHelper, result.toInt())
+                        viewModel.saveData(navControlHelper, result.toInt())
                         navControlHelper.moveToPreviousFragment()
                     }
                 }

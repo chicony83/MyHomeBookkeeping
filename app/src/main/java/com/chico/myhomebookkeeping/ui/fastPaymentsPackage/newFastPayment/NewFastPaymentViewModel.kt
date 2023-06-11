@@ -242,7 +242,8 @@ class NewFastPaymentViewModel(
             currencyId = _currency.value?.currencyId ?: 0,
             categoryId = _category.value?.categoriesId ?: 0,
             amount = amount,
-            description = description
+            description = description,
+            childCategories = emptyList() //TODO
         )
 //        Message.log("rating Int value = 0")
 //        Message.log("rating newFastPayment = ${newFastPayment.rating.toString()}")

@@ -59,11 +59,23 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/description_category" />
+                android:text="@string/description_main_category" />
 
             <Button
                 android:id="@+id/selectCategoryButton"
                 style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_category" />
+
+            <TextView
+                android:id="@+id/child_category_title"
+                style="@style/TextDescriptions"
+                android:visibility="gone"
+                android:text="@string/description_child_category" />
+
+            <Button
+                android:id="@+id/selectChildCategoryButton"
+                style="@style/ButtonFullWidth"
+                android:visibility="gone"
                 android:text="@string/text_on_button_select_category" />
 
             <TextView

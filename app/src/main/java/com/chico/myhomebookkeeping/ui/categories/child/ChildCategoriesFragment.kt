@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.categories
+package com.chico.myhomebookkeeping.ui.categories.child
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
+import com.chico.myhomebookkeeping.databinding.FragmentChildCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.ChildCategoriesDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -30,22 +31,20 @@ import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
-import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
 import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCategoryDialog
-import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.visibleInvisible
+import com.chico.myhomebookkeeping.utils.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
-class CategoriesFragment : Fragment() {
+class ChildCategoriesFragment : Fragment() {
 
-    private val viewModel: CategoriesViewModel by viewModels(
+
+    private val viewModel: ChildCategoriesViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
-    private var _binding: FragmentCategoriesBinding? = null
+    private var _binding: FragmentChildCategoriesBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: CategoryDao
     private lateinit var navControlHelper: NavControlHelper
@@ -60,16 +59,18 @@ class CategoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         db = dataBase.getDataBase(requireContext()).categoryDao()
-        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        _binding = FragmentChildCategoriesBinding.inflate(inflater, container, false)
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         binding.onClear = {
             requireView().hideKeyboard()
-            visibleInvisible(binding.selectAllButton, true)
+//            visibleInvisible(binding.selectAllButton, true)
             visibleInvisible(binding.searchTil, false)
             searchMode = false
             skipScroll = true
         }
+
+        viewModel.setParentCategory(arguments?.getInt(NavControlHelper.ARGS_PARENT_CATEGORY_NAME_RES))
 
         with(viewModel) {
             sortedByTextOnButton.observe(viewLifecycleOwner) {
@@ -77,11 +78,10 @@ class CategoriesFragment : Fragment() {
             }
             categoriesList.observe(viewLifecycleOwner) {
                 binding.categoryHolder.adapter =
-                    CategoriesAdapter(it,
+                    ChildCategoriesAdapter(it,
                         object : OnItemViewClickListener {
                             override fun onShortClick(selectedId: Int) {
-                                viewModel.setSelectedParentCategory(it.firstOrNull { it.categoriesId?.toInt() == selectedId })
-                                viewModel.saveData(navControlHelper, selectedId)
+                                viewModel.setSelectedChildCategory(it.firstOrNull { it.id?.toInt() == selectedId })
                                 findNavController().popBackStack()
                             }
 
@@ -89,6 +89,9 @@ class CategoriesFragment : Fragment() {
                                 showSelectCategoryDialog(selectedId)
                             }
                         })
+            }
+            parentCategoryNameRes.observe(viewLifecycleOwner) {
+                it?.let { it1 -> viewModel.loadCategories(it1) }
             }
         }
 
@@ -100,12 +103,12 @@ class CategoriesFragment : Fragment() {
                 if (!skipScroll) {
                     when ((recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()) {
                         0 -> {
-                            visibleInvisible(binding.selectAllButton, !searchMode)
+//                            visibleInvisible(binding.selectAllButton, !searchMode)
                             visibleInvisible(binding.searchTil, searchMode)
                             if (!searchMode) requireView().hideKeyboard()
                         }
                         else -> {
-                            visibleInvisible(binding.selectAllButton, false)
+//                            visibleInvisible(binding.selectAllButton, false)
                             visibleInvisible(binding.searchTil, true)
                         }
                     }
@@ -120,13 +123,13 @@ class CategoriesFragment : Fragment() {
             searchTil.editText?.doAfterTextChanged { char ->
                 searchMode = true
                 if (char.toString().isEmpty()) {
-                    (categoryHolder.adapter as CategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
+                    (categoryHolder.adapter as ChildCategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
                 } else {
                     val filteredCategories = viewModel.categoriesList.value.orEmpty().filter {
-                        getString(it.nameRes).toLowerCase(Locale.getDefault())
+                        getString(it.nameRes).lowercase(Locale.getDefault())
                             .contains(char.toString())
                     }
-                    (categoryHolder.adapter as CategoriesAdapter).updateList(filteredCategories)
+                    (categoryHolder.adapter as ChildCategoriesAdapter).updateList(filteredCategories)
                 }
             }
         }
@@ -138,7 +141,7 @@ class CategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navControlHelper = NavControlHelper(control)
-
+        hideBottomNavigation()
         view.hideKeyboard()
         with(binding) {
             selectAllIncomeButton.setOnClickListener {

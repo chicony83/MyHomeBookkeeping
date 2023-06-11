@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
@@ -18,8 +19,11 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.db.simpleQuery.MoneyMovingCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
+import com.chico.myhomebookkeeping.enums.ParentCategoriesEnum
+import com.chico.myhomebookkeeping.enums.toParentCategoriesEnum
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
@@ -40,7 +44,8 @@ class MoneyMovingViewModel(
     private val argsStartTimePeriod = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
     private val argsEndTimePeriod = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
 
-    private val argsNewEntryOfMoneyMovingInDbIsAdded = Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
+    private val argsNewEntryOfMoneyMovingInDbIsAdded =
+        Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
@@ -56,6 +61,8 @@ class MoneyMovingViewModel(
     private val modelCheck = ModelCheck()
     private val db: MoneyMovementDao =
         dataBase.getDataBase(app.applicationContext).moneyMovementDao()
+    private val currencyDao: CurrenciesDao =
+        dataBase.getDataBase(app.applicationContext).currenciesDao()
 
     private val dbCashAccount: CashAccountDao =
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
@@ -110,14 +117,30 @@ class MoneyMovingViewModel(
     private val setText = SetTextOnButtons(app.resources)
 
     fun getListFullMoneyMoving() {
-        runBlocking {
+        viewModelScope.launch {
             getValuesSP()
             setTextOnButtons()
-            val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
-                async(Dispatchers.IO) { loadListOfMoneyMoving() }
-            Log.i("TAG", "found lines money moving ${listFullMoneyMoving.await()?.size}")
-            postListFullMoneyMoving(listFullMoneyMoving.await())
-            postBalanceValues(listFullMoneyMoving.await())
+            val listMoneyMoving = db.getAllMovingMoney()
+            val listCurrency = currencyDao.getAllCurrenciesSortNameAsc()
+            val listFullMoneyMoving = listMoneyMoving.map { mm ->
+                FullMoneyMoving(
+                    id = mm.id ?: -1,
+                    timeStamp = mm.timeStamp,
+                    amount = mm.amount,
+                    cashAccountNameValue = if (mm.cashAccount == 1) app.getString(R.string.quick_setup_name_Card)
+                    else app.getString(R.string.quick_setup_name_Cash),
+                    currencyNameValue = listCurrency.firstOrNull { it.currencyId == mm.currency }?.iso4217.orEmpty(),
+                    categoryNameValue = app.getString(mm.category.toParentCategoriesEnum().nameRes),
+                    childCategoryNameValue = if (mm.childCategoryNameResValue!=0&&mm.childCategoryNameResValue!=0)app.getString(mm.childCategoryNameResValue) else "",
+                    isIncome = mm.category == 1,
+                    description = mm.description
+                )
+            }
+//            val listFullMoneyMoving: Deferred<List<FullMoneyMoving>?> =
+//                async(Dispatchers.IO) { loadListOfMoneyMoving() }
+//            Log.i("TAG", "found lines money moving ${listFullMoneyMoving.await()?.size}")
+            postListFullMoneyMoving(listFullMoneyMoving)
+            postBalanceValues(listMoneyMoving)
         }
     }
 
@@ -184,7 +207,7 @@ class MoneyMovingViewModel(
         )
     }
 
-    private fun postBalanceValues(list: List<FullMoneyMoving>?) = runBlocking {
+    private fun postBalanceValues(list: List<MoneyMovement>?) = runBlocking {
         if (!list.isNullOrEmpty()) {
             val moneyMovingCountMoney = MoneyMovingCountMoney(list)
             _incomeBalance.postValue(
@@ -259,12 +282,12 @@ class MoneyMovingViewModel(
         setSP.saveToSP(argsIdMoneyMovingForChange, selectedId)
     }
 
-    fun isTheEntryOfMoneyMovingAdded() :Boolean {
+    fun isTheEntryOfMoneyMovingAdded(): Boolean {
         return getSP.getBooleanElseReturnFalse(argsNewEntryOfMoneyMovingInDbIsAdded)
     }
 
     fun dialogOfNewEntryAddedIsShowed() {
-        setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded,false)
+        setSP.saveToSP(argsNewEntryOfMoneyMovingInDbIsAdded, false)
     }
 
 }

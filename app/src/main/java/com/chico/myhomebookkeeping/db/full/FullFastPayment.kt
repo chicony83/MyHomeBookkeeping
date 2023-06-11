@@ -1,16 +1,20 @@
 package com.chico.myhomebookkeeping.db.full
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
+import kotlinx.android.parcel.Parcelize
 
-class FullFastPayment(
+@Parcelize
+data class FullFastPayment(
     @ColumnInfo(name = "id")
     val id: Long,
 
     @ColumnInfo(name = "icon")
-    val icon: Int?,
+    val icon: Int? = null,
 
     @ColumnInfo(name = "name_fast_payment")
-    val nameFastPayment:String,
+    val nameFastPayment: String,
 
     @ColumnInfo(name = "rating")
     val rating: Int,
@@ -19,22 +23,25 @@ class FullFastPayment(
     val cashAccountNameValue: String,
 
     @ColumnInfo(name = "currency_name_value")
-    val currencyNameValue:String,
+    val currencyNameValue: String,
 
     @ColumnInfo(name = "category_name_value")
-    val categoryNameValue:String,
+    val categoryNameValue: String,
 
     @ColumnInfo(name = "icon_resource_value")
-    val categoryResourceValue:Int?,
+    val categoryResourceValue: Int? = null,
 
     @ColumnInfo(name = "is_income")
-    val isIncome:Boolean,
+    val isIncome: Boolean,
 
     @ColumnInfo(name = "amount")
-    val amount: Double?,
+    val amount: Double? = null,
 
     @ColumnInfo(name = "description")
-    val description: String?
-)
+    val description: String? = null,
+
+    @ColumnInfo(name = "childCategories")
+    val childCategories: List<ChildCategory>
+):Parcelable
 
 

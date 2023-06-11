@@ -95,6 +95,10 @@ class CashAccountViewModel(
         }
     }
 
+    fun setSelectedCashAccount(cashAccount: CashAccount?) {
+        _selectedCashAccount.postValue(cashAccount)
+    }
+
     fun resetCashAccountForSelect() {
         launchIo {
             _selectedCashAccount.postValue(null)

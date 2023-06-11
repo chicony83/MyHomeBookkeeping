@@ -2,6 +2,7 @@ package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
@@ -45,39 +48,44 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
-            buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner) {
                 binding.selectTimePeriod.text = it
-            })
-            buttonTextOfQueryCurrency.observe(viewLifecycleOwner, {
+            }
+            buttonTextOfQueryCurrency.observe(viewLifecycleOwner) {
                 binding.selectCurrency.text = it
-            })
-            buttonTextOfQueryCategory.observe(viewLifecycleOwner, {
+            }
+            buttonTextOfQueryCategory.observe(viewLifecycleOwner) {
                 binding.selectCategory.text = it
-            })
-            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner, {
+            }
+            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccount.text = it
-            })
-            moneyMovementList.observe(viewLifecycleOwner, {
+            }
+            moneyMovementList.observe(viewLifecycleOwner) {
                 binding.moneyMovingHolder.adapter = it?.let { it1 ->
                     MoneyMovingAdapter(it1, object :
                         OnItemViewClickListenerLong {
-                        override fun onClick(selectedId: Long) {
+                        override fun onClick(
+                            fullFastPayment: FullFastPayment,
+                            childCategory: ChildCategory
+                        ) {
 //                            getOneFullMoneyMoving(selectedId)
-                            showSelectDialog(selectedId)
+                            Log.e("!!!",it.toString() )
+                            TODO()
+//                            showSelectDialog(selectedId)
                         }
 
                     })
                 }
-            })
-            incomeBalance.observe(viewLifecycleOwner, {
+            }
+            incomeBalance.observe(viewLifecycleOwner) {
                 binding.incomeBalance.text = it.toString()
-            })
-            spendingBalance.observe(viewLifecycleOwner, {
+            }
+            spendingBalance.observe(viewLifecycleOwner) {
                 binding.spendingBalance.text = it.toString()
-            })
-            totalBalance.observe(viewLifecycleOwner, {
+            }
+            totalBalance.observe(viewLifecycleOwner) {
                 binding.totalBalance.text = it.toString()
-            })
+            }
         }
         return binding.root
     }
@@ -141,16 +149,19 @@ class MoneyMovingFragment : Fragment() {
     }
 
     private fun newEntryAdded() {
-        if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()){
+        if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()) {
             launchUi {
                 val entryIsAddedBottomSheet = EntryIsAddedBottomSheet(
-                    object : OnNextEntryButtonClickedCallBack{
+                    object : OnNextEntryButtonClickedCallBack {
                         override fun onClick() {
                             control.navigate(R.id.nav_fast_payments_fragment)
                         }
                     }
                 )
-                entryIsAddedBottomSheet.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                entryIsAddedBottomSheet.show(
+                    childFragmentManager,
+                    getString(R.string.tag_show_dialog)
+                )
 //                launchIo {
 //                    delay(3500)
 //                    entryIsAddedBottomSheet.dismiss()
