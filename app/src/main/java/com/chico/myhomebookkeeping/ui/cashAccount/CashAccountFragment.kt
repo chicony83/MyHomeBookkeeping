@@ -124,7 +124,7 @@ class CashAccountFragment : Fragment() {
     }
 
     private fun showChangeCashAccountDialog(cashAccount: CashAccount?) {
-        launchIo {
+        launchUi {
             val dialog = ChangeCashAccountDialog(cashAccount, object : OnChangeCashAccountCallBack {
                 override fun change(id: Int, name: String, number: String) {
                     cashAccountViewModel.saveChangedCashAccount(id, name, number)

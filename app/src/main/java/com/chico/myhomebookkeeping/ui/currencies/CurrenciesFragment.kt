@@ -115,7 +115,7 @@ class CurrenciesFragment : Fragment() {
     }
 
     private fun showChangeCurrencyDialog(currency: Currencies?) {
-        launchIo {
+        launchUi {
             val dialog = ChangeCurrencyDialog(currency, object : OnChangeCurrencyCallBack {
                 override fun change(id: Int, name: String) {
                     currenciesViewModel.saveChangedCurrency(id, name)

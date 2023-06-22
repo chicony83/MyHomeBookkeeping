@@ -116,7 +116,7 @@ class CategoriesFragment : Fragment() {
                     (categoryHolder.adapter as CategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
                 } else {
                     val filteredCategories = viewModel.categoriesList.value.orEmpty().filter {
-                        it.categoryName.toLowerCase(Locale.getDefault()).contains(char.toString())
+                        it.categoryName.lowercase(Locale.getDefault()).contains(char.toString())
                     }
                     (categoryHolder.adapter as CategoriesAdapter).updateList(filteredCategories)
                 }
@@ -219,7 +219,7 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun showChangeCategoryDialog(category: Categories?) {
-        launchIo {
+        launchUi {
             val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
 //                override fun changeWithoutIcon(id: Int, name: String, isIncome: Boolean) {
 //                    categoriesViewModel.saveChangedCategory(id,name,isIncome)

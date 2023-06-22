@@ -5,9 +5,10 @@
     style="@style/DialogLayout">
 
     <EditText
-        android:hint="@string/hint_enter_name"
         android:id="@+id/nameTextView"
-        style="@style/DialogEditText"
+        style="@style/DialogEnterNewName"
+        android:hint="@string/hint_enter_name"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -15,10 +16,26 @@
     <TextView
         android:id="@+id/errorThisNameIsTaken"
         style="@style/Description.MessageOfBusyName"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameTextView"
         tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/currencyNameShortEditText"
+        style="@style/DialogEnterNewNameShort"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken" />
+
+    <EditText
+        android:id="@+id/currencyNameISOEditText"
+        style="@style/DialogEnterNewNameISO"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/currencyNameShortEditText" />
 
     <Button
         android:id="@+id/saveButton"
@@ -26,7 +43,7 @@
         android:text="@string/text_on_button_save"
         app:layout_constraintEnd_toStartOf="@id/centerDialogChangeCurrency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken" />
+        app:layout_constraintTop_toBottomOf="@id/currencyNameISOEditText" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -34,13 +51,13 @@
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/centerDialogChangeCurrency"
-        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken" />
+        app:layout_constraintTop_toBottomOf="@id/currencyNameISOEditText" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerDialogChangeCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
