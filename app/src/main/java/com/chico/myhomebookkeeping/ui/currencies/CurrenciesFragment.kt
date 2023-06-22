@@ -130,13 +130,22 @@ class CurrenciesFragment : Fragment() {
         launchUi {
             val dialog = NewCurrencyDialog(result,
                 object : OnAddNewCurrencyCallBack {
-                    override fun addAndSelect(name: String, isSelect: Boolean) {
+                    override fun addAndSelect(currencyName: String, isSelect: Boolean) {
+
+                    }
+
+                    override fun addAndSelect(
+                        currencyName: String,
+                        currencyShortName: String,
+                        currencyISO: String,
+                        isSelect: Boolean
+                    ) {
                         val currencies = Currencies(
-                            currencyName = name,
-                            currencyNameShort = null,
+                            currencyName = currencyName,
+                            currencyNameShort = currencyShortName,
                             isCurrencyDefault = false,
                             icon = null,
-                            iso4217 = null,
+                            iso4217 = currencyISO,
                         )
                         val result = currenciesViewModel.addNewCurrency(currencies)
                         if (isSelect) {

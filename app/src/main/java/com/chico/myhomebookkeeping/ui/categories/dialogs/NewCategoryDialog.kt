@@ -39,7 +39,7 @@ class NewCategoryDialog(
             var namesList = listOf<String>()
 
             val nameEditText = layout.findViewById<EditText>(R.id.category_name)
-            val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
+            val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
 

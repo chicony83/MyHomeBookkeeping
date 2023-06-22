@@ -14,7 +14,7 @@
         style="@style/DialogEnterNewName" />
 
     <TextView
-        android:id="@+id/error_this_name_is_taken"
+        android:id="@+id/errorThisNameIsTaken"
         style="@style/Description.MessageOfBusyName"
         tools:visibility="visible" />
 
@@ -27,7 +27,7 @@
         android:id="@+id/number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_only_last_4_digits"
+        android:hint="@string/hint_new_currency_only_last_4_digits"
         android:inputType="number"
         android:maxLength="4"
         android:maxLines="1" />

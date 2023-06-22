@@ -10,15 +10,32 @@
     </style>
 
     <style name="DialogEnterNewName" parent="DialogEditText">
-        <item name="android:inputType">text</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:hint">@string/hint_enter_name</item>
     </style>
+
+    <style name="DialogEnterNewNameShort" parent="DialogEditText">
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:hint">@string/hint_new_currency_enter_name_short</item>
+    </style>
+
+    <style name="DialogEnterNewNameISO" parent="DialogEditText">
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:hint">@string/hint_new_currency_enter_name_ISO</item>
+    </style>
+
 
     <style name="EditText" parent="MatchParent_WrapContent">
         <item name="android:layout_marginStart">@dimen/margin_normal</item>
         <item name="android:layout_marginEnd">@dimen/margin_normal</item>
     </style>
+
     <style name="EditTextAmount" parent="EditText">
         <item name="android:inputType">numberDecimal</item>
         <item name="android:hint">@string/hint_enter_amount</item>

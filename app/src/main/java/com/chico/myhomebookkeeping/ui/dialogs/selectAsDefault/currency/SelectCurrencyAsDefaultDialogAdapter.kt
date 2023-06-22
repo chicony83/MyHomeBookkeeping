@@ -27,7 +27,7 @@ class SelectCurrencyAsDefaultDialogAdapter(
 
 
     class ViewHolder(private val item:View):RecyclerView.ViewHolder(item) {
-        var textView :TextView = item.findViewById(R.id.name_currency)
+        var textView :TextView = item.findViewById(R.id.nameCurrency)
         fun bind(currencies: Currencies) {
             textView.text = currencies.currencyName
         }

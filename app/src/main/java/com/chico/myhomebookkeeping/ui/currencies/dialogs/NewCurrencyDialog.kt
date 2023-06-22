@@ -29,8 +29,10 @@ class NewCurrencyDialog(
 
             var namesList = listOf<String>()
 
-            val nameEditText = layout.findViewById<EditText>(R.id.currency_name)
-            val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
+            val nameEditText = layout.findViewById<EditText>(R.id.currencyNameEditText)
+            val shortNameEditText = layout.findViewById<EditText>(R.id.currencyNameShortEditText)
+            val iSOEditText = layout.findViewById<EditText>(R.id.currencyNameISOEditText)
+            val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
 
             val addButton = layout.findViewById<Button>(R.id.addNewCurrencyButton)
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)
@@ -53,6 +55,8 @@ class NewCurrencyDialog(
             addAndSelectButton.setOnClickListener {
                 checkAndAddCurrency(
                     nameEditText,
+                    shortNameEditText,
+                    iSOEditText,
                     isSelectAfterAdd = true
                 )
             }
@@ -60,6 +64,8 @@ class NewCurrencyDialog(
             addButton.setOnClickListener {
                 checkAndAddCurrency(
                     nameEditText,
+                    shortNameEditText,
+                    iSOEditText,
                     isSelectAfterAdd = false
                 )
             }
@@ -76,19 +82,27 @@ class NewCurrencyDialog(
 
     private fun checkAndAddCurrency(
         nameEditText: EditText,
+        shortNameEditText: EditText,
+        iSOEditText: EditText,
         isSelectAfterAdd: Boolean
     ) {
-        val name = nameEditText.getString()
-        if (name.isNotEmpty()) {
-            val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
-            if (isLengthChecked) {
-                onAddNewCurrencyCallBack.addAndSelect(name, isSelectAfterAdd)
+        val nameCurrency = nameEditText.getString()
+        val nameShortCurrency = shortNameEditText.getString()
+        val iSOCurrency = iSOEditText.getString()
+
+        if (nameCurrency.isNotEmpty()) {
+            val isLengthNameChecked: Boolean = CheckString.isLengthMoThan(nameCurrency)
+//            val isLengthNameShortChecked: Boolean = CheckString.isLengthMoThan(nameCurrency)
+//            val isLengthISOChecked: Boolean = CheckString.isLengthMoThan(nameCurrency)
+            if (isLengthNameChecked) {
+
+                onAddNewCurrencyCallBack.addAndSelect(nameCurrency, nameShortCurrency,iSOCurrency, isSelectAfterAdd)
                 dialogCancel()
             }
-            if (!isLengthChecked) {
+            if (!isLengthNameChecked) {
                 showMessage(getString(R.string.message_too_short_name))
             }
-        } else if (name.isEmpty()) {
+        } else if (nameCurrency.isEmpty()) {
             showMessage(getString(R.string.message_too_short_name))
         }
     }

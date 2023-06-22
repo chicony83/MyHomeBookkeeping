@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/error_this_name_is_taken"
+        android:id="@+id/errorThisNameIsTaken"
         style="@style/Description.MessageOfBusyName"
         android:layout_margin="@dimen/margin_normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         android:layout_margin="@dimen/margin_normal"
         app:layout_constraintEnd_toStartOf="@id/verticalCenterOfDialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken">
+        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken">
 
         <RadioButton
             android:id="@+id/incoming_radio_button"
@@ -54,7 +54,7 @@
         app:layout_constraintBottom_toTopOf="@id/addAndSelectNewItemButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/verticalCenterOfDialog"
-        app:layout_constraintTop_toBottomOf="@id/error_this_name_is_taken"
+        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken"
         tools:src="@drawable/no_image" />
 
     <Button

@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     style="@style/RecyclerViewCard.Currencies">
 
     <LinearLayout
-        style="@style/RecyclerViewItem"
         android:id="@+id/currenciesItem"
-        android:orientation="vertical">
+        style="@style/RecyclerViewItem"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/name_currency"
-            android:layout_width="match_parent"
+            android:id="@+id/nameShortCurrency"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tool:text="USD" />
+
+        <TextView
+            android:id="@+id/nameCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iSOCurrency"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="Dollar" />
+
+        <TextView
+            android:id="@+id/iSOCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="ISO" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

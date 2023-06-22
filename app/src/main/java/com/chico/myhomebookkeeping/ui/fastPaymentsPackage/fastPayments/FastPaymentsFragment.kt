@@ -90,6 +90,7 @@ class FastPaymentsFragment : Fragment() {
 
     private fun showSelectDialog(selectedId: Long) {
         launchIo {
+
             val fastPayment = fastPaymentsViewModel.loadSelectedFullFastPayment(selectedId)
             launchUi {
                 val dialog = SelectPaymentDialog(fastPayment,

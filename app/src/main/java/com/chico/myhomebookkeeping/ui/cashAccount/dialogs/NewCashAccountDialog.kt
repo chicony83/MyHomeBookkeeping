@@ -29,7 +29,7 @@ class NewCashAccountDialog(
 
             val nameEditText = layout.findViewById<EditText>(R.id.nameTextView)
             val numberEditText = layout.findViewById<EditText>(R.id.number)
-            val errorTextView = layout.findViewById<TextView>(R.id.error_this_name_is_taken)
+            val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
 
             val addButton = layout.findViewById<Button>(R.id.addNewCashAccountButton)
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)

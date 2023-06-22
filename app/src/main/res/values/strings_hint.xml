@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hint_only_last_4_digits">Only last 4 digits</string>
+    <string name="hint_new_currency_only_last_4_digits">Only last 4 digits</string>
     <string name="hint_enter_name">Enter name</string>
+    <string name="hint_new_currency_enter_name_short">Enter short name</string>
+    <string name="hint_new_currency_enter_name_ISO">Enter ISO</string>
     <string name="hint_enter_amount">Enter amount</string>
     <string name="hint_add_you_description">Add you description</string>
     <string name="hint_enter_amount_be_inserted">Amount (will be inserted in the payment)</string>
