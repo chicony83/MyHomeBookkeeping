@@ -10,12 +10,16 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ChildCategory(
     @ColumnInfo(name = "name_res")
-    val nameRes: Int,
+    val nameRes: Int? = null,
+    @ColumnInfo(name = "name")
+    val name: String? = null,
     @ColumnInfo(name = "icon_res")
-    val iconRes: Int?,
+    val iconRes: Int? = null,
     @ColumnInfo(name = "parent_category_name_res")
-    val parentNameRes: Int
-):Parcelable {
+    val parentNameRes: Int? = null,
+    @ColumnInfo(name = "parent_category_name")
+    val parentName: String? = null
+) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 }

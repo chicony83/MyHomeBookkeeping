@@ -9,10 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.db.dao.ChildCategoriesDao
+import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
-import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
-import com.chico.myhomebookkeeping.db.dao.ParentCategoriesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
@@ -55,9 +53,16 @@ class FastPaymentsViewModel(
     private val getSp = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
-    private val fastPaymentsDao: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
-    private val parentCategoriesDao: ParentCategoriesDao = dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
-    private val childCategoriesDao: ChildCategoriesDao = dataBase.getDataBase(app.applicationContext).childCategoriesDao()
+    private val currenciesDao: CurrenciesDao =
+        dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val fastPaymentsDao: FastPaymentsDao =
+        dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val userParentDao: UserParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
+    private val parentCategoriesDao: ParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
+    private val childCategoriesDao: ChildCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).childCategoriesDao()
 
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
@@ -72,7 +77,12 @@ class FastPaymentsViewModel(
             Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             val result =
                 selectTargetingTypeOfFastPayment(listFullFastPayments.await(), typeOfFastPayments)
-            postListFullFastPayments(result)
+
+            val userFullFastPayments = fastPaymentsDao.getAllFastPayments().filter {
+                !result.map { it.id }.contains(it.id)
+            }.map { userFastPaymentToFullFastPayment(it) }
+
+            postListFullFastPayments(result.toMutableList().apply { addAll(userFullFastPayments) })
         }
     }
 
@@ -266,6 +276,28 @@ class FastPaymentsViewModel(
 
     fun getTypeOfRecycler(): String {
         return typeOfFastPayments
+    }
+
+    private suspend fun userFastPaymentToFullFastPayment(fastPayment: FastPayments): FullFastPayment {
+        val userParentCategories = userParentDao.getAllUserParentCategoriesSortIdDESC()
+        val userParentCategory =
+            userParentCategories.firstOrNull { it.name == fastPayment.childCategories.getOrNull(0)?.parentName }
+       val currencies = currenciesDao.getAllCurrenciesSortNameAsc()
+        return FullFastPayment(
+            id = fastPayment.id ?: -1,
+            icon = fastPayment.icon,
+            nameFastPayment = fastPayment.nameFastPayment,
+            description = fastPayment.description,
+            amount = fastPayment.amount,
+            isIncome = userParentCategory?.isIncome ?: false,
+            categoryNameValue = userParentCategory?.name.orEmpty(),
+            currencyNameValue = currencies.firstOrNull { it.currencyId==fastPayment.currencyId }?.currencyName.orEmpty(),
+            cashAccountNameValue = "",
+            childCategories = fastPayment.childCategories,
+            categoryResourceValue = null,
+            rating = 0,
+            isUserCustom = true
+        )
     }
 
     fun saveIdFastPaymentForPay(id: Long) {

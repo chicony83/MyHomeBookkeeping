@@ -78,5 +78,12 @@ enum class ChildCategoriesEnum(val nameRes: Int, val parentCategory: ParentCateg
 
     REPAIR_PHONE(R.string.repair, ParentCategoriesEnum.MOBILE_PHONE),
     SERVICE_PHONE(R.string.service, ParentCategoriesEnum.MOBILE_PHONE),
-    PAYMENT(R.string.payment, ParentCategoriesEnum.MOBILE_PHONE);
+    PAYMENT(R.string.payment, ParentCategoriesEnum.MOBILE_PHONE),
+
+    CREDIT(R.string.credit, ParentCategoriesEnum.CREDITS),
+
+    TAX(R.string.tax, ParentCategoriesEnum.TAXES),
+
+    MEDICAL_INSURANCE(R.string.medical_insurance, ParentCategoriesEnum.INSURANCE),
+    AUTO_INSURANCE(R.string.auto_insurance, ParentCategoriesEnum.INSURANCE);
 }

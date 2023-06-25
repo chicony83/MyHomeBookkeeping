@@ -245,7 +245,7 @@ class ChildCategoriesViewModel(
 
     private fun getNamesOfItems(items: List<ChildCategory>): MutableList<String> {
         val names = mutableListOf<String>()
-        for (element in items) names.add(app.getString(element.nameRes))
+        for (element in items) element.nameRes?.let { app.getString(it) }?.let { names.add(it) }
         return names
     }
 

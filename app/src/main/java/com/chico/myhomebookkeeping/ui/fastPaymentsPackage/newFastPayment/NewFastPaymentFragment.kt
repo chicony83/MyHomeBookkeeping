@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
@@ -56,9 +57,9 @@ class NewFastPaymentFragment : Fragment() {
             currency.observe(viewLifecycleOwner) {
 //                binding.selectCurrenciesButton.text = it.currencyName
             }
-            category.observe(viewLifecycleOwner) {
-                binding.selectCategoryButton.text = it.categoryName
-            }
+//            category.observe(viewLifecycleOwner) {
+//                binding.selectCategoryButton.text = it.categoryName
+//            }
             amount.observe(viewLifecycleOwner) {
                 binding.amount.setText(it.toString())
             }
@@ -112,7 +113,7 @@ class NewFastPaymentFragment : Fragment() {
             ratingButton.setOnClickListener { showSelectRatingDialog() }
             selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
 //            selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
-            selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
+//            selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
             submitButton.setOnClickListener {
                 presSubmitButton()
             }
@@ -122,18 +123,23 @@ class NewFastPaymentFragment : Fragment() {
     private fun presSubmitButton() {
         val isCashAccountNotNull = newFastPaymentViewModel.isCashAccountNotNull()
         val isCurrencyNotNull = newFastPaymentViewModel.isCurrencyNotNull()
-        val isCategoryNotNull = newFastPaymentViewModel.isCategoryNotNull()
+        val isParentCategoryNameNotNull = binding.mainCategoryEt.text.toString().isNotEmpty()
+        val isChildCategoryNameNotNull = binding.childCategoryEt.text.toString().isNotEmpty()
         val isAmountNotNull = UiHelper().isEnteredAndNotNull(binding.amount.text.toString())
         if (binding.nameFastPaymentEditText.text.isNotEmpty()) {
             if (isCashAccountNotNull) {
                 if (isCurrencyNotNull) {
-                    if (isCategoryNotNull) {
-                        if (isAmountNotNull) {
-                            addNewFastPayment()
-                        } else
-                            message(getString(R.string.message_enter_amount))
+                    if (isParentCategoryNameNotNull) {
+                        if (isChildCategoryNameNotNull) {
+                            if (isAmountNotNull) {
+                                addNewFastPayment()
+                            } else
+                                message(getString(R.string.message_enter_amount))
+                        } else {
+                            message(getString(R.string.message_child_category_not_selected))
+                        }
                     } else {
-                        message(getString(R.string.message_category_not_selected))
+                        message(getString(R.string.message_main_category_not_selected))
                     }
                 } else {
                     message(getString(R.string.message_currency_not_selected))
@@ -152,14 +158,19 @@ class NewFastPaymentFragment : Fragment() {
         val amount = getAmount()
         runBlocking {
             val result = newFastPaymentViewModel.addNewFastPayment(
-                nameFastPayment, description, amount
+                nameFastPayment = nameFastPayment,
+                amount = amount,
+                description = description,
+                isIncomeCategory = binding.isIncomeCheckbox.isChecked,
+                nameMainCategory = binding.mainCategoryEt.text.toString(),
+                nameChildCategory = binding.childCategoryEt.text.toString()
             )
             if (result > 0) {
                 view?.hideKeyboard()
                 message(getString(R.string.message_entry_added))
                 newFastPaymentViewModel.clearSPAfterSave()
             }
-            navControlHelper.toSelectedFragment(R.id.nav_fast_payments_fragment)
+            findNavController().popBackStack()
         }
     }
 

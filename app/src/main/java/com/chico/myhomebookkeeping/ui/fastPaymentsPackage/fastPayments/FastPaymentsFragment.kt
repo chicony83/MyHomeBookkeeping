@@ -66,9 +66,6 @@ class FastPaymentsFragment : Fragment() {
                     fullFastPayment: FullFastPayment,
                     childCategory: ChildCategory
                 ) {
-                    Log.e("!!!",childCategory.toString() )
-
-//                    fastPaymentsViewModel.saveIdFastPaymentForPay(selectedId)
                     findNavController().navigate(
                         R.id.nav_new_money_moving,
                         bundleOf(

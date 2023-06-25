@@ -126,8 +126,10 @@ class ChildCategoriesFragment : Fragment() {
                     (categoryHolder.adapter as ChildCategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
                 } else {
                     val filteredCategories = viewModel.categoriesList.value.orEmpty().filter {
-                        getString(it.nameRes).lowercase(Locale.getDefault())
-                            .contains(char.toString())
+                        it.nameRes?.let { it1 ->
+                            getString(it1).lowercase(Locale.getDefault())
+                                .contains(char.toString())
+                        } == true
                     }
                     (categoryHolder.adapter as ChildCategoriesAdapter).updateList(filteredCategories)
                 }

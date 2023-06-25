@@ -27,8 +27,12 @@
     <string name="gifts">Подарки</string>
     <string name="mobile_phone">Мобильный телефон</string>
     <string name="credits">Кредиты</string>
+    <string name="credit">Кредит</string>
     <string name="taxes">Налоги</string>
+    <string name="tax">Налог</string>
     <string name="insurance">Страховка</string>
+    <string name="medical_insurance">Медицинская страховка</string>
+    <string name="auto_insurance">Автомобильная страховка</string>
 
     <string name="earnings">Заработал</string>
     <string name="interest">Проценты</string>

@@ -48,12 +48,12 @@ class ChildCategoriesAdapter(
         fun bind(category: ChildCategory) {
             with(binding) {
                 val ctx =binding.root.context
-                root.contentDescription = ctx.getString(category.nameRes)
+                root.contentDescription = category.nameRes?.let { ctx.getString(it) }
                 idCategories.text = category.id.toString()
 
                 iconImg.setImageResource(category.iconRes ?: R.drawable.no_image)
 
-                categoryCardViewText.text = ctx.getString(category.nameRes)
+                categoryCardViewText.text = category.nameRes?.let { ctx.getString(it) }
                 categoriesItem.setOnLongClickListener {
                     category.id?.let { it1 -> listener.onLongClick(it1.toInt()) }
                     true
@@ -61,7 +61,7 @@ class ChildCategoriesAdapter(
                 categoriesItem.setOnClickListener {
                     category.id?.let { it1 -> listener.onShortClick(it1.toInt()) }
                 }
-                if (category.parentNameRes.fromNameResToParentCategoriesEnum().categoryId==1) { //is income
+                if (category.parentNameRes?.fromNameResToParentCategoriesEnum()?.categoryId==1) { //is income
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoriesItem.setBackgroundColor(
                             itemView.resources.getColor(
@@ -71,7 +71,7 @@ class ChildCategoriesAdapter(
                         )
                     }
                 }
-                if (category.parentNameRes.fromNameResToParentCategoriesEnum().categoryId!=1) {
+                if (category.parentNameRes?.fromNameResToParentCategoriesEnum()?.categoryId!=1) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         categoriesItem.setBackgroundColor(
                             itemView.resources.getColor(

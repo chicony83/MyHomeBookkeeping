@@ -155,7 +155,7 @@ class FreeMoneyMovingFragment : Fragment() {
                 if (it != null) {
                     binding.selectChildCategoryButton.text = it.nameRes.let { it1 ->
                         requireContext().getString(
-                            it1
+                            it1?:0
                         )
                     }
                 }else{

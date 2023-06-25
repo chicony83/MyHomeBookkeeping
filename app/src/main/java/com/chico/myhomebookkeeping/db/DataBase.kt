@@ -20,6 +20,7 @@ import com.chico.myhomebookkeeping.db.typeconverter.DbConverters
         FastPayments::class,
 //        Icons::class,
         ParentCategory::class,
+        UserParentCategory::class,
         IconsResource::class,
         IconCategory::class,
         ChildCategory::class
@@ -38,6 +39,7 @@ abstract class RoomDataBase : RoomDatabase() {
     //    abstract fun iconsDao(): IconsDao
     abstract fun parentCategoriesDao(): ParentCategoriesDao
     abstract fun childCategoriesDao(): ChildCategoriesDao
+    abstract fun userParentCategoriesDao(): UserParentCategoriesDao
     abstract fun iconResourcesDao(): IconResourcesDao
     abstract fun iconCategoryDao(): IconCategoryDao
 }

@@ -116,12 +116,23 @@ class FastPaymentsAdapter(
                 fastPaymentItemId.setOnClickListener { _ ->
                     fastPayment.id.let { it ->
 
-                        MaterialDialog(context).show {
-                            title(R.string.fragment_label_select_categories)
-                            listItemsSingleChoice(items = fastPayment.childCategories.map { binding.root.context.getString(it.nameRes) }) { dialog, index, text ->
-                                onShortClick.onClick(fastPayment,fastPayment.childCategories[index])
+                        if (fastPayment.childCategories.getOrNull(0)?.nameRes != null) {
+                            MaterialDialog(context).show {
+                                title(R.string.fragment_label_select_categories)
+                                listItemsSingleChoice(items = fastPayment.childCategories.map {
+                                    binding.root.context.getString(
+                                        it.nameRes ?: 0
+                                    )
+                                }) { dialog, index, text ->
+                                    onShortClick.onClick(
+                                        fastPayment,
+                                        fastPayment.childCategories[index]
+                                    )
+                                }
+                                positiveButton(R.string.text_on_button_submit)
                             }
-                            positiveButton(R.string.text_on_button_submit)
+                        } else {
+                            onShortClick.onClick(fastPayment, fastPayment.childCategories[0])
                         }
                     }
                 }

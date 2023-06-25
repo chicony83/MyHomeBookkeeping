@@ -40,6 +40,9 @@ data class FullFastPayment(
     @ColumnInfo(name = "description")
     val description: String? = null,
 
+    @ColumnInfo(name = "is_user_custom")
+    val isUserCustom: Boolean = false,
+
     @ColumnInfo(name = "childCategories")
     val childCategories: List<ChildCategory>
 ):Parcelable

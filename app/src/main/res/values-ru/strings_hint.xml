@@ -2,6 +2,7 @@
 <resources>
     <string name="hint_only_last_4_digits">Только последние 4 цифры</string>
     <string name="hint_enter_name">Введите название</string>
+    <string name="hint_is_income">Категория принадлежит к доходам?</string>
     <string name="hint_enter_amount">Введите сумму</string>
     <string name="hint_add_you_description">Добавьте ваше описание</string>
     <string name="hint_enter_amount_be_inserted">Сумма (будет вставлена в платёж)</string>

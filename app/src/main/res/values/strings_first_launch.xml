@@ -26,8 +26,12 @@
     <string name="gifts">Gifts</string>
     <string name="mobile_phone">Mobile phone</string>
     <string name="credits">Credits</string>
+    <string name="credit">Credit</string>
     <string name="taxes">Taxes</string>
+    <string name="tax">Tax</string>
     <string name="insurance">Insurance</string>
+    <string name="medical_insurance">Medical insurance</string>
+    <string name="auto_insurance">Auto insurance</string>
 
     <string name="earnings">Earnings</string>
     <string name="interest">Interest</string>

@@ -54,6 +54,8 @@ class NewMoneyMovingViewModel(
         dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbParentCategory: ParentCategoriesDao =
         dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
+    private val dbUserParentCategory: UserParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
 
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
@@ -89,9 +91,17 @@ class NewMoneyMovingViewModel(
     val selectedCategory: LiveData<ParentCategory?>
         get() = _selectedCategory
 
+    private val _selectedUserCategory = MutableLiveData<UserParentCategory?>()
+    val selectedUserCategory: LiveData<UserParentCategory?>
+        get() = _selectedUserCategory
+
     private val _selectedChildCategory = MutableLiveData<ChildCategory?>()
     val selectedChildCategory: LiveData<ChildCategory?>
         get() = _selectedChildCategory
+
+    private val _selectedUserChildCategory = MutableLiveData<ChildCategory?>()
+    val selectedUserChildCategory: LiveData<ChildCategory?>
+        get() = _selectedUserChildCategory
 
     private val _enteredDescription = MutableLiveData<String>()
     val enteredDescription: LiveData<String>
@@ -139,7 +149,9 @@ class NewMoneyMovingViewModel(
     }
 
     fun setChildCategory(childCategory: ChildCategory?) {
+        if (fullFastPayment.value?.isUserCustom == false)
         _selectedChildCategory.value = childCategory
+        else  _selectedUserChildCategory.value = childCategory
     }
 
     fun loadAndSetParentCategory(fullFastPayment: FullFastPayment) {
@@ -148,6 +160,12 @@ class NewMoneyMovingViewModel(
             _selectedCategory.postValue(parentCategories.firstOrNull { app.getString(it.nameRes) == fullFastPayment.categoryNameValue })
         }
     }
+
+    fun setUserParentCategory(fullFastPayment: FullFastPayment) {
+        viewModelScope.launch {
+            val userParentCategories = dbUserParentCategory.getAllUserParentCategoriesSortIdDESC()
+        _selectedUserCategory.postValue(userParentCategories.firstOrNull { it.name == fullFastPayment.categoryNameValue })
+    }}
 
     private fun loadCurrencies() {
         launchIo {
@@ -281,6 +299,27 @@ class NewMoneyMovingViewModel(
         return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
     }
 
+    suspend fun addNewUserCustomMoneyMoving(
+        amount: Double,
+        description: String
+    ): Long {
+        val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
+        val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
+        val categoryName: String = _selectedUserCategory.value?.name.orEmpty()
+        val childCategoryName: String = _selectedUserChildCategory.value?.name.orEmpty()
+        val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
+        val moneyMovement = MoneyMovement(
+            timeStamp = dateTime,
+            amount = amount,
+            cashAccount = cashAccountValue,
+            categoryUserName = categoryName,
+            childCategoryUserName = childCategoryName,
+            currency = currencyValue,
+            description = description
+        )
+        return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+    }
+
     fun setDate(it: Long?) {
         date = it ?: 0
     }
@@ -323,6 +362,9 @@ class NewMoneyMovingViewModel(
     }
 
     fun clearSPAfterSave() {
+        _fullFastPayment.value = null
+        _selectedUserChildCategory.value = null
+        _selectedUserCategory.value = null
         with(setSP) {
             saveToSP(argsDateTimeCreateKey, minusOneLong)
             saveToSP(argsAmountCreateKey, "")

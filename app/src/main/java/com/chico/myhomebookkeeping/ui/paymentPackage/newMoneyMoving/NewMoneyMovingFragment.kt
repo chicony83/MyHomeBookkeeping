@@ -102,7 +102,6 @@ class NewMoneyMovingFragment : Fragment() {
 //                pressSelectButton(R.id.nav_currencies)
 //            }
             selectChildCategoryButton.setOnClickListener {
-                Log.e("!!!", viewModel.fullFastPayment.value?.id?.toInt().toString())
                 findNavController().navigate(
                     R.id.nav_child_categories,
                     bundleOf(
@@ -140,12 +139,38 @@ class NewMoneyMovingFragment : Fragment() {
                         it1
                     )
                 }
+                binding.selectCategoryButton.isEnabled = true
+                binding.selectChildCategoryButton.isEnabled = true
+                binding.selectChildCategoryButton.text = viewModel.selectedChildCategory.value?.nameRes?.let { it1 ->
+                    requireContext().getString(
+                        it1
+                    )
+                }
             }
+
+            selectedUserCategory.observe(viewLifecycleOwner) {
+                with(binding) {
+                    selectChildCategoryButton.isVisible = it != null
+                    childCategoryTitle.isVisible = it != null
+                    selectCategoryButton.apply {
+                        text = it?.name
+                        isEnabled = false
+                    }
+                }
+            }
+
             selectedChildCategory.observe(viewLifecycleOwner) {
                 binding.selectChildCategoryButton.text = it?.nameRes?.let { it1 ->
                     requireContext().getString(
                         it1
                     )
+                }
+            }
+
+            selectedUserChildCategory.observe(viewLifecycleOwner) {
+                binding.selectChildCategoryButton.apply {
+                    text = it?.name
+                    isEnabled = false
                 }
             }
 
@@ -164,16 +189,26 @@ class NewMoneyMovingFragment : Fragment() {
                 buildCurrencyChips(currenciesList, selectedCurrencyChip.value)
             }
             fullFastPayment.observe(viewLifecycleOwner) { fullFastPayment ->
-                fullFastPayment?.let { viewModel.loadAndSetParentCategory(it) }
+
+                if (fullFastPayment?.amount != null) {
+                    binding.amount.setText(fullFastPayment.amount.toString())
+                }
+                if (fullFastPayment?.description != null) {
+                    binding.description.setText(fullFastPayment.description)
+                }
+
+                if (fullFastPayment?.isUserCustom == false) {
+                    viewModel.loadAndSetParentCategory(fullFastPayment)
+                } else {
+                    if (fullFastPayment != null) {
+                        viewModel.setUserParentCategory(fullFastPayment)
+                    }
+                }
             }
         }
         viewModel.getAndCheckArgsSp()
-        viewModel.setFullFastPayment(
-            arguments?.getParcelable<FullFastPayment>(
-                ARGS_FULL_FAST_PAYMENT
-            )
-        )
-        viewModel.setChildCategory(arguments?.getParcelable<ChildCategory>(ARGS_CHILD_CATEGORY))
+        viewModel.setFullFastPayment(arguments?.getParcelable(ARGS_FULL_FAST_PAYMENT))
+        viewModel.setChildCategory(arguments?.getParcelable(ARGS_CHILD_CATEGORY))
 
 //        lifecycleScope.launchWhenStarted {
 //            viewModel.onCalcAmountSelected.collectLatest {
@@ -253,9 +288,10 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
+        val isUserCustom = viewModel.fullFastPayment.value?.isUserCustom ?: false
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
-        val isCategoryNotNull = viewModel.isCategoryNotNull()
+        val isCategoryNotNull = if (!isUserCustom) viewModel.isCategoryNotNull() else true
         val checkAmount = uiHelper.isEnteredAndNotNull(binding.amount.text.toString())
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
@@ -282,10 +318,15 @@ class NewMoneyMovingFragment : Fragment() {
         val description = binding.description.text.toString()
         viewModel.saveDataToSP(amount, description)
         runBlocking {
-            val result = viewModel.addNewMoneyMoving(
-                amount = amount,
-                description = description
-            )
+            val result = if (viewModel.fullFastPayment.value?.isUserCustom == false)
+                viewModel.addNewMoneyMoving(
+                    amount = amount,
+                    description = description
+                ) else
+                viewModel.addNewUserCustomMoneyMoving(
+                    amount = amount,
+                    description = description
+                )
             if (result > 0) {
 //                uiHelper.clearUiListEditText(
 //                    listOf(

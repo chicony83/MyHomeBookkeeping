@@ -19,7 +19,7 @@ data class FullMoneyMoving(
     val currencyNameValue: String,
 
     @ColumnInfo(name = "category_name_value")
-    val categoryNameValue: String,
+    val categoryNameValue: String? = null,
 
     @ColumnInfo(name = "child_category_name_value")
     val childCategoryNameValue: String? = null,

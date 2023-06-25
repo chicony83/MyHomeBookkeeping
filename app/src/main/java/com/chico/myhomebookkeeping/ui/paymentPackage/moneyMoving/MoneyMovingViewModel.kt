@@ -123,6 +123,7 @@ class MoneyMovingViewModel(
             val listMoneyMoving = db.getAllMovingMoney()
             val listCurrency = currencyDao.getAllCurrenciesSortNameAsc()
             val listFullMoneyMoving = listMoneyMoving.map { mm ->
+                val isUserCustom = mm.categoryUserName!=null&&mm.childCategoryUserName!=null
                 FullMoneyMoving(
                     id = mm.id ?: -1,
                     timeStamp = mm.timeStamp,
@@ -130,8 +131,16 @@ class MoneyMovingViewModel(
                     cashAccountNameValue = if (mm.cashAccount == 1) app.getString(R.string.quick_setup_name_Card)
                     else app.getString(R.string.quick_setup_name_Cash),
                     currencyNameValue = listCurrency.firstOrNull { it.currencyId == mm.currency }?.iso4217.orEmpty(),
-                    categoryNameValue = app.getString(mm.category.toParentCategoriesEnum().nameRes),
-                    childCategoryNameValue = if (mm.childCategoryNameResValue!=0&&mm.childCategoryNameResValue!=0)app.getString(mm.childCategoryNameResValue) else "",
+                    categoryNameValue = if (!isUserCustom) mm.category?.toParentCategoriesEnum()?.nameRes?.let {
+                        app.getString(
+                            it
+                        )
+                    } else mm.categoryUserName,
+                    childCategoryNameValue = if (!isUserCustom) {if (mm.childCategoryNameResValue != 0 && mm.childCategoryNameResValue != 0) mm.childCategoryNameResValue?.let {
+                        app.getString(
+                            it
+                        )
+                    } else ""} else mm.childCategoryUserName,
                     isIncome = mm.category == 1,
                     description = mm.description
                 )
