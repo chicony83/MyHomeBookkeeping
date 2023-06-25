@@ -30,7 +30,6 @@ class ChangeFastPaymentFragment : Fragment() {
     val binding get() = _binding!!
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-    private val uiHelper = UiHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +75,7 @@ class ChangeFastPaymentFragment : Fragment() {
                 binding.selectCategoryButton.text = it.categoryName
             })
             paymentAmount.observe(viewLifecycleOwner, {
-                binding.amount.setText(it)
+                binding.amountEditText.setText(it)
             })
             paymentDescription.observe(viewLifecycleOwner, {
                 binding.description.setText(it)
@@ -152,7 +151,7 @@ class ChangeFastPaymentFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amount.text.toString().let {
+        return binding.amountEditText.text.toString().let {
             if (!it.isNullOrEmpty()) {
                 if (it.toDouble() > 0) {
                     Around.double(it)
@@ -164,7 +163,7 @@ class ChangeFastPaymentFragment : Fragment() {
     private fun pressSelectButton(fragment: Int) {
         changeFastPaymentViewModel.saveDataToSP(
             binding.nameFastPayment.text.toString(),
-            binding.amount.text.toString(),
+            binding.amountEditText.text.toString(),
             binding.description.text.toString()
         )
         navControlHelper.toSelectedFragment(fragment)

@@ -77,10 +77,10 @@ class FastPaymentsAdapter(
                 if (fastPayments.amount.toString().isNotEmpty()) {
                     val number: Double = fastPayments.amount ?: 0.0
                     if (number > 0) {
-                        amount.text = fastPayments.amount.toString()
+                        amountEditText.text = fastPayments.amount.toString()
                     }
                     if (number <= 0) {
-                        amount.text = "-"
+                        amountEditText.text = "-"
                     }
                 }
                 if (fastPayments.description.isNullOrEmpty()) {

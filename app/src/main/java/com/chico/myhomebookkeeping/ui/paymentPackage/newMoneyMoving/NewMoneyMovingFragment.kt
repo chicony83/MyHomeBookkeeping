@@ -18,12 +18,15 @@ import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_change_money_moving.*
+import kotlinx.android.synthetic.main.fragment_new_money_moving.amountEditText
+import kotlinx.android.synthetic.main.fragment_new_money_moving.eraseButton
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -80,7 +83,7 @@ class NewMoneyMovingFragment : Fragment() {
             calcButton.setOnClickListener {
                 requireView().hideKeyboard()
                 val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
-                    amount.text.toString()
+                    amountEditText.text.toString()
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
@@ -102,7 +105,7 @@ class NewMoneyMovingFragment : Fragment() {
             setDateTimeOnButton(currentDateTimeMillis)
 
             enteredAmount.observe(viewLifecycleOwner) {
-                binding.amount.setText(it.toString())
+                binding.amountEditText.setText(it.toString())
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -117,13 +120,21 @@ class NewMoneyMovingFragment : Fragment() {
 
         lifecycleScope.launchWhenResumed {
             viewModel.onCalcAmountSelected.collectLatest {
-               binding.amount.setText(it)
+                binding.amountEditText.setText(it)
             }
         }
+
+        showHideEraseButton()
+    }
+
+    private fun showHideEraseButton() {
+        amountEditText.addTextChangedListener(
+            NewMoneyMovingAmountTextWatcher(eraseButton)
+        )
     }
 
     private fun eraseAmountEditText() {
-        binding.amount.setText("")
+        binding.amountEditText.setText("")
     }
 
     private fun launchDatePicker() {
@@ -164,14 +175,14 @@ class NewMoneyMovingFragment : Fragment() {
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
         val isCategoryNotNull = viewModel.isCategoryNotNull()
-        val checkAmount = uiHelper.isEntered(binding.amount.text)
+        val checkAmount = uiHelper.isEntered(binding.amountEditText.text)
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
                 if (isCategoryNotNull) {
                     if (checkAmount) {
                         addNewMoneyMoving()
                     } else {
-                        setBackgroundWarningColor(binding.amount)
+                        setBackgroundWarningColor(binding.amountEditText)
                         message(getString(R.string.message_enter_amount))
                     }
                 } else {
@@ -186,7 +197,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun addNewMoneyMoving() {
-        val amount: Double = Around.double(binding.amount.text.toString())
+        val amount: Double = Around.double(binding.amountEditText.text.toString())
         val description = binding.description.text.toString()
         viewModel.saveDataToSP(amount, description)
         runBlocking {
@@ -244,7 +255,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amount.text.toString().let {
+        return binding.amountEditText.text.toString().let {
             if (it.isNotEmpty()) Around.double(it)
             else 0.0
         }

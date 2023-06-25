@@ -6,11 +6,9 @@ import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.chico.myhomebookkeeping.obj.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UiHelper(
 ) {
@@ -170,6 +168,14 @@ class UiHelper(
 
     fun showUiElement(bottomNavigation: BottomNavigationView) {
         bottomNavigation.visibility = View.VISIBLE
+    }
+
+    fun showUiElement(imageButton: ImageButton) {
+        imageButton.visibility = View.VISIBLE
+    }
+
+    fun hideUiElement(imageButton: ImageButton) {
+        imageButton.visibility = View.GONE
     }
 
 //    fun hideUiElement(recyclerView: RecyclerView) {

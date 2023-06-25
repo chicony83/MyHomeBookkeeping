@@ -88,7 +88,7 @@
                 android:text="@string/description_amount" />
 
             <EditText
-                android:id="@+id/amount"
+                android:id="@+id/amountEditText"
                 style="@style/EditTextAmount"
                 android:hint="@string/hint_enter_amount_be_inserted" />
 

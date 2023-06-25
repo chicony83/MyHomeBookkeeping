@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
             app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/amount"
+            android:id="@+id/amountEditText"
             style="@style/WrapContent_WrapContent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

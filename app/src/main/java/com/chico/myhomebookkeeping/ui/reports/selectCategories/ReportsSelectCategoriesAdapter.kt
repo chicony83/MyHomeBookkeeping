@@ -44,8 +44,8 @@ class ReportsSelectCategoriesAdapter(
         fun bind(item: ReportsCategoriesItem) {
             with(binding) {
                 itemId.text = item.id.toString()
-                nameTextView.text = item.name.toString()
-                amount.text = " "
+                nameTextView.text = item.name
+                amountEditText.text = " "
 
                 if (selectedCategoriesSet.isNotEmpty()) {
                     if (selectedCategoriesSet.contains(item.id)) {

@@ -60,7 +60,7 @@ class SelectPaymentDialog(
         val category = layout.findViewById<TextView>(R.id.categoryName)
         val rating = layout.findViewById<ImageView>(R.id.ratingImg)
         val description = layout.findViewById<TextView>(R.id.description)
-        val amount = layout.findViewById<TextView>(R.id.amount)
+        val amount = layout.findViewById<TextView>(R.id.amountEditText)
 
         if (fastPayment != null) {
             name.text = fastPayment.nameFastPayment

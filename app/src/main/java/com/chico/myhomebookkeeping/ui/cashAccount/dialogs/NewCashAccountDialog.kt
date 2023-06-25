@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.chico.myhomebookkeeping.EditNameTextWatcher
+import com.chico.myhomebookkeeping.textWathers.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnAddNewCashAccountsCallBack

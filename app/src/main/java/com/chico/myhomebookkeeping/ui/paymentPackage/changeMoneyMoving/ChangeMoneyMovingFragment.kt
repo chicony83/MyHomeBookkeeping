@@ -107,7 +107,7 @@ class ChangeMoneyMovingFragment : Fragment() {
                 binding.selectCategoryButton.text = it.categoryName
             })
             amountMoney.observe(viewLifecycleOwner, {
-                binding.amount.setText(it.toString())
+                binding.amountEditText.setText(it.toString())
             })
             descriptionText.observe(viewLifecycleOwner, {
                 binding.description.setText(it)
@@ -148,9 +148,9 @@ class ChangeMoneyMovingFragment : Fragment() {
 
 
     private fun pressSubmitButton() {
-        if (uiHelper.isEntered(binding.amount.text)) {
+        if (uiHelper.isEntered(binding.amountEditText.text)) {
             runBlocking {
-                val amount: Double = binding.amount.text.toString().toDouble()
+                val amount: Double = binding.amountEditText.text.toString().toDouble()
                 val description = binding.description.text.toString()
                 changeMoneyMovingViewModel.saveDataToSp()
                 val result: Int =
@@ -162,7 +162,7 @@ class ChangeMoneyMovingFragment : Fragment() {
                 }
             }
         } else {
-            setBackgroundWarningColor(binding.amount)
+            setBackgroundWarningColor(binding.amountEditText)
             message(getString(R.string.message_enter_amount))
         }
     }

@@ -53,7 +53,7 @@ class SelectMoneyMovingDialog(
 
         val itemId = layout.findViewById<TextView>(R.id.itemId)
         val dateTime = layout.findViewById<TextView>(R.id.date_time_text)
-        val amount = layout.findViewById<TextView>(R.id.amount)
+        val amount = layout.findViewById<TextView>(R.id.amountEditText)
         val currency = layout.findViewById<TextView>(R.id.currency)
         val category = layout.findViewById<TextView>(R.id.category)
         val cashAccount = layout.findViewById<TextView>(R.id.cash_account)

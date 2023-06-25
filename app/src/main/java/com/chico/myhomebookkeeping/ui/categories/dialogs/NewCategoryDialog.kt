@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.*
 import androidx.fragment.app.DialogFragment
-import com.chico.myhomebookkeeping.EditNameTextWatcher
+import com.chico.myhomebookkeeping.textWathers.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase

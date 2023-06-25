@@ -55,7 +55,7 @@ class NewFastPaymentFragment : Fragment() {
                 binding.selectCategoryButton.text = it.categoryName
             }
             amount.observe(viewLifecycleOwner) {
-                binding.amount.setText(it.toString())
+                binding. amountEditText.setText(it.toString())
             }
             description.observe(viewLifecycleOwner) {
                 binding.description.setText(it)
@@ -150,7 +150,7 @@ class NewFastPaymentFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amount.text.toString().let {
+        return binding.amountEditText.text.toString().let {
             if (!it.isNullOrEmpty()) {
                 if (it.toDouble() > 0) {
                     Around.double(it)

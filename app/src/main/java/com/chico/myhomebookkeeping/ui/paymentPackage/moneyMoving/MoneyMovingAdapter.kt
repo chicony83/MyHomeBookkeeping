@@ -110,10 +110,10 @@ class MoneyMovingAdapter(
                     uiHelper.hideUiElement(description)
                 }
                 if (moneyMovement.isIncome) {
-                    amount.text = plus + moneyMovement.amount.toString()
+                    amountEditText.text = plus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         with(binding){
-                            amount.setTextColor(
+                            amountEditText.setTextColor(
                                 itemView.resources.getColor(
                                     R.color.incomeTextColor,
                                     null
@@ -123,9 +123,9 @@ class MoneyMovingAdapter(
                     }
                 }
                 if (!moneyMovement.isIncome) {
-                    amount.text = minus + moneyMovement.amount.toString()
+                    amountEditText.text = minus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        binding.amount.setTextColor(
+                        binding.amountEditText.setTextColor(
                             itemView.resources.getColor(
                                 R.color.spendingTextColor,
                                 null

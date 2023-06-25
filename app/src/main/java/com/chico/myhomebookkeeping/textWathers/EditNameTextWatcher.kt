@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping
+package com.chico.myhomebookkeeping.textWathers
 
 import android.text.Editable
 import android.text.TextWatcher

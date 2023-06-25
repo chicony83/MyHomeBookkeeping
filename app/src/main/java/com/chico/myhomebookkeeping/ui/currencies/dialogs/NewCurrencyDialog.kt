@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.chico.myhomebookkeeping.EditNameTextWatcher
+import com.chico.myhomebookkeeping.textWathers.EditNameTextWatcher
 import java.lang.IllegalStateException
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.currencies.OnAddNewCurrencyCallBack

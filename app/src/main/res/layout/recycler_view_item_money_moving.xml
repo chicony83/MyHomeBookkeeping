@@ -38,13 +38,13 @@
                 android:id="@+id/currencyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/amount"
+                app:layout_constraintBottom_toBottomOf="@+id/amountEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/amount"
+                app:layout_constraintTop_toTopOf="@+id/amountEditText"
                 tool:text="долл" />
 
             <TextView
-                android:id="@+id/amount"
+                android:id="@+id/amountEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_normal"
