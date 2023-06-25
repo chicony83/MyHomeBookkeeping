@@ -33,6 +33,20 @@ object CurrenciesUseCase {
     ): Int {
         return db.changeLine(id, name)
     }
+    suspend fun changeCurrencyLineNameShortNameIso(
+        db: CurrenciesDao,
+        id: Int,
+        name: String,
+        nameShort:String?,
+        iSO:String?
+    ): Int {
+        return db.changeLineCurrencyNameShortNameIso(
+            id = id,
+            name = name,
+            shortName = nameShort,
+            iSO = iSO
+        )
+    }
 
     suspend fun getAllCurrenciesSortNameAsc(
         db: CurrenciesDao

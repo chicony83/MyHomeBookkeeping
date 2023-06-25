@@ -102,10 +102,14 @@ class CurrenciesViewModel(
         return currenciesList.value?.toList()
     }
 
-    fun saveChangedCurrency(id: Int, name: String) = runBlocking {
+    fun saveChangedCurrency(id: Int, name: String, nameShort: String?, iSO: String?) = runBlocking {
         val save = async {
-            CurrenciesUseCase.changeCurrencyLine(
-                db = db, id = id, name = name
+            CurrenciesUseCase.changeCurrencyLineNameShortNameIso(
+                db = db,
+                id = id,
+                name = name,
+                nameShort = nameShort,
+                iSO = iSO
             )
         }
         reloadCurrencies(save.await().toLong())

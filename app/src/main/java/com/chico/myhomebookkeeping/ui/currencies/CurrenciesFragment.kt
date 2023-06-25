@@ -118,7 +118,10 @@ class CurrenciesFragment : Fragment() {
         launchUi {
             val dialog = ChangeCurrencyDialog(currency, object : OnChangeCurrencyCallBack {
                 override fun change(id: Int, name: String) {
-                    currenciesViewModel.saveChangedCurrency(id, name)
+                }
+
+                override fun change(id: Int, name: String, nameShort: String?, iSO: String?) {
+                    currenciesViewModel.saveChangedCurrency(id, name, nameShort, iSO)
                 }
             })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -130,8 +133,7 @@ class CurrenciesFragment : Fragment() {
         launchUi {
             val dialog = NewCurrencyDialog(result,
                 object : OnAddNewCurrencyCallBack {
-                    override fun addAndSelect(currencyName: String, isSelect: Boolean) {
-
+                    override fun addAndSelect(name: String, isSelect: Boolean) {
                     }
 
                     override fun addAndSelect(
