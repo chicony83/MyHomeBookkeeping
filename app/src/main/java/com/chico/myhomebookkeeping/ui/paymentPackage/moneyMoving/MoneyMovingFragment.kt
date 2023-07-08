@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
@@ -19,6 +21,9 @@ import com.chico.myhomebookkeeping.db.entity.ChildCategory
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
+import com.chico.myhomebookkeeping.ui.categories.CategoriesViewModel
+import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
+import com.chico.myhomebookkeeping.ui.currencies.CurrenciesViewModel
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -34,6 +39,13 @@ class MoneyMovingFragment : Fragment() {
     private var _binding: FragmentMoneyMovingBinding? = null
     private val binding get() = _binding!!
     private lateinit var control: NavController
+
+    private val currenciesViewModel: CurrenciesViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
+    private val categoriesViewModel: CategoriesViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -69,7 +81,6 @@ class MoneyMovingFragment : Fragment() {
                             childCategory: ChildCategory
                         ) {
 //                            getOneFullMoneyMoving(selectedId)
-                            Log.e("!!!",it.toString() )
                             TODO()
 //                            showSelectDialog(selectedId)
                         }
@@ -122,12 +133,22 @@ class MoneyMovingFragment : Fragment() {
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
+        currenciesViewModel.selectedCurrency.observe(viewLifecycleOwner) {
+            moneyMovingViewModel.setButtonTextOfQueryCurrency(it.currencyName)
+        }
+        categoriesViewModel.selectedCategory.observe(viewLifecycleOwner) {
+           binding.selectCategory.text = createButtonText(
+                "CATEGORY", if (it?.nameRes != null) getString(it.nameRes)
+                else it?.name.orEmpty()
+            )
+        }
+
         with(binding) {
             selectCategory.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                findNavController().navigate(R.id.showCategories)
             }
             selectCurrency.setOnClickListener {
-                pressSelectButton(R.id.nav_currencies)
+                findNavController().navigate(R.id.showCurrencies)
             }
             selectCashAccount.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
@@ -199,5 +220,14 @@ class MoneyMovingFragment : Fragment() {
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
+    fun createButtonText(text: String, name: String): String {
+        val separator: String = getNewLineSeparator()
+        return text + separator + name
+    }
+
+    private fun getNewLineSeparator(): String {
+        return "\n"
     }
 }

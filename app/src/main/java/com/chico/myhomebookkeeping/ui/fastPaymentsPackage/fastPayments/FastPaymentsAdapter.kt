@@ -137,7 +137,7 @@ class FastPaymentsAdapter(
                     }
                 }
                 fastPaymentItemId.setOnLongClickListener {
-                    onLongClick.longClick(fastPayment.id)
+                    onLongClick.longClick(fastPayment)
                 }
             }
         }

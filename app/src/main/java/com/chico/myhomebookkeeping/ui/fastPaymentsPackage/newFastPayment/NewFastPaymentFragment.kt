@@ -156,6 +156,7 @@ class NewFastPaymentFragment : Fragment() {
         val nameFastPayment = getNameOfPayment()
         val description = getDescription()
         val amount = getAmount()
+        val cashAccountId = getCashAccountId()
         runBlocking {
             val result = newFastPaymentViewModel.addNewFastPayment(
                 nameFastPayment = nameFastPayment,
@@ -163,6 +164,7 @@ class NewFastPaymentFragment : Fragment() {
                 description = description,
                 isIncomeCategory = binding.isIncomeCheckbox.isChecked,
                 nameMainCategory = binding.mainCategoryEt.text.toString(),
+                cashAccountId = cashAccountId,
                 nameChildCategory = binding.childCategoryEt.text.toString()
             )
             if (result > 0) {
@@ -209,6 +211,13 @@ class NewFastPaymentFragment : Fragment() {
                 } else 0.0
             } else 0.0
         }
+    }
+
+    private fun getCashAccountId(): Int {
+        val cashAccountName = binding.selectCashAccountButton.text.toString()
+        return newFastPaymentViewModel.allCashAccounts.value?.firstOrNull {
+            it.accountName.lowercase() == cashAccountName.lowercase()
+        }?.cashAccountId ?: 1
     }
 
     private fun showSelectRatingDialog() {

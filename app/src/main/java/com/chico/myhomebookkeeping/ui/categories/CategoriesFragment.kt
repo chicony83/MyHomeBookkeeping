@@ -22,9 +22,11 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ChildCategory
 import com.chico.myhomebookkeeping.db.entity.ParentCategory
+import com.chico.myhomebookkeeping.domain.entities.NormalizedCategory
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.interfaces.OnCategoryClickListener
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
@@ -34,16 +36,13 @@ import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
 import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCategoryDialog
-import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.visibleInvisible
+import com.chico.myhomebookkeeping.utils.*
 import java.util.*
 
 class CategoriesFragment : Fragment() {
 
     private val viewModel: CategoriesViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireActivity() }
     )
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
@@ -78,15 +77,15 @@ class CategoriesFragment : Fragment() {
             categoriesList.observe(viewLifecycleOwner) {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it,
-                        object : OnItemViewClickListener {
-                            override fun onShortClick(selectedId: Int) {
-                                viewModel.setSelectedParentCategory(it.firstOrNull { it.categoriesId?.toInt() == selectedId })
-                                viewModel.saveData(navControlHelper, selectedId)
+                        object : OnCategoryClickListener {
+                            override fun onShortClick(category: NormalizedCategory) {
+                                viewModel.setSelectedCategory(category)
+//                                viewModel.saveData(navControlHelper, selectedId)
                                 findNavController().popBackStack()
                             }
 
-                            override fun onLongClick(selectedId: Int) {
-                                showSelectCategoryDialog(selectedId)
+                            override fun onLongClick(category: NormalizedCategory) {
+                                showSelectCategoryDialog(category)
                             }
                         })
             }
@@ -123,8 +122,11 @@ class CategoriesFragment : Fragment() {
                     (categoryHolder.adapter as CategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
                 } else {
                     val filteredCategories = viewModel.categoriesList.value.orEmpty().filter {
-                        getString(it.nameRes).toLowerCase(Locale.getDefault())
-                            .contains(char.toString())
+                        it.nameRes?.let { it1 ->
+                            getString(it1).toLowerCase(Locale.getDefault())
+                                .contains(char.toString())
+                        }?:false|| it.name?.contains(char.toString()) ?: false
+
                     }
                     (categoryHolder.adapter as CategoriesAdapter).updateList(filteredCategories)
                 }
@@ -136,22 +138,22 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        hideBottomNavigation()
         navControlHelper = NavControlHelper(control)
 
         view.hideKeyboard()
         with(binding) {
             selectAllIncomeButton.setOnClickListener {
-                viewModel.selectIncomeCategory(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
+                viewModel.setSelectedCategory(NormalizedCategory(name = "INCOME"))
+                findNavController().popBackStack()
             }
             selectAllSpendingButton.setOnClickListener {
-                viewModel.selectSpendingCategory(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
+                viewModel.setSelectedCategory(NormalizedCategory(name = "SPENDING"))
+                findNavController().popBackStack()
             }
             selectAllButton.setOnClickListener {
-                viewModel.selectAllCategories(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
+                viewModel.setSelectedCategory(NormalizedCategory(name = "SPENDING"))
+                findNavController().popBackStack()
             }
             sortingButton.setOnClickListener {
                 val popupMenu = PopupMenu(context, sortingButton)
@@ -205,7 +207,7 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private fun showSelectCategoryDialog(selectedId: Int) {
+    private fun showSelectCategoryDialog(normalizedCategory: NormalizedCategory) {
 //        launchIo {
 //            val category: ChildCategory? = viewModel.loadSelectedCategory(selectedId)
 //            launchUi {

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 
@@ -25,7 +26,7 @@ interface FastPaymentsDao {
     @Query("SELECT * FROM fast_payments_table WHERE id = :id")
     suspend fun getOneSelectedFastPayment(id: Long): FastPayments
 
-    @Query("UPDATE fast_payments_table SET name_fast_payment = :name,rating = :rating, cash_account = :cashAccount,currency = :currency, category = :category, amount = :amount, description = :description WHERE id = :id")
+    @Query("UPDATE fast_payments_table SET name_fast_payment = :name,rating = :rating, cash_account = :cashAccount,currency = :currency, category = :category, amount = :amount, description = :description, childCategories = :childCategories  WHERE id = :id")
     suspend fun changeFastPayment(
         id: Long,
         name: String,
@@ -34,7 +35,8 @@ interface FastPaymentsDao {
         currency: Int,
         category: Int,
         amount: Double,
-        description: String
+        description: String,
+        childCategories: List<ChildCategory>
     ): Int
 
     @Query("DELETE FROM fast_payments_table WHERE id = :id")

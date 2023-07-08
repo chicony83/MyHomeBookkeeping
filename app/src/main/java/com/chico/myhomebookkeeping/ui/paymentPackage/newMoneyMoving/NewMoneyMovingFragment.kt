@@ -27,10 +27,10 @@ import com.chico.myhomebookkeeping.enums.toParentCategoriesEnum
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_CHILD_CATEGORY
-import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY_NAME_RES
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogViewModel
 import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
@@ -90,6 +90,10 @@ class NewMoneyMovingFragment : Fragment() {
                         it.iso4217 == group.findViewById<Chip>(checkedId)?.text.toString()
                     }?.currencyId
                 )
+            }
+
+            eraseButton.setOnClickListener {
+                amount.text.clear()
             }
 
             selectDateTimeButton.setOnClickListener {

@@ -82,5 +82,6 @@ object Constants {
     const val SORTING_CATEGORIES = "sorting_categories"
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
+    const val ARGS_FULL_FAST_PAYMENT = "args_full_fast_payment"
 
 }

@@ -12,6 +12,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
@@ -31,6 +32,8 @@ import kotlinx.coroutines.*
 class FastPaymentsViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
+    private val cashAccountDao: CashAccountDao =
+        dataBase.getDataBase(app.applicationContext).cashAccountDao()
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
@@ -67,7 +70,21 @@ class FastPaymentsViewModel(
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
+    private val _allCashAccounts = MutableLiveData<List<CashAccount>>()
+    val allCashAccounts: LiveData<List<CashAccount>> get() = _allCashAccounts
+
     private var typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
+
+    init {
+        loadCashAccounts()
+    }
+
+
+    private fun loadCashAccounts() {
+        launchIo {
+            _allCashAccounts.postValue(cashAccountDao.getAllCashAccountsSortIdAsc())
+        }
+    }
 
     internal fun getFullFastPaymentsList() {
         typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
@@ -282,7 +299,7 @@ class FastPaymentsViewModel(
         val userParentCategories = userParentDao.getAllUserParentCategoriesSortIdDESC()
         val userParentCategory =
             userParentCategories.firstOrNull { it.name == fastPayment.childCategories.getOrNull(0)?.parentName }
-       val currencies = currenciesDao.getAllCurrenciesSortNameAsc()
+        val currencies = currenciesDao.getAllCurrenciesSortNameAsc()
         return FullFastPayment(
             id = fastPayment.id ?: -1,
             icon = fastPayment.icon,
@@ -291,8 +308,9 @@ class FastPaymentsViewModel(
             amount = fastPayment.amount,
             isIncome = userParentCategory?.isIncome ?: false,
             categoryNameValue = userParentCategory?.name.orEmpty(),
-            currencyNameValue = currencies.firstOrNull { it.currencyId==fastPayment.currencyId }?.currencyName.orEmpty(),
-            cashAccountNameValue = "",
+            currencyNameValue = currencies.firstOrNull { it.currencyId == fastPayment.currencyId }?.currencyName.orEmpty(),
+            cashAccountNameValue = allCashAccounts.value?.firstOrNull {
+                it.cashAccountId == fastPayment.cashAccountId }?.accountName.orEmpty(),
             childCategories = fastPayment.childCategories,
             categoryResourceValue = null,
             rating = 0,

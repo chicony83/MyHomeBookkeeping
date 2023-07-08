@@ -31,6 +31,7 @@ class NewFastPaymentViewModel(
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
     private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val cashAccountDao: CashAccountDao = dataBase.getDataBase(app.applicationContext).cashAccountDao()
 
     private val argsDescriptionFastPaymentKey =
         Constants.ARGS_NEW_FAST_PAYMENTS_NAME
@@ -107,15 +108,25 @@ class NewFastPaymentViewModel(
     private val _selectedCurrency = MutableLiveData<Currencies>()
     val selectedCurrency: LiveData<Currencies> = _selectedCurrency
 
+    private val _allCashAccounts = MutableLiveData<List<CashAccount>>()
+    val allCashAccounts: LiveData<List<CashAccount>> get() = _allCashAccounts
+
     fun loadInitData() {
         getSPValues()
         setValuesViewModel()
         loadCurrencies()
+        loadCashAccounts()
     }
 
     private fun loadCurrencies() {
         launchIo {
             _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
+        }
+    }
+
+    private fun loadCashAccounts() {
+        launchIo {
+            _allCashAccounts.postValue(cashAccountDao.getAllCashAccountsSortIdAsc())
         }
     }
 
@@ -241,7 +252,8 @@ class NewFastPaymentViewModel(
         isIncomeCategory: Boolean,
         nameChildCategory: String,
         description: String,
-        amount: Double
+        amount: Double,
+        cashAccountId:Int
     ): Long {
 
         val allFastPayments = dbNewFastPayment.getAllFastPayments()
@@ -260,7 +272,7 @@ class NewFastPaymentViewModel(
                 icon = null,
                 description = description,
                 amount = amount,
-                cashAccountId = 1,
+                cashAccountId = cashAccountId,
                 categoryId = allFastPayments.size + 1,
                 nameFastPayment = nameFastPayment,
                 currencyId = _currency.value?.currencyId ?: 0,

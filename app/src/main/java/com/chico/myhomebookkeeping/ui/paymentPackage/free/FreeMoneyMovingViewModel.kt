@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.domain.*
+import com.chico.myhomebookkeeping.domain.entities.NormalizedCategory
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.*
@@ -142,12 +143,19 @@ class FreeMoneyMovingViewModel(
         _selectedChildCategory.value = childCategory
     }
 
-    fun setParentCategory(parentCategory: ParentCategory?) {
-        _selectedCategory.value = parentCategory
+    fun setParentCategory(normalizedCategory: NormalizedCategory?) {
+        viewModelScope.launch {
+            val parentCategory = dbParentCategory.getAllParentCategoriesSortNameASC().firstOrNull {
+                it.nameRes == normalizedCategory?.nameRes
+            }
+            _selectedCategory.postValue(parentCategory)
+        }
     }
+
     fun resetParentCategory() {
         _selectedCategory.value = null
     }
+
     fun resetChildCategory() {
         _selectedChildCategory.value = null
     }

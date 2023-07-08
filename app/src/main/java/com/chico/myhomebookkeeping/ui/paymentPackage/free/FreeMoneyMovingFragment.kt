@@ -27,10 +27,10 @@ import com.chico.myhomebookkeeping.enums.toParentCategoriesEnum
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_CHILD_CATEGORY
-import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY_NAME_RES
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogViewModel
 import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
@@ -59,7 +59,7 @@ class FreeMoneyMovingFragment : Fragment() {
         ownerProducer = { requireParentFragment() }
     )
     private val parentCategoriesViewModel: CategoriesViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireActivity() }
     )
     private val calcDialogViewModel: CalcDialogViewModel by viewModels(
         ownerProducer = { requireActivity() }
@@ -102,6 +102,9 @@ class FreeMoneyMovingFragment : Fragment() {
 
             selectDateTimeButton.setOnClickListener {
                 launchDatePicker()
+            }
+            eraseButton.setOnClickListener {
+                amount.text.clear()
             }
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)

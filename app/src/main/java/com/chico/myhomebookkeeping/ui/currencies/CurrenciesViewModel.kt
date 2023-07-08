@@ -38,6 +38,10 @@ class CurrenciesViewModel(
     val currenciesList: LiveData<List<Currencies>>
         get() = _currenciesList
 
+    private val _selectedCurrency = MutableLiveData<Currencies>()
+    val selectedCurrency: LiveData<Currencies>
+        get() = _selectedCurrency
+
     init {
         loadCurrencies()
     }
@@ -46,6 +50,10 @@ class CurrenciesViewModel(
         launchIo {
             _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
         }
+    }
+
+    fun setSelectedCurrency(currency:Currencies){
+        _selectedCurrency.value = currency
     }
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {

@@ -7,32 +7,34 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.data.newFastPayment.Rating
-import com.chico.myhomebookkeeping.db.dao.CashAccountDao
-import com.chico.myhomebookkeeping.db.dao.CategoryDao
-import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
-import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
+import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.db.entity.Categories
-import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.db.entity.*
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class ChangeFastPaymentViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val currenciesDao: CurrenciesDao =
+        dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val cashAccountDao: CashAccountDao =
+        dataBase.getDataBase(app.applicationContext).cashAccountDao()
+    private val userParentCategoriesDao: UserParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
+    private val fastPaymentsDao: FastPaymentsDao =
+        dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val userParentDao: UserParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsNameChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_NAME
@@ -81,6 +83,9 @@ class ChangeFastPaymentViewModel(
     private val _paymentCurrency = MutableLiveData<Currencies>()
     val paymentCurrency: LiveData<Currencies> get() = _paymentCurrency
 
+    private val _allCashAccounts = MutableLiveData<List<CashAccount>>()
+    val allCashAccounts: LiveData<List<CashAccount>> get() = _allCashAccounts
+
     private val _paymentCashAccount = MutableLiveData<CashAccount>()
     val paymentCashAccount: LiveData<CashAccount> get() = _paymentCashAccount
 
@@ -104,66 +109,66 @@ class ChangeFastPaymentViewModel(
     private val _loadedCurrencyId = MutableLiveData<Currencies>()
     val loadedCurrencyId: LiveData<Currencies> = _loadedCurrencyId
 
+    private val _parentCategoryName = MutableLiveData<String>()
+    val parentCategoryName: LiveData<String> = _parentCategoryName
+
+    private val _userParentCategory = MutableLiveData<UserParentCategory>()
+    val userParentCategory: LiveData<UserParentCategory> = _userParentCategory
+
+    private val _childCategoryName = MutableLiveData<String>()
+    val childCategoryName: LiveData<String> = _childCategoryName
+
     init {
         loadCurrencies()
+        loadCashAccounts()
     }
 
     private fun loadCurrencies() {
         launchIo {
-            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
+            _currenciesList.postValue(currenciesDao.getAllCurrenciesSortNameAsc())
         }
     }
 
-    fun getFastPaymentForChange() {
-        idFastMoneyMovingForChange = getIDFastPaymentForChange()
-        if (modelCheck.isPositiveValue(idFastMoneyMovingForChange)) {
-            launchIo {
-                getFastPayment()
-            }
+    private fun loadCashAccounts() {
+        launchIo {
+            _allCashAccounts.postValue(cashAccountDao.getAllCashAccountsSortIdAsc())
         }
     }
 
-    private fun getIDFastPaymentForChange(): Long {
-        return getSP.getLong(argsIdFastPaymentForChangeKey)
-    }
+    fun setFastPaymentForChange(fullFastPayment: FullFastPayment?) {
+        _paymentName.value = fullFastPayment?.nameFastPayment
 
-    private suspend fun getFastPayment() = coroutineScope {
-        val fastPayment = async {
-            FastPaymentsUseCase.getOneFastPayment(idFastMoneyMovingForChange, dbFastPayments)
+        postRating(fullFastPayment?.rating)
+        if (_paymentCashAccount.value == null) {
+            _paymentCashAccount.value =
+                allCashAccounts.value?.firstOrNull { it.accountName.lowercase() == fullFastPayment?.cashAccountNameValue?.lowercase() }
         }
-        postName(fastPayment.await())
-        postRating(fastPayment.await())
-        postCashAccount(fastPayment.await())
-        withContext(Dispatchers.Main) {
-            _loadedCurrencyId.value =
-                currenciesList.value?.firstOrNull { it.currencyId == fastPayment.await()?.currencyId }
-        }
-        postCategory(fastPayment.await())
-        postAmount(fastPayment.await())
-        postDescription(fastPayment.await())
-    }
-
-    private fun postDescription(fastPayments: FastPayments?) {
-        _paymentDescription.postValue(getPostingDescription(fastPayments))
-    }
-
-    private fun getPostingDescription(fastPayments: FastPayments?): String {
-        return if (modelCheck.isPositiveValue(descriptionSPString)) {
-            descriptionSPString
-        } else {
-            fastPayments?.description ?: textEmpty
+        _loadedCurrencyId.value =
+            currenciesList.value?.firstOrNull { it.currencyName == fullFastPayment?.currencyNameValue }
+        postAmount(fullFastPayment)
+        _paymentDescription.value = fullFastPayment?.description.orEmpty()
+        _parentCategoryName.value = fullFastPayment?.categoryNameValue.orEmpty()
+        _childCategoryName.value = fullFastPayment?.childCategories?.getOrNull(0)?.name.orEmpty()
+        viewModelScope.launch {
+            _userParentCategory.postValue(
+                userParentCategoriesDao.getAllUserParentCategoriesSortNameASC()
+                    .firstOrNull { it.name == fullFastPayment?.categoryNameValue.orEmpty() })
         }
     }
 
-    private fun postAmount(fastPayments: FastPayments?) {
-        _paymentAmount.postValue(getPostingAmount(fastPayments).toString())
+    fun setSelectedCashAccount(cashAccount: CashAccount) {
+        _paymentCashAccount.value = cashAccount
     }
 
-    private fun getPostingAmount(fastPayments: FastPayments?): Double {
+    private fun postAmount(fullFastPayment: FullFastPayment?) {
+        _paymentAmount.value = getPostingAmount(fullFastPayment).toString()
+    }
+
+    private fun getPostingAmount(fullFastPayment: FullFastPayment?): Double {
         return if (modelCheck.isPositiveValue(amountSPDouble)) {
             amountSPDouble
         } else {
-            fastPayments?.amount ?: 0.0
+            fullFastPayment?.amount ?: 0.0
         }
     }
 
@@ -181,35 +186,21 @@ class ChangeFastPaymentViewModel(
         _paymentCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
     }
 
-    private suspend fun postCashAccount(fastPayments: FastPayments?) {
-        val postingId: Int = if (modelCheck.isPositiveValue(cashAccountSPInt)) {
-            cashAccountSPInt
-        } else {
-            fastPayments?.cashAccountId ?: 0
-        }
-        _paymentCashAccount.postValue(
-            CashAccountsUseCase.getOneCashAccountById(
-                dbCashAccount,
-                postingId
-            )
-        )
-    }
-
-    private fun postRating(fastPayments: FastPayments?) {
+    private fun postRating(rating: Int?) {
 //        val postingRating = if (modelCheck.isPositiveValue(ratingSPInt)) {
 //            ratingSPInt
 //        } else {
 //            fastPayments?.rating
 //        }
 //        Message.log("rating = $")
-        _paymentRating.postValue(getPostingRating(fastPayments))
+        _paymentRating.value = getPostingRating(rating)
     }
 
-    private fun getPostingRating(fastPayments: FastPayments?): Rating {
+    private fun getPostingRating(rating: Int?): Rating {
         return if (modelCheck.isPositiveValue(ratingSPInt)) {
             Rating(ratingSPInt, getRatingImage(ratingSPInt))
         } else {
-            val zeroRating = fastPayments?.rating ?: 0
+            val zeroRating = rating ?: 0
             Rating(zeroRating, getRatingImage(zeroRating))
         }
     }
@@ -279,21 +270,51 @@ class ChangeFastPaymentViewModel(
 //        getSP.getString(argsAmountChangeKey)
     }
 
-    suspend fun changeFastPayment(name: String, amount: Double, description: String): Int {
+    suspend fun changeFastPayment(
+        nameFastPayment: String,
+        nameMainCategory: String,
+        isIncomeCategory: Boolean,
+        nameChildCategory: String,
+        description: String,
+        amount: Double,
+        cashAccountId: Int,
+        currencyId: Int,
+        rating: Int,
+    ): Int {
+
+        userParentDao.addNewUserParentCategory(
+            UserParentCategory(
+                name = nameMainCategory,
+                isIncome = isIncomeCategory,
+                iconRes = null
+            )
+        )
+
+        val oldFastPayment = fastPaymentsDao.getAllFastPayments()
+            .firstOrNull { it.nameFastPayment == paymentName.value }
+
         return ChangeFastPaymentUseCase.changeFastPayment(
-            db = dbFastPayments,
-            id = idFastMoneyMovingForChange,
-            name = name,
-            rating = _paymentRating.value?.rating ?: 0,
-            cashAccount = _paymentCashAccount.value?.cashAccountId ?: 0,
-            currency = _paymentCurrency.value?.currencyId ?: 0,
-            category = _paymentCategory.value?.categoriesId ?: 0,
+            db = fastPaymentsDao,
+            id = oldFastPayment?.id?:-1,
             amount = amount,
-            description = description
+            description = description,
+            name = nameFastPayment,
+            currencyId = currencyId,
+            rating = rating,
+            cashAccount = cashAccountId,
+            category = oldFastPayment?.categoryId?:0,
+            childCategories = listOf(
+                ChildCategory(
+                    name = nameChildCategory,
+                    parentName = nameMainCategory
+                )
+            )
         )
     }
 
     suspend fun deleteLine(): Int {
-        return ChangeFastPaymentUseCase.deleteLine(dbFastPayments, idFastMoneyMovingForChange)
+        val oldFastPayment = fastPaymentsDao.getAllFastPayments()
+            .firstOrNull { it.nameFastPayment == paymentName.value }
+        return ChangeFastPaymentUseCase.deleteLine(dbFastPayments, oldFastPayment?.id?:-1)
     }
 }

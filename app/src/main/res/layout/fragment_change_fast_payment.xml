@@ -91,16 +91,36 @@
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/description_category" />
+                android:text="@string/description_main_category" />
 
-            <Button
-                android:id="@+id/selectCategoryButton"
-                style="@style/ButtonFullWidth"
-                android:text="@string/text_on_button_select_category" />
+            <EditText
+                android:id="@+id/main_category_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginVertical="@dimen/margin_normal"
+                android:hint="@string/hint_enter_name" />
+
+            <CheckBox
+                android:id="@+id/is_income_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/hint_is_income" />
 
             <TextView
+                android:id="@+id/child_category_title"
                 style="@style/TextDescriptions"
-                android:text="@string/description_amount" />
+                android:text="@string/description_child_category" />
+
+            <EditText
+                android:id="@+id/child_category_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginVertical="@dimen/margin_normal"
+                android:hint="@string/hint_enter_name" />
 
             <EditText
                 android:id="@+id/amount"

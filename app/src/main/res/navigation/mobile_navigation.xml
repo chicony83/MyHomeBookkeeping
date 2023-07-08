@@ -100,6 +100,12 @@
         <action
             android:id="@+id/action_nav_money_moving_to_nav_new_money_moving"
             app:destination="@id/nav_new_money_moving" />
+        <action
+            android:id="@+id/showCurrencies"
+            app:destination="@id/nav_currencies" />
+        <action
+            android:id="@+id/showCategories"
+            app:destination="@id/nav_categories" />
     </fragment>
 
     <fragment

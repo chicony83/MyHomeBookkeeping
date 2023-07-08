@@ -8,7 +8,6 @@ import com.chico.myhomebookkeeping.R
 class NavControlHelper(private val controller: NavController) {
 
     companion object{
-        const val ARGS_FULL_FAST_PAYMENT = "args full fast payment"
         const val ARGS_CHILD_CATEGORY = "args child category"
         const val ARGS_PARENT_CATEGORY = "args parent category"
         const val ARGS_PARENT_CATEGORY_NAME_RES = "args parent category name res"

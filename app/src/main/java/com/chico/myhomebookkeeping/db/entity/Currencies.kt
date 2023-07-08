@@ -11,16 +11,16 @@ data class Currencies(
     val currencyName: String,
 
     @ColumnInfo(name = "currency_name_short")
-    val currencyNameShort:String?,
+    val currencyNameShort:String?=null,
 
     @ColumnInfo(name = "iso_4217")
-    val iso4217:String?,
+    val iso4217:String?=null,
 
     @ColumnInfo(name = "icon_currency")
-    val icon: Int?,
+    val icon: Int?=-1,
 
     @ColumnInfo(name = "is_currency_default")
-    var isCurrencyDefault: Boolean?
+    var isCurrencyDefault: Boolean?=null
 
     ) {
 

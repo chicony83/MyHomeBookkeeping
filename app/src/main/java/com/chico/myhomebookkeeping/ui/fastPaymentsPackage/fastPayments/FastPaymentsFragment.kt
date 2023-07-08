@@ -1,7 +1,6 @@
 package com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,13 +23,14 @@ import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_CHILD_CATEGORY
-import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.interfaces.*
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnLongClickListenerCallBack
+import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.*
 import java.util.*
 
 
@@ -82,9 +82,8 @@ class FastPaymentsFragment : Fragment() {
                 }
             },
             onLongClick = object : OnLongClickListenerCallBack {
-                override fun longClick(long: Long): Boolean {
-                    Message.log("---LONG click detected  on ${long}---")
-                    showSelectDialog(long)
+                override fun longClick(fullFastPayment: FullFastPayment): Boolean {
+                    showSelectDialog(fullFastPayment)
                     return true
                 }
 
@@ -106,20 +105,24 @@ class FastPaymentsFragment : Fragment() {
         return binding.root
     }
 
-    private fun showSelectDialog(selectedId: Long) {
+    private fun showSelectDialog(fullFastPayment: FullFastPayment) {
         launchIo {
-            val fastPayment = fastPaymentsViewModel.loadSelectedFullFastPayment(selectedId)
             launchUi {
-                val dialog = SelectPaymentDialog(fastPayment,
+                val dialog = SelectPaymentDialog(
+                    fullFastPayment,
                     object : OnItemSelectForChangeCallBackLong {
-                        override fun onSelect(id: Long) {
-                            fastPaymentsViewModel.saveIdFastPaymentForChange(id)
-                            navControlHelper.toSelectedFragment(R.id.nav_change_fast_payment_fragment)
+                        override fun onSelect(fastPayment: FullFastPayment) {
+                            fastPaymentsViewModel.saveIdFastPaymentForChange(fastPayment.id)
+                            findNavController().navigate(
+                                R.id.nav_change_fast_payment_fragment, bundleOf(
+                                    ARGS_FULL_FAST_PAYMENT to fullFastPayment
+                                )
+                            )
                         }
                     },
                     object : OnItemSelectForSelectCallBackLong {
                         override fun onSelect(id: Long) {
-                            fastPaymentsViewModel.saveARGSForPay(fastPayment)
+                            fastPaymentsViewModel.saveARGSForPay(fullFastPayment)
                             navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
                         }
                     }
@@ -129,9 +132,16 @@ class FastPaymentsFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(500)
+            fastPaymentsViewModel.getFullFastPaymentsList()
+        }
+    }
+
     override fun onStart() {
         super.onStart()
-        fastPaymentsViewModel.getFullFastPaymentsList()
 
         if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()) {
             val updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)

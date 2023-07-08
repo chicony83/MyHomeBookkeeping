@@ -116,6 +116,13 @@ class MoneyMovingViewModel(
 
     private val setText = SetTextOnButtons(app.resources)
 
+    fun setButtonTextOfQueryCurrency(currencyFullName:String){
+        _buttonTextOfQueryCurrency.value = currencyFullName
+    }
+    fun setButtonTextOfQueryCategory(categoryFullName:String){
+        _buttonTextOfQueryCategory.value = categoryFullName
+    }
+
     fun getListFullMoneyMoving() {
         viewModelScope.launch {
             getValuesSP()
@@ -159,13 +166,13 @@ class MoneyMovingViewModel(
 
     private fun setTextOnButtons() {
         with(setText) {
-            textOnCategoryButton(
-                _buttonTextOfQueryCategory,
-                dbCategory,
-                categoryIntSP,
-                getSP,
-                argsIncomeSpendingKey
-            )
+//            textOnCategoryButton(
+//                _buttonTextOfQueryCategory,
+//                dbCategory,
+//                categoryIntSP,
+//                getSP,
+//                argsIncomeSpendingKey
+//            )
             textOnCurrencyButton(
                 _buttonTextOfQueryCurrency,
                 dbCurrencies,
