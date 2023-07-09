@@ -6,6 +6,8 @@
     <string name="message_enter_amount">Enter amount</string>
     <string name="message_name_not_entered">Enter name</string>
     <string name="message_category_not_selected">Select category</string>
+    <string name="message_main_category_not_selected">Enter name of main category</string>
+    <string name="message_child_category_not_selected">Enter name of child category</string>
     <string name="message_currency_not_selected">Select currency</string>
     <string name="message_cash_account_not_selected">Select cash account</string>
 

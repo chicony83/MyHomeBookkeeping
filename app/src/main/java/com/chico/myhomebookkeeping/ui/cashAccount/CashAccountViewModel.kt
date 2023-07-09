@@ -80,8 +80,6 @@ class CashAccountViewModel(
             navControlHelper = navControlHelper,
             id = id
         )
-
-
     }
 
     suspend fun loadSelectedCashAccount(selectedId: Int): CashAccount? {
@@ -95,6 +93,10 @@ class CashAccountViewModel(
         launchIo {
             _selectedCashAccount.postValue(null)
         }
+    }
+
+    fun setSelectedCashAccount(cashAccount: CashAccount?) {
+        _selectedCashAccount.postValue(cashAccount)
     }
 
     fun resetCashAccountForSelect() {

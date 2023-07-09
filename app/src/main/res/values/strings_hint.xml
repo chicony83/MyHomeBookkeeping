@@ -2,6 +2,7 @@
 <resources>
     <string name="hint_new_currency_only_last_4_digits">Only last 4 digits</string>
     <string name="hint_enter_name">Enter name</string>
+    <string name="hint_is_income">Does the category belong to income?</string>
     <string name="hint_new_currency_enter_name_short">Enter short name</string>
     <string name="hint_new_currency_enter_name_ISO">Enter ISO</string>
     <string name="hint_enter_amount">Enter amount</string>

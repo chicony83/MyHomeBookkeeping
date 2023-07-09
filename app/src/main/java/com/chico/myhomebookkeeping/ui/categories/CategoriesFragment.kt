@@ -11,33 +11,39 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
+import com.chico.myhomebookkeeping.db.dao.ChildCategoriesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
+import com.chico.myhomebookkeeping.db.entity.ParentCategory
+import com.chico.myhomebookkeeping.domain.entities.NormalizedCategory
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.interfaces.OnCategoryClickListener
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
+import com.chico.myhomebookkeeping.ui.cashAccount.CashAccountViewModel
 import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCategoryDialog
-import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.visibleInvisible
+import com.chico.myhomebookkeeping.utils.*
 import java.util.*
 
 class CategoriesFragment : Fragment() {
 
-    private val viewModel: CategoriesViewModel by viewModels()
+    private val viewModel: CategoriesViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: CategoryDao
@@ -71,14 +77,15 @@ class CategoriesFragment : Fragment() {
             categoriesList.observe(viewLifecycleOwner) {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it,
-                        object : OnItemViewClickListener {
-                            override fun onShortClick(selectedId: Int) {
-                                viewModel.saveData(navControlHelper, selectedId)
-                                navControlHelper.moveToPreviousFragment()
+                        object : OnCategoryClickListener {
+                            override fun onShortClick(category: NormalizedCategory) {
+                                viewModel.setSelectedCategory(category)
+//                                viewModel.saveData(navControlHelper, selectedId)
+                                findNavController().popBackStack()
                             }
 
-                            override fun onLongClick(selectedId: Int) {
-                                showSelectCategoryDialog(selectedId)
+                            override fun onLongClick(category: NormalizedCategory) {
+                                showSelectCategoryDialog(category)
                             }
                         })
             }
@@ -101,8 +108,7 @@ class CategoriesFragment : Fragment() {
                             visibleInvisible(binding.searchTil, true)
                         }
                     }
-                }
-                else{
+                } else {
                     skipScroll = false
                     searchMode = false
                 }
@@ -116,7 +122,11 @@ class CategoriesFragment : Fragment() {
                     (categoryHolder.adapter as CategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
                 } else {
                     val filteredCategories = viewModel.categoriesList.value.orEmpty().filter {
-                        it.categoryName.lowercase(Locale.getDefault()).contains(char.toString())
+                        it.nameRes?.let { it1 ->
+                            getString(it1).toLowerCase(Locale.getDefault())
+                                .contains(char.toString())
+                        }?:false|| it.name?.contains(char.toString()) ?: false
+
                     }
                     (categoryHolder.adapter as CategoriesAdapter).updateList(filteredCategories)
                 }
@@ -128,22 +138,22 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        hideBottomNavigation()
         navControlHelper = NavControlHelper(control)
 
         view.hideKeyboard()
         with(binding) {
             selectAllIncomeButton.setOnClickListener {
-                viewModel.selectIncomeCategory(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
+                viewModel.setSelectedCategory(NormalizedCategory(name = "INCOME"))
+                findNavController().popBackStack()
             }
             selectAllSpendingButton.setOnClickListener {
-                viewModel.selectSpendingCategory(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
+                viewModel.setSelectedCategory(NormalizedCategory(name = "SPENDING"))
+                findNavController().popBackStack()
             }
             selectAllButton.setOnClickListener {
-                viewModel.selectAllCategories(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
+                viewModel.setSelectedCategory(NormalizedCategory(name = "SPENDING"))
+                findNavController().popBackStack()
             }
             sortingButton.setOnClickListener {
                 val popupMenu = PopupMenu(context, sortingButton)
@@ -197,72 +207,78 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private fun showSelectCategoryDialog(selectedId: Int) {
-        launchIo {
-            val category: Categories? = viewModel.loadSelectedCategory(selectedId)
-            launchUi {
-                val dialog = SelectCategoryDialog(category,
-                    object : OnItemSelectForChangeCallBack {
-                        override fun onSelect(id: Int) {
-                            showChangeCategoryDialog(category)
-                        }
-                    },
-                    object : OnItemSelectForSelectCallBackInt {
-                        override fun onSelect(id: Int) {
-                            viewModel.saveData(navControlHelper, id)
-                            navControlHelper.moveToPreviousFragment()
-                        }
-                    })
-                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-            }
-        }
+    private fun showSelectCategoryDialog(normalizedCategory: NormalizedCategory) {
+//        launchIo {
+//            val category: ChildCategory? = viewModel.loadSelectedCategory(selectedId)
+//            launchUi {
+//                val dialog = SelectCategoryDialog(category,
+//                    object : OnItemSelectForChangeCallBack {
+//                        override fun onSelect(id: Int) {
+//                            showChangeCategoryDialog(category)
+//                        }
+//                    },
+//                    object : OnItemSelectForSelectCallBackInt {
+//                        override fun onSelect(id: Int) {
+//                            viewModel.saveData(navControlHelper, id)
+//                            navControlHelper.moveToPreviousFragment()
+//                        }
+//                    })
+//                dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+//            }
+//        }
     }
 
-    private fun showChangeCategoryDialog(category: Categories?) {
-        launchUi {
-            val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
-//                override fun changeWithoutIcon(id: Int, name: String, isIncome: Boolean) {
-//                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
+    private fun showChangeCategoryDialog(category: ChildCategory?) {
+//        launchIo {
+//            val dialog = ChangeCategoryDialog(category, object : OnChangeCategoryCallBack {
+////                override fun changeWithoutIcon(id: Int, name: String, isIncome: Boolean) {
+////                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
+////                }
+//
+//                override fun changeWithIcon(
+//                    id: Long,
+//                    nameRes: Int,
+//                    parentNameRes: Int,
+//                    iconResource: Int
+//                ) {
+//                    viewModel.saveChangedCategory(
+//                        id = id,
+//                        nameRes = nameRes,
+//                        parentNameRes = parentNameRes,
+//                        iconResource = iconResource
+//                    )
 //                }
-
-                override fun changeWithIcon(
-                    id: Int,
-                    name: String,
-                    isIncome: Boolean,
-                    iconResource: Int
-                ) {
-                    viewModel.saveChangedCategory(id, name, isIncome, iconResource)
-                }
-            })
-            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-        }
+//            })
+//            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+//        }
     }
 
     private fun showNewCategoryDialog() {
-        val result = viewModel.getNamesList()
-        launchUi {
-            val dialog = NewCategoryDialog(result, object : OnAddNewCategoryCallBack {
-
-                override fun addAndSelect(
-                    name: String,
-                    isIncome: Boolean,
-                    isSelect: Boolean,
-                    icon: Int
-                ) {
-                    val category = Categories(
-                        categoryName = name,
-                        isIncome = isIncome,
-                        icon = icon
-                    )
-                    val result: Long = viewModel.addNewCategory(category)
-                    if (isSelect) {
-                        viewModel.saveData(navControlHelper, result.toInt())
-                        navControlHelper.moveToPreviousFragment()
-                    }
-                }
-            })
-            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
-        }
+//        val result = viewModel.getNamesList()
+//        launchUi {
+//            val dialog = NewCategoryDialog(result, object : OnAddNewCategoryCallBack {
+//
+//                override fun addAndSelect(
+//                    isSelect: Boolean,
+//                    nameRes: Int,
+//                    parentNameRes: Int,
+//                    iconResource: Int
+//                ) {
+//                    val category = ChildCategory(
+//
+//                        categoryName = name,
+//                        isIncome = isIncome,
+//                        icon = icon
+//                    )
+//                    val result: Long = viewModel.addNewCategory(category)
+//                    if (isSelect) {
+//                        viewModel.saveData(navControlHelper, result.toInt())
+//                        navControlHelper.moveToPreviousFragment()
+//                    }
+//                }
+//            })
+//            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+//        }
     }
 
     private fun showMessage(s: String) {

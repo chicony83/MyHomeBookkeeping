@@ -45,12 +45,12 @@ object FastPaymentCreateSimpleQuery {
         return SimpleSQLiteQuery(query, args)
     }
     private fun mainQueryFastPayment(): String {
-        return "SELECT id, icon, name_fast_payment, rating , " +
+        return "SELECT id, icon, name_fast_payment, rating , childCategories ," +
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value, " +
-                "category_name AS category_name_value, " +
+                "name_fast_payment AS category_name_value, " +
                 "is_income, amount, description " +
-                "FROM fast_payments_table, cash_account_table, currency_table, category_table " +
+                "FROM fast_payments_table, cash_account_table, currency_table, parent_categories_table " +
                 "WHERE cash_account == cashAccountId " +
                 "AND currency == currencyId " +
                 "AND category == categoriesId "

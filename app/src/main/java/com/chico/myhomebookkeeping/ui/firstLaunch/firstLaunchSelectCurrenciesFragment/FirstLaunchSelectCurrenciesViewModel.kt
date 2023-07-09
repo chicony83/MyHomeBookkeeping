@@ -1,6 +1,8 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFragment
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,9 +10,15 @@ import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.IconCategory
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.domain.IconCategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.icons.AddIconCategories
+import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -36,6 +44,12 @@ class FirstLaunchSelectCurrenciesViewModel(
     val onDefaultCurrencyAdded: SharedFlow<Unit> = _onDefaultCurrencyAdded.asSharedFlow()
 
     private val emptyCurrency = Currencies("", "", "", null, null)
+
+    private val spName = Constants.SP_NAME
+    private val sharedPreferences: SharedPreferences =
+        app.getSharedPreferences(spName, Context.MODE_PRIVATE)
+    private val spEditor = sharedPreferences.edit()
+    private val setSP = SetSP(spEditor)
 
     init {
         viewModelScope.launch {
@@ -151,5 +165,9 @@ class FirstLaunchSelectCurrenciesViewModel(
 
     fun getSelectedCurrencies(): List<Currencies> {
         return selectedCurrenciesList.value.orEmpty()
+    }
+
+    fun setIsFirstLaunchFalse() {
+        setSP.setIsFirstLaunchFalse()
     }
 }

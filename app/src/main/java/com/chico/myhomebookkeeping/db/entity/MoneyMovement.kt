@@ -11,9 +11,15 @@ data class MoneyMovement(
     @ColumnInfo(name = "cash_account")
     val cashAccount: Int,
     @ColumnInfo(name = "currency")
-    val currency:Int,
+    val currency: Int,
     @ColumnInfo(name = "category")
-    val category:Int,
+    val category: Int? = null,
+    @ColumnInfo(name = "category_user_name")
+    val categoryUserName: String? = null,
+    @ColumnInfo(name = "child_category_name_res")
+    val childCategoryNameResValue: Int? = null,
+    @ColumnInfo(name = "child_category_user_name")
+    val childCategoryUserName: String? = null,
     @ColumnInfo(name = "amount")
     val amount: Double,
     @ColumnInfo(name = "description")

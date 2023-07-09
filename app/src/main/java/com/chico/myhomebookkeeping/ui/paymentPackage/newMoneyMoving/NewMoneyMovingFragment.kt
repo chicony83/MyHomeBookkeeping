@@ -3,30 +3,43 @@ package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
+import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
+import com.chico.myhomebookkeeping.enums.toParentCategoriesEnum
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_CHILD_CATEGORY
+import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY
+import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY_NAME_RES
 import com.chico.myhomebookkeeping.helpers.UiHelper
-import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
+import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
+import com.chico.myhomebookkeeping.ui.calc.CalcDialogViewModel
+import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
+import com.chico.myhomebookkeeping.utils.hideBottomNavigation
 import com.chico.myhomebookkeeping.utils.hideKeyboard
+import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.android.synthetic.main.fragment_change_money_moving.*
-import kotlinx.android.synthetic.main.fragment_new_money_moving.amountEditText
-import kotlinx.android.synthetic.main.fragment_new_money_moving.eraseButton
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -34,7 +47,15 @@ import java.util.*
 
 class NewMoneyMovingFragment : Fragment() {
 
-    private val viewModel: NewMoneyMovingViewModel by viewModels()
+    private val viewModel: NewMoneyMovingViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
+    private val childCategoriesViewModel: ChildCategoriesViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
+    private val calcDialogViewModel: CalcDialogViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
     private var _binding: FragmentNewMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
@@ -50,17 +71,30 @@ class NewMoneyMovingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNewMoneyMovingBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        hideBottomNavigation()
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(controller = control)
 
         with(binding) {
+
+            selectCurrenciesCg.setOnCheckedChangeListener { group, checkedId ->
+                viewModel.postCurrency(
+                    viewModel.currenciesList.value?.firstOrNull {
+                        it.iso4217 == group.findViewById<Chip>(checkedId)?.text.toString()
+                    }?.currencyId
+                )
+            }
+
+            eraseButton.setOnClickListener {
+                amount.text.clear()
+            }
 
             selectDateTimeButton.setOnClickListener {
                 launchDatePicker()
@@ -68,14 +102,17 @@ class NewMoneyMovingFragment : Fragment() {
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
-            selectCurrenciesButton.setOnClickListener {
-                pressSelectButton(R.id.nav_currencies)
-            }
-            selectCategoryButton.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
-            }
-            eraseButton.setOnClickListener {
-                eraseAmountEditText()
+//            selectCurrenciesButton.setOnClickListener {
+//                pressSelectButton(R.id.nav_currencies)
+//            }
+            selectChildCategoryButton.setOnClickListener {
+                findNavController().navigate(
+                    R.id.nav_child_categories,
+                    bundleOf(
+                        ARGS_PARENT_CATEGORY_NAME_RES to viewModel.fullFastPayment.value?.id?.toInt()
+                            ?.toParentCategoriesEnum()?.nameRes
+                    )
+                )
             }
             submitButton.setOnClickListener {
                 pressSubmitButton()
@@ -83,7 +120,7 @@ class NewMoneyMovingFragment : Fragment() {
             calcButton.setOnClickListener {
                 requireView().hideKeyboard()
                 val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
-                    amountEditText.text.toString()
+                    amount.text.toString()
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
@@ -95,17 +132,56 @@ class NewMoneyMovingFragment : Fragment() {
             selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccountButton.text = it.accountName
             }
-            selectedCurrency.observe(viewLifecycleOwner) {
-                binding.selectCurrenciesButton.text = it.currencyName
-            }
+//            selectedCurrency.observe(viewLifecycleOwner) {
+//                binding.selectCurrenciesButton.text = it.currencyName
+//            }
             selectedCategory.observe(viewLifecycleOwner) {
-                binding.selectCategoryButton.text = it.categoryName
+                binding.selectChildCategoryButton.isVisible = it != null
+                binding.childCategoryTitle.isVisible = it != null
+                binding.selectCategoryButton.text = it?.nameRes?.let { it1 ->
+                    requireContext().getString(
+                        it1
+                    )
+                }
+                binding.selectCategoryButton.isEnabled = true
+                binding.selectChildCategoryButton.isEnabled = true
+                binding.selectChildCategoryButton.text = viewModel.selectedChildCategory.value?.nameRes?.let { it1 ->
+                    requireContext().getString(
+                        it1
+                    )
+                }
+            }
+
+            selectedUserCategory.observe(viewLifecycleOwner) {
+                with(binding) {
+                    selectChildCategoryButton.isVisible = it != null
+                    childCategoryTitle.isVisible = it != null
+                    selectCategoryButton.apply {
+                        text = it?.name
+                        isEnabled = false
+                    }
+                }
+            }
+
+            selectedChildCategory.observe(viewLifecycleOwner) {
+                binding.selectChildCategoryButton.text = it?.nameRes?.let { it1 ->
+                    requireContext().getString(
+                        it1
+                    )
+                }
+            }
+
+            selectedUserChildCategory.observe(viewLifecycleOwner) {
+                binding.selectChildCategoryButton.apply {
+                    text = it?.name
+                    isEnabled = false
+                }
             }
 
             setDateTimeOnButton(currentDateTimeMillis)
 
             enteredAmount.observe(viewLifecycleOwner) {
-                binding.amountEditText.setText(it.toString())
+                binding.amount.setText(if (it == 0.0) "" else it.toString())
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -113,28 +189,72 @@ class NewMoneyMovingFragment : Fragment() {
             submitButton.observe(viewLifecycleOwner) {
                 binding.submitButton.text = it.toString()
             }
-        }
-        viewModel.getAndCheckArgsSp()
+            currenciesList.observe(viewLifecycleOwner) { currenciesList ->
+                buildCurrencyChips(currenciesList, selectedCurrencyChip.value)
+            }
+            fullFastPayment.observe(viewLifecycleOwner) { fullFastPayment ->
 
-        super.onViewCreated(view, savedInstanceState)
+                if (fullFastPayment?.amount != null) {
+                    binding.amount.setText(fullFastPayment.amount.toString())
+                }
+                if (fullFastPayment?.description != null) {
+                    binding.description.setText(fullFastPayment.description)
+                }
 
-        lifecycleScope.launchWhenResumed {
-            viewModel.onCalcAmountSelected.collectLatest {
-                binding.amountEditText.setText(it)
+                if (fullFastPayment?.isUserCustom == false) {
+                    viewModel.loadAndSetParentCategory(fullFastPayment)
+                } else {
+                    if (fullFastPayment != null) {
+                        viewModel.setUserParentCategory(fullFastPayment)
+                    }
+                }
             }
         }
+        viewModel.getAndCheckArgsSp()
+        viewModel.setFullFastPayment(arguments?.getParcelable(ARGS_FULL_FAST_PAYMENT))
+        viewModel.setChildCategory(arguments?.getParcelable(ARGS_CHILD_CATEGORY))
 
-        showHideEraseButton()
-    }
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.onCalcAmountSelected.collectLatest {
+//                binding.amount.setText(it)
+//            }
+//        }
+        calcDialogViewModel.onCalcAmountSelected.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.amount.setText(it)
+                calcDialogViewModel.resetCalcSelectedAmount()
+            }
+        }
+        childCategoriesViewModel.selectedChildCategory.observe(viewLifecycleOwner) {
+            if (it != null) viewModel.setChildCategory(it)
+        }
 
-    private fun showHideEraseButton() {
-        amountEditText.addTextChangedListener(
-            NewMoneyMovingAmountTextWatcher(eraseButton)
-        )
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun eraseAmountEditText() {
-        binding.amountEditText.setText("")
+        binding.amount.setText("")
+    }
+
+    private fun buildCurrencyChips(
+        currenciesList: List<Currencies>,
+        selectedCurrency: Currencies? = null
+    ) {
+        binding.selectCurrenciesCg.removeAllViews()
+        val currencyModels = currenciesList.map { currency ->
+            val chipView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_currency, binding.selectCurrenciesCg, false) as Chip
+
+            chipView.apply {
+                text = currency.iso4217
+                isCheckable = true
+                isChecked = if (selectedCurrency == null) currency.isCurrencyDefault
+                    ?: false else selectedCurrency.currencyId == currency.currencyId
+            }
+        }
+        currencyModels.forEach {
+            binding.selectCurrenciesCg.addView(it)
+        }
     }
 
     private fun launchDatePicker() {
@@ -172,17 +292,18 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun pressSubmitButton() {
+        val isUserCustom = viewModel.fullFastPayment.value?.isUserCustom ?: false
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
-        val isCategoryNotNull = viewModel.isCategoryNotNull()
-        val checkAmount = uiHelper.isEntered(binding.amountEditText.text)
+        val isCategoryNotNull = if (!isUserCustom) viewModel.isCategoryNotNull() else true
+        val checkAmount = uiHelper.isEnteredAndNotNull(binding.amount.text.toString())
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
                 if (isCategoryNotNull) {
                     if (checkAmount) {
                         addNewMoneyMoving()
                     } else {
-                        setBackgroundWarningColor(binding.amountEditText)
+                        setBackgroundWarningColor(binding.amount)
                         message(getString(R.string.message_enter_amount))
                     }
                 } else {
@@ -197,14 +318,19 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun addNewMoneyMoving() {
-        val amount: Double = Around.double(binding.amountEditText.text.toString())
+        val amount: Double = Around.double(binding.amount.text.toString())
         val description = binding.description.text.toString()
         viewModel.saveDataToSP(amount, description)
         runBlocking {
-            val result = viewModel.addNewMoneyMoving(
-                amount = amount,
-                description = description
-            )
+            val result = if (viewModel.fullFastPayment.value?.isUserCustom == false)
+                viewModel.addNewMoneyMoving(
+                    amount = amount,
+                    description = description
+                ) else
+                viewModel.addNewUserCustomMoneyMoving(
+                    amount = amount,
+                    description = description
+                )
             if (result > 0) {
 //                uiHelper.clearUiListEditText(
 //                    listOf(
@@ -244,7 +370,6 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressSelectButton(fragment: Int) {
         viewModel.saveDataToSP(getAmount(), getDescription())
         navControlHelper.toSelectedFragment(fragment)
-//        control.navigate(fragment)
     }
 
     private fun getDescription(): String {
@@ -255,7 +380,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amountEditText.text.toString().let {
+        return binding.amount.text.toString().let {
             if (it.isNotEmpty()) Around.double(it)
             else 0.0
         }
@@ -267,8 +392,11 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun message(text: String) {
-
-
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onStop() {
+        childCategoriesViewModel.resetSelectedChildCategory()
+        super.onStop()
     }
 }

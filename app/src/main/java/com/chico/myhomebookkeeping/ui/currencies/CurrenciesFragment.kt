@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
@@ -20,10 +21,12 @@ import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.*
+import com.chico.myhomebookkeeping.interfaces.OnCurrencyClickListener
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyCallBack
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.ChangeCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.NewCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.SelectCurrencyDialog
+import com.chico.myhomebookkeeping.utils.hideBottomNavigation
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -47,22 +50,23 @@ class CurrenciesFragment : Fragment() {
         db = dataBase.getDataBase(requireContext()).currenciesDao()
         _binding = FragmentCurrenciesBinding.inflate(inflater, container, false)
 
-        currenciesViewModel = ViewModelProvider(this).get(CurrenciesViewModel::class.java)
+        currenciesViewModel = ViewModelProvider(requireActivity()).get(CurrenciesViewModel::class.java)
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
         with(currenciesViewModel) {
             currenciesList.observe(viewLifecycleOwner) {
                 binding.currenciesHolder.adapter =
-                    CurrenciesAdapter(it, object : OnItemViewClickListener {
-                        override fun onShortClick(selectedId: Int) {
-                            currenciesViewModel.saveData(navControlHelper, selectedId)
-                            navControlHelper.moveToPreviousFragment()
+                    CurrenciesAdapter(it, object : OnCurrencyClickListener {
+                        override fun onShortClick(currency: Currencies) {
+                            currenciesViewModel.setSelectedCurrency(currency)
+                            currenciesViewModel.saveData(navControlHelper, currency.currencyId?:1)
+                            findNavController().popBackStack()
                         }
 
-                        override fun onLongClick(selectedId: Int) {
-                            showSelectCurrencyDialog(selectedId)
-                            Log.i("TAG", "---$selectedId---")
+                        override fun onLongClick(currency: Currencies) {
+                            showSelectCurrencyDialog(currency.currencyId?:1)
+                            Log.i("TAG", "---${currency.currencyId}---")
                         }
                     })
             }
@@ -72,6 +76,7 @@ class CurrenciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideBottomNavigation()
 
         navControlHelper = NavControlHelper(control)
 
@@ -79,7 +84,12 @@ class CurrenciesFragment : Fragment() {
         with(binding) {
             selectAllButton.setOnClickListener {
                 currenciesViewModel.saveData(navControlHelper, -1)
-                navControlHelper.moveToMoneyMovingFragment()
+                currenciesViewModel.setSelectedCurrency(
+                    Currencies(
+                    currencyName = "ALL",
+                )
+                )
+                findNavController().popBackStack()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
                 showNewCurrencyDialog()

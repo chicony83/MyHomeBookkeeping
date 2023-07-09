@@ -13,8 +13,8 @@ android {
         applicationId "com.chico.myhomebookkeeping"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 52
-        versionName "0.9.6.1"
+        versionCode 53
+        versionName "0.9.6.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +50,7 @@ dependencies {
     def afollestad_dialogs_version = "3.3.0"
     def gson_version = "2.9.1"
     def sliding_up_panel_version = "4.4.1"
+    def lottie_version = "5.0.3"
 
     implementation 'com.llollox:androidtoggleswitch:2.0.1'
 
@@ -69,6 +70,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.webkit:webkit:1.4.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
+    implementation "com.airbnb.android:lottie:$lottie_version"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
