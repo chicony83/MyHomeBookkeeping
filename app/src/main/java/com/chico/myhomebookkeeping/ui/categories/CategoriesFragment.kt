@@ -49,7 +49,7 @@ class CategoriesFragment : Fragment() {
     private lateinit var db: CategoryDao
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
-    private val uiHelper = UiHelper()
+//    private val uiHelper = UiHelper()
     private var skipScroll = false
     private var searchMode = false
 
@@ -64,7 +64,6 @@ class CategoriesFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         binding.onClear = {
             requireView().hideKeyboard()
-            visibleInvisible(binding.selectAllButton, true)
             visibleInvisible(binding.searchTil, false)
             searchMode = false
             skipScroll = true
@@ -80,7 +79,6 @@ class CategoriesFragment : Fragment() {
                         object : OnCategoryClickListener {
                             override fun onShortClick(category: NormalizedCategory) {
                                 viewModel.setSelectedCategory(category)
-//                                viewModel.saveData(navControlHelper, selectedId)
                                 findNavController().popBackStack()
                             }
 
@@ -99,12 +97,10 @@ class CategoriesFragment : Fragment() {
                 if (!skipScroll) {
                     when ((recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()) {
                         0 -> {
-                            visibleInvisible(binding.selectAllButton, !searchMode)
                             visibleInvisible(binding.searchTil, searchMode)
                             if (!searchMode) requireView().hideKeyboard()
                         }
                         else -> {
-                            visibleInvisible(binding.selectAllButton, false)
                             visibleInvisible(binding.searchTil, true)
                         }
                     }
@@ -143,18 +139,6 @@ class CategoriesFragment : Fragment() {
 
         view.hideKeyboard()
         with(binding) {
-            selectAllIncomeButton.setOnClickListener {
-                viewModel.setSelectedCategory(NormalizedCategory(name = "INCOME"))
-                findNavController().popBackStack()
-            }
-            selectAllSpendingButton.setOnClickListener {
-                viewModel.setSelectedCategory(NormalizedCategory(name = "SPENDING"))
-                findNavController().popBackStack()
-            }
-            selectAllButton.setOnClickListener {
-                viewModel.setSelectedCategory(NormalizedCategory(name = "SPENDING"))
-                findNavController().popBackStack()
-            }
             sortingButton.setOnClickListener {
                 val popupMenu = PopupMenu(context, sortingButton)
                 popupMenu.menuInflater.inflate(
@@ -186,16 +170,6 @@ class CategoriesFragment : Fragment() {
             }
             showHideAddCategoryFragmentButton.setOnClickListener {
                 showNewCategoryDialog()
-            }
-        }
-        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
-            or
-            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
-        ) {
-            with(uiHelper) {
-                hideUiElement(binding.selectAllButton)
-                hideUiElement(binding.selectAllIncomeButton)
-                hideUiElement(binding.selectAllSpendingButton)
             }
         }
     }
