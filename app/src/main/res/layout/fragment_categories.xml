@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="kotlin.jvm.functions.Function0" />
 
         <import type="kotlin.Unit" />
@@ -19,61 +20,21 @@
         style="@style/Fragment"
         tools:context=".ui.categories.CategoriesFragment">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/verticalCenterLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-<!--        <Button-->
-<!--            android:id="@+id/selectAllIncomeButton"-->
-<!--            style="@style/DialogButtonLeft"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:contentDescription="@string/text_on_button_all_income"-->
-<!--            android:text="@string/text_on_button_all_income"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/verticalCenterLayout"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/selectAllSpendingButton"-->
-<!--            style="@style/DialogButtonRight"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:contentDescription="@string/text_on_button_all_spending"-->
-<!--            android:text="@string/text_on_button_all_spending"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/selectAllButton"-->
-<!--            style="@style/ButtonFullWidth"-->
-<!--            android:contentDescription="@string/text_on_button_select_all"-->
-<!--            android:text="@string/text_on_button_select_all"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/selectAllIncomeButton"-->
-<!--            tools:visibility="invisible" />-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_til"
-            android:layout_marginHorizontal="@dimen/margin_normal"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            endIconClickListener="@{onClear}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal"
             android:hint="@string/hint_category"
             app:boxStrokeWidth="1dp"
-            endIconClickListener="@{onClear}"
             app:boxStrokeWidthFocused="1dp"
-            app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_close"
-            app:layout_constraintTop_toTopOf="parent"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toStartOf="@id/sortingButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/sortingButton">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -85,11 +46,11 @@
             android:id="@+id/sortingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/H6"
             android:contentDescription="@string/text_on_button_sorting_as"
             android:text="@string/text_on_button_sorting_as"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textSize="@dimen/H6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryHolder"
@@ -98,21 +59,12 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_normal"
             app:layoutManager="LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/show_hide_add_category_fragment_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_til"
             tools:listitem="@layout/recycler_view_item_categories" />
 
-        <Button
-            android:id="@+id/show_hide_add_category_fragment_button"
-            style="@style/ButtonFullWidth"
-            android:contentDescription="@string/text_on_button_add_new_category"
-            android:text="@string/text_on_button_add_new_category"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteX="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

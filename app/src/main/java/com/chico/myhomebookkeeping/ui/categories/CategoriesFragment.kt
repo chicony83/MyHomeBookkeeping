@@ -168,9 +168,9 @@ class CategoriesFragment : Fragment() {
                 }
                 popupMenu.show()
             }
-            showHideAddCategoryFragmentButton.setOnClickListener {
-                showNewCategoryDialog()
-            }
+//            showHideAddCategoryFragmentButton.setOnClickListener {
+//                showNewCategoryDialog()
+//            }
         }
     }
 
