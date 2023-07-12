@@ -125,7 +125,7 @@ class NewFastPaymentFragment : Fragment() {
         val isCurrencyNotNull = newFastPaymentViewModel.isCurrencyNotNull()
         val isParentCategoryNameNotNull = binding.mainCategoryEt.text.toString().isNotEmpty()
         val isChildCategoryNameNotNull = binding.childCategoryEt.text.toString().isNotEmpty()
-        val isAmountNotNull = UiHelper().isEnteredAndNotNull(binding.amount.text.toString())
+        val isAmountNotNull = UiHelper().isEnteredAndNotNull(binding.amountEditText.text.toString())
         if (binding.nameFastPaymentEditText.text.isNotEmpty()) {
             if (isCashAccountNotNull) {
                 if (isCurrencyNotNull) {

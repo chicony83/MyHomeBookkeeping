@@ -104,7 +104,7 @@ class FreeMoneyMovingFragment : Fragment() {
                 launchDatePicker()
             }
             eraseButton.setOnClickListener {
-                amount.text.clear()
+                amountEditText.text.clear()
             }
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
@@ -128,7 +128,7 @@ class FreeMoneyMovingFragment : Fragment() {
             calcButton.setOnClickListener {
                 requireView().hideKeyboard()
                 val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
-                    amount.text.toString()
+                    amountEditText.text.toString()
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
@@ -169,7 +169,7 @@ class FreeMoneyMovingFragment : Fragment() {
             setDateTimeOnButton(currentDateTimeMillis)
 
             enteredAmount.observe(viewLifecycleOwner) {
-                binding.amount.setText(if (it == 0.0) "" else it.toString())
+                binding.amountEditText.setText(if (it == 0.0) "" else it.toString())
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -197,7 +197,7 @@ class FreeMoneyMovingFragment : Fragment() {
 
         calcDialogViewModel.onCalcAmountSelected.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.amount.setText(it)
+                binding.amountEditText.setText(it)
                 calcDialogViewModel.resetCalcSelectedAmount()
             }
         }
@@ -215,7 +215,7 @@ class FreeMoneyMovingFragment : Fragment() {
     }
 
     private fun eraseAmountEditText() {
-        binding.amount.setText("")
+        binding.amountEditText.setText("")
     }
 
     private fun buildCurrencyChips(
@@ -277,14 +277,14 @@ class FreeMoneyMovingFragment : Fragment() {
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
         val isCategoryNotNull = viewModel.isCategoryNotNull()
-        val checkAmount = uiHelper.isEnteredAndNotNull(binding.amount.text.toString())
+        val checkAmount = uiHelper.isEnteredAndNotNull(binding.amountEditText.text.toString())
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
                 if (isCategoryNotNull) {
                     if (checkAmount) {
                         addNewMoneyMoving()
                     } else {
-                        setBackgroundWarningColor(binding.amount)
+                        setBackgroundWarningColor(binding.amountEditText)
                         message(getString(R.string.message_enter_amount))
                     }
                 } else {
@@ -299,7 +299,7 @@ class FreeMoneyMovingFragment : Fragment() {
     }
 
     private fun addNewMoneyMoving() {
-        val amount: Double = Around.double(binding.amount.text.toString())
+        val amount: Double = Around.double(binding.amountEditText.text.toString())
         val description = binding.description.text.toString()
         viewModel.saveDataToSP(amount, description)
         runBlocking {
@@ -360,7 +360,7 @@ class FreeMoneyMovingFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amount.text.toString().let {
+        return binding.amountEditText.text.toString().let {
             if (it.isNotEmpty()) Around.double(it)
             else 0.0
         }

@@ -93,7 +93,7 @@ class NewMoneyMovingFragment : Fragment() {
             }
 
             eraseButton.setOnClickListener {
-                amount.text.clear()
+                amountEditText.text.clear()
             }
 
             selectDateTimeButton.setOnClickListener {
@@ -120,7 +120,7 @@ class NewMoneyMovingFragment : Fragment() {
             calcButton.setOnClickListener {
                 requireView().hideKeyboard()
                 val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
-                    amount.text.toString()
+                    amountEditText.text.toString()
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
@@ -181,7 +181,7 @@ class NewMoneyMovingFragment : Fragment() {
             setDateTimeOnButton(currentDateTimeMillis)
 
             enteredAmount.observe(viewLifecycleOwner) {
-                binding.amount.setText(if (it == 0.0) "" else it.toString())
+                binding.amountEditText.setText(if (it == 0.0) "" else it.toString())
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -195,7 +195,7 @@ class NewMoneyMovingFragment : Fragment() {
             fullFastPayment.observe(viewLifecycleOwner) { fullFastPayment ->
 
                 if (fullFastPayment?.amount != null) {
-                    binding.amount.setText(fullFastPayment.amount.toString())
+                    binding.amountEditText.setText(fullFastPayment.amount.toString())
                 }
                 if (fullFastPayment?.description != null) {
                     binding.description.setText(fullFastPayment.description)
@@ -221,7 +221,7 @@ class NewMoneyMovingFragment : Fragment() {
 //        }
         calcDialogViewModel.onCalcAmountSelected.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.amount.setText(it)
+                binding.amountEditText.setText(it)
                 calcDialogViewModel.resetCalcSelectedAmount()
             }
         }
@@ -233,7 +233,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun eraseAmountEditText() {
-        binding.amount.setText("")
+        binding.amountEditText.setText("")
     }
 
     private fun buildCurrencyChips(
@@ -296,14 +296,14 @@ class NewMoneyMovingFragment : Fragment() {
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
         val isCategoryNotNull = if (!isUserCustom) viewModel.isCategoryNotNull() else true
-        val checkAmount = uiHelper.isEnteredAndNotNull(binding.amount.text.toString())
+        val checkAmount = uiHelper.isEnteredAndNotNull(binding.amountEditText.text.toString())
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
                 if (isCategoryNotNull) {
                     if (checkAmount) {
                         addNewMoneyMoving()
                     } else {
-                        setBackgroundWarningColor(binding.amount)
+                        setBackgroundWarningColor(binding.amountEditText)
                         message(getString(R.string.message_enter_amount))
                     }
                 } else {
@@ -318,7 +318,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun addNewMoneyMoving() {
-        val amount: Double = Around.double(binding.amount.text.toString())
+        val amount: Double = Around.double(binding.amountEditText.text.toString())
         val description = binding.description.text.toString()
         viewModel.saveDataToSP(amount, description)
         runBlocking {
@@ -380,7 +380,7 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amount.text.toString().let {
+        return binding.amountEditText.text.toString().let {
             if (it.isNotEmpty()) Around.double(it)
             else 0.0
         }

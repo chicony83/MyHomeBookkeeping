@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentChangeFastPaymentBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.db.full.FullFastPayment
+//import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -101,7 +101,7 @@ class ChangeFastPaymentFragment : Fragment() {
                 binding.selectCashAccountButton.text = it?.accountName.orEmpty()
             }
             paymentAmount.observe(viewLifecycleOwner) {
-                binding.amount.setText(it)
+                binding.amountEditText.setText(it)
             }
             paymentDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it)
@@ -181,7 +181,7 @@ class ChangeFastPaymentFragment : Fragment() {
     }
 
     private fun getAmount(): Double {
-        return binding.amount.text.toString().let {
+        return binding.amountEditText.text.toString().let {
             if (!it.isNullOrEmpty()) {
                 if (it.toDouble() > 0) {
                     Around.double(it)
@@ -193,7 +193,7 @@ class ChangeFastPaymentFragment : Fragment() {
     private fun pressSelectButton(fragment: Int) {
         changeFastPaymentViewModel.saveDataToSP(
             binding.nameFastPayment.text.toString(),
-            binding.amount.text.toString(),
+            binding.amountEditText.text.toString(),
             binding.description.text.toString()
         )
         navControlHelper.toSelectedFragment(fragment)
@@ -279,13 +279,13 @@ class ChangeFastPaymentFragment : Fragment() {
             val selectCashAccountButtonError = selectCashAccountButton.text.isEmpty()
             val mainCategoryEtError = mainCategoryEt.text.isEmpty()
             val childCategoryEtError = childCategoryEt.text.isEmpty()
-            val amountError = amount.text.isEmpty()
+            val amountError = amountEditText.text.isEmpty()
 
             if (nameFastPaymentError) nameFastPayment.error =  getString(R.string.error_empty)
             if (selectCashAccountButtonError) selectCashAccountButton.error = getString(R.string.error_empty)
             if (mainCategoryEtError) mainCategoryEt.error = getString(R.string.error_empty)
             if (childCategoryEtError)  childCategoryEt.error = getString(R.string.error_empty)
-            if (amountError) amount.error = getString(R.string.error_empty)
+            if (amountError) amountEditText.error = getString(R.string.error_empty)
 
             return !nameFastPaymentError && !selectCashAccountButtonError && !mainCategoryEtError && !childCategoryEtError && !amountError
         }
