@@ -15,9 +15,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.map
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.entity.ChildCategory
@@ -34,6 +37,7 @@ import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
 import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogViewModel
+import com.chico.myhomebookkeeping.ui.categories.CategoriesViewModel
 import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
 import com.chico.myhomebookkeeping.utils.hideBottomNavigation
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -54,6 +58,9 @@ class NewMoneyMovingFragment : Fragment() {
     private val childCategoriesViewModel: ChildCategoriesViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
+    private val categoriesViewModel:CategoriesViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
     private val calcDialogViewModel: CalcDialogViewModel by viewModels(
         ownerProducer = { requireActivity() }
     )
@@ -65,6 +72,8 @@ class NewMoneyMovingFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
+
+    private var selectedCategory = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,14 +112,35 @@ class NewMoneyMovingFragment : Fragment() {
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
+            val list = categoriesViewModel.categoriesList.value?.toList()
+            Toast.makeText(context,"size ${list?.size}",Toast.LENGTH_LONG).show()
+
+            selectCategoryButton.setOnClickListener{
+
+
+                MaterialDialog(requireContext()).show {
+                    title(R.string.dialog_title_select_category)
+                    listItemsSingleChoice(
+                        items = list?.map {
+                            binding.root.context.getString(
+                                it.nameRes?:0
+                            )
+                        }
+                    ) {
+                            dialog, index, text ->
+                        selectedCategory = index
+                        Toast.makeText(context,"$index",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
             selectChildCategoryButton.setOnClickListener {
-                findNavController().navigate(
-                    R.id.nav_child_categories,
-                    bundleOf(
-                        ARGS_PARENT_CATEGORY_NAME_RES to viewModel.fullFastPayment.value?.id?.toInt()
-                            ?.toParentCategoriesEnum()?.nameRes
-                    )
-                )
+//                findNavController().navigate(
+//                    R.id.nav_child_categories,
+//                    bundleOf(
+//                        ARGS_PARENT_CATEGORY_NAME_RES to viewModel.fullFastPayment.value?.id?.toInt()
+//                            ?.toParentCategoriesEnum()?.nameRes
+//                    )
+//                )
             }
             submitButton.setOnClickListener {
                 pressSubmitButton()

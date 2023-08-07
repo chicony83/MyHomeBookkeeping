@@ -118,7 +118,7 @@ class FastPaymentsAdapter(
 
                         if (fastPayment.childCategories.getOrNull(0)?.nameRes != null) {
                             MaterialDialog(context).show {
-                                title(R.string.fragment_label_select_categories)
+                                title(R.string.dialog_title_select_category)
                                 listItemsSingleChoice(items = fastPayment.childCategories.map {
                                     binding.root.context.getString(
                                         it.nameRes ?: 0
