@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.nav_money_moving)
                 }
                 R.id.add_money_moving -> {
-                    navController.navigate(R.id.nav_free_money_moving)
+                    navController.navigate(R.id.nav_new_money_moving)
                 }
                 R.id.reports -> {
                     navController.navigate(R.id.nav_reports)

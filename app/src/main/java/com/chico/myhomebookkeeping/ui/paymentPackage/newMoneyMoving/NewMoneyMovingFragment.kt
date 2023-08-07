@@ -102,9 +102,6 @@ class NewMoneyMovingFragment : Fragment() {
             selectCashAccountButton.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
             }
-//            selectCurrenciesButton.setOnClickListener {
-//                pressSelectButton(R.id.nav_currencies)
-//            }
             selectChildCategoryButton.setOnClickListener {
                 findNavController().navigate(
                     R.id.nav_child_categories,
@@ -132,9 +129,6 @@ class NewMoneyMovingFragment : Fragment() {
             selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccountButton.text = it.accountName
             }
-//            selectedCurrency.observe(viewLifecycleOwner) {
-//                binding.selectCurrenciesButton.text = it.currencyName
-//            }
             selectedCategory.observe(viewLifecycleOwner) {
                 binding.selectChildCategoryButton.isVisible = it != null
                 binding.childCategoryTitle.isVisible = it != null
@@ -214,11 +208,6 @@ class NewMoneyMovingFragment : Fragment() {
         viewModel.setFullFastPayment(arguments?.getParcelable(ARGS_FULL_FAST_PAYMENT))
         viewModel.setChildCategory(arguments?.getParcelable(ARGS_CHILD_CATEGORY))
 
-//        lifecycleScope.launchWhenStarted {
-//            viewModel.onCalcAmountSelected.collectLatest {
-//                binding.amount.setText(it)
-//            }
-//        }
         calcDialogViewModel.onCalcAmountSelected.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.amountEditText.setText(it)
@@ -332,16 +321,7 @@ class NewMoneyMovingFragment : Fragment() {
                     description = description
                 )
             if (result > 0) {
-//                uiHelper.clearUiListEditText(
-//                    listOf(
-//                        binding.amount, binding.description
-//                    )
-//                )
-//                setBackgroundDefaultColor(binding.amount)
                 view?.hideKeyboard()
-
-//                Toast(context).showCustomToastWhitsButton(requireActivity())
-//                message(getString(R.string.message_entry_added))
                 viewModel.saveSPOfNewEntryIsAdded()
                 control.navigate(R.id.nav_money_moving)
                 viewModel.clearSPAfterSave()
