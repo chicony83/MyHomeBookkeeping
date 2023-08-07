@@ -31,6 +31,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PAREN
 import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_PARENT_CATEGORY_NAME_RES
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
+import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogViewModel
 import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
@@ -121,6 +122,7 @@ class NewMoneyMovingFragment : Fragment() {
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
+            amountEditText.addTextChangedListener(NewMoneyMovingAmountTextWatcher(binding.eraseButton))
         }
         with(viewModel) {
             dataTime.observe(viewLifecycleOwner) {
@@ -139,11 +141,12 @@ class NewMoneyMovingFragment : Fragment() {
                 }
                 binding.selectCategoryButton.isEnabled = true
                 binding.selectChildCategoryButton.isEnabled = true
-                binding.selectChildCategoryButton.text = viewModel.selectedChildCategory.value?.nameRes?.let { it1 ->
-                    requireContext().getString(
-                        it1
-                    )
-                }
+                binding.selectChildCategoryButton.text =
+                    viewModel.selectedChildCategory.value?.nameRes?.let { it1 ->
+                        requireContext().getString(
+                            it1
+                        )
+                    }
             }
 
             selectedUserCategory.observe(viewLifecycleOwner) {
