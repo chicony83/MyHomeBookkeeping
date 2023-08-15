@@ -9,12 +9,12 @@
         android:id="@+id/nav_change_fast_payment_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.changeFastPayment.ChangeFastPaymentFragment"
         android:label="@string/fragment_label_change_fast_payment"
-        tools:layout="@layout/fragment_change_fast_payment"/>
+        tools:layout="@layout/fragment_change_fast_payment" />
     <fragment
         android:id="@+id/nav_new_fast_payment_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.newFastPayment.NewFastPaymentFragment"
         android:label="@string/fragment_label_new_fast_payment"
-        tools:layout="@layout/fragment_new_fast_payment"/>
+        tools:layout="@layout/fragment_new_fast_payment" />
     <fragment
         android:id="@+id/nav_fast_payments_fragment"
         android:name="com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.FastPaymentsFragment"
@@ -46,6 +46,7 @@
             android:id="@+id/action_nav_new_money_moving_to_nav_categories"
             app:destination="@id/nav_categories" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_select_password"
         android:name="com.chico.myhomebookkeeping.ui.selectPassword.SelectPasswordFragment"
@@ -84,6 +85,12 @@
         <action
             android:id="@+id/action_nav_money_moving_to_nav_new_money_moving"
             app:destination="@id/nav_new_money_moving" />
+        <action
+            android:id="@+id/showCurrencies"
+            app:destination="@id/nav_currencies" />
+        <action
+            android:id="@+id/showCategories"
+            app:destination="@id/nav_categories" />
     </fragment>
 
     <fragment
@@ -118,6 +125,11 @@
         android:label="@string/fragment_label_categories"
         tools:layout="@layout/fragment_categories" />
     <fragment
+        android:id="@+id/nav_child_categories"
+        android:name="com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesFragment"
+        android:label="@string/fragment_label_categories"
+        tools:layout="@layout/fragment_child_categories" />
+    <fragment
         android:id="@+id/nav_currencies"
         android:name="com.chico.myhomebookkeeping.ui.currencies.CurrenciesFragment"
         android:label="@string/fragment_label_currencies"
@@ -141,15 +153,11 @@
         android:name="com.chico.myhomebookkeeping.ui.help.HelpFragment"
         android:label="@string/fragment_label_help"
         tools:layout="@layout/fragment_help" />
-    <fragment
-        android:id="@+id/nav_first_launch_fragment"
-        android:name="com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchFragment"
-        android:label="first_launch"
-        tools:layout="@layout/fragment_first_launch" />
+
     <fragment
         android:id="@+id/nav_first_launch_select_currencies_fragment"
         android:name="com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFragment.FirstLaunchSelectCurrenciesFragment"
         android:label="@string/fragment_label_first_launch_select_currencies"
-        tools:layout="@layout/fragment_first_launch_select_currencies"/>
+        tools:layout="@layout/fragment_first_launch_select_currencies" />
 
 </navigation>

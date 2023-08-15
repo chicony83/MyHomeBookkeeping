@@ -1,11 +1,11 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
-import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
+import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class MoneyMovingCountMoney(
-    listFullMoneyMoving: List<FullMoneyMoving>
+    listMoneyMoving: List<MoneyMovement>
 ) {
     private var income = 0.0
     private var spending = 0.0
@@ -16,15 +16,15 @@ class MoneyMovingCountMoney(
         var spe = 0.0
         var bal = 0.0
 
-        for (i in listFullMoneyMoving.indices) {
-            val amount = listFullMoneyMoving[i].amount
+        for (i in listMoneyMoving.indices) {
+            val amount = listMoneyMoving[i].amount
 
-            if (listFullMoneyMoving[i].isIncome) {
+            if (listMoneyMoving[i].category == 1) { //Is income
                 inc += amount
                 bal += amount
             }
 
-            if (!listFullMoneyMoving[i].isIncome) {
+            if (listMoneyMoving[i].category != 1) {//Is income
                 spe -= amount
                 bal -= amount
             }

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RecyclerViewCard">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fastPaymentItemId"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_normal">
+
+        <ImageView
+            android:id="@+id/iconImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/content_description_icon_fast_payment"
+            android:src="@drawable/payments"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_fast_payment"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_half_normal"
+            android:textSize="@dimen/H4"
+            app:layout_constraintStart_toEndOf="@id/iconImg"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="проценты банка" />
+
+        <TextView
+            android:id="@+id/description_cash_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/description_cash_account"
+            android:textSize="@dimen/H6"
+            app:layout_constraintStart_toEndOf="@id/iconImg"
+            app:layout_constraintTop_toBottomOf="@id/name_fast_payment" />
+
+        <TextView
+            android:id="@+id/description_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/description_currency"
+            android:textSize="@dimen/H6"
+            app:layout_constraintStart_toStartOf="@id/description_cash_account"
+            app:layout_constraintTop_toBottomOf="@id/description_cash_account" />
+
+        <TextView
+            android:id="@+id/description_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/description_category"
+            android:textSize="@dimen/H6"
+            app:layout_constraintStart_toStartOf="@id/description_cash_account"
+            app:layout_constraintTop_toBottomOf="@id/description_currency" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/category_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="description_category,category_name" />
+
+        <TextView
+            android:id="@+id/cashAccountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_double"
+            app:layout_constraintStart_toEndOf="@id/barrier_values"
+            app:layout_constraintTop_toTopOf="@id/description_cash_account"
+            tools:text="@string/quick_setup_name_Cash" />
+
+        <TextView
+            android:id="@+id/currencyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_double"
+            app:layout_constraintStart_toEndOf="@id/barrier_values"
+            app:layout_constraintTop_toTopOf="@id/description_currency"
+            tools:text="@string/quick_setup_name_Currency" />
+
+        <ImageView
+            android:id="@+id/iconCategory"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/content_description_icon_item_of_category"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/barrier_values"
+            app:layout_constraintTop_toTopOf="@id/description_category"
+            tools:src="@drawable/no_image" />
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_double"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/barrier_values"
+            app:layout_constraintTop_toTopOf="@id/description_category"
+            tools:text="@string/description_category" />
+
+        <ImageView
+            android:id="@+id/ratingImg"
+            android:layout_width="50dp"
+            android:layout_height="10dp"
+            android:contentDescription="@string/description_rating_payment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/rating3" />
+
+        <TextView
+            android:id="@+id/description_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:text="@string/description_amount"
+            android:textSize="@dimen/H6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_barrier" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_double"
+            app:layout_constraintStart_toStartOf="@id/barrier_values"
+            app:layout_constraintTop_toTopOf="@id/description_amount"
+            tools:text="100.25" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_values"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="description_cash_account,description_currency,description_category" />
+
+        <TextView
+            android:id="@+id/description_of_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_amount" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_new_element_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="200dp">
+
+        <ImageButton
+            android:id="@+id/add_new_element_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="200dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/content_description_icon_add_new_element"
+            android:src="@drawable/ic_add_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

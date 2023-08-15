@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.domain
 
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
 import com.chico.myhomebookkeeping.utils.launchForResult
 import kotlinx.coroutines.runBlocking
 
@@ -11,20 +12,22 @@ object ChangeFastPaymentUseCase {
         name: String,
         rating: Int,
         cashAccount: Int,
-        currency: Int,
+        currencyId: Int,
         category: Int,
         amount: Double,
-        description: String
+        description: String,
+        childCategories: List<ChildCategory>
     ): Int {
         return db.changeFastPayment(
             id,
             name,
             rating,
             cashAccount,
-            currency,
+            currencyId,
             category,
             amount,
-            description
+            description,
+            childCategories
         )
 
     }

@@ -6,6 +6,7 @@ object Constants {
     const val ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY = "cashAccountForCreate"
     const val ARGS_NEW_PAYMENT_CURRENCY_KEY = "currencyForCreate"
     const val ARGS_NEW_PAYMENT_CATEGORY_KEY = "categoryForCreate"
+    const val ARGS_NEW_PAYMENT_CHILD_CATEGORY_KEY = "categoryForChildCreate"
     const val ARGS_NEW_PAYMENT_AMOUNT_KEY = "amountForCreate"
     const val ARGS_NEW_PAYMENT_DESCRIPTION_KEY = "descriptionForCreate"
 
@@ -81,5 +82,6 @@ object Constants {
     const val SORTING_CATEGORIES = "sorting_categories"
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
+    const val ARGS_FULL_FAST_PAYMENT = "args_full_fast_payment"
 
 }

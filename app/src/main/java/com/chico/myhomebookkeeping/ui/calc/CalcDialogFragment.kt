@@ -43,8 +43,8 @@ import java.util.*
 var appLanguage: Locale = Locale.getDefault()
 
 class CalcDialogFragment : DialogFragment() {
-    private val viewModel: NewMoneyMovingViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+    private val viewModel: CalcDialogViewModel by viewModels(
+        ownerProducer = { requireActivity() }
     )
     private val decimalSeparatorSymbol =
         DecimalFormatSymbols.getInstance().decimalSeparator.toString()

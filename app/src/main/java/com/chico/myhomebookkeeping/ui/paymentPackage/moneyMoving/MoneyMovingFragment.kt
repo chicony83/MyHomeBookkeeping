@@ -2,20 +2,28 @@ package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.db.entity.ChildCategory
+import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
+import com.chico.myhomebookkeeping.ui.categories.CategoriesViewModel
+import com.chico.myhomebookkeeping.ui.categories.child.ChildCategoriesViewModel
+import com.chico.myhomebookkeeping.ui.currencies.CurrenciesViewModel
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -32,6 +40,13 @@ class MoneyMovingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var control: NavController
 
+    private val currenciesViewModel: CurrenciesViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
+    private val categoriesViewModel: CategoriesViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,39 +60,43 @@ class MoneyMovingFragment : Fragment() {
         moneyMovingViewModel =
             ViewModelProvider(this).get(MoneyMovingViewModel::class.java)
         with(moneyMovingViewModel) {
-            buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
+            buttonTextOfTimePeriod.observe(viewLifecycleOwner) {
                 binding.selectTimePeriod.text = it
-            })
-            buttonTextOfQueryCurrency.observe(viewLifecycleOwner, {
+            }
+            buttonTextOfQueryCurrency.observe(viewLifecycleOwner) {
                 binding.selectCurrency.text = it
-            })
-            buttonTextOfQueryCategory.observe(viewLifecycleOwner, {
+            }
+            buttonTextOfQueryCategory.observe(viewLifecycleOwner) {
                 binding.selectCategory.text = it
-            })
-            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner, {
+            }
+            buttonTextOfQueryCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccount.text = it
-            })
-            moneyMovementList.observe(viewLifecycleOwner, {
+            }
+            moneyMovementList.observe(viewLifecycleOwner) {
                 binding.moneyMovingHolder.adapter = it?.let { it1 ->
                     MoneyMovingAdapter(it1, object :
                         OnItemViewClickListenerLong {
-                        override fun onClick(selectedId: Long) {
+                        override fun onClick(
+                            fullFastPayment: FullFastPayment,
+                            childCategory: ChildCategory
+                        ) {
 //                            getOneFullMoneyMoving(selectedId)
-                            showSelectDialog(selectedId)
+                            TODO()
+//                            showSelectDialog(selectedId)
                         }
 
                     })
                 }
-            })
-            incomeBalance.observe(viewLifecycleOwner, {
+            }
+            incomeBalance.observe(viewLifecycleOwner) {
                 binding.incomeBalance.text = it.toString()
-            })
-            spendingBalance.observe(viewLifecycleOwner, {
+            }
+            spendingBalance.observe(viewLifecycleOwner) {
                 binding.spendingBalance.text = it.toString()
-            })
-            totalBalance.observe(viewLifecycleOwner, {
+            }
+            totalBalance.observe(viewLifecycleOwner) {
                 binding.totalBalance.text = it.toString()
-            })
+            }
         }
         return binding.root
     }
@@ -114,12 +133,22 @@ class MoneyMovingFragment : Fragment() {
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
 
+        currenciesViewModel.selectedCurrency.observe(viewLifecycleOwner) {
+            moneyMovingViewModel.setButtonTextOfQueryCurrency(it.currencyName)
+        }
+        categoriesViewModel.selectedCategory.observe(viewLifecycleOwner) {
+           binding.selectCategory.text = createButtonText(
+                "CATEGORY", if (it?.nameRes != null) getString(it.nameRes)
+                else it?.name.orEmpty()
+            )
+        }
+
         with(binding) {
             selectCategory.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                findNavController().navigate(R.id.showCategories)
             }
             selectCurrency.setOnClickListener {
-                pressSelectButton(R.id.nav_currencies)
+                findNavController().navigate(R.id.showCurrencies)
             }
             selectCashAccount.setOnClickListener {
                 pressSelectButton(R.id.nav_cash_account)
@@ -141,16 +170,19 @@ class MoneyMovingFragment : Fragment() {
     }
 
     private fun newEntryAdded() {
-        if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()){
+        if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()) {
             launchUi {
                 val entryIsAddedBottomSheet = EntryIsAddedBottomSheet(
-                    object : OnNextEntryButtonClickedCallBack{
+                    object : OnNextEntryButtonClickedCallBack {
                         override fun onClick() {
                             control.navigate(R.id.nav_fast_payments_fragment)
                         }
                     }
                 )
-                entryIsAddedBottomSheet.show(childFragmentManager,getString(R.string.tag_show_dialog))
+                entryIsAddedBottomSheet.show(
+                    childFragmentManager,
+                    getString(R.string.tag_show_dialog)
+                )
 //                launchIo {
 //                    delay(3500)
 //                    entryIsAddedBottomSheet.dismiss()
@@ -188,5 +220,14 @@ class MoneyMovingFragment : Fragment() {
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
+    fun createButtonText(text: String, name: String): String {
+        val separator: String = getNewLineSeparator()
+        return text + separator + name
+    }
+
+    private fun getNewLineSeparator(): String {
+        return "\n"
     }
 }

@@ -6,37 +6,40 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.data.newFastPayment.Rating
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.CashAccount
-import com.chico.myhomebookkeeping.db.entity.Categories
-import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.db.entity.FastPayments
+import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
+import com.chico.myhomebookkeeping.enums.ChildCategoriesEnum
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import kotlinx.coroutines.launch
 
 class NewFastPaymentViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
     private val spName = Constants.SP_NAME
+    private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val cashAccountDao: CashAccountDao = dataBase.getDataBase(app.applicationContext).cashAccountDao()
 
     private val argsDescriptionFastPaymentKey =
         Constants.ARGS_NEW_FAST_PAYMENTS_NAME
     private val argsRatingKey = Constants.ARGS_NEW_FAST_PAYMENT_RATING
     private val argsCashAccount = Constants.ARGS_NEW_FAST_PAYMENT_CASH_ACCOUNT
     private val argsCurrency = Constants.ARGS_NEW_FAST_PAYMENT_CURRENCY
-    private val argsCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
+
+    //    private val argsCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
     private val argsAmount = Constants.ARGS_NEW_FAST_PAYMENT_AMOUNT
     private val argsDescription = Constants.ARGS_NEW_FAST_PAYMENT_DESCRIPTION
 
@@ -54,6 +57,8 @@ class NewFastPaymentViewModel(
     private val modelCheck = ModelCheck()
     private val dbNewFastPayment: FastPaymentsDao =
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
+    private val userParentDao: UserParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
 
     //    private val dbMoneyMovement: MoneyMovementDao =
 //        dataBase.getDataBase(app.applicationContext).moneyMovementDao()
@@ -61,8 +66,8 @@ class NewFastPaymentViewModel(
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
-    private val dbCategory: CategoryDao =
-        dataBase.getDataBase(app.applicationContext).categoryDao()
+//    private val dbCategory: CategoryDao =
+//        dataBase.getDataBase(app.applicationContext).categoryDao()
 
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
@@ -85,8 +90,11 @@ class NewFastPaymentViewModel(
     private val _currency = MutableLiveData<Currencies>()
     val currency: LiveData<Currencies> get() = _currency
 
-    private val _category = MutableLiveData<Categories>()
-    val category: LiveData<Categories> get() = _category
+    private val _parentCategoryName = MutableLiveData<String>()
+    val parentCategoryName: LiveData<String> get() = _parentCategoryName
+
+    private val _childCategoryName = MutableLiveData<String>()
+    val childCategoryName: LiveData<String> get() = _childCategoryName
 
     private val _amount = MutableLiveData<Double>()
     val amount: LiveData<Double> get() = _amount
@@ -94,9 +102,32 @@ class NewFastPaymentViewModel(
     private val _description = MutableLiveData<String>()
     val description: LiveData<String> get() = _description
 
-    init {
+    private val _currenciesList = MutableLiveData<List<Currencies>>()
+    val currenciesList: LiveData<List<Currencies>> = _currenciesList
+
+    private val _selectedCurrency = MutableLiveData<Currencies>()
+    val selectedCurrency: LiveData<Currencies> = _selectedCurrency
+
+    private val _allCashAccounts = MutableLiveData<List<CashAccount>>()
+    val allCashAccounts: LiveData<List<CashAccount>> get() = _allCashAccounts
+
+    fun loadInitData() {
         getSPValues()
         setValuesViewModel()
+        loadCurrencies()
+        loadCashAccounts()
+    }
+
+    private fun loadCurrencies() {
+        launchIo {
+            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
+        }
+    }
+
+    private fun loadCashAccounts() {
+        launchIo {
+            _allCashAccounts.postValue(cashAccountDao.getAllCashAccountsSortIdAsc())
+        }
     }
 
     private fun getSPValues() {
@@ -104,18 +135,20 @@ class NewFastPaymentViewModel(
         ratingSPInt = getSP.getInt(argsRatingKey)
         cashAccountSPInt = getSP.getInt(argsCashAccount)
         currencySPInt = getSP.getInt(argsCurrency)
-        categorySPInt = getSP.getInt(argsCategory)
+//        categorySPInt = getSP.getInt(argsCategory)
         amountSPString = getSP.getString(argsAmount).toString()
         descriptionSPString = getSP.getString(argsDescription).toString()
     }
 
     private fun setValuesViewModel() {
         launchIo { if (descriptionFastPaymentSPString.isNotEmpty()) launchUi { postDescriptionFastPayment() } }
-        launchIo { if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() }
-        if(!modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating(0) }}
+        launchIo {
+            if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() }
+            if (!modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating(0) }
+        }
         launchIo { if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi { postCashAccount() } }
-        launchIo { if (modelCheck.isPositiveValue(currencySPInt)) launchUi { postCurrency() } }
-        launchIo { if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory() } }
+//        launchIo { if (modelCheck.isPositiveValue(currencySPInt)) launchUi { postCurrency() } }
+//        launchIo { if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory() } }
         launchIo { if (modelCheck.isPositiveValue(amountSPString)) launchUi { postAmount() } }
         launchIo { if (descriptionSPString.isNotEmpty()) launchUi { postDescription() } }
     }
@@ -132,13 +165,13 @@ class NewFastPaymentViewModel(
         _amount.postValue(Around.double(amountSPString))
     }
 
-    private suspend fun postCategory() {
-        _category.postValue(CategoriesUseCase.getOneCategory(dbCategory, categorySPInt))
+//    private suspend fun postCategory() {
+//        _category.postValue(CategoriesUseCase.getOneCategory(dbCategory, categorySPInt))
+//    }
 
-    }
-
-    private suspend fun postCurrency() {
-        _currency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies, currencySPInt))
+    fun postCurrency(currencyId: Int?) {
+        _selectedCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
+        _currency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
     }
 
     private suspend fun postCashAccount() {
@@ -168,7 +201,7 @@ class NewFastPaymentViewModel(
             saveToSP(argsRatingKey, _rating.value?.rating ?: 0)
             saveToSP(argsCashAccount, _cashAccount.value?.cashAccountId)
             saveToSP(argsCurrency, _currency.value?.currencyId)
-            saveToSP(argsCategory, _category.value?.categoriesId)
+//            saveToSP(argsCategory, _category.value?.categoriesId)
             saveToSP(amountSPString, amount.toString())
             saveToSP(argsDescription, description)
         }
@@ -180,7 +213,7 @@ class NewFastPaymentViewModel(
             saveToSP(argsRatingKey, minusOneInt)
             saveToSP(argsCashAccount, minusOneInt)
             saveToSP(argsCurrency, minusOneInt)
-            saveToSP(argsCategory, minusOneInt)
+//            saveToSP(argsCategory, minusOneInt)
             saveToSP(amountSPString, textNone)
             saveToSP(argsDescription, textNone)
         }
@@ -205,32 +238,55 @@ class NewFastPaymentViewModel(
         return _currency.value != null
     }
 
-    fun isCategoryNotNull(): Boolean {
-        return _category.value != null
+    fun isParentCategoryNameNotNull(): Boolean {
+        return _parentCategoryName.value != null
+    }
+
+    fun isChildCategoryNameNotNull(): Boolean {
+        return _childCategoryName.value != null
     }
 
     suspend fun addNewFastPayment(
         nameFastPayment: String,
+        nameMainCategory: String,
+        isIncomeCategory: Boolean,
+        nameChildCategory: String,
         description: String,
-        amount: Double
+        amount: Double,
+        cashAccountId:Int
     ): Long {
 
-        val newFastPayment = FastPayments(
-            icon = null,
-            nameFastPayment = nameFastPayment,
-            rating = _rating.value?.rating ?: 0,
-            cashAccountId = _cashAccount.value?.cashAccountId ?: 0,
-            currencyId = _currency.value?.currencyId ?: 0,
-            categoryId = _category.value?.categoriesId ?: 0,
-            amount = amount,
-            description = description
+        val allFastPayments = dbNewFastPayment.getAllFastPayments()
+
+        userParentDao.addNewUserParentCategory(
+            UserParentCategory(
+                name = nameMainCategory,
+                isIncome = isIncomeCategory,
+                iconRes = null
+            )
+        )
+
+       return FastPaymentsUseCase.addNewFastPayment(
+            db = dbNewFastPayment,
+            FastPayments(
+                icon = null,
+                description = description,
+                amount = amount,
+                cashAccountId = cashAccountId,
+                categoryId = allFastPayments.size + 1,
+                nameFastPayment = nameFastPayment,
+                currencyId = _currency.value?.currencyId ?: 0,
+                rating = 0,
+                childCategories = listOf(
+                    ChildCategory(
+                        name = nameChildCategory,
+                        parentName = nameMainCategory
+                    )
+                )
+            )
         )
 //        Message.log("rating Int value = 0")
 //        Message.log("rating newFastPayment = ${newFastPayment.rating.toString()}")
-
-        return FastPaymentsUseCase.addNewFastPayment(
-            db = dbNewFastPayment, newFastPayment = newFastPayment
-        )
 //        return 1L
     }
 }
