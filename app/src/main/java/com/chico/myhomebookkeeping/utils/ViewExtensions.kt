@@ -2,10 +2,10 @@ package com.chico.myhomebookkeeping.utils
 
 
 import android.view.View
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.content_main.*
 
 
 @BindingAdapter("endIconClickListener")
@@ -14,10 +14,6 @@ fun TextInputLayout.endIconClickListener(callback: () -> Unit) {
         callback()
         editText?.text?.clear()
     }
-}
-
-fun Fragment.hideBottomNavigation(){
-    requireActivity().bottom_navigation.visibility = View.INVISIBLE
 }
 
 

@@ -71,56 +71,23 @@
                 style="@style/TextDescriptions"
                 android:text="@string/description_currency" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginVertical="@dimen/margin_normal"
-                android:scrollbars="none">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/select_currencies_cg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    app:chipSpacing="8dp"
-                    app:singleSelection="true" />
-
-            </HorizontalScrollView>
+            <Button
+                android:id="@+id/selectCurrenciesButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_currency" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/description_main_category" />
+                android:text="@string/description_category" />
 
-            <EditText
-                android:id="@+id/main_category_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginVertical="@dimen/margin_normal"
-                android:hint="@string/hint_enter_name" />
-
-            <CheckBox
-                android:id="@+id/is_income_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_normal"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:text="@string/hint_is_income" />
+            <Button
+                android:id="@+id/selectCategoryButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_category" />
 
             <TextView
-                android:id="@+id/child_category_title"
                 style="@style/TextDescriptions"
-                android:text="@string/description_child_category" />
-
-            <EditText
-                android:id="@+id/child_category_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginVertical="@dimen/margin_normal"
-                android:hint="@string/hint_enter_name" />
+                android:text="@string/description_amount" />
 
             <EditText
                 android:id="@+id/amountEditText"

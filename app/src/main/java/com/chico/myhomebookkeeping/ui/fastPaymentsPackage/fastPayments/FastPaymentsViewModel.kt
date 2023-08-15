@@ -9,10 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
+import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.FastPayments
 import com.chico.myhomebookkeeping.db.simpleQuery.FastPaymentCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.FastPaymentsUseCase
@@ -32,8 +31,6 @@ import kotlinx.coroutines.*
 class FastPaymentsViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val cashAccountDao: CashAccountDao =
-        dataBase.getDataBase(app.applicationContext).cashAccountDao()
 
     private val argsIdFastPaymentForChangeKey = Constants.ARGS_CHANGE_FAST_PAYMENT_ID
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
@@ -56,35 +53,12 @@ class FastPaymentsViewModel(
     private val getSp = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor = sharedPreferences.edit())
 
-    private val currenciesDao: CurrenciesDao =
-        dataBase.getDataBase(app.applicationContext).currenciesDao()
-    private val fastPaymentsDao: FastPaymentsDao =
-        dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
-    private val userParentDao: UserParentCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
-    private val parentCategoriesDao: ParentCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
-    private val childCategoriesDao: ChildCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).childCategoriesDao()
+    private val db: FastPaymentsDao = dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
 
     private val _fastPaymentsList = MutableLiveData<List<FullFastPayment>?>()
     val fastPaymentsList: MutableLiveData<List<FullFastPayment>?> get() = _fastPaymentsList
 
-    private val _allCashAccounts = MutableLiveData<List<CashAccount>>()
-    val allCashAccounts: LiveData<List<CashAccount>> get() = _allCashAccounts
-
     private var typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
-
-    init {
-        loadCashAccounts()
-    }
-
-
-    private fun loadCashAccounts() {
-        launchIo {
-            _allCashAccounts.postValue(cashAccountDao.getAllCashAccountsSortIdAsc())
-        }
-    }
 
     internal fun getFullFastPaymentsList() {
         typeOfFastPayments = getStateRecyclerFastPaymentByTypeFromSp()
@@ -94,12 +68,7 @@ class FastPaymentsViewModel(
             Message.log("--- size of list full fast payments = ${listFullFastPayments.await()?.size}")
             val result =
                 selectTargetingTypeOfFastPayment(listFullFastPayments.await(), typeOfFastPayments)
-
-            val userFullFastPayments = fastPaymentsDao.getAllFastPayments().filter {
-                !result.map { it.id }.contains(it.id)
-            }.map { userFastPaymentToFullFastPayment(it) }
-
-            postListFullFastPayments(result.toMutableList().apply { addAll(userFullFastPayments) })
+            postListFullFastPayments(result)
         }
     }
 
@@ -192,13 +161,13 @@ class FastPaymentsViewModel(
 
     private suspend fun getListFullFastPaymentsFromUseCase(query: SimpleSQLiteQuery): List<FullFastPayment>? {
         return FastPaymentsUseCase.getListFullFastPayments(
-            fastPaymentsDao, query
+            db, query
         )
     }
 
     suspend fun loadSelectedFullFastPayment(id: Long): FullFastPayment {
         return FastPaymentsUseCase.getOneFullFastPayment(
-            fastPaymentsDao,
+            db,
             FastPaymentCreateSimpleQuery.createQueryOneFullFastPayment(id)
         )
     }
@@ -207,7 +176,7 @@ class FastPaymentsViewModel(
         runBlocking {
             val id = fastPayment?.id ?: 0
             val selectedFastPayment: Deferred<FastPayments?> = async(Dispatchers.IO) {
-                FastPaymentsUseCase.getOneFastPayment(id, fastPaymentsDao)
+                FastPaymentsUseCase.getOneFastPayment(id, db)
             }
             saveToSp(selectedFastPayment.await())
         }
@@ -295,33 +264,10 @@ class FastPaymentsViewModel(
         return typeOfFastPayments
     }
 
-    private suspend fun userFastPaymentToFullFastPayment(fastPayment: FastPayments): FullFastPayment {
-        val userParentCategories = userParentDao.getAllUserParentCategoriesSortIdDESC()
-        val userParentCategory =
-            userParentCategories.firstOrNull { it.name == fastPayment.childCategories.getOrNull(0)?.parentName }
-        val currencies = currenciesDao.getAllCurrenciesSortNameAsc()
-        return FullFastPayment(
-            id = fastPayment.id ?: -1,
-            icon = fastPayment.icon,
-            nameFastPayment = fastPayment.nameFastPayment,
-            description = fastPayment.description,
-            amount = fastPayment.amount,
-            isIncome = userParentCategory?.isIncome ?: false,
-            categoryNameValue = userParentCategory?.name.orEmpty(),
-            currencyNameValue = currencies.firstOrNull { it.currencyId == fastPayment.currencyId }?.currencyName.orEmpty(),
-            cashAccountNameValue = allCashAccounts.value?.firstOrNull {
-                it.cashAccountId == fastPayment.cashAccountId }?.accountName.orEmpty(),
-            childCategories = fastPayment.childCategories,
-            categoryResourceValue = null,
-            rating = 0,
-            isUserCustom = true
-        )
-    }
-
     fun saveIdFastPaymentForPay(id: Long) {
         runBlocking {
             val selectedFastPayment: Deferred<FastPayments?> = async(Dispatchers.IO) {
-                FastPaymentsUseCase.getOneFastPayment(id, fastPaymentsDao)
+                FastPaymentsUseCase.getOneFastPayment(id, db)
             }
             saveToSp(selectedFastPayment.await())
         }

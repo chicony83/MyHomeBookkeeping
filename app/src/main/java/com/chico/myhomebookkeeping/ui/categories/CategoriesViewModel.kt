@@ -9,20 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
-import com.chico.myhomebookkeeping.db.dao.ChildCategoriesDao
-import com.chico.myhomebookkeeping.db.dao.ParentCategoriesDao
-import com.chico.myhomebookkeeping.db.dao.UserParentCategoriesDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.ChildCategory
-import com.chico.myhomebookkeeping.db.entity.ParentCategory
-import com.chico.myhomebookkeeping.db.entity.UserParentCategory
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.domain.ChildCategoriesUseCase
-import com.chico.myhomebookkeeping.domain.ParentCategoriesUseCase
-import com.chico.myhomebookkeeping.domain.entities.NormalizedCategory
-import com.chico.myhomebookkeeping.domain.mappers.ParentCategoryMapper
-import com.chico.myhomebookkeeping.domain.mappers.UserParentCategoryMapper
 import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
@@ -40,10 +29,7 @@ class CategoriesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val db: ParentCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
-    private val userParentCategoriesDao: UserParentCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
+    private val db: CategoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
 
     private val spName by lazy { Constants.SP_NAME }
     private val sharedPreferences: SharedPreferences =
@@ -64,11 +50,14 @@ class CategoriesViewModel(
     private val getSP = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor)
 
-    private val _categoriesList = MutableLiveData<List<NormalizedCategory>>()
-    val categoriesList: LiveData<List<NormalizedCategory>> get() = _categoriesList
+    private val _categoriesList = MutableLiveData<List<Categories>>()
+    val categoriesList: LiveData<List<Categories>> get() = _categoriesList
 
-    private val _selectedCategory = MutableLiveData<NormalizedCategory?>()
-    val selectedCategory: MutableLiveData<NormalizedCategory?> get() = _selectedCategory
+    private val _selectedCategory = MutableLiveData<Categories?>()
+    val selectedCategory: MutableLiveData<Categories?> get() = _selectedCategory
+
+    private var _changeCategory = MutableLiveData<Categories?>()
+    val changeCategory: LiveData<Categories?> get() = _changeCategory
 
     private var _sortedByTextOnButton = MutableLiveData<String>()
     val sortedByTextOnButton: LiveData<String> get() = _sortedByTextOnButton
@@ -81,40 +70,31 @@ class CategoriesViewModel(
         loadCategories()
     }
 
-    fun loadCategories() {
+    private fun loadCategories() {
         sortingCategoriesStringSP = getSortingValueFromSP()
 //        Message.log("get sortingCategoriesStringSP = $sortingCategoriesStringSP")
         launchIo {
             when (sortingCategoriesStringSP) {
                 SortingCategories.NumbersByASC.toString() -> {
-                    val composedCategories = mutableListOf<NormalizedCategory>().apply {
-                        addAll(ParentCategoriesUseCase.getAllCategoriesSortIdAsc(db).map {
-                            ParentCategoryMapper().map(it)
-                        })
-                        addAll(userParentCategoriesDao.getAllUserParentCategoriesSortIdASC().map {
-                            UserParentCategoryMapper().map(it)
-                        })
-                    }
-
-                    _categoriesList.postValue(composedCategories)
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdAsc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_ASC))
                 }
-//                SortingCategories.NumbersByDESC.toString() -> {
-//                    _categoriesList.postValue(ParentCategoriesUseCase.getAllCategoriesSortIdDesc(db))
-//                    setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_DESC))
-//                }
-//                SortingCategories.AlphabetByASC.toString() -> {
-//                    _categoriesList.postValue(ParentCategoriesUseCase.getAllCategoriesSortNameAsc(db))
-//                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
-//                }
-//                SortingCategories.AlphabetByDESC.toString() -> {
-//                    _categoriesList.postValue(ParentCategoriesUseCase.getAllCategoriesSortNameDesc(db))
-//                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
-//                }
-//                else -> {
-//                    _categoriesList.postValue(ParentCategoriesUseCase.getAllCategoriesSortNameAsc(db))
-//                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
-//                }
+                SortingCategories.NumbersByDESC.toString() -> {
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdDesc(db))
+                    setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_DESC))
+                }
+                SortingCategories.AlphabetByASC.toString() -> {
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
+                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
+                }
+                SortingCategories.AlphabetByDESC.toString() -> {
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameDesc(db))
+                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
+                }
+                else -> {
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
+                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
+                }
             }
         }
     }
@@ -142,16 +122,14 @@ class CategoriesViewModel(
         }
     }
 
-    suspend fun loadSelectedCategory(selectedId: Long): ParentCategory? {
-        return ParentCategoriesUseCase.getOneCategory(db, selectedId)
+    suspend fun loadSelectedCategory(selectedId: Int): Categories? {
+        return CategoriesUseCase.getOneCategory(db, selectedId)
     }
 
-    fun setSelectedCategory(normalizedCategory: NormalizedCategory?) {
-            _selectedCategory.value = normalizedCategory
-    }
-
-    fun resetCategoryForSelect() {
-            _selectedCategory.value = null
+    private fun resetCategoryForSelect() {
+        launchIo {
+            _selectedCategory.postValue(null)
+        }
     }
 
 //    fun resetCategoryForChange() {
@@ -220,9 +198,9 @@ class CategoriesViewModel(
         selectedIsIncomeSpending = argsNone
     }
 
-    fun addNewCategory(newCategory: ParentCategory): Long = runBlocking {
+    fun addNewCategory(newCategory: Categories): Long = runBlocking {
         val add = async {
-            ParentCategoriesUseCase.addNewCategory(
+            CategoriesUseCase.addNewCategory(
                 db = db,
                 newCategory = newCategory
             )
@@ -231,41 +209,31 @@ class CategoriesViewModel(
         return@runBlocking add.await()
     }
 
-//    fun getNamesList(): Any {
-//        val items = getItemsList()
-//        return if (!items.isNullOrEmpty()) getNamesOfItems(items)
-//        else -1
-//    }
+    fun getNamesList(): Any {
+        val items = getItemsList()
+        return if (!items.isNullOrEmpty()) getNamesOfItems(items)
+        else -1
+    }
 
-    private fun getNamesOfItems(items: List<ParentCategory>): MutableList<String> {
+    private fun getNamesOfItems(items: List<Categories>): MutableList<String> {
         val names = mutableListOf<String>()
-        for (element in items) names.add(app.applicationContext.getString(element.nameRes))
+        for (element in items) names.add(element.categoryName)
         return names
     }
 
-//    private fun getItemsList(): List<ParentCategory>? {
-//        return categoriesList.value?.toList()
-//    }
+    private fun getItemsList(): List<Categories>? {
+        return categoriesList.value?.toList()
+    }
 
     fun setSortingCategories(sorting: String) {
         setSP.saveToSP(argsSortingCategories, sorting)
     }
 
-    fun saveChangedCategory(
-        db: ChildCategoriesDao = dataBase.getDataBase(app).childCategoriesDao(),
-        id: Long,
-        nameRes: Int,
-        parentNameRes: Int,
-        iconResource: Int
-    ) =
+    fun saveChangedCategory(id: Int, name: String, isIncome: Boolean, iconResource: Int) =
         runBlocking {
             val change = async {
-                ChildCategoriesUseCase.changeCategoryLine(
-                    db = db,
-                    id = id,
-                    nameRes = nameRes,
-                    parentNameRes = parentNameRes,
-                    iconResource = iconResource
+                CategoriesUseCase.changeCategoryLine(
+                    db = db, id = id, name = name, isIncome = isIncome, iconResource
                 )
             }
             reloadCategories(change.await().toLong())

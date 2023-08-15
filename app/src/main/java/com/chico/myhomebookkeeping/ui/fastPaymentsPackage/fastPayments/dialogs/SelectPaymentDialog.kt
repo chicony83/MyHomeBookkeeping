@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
@@ -31,9 +30,7 @@ class SelectPaymentDialog(
             builder.setView(layout)
 
             val selectButton = layout.findViewById<Button>(R.id.selectButton)
-            val changeButton = layout.findViewById<Button>(R.id.changeButton).apply {
-                isVisible = fastPayment?.isUserCustom == true
-            }
+            val changeButton = layout.findViewById<Button>(R.id.changeButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
             cancelButton.setOnClickListener { dialogCancel() }
@@ -43,8 +40,9 @@ class SelectPaymentDialog(
                 }
             }
             changeButton.setOnClickListener {
-                dismiss()
-                fastPayment?.let { it1 -> onItemSelectForChangeCallBackLong.onSelect(it1) }
+                fastPayment?.id.let { it1 ->
+                    onItemSelectForChangeCallBackLong.onSelect(it1 ?: 0)
+                }
             }
 
             builder.create()

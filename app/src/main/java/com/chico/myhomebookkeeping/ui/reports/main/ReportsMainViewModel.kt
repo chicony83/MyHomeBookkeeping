@@ -71,8 +71,8 @@ class ReportsMainViewModel(
     val buttonTextOfTimePeriod: LiveData<String>
         get() = _buttonTextOfTimePeriod
 
-    private val _map = MutableLiveData<Map<String?, Double>?>()
-    val map: LiveData<Map<String?, Double>?>
+    private val _map = MutableLiveData<Map<String, Double>?>()
+    val map: LiveData<Map<String, Double>?>
         get() = _map
 
     private val setText = SetTextOnButtons(app.resources)
@@ -153,7 +153,7 @@ class ReportsMainViewModel(
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
     }
 
-    fun getMap(): MutableLiveData<Map<String?, Double>?> {
+    fun getMap(): MutableLiveData<Map<String, Double>?> {
         return _map
     }
 

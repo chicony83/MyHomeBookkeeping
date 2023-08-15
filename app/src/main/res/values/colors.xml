@@ -34,7 +34,6 @@
     <color name="colorSecondaryVariantNight">#6AA695</color>
 
     <color name="calculation_error_color">#F44B3F</color>
-    <color name="item_currency">#2999A6</color>
 
     <!-- Normal Theme -->
     <color name="text_color">#000</color>

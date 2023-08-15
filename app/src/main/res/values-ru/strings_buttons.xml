@@ -3,7 +3,6 @@
     <string name="text_on_button_cash_account">Счёт</string>
     <string name="text_on_button_currency">Валюта</string>
     <string name="text_on_button_category">Категория</string>
-    <string name="text_on_button_category_all">Категория\nALL</string>
 
     <string name="text_on_button_time_period">Период</string>
     <string name="text_on_button_time_period_from">с</string>

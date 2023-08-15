@@ -7,32 +7,23 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
-import com.chico.myhomebookkeeping.db.entity.ChildCategory
-import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.NavControlHelper.Companion.ARGS_CHILD_CATEGORY
 import com.chico.myhomebookkeeping.interfaces.*
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnLongClickListenerCallBack
-import com.chico.myhomebookkeeping.obj.Constants.ARGS_FULL_FAST_PAYMENT
-import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.dialogs.SelectPaymentDialog
+import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import kotlinx.coroutines.*
-import java.util.*
-
 
 class FastPaymentsFragment : Fragment() {
     private var _binding: FragmentFastPaymentsBinding? = null
@@ -40,11 +31,8 @@ class FastPaymentsFragment : Fragment() {
 
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
-    private lateinit var adapter: FastPaymentsAdapter
 
-    private val fastPaymentsViewModel: FastPaymentsViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
-    )
+    private lateinit var fastPaymentsViewModel: FastPaymentsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,77 +40,69 @@ class FastPaymentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFastPaymentsBinding.inflate(inflater, container, false)
-        control = findNavController()
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(controller = control)
+
+        fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
         val layoutManager = GridLayoutManager(activity, 2)
 
-
-        binding.recyclerView.layoutManager = layoutManager
-        adapter = FastPaymentsAdapter(
-            requireContext(),
-            onShortClick = object : OnItemViewClickListenerLong {
-                override fun onClick(
-                    fullFastPayment: FullFastPayment,
-                    childCategory: ChildCategory
-                ) {
-                    findNavController().navigate(
-                        R.id.nav_new_money_moving,
-                        bundleOf(
-                            ARGS_FULL_FAST_PAYMENT to fullFastPayment,
-                            ARGS_CHILD_CATEGORY to childCategory
-                        )
-                    )
-                }
-            },
-            onCreateNewElementClick = object : OnPressCreateNewElement {
-                override fun onPress() {
-                    navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment)
-                    Message.log("PRESS")
-                }
-            },
-            onLongClick = object : OnLongClickListenerCallBack {
-                override fun longClick(fullFastPayment: FullFastPayment): Boolean {
-                    showSelectDialog(fullFastPayment)
-                    return true
-                }
-
-                override fun onLongClick(p0: View?): Boolean {
-                    return true
-                }
-            }
-        )
-
-        binding.recyclerView.adapter = adapter
-
         with(fastPaymentsViewModel) {
+//            sortedByTextOnButton.observe(viewLifecycleOwner, {
+//                binding.sortingButton.text = it
+//            })
 
             fastPaymentsList.observe(viewLifecycleOwner) {
-                adapter.updateList(
-                    it?.toMutableList().apply { this?.add(createAddFastPaymentItem()) })
+                binding.recyclerView.layoutManager = layoutManager
+                binding.recyclerView.adapter = it?.let { it1 ->
+                    FastPaymentsAdapter(
+                        it1,
+                        object : OnItemViewClickListenerLong {
+                            override fun onClick(selectedId: Long) {
+                                Message.log("---Short click detected---")
+                                fastPaymentsViewModel.saveIdFastPaymentForPay(selectedId)
+                                navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
+                            }
+                        },
+                        object : OnPressCreateNewElement {
+                            override fun onPress() {
+                                navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment)
+                                Message.log("PRESS")
+                            }
+                        },
+                        object : OnLongClickListenerCallBack {
+                            override fun longClick(long: Long): Boolean {
+                                Message.log("---LONG click detected  on ${long}---")
+                                showSelectDialog(long)
+                                return true
+                            }
+
+                            override fun onLongClick(p0: View?): Boolean {
+                                return true
+                            }
+                        }
+                    )
+                }
             }
         }
         return binding.root
     }
 
-    private fun showSelectDialog(fullFastPayment: FullFastPayment) {
+    private fun showSelectDialog(selectedId: Long) {
         launchIo {
+
+            val fastPayment = fastPaymentsViewModel.loadSelectedFullFastPayment(selectedId)
             launchUi {
-                val dialog = SelectPaymentDialog(
-                    fullFastPayment,
+                val dialog = SelectPaymentDialog(fastPayment,
                     object : OnItemSelectForChangeCallBackLong {
-                        override fun onSelect(fastPayment: FullFastPayment) {
-                            fastPaymentsViewModel.saveIdFastPaymentForChange(fastPayment.id)
-                            findNavController().navigate(
-                                R.id.nav_change_fast_payment_fragment, bundleOf(
-                                    ARGS_FULL_FAST_PAYMENT to fullFastPayment
-                                )
-                            )
+                        override fun onSelect(id: Long) {
+                            fastPaymentsViewModel.saveIdFastPaymentForChange(id)
+                            navControlHelper.toSelectedFragment(R.id.nav_change_fast_payment_fragment)
                         }
                     },
                     object : OnItemSelectForSelectCallBackLong {
                         override fun onSelect(id: Long) {
-                            fastPaymentsViewModel.saveARGSForPay(fullFastPayment)
+                            fastPaymentsViewModel.saveARGSForPay(fastPayment)
                             navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
                         }
                     }
@@ -132,16 +112,9 @@ class FastPaymentsFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(500)
-            fastPaymentsViewModel.getFullFastPaymentsList()
-        }
-    }
-
     override fun onStart() {
         super.onStart()
+        fastPaymentsViewModel.getFullFastPaymentsList()
 
         if (!fastPaymentsViewModel.isLastVersionOfProgramChecked()) {
             val updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
@@ -232,7 +205,7 @@ class FastPaymentsFragment : Fragment() {
         }
         fastPaymentsViewModel.cleaningSP()
 
-        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_select_currencies_fragment)) {
+        if (navControlHelper.isPreviousFragment(R.id.nav_first_launch_fragment)) {
             fastPaymentsViewModel.reloadRecycler()
         }
     }
@@ -277,18 +250,5 @@ class FastPaymentsFragment : Fragment() {
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
-    }
-
-    private fun createAddFastPaymentItem(): FullFastPayment {
-        return FullFastPayment(
-            id = Calendar.getInstance().timeInMillis,
-            nameFastPayment = FastPaymentsAdapter.ADD_FAST_PAYMENT,
-            rating = 0,
-            isIncome = false,
-            cashAccountNameValue = "",
-            categoryNameValue = "",
-            currencyNameValue = "",
-            childCategories = emptyList() //TODO
-        )
     }
 }

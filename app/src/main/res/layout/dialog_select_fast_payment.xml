@@ -127,7 +127,6 @@
         android:id="@+id/selectButton"
         style="@style/ButtonFullWidth"
         android:text="@string/text_on_button_make_payment"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/description" />
 
     <Button

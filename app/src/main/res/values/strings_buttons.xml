@@ -3,7 +3,6 @@
     <string name="text_on_button_cash_account">Cash account</string>
     <string name="text_on_button_currency">Currency</string>
     <string name="text_on_button_category">Category</string>
-    <string name="text_on_button_category_all">Category\nALL</string>
 
     <string name="text_on_button_time_period">Period</string>
     <string name="text_on_button_time_period_from">from</string>

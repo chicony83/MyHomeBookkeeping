@@ -22,7 +22,6 @@ import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.flow.collect
 
 class FirstLaunchSelectCurrenciesFragment : Fragment() {
@@ -68,10 +67,9 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.onDefaultCurrencyAdded.collect {
                 (requireActivity() as MainActivity).mainActivityViewModel.setFirstLaunchFlag(false)
-                viewModel.setIsFirstLaunchFalse()
 
                 findNavController().navigate(
-                    R.id.nav_fast_payments_fragment,
+                    R.id.nav_first_launch_fragment,
                     null,
                     NavOptions.Builder()
                         .setPopUpTo(R.id.nav_first_launch_select_currencies_fragment, true).build()
@@ -86,7 +84,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.hideKeyboard()
-        control = findNavController()
+        control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
         binding.submitButton.setOnClickListener {
 

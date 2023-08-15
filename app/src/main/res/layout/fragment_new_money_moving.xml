@@ -39,43 +39,18 @@
                 style="@style/TextDescriptions"
                 android:text="@string/description_currency" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginVertical="@dimen/margin_normal"
-                android:scrollbars="none">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/select_currencies_cg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    app:chipSpacing="8dp"
-                    app:singleSelection="true"/>
-
-            </HorizontalScrollView>
+            <Button
+                android:id="@+id/selectCurrenciesButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_currency" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="@string/description_main_category" />
+                android:text="@string/description_category" />
 
             <Button
                 android:id="@+id/selectCategoryButton"
                 style="@style/ButtonFullWidth"
-                android:text="@string/text_on_button_select_category" />
-
-            <TextView
-                android:id="@+id/child_category_title"
-                style="@style/TextDescriptions"
-                android:visibility="gone"
-                android:text="@string/description_child_category" />
-
-            <Button
-                android:id="@+id/selectChildCategoryButton"
-                style="@style/ButtonFullWidth"
-                android:visibility="gone"
                 android:text="@string/text_on_button_select_category" />
 
             <TextView

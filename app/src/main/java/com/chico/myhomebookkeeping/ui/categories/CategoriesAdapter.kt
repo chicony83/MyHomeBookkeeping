@@ -8,22 +8,17 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
-import com.chico.myhomebookkeeping.db.entity.ChildCategory
-import com.chico.myhomebookkeeping.db.entity.ParentCategory
-import com.chico.myhomebookkeeping.domain.entities.NormalizedCategory
-import com.chico.myhomebookkeeping.enums.fromNameResToParentCategoriesEnum
-import com.chico.myhomebookkeeping.interfaces.OnCategoryClickListener
 
 class CategoriesAdapter(
-    categoriesList: List<NormalizedCategory>,
-    val listener: OnCategoryClickListener
+    categoriesList: List<Categories>,
+    val listener: OnItemViewClickListener
 ) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     private var initList = categoriesList
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(categoriesList: List<NormalizedCategory>) {
+    fun updateList(categoriesList: List<Categories>) {
         initList = categoriesList
         this.notifyDataSetChanged()
     }
@@ -48,25 +43,20 @@ class CategoriesAdapter(
         private val binding: RecyclerViewItemCategoriesBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(category: NormalizedCategory) {
-            val ctx = binding.root.context
+        fun bind(category: Categories) {
             with(binding) {
-                if (category.nameRes!=null) root.contentDescription = ctx.getString(category.nameRes)
-                else root.contentDescription = category.name
-
+                root.contentDescription = category.categoryName
                 idCategories.text = category.categoriesId.toString()
 
-                iconImg.setImageResource(category.iconRes ?: R.drawable.no_image)
+                iconImg.setImageResource(category.icon ?: R.drawable.no_image)
 
-                if (category.nameRes!=null) categoryCardViewText.text = ctx.getString(category.nameRes)
-                else categoryCardViewText.text = category.name
-
+                categoryCardViewText.text = category.categoryName
                 categoriesItem.setOnLongClickListener {
-                    category.let { it1 -> listener.onLongClick(it1) }
+                    category.categoriesId?.let { it1 -> listener.onLongClick(it1) }
                     true
                 }
                 categoriesItem.setOnClickListener {
-                    category.let { it1 -> listener.onShortClick(it1) }
+                    category.categoriesId?.let { it1 -> listener.onShortClick(it1) }
                 }
                 if (category.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {

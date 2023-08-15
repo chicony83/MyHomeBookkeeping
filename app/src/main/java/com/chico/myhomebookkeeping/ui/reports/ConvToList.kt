@@ -30,7 +30,7 @@ object ConvToList {
         return list
     }
 
-    fun moneyMovementListToMap(list: List<FullMoneyMoving>): Map<String?, Double> {
+    fun moneyMovementListToMap(list: List<FullMoneyMoving>): Map<String, Double> {
         return list
             .sortedBy { it.categoryNameValue }
             .groupBy { it.categoryNameValue }

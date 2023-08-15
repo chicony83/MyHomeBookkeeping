@@ -9,12 +9,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
-import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.db.dao.CashAccountDao
+import com.chico.myhomebookkeeping.db.dao.CategoryDao
+import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
+import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.db.entity.*
-import com.chico.myhomebookkeeping.db.full.FullFastPayment
+import com.chico.myhomebookkeeping.db.entity.CashAccount
+import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -34,8 +39,6 @@ class NewMoneyMovingViewModel(
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
-    private val db: CurrenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
-
     private val argsNewEntryOfMoneyMovingInDbIsAdded =
         Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
 
@@ -52,10 +55,8 @@ class NewMoneyMovingViewModel(
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
-    private val dbParentCategory: ParentCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
-    private val dbUserParentCategory: UserParentCategoriesDao =
-        dataBase.getDataBase(app.applicationContext).userParentCategoriesDao()
+    private val dbCategory: CategoryDao =
+        dataBase.getDataBase(app.applicationContext).categoryDao()
 
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
@@ -83,25 +84,9 @@ class NewMoneyMovingViewModel(
     val selectedCashAccount: LiveData<CashAccount>
         get() = _selectedCashAccount
 
-    private val _fullFastPayment = MutableLiveData<FullFastPayment?>()
-    val fullFastPayment: LiveData<FullFastPayment?>
-        get() = _fullFastPayment
-
-    private val _selectedCategory = MutableLiveData<ParentCategory?>()
-    val selectedCategory: LiveData<ParentCategory?>
+    private val _selectedCategory = MutableLiveData<Categories>()
+    val selectedCategory: LiveData<Categories>
         get() = _selectedCategory
-
-    private val _selectedUserCategory = MutableLiveData<UserParentCategory?>()
-    val selectedUserCategory: LiveData<UserParentCategory?>
-        get() = _selectedUserCategory
-
-    private val _selectedChildCategory = MutableLiveData<ChildCategory?>()
-    val selectedChildCategory: LiveData<ChildCategory?>
-        get() = _selectedChildCategory
-
-    private val _selectedUserChildCategory = MutableLiveData<ChildCategory?>()
-    val selectedUserChildCategory: LiveData<ChildCategory?>
-        get() = _selectedUserChildCategory
 
     private val _enteredDescription = MutableLiveData<String>()
     val enteredDescription: LiveData<String>
@@ -118,12 +103,6 @@ class NewMoneyMovingViewModel(
     private var _onCalcAmountSelected = MutableStateFlow("")
     val onCalcAmountSelected: StateFlow<String> = _onCalcAmountSelected
 
-    private val _currenciesList = MutableLiveData<List<Currencies>>()
-    val currenciesList: LiveData<List<Currencies>> = _currenciesList
-
-    private val _selectedCurrencyChip = MutableLiveData<Currencies>()
-    val selectedCurrencyChip: LiveData<Currencies> = _selectedCurrencyChip
-
     //    private var idMoneyMovingForChange: Long = -1
 
     private var dateTimeSPLong = minusOneLong
@@ -134,43 +113,11 @@ class NewMoneyMovingViewModel(
     private var descriptionSPString = ""
 //    var id: Long = -1
 
-    init {
-        loadCurrencies()
-    }
-
     fun getAndCheckArgsSp() {
+
         getSharedPreferencesArgs()
         setSubmitButtonText(app.getString(R.string.text_on_button_add))
         setValuesViewModel()
-    }
-
-    fun setFullFastPayment(fullFastPayment: FullFastPayment?) {
-        _fullFastPayment.value = fullFastPayment
-    }
-
-    fun setChildCategory(childCategory: ChildCategory?) {
-        if (fullFastPayment.value?.isUserCustom == false)
-        _selectedChildCategory.value = childCategory
-        else  _selectedUserChildCategory.value = childCategory
-    }
-
-    fun loadAndSetParentCategory(fullFastPayment: FullFastPayment) {
-        viewModelScope.launch {
-            val parentCategories = dbParentCategory.getAllParentCategoriesSortNameASC()
-            _selectedCategory.postValue(parentCategories.firstOrNull { app.getString(it.nameRes) == fullFastPayment.categoryNameValue })
-        }
-    }
-
-    fun setUserParentCategory(fullFastPayment: FullFastPayment) {
-        viewModelScope.launch {
-            val userParentCategories = dbUserParentCategory.getAllUserParentCategoriesSortIdDESC()
-        _selectedUserCategory.postValue(userParentCategories.firstOrNull { it.name == fullFastPayment.categoryNameValue })
-    }}
-
-    private fun loadCurrencies() {
-        launchIo {
-            _currenciesList.postValue(db.getAllCurrenciesSortNameAsc())
-        }
     }
 
     private fun getSharedPreferencesArgs() {
@@ -178,7 +125,7 @@ class NewMoneyMovingViewModel(
         dateTimeSPLong = getSP.getLong(argsDateTimeCreateKey)
         cashAccountSPInt = getSP.getInt(argsCashAccountCreateKey)
         currencySPInt = getSP.getInt(argsCurrencyCreateKey)
-//        categorySPInt = getSP.getInt(argsCategoryCreateKey)
+        categorySPInt = getSP.getInt(argsCategoryCreateKey)
         amountSPString = getSP.getString(argsAmountCreateKey).toString()
         descriptionSPString = getSP.getString(argsDescriptionCreateKey).toString()
     }
@@ -205,9 +152,9 @@ class NewMoneyMovingViewModel(
                 )
             }
         }
-//        launchIo {
-//            if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory(categorySPInt) }
-//        }
+        launchIo {
+            if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory(categorySPInt) }
+        }
         launchIo {
             if (modelCheck.isPositiveValue(amountSPString)) launchUi {
                 postAmount(
@@ -236,17 +183,16 @@ class NewMoneyMovingViewModel(
         _dateTime.postValue(dateTimeSPLong.parseTimeFromMillis())
     }
 
-//    private suspend fun postCategory(idNum: Int) {
-//        _selectedCategory.postValue(
-//            CategoriesUseCase.getOneCategory(dbCategory, idNum)
-//        )
-//    }
+    private suspend fun postCategory(idNum: Int) {
+        _selectedCategory.postValue(
+            CategoriesUseCase.getOneCategory(dbCategory, idNum)
+        )
+    }
 
-
-    fun postCurrency(currencyId: Int?) {
-        _selectedCurrencyChip.value =
-            currenciesList.value?.firstOrNull { it.currencyId == currencyId }
-        _selectedCurrency.value = currenciesList.value?.firstOrNull { it.currencyId == currencyId }
+    private suspend fun postCurrency(idNum: Int) {
+        _selectedCurrency.postValue(
+            CurrenciesUseCase.getOneCurrency(dbCurrencies, idNum)
+        )
     }
 
     private suspend fun postCashAccount(idNum: Int) {
@@ -267,10 +213,10 @@ class NewMoneyMovingViewModel(
                 argsCashAccountCreateKey,
                 _selectedCashAccount.value?.cashAccountId
             )
-//            saveToSP(
-//                argsCategoryCreateKey,
-//                _selectedCategory.value?.categoriesId
-//            )
+            saveToSP(
+                argsCategoryCreateKey,
+                _selectedCategory.value?.categoriesId
+            )
             if (amount > 0) {
                 saveToSP(argsAmountCreateKey, amount.toString())
             }
@@ -284,36 +230,13 @@ class NewMoneyMovingViewModel(
     ): Long {
         val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
         val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
-        val categoryValue: Int = _selectedCategory.value?.categoriesId?.toInt() ?: 0
-        val childCategoryNameResValue: Int = _selectedChildCategory.value?.nameRes ?: 0
+        val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
         val moneyMovement = MoneyMovement(
             timeStamp = dateTime,
             amount = amount,
             cashAccount = cashAccountValue,
             category = categoryValue,
-            childCategoryNameResValue = childCategoryNameResValue,
-            currency = currencyValue,
-            description = description
-        )
-        return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
-    }
-
-    suspend fun addNewUserCustomMoneyMoving(
-        amount: Double,
-        description: String
-    ): Long {
-        val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
-        val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
-        val categoryName: String = _selectedUserCategory.value?.name.orEmpty()
-        val childCategoryName: String = _selectedUserChildCategory.value?.name.orEmpty()
-        val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
-        val moneyMovement = MoneyMovement(
-            timeStamp = dateTime,
-            amount = amount,
-            cashAccount = cashAccountValue,
-            categoryUserName = categoryName,
-            childCategoryUserName = childCategoryName,
             currency = currencyValue,
             description = description
         )
@@ -362,9 +285,6 @@ class NewMoneyMovingViewModel(
     }
 
     fun clearSPAfterSave() {
-        _fullFastPayment.value = null
-        _selectedUserChildCategory.value = null
-        _selectedUserCategory.value = null
         with(setSP) {
             saveToSP(argsDateTimeCreateKey, minusOneLong)
             saveToSP(argsAmountCreateKey, "")
@@ -377,7 +297,7 @@ class NewMoneyMovingViewModel(
     }
 
     fun setCalcSelectedAmount(amount: String, decimalSeparatorSymbol: String) {
-        val clearedAmount = removeWhitespacesAndCommas(amount, decimalSeparatorSymbol)
+        val clearedAmount = removeWhitespacesAndCommas(amount,decimalSeparatorSymbol)
         viewModelScope.launch {
             if (clearedAmount.hasExpression()) {
                 _onCalcAmountSelected.value = ""

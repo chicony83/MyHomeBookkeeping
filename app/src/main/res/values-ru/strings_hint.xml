@@ -2,7 +2,6 @@
 <resources>
     <string name="hint_new_currency_only_last_4_digits">Только последние 4 цифры</string>
     <string name="hint_enter_name">Введите название</string>
-    <string name="hint_is_income">Категория принадлежит к доходам?</string>
     <string name="hint_new_currency_enter_name_short">Введите короткое название</string>
     <string name="hint_new_currency_enter_name_ISO">Введите ISO</string>
     <string name="hint_enter_amount">Введите сумму</string>

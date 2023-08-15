@@ -2,6 +2,7 @@ package com.chico.myhomebookkeeping.domain
 
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.entity.CashAccount
+import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchViewModel
 import com.chico.myhomebookkeeping.utils.launchForResult
 
 object CashAccountsUseCase {

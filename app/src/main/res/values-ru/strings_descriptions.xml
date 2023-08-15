@@ -9,8 +9,6 @@
     <string name="description_cash_account">Счет</string>
     <string name="description_currency">Валюта</string>
     <string name="description_category">Категория</string>
-    <string name="description_main_category">Главная Категория</string>
-    <string name="description_child_category">Дочерняя Категория</string>
     <string name="description_amount">Сумма</string>
     <string name="description_description">Описание</string>
 

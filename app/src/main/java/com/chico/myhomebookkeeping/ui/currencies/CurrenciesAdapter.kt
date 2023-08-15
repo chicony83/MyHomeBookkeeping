@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCurrenciesBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.interfaces.OnCurrencyClickListener
 
 class CurrenciesAdapter(
     private val currenciesList: List<Currencies>,
-    val listener: OnCurrencyClickListener
+    val listener: OnItemViewClickListener
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
 
@@ -41,11 +40,11 @@ class CurrenciesAdapter(
                 iSOCurrency.text = currencies.iso4217
 
                 currenciesItem.setOnLongClickListener {
-                    currencies.let { it1 -> listener.onLongClick(it1) }
+                    currencies.currencyId?.let { it1 -> listener.onLongClick(it1) }
                     true
                 }
                 currenciesItem.setOnClickListener {
-                    currencies.let { it1 -> listener.onShortClick(it1) }
+                    currencies.currencyId?.let { it1 -> listener.onShortClick(it1) }
                 }
             }
         }

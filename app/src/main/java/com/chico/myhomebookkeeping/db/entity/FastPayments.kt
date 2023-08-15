@@ -29,9 +29,6 @@ data class FastPayments(
 
     @ColumnInfo(name = "description")
     val description: String?,
-
-    @ColumnInfo(name = "childCategories")
-    val childCategories: List<ChildCategory>
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null

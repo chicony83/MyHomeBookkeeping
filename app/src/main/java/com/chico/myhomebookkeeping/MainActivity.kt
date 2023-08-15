@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 //        eraseSP.eraseTempSP()
 
         if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_select_currencies_fragment)
-//        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.showAddCategoriesFragment)
+//        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_fragment)
     }
 
     private fun uiMode() {
@@ -131,10 +131,10 @@ class MainActivity : AppCompatActivity() {
                         uiHelper.hideUiElement(toolbar)
                         uiHelper.hideUiElement(bottomNavigationView)
                     }
-//                    R.id.showAddCategoriesFragment -> {
-//                        uiHelper.hideUiElement(toolbar)
-//                        uiHelper.hideUiElement(bottomNavigationView)
-//                    }
+                    R.id.nav_first_launch_fragment -> {
+                        uiHelper.hideUiElement(toolbar)
+                        uiHelper.hideUiElement(bottomNavigationView)
+                    }
 //                    R.id.nav_new_money_moving->{
 //                        uiHelper.hideUiElement(bottomNavigation)
 //                    }

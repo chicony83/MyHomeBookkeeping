@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
-import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.DayNightMode
@@ -21,8 +20,7 @@ class MoneyMovingAdapter(
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolderMovingItem>() {
     private lateinit var plus: String
     private lateinit var minus: String
-
-    //    private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//    private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
 //
 //    private var dayToday: Long = 0
 //    private var dayYesterday: Long = 0
@@ -93,7 +91,6 @@ class MoneyMovingAdapter(
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
                 categoryName.text = moneyMovement.categoryNameValue
-                childCategoryName.text = moneyMovement.childCategoryNameValue
 
                 if (!moneyMovement.description.isNullOrEmpty()) {
                     description.text = moneyMovement.description
@@ -115,7 +112,7 @@ class MoneyMovingAdapter(
                 if (moneyMovement.isIncome) {
                     amountEditText.text = plus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        with(binding) {
+                        with(binding){
                             amountEditText.setTextColor(
                                 itemView.resources.getColor(
                                     R.color.incomeTextColor,
@@ -137,7 +134,7 @@ class MoneyMovingAdapter(
                     }
                 }
                 moneyMovingItem.setOnClickListener {
-//                    moneyMovement.id.let { listener.onClick(it) }
+                    moneyMovement.id.let { listener.onClick(it) }
                 }
             }
         }

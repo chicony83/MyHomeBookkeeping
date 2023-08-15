@@ -27,7 +27,6 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val argsEndTimePeriodForReports = Constants.ARGS_REPORTS_END_TIME_PERIOD
 
     private val argsCreateCategory = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
-    private val argsCreateChildCategory = Constants.ARGS_NEW_PAYMENT_CHILD_CATEGORY_KEY
     private val argsQueryCategory = Constants.ARGS_QUERY_PAYMENT_CATEGORY_KEY
     private val argsChangeCategory = Constants.ARGS_CHANGE_PAYMENT_CATEGORY_KEY
     private val argsNewFastPaymentCategory = Constants.ARGS_NEW_FAST_PAYMENT_CATEGORY
@@ -65,7 +64,6 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
             navNewMoneyMoving -> {
                 when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsCreateCategory
-                    R.id.nav_child_categories -> args = argsCreateChildCategory
                     R.id.nav_cash_account -> args = argsCreateCashAccount
                     R.id.nav_currencies -> args = argsCreateCurrency
                 }
