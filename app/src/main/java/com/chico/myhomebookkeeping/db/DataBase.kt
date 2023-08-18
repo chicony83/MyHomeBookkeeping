@@ -21,7 +21,7 @@ import com.chico.myhomebookkeeping.db.entity.*
         IconsResource::class,
         IconCategory::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
 abstract class RoomDataBase : RoomDatabase() {
@@ -48,6 +48,7 @@ object dataBase {
             .addMigrations(migration_2_to_3)
             .addMigrations(migration_3_to_4)
             .addMigrations(migration_4_to_5)
+            .addMigrations(migration_5_to_6)
             .build()
 }
 
@@ -81,5 +82,10 @@ private object migration_4_to_5 : Migration(4, 5) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'currency_name_short' TEXT")
         database.execSQL("ALTER TABLE 'currency_table' ADD COLUMN 'iso_4217' TEXT")
+    }
+}
+private object migration_5_to_6:Migration(5,6){
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'parent_category_id' INTEGER")
     }
 }

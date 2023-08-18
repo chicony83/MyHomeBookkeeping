@@ -252,7 +252,8 @@ class CategoriesFragment : Fragment() {
                     val category = Categories(
                         categoryName = name,
                         isIncome = isIncome,
-                        icon = icon
+                        icon = icon,
+                        parentCategoryId = null
                     )
                     val result: Long = viewModel.addNewCategory(category)
                     if (isSelect) {

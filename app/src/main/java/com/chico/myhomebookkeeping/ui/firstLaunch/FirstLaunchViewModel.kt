@@ -164,7 +164,10 @@ class FirstLaunchViewModel(
     private suspend fun addCategory(item: SelectedItemOfImageAndCheckBox, isIncome: Boolean): Long {
         return dbCategories.addCategory(
             Categories(
-                item.checkBox.text.toString(), isIncome, item.img
+                categoryName = item.checkBox.text.toString(),
+                isIncome = isIncome,
+                icon = item.img,
+                parentCategoryId = null
             )
         )
     }
