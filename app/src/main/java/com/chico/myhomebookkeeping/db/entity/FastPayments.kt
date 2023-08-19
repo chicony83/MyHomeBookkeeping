@@ -8,25 +8,18 @@ import androidx.room.PrimaryKey
 data class FastPayments(
     @ColumnInfo(name = "icon")
     val icon: Int?,
-
     @ColumnInfo(name = "name_fast_payment")
     val nameFastPayment:String,
-
     @ColumnInfo(name = "rating")
     val rating:Int,
-
     @ColumnInfo(name = "cash_account")
     val cashAccountId: Int,
-
     @ColumnInfo(name = "currency")
     val currencyId: Int,
-
     @ColumnInfo(name = "category")
     val categoryId: Int,
-
     @ColumnInfo(name = "amount")
     val amount:Double?,
-
     @ColumnInfo(name = "description")
     val description: String?,
 ) {

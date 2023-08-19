@@ -8,10 +8,8 @@ import androidx.room.PrimaryKey
 data class IconsResource(
     @ColumnInfo(name = "icon_name")
     val iconName:String,
-
     @ColumnInfo(name = "icon_category")
     val iconCategory:Int?,
-
     @ColumnInfo(name = "icon_resource")
     val iconResources:Int
 ) {
