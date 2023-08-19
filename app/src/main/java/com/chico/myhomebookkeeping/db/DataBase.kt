@@ -86,6 +86,8 @@ private object migration_4_to_5 : Migration(4, 5) {
 }
 private object migration_5_to_6:Migration(5,6){
     override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("DROP TABLE 'parent_categories_table'")
+        database.execSQL("CREATE TABLE IF NOT EXISTS 'parent_categories_table' ('id' INTEGER, 'name' TEXT NOT NULL, 'icon_parent_category' INTEGER, PRIMARY KEY ('id'))")
         database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'parent_category_id' INTEGER")
     }
 }
