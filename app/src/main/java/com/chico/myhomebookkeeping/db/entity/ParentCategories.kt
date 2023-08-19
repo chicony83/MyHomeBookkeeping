@@ -12,5 +12,5 @@ class ParentCategories(
     val icon:Int?
 ){
     @PrimaryKey(autoGenerate = true)
-    var id:Long? = null
+    var id:Int? = null
 }

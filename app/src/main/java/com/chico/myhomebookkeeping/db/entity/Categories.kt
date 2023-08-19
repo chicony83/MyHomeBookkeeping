@@ -11,7 +11,9 @@ data class Categories(
     @ColumnInfo(name = "is_income")
     val isIncome:Boolean,
     @ColumnInfo(name = "icon_category")
-    val icon:Int?
+    val icon:Int?,
+    @ColumnInfo(name = "parent_category_id")
+    val parentCategoryId:Int?
 ) {
     @PrimaryKey(autoGenerate = true)
     var categoriesId: Int? = null
