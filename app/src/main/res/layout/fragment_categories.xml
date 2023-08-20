@@ -85,6 +85,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/parentCategoryHolder"
+            style="@style/RecyclerHolder"
+            android:layout_height="250dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/recycler_view_item_parent_categories"/>
 
         <Button
             android:id="@+id/sortingButton"
@@ -106,7 +115,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/parentCategoryHolder"
             tools:listitem="@layout/recycler_view_item_categories" />
 
         <Button

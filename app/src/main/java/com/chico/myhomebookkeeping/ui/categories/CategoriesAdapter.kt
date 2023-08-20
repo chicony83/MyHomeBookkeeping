@@ -50,7 +50,7 @@ class CategoriesAdapter(
 
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
 
-                categoryCardViewText.text = category.categoryName
+                categoryNameTextView.text = category.categoryName
                 categoriesItem.setOnLongClickListener {
                     category.categoriesId?.let { it1 -> listener.onLongClick(it1) }
                     true
