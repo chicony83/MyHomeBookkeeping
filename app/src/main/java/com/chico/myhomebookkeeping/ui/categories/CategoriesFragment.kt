@@ -58,7 +58,7 @@ class CategoriesFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         binding.onClear = {
             requireView().hideKeyboard()
-            visibleInvisible(binding.selectAllButton, true)
+//            visibleInvisible(binding.selectAllButton, true)
             visibleInvisible(binding.searchTil, false)
             searchMode = false
             skipScroll = true
@@ -92,12 +92,12 @@ class CategoriesFragment : Fragment() {
                 if (!skipScroll) {
                     when ((recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()) {
                         0 -> {
-                            visibleInvisible(binding.selectAllButton, !searchMode)
+//                            visibleInvisible(binding.selectAllButton, !searchMode)
                             visibleInvisible(binding.searchTil, searchMode)
                             if (!searchMode) requireView().hideKeyboard()
                         }
                         else -> {
-                            visibleInvisible(binding.selectAllButton, false)
+//                            visibleInvisible(binding.selectAllButton, false)
                             visibleInvisible(binding.searchTil, true)
                         }
                     }
@@ -133,18 +133,18 @@ class CategoriesFragment : Fragment() {
 
         view.hideKeyboard()
         with(binding) {
-            selectAllIncomeButton.setOnClickListener {
-                viewModel.selectIncomeCategory(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
-            }
-            selectAllSpendingButton.setOnClickListener {
-                viewModel.selectSpendingCategory(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
-            }
-            selectAllButton.setOnClickListener {
-                viewModel.selectAllCategories(navControlHelper)
-                navControlHelper.moveToMoneyMovingFragment()
-            }
+//            selectAllIncomeButton.setOnClickListener {
+//                viewModel.selectIncomeCategory(navControlHelper)
+//                navControlHelper.moveToMoneyMovingFragment()
+//            }
+//            selectAllSpendingButton.setOnClickListener {
+//                viewModel.selectSpendingCategory(navControlHelper)
+//                navControlHelper.moveToMoneyMovingFragment()
+//            }
+//            selectAllButton.setOnClickListener {
+//                viewModel.selectAllCategories(navControlHelper)
+//                navControlHelper.moveToMoneyMovingFragment()
+//            }
             sortingButton.setOnClickListener {
                 val popupMenu = PopupMenu(context, sortingButton)
                 popupMenu.menuInflater.inflate(
@@ -178,16 +178,16 @@ class CategoriesFragment : Fragment() {
                 showNewCategoryDialog()
             }
         }
-        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
-            or
-            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
-        ) {
-            with(uiHelper) {
-                hideUiElement(binding.selectAllButton)
-                hideUiElement(binding.selectAllIncomeButton)
-                hideUiElement(binding.selectAllSpendingButton)
-            }
-        }
+//        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
+//            or
+//            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
+//        ) {
+//            with(uiHelper) {
+//                hideUiElement(binding.selectAllButton)
+//                hideUiElement(binding.selectAllIncomeButton)
+//                hideUiElement(binding.selectAllSpendingButton)
+//            }
+//        }
     }
 
     private fun sortingCategories(sorting: String) {
