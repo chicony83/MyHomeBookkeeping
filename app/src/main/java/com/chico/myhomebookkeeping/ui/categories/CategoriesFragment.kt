@@ -29,6 +29,8 @@ import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBac
 import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCategoryDialog
+import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategoriesAdapter
+import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategoriesViewModel
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -37,7 +39,8 @@ import java.util.*
 
 class CategoriesFragment : Fragment() {
 
-    private val viewModel: CategoriesViewModel by viewModels()
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
+    private val parentCategoriesViewModel: ParentCategoriesViewModel by viewModels()
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: CategoryDao
@@ -63,8 +66,23 @@ class CategoriesFragment : Fragment() {
             searchMode = false
             skipScroll = true
         }
+        with(parentCategoriesViewModel) {
+            parentCategoriesList.observe(viewLifecycleOwner) {
+                binding.parentCategoryHolder.adapter = ParentCategoriesAdapter(it,
+                    object : OnItemViewClickListener {
+                        override fun onShortClick(selectedId: Int) {
 
-        with(viewModel) {
+                        }
+
+                        override fun onLongClick(selectedId: Int) {
+
+                        }
+
+                    }
+                )
+            }
+        }
+        with(categoriesViewModel) {
             sortedByTextOnButton.observe(viewLifecycleOwner) {
                 binding.sortingButton.text = it
             }
@@ -73,7 +91,7 @@ class CategoriesFragment : Fragment() {
                     CategoriesAdapter(it,
                         object : OnItemViewClickListener {
                             override fun onShortClick(selectedId: Int) {
-                                viewModel.saveData(navControlHelper, selectedId)
+                                categoriesViewModel.saveData(navControlHelper, selectedId)
                                 navControlHelper.moveToPreviousFragment()
                             }
 
@@ -96,13 +114,13 @@ class CategoriesFragment : Fragment() {
                             visibleInvisible(binding.searchTil, searchMode)
                             if (!searchMode) requireView().hideKeyboard()
                         }
+
                         else -> {
 //                            visibleInvisible(binding.selectAllButton, false)
                             visibleInvisible(binding.searchTil, true)
                         }
                     }
-                }
-                else{
+                } else {
                     skipScroll = false
                     searchMode = false
                 }
@@ -113,11 +131,12 @@ class CategoriesFragment : Fragment() {
             searchTil.editText?.doAfterTextChanged { char ->
                 searchMode = true
                 if (char.toString().isEmpty()) {
-                    (categoryHolder.adapter as CategoriesAdapter).updateList(viewModel.categoriesList.value.orEmpty())
+                    (categoryHolder.adapter as CategoriesAdapter).updateList(categoriesViewModel.categoriesList.value.orEmpty())
                 } else {
-                    val filteredCategories = viewModel.categoriesList.value.orEmpty().filter {
-                        it.categoryName.lowercase(Locale.getDefault()).contains(char.toString())
-                    }
+                    val filteredCategories =
+                        categoriesViewModel.categoriesList.value.orEmpty().filter {
+                            it.categoryName.lowercase(Locale.getDefault()).contains(char.toString())
+                        }
                     (categoryHolder.adapter as CategoriesAdapter).updateList(filteredCategories)
                 }
             }
@@ -157,14 +176,17 @@ class CategoriesFragment : Fragment() {
 //                            Message.log("sort by numbers ASC")
                             sortingCategories(SortingCategories.NumbersByASC.toString())
                         }
+
                         R.id.sort_by_numbers_DESC -> {
                             sortingCategories(SortingCategories.NumbersByDESC.toString())
 //                            Message.log("Sort by numbers DESC")
                         }
+
                         R.id.sort_by_alphabet_ASC -> {
                             sortingCategories(SortingCategories.AlphabetByASC.toString())
 //                            Message.log("Sorting by alphabet ASC")
                         }
+
                         R.id.sort_by_alphabet_DESC -> {
                             sortingCategories(SortingCategories.AlphabetByDESC.toString())
 //                            Message.log("Sorting by alphabet DESC")
@@ -191,7 +213,7 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun sortingCategories(sorting: String) {
-        with(viewModel) {
+        with(categoriesViewModel) {
             setSortingCategories(sorting)
             reloadCategories()
         }
@@ -199,7 +221,7 @@ class CategoriesFragment : Fragment() {
 
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
-            val category: Categories? = viewModel.loadSelectedCategory(selectedId)
+            val category: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
             launchUi {
                 val dialog = SelectCategoryDialog(category,
                     object : OnItemSelectForChangeCallBack {
@@ -209,7 +231,7 @@ class CategoriesFragment : Fragment() {
                     },
                     object : OnItemSelectForSelectCallBackInt {
                         override fun onSelect(id: Int) {
-                            viewModel.saveData(navControlHelper, id)
+                            categoriesViewModel.saveData(navControlHelper, id)
                             navControlHelper.moveToPreviousFragment()
                         }
                     })
@@ -231,7 +253,7 @@ class CategoriesFragment : Fragment() {
                     isIncome: Boolean,
                     iconResource: Int
                 ) {
-                    viewModel.saveChangedCategory(id, name, isIncome, iconResource)
+                    categoriesViewModel.saveChangedCategory(id, name, isIncome, iconResource)
                 }
             })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -239,7 +261,7 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun showNewCategoryDialog() {
-        val result = viewModel.getNamesList()
+        val result = categoriesViewModel.getNamesList()
         launchUi {
             val dialog = NewCategoryDialog(result, object : OnAddNewCategoryCallBack {
 
@@ -255,9 +277,9 @@ class CategoriesFragment : Fragment() {
                         icon = icon,
                         parentCategoryId = null
                     )
-                    val result: Long = viewModel.addNewCategory(category)
+                    val result: Long = categoriesViewModel.addNewCategory(category)
                     if (isSelect) {
-                        viewModel.saveData(navControlHelper, result.toInt())
+                        categoriesViewModel.saveData(navControlHelper, result.toInt())
                         navControlHelper.moveToPreviousFragment()
                     }
                 }

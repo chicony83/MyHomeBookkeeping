@@ -88,6 +88,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentCategoryHolder"
             style="@style/RecyclerHolder"
+            android:layout_width="match_parent"
             android:layout_height="250dp"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"

@@ -41,8 +41,7 @@ class CategoriesAdapter(
 
     inner class ViewHolder(
         private val binding: RecyclerViewItemCategoriesBinding
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Categories) {
             with(binding) {
                 root.contentDescription = category.categoryName
