@@ -13,18 +13,18 @@
         android:paddingEnd="@dimen/margin_half_normal">
 
         <TextView
+            style="@style/RecyclerViewItem"
             android:gravity="center"
             android:id="@+id/nameCurrency"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="USD" />
+            tools:text="united state dollar" />
 
         <TextView
+            style="@style/RecyclerViewItem"
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_normal"
             android:text="@string/text_view_arrow_to_the_right" />
 
     </LinearLayout>

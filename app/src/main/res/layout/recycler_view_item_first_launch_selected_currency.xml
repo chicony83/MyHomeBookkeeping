@@ -13,18 +13,17 @@
         android:paddingEnd="@dimen/margin_normal">
 
         <TextView
+            style="@style/RecyclerViewItem"
             android:id="@+id/remButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_half_normal"
             android:text="@string/text_view_arrow_to_the_left" />
 
         <TextView
+            style="@style/RecyclerViewItem"
             android:gravity="center"
             android:id="@+id/nameCurrency"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_half_normal"
             android:layout_weight="1"
             tools:text="EUR" />
 
