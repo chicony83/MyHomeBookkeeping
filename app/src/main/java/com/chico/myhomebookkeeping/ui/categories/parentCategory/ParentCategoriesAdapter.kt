@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.categories.parentCategory
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemParentCategoriesBinding
@@ -23,18 +24,38 @@ class ParentCategoriesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int  = initList.size
+    override fun getItemCount(): Int = initList.size + 2
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(initList[position])
+        if (position < initList.size) {
+            holder.bind(initList[position])
+        } else if (position == initList.size + 1) {
+            holder.bindNoParentCategory()
+        } else if (position == initList.size + 2) {
+            holder.bindAddNewPArentCategory()
+        }
     }
 
     inner class ViewHolder(
         private val binding: RecyclerViewItemParentCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(parentCategory: ParentCategories) {
-            with(binding){
+            with(binding) {
                 parentCategoryNameTextView.text = parentCategory.name
+            }
+        }
+
+        fun bindNoParentCategory() {
+            with(binding){
+                parentCategoriesItem.visibility == View.GONE
+                noParentCategoryItem.visibility==View.VISIBLE
+            }
+        }
+
+        fun bindAddNewPArentCategory() {
+            with(binding){
+                parentCategoriesItem.visibility == View.GONE
+                newParentCategoriesItem.visibility == View.VISIBLE
             }
         }
     }
