@@ -67,13 +67,24 @@
                     style="@style/EditTextAmount"
                     android:layout_width="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/calc_button"
+                    app:layout_constraintEnd_toStartOf="@id/eraseButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
+                    android:id="@+id/eraseButton"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:background="?android:selectableItemBackground"
+                    android:contentDescription="@string/content_description_erase_button"
+                    android:src="@drawable/button_clear"
+                    app:layout_constraintEnd_toStartOf="@id/calc_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
                     android:id="@+id/calc_button"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="@dimen/margin_normal"
                     android:background="?android:selectableItemBackground"
@@ -83,17 +94,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:visibility="gone"
-                    android:id="@+id/eraseButton"
-                    android:layout_width="30dp"
-                    android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
-                    android:contentDescription="@string/content_description_erase_button"
-                    android:src="@drawable/button_clear"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/amountEditText"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
