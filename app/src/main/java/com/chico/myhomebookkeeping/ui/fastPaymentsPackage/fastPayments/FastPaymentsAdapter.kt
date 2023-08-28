@@ -12,13 +12,13 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFastPaymentBindin
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
-import com.chico.myhomebookkeeping.interfaces.OnPressCreateNewElement
+import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnLongClickListenerCallBack
 
 class FastPaymentsAdapter(
     private val fullFastPaymentsList: List<FullFastPayment>,
     private val listener: OnItemViewClickListenerLong,
-    private val pressCreateNewElement: OnPressCreateNewElement,
+    private val pressCreateNewElement: OnClickCreateNewElementCallBack,
     private val onLongClickListener: OnLongClickListenerCallBack
 
 ) : RecyclerView.Adapter<FastPaymentsAdapter.ViewHolderFastPaymentItem>() {

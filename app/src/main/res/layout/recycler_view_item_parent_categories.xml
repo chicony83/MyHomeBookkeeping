@@ -5,8 +5,9 @@
     style="@style/RecyclerViewCard.Categories">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/parentCategoriesItem"
+        android:id="@+id/parent_categories_item"
         style="@style/RecyclerViewItem"
+        android:visibility="gone"
         tool:visibility="gone">
 
         <ImageView
@@ -19,10 +20,11 @@
             tool:src="@drawable/no_image" />
 
         <TextView
+            android:visibility="gone"
+            android:text="@string/text_on_button_no"
             android:id="@+id/id_parent_categories"
             style="@style/TextView.RecyclerViewHorizontalItem"
             android:layout_marginEnd="@dimen/margin_normal"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/icon_imageView"
             app:layout_constraintStart_toEndOf="@id/icon_imageView"
             app:layout_constraintTop_toTopOf="@id/icon_imageView"
@@ -43,7 +45,7 @@
         android:id="@+id/no_parent_category_item"
         style="@style/RecyclerViewItem"
         android:visibility="gone"
-        tool:visibility="visible">
+        tool:visibility="gone">
 
         <TextView
             android:gravity="center"
@@ -57,17 +59,20 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/newParentCategoriesItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/new_parent_categories_item"
+        style="@style/RecyclerViewItem"
         android:visibility="gone"
-        tool:visibility="gone">
+        tool:visibility="visible">
 
-        <ImageButton
-            android:id="@+id/add_new_parent_category_imageButton"
+        <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/add_new_parent_category_imageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/add" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

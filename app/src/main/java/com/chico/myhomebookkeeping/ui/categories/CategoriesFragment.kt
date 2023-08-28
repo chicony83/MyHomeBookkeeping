@@ -19,11 +19,13 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.enums.SortingCategories
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
+import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
@@ -71,13 +73,18 @@ class CategoriesFragment : Fragment() {
                 binding.parentCategoryHolder.adapter = ParentCategoriesAdapter(it,
                     object : OnItemViewClickListener {
                         override fun onShortClick(selectedId: Int) {
-
+                            showMessage("short click on $selectedId")
                         }
 
                         override fun onLongClick(selectedId: Int) {
-
+                            showMessage("long click on $selectedId")
                         }
 
+                    },
+                    object :OnClickCreateNewElementCallBack{
+                        override fun onPress() {
+                            showMessage("new element")
+                        }
                     }
                 )
             }
