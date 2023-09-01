@@ -18,8 +18,8 @@ import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.enums.SortingCategories
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
@@ -28,9 +28,11 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
-import com.chico.myhomebookkeeping.ui.categories.dialogs.ChangeCategoryDialog
-import com.chico.myhomebookkeeping.ui.categories.dialogs.NewCategoryDialog
-import com.chico.myhomebookkeeping.ui.categories.dialogs.SelectCategoryDialog
+import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
+import com.chico.myhomebookkeeping.ui.categories.dialogs.category.ChangeCategoryDialog
+import com.chico.myhomebookkeeping.ui.categories.dialogs.category.NewCategoryDialog
+import com.chico.myhomebookkeeping.ui.categories.dialogs.category.SelectCategoryDialog
+import com.chico.myhomebookkeeping.ui.categories.dialogs.parentCategory.NewParentCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategoriesAdapter
 import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategoriesViewModel
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -79,11 +81,10 @@ class CategoriesFragment : Fragment() {
                         override fun onLongClick(selectedId: Int) {
                             showMessage("long click on $selectedId")
                         }
-
                     },
-                    object :OnClickCreateNewElementCallBack{
+                    object : OnClickCreateNewElementCallBack {
                         override fun onPress() {
-                            showMessage("new element")
+                            showNewParentCategoryDialog()
                         }
                     }
                 )
@@ -291,6 +292,25 @@ class CategoriesFragment : Fragment() {
                     }
                 }
             })
+            dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
+        }
+    }
+
+    private fun showNewParentCategoryDialog() {
+        launchUi {
+            val dialog = NewParentCategoryDialog(
+                object : OnAddNewParentCategoryCallBack {
+                    override fun add(name: String, icon: Int?) {
+                        val parentCategory = ParentCategories(
+                            name = name,
+                            icon = icon
+                        )
+                        val result:Long = parentCategoriesViewModel.addNewParentCategory(parentCategory)
+                    }
+
+                }
+
+            )
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }

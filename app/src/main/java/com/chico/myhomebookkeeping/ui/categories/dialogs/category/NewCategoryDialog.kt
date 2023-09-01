@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.categories.dialogs
+package com.chico.myhomebookkeeping.ui.categories.dialogs.category
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -62,13 +62,6 @@ class NewCategoryDialog(
                 addButton, addAndSelectButton
             )
 
-//            iconImg.setImageResource(R.drawable.no_image)
-
-            launchIo {
-
-
-            }
-
             nameEditText.addTextChangedListener(
                 EditNameTextWatcher(
                     namesList = namesList,
@@ -128,8 +121,9 @@ class NewCategoryDialog(
         spendingRadioButton: RadioButton,
         isSelectAfterAdd: Boolean
     ) {
-        val name = nameEditText.getString()
         if (nameEditText.text.isNotEmpty()) {
+            val name = nameEditText.getString()
+
             val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
             val isTypeCategorySelected =
                 isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)

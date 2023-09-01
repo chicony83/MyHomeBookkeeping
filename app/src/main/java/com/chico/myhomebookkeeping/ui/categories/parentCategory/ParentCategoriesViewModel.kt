@@ -9,14 +9,17 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.domain.ParentCategoriesUseCase
 import com.chico.myhomebookkeeping.utils.launchIo
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class ParentCategoriesViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val db:ParentCategoriesDao = dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
+    private val db: ParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
 
     private val _parentCategoriesList = MutableLiveData<List<ParentCategories>>()
-    val parentCategoriesList:LiveData<List<ParentCategories>> get() = _parentCategoriesList
+    val parentCategoriesList: LiveData<List<ParentCategories>> get() = _parentCategoriesList
 
     init {
         loadParentCategories()
@@ -24,7 +27,28 @@ class ParentCategoriesViewModel(
 
     private fun loadParentCategories() {
         launchIo {
-            _parentCategoriesList.postValue(ParentCategoriesUseCase.getAllParentCategoriesSortNameAsc(db))
+            _parentCategoriesList.postValue(
+                ParentCategoriesUseCase.getAllParentCategoriesSortNameAsc(
+                    db
+                )
+            )
+        }
+    }
+
+    fun addNewParentCategory(parentCategory: ParentCategories): Long = runBlocking {
+        val add = async {
+            ParentCategoriesUseCase.addNewParentCategory(
+                db = db,
+                newParentCategory = parentCategory
+            )
+        }
+        reloadParentCategories(add.await())
+        return@runBlocking add.await()
+    }
+
+    private fun reloadParentCategories(long: Long) {
+        if (long > 0) {
+            loadParentCategories()
         }
     }
 

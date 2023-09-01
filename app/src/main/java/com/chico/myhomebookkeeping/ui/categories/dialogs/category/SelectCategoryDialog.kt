@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.categories.dialogs
+package com.chico.myhomebookkeeping.ui.categories.dialogs.category
 
 import android.app.AlertDialog
 import android.app.Dialog

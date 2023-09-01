@@ -54,6 +54,7 @@ class ParentCategoriesAdapter(
             with(binding) {
                 parentCategoriesItem.visibility = View.VISIBLE
 
+                idParentCategories.text = parentCategory.id.toString()
                 parentCategoryNameTextView.text = parentCategory.name
 
                 parentCategoriesItem.setOnClickListener {
