@@ -79,18 +79,22 @@ class CategoriesViewModel(
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdAsc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_ASC))
                 }
+
                 SortingCategories.NumbersByDESC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdDesc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_DESC))
                 }
+
                 SortingCategories.AlphabetByASC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
                 }
+
                 SortingCategories.AlphabetByDESC.toString() -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameDesc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 }
+
                 else -> {
                     _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
@@ -238,4 +242,15 @@ class CategoriesViewModel(
             }
             reloadCategories(change.await().toLong())
         }
+
+    fun reloadCategoriesWithParentId(parentCategoryId: Int) {
+        launchIo {
+            _categoriesList.postValue(
+                CategoriesUseCase.getAllCategoriesWithParentIdSortNameAsc(
+                    parentCategoryId,
+                    db
+                )
+            )
+        }
+    }
 }

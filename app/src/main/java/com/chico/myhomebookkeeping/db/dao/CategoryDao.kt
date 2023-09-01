@@ -28,4 +28,7 @@ interface CategoryDao {
 
     @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome, icon_category = :iconResource WHERE categoriesId = :id")
     suspend fun changeLine(id: Int, name: String, isIncome: Boolean,iconResource:Int):Int
+
+    @Query("SELECT * FROM category_table WHERE parent_category_id = :parentCategoryId ORDER BY category_name ASC")
+    suspend fun getAllCategoriesWithParentIdSortNameAsc(parentCategoryId: Int): List<Categories>?
 }

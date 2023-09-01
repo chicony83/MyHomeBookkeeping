@@ -74,8 +74,9 @@ class CategoriesFragment : Fragment() {
             parentCategoriesList.observe(viewLifecycleOwner) {
                 binding.parentCategoryHolder.adapter = ParentCategoriesAdapter(it,
                     object : OnItemViewClickListener {
-                        override fun onShortClick(selectedId: Int) {
-                            showMessage("short click on $selectedId")
+                        override fun onShortClick(selectedParentCategoryId: Int) {
+//                            showMessage("short click on $selectedId")
+                            categoriesViewModel.reloadCategoriesWithParentId(selectedParentCategoryId)
                         }
 
                         override fun onLongClick(selectedId: Int) {

@@ -46,4 +46,11 @@ object CategoriesUseCase {
     suspend fun getAllCategoriesSortNameDesc(db: CategoryDao): List<Categories> {
         return db.getAllCategoriesSortNameDESC()
     }
+
+    suspend fun getAllCategoriesWithParentIdSortNameAsc(
+        parentCategoryId: Int,
+        db: CategoryDao
+    ): List<Categories>? {
+        return db.getAllCategoriesWithParentIdSortNameAsc(parentCategoryId)
+    }
 }
