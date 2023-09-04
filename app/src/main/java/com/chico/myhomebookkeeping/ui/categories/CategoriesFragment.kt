@@ -271,8 +271,10 @@ class CategoriesFragment : Fragment() {
 
     private fun showNewCategoryDialog() {
         val result = categoriesViewModel.getNamesList()
+        val parentCategoriesList = parentCategoriesViewModel.getParentCategoriesList()
+
         launchUi {
-            val dialog = NewCategoryDialog(result, object : OnAddNewCategoryCallBack {
+            val dialog = NewCategoryDialog(result,parentCategoriesList, object : OnAddNewCategoryCallBack {
 
                 override fun addAndSelect(
                     name: String,
@@ -285,6 +287,26 @@ class CategoriesFragment : Fragment() {
                         isIncome = isIncome,
                         icon = icon,
                         parentCategoryId = null
+                    )
+                    val result: Long = categoriesViewModel.addNewCategory(category)
+                    if (isSelect) {
+                        categoriesViewModel.saveData(navControlHelper, result.toInt())
+                        navControlHelper.moveToPreviousFragment()
+                    }
+                }
+
+                override fun addAndSelectFull(
+                    name: String,
+                    parentCategoryId: Int,
+                    isIncome: Boolean,
+                    isSelect: Boolean,
+                    icon: Int
+                ) {
+                    val category = Categories(
+                        categoryName = name,
+                        isIncome = isIncome,
+                        icon = icon,
+                        parentCategoryId = parentCategoryId
                     )
                     val result: Long = categoriesViewModel.addNewCategory(category)
                     if (isSelect) {

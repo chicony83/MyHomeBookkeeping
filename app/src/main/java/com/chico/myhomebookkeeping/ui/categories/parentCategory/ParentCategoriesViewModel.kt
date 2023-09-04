@@ -52,4 +52,8 @@ class ParentCategoriesViewModel(
         }
     }
 
+    fun getParentCategoriesList(): List<ParentCategories> {
+        return _parentCategoriesList.value?.toList()!!
+    }
+
 }
