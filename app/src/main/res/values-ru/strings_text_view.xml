@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="text_view_first_launch_select_you_currencies">Выберите нужную валюту</string>
-
+    <string name="text_view_select_parent_category">Родительская категория</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.categories
+package com.chico.myhomebookkeeping.ui.categories.categories
 
 import android.app.Application
 import android.content.Context
@@ -20,9 +20,6 @@ import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.runBlocking
 
 class CategoriesViewModel(
@@ -54,10 +51,10 @@ class CategoriesViewModel(
     val categoriesList: LiveData<List<Categories>> get() = _categoriesList
 
     private val _selectedCategory = MutableLiveData<Categories?>()
-    val selectedCategory: MutableLiveData<Categories?> get() = _selectedCategory
+//    val selectedCategory: MutableLiveData<Categories?> get() = _selectedCategory
 
     private var _changeCategory = MutableLiveData<Categories?>()
-    val changeCategory: LiveData<Categories?> get() = _changeCategory
+//    val changeCategory: LiveData<Categories?> get() = _changeCategory
 
     private var _sortedByTextOnButton = MutableLiveData<String>()
     val sortedByTextOnButton: LiveData<String> get() = _sortedByTextOnButton
@@ -177,30 +174,30 @@ class CategoriesViewModel(
 //        )
     }
 
-    fun selectSpendingCategory(navControlHelper: NavControlHelper) {
-        resetCategoryForSelect()
-        setIsIncomeCategoriesSelect(argsSpending)
-        saveIsIncomeCategory()
-        saveData(navControlHelper, -1)
-    }
+//    fun selectSpendingCategory(navControlHelper: NavControlHelper) {
+//        resetCategoryForSelect()
+//        setIsIncomeCategoriesSelect(argsSpending)
+//        saveIsIncomeCategory()
+//        saveData(navControlHelper, -1)
+//    }
 
-    fun selectIncomeCategory(navControlHelper: NavControlHelper) {
-        resetCategoryForSelect()
-        setIsIncomeCategoriesSelect(argsIncome)
-        saveIsIncomeCategory()
-        saveData(navControlHelper, -1)
-    }
+//    fun selectIncomeCategory(navControlHelper: NavControlHelper) {
+//        resetCategoryForSelect()
+//        setIsIncomeCategoriesSelect(argsIncome)
+//        saveIsIncomeCategory()
+//        saveData(navControlHelper, -1)
+//    }
 
-    fun selectAllCategories(navControlHelper: NavControlHelper) {
-        isIncomeSpendingSetNone()
-        resetCategoryForSelect()
-        saveIsIncomeCategory()
-        saveData(navControlHelper, -1)
-    }
+//    fun selectAllCategories(navControlHelper: NavControlHelper) {
+//        isIncomeSpendingSetNone()
+//        resetCategoryForSelect()
+//        saveIsIncomeCategory()
+//        saveData(navControlHelper, -1)
+//    }
 
-    private fun isIncomeSpendingSetNone() {
-        selectedIsIncomeSpending = argsNone
-    }
+//    private fun isIncomeSpendingSetNone() {
+//        selectedIsIncomeSpending = argsNone
+//    }
 
     fun addNewCategory(newCategory: Categories): Long = runBlocking {
         val add = async {

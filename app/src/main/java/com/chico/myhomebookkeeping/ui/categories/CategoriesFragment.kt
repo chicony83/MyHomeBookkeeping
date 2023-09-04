@@ -29,6 +29,8 @@ import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
+import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesAdapter
+import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesViewModel
 import com.chico.myhomebookkeeping.ui.categories.dialogs.category.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.category.NewCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.category.SelectCategoryDialog
@@ -50,7 +52,7 @@ class CategoriesFragment : Fragment() {
     private lateinit var db: CategoryDao
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
-    private val uiHelper = UiHelper()
+//    private val uiHelper = UiHelper()
     private var skipScroll = false
     private var searchMode = false
 

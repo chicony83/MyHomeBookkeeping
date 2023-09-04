@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.categories
+package com.chico.myhomebookkeeping.ui.categories.categories
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

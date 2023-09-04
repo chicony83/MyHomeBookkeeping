@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
     style="@style/DialogLayout">
 
     <EditText
-        android:id="@+id/nameTextView"
+        android:id="@+id/category_name_TextView"
         style="@style/DialogEditText"
         android:hint="@string/hint_enter_name"
         app:layout_constraintEnd_toStartOf="@+id/iconImg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/parent_categories_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/text_view_select_parent_category"
+        android:textSize="@dimen/H4"
+        app:layout_constraintEnd_toEndOf="@id/category_name_TextView"
+        app:layout_constraintStart_toStartOf="@id/category_name_TextView"
+        app:layout_constraintTop_toBottomOf="@id/category_name_TextView"/>
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
         app:layout_constraintEnd_toStartOf="@id/iconImg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameTextView">
+        app:layout_constraintStart_toStartOf="@id/parent_categories_TextView"
+        app:layout_constraintTop_toBottomOf="@id/parent_categories_TextView">
 
         <RadioButton
             android:id="@+id/incomeRadioButton"
@@ -34,13 +46,14 @@
     </RadioGroup>
 
     <ImageView
-        android:src="@drawable/no_image"
+        android:contentDescription="@string/content_description_icon_item_of_category"
         android:id="@+id/iconImg"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/no_image"
         app:layout_constraintBottom_toTopOf="@id/cancelButton"
-        app:layout_constraintTop_toTopOf="@id/nameTextView"
-        app:layout_constraintEnd_toEndOf="@id/cancelButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/saveButton"

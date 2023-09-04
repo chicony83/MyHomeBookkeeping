@@ -33,7 +33,7 @@ class ChangeCategoryDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_change_category, null)
 
-            val nameEditText = layout.findViewById<EditText>(R.id.nameTextView)
+            val nameEditText = layout.findViewById<EditText>(R.id.category_name_TextView)
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incomeRadioButton)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spendingRadioButton)
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
