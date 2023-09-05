@@ -34,9 +34,9 @@ class NewCategoryDialog(
     private lateinit var iconImg: ImageView
     private lateinit var selectedIcon: IconsResource
     private lateinit var db: IconResourcesDao
-    private lateinit var selectedCategoryName: String
+    private lateinit var selectedParentCategoryName: String
 
-    private var selectedParentCategory = 0
+    private var selectedParentCategoryId = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             db = dataBase.getDataBase(requireContext()).iconResourcesDao()
@@ -65,11 +65,9 @@ class NewCategoryDialog(
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelCreateButton)
 
-            val parentCategoriesNameList: List<String> = parentCategoriesList.map { it1 ->
+            val parentCategoriesNamesArray: Array<String> = parentCategoriesList.map { it1 ->
                 it1.name
-            }
-
-            val parentCategoriesNamesArray: Array<String> = parentCategoriesNameList.toTypedArray()
+            }.toTypedArray()
 
             if (result is List<*>) {
                 namesList = (result as List<String>)
@@ -132,19 +130,19 @@ class NewCategoryDialog(
         onSelectParentCategoryCallBack: OnSelectParentCategoryCallBack,
         parentCategoriesNamesArray: Array<String>
     ) {
-        selectedCategoryName = parentCategoriesNamesArray[selectedParentCategory]
+        selectedParentCategoryName = parentCategoriesNamesArray[selectedParentCategoryId]
         launchUi {
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("select parent category")
+                .setTitle(getString(R.string.dialog_title_select_parent_category))
                 .setSingleChoiceItems(
                     parentCategoriesNamesArray,
-                    selectedParentCategory
+                    selectedParentCategoryId
                 ) { _, listener ->
-                    selectedParentCategory = listener
-                    selectedCategoryName = parentCategoriesNamesArray[listener]
+                    selectedParentCategoryId = listener
+                    selectedParentCategoryName = parentCategoriesNamesArray[listener]
                 }
                 .setPositiveButton(getString(R.string.text_on_button_submit)) { _, _ ->
-                    onSelectParentCategoryCallBack.onSelect(selectedCategoryName)
+                    onSelectParentCategoryCallBack.onSelect(selectedParentCategoryName)
                 }
                 .setNegativeButton(getString(R.string.text_on_button_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -194,7 +192,7 @@ class NewCategoryDialog(
             if (isLengthChecked) {
                 if (isTypeCategorySelected) {
                     if (incomeRadioButton.isChecked) {
-                        if (selectedParentCategory>0){
+                        if (selectedParentCategory > 0) {
                             onAddNewCategoryCallBack.addAndSelectFull(
                                 name = name,
                                 parentCategoryId = selectedParentCategory,
@@ -202,7 +200,7 @@ class NewCategoryDialog(
                                 icon = selectedIcon.iconResources,
                                 isSelect = isSelectAfterAdd
                             )
-                        }else{
+                        } else {
                             onAddNewCategoryCallBack.addAndSelect(
                                 name = name,
                                 isIncome = true,
@@ -212,7 +210,7 @@ class NewCategoryDialog(
                         }
                         dialogCancel()
                     } else if (spendingRadioButton.isChecked) {
-                        if (selectedParentCategory>0){
+                        if (selectedParentCategory > 0) {
                             onAddNewCategoryCallBack.addAndSelectFull(
                                 name = name,
                                 parentCategoryId = selectedParentCategory,
@@ -220,7 +218,7 @@ class NewCategoryDialog(
                                 icon = selectedIcon.iconResources,
                                 isSelect = isSelectAfterAdd
                             )
-                        }else{
+                        } else {
                             onAddNewCategoryCallBack.addAndSelect(
                                 name = name,
                                 isIncome = false,

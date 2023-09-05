@@ -10,40 +10,74 @@ import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.IconsResource
+import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
+import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
 import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.dialog_change_category.view.category_name_EditText
+import kotlinx.android.synthetic.main.dialog_change_category.view.parent_categories_TextView
 import java.lang.IllegalStateException
 
 class ChangeCategoryDialog(
     private val category: Categories?,
+    private val parentCategoriesList: List<ParentCategories>,
     private val onChangeCategoryCallBack: OnChangeCategoryCallBack
 ) : DialogFragment() {
 
-    private var iconResource:Int = 0
-    private lateinit var iconImg:ImageView
+    private var iconResource: Int = 0
+    private lateinit var iconImg: ImageView
+
+    private lateinit var selectedParentCategoryName: String
+    private var selectedParentCategoryId = 0
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_change_category, null)
 
-            val nameEditText = layout.findViewById<EditText>(R.id.category_name_TextView)
+            val categoryNameEditText = layout.category_name_EditText
+
+            val parentCategoryTextView = layout.parent_categories_TextView
+
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incomeRadioButton)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spendingRadioButton)
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
 
+            val parentCategoriesNamesArray: Array<String> = parentCategoriesList.map { it1 ->
+                it1.name
+            }.toTypedArray()
+
             val saveButton = layout.findViewById<Button>(R.id.saveButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
-            nameEditText.setText(category?.categoryName.toString())
+            categoryNameEditText.setText(category?.categoryName.toString())
             iconResource = category?.icon ?: R.drawable.no_image
             iconImg.setImageResource(iconResource)
+
+            parentCategoryTextView.text = category?.parentCategoryId.toString()
+
+
+            parentCategoryTextView.setOnClickListener {
+                showSelectParentCategoryDialog(
+                    object : OnSelectParentCategoryCallBack {
+                        override fun onSelect(name: String) {
+                            parentCategoryTextView.text = name
+                        }
+                    },
+                    parentCategoriesNamesArray
+                )
+            }
+//            if (category?.parentCategoryId){
+//
+//            }
 
             if (category?.isIncome == true) {
                 incomeRadioButton.isChecked = true
@@ -60,14 +94,14 @@ class ChangeCategoryDialog(
                 val isTypeOfCategorySelected =
                     getIsTypeOfCategorySelected(incomeRadioButton, spendingRadioButton)
                 val isIncome = getTypeOfCategory(incomeRadioButton, spendingRadioButton)
-                if (nameEditText.text.isNotEmpty()) {
-                    val name = nameEditText.text.toString()
+                if (categoryNameEditText.text.isNotEmpty()) {
+                    val name = categoryNameEditText.text.toString()
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     if (isLengthChecked) {
                         if (isTypeOfCategorySelected) {
                             onChangeCategoryCallBack.changeWithIcon(
                                 id = category?.categoriesId ?: 0,
-                                name = nameEditText.text.toString(),
+                                name = categoryNameEditText.text.toString(),
                                 isIncome = isIncome,
                                 iconResource = iconResource
 
@@ -77,7 +111,7 @@ class ChangeCategoryDialog(
                     } else if (!isLengthChecked) {
                         showMessage(getString(R.string.message_too_short_name))
                     }
-                } else if (nameEditText.text.isEmpty()) {
+                } else if (categoryNameEditText.text.isEmpty()) {
                     showMessage(getString(R.string.message_too_short_name))
                 }
             }
@@ -89,6 +123,31 @@ class ChangeCategoryDialog(
             builder.setView(layout)
             builder.create()
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun showSelectParentCategoryDialog(
+        onSelectParentCategoryCallBack: OnSelectParentCategoryCallBack,
+        parentCategoriesNamesArray: Array<String>
+    ) {
+        selectedParentCategoryName = parentCategoriesNamesArray[selectedParentCategoryId]
+        launchUi {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_title_select_parent_category)
+                .setSingleChoiceItems(
+                    parentCategoriesNamesArray,
+                    selectedParentCategoryId
+                ) { _, listener ->
+                    selectedParentCategoryId = listener
+                    selectedParentCategoryName = parentCategoriesNamesArray[listener]
+                }
+                .setPositiveButton(getString(R.string.text_on_button_submit)) { _, _ ->
+                    onSelectParentCategoryCallBack.onSelect(selectedParentCategoryName)
+                }
+                .setNegativeButton(R.string.text_on_button_cancel){dialog,_->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     private fun showSelectIconDialog() {
