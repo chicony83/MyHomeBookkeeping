@@ -11,6 +11,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
+import kotlinx.android.synthetic.main.dialog_select_category.view.parent_category_name_TextView
 import java.lang.IllegalStateException
 
 class SelectCategoryDialog(
@@ -24,6 +25,8 @@ class SelectCategoryDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_select_category, null)
 
+            val parentCategoryName = layout.parent_category_name_TextView
+
             val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
             val name = layout.findViewById<TextView>(R.id.selectedItemName)
 
@@ -32,6 +35,7 @@ class SelectCategoryDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
             categories?.let { it1 ->
+                parentCategoryName.text = it1.parentCategoryId.toString()
                 name.text = it1.categoryName
                 iconImg.setImageResource(it1.icon ?: R.drawable.no_image)
             }

@@ -57,11 +57,16 @@ class ParentCategoriesAdapter(
                 idParentCategories.text = parentCategory.id.toString()
                 parentCategoryNameTextView.text = parentCategory.name
 
+                parentCategoriesItem.setOnLongClickListener{
+                    parentCategory.id?.let {
+                        it1->onItemViewClickListener.onLongClick(it1)
+                    }
+                    true
+                }
                 parentCategoriesItem.setOnClickListener {
-                    val id = idParentCategories.text.toString().toInt()
-
-                    onItemViewClickListener.onLongClick(id)
-                    onItemViewClickListener.onShortClick(id)
+                    parentCategory.id?.let {
+                        it1->onItemViewClickListener.onShortClick(it1)
+                    }
                 }
             }
         }

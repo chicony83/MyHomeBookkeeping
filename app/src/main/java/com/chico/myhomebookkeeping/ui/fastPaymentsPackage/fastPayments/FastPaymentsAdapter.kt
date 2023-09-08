@@ -57,7 +57,7 @@ class FastPaymentsAdapter(
                 addNewElementLayout.background = null
                 addNewElementImg.setOnClickListener {
                     pressCreateNewElement.onPress()
-                    Message.log("---PreSSEd---")
+                    Message.log("---press Create New element---")
                 }
             }
         }
