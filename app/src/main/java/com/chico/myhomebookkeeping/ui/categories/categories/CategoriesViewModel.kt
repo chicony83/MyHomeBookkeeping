@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.categories.categories
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -249,5 +250,6 @@ class CategoriesViewModel(
                 )
             )
         }
+        Toast.makeText(app.applicationContext, "size ${_categoriesList.value?.size}", Toast.LENGTH_LONG).show()
     }
 }

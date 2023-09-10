@@ -285,7 +285,7 @@ class CategoriesFragment : Fragment() {
                 parentCategoriesList,
                 object : OnAddNewCategoryCallBack {
 
-                    override fun addAndSelect(
+                    override fun addAndSelectWithoutParentCategory(
                         name: String,
                         isIncome: Boolean,
                         isSelect: Boolean,

@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.icon.names.NoCategoryNames
 import com.chico.myhomebookkeeping.helpers.CheckString
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
@@ -177,57 +178,45 @@ class NewCategoryDialog(
         isSelectAfterAdd: Boolean
     ) {
         if (nameEditText.text.isNotEmpty()) {
-            val name = nameEditText.getString()
-            var selectedParentCategory: Int = 0
-
-            val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
+            var selectedParentCategoryId: Int = -1
+            val nameCategory = nameEditText.getString()
+            val isLengthChecked: Boolean = CheckString.isLengthMoThan(nameCategory)
             val isTypeCategorySelected =
                 isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
 
-            if (parentCategoriesList.equals(parentCategoriesTextView.text.toString())) {
-                selectedParentCategory =
-                    getSelectedParentCategoryId(parentCategoriesTextView.text.toString())
-            }
+            selectedParentCategoryId =
+                getSelectedParentCategoryId(parentCategoriesTextView.text.toString())
 
             if (isLengthChecked) {
                 if (isTypeCategorySelected) {
-                    if (incomeRadioButton.isChecked) {
-                        if (selectedParentCategory > 0) {
-                            onAddNewCategoryCallBack.addAndSelectFull(
-                                name = name,
-                                parentCategoryId = selectedParentCategory,
-                                isIncome = true,
-                                icon = selectedIcon.iconResources,
-                                isSelect = isSelectAfterAdd
-                            )
-                        } else {
-                            onAddNewCategoryCallBack.addAndSelect(
-                                name = name,
-                                isIncome = true,
-                                icon = selectedIcon.iconResources,
-                                isSelect = isSelectAfterAdd
-                            )
-                        }
-                        dialogCancel()
-                    } else if (spendingRadioButton.isChecked) {
-                        if (selectedParentCategory > 0) {
-                            onAddNewCategoryCallBack.addAndSelectFull(
-                                name = name,
-                                parentCategoryId = selectedParentCategory,
-                                isIncome = false,
-                                icon = selectedIcon.iconResources,
-                                isSelect = isSelectAfterAdd
-                            )
-                        } else {
-                            onAddNewCategoryCallBack.addAndSelect(
-                                name = name,
-                                isIncome = false,
-                                icon = selectedIcon.iconResources,
-                                isSelect = isSelectAfterAdd
-                            )
-                        }
-                        dialogCancel()
+
+                    val isIncomeCategory: Boolean =
+                        getTypeCategoryIsIncomeDefault(incomeRadioButton, spendingRadioButton)
+                    val icon = selectedIcon.iconResources
+
+
+                    if (selectedParentCategoryId > -1) {
+                        onAddNewCategoryCallBack.addAndSelectFull(
+                            name = nameCategory,
+                            parentCategoryId = selectedParentCategoryId,
+                            isIncome = isIncomeCategory,
+                            icon = icon,
+                            isSelect = isSelectAfterAdd
+                        )
+                    } else {
+                        onAddNewCategoryCallBack.addAndSelectWithoutParentCategory(
+                            name = nameCategory,
+                            isIncome = isIncomeCategory,
+                            icon = icon,
+                            isSelect = isSelectAfterAdd
+                        )
                     }
+                    Message.log(
+                        "add category $nameCategory " +
+                                "parentCategory ID = $selectedParentCategoryId, " +
+                                "parent name $nameCategory"
+                    )
+                    dialogCancel()
                 } else if (!isTypeCategorySelected) {
                     showMessage(getString(R.string.message_select_type_of_category))
                 }
@@ -239,11 +228,27 @@ class NewCategoryDialog(
         }
     }
 
-    private fun getSelectedParentCategoryId(text: String): Int {
-        val result: ParentCategories = parentCategoriesList.find {
-            it.name == text
-        }!!
-        return result.id ?: 0
+    private fun getTypeCategoryIsIncomeDefault(
+        incomeRadioButton: RadioButton,
+        spendingRadioButton: RadioButton
+    ): Boolean {
+        return incomeRadioButton.isChecked
+//        if (incomeRadioButton.isChecked) {return true}
+//        else return false
+    }
+
+    private fun getSelectedParentCategoryId(name: String): Int {
+        var result = -1
+        for (i in 0..parentCategoriesList.size) {
+            Message.log("such name $name")
+            Message.log("parent category ${parentCategoriesList[i].name} == $name")
+            if (parentCategoriesList[i].name == name) {
+                Message.log("success")
+                result = parentCategoriesList[i].id!!
+                break
+            }
+        }
+        return result
     }
 
     private fun isSelectTypeOfCategory(
