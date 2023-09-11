@@ -231,15 +231,40 @@ class CategoriesViewModel(
         setSP.saveToSP(argsSortingCategories, sorting)
     }
 
-    fun saveChangedCategory(id: Int, name: String, isIncome: Boolean, iconResource: Int) =
+    fun saveChangedCategoryWithoutParentCategory(
+        id: Int,
+        name: String,
+        isIncome: Boolean,
+        iconResource: Int
+    ) =
         runBlocking {
             val change = async {
-                CategoriesUseCase.changeCategoryLine(
+                CategoriesUseCase.changeCategoryLineWithoutParentCategory(
                     db = db, id = id, name = name, isIncome = isIncome, iconResource
                 )
             }
             reloadCategories(change.await().toLong())
         }
+
+    fun saveChangedCategoryFull(
+        id: Int,
+        name: String,
+        isIncome: Boolean,
+        iconResource: Int,
+        parentCategoryId: Int
+    ) = runBlocking {
+        val change = async {
+            CategoriesUseCase.changeCategoryLineFull(
+                db = db,
+                id = id,
+                name = name,
+                isIncome = isIncome,
+                iconResource = iconResource,
+                parentCategoryId = parentCategoryId
+            )
+        }
+        reloadCategories(change.await().toLong())
+    }
 
     fun reloadCategoriesWithParentId(parentCategoryId: Int) {
         launchIo {
@@ -250,6 +275,11 @@ class CategoriesViewModel(
                 )
             )
         }
-        Toast.makeText(app.applicationContext, "size ${_categoriesList.value?.size}", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            app.applicationContext,
+            "size ${_categoriesList.value?.size}",
+            Toast.LENGTH_LONG
+        ).show()
     }
+
 }

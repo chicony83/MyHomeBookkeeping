@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
@@ -64,7 +65,6 @@ class ChangeCategoryDialog(
 
             parentCategoryTextView.text = category?.parentCategoryId.toString()
 
-
             parentCategoryTextView.setOnClickListener {
                 showSelectParentCategoryDialog(
                     object : OnSelectParentCategoryCallBack {
@@ -75,9 +75,6 @@ class ChangeCategoryDialog(
                     parentCategoriesNamesArray
                 )
             }
-//            if (category?.parentCategoryId){
-//
-//            }
 
             if (category?.isIncome == true) {
                 incomeRadioButton.isChecked = true
@@ -93,19 +90,40 @@ class ChangeCategoryDialog(
             saveButton.setOnClickListener {
                 val isTypeOfCategorySelected =
                     getIsTypeOfCategorySelected(incomeRadioButton, spendingRadioButton)
-                val isIncome = getTypeOfCategory(incomeRadioButton, spendingRadioButton)
                 if (categoryNameEditText.text.isNotEmpty()) {
+
                     val name = categoryNameEditText.text.toString()
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
+                    val categoryId = category?.categoriesId ?: 0
+
+                    val selectedParentCategory: Int =
+                        ParentCategoryHelper.getIdSelectedParentCategory(
+                            parentCategoryTextView.text.toString(),
+                            parentCategoriesList
+                        )
+
                     if (isLengthChecked) {
                         if (isTypeOfCategorySelected) {
-                            onChangeCategoryCallBack.changeWithIcon(
-                                id = category?.categoriesId ?: 0,
-                                name = categoryNameEditText.text.toString(),
-                                isIncome = isIncome,
-                                iconResource = iconResource
 
-                            )
+                            val isIncome = getTypeOfCategory(incomeRadioButton, spendingRadioButton)
+
+                            if (selectedParentCategory > -1) {
+                                onChangeCategoryCallBack.changeCategoryFull(
+                                    id = categoryId,
+                                    name = name,
+                                    isIncome = isIncome,
+                                    iconResource = iconResource,
+                                    parentCategoryId =selectedParentCategory
+                                )
+                            } else {
+                                onChangeCategoryCallBack.changeCategoryWithoutParentCategory(
+                                    id = categoryId,
+                                    name = name,
+                                    isIncome = isIncome,
+                                    iconResource = iconResource
+                                )
+                            }
+
                         }
                         dialogCancel()
                     } else if (!isLengthChecked) {
@@ -143,7 +161,7 @@ class ChangeCategoryDialog(
                 .setPositiveButton(getString(R.string.text_on_button_submit)) { _, _ ->
                     onSelectParentCategoryCallBack.onSelect(selectedParentCategoryName)
                 }
-                .setNegativeButton(R.string.text_on_button_cancel){dialog,_->
+                .setNegativeButton(R.string.text_on_button_cancel) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .show()

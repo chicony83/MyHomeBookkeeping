@@ -14,7 +14,7 @@ import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.icon.names.NoCategoryNames
 import com.chico.myhomebookkeeping.helpers.CheckString
-import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
@@ -23,6 +23,7 @@ import com.chico.myhomebookkeeping.utils.getString
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.dialog_new_category.view.category_name_EditText
 import kotlinx.android.synthetic.main.dialog_new_category.view.parent_categories_TextView
 import java.lang.IllegalStateException
 
@@ -49,7 +50,7 @@ class NewCategoryDialog(
 
             val parentCategoriesTextView = layout.parent_categories_TextView
 
-            val nameEditText = layout.findViewById<EditText>(R.id.category_name)
+            val categoryNameEditText = layout.category_name_EditText
             val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
@@ -77,7 +78,7 @@ class NewCategoryDialog(
                 addButton, addAndSelectButton
             )
 
-            nameEditText.addTextChangedListener(
+            categoryNameEditText.addTextChangedListener(
                 EditNameTextWatcher(
                     namesList = namesList,
                     buttonList = buttonsList(),
@@ -99,7 +100,7 @@ class NewCategoryDialog(
 
             addAndSelectButton.setOnClickListener {
                 checkAndAddCategory(
-                    nameEditText,
+                    categoryNameEditText,
                     parentCategoriesTextView,
                     incomeRadioButton,
                     spendingRadioButton,
@@ -109,7 +110,7 @@ class NewCategoryDialog(
 
             addButton.setOnClickListener {
                 checkAndAddCategory(
-                    nameEditText,
+                    categoryNameEditText,
                     parentCategoriesTextView,
                     incomeRadioButton,
                     spendingRadioButton,
@@ -178,14 +179,15 @@ class NewCategoryDialog(
         isSelectAfterAdd: Boolean
     ) {
         if (nameEditText.text.isNotEmpty()) {
-            var selectedParentCategoryId: Int = -1
             val nameCategory = nameEditText.getString()
             val isLengthChecked: Boolean = CheckString.isLengthMoThan(nameCategory)
             val isTypeCategorySelected =
                 isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
 
-            selectedParentCategoryId =
-                getSelectedParentCategoryId(parentCategoriesTextView.text.toString())
+            val selectedParentCategoryId: Int = ParentCategoryHelper.getIdSelectedParentCategory(
+                parentCategoriesTextView.text.toString(),
+                parentCategoriesList,
+            )
 
             if (isLengthChecked) {
                 if (isTypeCategorySelected) {
@@ -193,7 +195,6 @@ class NewCategoryDialog(
                     val isIncomeCategory: Boolean =
                         getTypeCategoryIsIncomeDefault(incomeRadioButton, spendingRadioButton)
                     val icon = selectedIcon.iconResources
-
 
                     if (selectedParentCategoryId > -1) {
                         onAddNewCategoryCallBack.addAndSelectFull(
@@ -211,11 +212,6 @@ class NewCategoryDialog(
                             isSelect = isSelectAfterAdd
                         )
                     }
-                    Message.log(
-                        "add category $nameCategory " +
-                                "parentCategory ID = $selectedParentCategoryId, " +
-                                "parent name $nameCategory"
-                    )
                     dialogCancel()
                 } else if (!isTypeCategorySelected) {
                     showMessage(getString(R.string.message_select_type_of_category))
@@ -237,19 +233,16 @@ class NewCategoryDialog(
 //        else return false
     }
 
-    private fun getSelectedParentCategoryId(name: String): Int {
-        var result = -1
-        for (i in 0..parentCategoriesList.size) {
-            Message.log("such name $name")
-            Message.log("parent category ${parentCategoriesList[i].name} == $name")
-            if (parentCategoriesList[i].name == name) {
-                Message.log("success")
-                result = parentCategoriesList[i].id!!
-                break
-            }
-        }
-        return result
-    }
+//    private fun getIdSelectedParentCategoryId(name: String): Int {
+//        var result = -1
+//        for (i in 0..parentCategoriesList.size) {
+//            if (parentCategoriesList[i].name == name) {
+//                result = parentCategoriesList[i].id!!
+//                break
+//            }
+//        }
+//        return result
+//    }
 
     private fun isSelectTypeOfCategory(
         incomeRadioButton: RadioButton,

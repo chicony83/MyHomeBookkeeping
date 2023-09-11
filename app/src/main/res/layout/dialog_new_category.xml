@@ -7,7 +7,7 @@
 
     <EditText
         android:inputType="text"
-        android:id="@+id/category_name"
+        android:id="@+id/category_name_EditText"
         style="@style/DialogEnterNewName"
         android:layout_margin="@dimen/margin_normal"
         android:paddingTop="@dimen/margin_double"
@@ -19,8 +19,8 @@
         android:id="@+id/errorThisNameIsTaken"
         style="@style/Description.MessageOfBusyName"
         android:gravity="start"
-        app:layout_constraintEnd_toEndOf="@id/category_name"
-        app:layout_constraintTop_toTopOf="@id/category_name"
+        app:layout_constraintEnd_toEndOf="@id/category_name_EditText"
+        app:layout_constraintTop_toTopOf="@id/category_name_EditText"
         tools:visibility="visible" />
 
     <TextView
@@ -31,8 +31,8 @@
         android:text="@string/text_view_select_parent_category"
         android:textSize="@dimen/H4"
         app:layout_constraintEnd_toStartOf="@id/iconImg"
-        app:layout_constraintStart_toStartOf="@id/category_name"
-        app:layout_constraintTop_toBottomOf="@id/category_name" />
+        app:layout_constraintStart_toStartOf="@id/category_name_EditText"
+        app:layout_constraintTop_toBottomOf="@id/category_name_EditText" />
 
 
     <RadioGroup

@@ -263,15 +263,25 @@ class CategoriesFragment : Fragment() {
 //                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
 //                }
 
-                override fun changeWithIcon(
+                override fun changeCategoryWithoutParentCategory(
                     id: Int,
                     name: String,
                     isIncome: Boolean,
                     iconResource: Int
                 ) {
-                    categoriesViewModel.saveChangedCategory(id, name, isIncome, iconResource)
+                    categoriesViewModel.saveChangedCategoryWithoutParentCategory(id, name, isIncome, iconResource)
                 }
-            })
+
+                    override fun changeCategoryFull(
+                        id: Int,
+                        name: String,
+                        isIncome: Boolean,
+                        iconResource: Int,
+                        parentCategoryId: Int
+                    ) {
+                        categoriesViewModel.saveChangedCategoryFull(id,name,isIncome,iconResource,parentCategoryId)
+                    }
+                })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
         }
     }
