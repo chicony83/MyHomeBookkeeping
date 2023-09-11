@@ -46,5 +46,8 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table WHERE parent_category_id = :parentCategoryId ORDER BY category_name ASC")
     suspend fun getAllCategoriesWithParentIdSortNameAsc(parentCategoryId: Int): List<Categories>?
 
+    @Query("SELECT * FROM category_table WHERE parent_category_id IS null ORDER BY category_name ASC")
+    suspend fun getAllCategoriesWithoutParentCategory(): List<Categories>?
+
 
 }

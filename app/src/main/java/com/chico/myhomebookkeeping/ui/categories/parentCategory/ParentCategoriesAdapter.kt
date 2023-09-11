@@ -1,21 +1,19 @@
 package com.chico.myhomebookkeeping.ui.categories.parentCategory
 
-import android.app.Application
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemParentCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
-import kotlin.coroutines.coroutineContext
+import com.chico.myhomebookkeeping.interfaces.categories.OnSelectNoCategories
 
 class ParentCategoriesAdapter(
     parentCategoriesList: List<ParentCategories>,
     val onItemViewClickListener: OnItemViewClickListener,
+    val onSelectNoCategories: OnSelectNoCategories,
     val clickCreateNewCurrencyListener: OnClickCreateNewElementCallBack,
 
     ) : RecyclerView.Adapter<ParentCategoriesAdapter.ViewHolder>() {
@@ -73,7 +71,12 @@ class ParentCategoriesAdapter(
 
         fun bindNoParentCategory() {
             with(binding) {
-                noParentCategoryItem.visibility = View.VISIBLE
+                with(noParentCategoryItem){
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        onSelectNoCategories.onSelect()
+                    }
+                }
             }
         }
 

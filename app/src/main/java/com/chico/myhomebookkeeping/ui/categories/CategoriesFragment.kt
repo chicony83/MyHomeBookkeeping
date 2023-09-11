@@ -27,6 +27,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
+import com.chico.myhomebookkeeping.interfaces.categories.OnSelectNoCategories
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesAdapter
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesViewModel
@@ -85,6 +86,12 @@ class CategoriesFragment : Fragment() {
 
                         override fun onLongClick(id: Int) {
                             showMessage("long click on $id")
+                        }
+                    },
+                    object :OnSelectNoCategories{
+                        override fun onSelect() {
+                            categoriesViewModel.reloadCategoriesWithoutParentCategory()
+                            showMessage("press no category button")
                         }
                     },
                     object : OnClickCreateNewElementCallBack {

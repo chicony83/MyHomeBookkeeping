@@ -28,7 +28,7 @@ object CategoriesUseCase {
         isIncome: Boolean,
         iconResource: Int
     ): Int {
-        return db.changeLineWithoutCategory(id, name, isIncome,iconResource)
+        return db.changeLineWithoutCategory(id, name, isIncome, iconResource)
     }
 
     suspend fun changeCategoryLineFull(
@@ -38,8 +38,8 @@ object CategoriesUseCase {
         isIncome: Boolean,
         iconResource: Int,
         parentCategoryId: Int
-    ):Int {
-        return db.changeLineFull(id,name,isIncome,iconResource,parentCategoryId)
+    ): Int {
+        return db.changeLineFull(id, name, isIncome, iconResource, parentCategoryId)
     }
 
     suspend fun getAllCategoriesSortIdDesc(db: CategoryDao): List<Categories> {
@@ -63,6 +63,10 @@ object CategoriesUseCase {
         db: CategoryDao
     ): List<Categories>? {
         return db.getAllCategoriesWithParentIdSortNameAsc(parentCategoryId)
+    }
+
+    suspend fun getAllCategoriesWithoutParentCategory(db: CategoryDao): List<Categories>? {
+        return db.getAllCategoriesWithoutParentCategory()
     }
 
 }

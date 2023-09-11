@@ -282,4 +282,14 @@ class CategoriesViewModel(
         ).show()
     }
 
+    fun reloadCategoriesWithoutParentCategory() {
+        launchIo {
+            _categoriesList.postValue(
+                CategoriesUseCase.getAllCategoriesWithoutParentCategory(
+                    db
+                )
+            )
+        }
+    }
+
 }
