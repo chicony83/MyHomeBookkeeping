@@ -27,6 +27,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
+import com.chico.myhomebookkeeping.interfaces.categories.OnSelectAllCategories
 import com.chico.myhomebookkeeping.interfaces.categories.OnSelectNoCategories
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesAdapter
@@ -78,20 +79,24 @@ class CategoriesFragment : Fragment() {
                 binding.parentCategoryHolder.adapter = ParentCategoriesAdapter(it,
                     object : OnItemViewClickListener {
                         override fun onShortClick(id: Int) {
-                            showMessage("short click on $id")
-                            categoriesViewModel.reloadCategoriesWithParentId(
+//                            showMessage("short click on $id")
+                            categoriesViewModel.getCategoriesWithParentId(
                                 id
                             )
                         }
-
                         override fun onLongClick(id: Int) {
-                            showMessage("long click on $id")
+//                            showMessage("long click on $id")
+                        }
+                    },
+                    object :OnSelectAllCategories{
+                        override fun onSelectAll() {
+                            categoriesViewModel.getAllCategories()
                         }
                     },
                     object :OnSelectNoCategories{
                         override fun onSelect() {
-                            categoriesViewModel.reloadCategoriesWithoutParentCategory()
-                            showMessage("press no category button")
+                            categoriesViewModel.getCategoriesWithoutParentCategory()
+//                            showMessage("press no category button")
                         }
                     },
                     object : OnClickCreateNewElementCallBack {
@@ -241,7 +246,7 @@ class CategoriesFragment : Fragment() {
 
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
-            val category: Categories? = categoriesViewModel.loadSelectedCategory(selectedId)
+            val category: Categories? = categoriesViewModel.getSelectedCategory(selectedId)
             launchUi {
                 val dialog = SelectCategoryDialog(category,
                     object : OnItemSelectForChangeCallBack {

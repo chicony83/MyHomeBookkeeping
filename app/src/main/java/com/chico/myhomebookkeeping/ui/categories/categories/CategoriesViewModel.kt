@@ -124,15 +124,15 @@ class CategoriesViewModel(
         }
     }
 
-    suspend fun loadSelectedCategory(selectedId: Int): Categories? {
+    suspend fun getSelectedCategory(selectedId: Int): Categories? {
         return CategoriesUseCase.getOneCategory(db, selectedId)
     }
 
-    private fun resetCategoryForSelect() {
-        launchIo {
-            _selectedCategory.postValue(null)
-        }
-    }
+//    private fun resetCategoryForSelect() {
+//        launchIo {
+//            _selectedCategory.postValue(null)
+//        }
+//    }
 
 //    fun resetCategoryForChange() {
 //        launchIo {
@@ -140,15 +140,15 @@ class CategoriesViewModel(
 //        }
 //    }
 
-    private fun setIsIncomeCategoriesSelect(value: String) {
-        selectedIsIncomeSpending = value
-    }
-
-    private fun saveIsIncomeCategory() {
-        setSP.saveIsIncomeCategoryToSP(
-            argsIncomeSpending, selectedIsIncomeSpending
-        )
-    }
+//    private fun setIsIncomeCategoriesSelect(value: String) {
+//        selectedIsIncomeSpending = value
+//    }
+//
+//    private fun saveIsIncomeCategory() {
+//        setSP.saveIsIncomeCategoryToSP(
+//            argsIncomeSpending, selectedIsIncomeSpending
+//        )
+//    }
 
 //    private fun saveData(navControlHelper: NavControlHelper) {
 //        setSP.checkAndSaveToSP(
@@ -266,7 +266,7 @@ class CategoriesViewModel(
         reloadCategories(change.await().toLong())
     }
 
-    fun reloadCategoriesWithParentId(parentCategoryId: Int) {
+    fun getCategoriesWithParentId(parentCategoryId: Int) {
         launchIo {
             _categoriesList.postValue(
                 CategoriesUseCase.getAllCategoriesWithParentIdSortNameAsc(
@@ -282,12 +282,20 @@ class CategoriesViewModel(
         ).show()
     }
 
-    fun reloadCategoriesWithoutParentCategory() {
+    fun getCategoriesWithoutParentCategory() {
         launchIo {
             _categoriesList.postValue(
                 CategoriesUseCase.getAllCategoriesWithoutParentCategory(
                     db
                 )
+            )
+        }
+    }
+
+    fun getAllCategories() {
+        launchIo {
+            _categoriesList.postValue(
+                CategoriesUseCase.getAllCategoriesSortNameAsc(db)
             )
         }
     }

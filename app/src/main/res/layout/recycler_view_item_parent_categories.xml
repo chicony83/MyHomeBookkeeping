@@ -4,11 +4,26 @@
     xmlns:tool="http://schemas.android.com/tools"
     style="@style/RecyclerViewCard.Categories">
 
+    <LinearLayout
+        android:id="@+id/all_categories_item"
+        style="@style/RecyclerViewItem"
+        android:visibility="gone"
+        tool:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/text_view_All_categories"
+            android:textSize="@dimen/H3"/>
+    </LinearLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_categories_item"
         style="@style/RecyclerViewItem"
         android:visibility="gone"
-        tool:visibility="visible">
+        tool:visibility="gone">
 
         <ImageView
             android:id="@+id/icon_imageView"
@@ -40,7 +55,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/no_parent_category_item"
         style="@style/RecyclerViewItem"
         android:visibility="gone"
@@ -50,28 +65,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/text_on_button_no_parent_category"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/text_on_button_no_parent_category" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/new_parent_categories_item"
         style="@style/RecyclerViewItem"
         android:visibility="gone"
-        tool:visibility="gone">
+        tool:visibility="visible">
 
         <ImageView
             android:id="@+id/add_new_parent_category_imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/add"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/add" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

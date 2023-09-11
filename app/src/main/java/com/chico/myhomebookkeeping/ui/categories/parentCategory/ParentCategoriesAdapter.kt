@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemParentCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
+import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
+import com.chico.myhomebookkeeping.interfaces.categories.OnSelectAllCategories
 import com.chico.myhomebookkeeping.interfaces.categories.OnSelectNoCategories
 
 class ParentCategoriesAdapter(
     parentCategoriesList: List<ParentCategories>,
     val onItemViewClickListener: OnItemViewClickListener,
+    val onSelectAllCategories: OnSelectAllCategories,
     val onSelectNoCategories: OnSelectNoCategories,
-    val clickCreateNewCurrencyListener: OnClickCreateNewElementCallBack,
+    val createNewElementListener: OnClickCreateNewElementCallBack,
 
     ) : RecyclerView.Adapter<ParentCategoriesAdapter.ViewHolder>() {
 
@@ -29,20 +32,31 @@ class ParentCategoriesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = initList.size + 3
+    override fun getItemCount(): Int = initList.size + 4
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        com.chico.myhomebookkeeping.helpers.Message.log("list size ${initList.size.toString()}")
-        if (position < initList.size) {
-            holder.bind(initList[position])
-        }else{
-            if (position == initList.size + 1) {
-                holder.bindNoParentCategory()
-            }
-            if (position == initList.size + 2) {
-                holder.bindAddNewParentCategory()
-            }
+        Message.log("list size ${initList.size.toString()}")
+
+        when (position) {
+
+            in initList.indices -> holder.bind(initList[position])
+
+            initList.size + 1 -> holder.bindNoParentCategory()
+            initList.size + 2 -> holder.bindWithoutParentsCategories()
+            initList.size + 3 -> holder.bindAddNewParentCategory()
         }
+
+//        if (position < initList.size) {
+//            holder.bind(initList[position])
+//        } else {
+//
+//            if (position == initList.size + 1) {
+//                holder.bindNoParentCategory()
+//            }
+//            if (position == initList.size + 2) {
+//                holder.bindAddNewParentCategory()
+//            }
+//        }
     }
 
     inner class ViewHolder(
@@ -55,15 +69,15 @@ class ParentCategoriesAdapter(
                 idParentCategories.text = parentCategory.id.toString()
                 parentCategoryNameTextView.text = parentCategory.name
 
-                parentCategoriesItem.setOnLongClickListener{
-                    parentCategory.id?.let {
-                        it1->onItemViewClickListener.onLongClick(it1)
+                parentCategoriesItem.setOnLongClickListener {
+                    parentCategory.id?.let { it1 ->
+                        onItemViewClickListener.onLongClick(it1)
                     }
                     true
                 }
                 parentCategoriesItem.setOnClickListener {
-                    parentCategory.id?.let {
-                        it1->onItemViewClickListener.onShortClick(it1)
+                    parentCategory.id?.let { it1 ->
+                        onItemViewClickListener.onShortClick(it1)
                     }
                 }
             }
@@ -71,7 +85,7 @@ class ParentCategoriesAdapter(
 
         fun bindNoParentCategory() {
             with(binding) {
-                with(noParentCategoryItem){
+                with(noParentCategoryItem) {
                     visibility = View.VISIBLE
                     setOnClickListener {
                         onSelectNoCategories.onSelect()
@@ -83,9 +97,19 @@ class ParentCategoriesAdapter(
         fun bindAddNewParentCategory() {
             with(binding) {
                 newParentCategoriesItem.visibility = View.VISIBLE
-
                 addNewParentCategoryImageView.setOnClickListener {
-                    clickCreateNewCurrencyListener.onPress()
+                    createNewElementListener.onPress()
+                }
+            }
+        }
+
+        fun bindWithoutParentsCategories() {
+            with(binding) {
+                with(allCategoriesItem) {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        onSelectAllCategories.onSelectAll()
+                    }
                 }
             }
         }
