@@ -82,4 +82,5 @@
         <item name="android:textSize">@dimen/H1</item>
         <item name="android:gravity">center</item>
     </style>
+
 </resources>

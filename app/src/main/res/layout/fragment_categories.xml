@@ -77,7 +77,8 @@
             app:endIconMode="custom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -88,13 +89,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentCategoryHolder"
             style="@style/RecyclerHolder"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            app:layoutManager="LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/verticalCenterLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/recycler_view_item_parent_categories"/>
+            tools:listitem="@layout/recycler_view_item_parent_categories" />
 
         <Button
             android:id="@+id/sortingButton"
@@ -103,20 +105,21 @@
             android:contentDescription="@string/text_on_button_sorting_as"
             android:text="@string/text_on_button_sorting_as"
             android:textSize="@dimen/H6"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/categoryHolder"
             app:layout_constraintTop_toTopOf="@id/categoryHolder" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryHolder"
             style="@style/RecyclerHolder"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_normal"
-            app:layoutManager="LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/parentCategoryHolder"
+            app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/recycler_view_item_categories" />
 
         <Button
