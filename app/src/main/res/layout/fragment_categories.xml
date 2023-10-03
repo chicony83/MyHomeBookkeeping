@@ -122,14 +122,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/recycler_view_item_categories" />
 
-        <Button
-            android:id="@+id/show_hide_add_category_fragment_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/text_on_button_add_new_category"
-            android:text="@string/text_on_button_add_new_category"
-            app:layout_constraintBottom_toBottomOf="@id/categoryHolder"
-            app:layout_constraintEnd_toEndOf="@id/categoryHolder" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

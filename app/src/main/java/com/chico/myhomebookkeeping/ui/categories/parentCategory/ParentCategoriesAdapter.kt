@@ -35,7 +35,7 @@ class ParentCategoriesAdapter(
     override fun getItemCount(): Int = initList.size + 4
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Message.log("list size ${initList.size.toString()}")
+        Message.log("list size ${initList.size}")
 
         when (position) {
 
@@ -45,18 +45,6 @@ class ParentCategoriesAdapter(
             initList.size + 2 -> holder.bindWithoutParentsCategories()
             initList.size + 3 -> holder.bindAddNewParentCategory()
         }
-
-//        if (position < initList.size) {
-//            holder.bind(initList[position])
-//        } else {
-//
-//            if (position == initList.size + 1) {
-//                holder.bindNoParentCategory()
-//            }
-//            if (position == initList.size + 2) {
-//                holder.bindAddNewParentCategory()
-//            }
-//        }
     }
 
     inner class ViewHolder(

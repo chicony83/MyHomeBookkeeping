@@ -27,6 +27,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
+import com.chico.myhomebookkeeping.interfaces.categories.OnPressCreateNewCategory
 import com.chico.myhomebookkeeping.interfaces.categories.OnSelectAllCategories
 import com.chico.myhomebookkeeping.interfaces.categories.OnSelectNoCategories
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
@@ -117,13 +118,19 @@ class CategoriesFragment : Fragment() {
                         object : OnItemViewClickListener {
                             override fun onShortClick(selectedId: Int) {
                                 categoriesViewModel.saveData(navControlHelper, selectedId)
-                                navControlHelper.moveToPreviousFragment()
+//                                navControlHelper.moveToPreviousFragment()
                             }
 
                             override fun onLongClick(selectedId: Int) {
                                 showSelectCategoryDialog(selectedId)
                             }
-                        })
+                        },
+                        object :OnPressCreateNewCategory{
+                            override fun onPress() {
+                                showNewCategoryDialog()
+                            }
+                        }
+                    )
             }
         }
 
@@ -220,9 +227,6 @@ class CategoriesFragment : Fragment() {
                     true
                 }
                 popupMenu.show()
-            }
-            showHideAddCategoryFragmentButton.setOnClickListener {
-                showNewCategoryDialog()
             }
         }
 //        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)

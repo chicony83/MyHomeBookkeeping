@@ -52,11 +52,15 @@
         <item name="android:elevation">@dimen/margin_half_normal</item>
         <item name="android:paddingStart">@dimen/margin_double</item>
         <item name="android:paddingEnd">@dimen/margin_double</item>
-        <item name="android:paddingTop">@dimen/margin_normal</item>
-        <item name="android:paddingBottom">@dimen/margin_normal</item>
+        <item name="android:paddingTop">@dimen/margin_half_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_half_normal</item>
     </style>
     <style name="RecyclerViewItem.ParentCategories">
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textSize">@dimen/H3</item>
+    </style>
+    <style name="RecyclerViewItem.Categories">
+        <item name="android:layout_height">60dp</item>
         <item name="android:textSize">@dimen/H3</item>
     </style>
     <style name="RecyclerViewItem.Dialogs">
@@ -70,9 +74,5 @@
     <style name="RecyclerViewItem.MoneyMoving">
         <item name="android:padding">@dimen/margin_half_normal</item>
         <item name="android:layout_margin">@dimen/margin_half_normal</item>
-    </style>
-
-    <style name="RecyclerViewItem.Categories">
-
     </style>
 </resources>

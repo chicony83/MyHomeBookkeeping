@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/categoriesItem"
+        android:id="@+id/categories_item"
         style="@style/RecyclerViewItem.Dialogs"
         android:orientation="horizontal">
 
