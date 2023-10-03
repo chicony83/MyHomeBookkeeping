@@ -109,9 +109,9 @@ class CategoriesFragment : Fragment() {
             }
         }
         with(categoriesViewModel) {
-            sortedByTextOnButton.observe(viewLifecycleOwner) {
-                binding.sortingButton.text = it
-            }
+//            sortedByTextOnButton.observe(viewLifecycleOwner) {
+//                binding.sortingButton.text = it
+//            }
             categoriesList.observe(viewLifecycleOwner) {
                 binding.categoryHolder.adapter =
                     CategoriesAdapter(it,
@@ -183,7 +183,7 @@ class CategoriesFragment : Fragment() {
         navControlHelper = NavControlHelper(control)
 
         view.hideKeyboard()
-        with(binding) {
+//        with(binding) {
 //            selectAllIncomeButton.setOnClickListener {
 //                viewModel.selectIncomeCategory(navControlHelper)
 //                navControlHelper.moveToMoneyMovingFragment()
@@ -196,39 +196,39 @@ class CategoriesFragment : Fragment() {
 //                viewModel.selectAllCategories(navControlHelper)
 //                navControlHelper.moveToMoneyMovingFragment()
 //            }
-            sortingButton.setOnClickListener {
-                val popupMenu = PopupMenu(context, sortingButton)
-                popupMenu.menuInflater.inflate(
-                    R.menu.pop_up_menu_sorting_categories,
-                    popupMenu.menu
-                )
-                popupMenu.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.sort_by_numbers_ASC -> {
-//                            Message.log("sort by numbers ASC")
-                            sortingCategories(SortingCategories.NumbersByASC.toString())
-                        }
-
-                        R.id.sort_by_numbers_DESC -> {
-                            sortingCategories(SortingCategories.NumbersByDESC.toString())
-//                            Message.log("Sort by numbers DESC")
-                        }
-
-                        R.id.sort_by_alphabet_ASC -> {
-                            sortingCategories(SortingCategories.AlphabetByASC.toString())
-//                            Message.log("Sorting by alphabet ASC")
-                        }
-
-                        R.id.sort_by_alphabet_DESC -> {
-                            sortingCategories(SortingCategories.AlphabetByDESC.toString())
-//                            Message.log("Sorting by alphabet DESC")
-                        }
-                    }
-                    true
-                }
-                popupMenu.show()
-            }
-        }
+//            sortingButton.setOnClickListener {
+//                val popupMenu = PopupMenu(context, sortingButton)
+//                popupMenu.menuInflater.inflate(
+//                    R.menu.pop_up_menu_sorting_categories,
+//                    popupMenu.menu
+//                )
+//                popupMenu.setOnMenuItemClickListener { item ->
+//                    when (item.itemId) {
+//                        R.id.sort_by_numbers_ASC -> {
+////                            Message.log("sort by numbers ASC")
+//                            sortingCategories(SortingCategories.NumbersByASC.toString())
+//                        }
+//
+//                        R.id.sort_by_numbers_DESC -> {
+//                            sortingCategories(SortingCategories.NumbersByDESC.toString())
+////                            Message.log("Sort by numbers DESC")
+//                        }
+//
+//                        R.id.sort_by_alphabet_ASC -> {
+//                            sortingCategories(SortingCategories.AlphabetByASC.toString())
+////                            Message.log("Sorting by alphabet ASC")
+//                        }
+//
+//                        R.id.sort_by_alphabet_DESC -> {
+//                            sortingCategories(SortingCategories.AlphabetByDESC.toString())
+////                            Message.log("Sorting by alphabet DESC")
+//                        }
+//                    }
+//                    true
+//                }
+//                popupMenu.show()
+//            }
+//        }
 //        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
 //            or
 //            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
@@ -241,12 +241,12 @@ class CategoriesFragment : Fragment() {
 //        }
     }
 
-    private fun sortingCategories(sorting: String) {
-        with(categoriesViewModel) {
-            setSortingCategories(sorting)
-            reloadCategories()
-        }
-    }
+//    private fun sortingCategories(sorting: String) {
+//        with(categoriesViewModel) {
+//            setSortingCategories(sorting)
+//            reloadCategories()
+//        }
+//    }
 
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
