@@ -13,4 +13,7 @@ interface ParentCategoriesDao {
 
     @Query("SELECT * FROM parent_categories_table ORDER BY parent_category_name ASC")
     suspend fun getAllParentCategoriesSortNameAsc():List<ParentCategories>
+
+    @Query("SELECT * FROM parent_categories_table WHERE id = :id")
+    suspend fun getSelectedParentCategory(id: Int): ParentCategories
 }

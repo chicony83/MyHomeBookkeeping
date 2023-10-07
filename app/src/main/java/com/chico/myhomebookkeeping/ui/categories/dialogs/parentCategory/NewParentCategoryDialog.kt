@@ -7,7 +7,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.R
+import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
 import com.chico.myhomebookkeeping.utils.getString
@@ -31,7 +33,7 @@ class NewParentCategoryDialog(
             val cancelButton = layout.cancel_button
 
             submitButton.setOnClickListener {
-                checkAndAddPArentCategory(
+                checkAndAddParentCategory(
                     nameEditText
                 )
             }
@@ -50,7 +52,7 @@ class NewParentCategoryDialog(
         dialog?.dismiss()
     }
 
-    private fun checkAndAddPArentCategory(nameEditText: EditText) {
+    private fun checkAndAddParentCategory(nameEditText: EditText) {
         if (nameEditText.text.isNotEmpty()) {
             val name = nameEditText.getString()
             val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)

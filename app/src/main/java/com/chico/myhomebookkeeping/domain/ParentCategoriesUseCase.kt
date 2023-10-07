@@ -14,4 +14,8 @@ object ParentCategoriesUseCase {
     ):Long {
         return db.addNewParentCategory(newParentCategory)
     }
+
+    suspend fun getSelectedParentCategory(db: ParentCategoriesDao, id: Int): ParentCategories {
+        return db.getSelectedParentCategory(id)
+    }
 }

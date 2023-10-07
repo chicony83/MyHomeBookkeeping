@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.*
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.textWathers.EditNameTextWatcher
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.IconResourcesDao
@@ -29,6 +30,7 @@ import java.lang.IllegalStateException
 
 class NewCategoryDialog(
     private val result: Any,
+    private val parentCategoriesResult: MutableLiveData<ParentCategories?>,
     private val parentCategoriesList: List<ParentCategories>,
     private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack,
 ) : DialogFragment() {
@@ -54,6 +56,10 @@ class NewCategoryDialog(
             val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)
+
+            if (parentCategoriesResult.value != null) {
+                parentCategoriesTextView.text = parentCategoriesResult.value!!.name
+            }
 
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
 

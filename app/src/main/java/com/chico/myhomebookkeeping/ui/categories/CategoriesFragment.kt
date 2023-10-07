@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,6 +80,7 @@ class CategoriesFragment : Fragment() {
                     object : OnItemViewClickListener {
                         override fun onShortClick(id: Int) {
                             categoriesViewModel.getCategoriesWithParentId(id)
+                            parentCategoriesViewModel.getSelectedParentCategory(id)
                         }
 
                         override fun onLongClick(id: Int) {
@@ -88,11 +90,13 @@ class CategoriesFragment : Fragment() {
                     object : OnSelectAllCategories {
                         override fun onSelectAll() {
                             categoriesViewModel.getAllCategories()
+                            parentCategoriesViewModel.eraseSelectedParentCategory()
                         }
                     },
                     object : OnSelectNoCategories {
                         override fun onSelect() {
                             categoriesViewModel.getCategoriesWithoutParentCategory()
+                            parentCategoriesViewModel.eraseSelectedParentCategory()
 //                            showMessage("press no category button")
                         }
                     },
@@ -123,7 +127,8 @@ class CategoriesFragment : Fragment() {
                         },
                         object : OnPressCreateNewCategory {
                             override fun onPress() {
-                                showNewCategoryDialog()
+                                val parentCategoriesResult = parentCategoriesViewModel.selectedParentCategory
+                                showNewCategoryDialog(parentCategoriesResult)
                             }
                         }
                     )
@@ -311,12 +316,13 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private fun showNewCategoryDialog() {
+    private fun showNewCategoryDialog(parentCategoriesResult: MutableLiveData<ParentCategories?>) {
         val result = categoriesViewModel.getNamesList()
         val parentCategoriesList = parentCategoriesViewModel.getParentCategoriesList()
 
         launchUi {
             val dialog = NewCategoryDialog(result,
+                parentCategoriesResult,
                 parentCategoriesList,
                 object : OnAddNewCategoryCallBack {
 

@@ -21,6 +21,11 @@ class ParentCategoriesViewModel(
     private val _parentCategoriesList = MutableLiveData<List<ParentCategories>>()
     val parentCategoriesList: LiveData<List<ParentCategories>> get() = _parentCategoriesList
 
+    private val _selectedParentCategory = MutableLiveData<ParentCategories?>()
+    val selectedParentCategory : MutableLiveData<ParentCategories?> get() = _selectedParentCategory
+
+
+
     init {
         loadParentCategories()
     }
@@ -54,6 +59,16 @@ class ParentCategoriesViewModel(
 
     fun getParentCategoriesList(): List<ParentCategories> {
         return _parentCategoriesList.value?.toList()!!
+    }
+
+    fun getSelectedParentCategory(id: Int)  {
+        launchIo {
+            _selectedParentCategory.postValue(ParentCategoriesUseCase.getSelectedParentCategory(db, id))
+        }
+    }
+
+    fun eraseSelectedParentCategory(){
+        _selectedParentCategory.postValue(null)
     }
 
 }
