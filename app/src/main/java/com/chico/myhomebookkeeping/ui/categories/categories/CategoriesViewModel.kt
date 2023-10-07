@@ -275,11 +275,11 @@ class CategoriesViewModel(
                 )
             )
         }
-        Toast.makeText(
-            app.applicationContext,
-            "size ${_categoriesList.value?.size}",
-            Toast.LENGTH_LONG
-        ).show()
+//        Toast.makeText(
+//            app.applicationContext,
+//            "size ${_categoriesList.value?.size}",
+//            Toast.LENGTH_LONG
+//        ).show()
     }
 
     fun getCategoriesWithoutParentCategory() {

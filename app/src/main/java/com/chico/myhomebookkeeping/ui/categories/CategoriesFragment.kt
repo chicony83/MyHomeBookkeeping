@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -19,7 +18,6 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
-import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
@@ -80,21 +78,19 @@ class CategoriesFragment : Fragment() {
                 binding.parentCategoryHolder.adapter = ParentCategoriesAdapter(it,
                     object : OnItemViewClickListener {
                         override fun onShortClick(id: Int) {
-//                            showMessage("short click on $id")
-                            categoriesViewModel.getCategoriesWithParentId(
-                                id
-                            )
+                            categoriesViewModel.getCategoriesWithParentId(id)
                         }
+
                         override fun onLongClick(id: Int) {
 //                            showMessage("long click on $id")
                         }
                     },
-                    object :OnSelectAllCategories{
+                    object : OnSelectAllCategories {
                         override fun onSelectAll() {
                             categoriesViewModel.getAllCategories()
                         }
                     },
-                    object :OnSelectNoCategories{
+                    object : OnSelectNoCategories {
                         override fun onSelect() {
                             categoriesViewModel.getCategoriesWithoutParentCategory()
 //                            showMessage("press no category button")
@@ -125,7 +121,7 @@ class CategoriesFragment : Fragment() {
                                 showSelectCategoryDialog(selectedId)
                             }
                         },
-                        object :OnPressCreateNewCategory{
+                        object : OnPressCreateNewCategory {
                             override fun onPress() {
                                 showNewCategoryDialog()
                             }
@@ -251,8 +247,10 @@ class CategoriesFragment : Fragment() {
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
             val category: Categories? = categoriesViewModel.getSelectedCategory(selectedId)
+            val parentCategoriesList: List<ParentCategories> =
+                parentCategoriesViewModel.parentCategoriesList.value!!.toList()
             launchUi {
-                val dialog = SelectCategoryDialog(category,
+                val dialog = SelectCategoryDialog(category, parentCategoriesList,
                     object : OnItemSelectForChangeCallBack {
                         override fun onSelect(id: Int) {
                             showChangeCategoryDialog(category)
@@ -279,14 +277,19 @@ class CategoriesFragment : Fragment() {
 //                    categoriesViewModel.saveChangedCategory(id,name,isIncome)
 //                }
 
-                override fun changeCategoryWithoutParentCategory(
-                    id: Int,
-                    name: String,
-                    isIncome: Boolean,
-                    iconResource: Int
-                ) {
-                    categoriesViewModel.saveChangedCategoryWithoutParentCategory(id, name, isIncome, iconResource)
-                }
+                    override fun changeCategoryWithoutParentCategory(
+                        id: Int,
+                        name: String,
+                        isIncome: Boolean,
+                        iconResource: Int
+                    ) {
+                        categoriesViewModel.saveChangedCategoryWithoutParentCategory(
+                            id,
+                            name,
+                            isIncome,
+                            iconResource
+                        )
+                    }
 
                     override fun changeCategoryFull(
                         id: Int,
@@ -295,7 +298,13 @@ class CategoriesFragment : Fragment() {
                         iconResource: Int,
                         parentCategoryId: Int
                     ) {
-                        categoriesViewModel.saveChangedCategoryFull(id,name,isIncome,iconResource,parentCategoryId)
+                        categoriesViewModel.saveChangedCategoryFull(
+                            id,
+                            name,
+                            isIncome,
+                            iconResource,
+                            parentCategoryId
+                        )
                     }
                 })
             dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))

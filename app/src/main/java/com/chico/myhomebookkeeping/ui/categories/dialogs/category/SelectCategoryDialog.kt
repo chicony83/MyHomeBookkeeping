@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import kotlinx.android.synthetic.main.dialog_select_category.view.parent_category_name_TextView
@@ -16,6 +17,7 @@ import java.lang.IllegalStateException
 
 class SelectCategoryDialog(
     private val categories: Categories?,
+    private val parentCategoriesList: List<ParentCategories>,
     private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
     private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) : DialogFragment() {
@@ -35,7 +37,7 @@ class SelectCategoryDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
             categories?.let { it1 ->
-                parentCategoryName.text = it1.parentCategoryId.toString()
+                parentCategoryName.text = getParentCategoriesName(categories.parentCategoryId)
                 name.text = it1.categoryName
                 iconImg.setImageResource(it1.icon ?: R.drawable.no_image)
             }
@@ -66,6 +68,16 @@ class SelectCategoryDialog(
             builder.create()
 
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
+    }
+
+    private fun getParentCategoriesName(parentCategoryId: Int?): String {
+        var name = "no parent category"
+        if (parentCategoryId != null) {
+            if (parentCategoryId >= 0) {
+                name = parentCategoryId.toString()+ " " + parentCategoriesList[parentCategoryId-1].name
+            }
+        }
+        return name
     }
 
     private fun dialogCancel() {
