@@ -67,7 +67,6 @@ class ChangeCategoryDialog(
             if (category?.parentCategoryId != null) {
                 if (category.parentCategoryId > 0) {
 
-//                    var parentCategoryName: String = "no parent category"
                     val parentCategoryName =
                         SuchName().suchParentCategoryNameById(parentCategoriesList, category)
 

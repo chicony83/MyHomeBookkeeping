@@ -81,11 +81,6 @@ class SelectCategoryDialog(
             }
         }
 
-//        if (parentCategoryId != null) {
-//            if (parentCategoryId >= 0) {
-//                parentCategoryName = parentCategoryId.toString()+ " " + parentCategoriesList[parentCategoryId-1].name
-//            }
-//        }
         return parentCategoryName
     }
 
