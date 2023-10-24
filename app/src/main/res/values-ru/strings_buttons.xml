@@ -59,4 +59,6 @@
     <string name="text_on_button_sorting_by_rating_ASC">рейтинг ↑</string>
     <string name="text_on_button_sorting_by_rating_DESC">рейтинг ↓</string>
 
+    <string name="text_on_button_no_parent_category">Без родительской категории</string>
+
 </resources>

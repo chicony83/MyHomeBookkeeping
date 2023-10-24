@@ -1,5 +1,5 @@
 package com.chico.myhomebookkeeping.interfaces
 
-interface OnPressCreateNewElement {
+interface OnClickCreateNewElementCallBack {
     fun onPress()
 }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/categoriesItem"
+        android:id="@+id/categories_item"
         style="@style/RecyclerViewItem.Dialogs"
         android:orientation="horizontal">
 
@@ -28,7 +28,7 @@
 
         <TextView
             tools:text="income"
-            android:id="@+id/nameTextView"
+            android:id="@+id/category_name_TextView"
             app:layout_constraintStart_toEndOf="@id/isCheckedCheckBox"
             app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox"
             app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"

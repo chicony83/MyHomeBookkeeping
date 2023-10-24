@@ -10,7 +10,8 @@
         android:text="@string/description_cash_account_name" />
 
     <EditText
-        android:id="@+id/nameTextView"
+        android:inputType="text"
+        android:id="@+id/cash_account_name_editText"
         style="@style/DialogEnterNewName" />
 
     <TextView

@@ -64,7 +64,7 @@ class FastPaymentsFragment : Fragment() {
                                 navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
                             }
                         },
-                        object : OnPressCreateNewElement {
+                        object : OnClickCreateNewElementCallBack {
                             override fun onPress() {
                                 navControlHelper.toSelectedFragment(R.id.nav_new_fast_payment_fragment)
                                 Message.log("PRESS")

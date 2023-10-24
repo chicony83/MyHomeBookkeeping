@@ -23,11 +23,9 @@
     </style>
 
     <style name="Description.MessageOfBusyName">
-        <item name="android:layout_marginStart">@dimen/margin_normal</item>
-        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
-
-        <item name="android:gravity">center</item>
-        <item name="android:background">@color/warning</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/H5</item>
+        <item name="android:textColor">@color/warning</item>
         <item name="android:visibility">gone</item>
         <item name="android:text">@string/description_this_name_is_taken</item>
     </style>
@@ -84,4 +82,5 @@
         <item name="android:textSize">@dimen/H1</item>
         <item name="android:gravity">center</item>
     </style>
+
 </resources>

@@ -3,34 +3,46 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/DialogLayout"
-    android:orientation="vertical">
+    style="@style/DialogLayout">
 
     <EditText
-        android:id="@+id/category_name"
+        android:inputType="text"
+        android:id="@+id/category_name_EditText"
         style="@style/DialogEnterNewName"
         android:layout_margin="@dimen/margin_normal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="@dimen/margin_double"
+        app:layout_constraintEnd_toStartOf="@id/iconImg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/errorThisNameIsTaken"
         style="@style/Description.MessageOfBusyName"
-        android:layout_margin="@dimen/margin_normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_name"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="@id/category_name_EditText"
+        app:layout_constraintTop_toTopOf="@id/category_name_EditText"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/parent_categories_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/text_view_select_parent_category"
+        android:textSize="@dimen/H4"
+        app:layout_constraintEnd_toStartOf="@id/iconImg"
+        app:layout_constraintStart_toStartOf="@id/category_name_EditText"
+        app:layout_constraintTop_toBottomOf="@id/category_name_EditText" />
+
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_normal"
-        app:layout_constraintEnd_toStartOf="@id/verticalCenterOfDialog"
+        app:layout_constraintEnd_toStartOf="@id/iconImg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken">
+        app:layout_constraintTop_toBottomOf="@id/parent_categories_TextView">
 
         <RadioButton
             android:id="@+id/incoming_radio_button"
@@ -47,14 +59,13 @@
 
     <ImageView
         android:id="@+id/iconImg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_margin="@dimen/margin_normal"
         android:contentDescription="@string/content_description_icon_item_of_category"
         app:layout_constraintBottom_toTopOf="@id/addAndSelectNewItemButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/verticalCenterOfDialog"
-        app:layout_constraintTop_toBottomOf="@id/errorThisNameIsTaken"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/no_image" />
 
     <Button
@@ -65,30 +76,26 @@
         app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/verticalCenterOfDialog"
+        android:id="@+id/vertical_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-
     <Button
         android:id="@+id/addNewCategoryButton"
         style="@style/DialogButtonLeft.Positive"
-        android:layout_weight="1"
         android:text="@string/text_on_button_add"
-        app:layout_constraintEnd_toStartOf="@id/verticalCenterOfDialog"
+        app:layout_constraintEnd_toStartOf="@id/vertical_center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addAndSelectNewItemButton" />
 
     <Button
         android:id="@+id/cancelCreateButton"
         style="@style/DialogButtonRight.Negative"
-        android:layout_weight="1"
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/verticalCenterOfDialog"
+        app:layout_constraintStart_toEndOf="@id/vertical_center"
         app:layout_constraintTop_toBottomOf="@id/addAndSelectNewItemButton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

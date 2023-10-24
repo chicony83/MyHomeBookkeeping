@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "parent_categories_table")
 class ParentCategories(
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "parent_category_name")
     val name:String,
-    @ColumnInfo(name = "icon_parent_category")
+    @ColumnInfo(name = "name_icon_parent_category")
     val icon:Int?
 ){
     @PrimaryKey(autoGenerate = true)

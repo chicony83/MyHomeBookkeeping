@@ -6,9 +6,26 @@
     style="@style/RecyclerViewCard.Categories">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/categoriesItem"
-        style="@style/RecyclerViewItem"
-        android:orientation="horizontal">
+        android:id="@+id/add_new_category_item"
+        style="@style/RecyclerViewItem.Categories"
+        android:visibility="gone"
+        tool:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/add_new_category_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/content_description_icon_add_new_element"
+            android:src="@drawable/ic_add_circle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/categories_item"
+        style="@style/RecyclerViewItem.Categories"
+        android:visibility="gone"
+        tool:visibility="gone">
 
         <ImageView
             android:id="@+id/iconImg"
@@ -16,7 +33,8 @@
             android:contentDescription="@string/content_description_icon_item_of_category"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tool:src="@drawable/no_image" />
 
         <TextView
             android:id="@+id/id_categories"
@@ -28,7 +46,7 @@
             tool:text="1" />
 
         <TextView
-            android:id="@+id/category_cardView_text"
+            android:id="@+id/category_name_textView"
             style="@style/TextView.RecyclerViewHorizontalItem"
             app:layout_constraintBottom_toBottomOf="@id/id_categories"
             app:layout_constraintStart_toEndOf="@id/id_categories"

@@ -5,7 +5,7 @@
 
     <EditText
         android:hint="@string/hint_enter_name"
-        android:id="@+id/nameTextView"
+        android:id="@+id/cash_account_name_editText"
         style="@style/DialogEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
         android:maxLength="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        app:layout_constraintTop_toBottomOf="@id/cash_account_name_editText"
         android:hint="@string/hint_new_currency_only_last_4_digits" />
 
     <Button

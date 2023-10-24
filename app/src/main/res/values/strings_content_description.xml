@@ -3,6 +3,8 @@
     <string name="content_description_rating_stars" translatable="false">Rating stars</string>
     <string name="content_description_icon_item_of_cash_account" translatable="false">icon item of cash account</string>
     <string name="content_description_icon_item_of_category" translatable="false">icon item of category</string>
+    <string name="content_description_icon_item_of_parent_category" translatable="false">icon item of parent category</string>
+
     <string name="content_description_icon_add_new_element" translatable="false">add new element</string>
     <string name="content_description_icon_fast_payment" translatable="false">icon fast payment</string>
     <string name="content_description_icon_sorting" translatable="false">sorting icon</string>

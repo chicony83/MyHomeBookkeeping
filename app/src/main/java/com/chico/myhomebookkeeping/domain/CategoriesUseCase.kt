@@ -21,14 +21,25 @@ object CategoriesUseCase {
         }
     }
 
-    suspend fun changeCategoryLine(
+    suspend fun changeCategoryLineWithoutParentCategory(
         db: CategoryDao,
         id: Int,
         name: String,
         isIncome: Boolean,
         iconResource: Int
     ): Int {
-        return db.changeLine(id, name, isIncome,iconResource)
+        return db.changeLineWithoutCategory(id, name, isIncome, iconResource)
+    }
+
+    suspend fun changeCategoryLineFull(
+        db: CategoryDao,
+        id: Int,
+        name: String,
+        isIncome: Boolean,
+        iconResource: Int,
+        parentCategoryId: Int
+    ): Int {
+        return db.changeLineFull(id, name, isIncome, iconResource, parentCategoryId)
     }
 
     suspend fun getAllCategoriesSortIdDesc(db: CategoryDao): List<Categories> {
@@ -46,4 +57,16 @@ object CategoriesUseCase {
     suspend fun getAllCategoriesSortNameDesc(db: CategoryDao): List<Categories> {
         return db.getAllCategoriesSortNameDESC()
     }
+
+    suspend fun getAllCategoriesWithParentIdSortNameAsc(
+        parentCategoryId: Int,
+        db: CategoryDao
+    ): List<Categories>? {
+        return db.getAllCategoriesWithParentIdSortNameAsc(parentCategoryId)
+    }
+
+    suspend fun getAllCategoriesWithoutParentCategory(db: CategoryDao): List<Categories>? {
+        return db.getAllCategoriesWithoutParentCategory()
+    }
+
 }
