@@ -63,7 +63,22 @@ class ChangeCategoryDialog(
             iconResource = category?.icon ?: R.drawable.no_image
             iconImg.setImageResource(iconResource)
 
-            parentCategoryTextView.text = category?.parentCategoryId.toString()
+            if (category?.parentCategoryId != null) {
+                if (category.parentCategoryId > 0) {
+
+                    var parentCategoryName: String = ""
+
+                    for (i in parentCategoriesList.indices){
+                        if (parentCategoriesList[i].id == category.parentCategoryId){
+                            parentCategoriesList[i].let {
+                                parentCategoryName = it.name
+                            }
+                        }
+                    }
+
+                    parentCategoryTextView.text = parentCategoryName
+                }
+            }
 
             parentCategoryTextView.setOnClickListener {
                 showSelectParentCategoryDialog(
@@ -113,7 +128,7 @@ class ChangeCategoryDialog(
                                     name = name,
                                     isIncome = isIncome,
                                     iconResource = iconResource,
-                                    parentCategoryId =selectedParentCategory
+                                    parentCategoryId = selectedParentCategory
                                 )
                             } else {
                                 onChangeCategoryCallBack.changeCategoryWithoutParentCategory(

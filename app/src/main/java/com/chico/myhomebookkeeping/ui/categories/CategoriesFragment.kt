@@ -253,7 +253,7 @@ class CategoriesFragment : Fragment() {
         launchIo {
             val category: Categories? = categoriesViewModel.getSelectedCategory(selectedId)
             val parentCategoriesList: List<ParentCategories> =
-                parentCategoriesViewModel.parentCategoriesList.value!!.toList()
+                parentCategoriesViewModel.parentCategoriesList.value!!.toList().sortedBy { it.name }
             launchUi {
                 val dialog = SelectCategoryDialog(category, parentCategoriesList,
                     object : OnItemSelectForChangeCallBack {
