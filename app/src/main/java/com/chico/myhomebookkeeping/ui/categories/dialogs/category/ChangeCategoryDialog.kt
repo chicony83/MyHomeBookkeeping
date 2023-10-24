@@ -18,6 +18,7 @@ import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
+import com.chico.myhomebookkeeping.ui.categories.such.SuchName
 import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -66,15 +67,9 @@ class ChangeCategoryDialog(
             if (category?.parentCategoryId != null) {
                 if (category.parentCategoryId > 0) {
 
-                    var parentCategoryName: String = ""
-
-                    for (i in parentCategoriesList.indices){
-                        if (parentCategoriesList[i].id == category.parentCategoryId){
-                            parentCategoriesList[i].let {
-                                parentCategoryName = it.name
-                            }
-                        }
-                    }
+//                    var parentCategoryName: String = "no parent category"
+                    val parentCategoryName =
+                        SuchName().suchParentCategoryNameById(parentCategoriesList, category)
 
                     parentCategoryTextView.text = parentCategoryName
                 }
