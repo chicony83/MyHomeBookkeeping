@@ -13,7 +13,6 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnAddNewCashAccountsCallBack
 import com.chico.myhomebookkeeping.utils.getString
-import kotlinx.android.synthetic.main.dialog_change_cash_account.view.cash_account_name_editText
 import java.lang.IllegalStateException
 
 class NewCashAccountDialog(
@@ -28,7 +27,7 @@ class NewCashAccountDialog(
 
             var namesList = listOf<String>()
 
-            val nameEditText = layout.cash_account_name_editText
+            val nameEditText = layout.findViewById<EditText>(R.id.cash_account_name_editText)
             val numberEditText = layout.findViewById<EditText>(R.id.number)
             val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
 

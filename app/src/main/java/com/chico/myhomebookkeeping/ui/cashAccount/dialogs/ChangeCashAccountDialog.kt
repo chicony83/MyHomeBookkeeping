@@ -11,7 +11,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnChangeCashAccountCallBack
-import kotlinx.android.synthetic.main.dialog_change_cash_account.view.cash_account_name_editText
+//import kotlinx.android.synthetic.main.dialog_change_cash_account.view.cash_account_name_editText
 import java.lang.IllegalStateException
 
 class ChangeCashAccountDialog(
@@ -24,7 +24,7 @@ class ChangeCashAccountDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_change_cash_account, null)
 
-            val nameEditText = layout.cash_account_name_editText
+            val nameEditText = layout.findViewById<EditText>(R.id.cash_account_name_editText)
             val numberEditText = layout.findViewById<EditText>(R.id.number)
 
             val saveButton = layout.findViewById<Button>(R.id.saveButton)

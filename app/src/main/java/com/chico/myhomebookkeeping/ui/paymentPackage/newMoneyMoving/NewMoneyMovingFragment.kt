@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,9 +25,9 @@ import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.android.synthetic.main.fragment_change_money_moving.*
-import kotlinx.android.synthetic.main.fragment_new_money_moving.amountEditText
-import kotlinx.android.synthetic.main.fragment_new_money_moving.eraseButton
+//import kotlinx.android.synthetic.main.fragment_change_money_moving.*
+//import kotlinx.android.synthetic.main.fragment_new_money_moving.amountEditText
+//import kotlinx.android.synthetic.main.fragment_new_money_moving.eraseButton
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -124,10 +125,10 @@ class NewMoneyMovingFragment : Fragment() {
             }
         }
 
-        showHideEraseButton()
+        showHideEraseButton(binding.amountEditText, binding.eraseButton)
     }
 
-    private fun showHideEraseButton() {
+    private fun showHideEraseButton(amountEditText: EditText, eraseButton: ImageButton) {
         amountEditText.addTextChangedListener(
             NewMoneyMovingAmountTextWatcher(eraseButton)
         )

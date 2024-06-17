@@ -13,7 +13,6 @@ import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.ui.categories.such.SuchName
-import kotlinx.android.synthetic.main.dialog_select_category.view.parent_category_name_TextView
 import java.lang.IllegalStateException
 
 class SelectCategoryDialog(
@@ -28,7 +27,7 @@ class SelectCategoryDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_select_category, null)
 
-            val parentCategoryName = layout.parent_category_name_TextView
+            val parentCategoryName = layout.findViewById<TextView>(R.id.parent_category_name_TextView)
 
             val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
             val name = layout.findViewById<TextView>(R.id.selectedItemName)

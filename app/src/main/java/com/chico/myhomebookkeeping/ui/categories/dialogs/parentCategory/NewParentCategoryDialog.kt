@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.categories.dialogs.parentCategory
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -13,9 +14,6 @@ import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
 import com.chico.myhomebookkeeping.utils.getString
-import kotlinx.android.synthetic.main.dialog_new_parent_category.view.cancel_button
-import kotlinx.android.synthetic.main.dialog_new_parent_category.view.parent_category_name_editText
-import kotlinx.android.synthetic.main.dialog_new_parent_category.view.submit_button
 
 class NewParentCategoryDialog(
     private val onAddNewParentCategoryCallBack: OnAddNewParentCategoryCallBack
@@ -28,9 +26,12 @@ class NewParentCategoryDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_new_parent_category, null)
 
-            val nameEditText = layout.parent_category_name_editText
-            val submitButton = layout.submit_button
-            val cancelButton = layout.cancel_button
+            val nameEditText = layout.findViewById<EditText>(R.id.parent_category_name_editText)
+//            val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
+            val submitButton = layout.findViewById<Button>(R.id.submit_button)
+            val cancelButton = layout.findViewById<Button>(R.id.cancel_button)
+
+//            iconImg.setImageResource(R.drawable.no_image)
 
             submitButton.setOnClickListener {
                 checkAndAddParentCategory(

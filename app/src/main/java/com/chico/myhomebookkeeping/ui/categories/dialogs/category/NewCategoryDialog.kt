@@ -24,8 +24,6 @@ import com.chico.myhomebookkeeping.utils.getString
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.dialog_new_category.view.category_name_EditText
-import kotlinx.android.synthetic.main.dialog_new_category.view.parent_categories_TextView
 import java.lang.IllegalStateException
 
 class NewCategoryDialog(
@@ -50,9 +48,9 @@ class NewCategoryDialog(
 
             var namesList = listOf<String>()
 
-            val parentCategoriesTextView = layout.parent_categories_TextView
+            val parentCategoriesTextView = layout.findViewById<TextView>(R.id.parent_categories_TextView)
 
-            val categoryNameEditText = layout.category_name_EditText
+            val categoryNameEditText = layout.findViewById<EditText>(R.id.category_name_EditText)
             val errorTextView = layout.findViewById<TextView>(R.id.errorThisNameIsTaken)
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incoming_radio_button)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spending_radio_button)

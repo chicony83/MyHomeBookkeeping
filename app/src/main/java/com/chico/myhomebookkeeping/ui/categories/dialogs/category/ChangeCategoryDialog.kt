@@ -23,8 +23,6 @@ import com.chico.myhomebookkeeping.ui.dialogs.SelectIconDialog
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.dialog_change_category.view.category_name_EditText
-import kotlinx.android.synthetic.main.dialog_change_category.view.parent_categories_TextView
 import java.lang.IllegalStateException
 
 class ChangeCategoryDialog(
@@ -45,9 +43,11 @@ class ChangeCategoryDialog(
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_change_category, null)
 
-            val categoryNameEditText = layout.category_name_EditText
+            val categoryNameEditText = layout.findViewById<EditText>(R.id.category_name_EditText)
 
-            val parentCategoryTextView = layout.parent_categories_TextView
+
+            val parentCategoryTextView = layout.findViewById<TextView>(R.id.parent_categories_TextView)
+
 
             val incomeRadioButton = layout.findViewById<RadioButton>(R.id.incomeRadioButton)
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spendingRadioButton)
