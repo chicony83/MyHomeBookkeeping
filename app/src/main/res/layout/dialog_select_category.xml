@@ -8,7 +8,7 @@
         android:id="@+id/parent_category_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="parent category"
+        android:text="@string/text_view_parent_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iconImg"
         app:layout_constraintTop_toTopOf="parent" />

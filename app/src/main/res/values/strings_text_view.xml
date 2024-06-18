@@ -3,6 +3,8 @@
     <string name="text_view_first_launch_select_you_currencies">Select you currencies</string>
     <string name="text_view_arrow_to_the_left" translatable="false">&lt;&lt;</string>
     <string name="text_view_arrow_to_the_right" translatable="false">&gt;&gt;</string>
-    <string name="text_view_select_parent_category">Parent category</string>
+    <string name="text_view_select_parent_category">Select parent category</string>
     <string name="text_view_All_categories">All</string>
+    <string name="text_view_parent_category">Parent category</string>">
+    <string name="text_view_no_parent_category">no parent category</string>
 </resources>

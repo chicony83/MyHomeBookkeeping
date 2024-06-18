@@ -30,7 +30,7 @@ class SelectCategoryDialog(
             val parentCategoryName = layout.findViewById<TextView>(R.id.parent_category_name_TextView)
 
             val iconImg = layout.findViewById<ImageView>(R.id.iconImg)
-            val name = layout.findViewById<TextView>(R.id.selectedItemName)
+            val categoryName = layout.findViewById<TextView>(R.id.selectedItemName)
 
             val selectButton = layout.findViewById<Button>(R.id.selectButton)
             val changeButton = layout.findViewById<Button>(R.id.changeButton)
@@ -38,25 +38,21 @@ class SelectCategoryDialog(
 
             category?.let { it1 ->
                 parentCategoryName.text = getParentCategoriesName(category.parentCategoryId)
-                name.text = it1.categoryName
+                categoryName.text = it1.categoryName
                 iconImg.setImageResource(it1.icon ?: R.drawable.no_image)
             }
-
-            name.setOnClickListener {
-                category?.categoriesId?.let { it1 ->
-                    onItemSelectForChangeCallBack.onSelect(it1)
-                }
-                dialogCancel()
+            parentCategoryName.setOnClickListener {
+                changeCategory()
+            }
+            categoryName.setOnClickListener {
+                changeCategory()
+            }
+            changeButton.setOnClickListener {
+                changeCategory()
             }
             selectButton.setOnClickListener {
                 category?.categoriesId?.let { it1 ->
                     onItemSelectForSelectCallBackInt.onSelect(it1)
-                }
-                dialogCancel()
-            }
-            changeButton.setOnClickListener {
-                category?.categoriesId?.let { it1 ->
-                    onItemSelectForChangeCallBack.onSelect(it1)
                 }
                 dialogCancel()
             }
@@ -70,8 +66,15 @@ class SelectCategoryDialog(
         } ?: throw IllegalStateException(getString(R.string.exceptions_activity_cant_be_null))
     }
 
+    private fun changeCategory() {
+        category?.categoriesId?.let { it1 ->
+            onItemSelectForChangeCallBack.onSelect(it1)
+        }
+        dialogCancel()
+    }
+
     private fun getParentCategoriesName(parentCategoryId: Int?): String {
-        var parentCategoryName = "no parent category"
+        var parentCategoryName = resources.getString(R.string.text_view_no_parent_category)
 
         if (category?.parentCategoryId != null) {
             if (category.parentCategoryId > 0) {
