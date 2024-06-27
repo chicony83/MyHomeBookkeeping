@@ -118,7 +118,7 @@ class CategoriesFragment : Fragment() {
                         object : OnItemViewClickListener {
                             override fun onShortClick(selectedId: Int) {
                                 categoriesViewModel.saveData(navControlHelper, selectedId)
-//                                navControlHelper.moveToPreviousFragment()
+                                navControlHelper.moveToPreviousFragment()
                             }
 
                             override fun onLongClick(selectedId: Int) {
