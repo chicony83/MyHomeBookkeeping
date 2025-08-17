@@ -231,16 +231,16 @@ class NewMoneyMovingFragment : Fragment() {
         }
     }
 
-    private fun setBackgroundDefaultColor(editText: EditText) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            editText.setBackgroundColor(
-                resources.getColor(
-                    R.color.design_default_color_background,
-                    null
-                )
-            )
-        }
-    }
+//    private fun setBackgroundDefaultColor(editText: EditText) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            editText.setBackgroundColor(
+//                resources.getColor(
+//                    R.color.design_default_color_background,
+//                    null
+//                )
+//            )
+//        }
+//    }
 
     private fun pressSelectButton(fragment: Int) {
         viewModel.saveDataToSP(getAmount(), getDescription())

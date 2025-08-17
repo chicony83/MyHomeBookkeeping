@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFastPaymentsBinding
@@ -29,8 +30,8 @@ class FastPaymentsFragment : Fragment() {
     private var _binding: FragmentFastPaymentsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var control: NavController
-    private lateinit var navControlHelper: NavControlHelper
+     private val control by lazy { findNavController() }
+     private val navControlHelper by lazy { NavControlHelper(control) }
 
     private lateinit var fastPaymentsViewModel: FastPaymentsViewModel
 
@@ -40,8 +41,7 @@ class FastPaymentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFastPaymentsBinding.inflate(inflater, container, false)
-        control = activity?.findNavController(R.id.nav_host_fragment)!!
-        navControlHelper = NavControlHelper(controller = control)
+
 
         fastPaymentsViewModel = ViewModelProvider(this).get(FastPaymentsViewModel::class.java)
 
@@ -157,6 +157,8 @@ class FastPaymentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        control = findNavController()
 
         with(binding) {
             selectAllButton.setOnClickListener {

@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.BuildConfig
+//import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.full.FullFastPayment
 import com.chico.myhomebookkeeping.db.dao.FastPaymentsDao
@@ -231,12 +231,13 @@ class FastPaymentsViewModel(
 
     fun isLastVersionOfProgramChecked(): Boolean {
         val lastCheckedVersion = getSp.getInt(ConstantsOfUpdate.LAST_CHECKED_VERSION)
-        val currentVersion = BuildConfig.VERSION_CODE
-        return lastCheckedVersion == currentVersion
+//        val currentVersion = BuildConfig.VERSION_CODE
+//        return lastCheckedVersion == currentVersion
+        return true
     }
 
     fun setLastVersionChecked() {
-        setSP.saveToSP(ConstantsOfUpdate.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
+//        setSP.saveToSP(ConstantsOfUpdate.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
     }
 
     fun getAllFastPayments() {

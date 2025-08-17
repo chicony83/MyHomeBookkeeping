@@ -65,7 +65,7 @@ class CategoriesFragment : Fragment() {
     ): View {
         db = dataBase.getDataBase(requireContext()).categoryDao()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-
+        binding.lifecycleOwner = viewLifecycleOwner
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         binding.onClear = {
             requireView().hideKeyboard()

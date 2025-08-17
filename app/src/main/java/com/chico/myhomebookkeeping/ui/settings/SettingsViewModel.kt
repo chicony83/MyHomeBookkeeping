@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chico.myhomebookkeeping.BuildConfig
+//import com.chico.myhomebookkeeping.BuildConfig
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -26,8 +26,8 @@ class SettingsViewModel(
     val appVersion: LiveData<String>
         get() = _appVersion
 
-    init {
-        val currentVersion = app.getString(R.string.current_version)
-        _appVersion.postValue("$currentVersion ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-    }
+//    init {
+//        val currentVersion = app.getString(R.string.current_version)
+//        _appVersion.postValue("$currentVersion ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+//    }
 }

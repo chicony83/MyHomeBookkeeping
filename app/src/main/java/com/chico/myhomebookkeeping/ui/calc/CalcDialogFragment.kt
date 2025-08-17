@@ -30,8 +30,8 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.DialogCalcMainBinding
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.NewMoneyMovingViewModel
 import com.chico.myhomebookkeeping.utils.removeWhitespacesAndCommas
-import com.sothree.slidinguppanel.PanelSlideListener
-import com.sothree.slidinguppanel.PanelState
+//import com.sothree.slidinguppanel.PanelSlideListener
+//import com.sothree.slidinguppanel.PanelState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -78,53 +78,53 @@ class CalcDialogFragment : DialogFragment() {
         binding.input.showSoftInputOnFocus = false
         binding.input.setText(initialAmount)
 
-        binding.backspaceButton.setOnLongClickListener {
-            binding.input.setText("")
-            binding.resultDisplay.setText("")
-            true
-        }
-
-        val lt = LayoutTransition()
-        lt.disableTransitionType(LayoutTransition.DISAPPEARING)
-        binding.tableLayout.layoutTransition = lt
-
-        binding.pointButton.setImageResource(if (decimalSeparatorSymbol == ",") R.drawable.comma else R.drawable.dot)
-
-        historyLayoutMgr = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        binding.historyRecylcleView.layoutManager = historyLayoutMgr
-        historyAdapter = HistoryAdapter(mutableListOf()) { value ->
-            run {
-                updateDisplay(requireActivity().window.decorView, value)
-            }
-        }
-        binding.historyRecylcleView.adapter = historyAdapter
-        val historyList = MyPreferences(requireContext()).getHistory()
-        historyAdapter.appendHistory(historyList)
-        if (historyAdapter.itemCount > 0) {
-            binding.historyRecylcleView.scrollToPosition(historyAdapter.itemCount - 1)
-        }
-
-        binding.slidingLayout.addPanelSlideListener(object : PanelSlideListener {
-            override fun onPanelSlide(panel: View, slideOffset: Float) {
-                if (slideOffset == 0f) { // If the panel got collapsed
-                    binding.slidingLayout.scrollableView = binding.historyRecylcleView
-                }
-            }
-
-            override fun onPanelStateChanged(
-                panel: View,
-                previousState: PanelState,
-                newState: PanelState
-            ) {
-                if (newState == PanelState.ANCHORED) { // To prevent the panel from getting stuck in the middle
-                    binding.slidingLayout.panelState = PanelState.EXPANDED
-                }
-            }
-        })
+//        binding.backspaceButton.setOnLongClickListener {
+//            binding.input.setText("")
+//            binding.resultDisplay.setText("")
+//            true
+//        }
+//
+//        val lt = LayoutTransition()
+//        lt.disableTransitionType(LayoutTransition.DISAPPEARING)
+//        binding.tableLayout.layoutTransition = lt
+//
+//        binding.pointButton.setImageResource(if (decimalSeparatorSymbol == ",") R.drawable.comma else R.drawable.dot)
+//
+//        historyLayoutMgr = LinearLayoutManager(
+//            requireContext(),
+//            LinearLayoutManager.VERTICAL,
+//            false
+//        )
+//        binding.historyRecylcleView.layoutManager = historyLayoutMgr
+//        historyAdapter = HistoryAdapter(mutableListOf()) { value ->
+//            run {
+//                updateDisplay(requireActivity().window.decorView, value)
+//            }
+//        }
+//        binding.historyRecylcleView.adapter = historyAdapter
+//        val historyList = MyPreferences(requireContext()).getHistory()
+//        historyAdapter.appendHistory(historyList)
+//        if (historyAdapter.itemCount > 0) {
+//            binding.historyRecylcleView.scrollToPosition(historyAdapter.itemCount - 1)
+//        }
+//
+//        binding.slidingLayout.addPanelSlideListener(object : PanelSlideListener {
+//            override fun onPanelSlide(panel: View, slideOffset: Float) {
+//                if (slideOffset == 0f) { // If the panel got collapsed
+//                    binding.slidingLayout.scrollableView = binding.historyRecylcleView
+//                }
+//            }
+//
+//            override fun onPanelStateChanged(
+//                panel: View,
+//                previousState: PanelState,
+//                newState: PanelState
+//            ) {
+//                if (newState == PanelState.ANCHORED) { // To prevent the panel from getting stuck in the middle
+//                    binding.slidingLayout.panelState = PanelState.EXPANDED
+//                }
+//            }
+//        })
 
         // Prevent the phone from sleeping (if option enabled)
         if (MyPreferences(requireContext()).preventPhoneFromSleepingMode) {
@@ -661,7 +661,7 @@ class CalcDialogFragment : DialogFragment() {
                                 }
 
                                 // Scroll to the bottom of the recycle view
-                                binding.historyRecylcleView.scrollToPosition(historyAdapter.itemCount - 1)
+//                                binding.historyRecylcleView.scrollToPosition(historyAdapter.itemCount - 1)
                             }
                         }
                     }
