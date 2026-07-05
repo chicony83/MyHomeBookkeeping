@@ -12,20 +12,36 @@
         android:paddingStart="@dimen/margin_normal"
         android:paddingEnd="@dimen/margin_half_normal">
 
-        <TextView
-            style="@style/RecyclerViewItem"
-            android:gravity="center"
-            android:id="@+id/nameCurrency"
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="united state dollar" />
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/margin_half_normal">
+
+            <TextView
+                android:id="@+id/nameCurrency"
+                style="@style/RecyclerViewItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="United States dollar" />
+
+            <TextView
+                android:id="@+id/isoCurrency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_second_color"
+                android:textSize="@dimen/H6"
+                tools:text="USD" />
+        </LinearLayout>
 
         <TextView
             style="@style/RecyclerViewItem"
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_view_arrow_to_the_right" />
+            android:text="@string/text_view_arrow_to_the_right"
+            android:textColor="?attr/colorPrimary" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

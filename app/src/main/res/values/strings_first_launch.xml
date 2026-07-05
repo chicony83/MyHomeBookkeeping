@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="first_launch_currencies_title">Choose your currencies</string>
+    <string name="first_launch_currencies_hint">Tap a currency to add it.\nOn the next step, you will need to choose the default currency.</string>
+    <string name="first_launch_currencies_available_count">Available · %1$d</string>
+    <string name="first_launch_currencies_selected_count">Selected · %1$d</string>
+    <string name="first_launch_currencies_continue">Continue · choose default</string>
+    <string name="first_launch_currencies_empty_message">Add at least one currency to continue</string>
     <string name="quick_setup_add_Cash_account">Cash accounts</string>
     <string name="quick_setup_name_Card">Card</string>
     <string name="quick_setup_name_Cash">Cash</string>

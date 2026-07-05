@@ -33,6 +33,7 @@ class FirstLaunchSelectCurrencySelectedCurrencyAdapter(
         fun bind(currencies: Currencies) {
             with(binding) {
                 nameCurrency.text = currencies.currencyName
+                isoCurrency.text = currencies.iso4217
                 firstLaunchSelectedCurrencyItem.setOnClickListener {
                     currencies.iso4217?.let {
                         it1->listener.onClick(it1)

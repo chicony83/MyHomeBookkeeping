@@ -40,6 +40,8 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 
         with(viewModel) {
             firstLaunchCurrenciesList.observe(viewLifecycleOwner) {
+                binding.availableCurrenciesTitle.text =
+                    getString(R.string.first_launch_currencies_available_count, it.size)
                 binding.currenciesForSelectHolder.adapter =
                     FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
                         it, object : OnChangeCurrencyByTextCallBack {
@@ -52,6 +54,9 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 //                Message.log("--- size of getFirstLaunchList ${it.size}")
             }
             selectedCurrenciesList.observe(viewLifecycleOwner) {
+                binding.selectedCurrenciesTitle.text =
+                    getString(R.string.first_launch_currencies_selected_count, it.size)
+                binding.submitButton.isEnabled = it.isNotEmpty()
                 binding.selectedCurrenciesHolder.adapter =
                     FirstLaunchSelectCurrencySelectedCurrencyAdapter(
                         it, object : OnChangeCurrencyByTextCallBack {
@@ -119,7 +124,11 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                         negativeButton(R.string.text_on_button_cancel)
                     }
                 }
-                false -> Toast.makeText(context, "list is EMPTY", Toast.LENGTH_LONG).show()
+                false -> Toast.makeText(
+                    context,
+                    R.string.first_launch_currencies_empty_message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
