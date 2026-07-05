@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_section_title">Резервная копия и перенос</string>
+    <string name="backup_section_description">Данные остаются на вашем устройстве. Копия шифруется вашим паролем и никуда не отправляется приложением.</string>
+    <string name="backup_create_button">Создать зашифрованную копию</string>
+    <string name="backup_restore_button">Восстановить из копии</string>
+    <string name="backup_password_title">Защитите резервную копию</string>
+    <string name="backup_password_hint">Пароль — не менее 8 символов</string>
+    <string name="backup_password_repeat_hint">Повторите пароль</string>
+    <string name="backup_password_mismatch">Пароли не совпадают</string>
+    <string name="backup_password_too_short">Введите не менее 8 символов</string>
+    <string name="backup_created">Резервная копия создана</string>
+    <string name="backup_failed">Не удалось создать резервную копию</string>
+    <string name="restore_password_title">Откройте резервную копию</string>
+    <string name="restore_password_hint">Пароль резервной копии</string>
+    <string name="restore_ready_title">Резервная копия проверена</string>
+    <string name="restore_ready_message">Приложение закроется для безопасной замены базы. Откройте его снова, чтобы завершить восстановление.</string>
+    <string name="restore_failed">Не удалось проверить или расшифровать эту копию</string>
+    <string name="backup_file_name" translatable="false">MyHomeBookkeeping-v%1$s-%2$s.mhbk</string>
+</resources>

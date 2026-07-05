@@ -2,8 +2,6 @@ package com.chico.myhomebookkeeping.icons
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
@@ -80,12 +78,5 @@ class IconsMaps(private val resources: Resources, private val opPackageName: Str
         CategoryIconNames.TwoWheeler.name to getDrawable(R.drawable.category_two_wheeler)
     )
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun getDrawable(drawable: Int): Int {
-        return resources.getIdentifier(
-            resources.getResourceName(drawable),
-            "drawable",
-            opPackageName
-        )
-    }
+    private fun getDrawable(drawable: Int): Int = drawable
 }

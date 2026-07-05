@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_section_title">Backup and transfer</string>
+    <string name="backup_section_description">Your data stays on this device. The backup is encrypted with your password and is never sent anywhere by the app.</string>
+    <string name="backup_create_button">Create encrypted backup</string>
+    <string name="backup_restore_button">Restore from backup</string>
+    <string name="backup_password_title">Protect the backup</string>
+    <string name="backup_password_hint">Password (at least 8 characters)</string>
+    <string name="backup_password_repeat_hint">Repeat password</string>
+    <string name="backup_password_mismatch">Passwords do not match</string>
+    <string name="backup_password_too_short">Use at least 8 characters</string>
+    <string name="backup_created">Backup created</string>
+    <string name="backup_failed">Could not create backup</string>
+    <string name="restore_password_title">Unlock the backup</string>
+    <string name="restore_password_hint">Backup password</string>
+    <string name="restore_ready_title">Backup verified</string>
+    <string name="restore_ready_message">The app will close to replace the database safely. Open it again to finish restoring.</string>
+    <string name="restore_failed">Could not verify or decrypt this backup</string>
+    <string name="backup_file_name" translatable="false">MyHomeBookkeeping-v%1$s-%2$s.mhbk</string>
+</resources>

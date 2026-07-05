@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
+import com.chico.myhomebookkeeping.checks.AppVersion
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
@@ -231,13 +232,11 @@ class FastPaymentsViewModel(
 
     fun isLastVersionOfProgramChecked(): Boolean {
         val lastCheckedVersion = getSp.getInt(ConstantsOfUpdate.LAST_CHECKED_VERSION)
-//        val currentVersion = BuildConfig.VERSION_CODE
-//        return lastCheckedVersion == currentVersion
-        return true
+        return lastCheckedVersion == AppVersion.code(app)
     }
 
     fun setLastVersionChecked() {
-//        setSP.saveToSP(ConstantsOfUpdate.LAST_CHECKED_VERSION, BuildConfig.VERSION_CODE)
+        setSP.saveToSP(ConstantsOfUpdate.LAST_CHECKED_VERSION, AppVersion.code(app))
     }
 
     fun getAllFastPayments() {
