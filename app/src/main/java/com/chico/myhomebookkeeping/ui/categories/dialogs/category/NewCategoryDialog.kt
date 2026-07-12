@@ -34,11 +34,12 @@ class NewCategoryDialog(
 ) : DialogFragment() {
     //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     private lateinit var iconImg: ImageView
-    private lateinit var selectedIcon: IconsResource
     private lateinit var db: IconResourcesDao
     private lateinit var selectedParentCategoryName: String
 
     private var selectedParentCategoryId = 0
+    private var selectedIconResource: Int = R.drawable.no_image
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             db = dataBase.getDataBase(requireContext()).iconResourcesDao()
@@ -60,11 +61,18 @@ class NewCategoryDialog(
             }
 
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
+            iconImg.setImageResource(selectedIconResource)
 
             launchIo {
-                selectedIcon = IconResourcesUseCase.getIconByName(db, NoCategoryNames.NoImage.name)
-//                iconImg = ImageView()
-                iconImg.setImageResource(selectedIcon.iconResources)
+                val defaultIcon = runCatching {
+                    IconResourcesUseCase.getIconByName(db, NoCategoryNames.NoImage.name)
+                }.getOrNull()
+                if (defaultIcon != null) {
+                    selectedIconResource = defaultIcon.iconResources
+                    launchUi {
+                        iconImg.setImageResource(selectedIconResource)
+                    }
+                }
             }
 
             val addButton = layout.findViewById<Button>(R.id.addNewCategoryButton)
@@ -172,8 +180,8 @@ class NewCategoryDialog(
                 val dialog = SelectIconDialog(iconsList, object : OnSelectIconCallBack {
                     override fun selectIcon(icon: IconsResource) {
 //                        Message.log("selected icon Id = ${icon.id}")
-                        selectedIcon = icon
-                        iconImg.setImageResource(icon.iconResources)
+                        selectedIconResource = icon.iconResources
+                        iconImg.setImageResource(selectedIconResource)
 
                     }
                 })
@@ -205,7 +213,7 @@ class NewCategoryDialog(
 
                     val isIncomeCategory: Boolean =
                         getTypeCategoryIsIncomeDefault(incomeRadioButton, spendingRadioButton)
-                    val icon = selectedIcon.iconResources
+                    val icon = selectedIconResource
 
                     if (selectedParentCategoryId != null) {
                         onAddNewCategoryCallBack.addAndSelectFull(
