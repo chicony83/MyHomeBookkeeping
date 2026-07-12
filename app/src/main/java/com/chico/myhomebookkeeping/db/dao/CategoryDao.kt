@@ -14,6 +14,9 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table ORDER BY category_name ASC")
     suspend fun getAllCategoriesSortNameASC(): List<Categories>
 
+    @Query("SELECT * FROM category_table ORDER BY category_order ASC, category_name ASC")
+    suspend fun getAllCategoriesSortOrderASC(): List<Categories>
+
     @Query("SELECT * FROM category_table ORDER BY category_name DESC")
     suspend fun getAllCategoriesSortNameDESC(): List<Categories>
 
@@ -49,5 +52,10 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table WHERE parent_category_id IS null ORDER BY category_name ASC")
     suspend fun getAllCategoriesWithoutParentCategory(): List<Categories>?
 
+    @Query("UPDATE category_table SET category_order = :order WHERE categoriesId = :id")
+    suspend fun updateCategoryOrder(id: Int, order: Int): Int
+
+    @Query("UPDATE category_table SET parent_category_id = :parentCategoryId, category_order = :order WHERE categoriesId = :id")
+    suspend fun updateCategoryParentAndOrder(id: Int, parentCategoryId: Int?, order: Int): Int
 
 }

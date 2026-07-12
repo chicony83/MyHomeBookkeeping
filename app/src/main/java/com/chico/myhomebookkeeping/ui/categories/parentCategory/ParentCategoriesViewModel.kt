@@ -47,8 +47,12 @@ class ParentCategoriesViewModel(
                 newParentCategory = parentCategory
             )
         }
-        reloadParentCategories(add.await())
-        return@runBlocking add.await()
+        val addedId = add.await()
+        if (addedId > 0) {
+            ParentCategoriesUseCase.updateParentCategoryOrder(db, addedId.toInt(), addedId.toInt())
+        }
+        reloadParentCategories(addedId)
+        return@runBlocking addedId
     }
 
     private fun reloadParentCategories(long: Long) {
@@ -69,6 +73,17 @@ class ParentCategoriesViewModel(
 
     fun eraseSelectedParentCategory(){
         _selectedParentCategory.postValue(null)
+    }
+
+    fun saveParentCategoriesOrder(parentCategories: List<ParentCategories>) {
+        launchIo {
+            parentCategories.forEachIndexed { index, parentCategory ->
+                parentCategory.id?.let { id ->
+                    ParentCategoriesUseCase.updateParentCategoryOrder(db, id, index)
+                }
+            }
+            _parentCategoriesList.postValue(ParentCategoriesUseCase.getAllParentCategoriesSortNameAsc(db))
+        }
     }
 
 }

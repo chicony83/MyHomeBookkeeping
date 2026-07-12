@@ -21,7 +21,7 @@ import com.chico.myhomebookkeeping.db.entity.*
         IconsResource::class,
         IconCategory::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = true,
 )
 abstract class RoomDataBase : RoomDatabase() {
@@ -49,6 +49,7 @@ object dataBase {
             .addMigrations(migration_3_to_4)
             .addMigrations(migration_4_to_5)
             .addMigrations(migration_5_to_6)
+            .addMigrations(migration_6_to_7)
             .build()
 }
 
@@ -89,5 +90,14 @@ private object migration_5_to_6:Migration(5,6){
         database.execSQL("DROP TABLE 'parent_categories_table'")
         database.execSQL("CREATE TABLE IF NOT EXISTS 'parent_categories_table' ('id' INTEGER, 'name' TEXT NOT NULL, 'name_icon_parent_category' INTEGER, PRIMARY KEY ('id'))")
         database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'parent_category_id' INTEGER")
+    }
+}
+
+private object migration_6_to_7 : Migration(6, 7) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE 'category_table' ADD COLUMN 'category_order' INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("UPDATE category_table SET category_order = categoriesId")
+        database.execSQL("ALTER TABLE 'parent_categories_table' ADD COLUMN 'parent_category_order' INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("UPDATE parent_categories_table SET parent_category_order = id")
     }
 }

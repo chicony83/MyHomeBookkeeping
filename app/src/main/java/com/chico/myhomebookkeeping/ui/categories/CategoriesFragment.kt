@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -24,17 +26,16 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
-import com.chico.myhomebookkeeping.interfaces.categories.OnPressCreateNewCategory
-import com.chico.myhomebookkeeping.interfaces.categories.OnSelectAllCategories
-import com.chico.myhomebookkeeping.interfaces.categories.OnSelectNoCategories
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
-import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesAdapter
+import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroup
+import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroupsAdapter
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesViewModel
+import com.chico.myhomebookkeeping.ui.categories.categories.normalizeTopOrder
 import com.chico.myhomebookkeeping.ui.categories.dialogs.category.ChangeCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.category.NewCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.category.SelectCategoryDialog
 import com.chico.myhomebookkeeping.ui.categories.dialogs.parentCategory.NewParentCategoryDialog
-import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategoriesAdapter
 import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategoriesViewModel
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -51,10 +52,11 @@ class CategoriesFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
 
-    //    private val uiHelper = UiHelper()
+//    private val uiHelper = UiHelper()
     private var searchMode = false
-    private var categoriesAdapter: CategoriesAdapter? = null
-    private var parentCategoriesAdapter: ParentCategoriesAdapter? = null
+    private var categoryGroupsAdapter: CategoryGroupsAdapter? = null
+    private var categoryOrderEditMode = false
+    private var categoryTouchHelper: ItemTouchHelper? = null
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
     private val searchMinLength = 4
@@ -77,37 +79,6 @@ class CategoriesFragment : Fragment() {
         with(parentCategoriesViewModel) {
             parentCategoriesList.observe(viewLifecycleOwner) {
                 currentParentCategoriesList = it
-                parentCategoriesAdapter = ParentCategoriesAdapter(it,
-                    object : OnItemViewClickListener {
-                        override fun onShortClick(id: Int) {
-                            categoriesViewModel.getCategoriesWithParentId(id)
-                            parentCategoriesViewModel.getSelectedParentCategory(id)
-                        }
-
-                        override fun onLongClick(id: Int) {
-//                            showMessage("long click on $id")
-                        }
-                    },
-                    object : OnSelectAllCategories {
-                        override fun onSelectAll() {
-                            categoriesViewModel.getAllCategories()
-                            parentCategoriesViewModel.eraseSelectedParentCategory()
-                        }
-                    },
-                    object : OnSelectNoCategories {
-                        override fun onSelect() {
-                            categoriesViewModel.getCategoriesWithoutParentCategory()
-                            parentCategoriesViewModel.eraseSelectedParentCategory()
-//                            showMessage("press no category button")
-                        }
-                    },
-                    object : OnClickCreateNewElementCallBack {
-                        override fun onPress() {
-                            showNewParentCategoryDialog()
-                        }
-                    }
-                )
-                binding.parentCategoryHolder.adapter = parentCategoriesAdapter
                 filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
             }
         }
@@ -117,26 +88,6 @@ class CategoriesFragment : Fragment() {
 //            }
             categoriesList.observe(viewLifecycleOwner) {
                 currentCategoriesList = it
-                categoriesAdapter =
-                    CategoriesAdapter(it,
-                        object : OnItemViewClickListener {
-                            override fun onShortClick(selectedId: Int) {
-                                categoriesViewModel.saveData(navControlHelper, selectedId)
-                                navControlHelper.moveToPreviousFragment()
-                            }
-
-                            override fun onLongClick(selectedId: Int) {
-                                showSelectCategoryDialog(selectedId)
-                            }
-                        },
-                        object : OnPressCreateNewCategory {
-                            override fun onPress() {
-                                val parentCategoriesResult = parentCategoriesViewModel.selectedParentCategory
-                                showNewCategoryDialog(parentCategoriesResult)
-                            }
-                        }
-                    )
-                binding.categoryHolder.adapter = categoriesAdapter
                 filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
             }
         }
@@ -218,10 +169,17 @@ class CategoriesFragment : Fragment() {
         if (searchMode) {
             hideSearch()
         } else {
+            if (categoryOrderEditMode) toggleCategoryOrderEditMode()
             searchMode = true
             binding.searchTil.visibility = View.VISIBLE
             binding.searchTil.editText?.requestFocus()
         }
+    }
+
+    fun toggleCategoryOrderEditMode() {
+        if (searchMode) hideSearch()
+        categoryOrderEditMode = !categoryOrderEditMode
+        categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
     }
 
     private fun hideSearch() {
@@ -235,21 +193,151 @@ class CategoriesFragment : Fragment() {
     private fun filterLists(query: String) {
         val normalizedQuery = query.lowercase(Locale.getDefault())
         if (normalizedQuery.length < searchMinLength) {
-            categoriesAdapter?.updateList(currentCategoriesList)
-            parentCategoriesAdapter?.updateList(currentParentCategoriesList)
+            updateCategoryTree(
+                parentCategories = currentParentCategoriesList,
+                categories = currentCategoriesList,
+                expandAll = false
+            )
             return
         }
 
-        categoriesAdapter?.updateList(
-            currentCategoriesList.filter {
-                it.categoryName.lowercase(Locale.getDefault()).contains(normalizedQuery)
+        val categoryMatches = currentCategoriesList.filter { category ->
+            category.categoryName.lowercase(Locale.getDefault()).contains(normalizedQuery)
+        }
+        val categoryMatchParentIds = categoryMatches.mapNotNull { it.parentCategoryId }.toSet()
+        val parentNameMatches = currentParentCategoriesList.filter { parentCategory ->
+            parentCategory.name.lowercase(Locale.getDefault()).contains(normalizedQuery)
+        }
+        val parentNameMatchIds = parentNameMatches.mapNotNull { it.id }.toSet()
+        val filteredParentCategories = currentParentCategoriesList.filter { parentCategory ->
+            parentCategory.id?.let {
+                it in categoryMatchParentIds || it in parentNameMatchIds
+            } == true
+        }
+        val filteredCategories = currentCategoriesList.filter { category ->
+            category in categoryMatches || category.parentCategoryId?.let { it in parentNameMatchIds } == true
+        }
+        updateCategoryTree(
+            parentCategories = filteredParentCategories,
+            categories = filteredCategories,
+            expandAll = true
+        )
+    }
+
+    private fun updateCategoryTree(
+        parentCategories: List<ParentCategories>,
+        categories: List<Categories>,
+        expandAll: Boolean
+    ) {
+        val parentCategoriesById = parentCategories.mapNotNull { parentCategory ->
+            parentCategory.id?.let { it to parentCategory }
+        }.toMap()
+
+        val parentGroups = parentCategories.map { parentCategory ->
+            CategoryGroup(
+                parentCategory = parentCategory,
+                categories = categories.filter { it.parentCategoryId == parentCategory.id }
+            )
+        }
+
+        val withoutParentGroup = CategoryGroup(
+            parentCategory = null,
+            categories = categories.filter {
+                val parentCategoryId = it.parentCategoryId
+                parentCategoryId == null || parentCategoriesById[parentCategoryId] == null
             }
         )
-        parentCategoriesAdapter?.updateList(
-            currentParentCategoriesList.filter {
-                it.name.lowercase(Locale.getDefault()).contains(normalizedQuery)
+
+        val groups = parentGroups + withoutParentGroup
+        val topOrder = getTopOrder(groups)
+        val adapter = categoryGroupsAdapter
+        if (adapter == null) {
+            categoryGroupsAdapter = CategoryGroupsAdapter(
+                groups,
+                topOrder,
+                object : OnItemViewClickListener {
+                    override fun onShortClick(selectedId: Int) {
+                        if (categoryOrderEditMode) return
+                        categoriesViewModel.saveData(navControlHelper, selectedId)
+                        navControlHelper.moveToPreviousFragment()
+                    }
+
+                    override fun onLongClick(selectedId: Int) {
+                        if (categoryOrderEditMode) return
+                        showSelectCategoryDialog(selectedId)
+                    }
+                },
+                { parentCategory ->
+                    showNewCategoryDialog(MutableLiveData(parentCategory))
+                },
+                object : OnClickCreateNewElementCallBack {
+                    override fun onPress() {
+                        showNewParentCategoryDialog()
+                    }
+                },
+                { newTopOrder, parentCategories ->
+                    saveTopOrder(newTopOrder)
+                    parentCategoriesViewModel.saveParentCategoriesOrder(parentCategories)
+                },
+                { categories ->
+                    categoriesViewModel.saveCategoriesOrder(categories)
+                }
+            )
+            categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
+            binding.categoryTreeHolder.adapter = categoryGroupsAdapter
+            setupCategoryTouchHelper()
+        } else {
+            adapter.updateList(groups, topOrder, expandAll)
+        }
+    }
+
+    private fun setupCategoryTouchHelper() {
+        if (categoryTouchHelper != null) return
+        val itemTouchHelper = ItemTouchHelper(
+            object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                0
+            ) {
+                override fun isLongPressDragEnabled(): Boolean = false
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    if (!categoryOrderEditMode) return false
+                    return categoryGroupsAdapter?.moveItem(
+                        viewHolder.adapterPosition,
+                        target.adapterPosition
+                    ) == true
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
             }
         )
+        categoryGroupsAdapter?.setDragStartListener { holder ->
+            itemTouchHelper.startDrag(holder)
+        }
+        itemTouchHelper.attachToRecyclerView(binding.categoryTreeHolder)
+        categoryTouchHelper = itemTouchHelper
+    }
+
+    private fun getTopOrder(groups: List<CategoryGroup>): List<String> {
+        val savedOrder = requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+            .getString(Constants.CATEGORIES_TOP_ORDER, "")
+            .orEmpty()
+            .split(",")
+            .filter { it.isNotBlank() }
+        return normalizeTopOrder(savedOrder, groups)
+    }
+
+    private fun saveTopOrder(topOrder: List<String>) {
+        requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+            .edit()
+            .putString(Constants.CATEGORIES_TOP_ORDER, topOrder.joinToString(","))
+            .apply()
     }
 
 //    private fun sortingCategories(sorting: String) {

@@ -7,12 +7,21 @@
     <item
         android:id="@+id/search_button"
         android:icon="@drawable/ic_baseline_search_24"
+        android:orderInCategory="10"
         android:title="@string/hint_category"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/category_order_button"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="20"
+        android:title="@string/text_on_button_category_order"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/help_button"
         android:icon="@drawable/ic_baseline_help_outline_24"
+        android:orderInCategory="30"
         android:title="@string/text_on_button_help"
         app:showAsAction="ifRoom" />
 

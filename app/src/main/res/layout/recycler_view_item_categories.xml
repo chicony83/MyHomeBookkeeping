@@ -48,9 +48,23 @@
         <TextView
             android:id="@+id/category_name_textView"
             style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="0dp"
             app:layout_constraintBottom_toBottomOf="@id/id_categories"
+            app:layout_constraintEnd_toStartOf="@id/category_drag_handle_imageView"
             app:layout_constraintStart_toEndOf="@id/id_categories"
             app:layout_constraintTop_toTopOf="@id/id_categories"
-            tool:text="проценты банка" />
+            tool:text="category" />
+
+        <ImageView
+            android:id="@+id/category_drag_handle_imageView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@string/content_description_icon_drag_handle"
+            android:src="@drawable/ic_drag_handle"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iconImg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iconImg"
+            tool:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

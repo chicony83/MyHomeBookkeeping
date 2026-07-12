@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RecyclerViewCard.Categories">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/category_group_header"
+            style="@style/RecyclerViewItem.ParentCategories">
+
+            <ImageView
+                android:id="@+id/group_icon_imageView"
+                style="@style/ImageIcon.RecyclerView"
+                android:contentDescription="@string/content_description_icon_item_of_parent_category"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/no_image" />
+
+            <TextView
+                android:id="@+id/group_name_textView"
+                style="@style/TextView.RecyclerViewHorizontalItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toBottomOf="@id/group_icon_imageView"
+                app:layout_constraintEnd_toStartOf="@id/group_count_textView"
+                app:layout_constraintStart_toEndOf="@id/group_icon_imageView"
+                app:layout_constraintTop_toTopOf="@id/group_icon_imageView"
+                tools:text="Дом" />
+
+            <TextView
+                android:id="@+id/group_count_textView"
+                style="@style/TextView.RecyclerViewHorizontalItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/group_icon_imageView"
+                app:layout_constraintEnd_toStartOf="@id/group_expand_imageView"
+                app:layout_constraintTop_toTopOf="@id/group_icon_imageView"
+                tools:text="7" />
+
+            <ImageView
+                android:id="@+id/group_expand_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/content_description_icon_item_of_parent_category"
+                android:src="@drawable/category_arrow_drop_down"
+                app:layout_constraintBottom_toBottomOf="@id/group_icon_imageView"
+                app:layout_constraintEnd_toStartOf="@id/group_drag_handle_imageView"
+                app:layout_constraintTop_toTopOf="@id/group_icon_imageView" />
+
+            <ImageView
+                android:id="@+id/group_drag_handle_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/content_description_icon_drag_handle"
+                android:src="@drawable/ic_drag_handle"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/group_icon_imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/group_icon_imageView"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/group_categories_recyclerView"
+            style="@style/RecyclerHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/recycler_view_item_categories" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

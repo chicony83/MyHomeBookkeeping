@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.categories.categories
 
 import android.annotation.SuppressLint
+import android.view.MotionEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,16 +15,32 @@ import com.chico.myhomebookkeeping.interfaces.categories.OnPressCreateNewCategor
 class CategoriesAdapter(
     categoriesList: List<Categories>,
     val listener: OnItemViewClickListener,
-    val onPressCreateNewCategoryListener: OnPressCreateNewCategory
+    val onPressCreateNewCategoryListener: OnPressCreateNewCategory,
+    private val editMode: Boolean = false,
+    private var dragStartListener: ((RecyclerView.ViewHolder) -> Unit)? = null
 ) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
-    private var initList = categoriesList
+    private var initList = categoriesList.toMutableList()
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(categoriesList: List<Categories>) {
-        initList = categoriesList
+        initList = categoriesList.toMutableList()
         this.notifyDataSetChanged()
+    }
+
+    fun moveCategory(fromPosition: Int, toPosition: Int): Boolean {
+        if (fromPosition !in initList.indices || toPosition !in initList.indices) return false
+        val category = initList.removeAt(fromPosition)
+        initList.add(toPosition, category)
+        notifyItemMoved(fromPosition, toPosition)
+        return true
+    }
+
+    fun getCategories(): List<Categories> = initList.toList()
+
+    fun updateDragStartListener(listener: (RecyclerView.ViewHolder) -> Unit) {
+        dragStartListener = listener
     }
 
     override fun onCreateViewHolder(
@@ -59,14 +76,17 @@ class CategoriesAdapter(
                 addNewCategoryItem.visibility = View.GONE
                 categoriesItem.setOnClickListener(null)
                 categoriesItem.setOnLongClickListener(null)
+                categoryDragHandleImageView.setOnTouchListener(null)
                 addNewCategoryImageView.setOnClickListener(null)
             }
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         fun bind(category: Categories) {
             with(binding) {
                 resetItemState()
                 categoriesItem.visibility = View.VISIBLE
+                categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 root.contentDescription = category.categoryName
                 idCategories.text = category.categoriesId.toString()
 
@@ -79,6 +99,12 @@ class CategoriesAdapter(
                 }
                 categoriesItem.setOnClickListener {
                     category.categoriesId?.let { it1 -> listener.onShortClick(it1) }
+                }
+                categoryDragHandleImageView.setOnTouchListener { _, event ->
+                    if (editMode && event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        dragStartListener?.invoke(this@ViewHolder)
+                    }
+                    false
                 }
                 if (category.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -107,6 +133,7 @@ class CategoriesAdapter(
             with(binding) {
                 resetItemState()
                 addNewCategoryItem.visibility = View.VISIBLE
+                categoryDragHandleImageView.visibility = View.GONE
                 addNewCategoryImageView.setOnClickListener {
                     onPressCreateNewCategoryListener.onPress()
                 }

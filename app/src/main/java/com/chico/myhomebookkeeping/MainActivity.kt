@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private val checkNightMode = CheckNightMode()
     private lateinit var eraseSP: EraseSP
     private var searchMenuItem: MenuItem? = null
+    private var categoryOrderMenuItem: MenuItem? = null
 
     private lateinit var spEditor: SharedPreferences.Editor
 
@@ -165,7 +166,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         searchMenuItem = menu.findItem(R.id.search_button)
-        searchMenuItem?.isVisible = navController.currentDestination?.id == R.id.nav_categories
+        categoryOrderMenuItem = menu.findItem(R.id.category_order_button)
+        val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
+        searchMenuItem?.isVisible = isCategoriesDestination
+        categoryOrderMenuItem?.isVisible = isCategoriesDestination
         return true
     }
 
@@ -173,6 +177,10 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.search_button -> {
                 getCurrentFragment<CategoriesFragment>()?.toggleSearch()
+                true
+            }
+            R.id.category_order_button -> {
+                getCurrentFragment<CategoriesFragment>()?.toggleCategoryOrderEditMode()
                 true
             }
             R.id.help_button -> {
@@ -198,7 +206,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSearchMenuVisibility() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            searchMenuItem?.isVisible = destination.id == R.id.nav_categories
+            val isCategoriesDestination = destination.id == R.id.nav_categories
+            searchMenuItem?.isVisible = isCategoriesDestination
+            categoryOrderMenuItem?.isVisible = isCategoriesDestination
         }
     }
 

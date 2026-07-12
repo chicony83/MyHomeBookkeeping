@@ -18,4 +18,8 @@ object ParentCategoriesUseCase {
     suspend fun getSelectedParentCategory(db: ParentCategoriesDao, id: Int): ParentCategories {
         return db.getSelectedParentCategory(id)
     }
+
+    suspend fun updateParentCategoryOrder(db: ParentCategoriesDao, id: Int, order: Int): Int {
+        return db.updateParentCategoryOrder(id, order)
+    }
 }

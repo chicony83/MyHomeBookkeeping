@@ -20,13 +20,6 @@
         style="@style/Fragment.paddingBottom"
         tools:context=".ui.categories.CategoriesFragment">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/verticalCenterLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_til"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -52,28 +45,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/parentCategoryHolder"
-            style="@style/RecyclerHolder"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/verticalCenterLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_til"
-            tools:listitem="@layout/recycler_view_item_parent_categories" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryHolder"
+            android:id="@+id/categoryTreeHolder"
             style="@style/RecyclerHolder"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_til"
-            tools:listitem="@layout/recycler_view_item_categories" />
+            tools:listitem="@layout/recycler_view_item_category_group" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -94,7 +94,7 @@ class CategoriesViewModel(
                 }
 
                 else -> {
-                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
+                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortOrderAsc(db))
                     setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
                 }
             }
@@ -207,8 +207,12 @@ class CategoriesViewModel(
                 newCategory = newCategory
             )
         }
-        reloadCategories(add.await())
-        return@runBlocking add.await()
+        val addedId = add.await()
+        if (addedId > 0) {
+            CategoriesUseCase.updateCategoryOrder(db, addedId.toInt(), addedId.toInt())
+        }
+        reloadCategories(addedId)
+        return@runBlocking addedId
     }
 
     fun getNamesList(): Any {
@@ -295,8 +299,24 @@ class CategoriesViewModel(
     fun getAllCategories() {
         launchIo {
             _categoriesList.postValue(
-                CategoriesUseCase.getAllCategoriesSortNameAsc(db)
+                CategoriesUseCase.getAllCategoriesSortOrderAsc(db)
             )
+        }
+    }
+
+    fun saveCategoriesOrder(categories: List<Categories>) {
+        launchIo {
+            categories.forEachIndexed { index, category ->
+                category.categoriesId?.let { id ->
+                    CategoriesUseCase.updateCategoryParentAndOrder(
+                        db = db,
+                        id = id,
+                        parentCategoryId = category.parentCategoryId,
+                        order = index
+                    )
+                }
+            }
+            _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortOrderAsc(db))
         }
     }
 

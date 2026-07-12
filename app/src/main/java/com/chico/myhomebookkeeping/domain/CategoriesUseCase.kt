@@ -54,6 +54,10 @@ object CategoriesUseCase {
         return db.getAllCategoriesSortNameASC()
     }
 
+    suspend fun getAllCategoriesSortOrderAsc(db: CategoryDao): List<Categories> {
+        return db.getAllCategoriesSortOrderASC()
+    }
+
     suspend fun getAllCategoriesSortNameDesc(db: CategoryDao): List<Categories> {
         return db.getAllCategoriesSortNameDESC()
     }
@@ -67,6 +71,19 @@ object CategoriesUseCase {
 
     suspend fun getAllCategoriesWithoutParentCategory(db: CategoryDao): List<Categories>? {
         return db.getAllCategoriesWithoutParentCategory()
+    }
+
+    suspend fun updateCategoryOrder(db: CategoryDao, id: Int, order: Int): Int {
+        return db.updateCategoryOrder(id, order)
+    }
+
+    suspend fun updateCategoryParentAndOrder(
+        db: CategoryDao,
+        id: Int,
+        parentCategoryId: Int?,
+        order: Int
+    ): Int {
+        return db.updateCategoryParentAndOrder(id, parentCategoryId, order)
     }
 
 }
