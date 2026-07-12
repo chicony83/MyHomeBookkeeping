@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_normal"
             android:hint="@string/hint_category"
+            android:visibility="gone"
             app:boxStrokeWidth="1dp"
             app:boxStrokeWidthFocused="1dp"
             app:endIconDrawable="@drawable/ic_close"
@@ -59,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/verticalCenterLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_til"
             tools:listitem="@layout/recycler_view_item_parent_categories" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -71,7 +72,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/verticalCenterLayout"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_til"
             tools:listitem="@layout/recycler_view_item_categories" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

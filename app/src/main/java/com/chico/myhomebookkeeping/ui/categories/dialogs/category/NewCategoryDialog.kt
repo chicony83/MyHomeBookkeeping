@@ -71,9 +71,16 @@ class NewCategoryDialog(
             val addAndSelectButton = layout.findViewById<Button>(R.id.addAndSelectNewItemButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelCreateButton)
 
-            val parentCategoriesNamesArray: Array<String> = parentCategoriesList.map { it1 ->
-                it1.name
-            }.toTypedArray()
+            val noParentCategory = getString(R.string.text_on_button_no_parent_category)
+            val parentCategoriesNamesArray: Array<String> =
+                (listOf(noParentCategory) + parentCategoriesList.map { it.name }).toTypedArray()
+
+            parentCategoriesTextView.text = parentCategoriesResult.value?.name ?: noParentCategory
+            selectedParentCategoryId = parentCategoriesResult.value?.let { selected ->
+                parentCategoriesList.indexOfFirst { it.id == selected.id }
+                    .takeIf { it >= 0 }
+                    ?.plus(1)
+            } ?: 0
 
             if (result is List<*>) {
                 namesList = (result as List<String>)
@@ -188,7 +195,7 @@ class NewCategoryDialog(
             val isTypeCategorySelected =
                 isSelectTypeOfCategory(incomeRadioButton, spendingRadioButton)
 
-            val selectedParentCategoryId: Int = ParentCategoryHelper.getIdSelectedParentCategory(
+            val selectedParentCategoryId: Int? = ParentCategoryHelper.getIdSelectedParentCategory(
                 parentCategoriesTextView.text.toString(),
                 parentCategoriesList,
             )
@@ -200,7 +207,7 @@ class NewCategoryDialog(
                         getTypeCategoryIsIncomeDefault(incomeRadioButton, spendingRadioButton)
                     val icon = selectedIcon.iconResources
 
-                    if (selectedParentCategoryId > -1) {
+                    if (selectedParentCategoryId != null) {
                         onAddNewCategoryCallBack.addAndSelectFull(
                             name = nameCategory,
                             parentCategoryId = selectedParentCategoryId,

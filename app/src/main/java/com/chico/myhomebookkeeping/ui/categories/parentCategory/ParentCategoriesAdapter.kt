@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.categories.parentCategory
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,12 @@ class ParentCategoriesAdapter(
 
     private var initList = parentCategoriesList
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(parentCategoriesList: List<ParentCategories>) {
+        initList = parentCategoriesList
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = RecyclerViewItemParentCategoriesBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -32,7 +39,7 @@ class ParentCategoriesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = initList.size + 4
+    override fun getItemCount(): Int = initList.size + 3
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Message.log("list size ${initList.size}")
@@ -41,17 +48,32 @@ class ParentCategoriesAdapter(
 
             in initList.indices -> holder.bind(initList[position])
 
-            initList.size + 1 -> holder.bindNoParentCategory()
-            initList.size + 2 -> holder.bindWithoutParentsCategories()
-            initList.size + 3 -> holder.bindAddNewParentCategory()
+            initList.size -> holder.bindNoParentCategory()
+            initList.size + 1 -> holder.bindWithoutParentsCategories()
+            initList.size + 2 -> holder.bindAddNewParentCategory()
         }
     }
 
     inner class ViewHolder(
         private val binding: RecyclerViewItemParentCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        private fun resetItemState() {
+            with(binding) {
+                allCategoriesItem.visibility = View.GONE
+                parentCategoriesItem.visibility = View.GONE
+                noParentCategoryItem.visibility = View.GONE
+                newParentCategoriesItem.visibility = View.GONE
+                allCategoriesItem.setOnClickListener(null)
+                parentCategoriesItem.setOnClickListener(null)
+                parentCategoriesItem.setOnLongClickListener(null)
+                noParentCategoryItem.setOnClickListener(null)
+                addNewParentCategoryImageView.setOnClickListener(null)
+            }
+        }
+
         fun bind(parentCategory: ParentCategories) {
             with(binding) {
+                resetItemState()
                 parentCategoriesItem.visibility = View.VISIBLE
 
                 idParentCategories.text = parentCategory.id.toString()
@@ -73,6 +95,7 @@ class ParentCategoriesAdapter(
 
         fun bindNoParentCategory() {
             with(binding) {
+                resetItemState()
                 with(noParentCategoryItem) {
                     visibility = View.VISIBLE
                     setOnClickListener {
@@ -84,6 +107,7 @@ class ParentCategoriesAdapter(
 
         fun bindAddNewParentCategory() {
             with(binding) {
+                resetItemState()
                 newParentCategoriesItem.visibility = View.VISIBLE
                 addNewParentCategoryImageView.setOnClickListener {
                     createNewElementListener.onPress()
@@ -93,6 +117,7 @@ class ParentCategoriesAdapter(
 
         fun bindWithoutParentsCategories() {
             with(binding) {
+                resetItemState()
                 with(allCategoriesItem) {
                     visibility = View.VISIBLE
                     setOnClickListener {

@@ -53,9 +53,9 @@ class ChangeCategoryDialog(
             val spendingRadioButton = layout.findViewById<RadioButton>(R.id.spendingRadioButton)
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
 
-            val parentCategoriesNamesArray: Array<String> = parentCategoriesList.map { it1 ->
-                it1.name
-            }.toTypedArray()
+            val noParentCategory = getString(R.string.text_on_button_no_parent_category)
+            val parentCategoriesNamesArray: Array<String> =
+                (listOf(noParentCategory) + parentCategoriesList.map { it.name }).toTypedArray()
 
             val saveButton = layout.findViewById<Button>(R.id.saveButton)
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
@@ -64,14 +64,15 @@ class ChangeCategoryDialog(
             iconResource = category?.icon ?: R.drawable.no_image
             iconImg.setImageResource(iconResource)
 
-            if (category?.parentCategoryId != null) {
-                if (category.parentCategoryId > 0) {
-
-                    val parentCategoryName =
-                        SuchName().suchParentCategoryNameById(parentCategoriesList, category)
-
-                    parentCategoryTextView.text = parentCategoryName
-                }
+            parentCategoryTextView.text = noParentCategory
+            if (category?.parentCategoryId != null && category.parentCategoryId > 0) {
+                val parentCategoryName =
+                    SuchName().suchParentCategoryNameById(parentCategoriesList, category)
+                parentCategoryTextView.text = parentCategoryName
+                selectedParentCategoryId = parentCategoriesList
+                    .indexOfFirst { it.id == category.parentCategoryId }
+                    .takeIf { it >= 0 }
+                    ?.plus(1) ?: 0
             }
 
             parentCategoryTextView.setOnClickListener {
@@ -105,7 +106,7 @@ class ChangeCategoryDialog(
                     val isLengthChecked: Boolean = CheckString.isLengthMoThan(name)
                     val categoryId = category?.categoriesId ?: 0
 
-                    val selectedParentCategory: Int =
+                    val selectedParentCategory: Int? =
                         ParentCategoryHelper.getIdSelectedParentCategory(
                             parentCategoryTextView.text.toString(),
                             parentCategoriesList
@@ -116,7 +117,7 @@ class ChangeCategoryDialog(
 
                             val isIncome = getTypeOfCategory(incomeRadioButton, spendingRadioButton)
 
-                            if (selectedParentCategory > -1) {
+                            if (selectedParentCategory != null) {
                                 onChangeCategoryCallBack.changeCategoryFull(
                                     id = categoryId,
                                     name = name,

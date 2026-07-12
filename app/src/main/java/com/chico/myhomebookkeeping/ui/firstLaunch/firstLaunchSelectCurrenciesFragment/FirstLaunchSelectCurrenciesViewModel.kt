@@ -75,9 +75,9 @@ class FirstLaunchSelectCurrenciesViewModel(
     private fun removeSelectedCurrencyFromMutableList(
         id: Int,
         list: MutableList<Currencies>?
-    ): MutableList<Currencies>? {
+    ): MutableList<Currencies> {
 
-        return list?.apply { removeAt(id) }
+        return list?.apply { removeAt(id) } ?: mutableListOf()
 
 //        _firstLaunchCurrenciesList.value =
 //            _firstLaunchCurrenciesList.value?.toMutableList()?.apply {

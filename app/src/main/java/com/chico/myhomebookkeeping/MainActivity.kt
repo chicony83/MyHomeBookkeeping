@@ -28,6 +28,7 @@ import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val checkNightMode = CheckNightMode()
     private lateinit var eraseSP: EraseSP
+    private var searchMenuItem: MenuItem? = null
 
     private lateinit var spEditor: SharedPreferences.Editor
 
@@ -104,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         hideToolbarAndBottomNavigation(toolbar)
+        setupSearchMenuVisibility()
 //        eraseSP.eraseTempSP()
 
         if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_select_currencies_fragment)
@@ -161,11 +164,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
+        searchMenuItem = menu.findItem(R.id.search_button)
+        searchMenuItem?.isVisible = navController.currentDestination?.id == R.id.nav_categories
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.search_button -> {
+                getCurrentFragment<CategoriesFragment>()?.toggleSearch()
+                true
+            }
             R.id.help_button -> {
                 navController.navigate(R.id.nav_help_fragment)
                 true
@@ -185,5 +194,19 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun setupSearchMenuVisibility() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            searchMenuItem?.isVisible = destination.id == R.id.nav_categories
+        }
+    }
+
+    private inline fun <reified T> getCurrentFragment(): T? {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+        return navHostFragment
+            ?.childFragmentManager
+            ?.primaryNavigationFragment as? T
     }
 }

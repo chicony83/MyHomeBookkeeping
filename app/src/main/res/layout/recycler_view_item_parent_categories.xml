@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/RecyclerViewCard.Categories">
 
     <LinearLayout
         android:id="@+id/all_categories_item"
         style="@style/RecyclerViewItem.ParentCategories"
         android:visibility="gone"
-        tool:visibility="gone">
+        tools:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:id="@+id/parent_categories_item"
         style="@style/RecyclerViewItem.ParentCategories"
         android:visibility="gone"
-        tool:visibility="gone">
+        tools:visibility="gone">
 
         <ImageView
             android:id="@+id/icon_imageView"
@@ -30,33 +30,38 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tool:src="@drawable/no_image" />
+            tools:src="@drawable/no_image" />
 
         <TextView
             android:id="@+id/id_parent_categories"
             style="@style/TextView.RecyclerViewHorizontalItem"
             android:layout_marginEnd="@dimen/margin_normal"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/icon_imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/icon_imageView"
-            tool:text="1" />
+            tools:text="1" />
 
         <TextView
             android:id="@+id/parent_category_name_textView"
             style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/icon_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icon_imageView"
-            app:layout_constraintTop_toBottomOf="@id/icon_imageView"
             app:layout_constraintTop_toTopOf="@id/icon_imageView"
-            tool:text="доходы" />
+            tools:text="Ремонты для автомобиля" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/no_parent_category_item"
         style="@style/RecyclerViewItem.ParentCategories"
         android:visibility="gone"
-        tool:visibility="gone">
+        tools:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -69,7 +74,7 @@
         android:id="@+id/new_parent_categories_item"
         style="@style/RecyclerViewItem.ParentCategories"
         android:visibility="gone"
-        tool:visibility="visible">
+        tools:visibility="visible">
 
         <ImageButton
             android:id="@+id/add_new_parent_category_imageView"

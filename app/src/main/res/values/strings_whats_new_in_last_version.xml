@@ -2,6 +2,7 @@
 <resources>
     <string name="string_last_version_title">Version history</string>
     <string name="version_history_button">Version history</string>
+    <string name="string_last_version_0_9_9">0.9.9\nFixed several category screen glitches: list items no longer overlap while scrolling, category search is opened from the toolbar, and parent category names wrap more cleanly.</string>
     <string name="string_last_version_0_9_8">0.9.8\nFixed issues that could cause icons to change after an application update.\nAdded encrypted backup and restore for transferring data between phones.</string>
     <string name="string_last_version_0_9_7_0">0.9.7\nAdded\nIt is possible to select multiple currencies on first launch.\nQuick search in categories.\nQuick selection of currencies, categories, accounts.\nCalculator when adding a payment.</string>
     <string name="string_last_version_0_9_6_1">0.9.6.1\nFixed a bug with the button to add a new quick payment.\nFixed a bug with a pop-up window in the log.</string>

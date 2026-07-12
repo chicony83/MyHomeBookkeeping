@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentCategoriesBinding
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
@@ -41,7 +39,6 @@ import com.chico.myhomebookkeeping.ui.categories.parentCategory.ParentCategories
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.chico.myhomebookkeeping.utils.visibleInvisible
 import java.util.*
 
 class CategoriesFragment : Fragment() {
@@ -55,8 +52,12 @@ class CategoriesFragment : Fragment() {
     private lateinit var control: NavController
 
     //    private val uiHelper = UiHelper()
-    private var skipScroll = false
     private var searchMode = false
+    private var categoriesAdapter: CategoriesAdapter? = null
+    private var parentCategoriesAdapter: ParentCategoriesAdapter? = null
+    private var currentCategoriesList: List<Categories> = emptyList()
+    private var currentParentCategoriesList: List<ParentCategories> = emptyList()
+    private val searchMinLength = 4
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,15 +69,15 @@ class CategoriesFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         binding.onClear = {
-            requireView().hideKeyboard()
-//            visibleInvisible(binding.selectAllButton, true)
-            visibleInvisible(binding.searchTil, false)
-            searchMode = false
-            skipScroll = true
+            hideSearch()
+        }
+        binding.searchTil.setEndIconOnClickListener {
+            hideSearch()
         }
         with(parentCategoriesViewModel) {
             parentCategoriesList.observe(viewLifecycleOwner) {
-                binding.parentCategoryHolder.adapter = ParentCategoriesAdapter(it,
+                currentParentCategoriesList = it
+                parentCategoriesAdapter = ParentCategoriesAdapter(it,
                     object : OnItemViewClickListener {
                         override fun onShortClick(id: Int) {
                             categoriesViewModel.getCategoriesWithParentId(id)
@@ -106,6 +107,8 @@ class CategoriesFragment : Fragment() {
                         }
                     }
                 )
+                binding.parentCategoryHolder.adapter = parentCategoriesAdapter
+                filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
             }
         }
         with(categoriesViewModel) {
@@ -113,7 +116,8 @@ class CategoriesFragment : Fragment() {
 //                binding.sortingButton.text = it
 //            }
             categoriesList.observe(viewLifecycleOwner) {
-                binding.categoryHolder.adapter =
+                currentCategoriesList = it
+                categoriesAdapter =
                     CategoriesAdapter(it,
                         object : OnItemViewClickListener {
                             override fun onShortClick(selectedId: Int) {
@@ -132,46 +136,14 @@ class CategoriesFragment : Fragment() {
                             }
                         }
                     )
+                binding.categoryHolder.adapter = categoriesAdapter
+                filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
             }
         }
 
-        binding.categoryHolder.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (!skipScroll) {
-                    when ((recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()) {
-                        0 -> {
-//                            visibleInvisible(binding.selectAllButton, !searchMode)
-                            visibleInvisible(binding.searchTil, searchMode)
-                            if (!searchMode) requireView().hideKeyboard()
-                        }
-
-                        else -> {
-//                            visibleInvisible(binding.selectAllButton, false)
-                            visibleInvisible(binding.searchTil, true)
-                        }
-                    }
-                } else {
-                    skipScroll = false
-                    searchMode = false
-                }
-            }
-        })
-
         with(binding) {
             searchTil.editText?.doAfterTextChanged { char ->
-                searchMode = true
-                if (char.toString().isEmpty()) {
-                    (categoryHolder.adapter as CategoriesAdapter).updateList(categoriesViewModel.categoriesList.value.orEmpty())
-                } else {
-                    val filteredCategories =
-                        categoriesViewModel.categoriesList.value.orEmpty().filter {
-                            it.categoryName.lowercase(Locale.getDefault()).contains(char.toString())
-                        }
-                    (categoryHolder.adapter as CategoriesAdapter).updateList(filteredCategories)
-                }
+                filterLists(char?.toString().orEmpty())
             }
         }
 
@@ -240,6 +212,44 @@ class CategoriesFragment : Fragment() {
 //                hideUiElement(binding.selectAllSpendingButton)
 //            }
 //        }
+    }
+
+    fun toggleSearch() {
+        if (searchMode) {
+            hideSearch()
+        } else {
+            searchMode = true
+            binding.searchTil.visibility = View.VISIBLE
+            binding.searchTil.editText?.requestFocus()
+        }
+    }
+
+    private fun hideSearch() {
+        requireView().hideKeyboard()
+        binding.searchTil.editText?.text?.clear()
+        filterLists("")
+        binding.searchTil.visibility = View.GONE
+        searchMode = false
+    }
+
+    private fun filterLists(query: String) {
+        val normalizedQuery = query.lowercase(Locale.getDefault())
+        if (normalizedQuery.length < searchMinLength) {
+            categoriesAdapter?.updateList(currentCategoriesList)
+            parentCategoriesAdapter?.updateList(currentParentCategoriesList)
+            return
+        }
+
+        categoriesAdapter?.updateList(
+            currentCategoriesList.filter {
+                it.categoryName.lowercase(Locale.getDefault()).contains(normalizedQuery)
+            }
+        )
+        parentCategoriesAdapter?.updateList(
+            currentParentCategoriesList.filter {
+                it.name.lowercase(Locale.getDefault()).contains(normalizedQuery)
+            }
+        )
     }
 
 //    private fun sortingCategories(sorting: String) {

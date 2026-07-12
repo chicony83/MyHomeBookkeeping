@@ -42,19 +42,30 @@ class CategoriesAdapter(
     ) {
         when (position) {
             in initList.indices -> holder.bind(initList[position])
-            initList.size + 1 -> holder.bindAddNewCategory()
+            initList.size -> holder.bindAddNewCategory()
         }
 
 
     }
 
-    override fun getItemCount() = initList.size + 2
+    override fun getItemCount() = initList.size + 1
 
     inner class ViewHolder(
         private val binding: RecyclerViewItemCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        private fun resetItemState() {
+            with(binding) {
+                categoriesItem.visibility = View.GONE
+                addNewCategoryItem.visibility = View.GONE
+                categoriesItem.setOnClickListener(null)
+                categoriesItem.setOnLongClickListener(null)
+                addNewCategoryImageView.setOnClickListener(null)
+            }
+        }
+
         fun bind(category: Categories) {
             with(binding) {
+                resetItemState()
                 categoriesItem.visibility = View.VISIBLE
                 root.contentDescription = category.categoryName
                 idCategories.text = category.categoriesId.toString()
@@ -94,6 +105,7 @@ class CategoriesAdapter(
 
         fun bindAddNewCategory() {
             with(binding) {
+                resetItemState()
                 addNewCategoryItem.visibility = View.VISIBLE
                 addNewCategoryImageView.setOnClickListener {
                     onPressCreateNewCategoryListener.onPress()
