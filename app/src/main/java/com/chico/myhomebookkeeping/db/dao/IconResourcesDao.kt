@@ -18,4 +18,7 @@ interface IconResourcesDao {
 
     @Query("SELECT * FROM icon_resource_table WHERE icon_name = :name")
     suspend fun getIconByName(name: String): IconsResource
+
+    @Query("SELECT * FROM icon_resource_table WHERE icon_name = :name AND icon_category = :iconCategory LIMIT 1")
+    suspend fun getIconByNameAndCategory(name: String, iconCategory: Int): IconsResource?
 }

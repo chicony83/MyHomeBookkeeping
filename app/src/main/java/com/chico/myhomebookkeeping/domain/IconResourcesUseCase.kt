@@ -22,4 +22,12 @@ object IconResourcesUseCase {
     suspend fun getIconByName(db: IconResourcesDao,name:String): IconsResource {
         return db.getIconByName(name)
     }
+
+    suspend fun getIconByNameAndCategory(
+        db: IconResourcesDao,
+        name: String,
+        iconCategory: Int
+    ): IconsResource? {
+        return db.getIconByNameAndCategory(name, iconCategory)
+    }
 }

@@ -11,6 +11,9 @@ interface CategoryDao {
     @Insert
     suspend fun addCategory(category: Categories): Long
 
+    @Query("SELECT COUNT(*) FROM category_table")
+    suspend fun getCategoriesCount(): Int
+
     @Query("SELECT * FROM category_table ORDER BY category_name ASC")
     suspend fun getAllCategoriesSortNameASC(): List<Categories>
 

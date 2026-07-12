@@ -14,6 +14,9 @@ interface CurrenciesDao {
     @Insert
     suspend fun addCurrencies(currencies: List<Currencies>)
 
+    @Query("SELECT COUNT(*) FROM currency_table")
+    suspend fun getCurrenciesCount(): Int
+
     @Query("SELECT * FROM currency_table ORDER BY currency_name ASC")
     suspend fun getAllCurrenciesSortNameAsc(): List<Currencies>
 

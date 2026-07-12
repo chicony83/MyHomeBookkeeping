@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
-import com.chico.myhomebookkeeping.db.dao.IconCategoryDao
-import com.chico.myhomebookkeeping.icons.AddIconCategories
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -33,6 +31,7 @@ class UpdateViewModel(
             launchIo {
                 val update44To45 = Update44To45()
                 update44To45.update(app)
+                setSP.saveToSP(updateKey,true)
             }
         }
     }
