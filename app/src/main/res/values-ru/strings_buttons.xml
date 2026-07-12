@@ -30,6 +30,7 @@
     <string name="text_on_button_income_category">Доходы</string>
 
     <string name="text_on_button_add_new_category">Добавить категорию</string>
+    <string name="text_on_button_add_new_subcategory">Добавить подкатегорию</string>
     <string name="text_on_button_add_new_currency">Добавить валюту</string>
     <string name="text_on_button_add_new_cash_account">Добавить счёт</string>
 

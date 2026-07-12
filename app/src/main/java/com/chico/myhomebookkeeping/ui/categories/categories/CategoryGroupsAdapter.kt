@@ -249,6 +249,10 @@ class CategoryGroupsAdapter(
             with(binding) {
                 categoriesItem.visibility = View.GONE
                 addNewCategoryItem.visibility = View.VISIBLE
+                addNewCategoryTextView.text = itemView.context.getString(R.string.text_on_button_add_new_subcategory)
+                addNewCategoryItem.setOnClickListener {
+                    onPressCreateNewCategory(parentCategory)
+                }
                 addNewCategoryImageView.setOnClickListener {
                     onPressCreateNewCategory(parentCategory)
                 }
@@ -266,6 +270,10 @@ class CategoryGroupsAdapter(
                 parentCategoriesItem.visibility = View.GONE
                 noParentCategoryItem.visibility = View.GONE
                 newParentCategoriesItem.visibility = View.VISIBLE
+                addNewParentCategoryTextView.text = itemView.context.getString(R.string.text_on_button_add_new_category)
+                newParentCategoriesItem.setOnClickListener {
+                    createNewParentCategoryListener.onPress()
+                }
                 addNewParentCategoryImageView.setOnClickListener {
                     createNewParentCategoryListener.onPress()
                 }
