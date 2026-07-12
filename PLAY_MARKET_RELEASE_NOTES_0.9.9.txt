@@ -1,0 +1,21 @@
+What's new in 0.9.9
+
+- Fixed category screen list glitches: items no longer overlap while scrolling.
+- Added category search from the top app bar.
+- Improved filtering for categories and parent categories.
+- Improved parent category row layout so long names wrap more cleanly.
+- Fixed creating and editing categories without a parent category.
+- Improved first-launch currency selection handling.
+- Updated the app to target Android SDK 35.
+- Added regression tests for categories without a parent category.
+
+Что нового в 0.9.9
+
+- Исправлены ошибки экрана категорий: элементы списков больше не накладываются при прокрутке.
+- Добавлен поиск категорий из верхней панели.
+- Улучшена фильтрация категорий и родительских категорий.
+- Улучшено отображение длинных названий родительских категорий.
+- Исправлено создание и изменение категорий без родительской категории.
+- Улучшена обработка выбора валют при первом запуске.
+- Приложение обновлено под Android SDK 35.
+- Добавлены тесты для категорий без родительской категории.
