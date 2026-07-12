@@ -18,6 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/holder_categories"
         style="@style/Fragment.paddingBottom"
+        android:background="@color/categoryScreenBackground"
         tools:context=".ui.categories.CategoriesFragment">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
             android:hint="@string/hint_category"
             android:visibility="gone"
             app:boxStrokeWidth="1dp"
@@ -49,6 +51,9 @@
             style="@style/RecyclerHolder"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/margin_normal"
+            android:paddingBottom="@dimen/margin_double"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

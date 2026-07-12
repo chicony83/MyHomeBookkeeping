@@ -10,6 +10,14 @@
 
     <color name="incomeBackgroundColor">#2600FF00</color>
     <color name="spendingBackgroundColor">#26FF0000</color>
+    <color name="categoryScreenBackground">#F5F7F8</color>
+    <color name="categoryCardBackground">#FFFFFFFF</color>
+    <color name="categoryChildBackground">#FAFBFB</color>
+    <color name="categoryAddBackground">#F0F8F8</color>
+    <color name="categoryDivider">#1F000000</color>
+    <color name="categoryTextSecondary">#6B7478</color>
+    <color name="categoryIncomeIndicator">#22A66A</color>
+    <color name="categorySpendingIndicator">#D85A50</color>
 
     <color name="warning">#FF0000</color>
 

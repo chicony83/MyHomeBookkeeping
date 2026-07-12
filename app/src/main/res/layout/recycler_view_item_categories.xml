@@ -8,31 +8,59 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_new_category_item"
         style="@style/RecyclerViewItem.Categories"
+        android:background="@drawable/category_add_background"
         android:visibility="gone"
         tool:visibility="gone">
 
         <ImageButton
             android:id="@+id/add_new_category_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="?android:selectableItemBackground"
             android:contentDescription="@string/content_description_icon_add_new_element"
-            android:src="@drawable/ic_add_circle" />
+            android:src="@drawable/ic_add_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/add_new_category_textView"
+            style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_on_button_add_new_category"
+            android:textColor="@color/colorPrimaryVariant"
+            android:textSize="@dimen/H5"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/add_new_category_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_new_category_imageView"
+            app:layout_constraintTop_toTopOf="@id/add_new_category_imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categories_item"
         style="@style/RecyclerViewItem.Categories"
+        android:background="@drawable/category_child_background"
         android:visibility="gone"
         tool:visibility="gone">
+
+        <View
+            android:id="@+id/category_type_indicator"
+            android:layout_width="5dp"
+            android:layout_height="36dp"
+            android:background="@drawable/category_indicator_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iconImg"
             style="@style/ImageIcon.RecyclerView"
             android:contentDescription="@string/content_description_icon_item_of_category"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/category_type_indicator"
             app:layout_constraintTop_toTopOf="parent"
             tool:src="@drawable/no_image" />
 
@@ -40,6 +68,9 @@
             android:id="@+id/id_categories"
             style="@style/TextView.RecyclerViewHorizontalItem"
             android:layout_marginEnd="@dimen/margin_normal"
+            android:textColor="@color/categoryTextSecondary"
+            android:textSize="@dimen/H6"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/iconImg"
             app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toTopOf="@id/iconImg"
@@ -49,10 +80,12 @@
             android:id="@+id/category_name_textView"
             style="@style/TextView.RecyclerViewHorizontalItem"
             android:layout_width="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/id_categories"
+            android:textColor="@color/black"
+            android:textSize="@dimen/H5"
+            app:layout_constraintBottom_toBottomOf="@id/iconImg"
             app:layout_constraintEnd_toStartOf="@id/category_drag_handle_imageView"
-            app:layout_constraintStart_toEndOf="@id/id_categories"
-            app:layout_constraintTop_toTopOf="@id/id_categories"
+            app:layout_constraintStart_toEndOf="@id/iconImg"
+            app:layout_constraintTop_toTopOf="@id/iconImg"
             tool:text="category" />
 
         <ImageView

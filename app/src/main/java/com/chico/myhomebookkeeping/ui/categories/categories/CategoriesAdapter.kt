@@ -5,6 +5,7 @@ import android.view.MotionEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
@@ -106,26 +107,14 @@ class CategoriesAdapter(
                     }
                     false
                 }
-                if (category.isIncome) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoriesItem.setBackgroundColor(
-                            itemView.resources.getColor(
-                                R.color.incomeBackgroundColor,
-                                null
-                            )
-                        )
-                    }
+                val indicatorColor = if (category.isIncome) {
+                    R.color.categoryIncomeIndicator
+                } else {
+                    R.color.categorySpendingIndicator
                 }
-                if (!category.isIncome) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoriesItem.setBackgroundColor(
-                            itemView.resources.getColor(
-                                R.color.spendingBackgroundColor,
-                                null
-                            )
-                        )
-                    }
-                }
+                categoryTypeIndicator.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, indicatorColor)
+                )
             }
         }
 

@@ -2,5 +2,13 @@
 <resources>
     <color name="black">#FFF</color>
     <color name="white">#000000</color>
+    <color name="categoryScreenBackground">#0F1516</color>
+    <color name="categoryCardBackground">#182123</color>
+    <color name="categoryChildBackground">#121A1B</color>
+    <color name="categoryAddBackground">#162A2B</color>
+    <color name="categoryDivider">#33FFFFFF</color>
+    <color name="categoryTextSecondary">#A4B0B3</color>
+    <color name="categoryIncomeIndicator">#4FC986</color>
+    <color name="categorySpendingIndicator">#F07B72</color>
 
 </resources>

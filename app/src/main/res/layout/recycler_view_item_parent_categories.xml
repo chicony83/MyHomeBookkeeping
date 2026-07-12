@@ -7,6 +7,7 @@
     <LinearLayout
         android:id="@+id/all_categories_item"
         style="@style/RecyclerViewItem.ParentCategories"
+        android:background="@drawable/category_group_background"
         android:visibility="gone"
         tools:visibility="gone">
 
@@ -20,6 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_categories_item"
         style="@style/RecyclerViewItem.ParentCategories"
+        android:background="@drawable/category_group_background"
         android:visibility="gone"
         tools:visibility="gone">
 
@@ -50,6 +52,8 @@
             android:gravity="center_vertical"
             android:maxLines="2"
             android:textAlignment="viewStart"
+            android:textSize="@dimen/H4"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/icon_imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icon_imageView"
@@ -60,6 +64,7 @@
     <LinearLayout
         android:id="@+id/no_parent_category_item"
         style="@style/RecyclerViewItem.ParentCategories"
+        android:background="@drawable/category_group_background"
         android:visibility="gone"
         tools:visibility="gone">
 
@@ -73,17 +78,35 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/new_parent_categories_item"
         style="@style/RecyclerViewItem.ParentCategories"
+        android:background="@drawable/category_add_background"
         android:visibility="gone"
         tools:visibility="visible">
 
         <ImageButton
             android:id="@+id/add_new_parent_category_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="?android:selectableItemBackground"
             android:contentDescription="@string/content_description_icon_add_new_element"
-            android:src="@drawable/ic_add_circle" />
+            android:src="@drawable/ic_add_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/add_new_parent_category_textView"
+            style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_on_button_add"
+            android:textColor="@color/colorPrimaryVariant"
+            android:textSize="@dimen/H5"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/add_new_parent_category_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_new_parent_category_imageView"
+            app:layout_constraintTop_toTopOf="@id/add_new_parent_category_imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

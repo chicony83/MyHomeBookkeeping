@@ -11,7 +11,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/category_group_header"
-            style="@style/RecyclerViewItem.ParentCategories">
+            style="@style/RecyclerViewItem.ParentCategories"
+            android:background="@drawable/category_group_background">
 
             <ImageView
                 android:id="@+id/group_icon_imageView"
@@ -30,6 +31,9 @@
                 android:gravity="center_vertical"
                 android:maxLines="2"
                 android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/H4"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/group_icon_imageView"
                 app:layout_constraintEnd_toStartOf="@id/group_count_textView"
                 app:layout_constraintStart_toEndOf="@id/group_icon_imageView"
@@ -39,10 +43,12 @@
             <TextView
                 android:id="@+id/group_count_textView"
                 style="@style/TextView.RecyclerViewHorizontalItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="28dp"
                 android:layout_marginEnd="@dimen/margin_normal"
                 android:gravity="center"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 app:layout_constraintBottom_toBottomOf="@id/group_icon_imageView"
                 app:layout_constraintEnd_toStartOf="@id/group_expand_imageView"
                 app:layout_constraintTop_toTopOf="@id/group_icon_imageView"
