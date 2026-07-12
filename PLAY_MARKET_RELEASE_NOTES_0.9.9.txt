@@ -7,7 +7,6 @@ What's new in 0.9.9
 - Fixed creating and editing categories without a parent category.
 - Improved first-launch currency selection handling.
 - Updated the app to target Android SDK 35.
-- Added regression tests for categories without a parent category.
 
 Что нового в 0.9.9
 
@@ -18,4 +17,3 @@ What's new in 0.9.9
 - Исправлено создание и изменение категорий без родительской категории.
 - Улучшена обработка выбора валют при первом запуске.
 - Приложение обновлено под Android SDK 35.
-- Добавлены тесты для категорий без родительской категории.
