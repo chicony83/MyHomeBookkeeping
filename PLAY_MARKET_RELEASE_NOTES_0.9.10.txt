@@ -1,0 +1,11 @@
+What's new in 0.9.10
+
+- Improved add-category and add-subcategory dialogs: cleaner layout, better field sizing, and more consistent spacing.
+- Fixed add actions on the category screen so the whole row can be tapped, not only the plus icon.
+- Renamed category actions to make categories and subcategories clearer.
+
+Что нового в 0.9.10
+
+- Улучшены диалоги добавления категории и подкатегории: аккуратнее расположены поля, размеры и отступы.
+- Исправлены действия добавления на экране категорий: теперь нажимается вся строка, а не только значок плюса.
+- Переименованы действия добавления, чтобы понятнее разделять категории и подкатегории.
