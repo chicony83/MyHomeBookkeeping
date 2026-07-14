@@ -4,6 +4,8 @@ What's new in 0.9.10
 - Fixed add actions on the category screen so the whole row can be tapped, not only the plus icon.
 - Renamed category actions to make categories and subcategories clearer.
 - Reworked first-launch currency selection: currencies are now selected with checkboxes and grouped into major currencies, other currencies, and cryptocurrencies.
+- Updated first-launch currency dialogs and currency rows: symbol, code, and name are shown compactly in one line.
+- Refined starter currency names to make the list easier to read for Russian, English, and European users.
 - Added more fiat currencies and optional cryptocurrency choices.
 - Added text symbols for major cryptocurrencies where they render reliably.
 - Added confirmation when a cryptocurrency is selected as the default currency.
@@ -14,6 +16,8 @@ What's new in 0.9.10
 - Исправлены действия добавления на экране категорий: теперь нажимается вся строка, а не только значок плюса.
 - Переименованы действия добавления, чтобы понятнее разделять категории и подкатегории.
 - Переработан выбор валют при первом запуске: теперь валюты выбираются флажками и разделены на основные, остальные и криптовалюты.
+- Обновлен дизайн диалогов первого выбора валют и строк валют: символ, код и название отображаются компактно в одну строку.
+- Уточнены названия стартовых валют, чтобы список был понятнее для русско/англо/европейской аудитории.
 - Добавлены дополнительные валюты и отдельный список популярных криптовалют.
 - Добавлены текстовые символы для основных криптовалют, где они корректно отображаются.
 - Добавлено подтверждение, если криптовалюта выбирается основной валютой.
