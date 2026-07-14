@@ -46,6 +46,7 @@ class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currencies: Currencies) {
             with(binding) {
+                currencySymbol.text = currencies.currencyNameShort
                 nameCurrency.text = currencies.currencyName
                 isoCurrency.text = currencies.iso4217
                 currencyCheckBox.isChecked = selectedCurrenciesIso.contains(currencies.iso4217)

@@ -255,6 +255,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
             fun bind(currency: Currencies) {
                 with(binding) {
+                    currencySymbol.text = currency.currencyNameShort
                     nameCurrency.text = currency.currencyName
                     isoCurrency.text = currency.iso4217
                     defaultCurrencyRadioButton.isChecked = currency.iso4217 == selectedCurrencyIso
