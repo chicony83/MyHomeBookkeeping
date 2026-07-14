@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/DialogLayout">
+    style="@style/DialogLayout"
+    android:background="@drawable/category_group_background">
 
     <EditText
         android:id="@+id/currencyNameEditText"

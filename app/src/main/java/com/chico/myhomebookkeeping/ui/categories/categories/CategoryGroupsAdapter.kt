@@ -217,8 +217,8 @@ class CategoryGroupsAdapter(
                 groupCountTextView.text = group.categories.size.toString()
                 groupIconImageView.setImageResource(parentCategory?.icon ?: R.drawable.no_image)
                 groupExpandImageView.setImageResource(
-                    if (isExpanded) R.drawable.category_arrow_drop_up
-                    else R.drawable.category_arrow_drop_down
+                    if (isExpanded) R.drawable.ic_expand_remove
+                    else R.drawable.ic_expand_add
                 )
                 groupDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 groupDragHandleImageView.setOnTouchListener { _, event ->

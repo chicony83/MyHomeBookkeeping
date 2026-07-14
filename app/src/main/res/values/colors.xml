@@ -18,6 +18,13 @@
     <color name="categoryTextSecondary">#6B7478</color>
     <color name="categoryIncomeIndicator">#22A66A</color>
     <color name="categorySpendingIndicator">#D85A50</color>
+    <color name="buttonPrimaryBackground">#E7F3F4</color>
+    <color name="buttonPrimaryText">#0F5660</color>
+    <color name="buttonPrimaryBorder">#8AB9BE</color>
+    <color name="buttonNeutralBackground">#FFFFFFFF</color>
+    <color name="buttonFilterBackground">#F1F6F7</color>
+    <color name="buttonPressedOverlay">#DDE9EA</color>
+    <color name="buttonDangerText">#B84941</color>
 
     <color name="warning">#FF0000</color>
 

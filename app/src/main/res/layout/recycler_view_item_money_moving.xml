@@ -6,14 +6,17 @@
     style="@style/RecyclerViewCard.MoneyMoving">
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/moneyMovingItem"
-        style="@style/MatchParent_WrapContent">
+        style="@style/MatchParent_WrapContent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/dateSeparator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_half_normal"
+            android:layout_marginBottom="@dimen/margin_half_normal"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +27,14 @@
                 android:id="@+id/dateSeparatorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/categoryTextSecondary"
                 android:textSize="@dimen/H4" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item"
             style="@style/RecyclerViewItem.MoneyMoving"
+            android:minHeight="64dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dateSeparator">
@@ -38,6 +43,8 @@
                 android:id="@+id/currencyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 app:layout_constraintBottom_toBottomOf="@+id/amountEditText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/amountEditText"
@@ -48,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_normal"
+                android:textStyle="bold"
                 android:textSize="@dimen/H3"
                 app:layout_constraintEnd_toStartOf="@id/currencyName"
                 app:layout_constraintTop_toBottomOf="@+id/dataTime"
@@ -57,22 +65,36 @@
                 android:id="@+id/dataTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tool:text="1970-01-01" />
 
             <TextView
                 android:id="@+id/categoryName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/H5"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/dataTime"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tool:text="заработал" />
 
             <TextView
                 android:id="@+id/cashAccountName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:maxLines="1"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H6"
+                app:layout_constraintEnd_toStartOf="@id/amountEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/categoryName"
                 tool:text="наличка" />
@@ -82,6 +104,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_half_normal"
+                android:background="@drawable/category_child_background"
+                android:padding="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H6"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

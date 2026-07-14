@@ -19,16 +19,30 @@
     </style>
 
     <style name="DialogButtons" parent="Buttons">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/H6</item>
-        <item name="elevation">@dimen/margin_normal</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/H5</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/button_neutral_background</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">44dp</item>
+        <item name="android:paddingStart">@dimen/margin_double</item>
+        <item name="android:paddingEnd">@dimen/margin_double</item>
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="android:insetTop">@dimen/margin_zero</item>
         <item name="android:insetBottom">@dimen/margin_zero</item>
         <item name="android:layout_margin">@dimen/margin_normal</item>
     </style>
 
     <style name="TopButtons" parent="DialogButtons">
-
+        <item name="android:background">@drawable/button_filter_background</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/H6</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingStart">@dimen/margin_double</item>
+        <item name="android:paddingEnd">@dimen/margin_double</item>
     </style>
 
     <style name="DialogButtonLeft" parent="DialogButtons">
@@ -50,15 +64,16 @@
 
     <style name="ButtonFullWidth.AddAndSelect">
         <item name="android:text">@string/text_on_button_add_and_select</item>
-        <!--        <item name="backgroundTint">@null</item>-->
-        <!--        <item name="android:textColor">@color/colorSubmitButton</item>-->
+        <item name="android:background">@drawable/button_primary_background</item>
+        <item name="android:textColor">@color/buttonPrimaryText</item>
     </style>
 
     <style name="DialogButtonLeft.Positive">
-        <!--        <item name="backgroundTint">@null</item>-->
         <item name="android:textSize">@dimen/H5</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_weight">1</item>
-        <!--        <item name="android:textColor">@color/colorSubmitButton</item>-->
+        <item name="android:background">@drawable/button_primary_background</item>
+        <item name="android:textColor">@color/buttonPrimaryText</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -70,21 +85,24 @@
     </style>
 
     <style name="DialogButtonRight.Negative">
-        <!--        <item name="backgroundTint">@null</item>-->
-        <!--        <item name="android:textColor">@color/colorCancelButton</item>-->
+        <item name="android:background">@drawable/button_neutral_background</item>
+        <item name="android:textColor">@color/categoryTextSecondary</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DialogButtonCenter.Select">
-        <!--        <item name="backgroundTint">@null</item>-->
+        <item name="android:background">@drawable/button_primary_background</item>
+        <item name="android:textColor">@color/buttonPrimaryText</item>
         <item name="android:textSize">@dimen/H5</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DialogButtonLeft.Change">
-        <!--        <item name="backgroundTint">@null</item>-->
+        <item name="android:background">@drawable/button_neutral_background</item>
+        <item name="android:textColor">@color/colorPrimaryVariant</item>
         <item name="android:textSize">@dimen/H5</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

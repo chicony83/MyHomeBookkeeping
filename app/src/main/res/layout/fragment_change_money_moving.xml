@@ -4,10 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
+    android:background="@color/categoryScreenBackground"
     tools:context=".ui.paymentPackage.changeMoneyMoving.ChangeMoneyMovingFragment">
 
     <ScrollView
         style="@style/MoneyMovingScrollView"
+        android:clipToPadding="false"
+        android:padding="@dimen/margin_normal"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,11 +19,15 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@drawable/category_group_background"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_normal">
 
             <TextView
                 style="@style/TextDescriptions"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 android:text="@string/description_date_time_text" />
 
             <Button
@@ -34,6 +41,9 @@
 
             <TextView
                 style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 android:text="@string/text_on_button_cash_account" />
 
             <Button
@@ -44,6 +54,9 @@
 
             <TextView
                 style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 android:text="@string/text_on_button_currency" />
 
             <Button
@@ -53,6 +66,9 @@
 
             <TextView
                 style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 android:text="@string/text_on_button_category" />
 
             <Button
@@ -62,19 +78,27 @@
 
             <TextView
                 style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 android:text="@string/description_amount" />
 
             <EditText
                 android:id="@+id/amountEditText"
-                style="@style/EditTextAmount" />
+                style="@style/EditTextAmount"
+                android:backgroundTint="@color/colorPrimary" />
 
             <TextView
                 style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
                 android:text="@string/description_description" />
 
             <EditText
                 android:id="@+id/description"
-                style="@style/EditTextDescription" />
+                style="@style/EditTextDescription"
+                android:backgroundTint="@color/colorPrimary" />
 
         </LinearLayout>
     </ScrollView>
@@ -82,6 +106,7 @@
     <Button
         android:id="@+id/submitButton"
         style="@style/DialogButtonLeft.Positive"
+        android:layout_marginStart="@dimen/margin_normal"
         android:text="@string/text_on_button_change"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/centerFragment"
@@ -90,6 +115,9 @@
     <Button
         android:id="@+id/deleteButton"
         style="@style/DialogButtonRight.Negative"
+        android:background="@drawable/button_danger_background"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:textColor="@color/buttonDangerText"
         android:text="@string/text_on_button_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

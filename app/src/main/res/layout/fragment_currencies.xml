@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
+    android:background="@color/categoryScreenBackground"
     tools:context=".ui.currencies.CurrenciesFragment">
 
     <LinearLayout
@@ -16,16 +17,20 @@
 
         <Button
             android:id="@+id/selectAllButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/ButtonFullWidth"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/text_on_button_select_all" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currenciesHolder"
         style="@style/RecyclerHolder"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_double"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/show_hide_add_currency_fragment_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +39,7 @@
 
     <Button
         android:id="@+id/show_hide_add_currency_fragment_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/ButtonFullWidth"
         android:text="@string/text_on_button_add_new_currency"
         app:layout_constraintBottom_toBottomOf="parent" />
 

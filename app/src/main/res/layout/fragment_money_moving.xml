@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
+    android:background="@color/categoryScreenBackground"
     tools:context=".ui.paymentPackage.moneyMoving.MoneyMovingFragment">
 
     <HorizontalScrollView
         android:id="@+id/scrollViewButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/categoryScreenBackground"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_half_normal"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +30,7 @@
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
                 android:text="@string/text_on_button_currency" />
 
             <Button
@@ -33,6 +38,7 @@
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_half_normal"
                 android:text="@string/text_on_button_category" />
 
             <Button
@@ -40,6 +46,7 @@
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_half_normal"
                 android:text="@string/text_on_button_cash_account" />
 
             <Button
@@ -47,6 +54,8 @@
                 style="@style/TopButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_half_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
                 android:text="@string/text_on_button_time_period" />
         </LinearLayout>
     </HorizontalScrollView>
@@ -54,27 +63,37 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/moneyMovingHolder"
         style="@style/RecyclerHolder"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_half_normal"
+        android:paddingBottom="@dimen/margin_normal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollViewButtons" />
 
     <LinearLayout
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/category_group_background"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_normal"
         android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:layout_marginStart="@dimen/margin_double"
             android:id="@+id/incomeBalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_double"
             android:layout_weight="1"
+            android:textColor="@color/incomeTextColor"
+            android:textSize="@dimen/H6"
             tools:text="0" />
 
         <TextView
@@ -83,15 +102,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textColor="@color/spendingTextColor"
+            android:textSize="@dimen/H6"
             tools:text="0" />
 
         <TextView
             android:id="@+id/totalBalance"
-            android:layout_marginEnd="@dimen/margin_double"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_double"
             android:layout_weight="1"
             android:gravity="right"
+            android:textColor="@color/black"
+            android:textSize="@dimen/H6"
             tools:text="0" />
     </LinearLayout>
 

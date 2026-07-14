@@ -2,12 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DialogLayout"
+    android:background="@drawable/category_group_background"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/message"
         style="@style/Description"
         android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/H4"
+        android:textStyle="bold"
         android:text="@string/description_you_want_to_delete_the_entry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +24,9 @@
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/submitDeleteButton"
         style="@style/DialogButtonLeft.Positive"
+        android:background="@drawable/button_danger_background"
+        android:layout_marginTop="@dimen/margin_double"
+        android:textColor="@color/buttonDangerText"
         android:text="@string/text_on_button_yes" />
 
     <Button
@@ -28,6 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/message"
         android:id="@+id/cancelDeleteButton"
         style="@style/DialogButtonRight.Negative"
+        android:layout_marginTop="@dimen/margin_double"
         android:text="@string/text_on_button_no" />
 
     <androidx.constraintlayout.widget.Guideline

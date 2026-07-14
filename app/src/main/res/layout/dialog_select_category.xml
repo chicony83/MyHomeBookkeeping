@@ -2,49 +2,67 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/DialogLayout">
+    style="@style/DialogLayout"
+    android:background="@color/categoryScreenBackground">
 
     <TextView
         android:id="@+id/parent_category_description"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:gravity="center"
         android:text="@string/text_view_parent_category"
+        android:textColor="@color/categoryTextSecondary"
+        android:textSize="@dimen/H6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iconImg"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedItemName" />
 
     <TextView
         android:id="@+id/parent_category_name_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="@dimen/margin_half_normal"
+        android:background="@drawable/category_child_background"
+        android:gravity="center"
+        android:paddingStart="@dimen/margin_double"
+        android:paddingEnd="@dimen/margin_double"
         android:text="PARENT CATEGORY"
+        android:textColor="@color/black"
+        android:textSize="@dimen/H5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iconImg"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parent_category_description" />
 
 
     <ImageView
         android:id="@+id/iconImg"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="@dimen/margin_normal"
-        app:layout_constraintBottom_toTopOf="@id/horizontalBarrier"
-        app:layout_constraintStart_toStartOf="@id/selectButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@drawable/category_child_background"
+        android:contentDescription="@string/content_description_icon_item_of_category"
+        android:padding="@dimen/margin_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/no_image" />
 
     <TextView
         android:id="@+id/selectedItemName"
         style="@style/Description"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
         android:gravity="center"
-        android:maxWidth="200dp"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/H3"
+        android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="@id/selectButton"
-        app:layout_constraintStart_toEndOf="@id/iconImg"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/selectButton"
+        app:layout_constraintTop_toBottomOf="@id/iconImg"
         tools:text="общественный транспорт" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -52,11 +70,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="selectedItemName,iconImg" />
+        app:constraint_referenced_ids="parent_category_name_TextView" />
 
     <Button
         android:id="@+id/selectButton"
         style="@style/DialogButtonCenter.Select"
+        android:layout_marginTop="@dimen/margin_normal"
         android:text="@string/text_on_button_select"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

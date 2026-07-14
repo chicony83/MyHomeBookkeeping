@@ -2,17 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DialogLayout"
+    android:background="@drawable/category_group_background"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/description_cash_account_name" />
+        android:text="@string/description_cash_account_name"
+        android:textColor="@color/categoryTextSecondary"
+        android:textSize="@dimen/H5" />
 
     <EditText
-        android:inputType="text"
         android:id="@+id/cash_account_name_editText"
-        style="@style/DialogEnterNewName" />
+        style="@style/DialogEnterNewName"
+        android:layout_width="match_parent"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/errorThisNameIsTaken"
@@ -22,7 +26,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/descriptions_last_4_digits_of_card" />
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/descriptions_last_4_digits_of_card"
+        android:textColor="@color/categoryTextSecondary"
+        android:textSize="@dimen/H5" />
 
     <EditText
         android:id="@+id/number"

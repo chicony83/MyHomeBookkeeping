@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cashAccountItem"
-        style="@style/RecyclerViewItem"
+        style="@style/RecyclerViewItem.ParentCategories"
+        android:background="@drawable/category_group_background"
         android:orientation="horizontal">
 
         <ImageView
@@ -23,8 +24,15 @@
         <TextView
             android:id="@+id/nameCashAccount"
             style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="0dp"
             android:layout_marginEnd="@dimen/margin_normal"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/H5"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iconImg"
+            app:layout_constraintEnd_toStartOf="@id/numberCashAccount"
             app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toTopOf="@id/iconImg"
             tools:text="card" />
@@ -32,8 +40,12 @@
         <TextView
             android:id="@+id/numberCashAccount"
             style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:textColor="@color/categoryTextSecondary"
+            android:textSize="@dimen/H6"
             app:layout_constraintBottom_toBottomOf="@id/nameCashAccount"
-            app:layout_constraintStart_toEndOf="@id/nameCashAccount"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/nameCashAccount"
             tools:text="@string/sign_number_of_account" />
     </androidx.constraintlayout.widget.ConstraintLayout>

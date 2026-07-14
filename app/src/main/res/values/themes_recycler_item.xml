@@ -28,11 +28,31 @@
     </style>
 
     <style name="RecyclerViewCard.Currencies">
-
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="cardBackgroundColor">@color/categoryCardBackground</item>
     </style>
 
     <style name="RecyclerViewCard.CashAccounts">
-
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="cardBackgroundColor">@color/categoryCardBackground</item>
     </style>
 
     <style name="RecyclerViewCard.Categories">
@@ -50,8 +70,17 @@
     </style>
 
     <style name="RecyclerViewCard.MoneyMoving">
-        <item name="android:elevation">0dp</item>
-        <item name="cardElevation">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="cardBackgroundColor">@color/categoryCardBackground</item>
     </style>
 
     <style name="RecyclerViewItem" parent="MatchParent_WrapContent">
@@ -85,7 +114,9 @@
     </style>
 
     <style name="RecyclerViewItem.MoneyMoving">
-        <item name="android:padding">@dimen/margin_half_normal</item>
-        <item name="android:layout_margin">@dimen/margin_half_normal</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+        <item name="android:paddingTop">@dimen/margin_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_normal</item>
     </style>
 </resources>

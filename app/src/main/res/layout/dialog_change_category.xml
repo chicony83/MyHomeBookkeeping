@@ -1,82 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    style="@style/DialogLayout">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLayout"
+    android:background="@color/categoryScreenBackground">
 
     <EditText
         android:id="@+id/category_name_EditText"
-        android:layout_height="wrap_content"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginEnd="0dp"
         android:hint="@string/hint_enter_name"
-        app:layout_constraintEnd_toStartOf="@+id/iconImg"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/parent_categories_TextView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginTop="@dimen/margin_normal"
+        android:background="@drawable/category_add_background"
+        android:drawableEnd="@drawable/category_arrow_drop_down"
+        android:drawablePadding="@dimen/margin_normal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_double"
+        android:paddingEnd="@dimen/margin_normal"
         android:text="@string/text_view_select_parent_category"
-        android:textSize="@dimen/H4"
-        app:layout_constraintEnd_toEndOf="@id/category_name_EditText"
-        app:layout_constraintStart_toStartOf="@id/category_name_EditText"
+        android:textColor="@color/black"
+        android:textSize="@dimen/H5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/category_name_EditText"/>
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginTop="@dimen/margin_normal"
-        app:layout_constraintEnd_toStartOf="@id/iconImg"
-        app:layout_constraintStart_toStartOf="@id/parent_categories_TextView"
+        android:background="@drawable/category_child_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_normal"
+        android:paddingEnd="@dimen/margin_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parent_categories_TextView">
 
         <RadioButton
             android:id="@+id/incomeRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_on_button_income_category" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/text_on_button_income_category"
+            android:textColor="@color/incomeTextColor"
+            android:textSize="@dimen/H5" />
 
         <RadioButton
             android:id="@+id/spendingRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_on_radio_button_spending_category" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/text_on_radio_button_spending_category"
+            android:textColor="@color/spendingTextColor"
+            android:textSize="@dimen/H5" />
     </RadioGroup>
 
     <ImageView
-        android:contentDescription="@string/content_description_icon_item_of_category"
         android:id="@+id/iconImg"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@drawable/category_child_background"
+        android:contentDescription="@string/content_description_icon_item_of_category"
+        android:padding="@dimen/margin_normal"
         android:src="@drawable/no_image"
-        app:layout_constraintBottom_toTopOf="@id/cancelButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup"
+        tools:src="@drawable/no_image" />
 
     <Button
         android:id="@+id/saveButton"
         style="@style/DialogButtonLeft.Positive"
+        android:layout_marginTop="@dimen/margin_double"
         android:text="@string/text_on_button_save"
         app:layout_constraintEnd_toStartOf="@id/centerDialogChangeCategory"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@id/iconImg" />
 
     <Button
         android:id="@+id/cancelButton"
         style="@style/DialogButtonRight.Negative"
+        android:layout_marginTop="@dimen/margin_double"
         android:text="@string/text_on_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/centerDialogChangeCategory"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@id/iconImg" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerDialogChangeCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
