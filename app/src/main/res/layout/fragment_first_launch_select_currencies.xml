@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context=".ui.firstLaunch.firstLaunchSelectCurrenciesFragment.FirstLaunchSelectCurrenciesFragment">
 
     <TextView
         android:id="@+id/selectCurrenciesTextView"
@@ -13,9 +14,9 @@
         android:layout_marginHorizontal="@dimen/margin_double"
         android:text="@string/first_launch_currencies_title"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/selectCurrenciesHint"
@@ -42,37 +43,128 @@
         app:layout_constraintTop_toBottomOf="@id/selectCurrenciesHint"
         tools:text="Selected · 0" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency"
-        android:id="@+id/currenciesForSelectHolder"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/currenciesScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/showMoreButtonsHolder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/availableCurrenciesTitle" />
-
-    <LinearLayout
-        android:id="@+id/showMoreButtonsHolder"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/margin_normal"
+        android:fillViewport="false"
         app:layout_constraintBottom_toTopOf="@id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/availableCurrenciesTitle">
 
-        <Button
-            android:id="@+id/showMoreCurrenciesButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/first_launch_currencies_show_more" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/showCryptoCurrenciesButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/first_launch_currencies_show_crypto" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/majorCurrenciesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/category_group_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/majorCurrenciesTitle"
+                    style="@style/RecyclerViewItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/first_launch_currencies_major" />
+
+                <ImageView
+                    android:id="@+id/majorCurrenciesExpandImageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/first_launch_currencies_major"
+                    android:src="@drawable/category_arrow_drop_up" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/majorCurrenciesHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency" />
+
+            <LinearLayout
+                android:id="@+id/otherCurrenciesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/category_group_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/otherCurrenciesTitle"
+                    style="@style/RecyclerViewItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/first_launch_currencies_other" />
+
+                <ImageView
+                    android:id="@+id/otherCurrenciesExpandImageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/first_launch_currencies_other"
+                    android:src="@drawable/category_arrow_drop_down" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/otherCurrenciesHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/cryptoCurrenciesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/category_group_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/cryptoCurrenciesTitle"
+                    style="@style/RecyclerViewItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/first_launch_currencies_crypto" />
+
+                <ImageView
+                    android:id="@+id/cryptoCurrenciesExpandImageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/first_launch_currencies_crypto"
+                    android:src="@drawable/category_arrow_drop_down" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cryptoCurrenciesHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/submitButton"

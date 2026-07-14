@@ -21,10 +21,6 @@ class FirstLaunchSelectCurrenciesViewModel(
     private val dbCurrencies: CurrenciesDao =
         dataBase.getDataBase(app.applicationContext).currenciesDao()
 
-    private val _firstLaunchCurrenciesList = MutableLiveData<List<Currencies>>()
-    val firstLaunchCurrenciesList: LiveData<List<Currencies>>
-        get() = _firstLaunchCurrenciesList
-
     private val _selectedCurrenciesList = MutableLiveData<List<Currencies>>()
     val selectedCurrenciesList: LiveData<List<Currencies>>
         get() = _selectedCurrenciesList
@@ -34,7 +30,6 @@ class FirstLaunchSelectCurrenciesViewModel(
 
     init {
         viewModelScope.launch {
-            _firstLaunchCurrenciesList.postValue(FirstLaunchCurrenciesList.getCurrenciesList())
             _selectedCurrenciesList.postValue(listOf<Currencies>())
         }
     }
@@ -44,8 +39,8 @@ class FirstLaunchSelectCurrenciesViewModel(
         val selectedCurrency = selectedCurrencies.firstOrNull { it.iso4217 == iso4217 }
 
         if (selectedCurrency == null) {
-            _firstLaunchCurrenciesList.value
-                .orEmpty()
+            FirstLaunchCurrenciesList
+                .getAllCurrenciesList()
                 .firstOrNull { it.iso4217 == iso4217 }
                 ?.let { selectedCurrencies.add(it) }
         } else {
@@ -53,26 +48,6 @@ class FirstLaunchSelectCurrenciesViewModel(
         }
 
         _selectedCurrenciesList.postValue(sortedByISO(selectedCurrencies))
-    }
-
-    fun showMoreCurrencies() {
-        appendCurrencies(FirstLaunchCurrenciesList.getMoreFiatCurrenciesList())
-    }
-
-    fun showCryptoCurrencies() {
-        appendCurrencies(FirstLaunchCurrenciesList.getCryptoCurrenciesList())
-    }
-
-    private fun appendCurrencies(currencies: List<Currencies>) {
-        val currentCurrencies = _firstLaunchCurrenciesList.value.orEmpty()
-        val currentCodes = currentCurrencies.mapNotNull { it.iso4217 }.toSet()
-        val currenciesForAdd = currencies.filter { it.iso4217 !in currentCodes }
-
-        if (currenciesForAdd.isNotEmpty()) {
-            _firstLaunchCurrenciesList.postValue(
-                sortedByISO((currentCurrencies + currenciesForAdd).toMutableList())
-            )
-        }
     }
 
     private fun sortedByISO(listForPost: MutableList<Currencies>): List<Currencies> {

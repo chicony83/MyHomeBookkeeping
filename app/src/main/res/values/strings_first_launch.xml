@@ -6,8 +6,9 @@
     <string name="first_launch_currencies_selected_count">Selected · %1$d</string>
     <string name="first_launch_currencies_continue">Continue · choose default</string>
     <string name="first_launch_currencies_empty_message">Add at least one currency to continue</string>
-    <string name="first_launch_currencies_show_more">Show more currencies</string>
-    <string name="first_launch_currencies_show_crypto">Show cryptocurrencies</string>
+    <string name="first_launch_currencies_major">Major currencies</string>
+    <string name="first_launch_currencies_other">Other currencies</string>
+    <string name="first_launch_currencies_crypto">Cryptocurrencies</string>
     <string name="quick_setup_add_Cash_account">Cash accounts</string>
     <string name="quick_setup_name_Card">Card</string>
     <string name="quick_setup_name_Cash">Cash</string>

@@ -3,27 +3,33 @@ package com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFr
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
 object FirstLaunchCurrenciesList {
-    private val baseCurrenciesList = listOf(
+    private val majorCurrenciesList = listOf(
+        Currencies("Беларускі рубель", "Br.", "BYN", null, false),
+        Currencies("Euro", "€", "EUR", null, false),
+        Currencies("Pound sterling", "£", "GBP", null, false),
+        Currencies("Franc suisse", "CHF", "CHF", null, false),
+        Currencies("Chinese yuan", "¥", "CNY", null, false),
+        Currencies("Japanese yen", "¥", "JPY", null, false),
+        Currencies("Złoty", "zł", "PLN", null, false),
+        Currencies("Гривня", "₴", "UAH", null, false),
+        Currencies("United States dollar", "\$", "USD", null, false)
+    )
+
+    private val otherFiatCurrenciesList = listOf(
         Currencies("Australian dollar", "A\$", "AUD", null, false),
         Currencies("Azərbaycan manatı", "man.", "AZN", null, false),
         Currencies("Bulgarian lev", "лв", "BGN", null, false),
         Currencies("Brazilian real", "R\$", "BRL", null, false),
-        Currencies("Беларускі рубель", "Br.", "BYN", null, false),
         Currencies("Canadian dollar", "C\$", "CAD", null, false),
-        Currencies("Franc suisse", "CHF", "CHF", null, false),
-        Currencies("Chinese yuan", "¥", "CNY", null, false),
         Currencies("Czech koruna", "Kč", "CZK", null, false),
         Currencies("Danish krone", "kr.", "DKK", null, false),
         Currencies("United Arab Emirates dirham", "د.إ", "AED", null, false),
-        Currencies("Euro", "€", "EUR", null, false),
-        Currencies("Pound sterling", "£", "GBP", null, false),
         Currencies("ლარი", "ლ", "GEL", null, false),
         Currencies("Hong Kong dollar", "HK\$", "HKD", null, false),
         Currencies("Forint", "Ft", "HUF", null, false),
         Currencies("Հայկական դրամ", "֏", "AMD", null, false),
         Currencies("Indian rupee", "₹", "INR", null, false),
         Currencies("Israeli new shekel", "₪", "ILS", null, false),
-        Currencies("Japanese yen", "¥", "JPY", null, false),
         Currencies("Сом", "с", "KGS", null, false),
         Currencies("South Korean won", "₩", "KRW", null, false),
         Currencies("Теңге", "₸", "KZT", null, false),
@@ -31,7 +37,6 @@ object FirstLaunchCurrenciesList {
         Currencies("Mexican peso", "Mex\$", "MXN", null, false),
         Currencies("Norwegian krone", "kr", "NOK", null, false),
         Currencies("New Zealand dollar", "NZ\$", "NZD", null, false),
-        Currencies("Złoty", "zł", "PLN", null, false),
         Currencies("Romanian leu", "lei", "RON", null, false),
         Currencies("Saudi riyal", "﷼", "SAR", null, false),
         Currencies("Swedish krona", "kr", "SEK", null, false),
@@ -39,13 +44,8 @@ object FirstLaunchCurrenciesList {
         Currencies("Сомонӣ", "смн.", "TJS", null, false),
         Currencies("Turkish lira", "₺", "TRY", null, false),
         Currencies("Türkmen manaty", "m", "TMT", null, false),
-        Currencies("Гривня", "₴", "UAH", null, false),
-        Currencies("United States dollar", "\$", "USD", null, false),
         Currencies("So‘m", "So'm", "UZS", null, false),
-        Currencies("South African rand", "R", "ZAR", null, false)
-    )
-
-    private val moreFiatCurrenciesList = listOf(
+        Currencies("South African rand", "R", "ZAR", null, false),
         Currencies("Afghani", "؋", "AFN", null, false),
         Currencies("Lek", "L", "ALL", null, false),
         Currencies("Argentine peso", "\$", "ARS", null, false),
@@ -79,31 +79,36 @@ object FirstLaunchCurrenciesList {
         Currencies("Tether", "₮", "USDT", null, false),
         Currencies("USD Coin", "USDC", "USDC", null, false),
         Currencies("BNB", "BNB", "BNB", null, false),
-        Currencies("Solana", "SOL", "SOL", null, false),
-        Currencies("XRP", "XRP", "XRP", null, false),
+        Currencies("Solana", "◎", "SOL", null, false),
+        Currencies("XRP", "✕", "XRP", null, false),
         Currencies("Dogecoin", "Ð", "DOGE", null, false),
         Currencies("TRON", "TRX", "TRX", null, false),
         Currencies("Toncoin", "TON", "TON", null, false),
-        Currencies("Cardano", "ADA", "ADA", null, false),
+        Currencies("Cardano", "₳", "ADA", null, false),
         Currencies("Litecoin", "Ł", "LTC", null, false),
-        Currencies("Bitcoin Cash", "BCH", "BCH", null, false),
+        Currencies("Bitcoin Cash", "Ƀ", "BCH", null, false),
         Currencies("Polkadot", "DOT", "DOT", null, false),
-        Currencies("Chainlink", "LINK", "LINK", null, false),
-        Currencies("Avalanche", "AVAX", "AVAX", null, false),
+        Currencies("Chainlink", "⬡", "LINK", null, false),
+        Currencies("Avalanche", "▲", "AVAX", null, false),
         Currencies("Stellar", "XLM", "XLM", null, false),
         Currencies("NEAR Protocol", "NEAR", "NEAR", null, false),
         Currencies("Aptos", "APT", "APT", null, false),
         Currencies("Ethereum Classic", "ETC", "ETC", null, false),
-        Currencies("Monero", "XMR", "XMR", null, false),
-        Currencies("Cosmos", "ATOM", "ATOM", null, false),
-        Currencies("Algorand", "ALGO", "ALGO", null, false)
+        Currencies("Monero", "ɱ", "XMR", null, false),
+        Currencies("Cosmos", "⚛", "ATOM", null, false),
+        Currencies("Algorand", "Ⱥ", "ALGO", null, false)
     )
 
-    fun getCurrenciesList(): List<Currencies> = sortedByCode(baseCurrenciesList)
+    fun getMajorCurrenciesList(): List<Currencies> = sortedByCode(majorCurrenciesList)
 
-    fun getMoreFiatCurrenciesList(): List<Currencies> = sortedByCode(moreFiatCurrenciesList)
+    fun getOtherFiatCurrenciesList(): List<Currencies> = sortedByCode(otherFiatCurrenciesList)
 
     fun getCryptoCurrenciesList(): List<Currencies> = sortedByCode(cryptoCurrenciesList)
+
+    fun getAllCurrenciesList(): List<Currencies> =
+        getMajorCurrenciesList() + getOtherFiatCurrenciesList() + getCryptoCurrenciesList()
+
+    fun getCurrenciesList(): List<Currencies> = getMajorCurrenciesList()
 
     fun isCryptoCurrency(iso4217: String?): Boolean {
         return cryptoCurrenciesList.any { it.iso4217 == iso4217 }

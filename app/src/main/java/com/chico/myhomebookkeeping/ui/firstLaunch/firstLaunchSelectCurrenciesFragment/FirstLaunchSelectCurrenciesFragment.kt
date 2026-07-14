@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +31,12 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
     private val viewModel: FirstLaunchSelectCurrenciesViewModel by viewModels()
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
+    private lateinit var majorCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
+    private lateinit var otherCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
+    private lateinit var cryptoCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
+    private var isMajorCurrenciesExpanded = true
+    private var isOtherCurrenciesExpanded = false
+    private var isCryptoCurrenciesExpanded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,14 +46,11 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         _binding = FragmentFirstLaunchSelectCurrenciesBinding.inflate(inflater, container, false)
 
         with(viewModel) {
-            firstLaunchCurrenciesList.observe(viewLifecycleOwner) {
-                renderCurrenciesList()
-            }
             selectedCurrenciesList.observe(viewLifecycleOwner) {
                 binding.availableCurrenciesTitle.text =
                     getString(R.string.first_launch_currencies_selected_count, it.size)
                 binding.submitButton.isEnabled = it.isNotEmpty()
-                renderCurrenciesList()
+                updateSelectedCurrencies()
             }
         }
         lifecycleScope.launchWhenStarted {
@@ -71,13 +75,18 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
-        binding.showMoreCurrenciesButton.setOnClickListener {
-            viewModel.showMoreCurrencies()
-            binding.showMoreCurrenciesButton.visibility = View.GONE
+        initCurrenciesLists()
+        binding.majorCurrenciesHeader.setOnClickListener {
+            isMajorCurrenciesExpanded = !isMajorCurrenciesExpanded
+            renderCurrenciesSections()
         }
-        binding.showCryptoCurrenciesButton.setOnClickListener {
-            viewModel.showCryptoCurrencies()
-            binding.showCryptoCurrenciesButton.visibility = View.GONE
+        binding.otherCurrenciesHeader.setOnClickListener {
+            isOtherCurrenciesExpanded = !isOtherCurrenciesExpanded
+            renderCurrenciesSections()
+        }
+        binding.cryptoCurrenciesHeader.setOnClickListener {
+            isCryptoCurrenciesExpanded = !isCryptoCurrenciesExpanded
+            renderCurrenciesSections()
         }
         binding.submitButton.setOnClickListener {
 
@@ -119,17 +128,77 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         }
     }
 
-    private fun renderCurrenciesList() {
-        binding.currenciesForSelectHolder.adapter =
-            FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-                viewModel.firstLaunchCurrenciesList.value.orEmpty(),
-                viewModel.getSelectedCurrencies().mapNotNull { it.iso4217 }.toSet(),
-                object : OnChangeCurrencyByTextCallBack {
-                    override fun onClick(string: String) {
-                        viewModel.toggleCurrencySelection(string)
-                    }
-                }
-            )
+    private fun initCurrenciesLists() {
+        val selectedCurrenciesIso = getSelectedCurrenciesIso()
+        val listener = object : OnChangeCurrencyByTextCallBack {
+            override fun onClick(string: String) {
+                viewModel.toggleCurrencySelection(string)
+            }
+        }
+
+        majorCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
+            FirstLaunchCurrenciesList.getMajorCurrenciesList(),
+            selectedCurrenciesIso,
+            listener
+        )
+        otherCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
+            FirstLaunchCurrenciesList.getOtherFiatCurrenciesList(),
+            selectedCurrenciesIso,
+            listener
+        )
+        cryptoCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
+            FirstLaunchCurrenciesList.getCryptoCurrenciesList(),
+            selectedCurrenciesIso,
+            listener
+        )
+
+        binding.majorCurrenciesHolder.adapter = majorCurrenciesAdapter
+        binding.otherCurrenciesHolder.adapter = otherCurrenciesAdapter
+        binding.cryptoCurrenciesHolder.adapter = cryptoCurrenciesAdapter
+        renderCurrenciesSections()
+    }
+
+    private fun updateSelectedCurrencies() {
+        if (!::majorCurrenciesAdapter.isInitialized) return
+
+        val selectedCurrenciesIso = getSelectedCurrenciesIso()
+        majorCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
+        otherCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
+        cryptoCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
+    }
+
+    private fun renderCurrenciesSections() {
+        renderCurrenciesSection(
+            isMajorCurrenciesExpanded,
+            binding.majorCurrenciesHolder,
+            binding.majorCurrenciesExpandImageView
+        )
+        renderCurrenciesSection(
+            isOtherCurrenciesExpanded,
+            binding.otherCurrenciesHolder,
+            binding.otherCurrenciesExpandImageView
+        )
+        renderCurrenciesSection(
+            isCryptoCurrenciesExpanded,
+            binding.cryptoCurrenciesHolder,
+            binding.cryptoCurrenciesExpandImageView
+        )
+    }
+
+    private fun renderCurrenciesSection(
+        isExpanded: Boolean,
+        recyclerView: View,
+        expandImageView: ImageView
+    ) {
+        recyclerView.visibility = if (isExpanded) View.VISIBLE else View.GONE
+        expandImageView.setImageResource(
+            if (isExpanded) R.drawable.category_arrow_drop_up
+            else R.drawable.category_arrow_drop_down
+        )
+    }
+
+    private fun getSelectedCurrenciesIso(): Set<String> {
+        return viewModel.getSelectedCurrencies().mapNotNull { it.iso4217 }.toSet()
     }
 
     @SuppressLint("CheckResult")
