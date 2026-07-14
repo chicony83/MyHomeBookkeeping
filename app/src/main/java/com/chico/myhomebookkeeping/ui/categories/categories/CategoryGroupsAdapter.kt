@@ -46,6 +46,8 @@ class CategoryGroupsAdapter(
     private var rows = buildRows()
     private var editMode = false
     private var dragStartListener: ((RecyclerView.ViewHolder) -> Unit)? = null
+    private var pendingTopOrderChanged = false
+    private var pendingCategoriesOrderChanged = false
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(groups: List<CategoryGroup>, topOrder: List<String>, expandAll: Boolean) {
@@ -75,8 +77,24 @@ class CategoryGroupsAdapter(
         val toRow = rows[toPosition]
         return when {
             fromRow.isTopRow() && toRow.isTopRow() -> moveTopRow(fromRow, toRow)
-            fromRow is CategoryTreeRow.CategoryItem -> moveCategory(fromRow, toRow)
+            fromRow is CategoryTreeRow.CategoryItem -> moveCategory(
+                fromRow,
+                toRow,
+                fromPosition,
+                movingDown = fromPosition < toPosition
+            )
             else -> false
+        }
+    }
+
+    fun commitPendingOrderChanges() {
+        if (pendingTopOrderChanged) {
+            onTopOrderChanged(topOrder, orderedParentCategories())
+            pendingTopOrderChanged = false
+        }
+        if (pendingCategoriesOrderChanged) {
+            onCategoriesOrderChanged(groups.flatMap { it.categories })
+            pendingCategoriesOrderChanged = false
         }
     }
 
@@ -86,19 +104,22 @@ class CategoryGroupsAdapter(
         val mutableTopOrder = topOrder.toMutableList()
         val fromIndex = mutableTopOrder.indexOf(fromKey)
         val toIndex = mutableTopOrder.indexOf(toKey)
+        if (fromIndex == toIndex) return false
         if (fromIndex == -1 || toIndex == -1) return false
         mutableTopOrder.removeAt(fromIndex)
         mutableTopOrder.add(toIndex, fromKey)
         topOrder = mutableTopOrder
         rows = buildRows()
         notifyDataSetChanged()
-        onTopOrderChanged(topOrder, orderedParentCategories())
+        pendingTopOrderChanged = true
         return true
     }
 
     private fun moveCategory(
         fromRow: CategoryTreeRow.CategoryItem,
-        toRow: CategoryTreeRow
+        toRow: CategoryTreeRow,
+        fromPosition: Int,
+        movingDown: Boolean
     ): Boolean {
         val categoriesByParent = groups.associate { group ->
             group.parentCategory?.id to group.categories.toMutableList()
@@ -109,17 +130,22 @@ class CategoryGroupsAdapter(
             is CategoryTreeRow.CategoryItem -> toRow.parentCategoryId
             is CategoryTreeRow.ParentHeader -> toRow.group.parentCategory?.id
             is CategoryTreeRow.NoParentHeader -> null
+            is CategoryTreeRow.AddCategory -> toRow.parentCategory?.id
             else -> return false
         }
 
         categoriesByParent[fromParentId]?.removeAll { it.categoriesId == fromCategory.categoriesId }
         val targetList = categoriesByParent.getOrPut(targetParentId) { mutableListOf() }
         val insertIndex = when (toRow) {
-            is CategoryTreeRow.CategoryItem -> targetList.indexOfFirst {
-                it.categoriesId == toRow.category.categoriesId
-            }.takeIf { it >= 0 } ?: targetList.size
+            is CategoryTreeRow.CategoryItem -> {
+                val targetIndex = targetList.indexOfFirst {
+                    it.categoriesId == toRow.category.categoriesId
+                }.takeIf { it >= 0 } ?: targetList.size
+                if (movingDown) targetIndex + 1 else targetIndex
+            }
+            is CategoryTreeRow.AddCategory -> targetList.size
             else -> 0
-        }
+        }.coerceIn(0, targetList.size)
         targetList.add(
             insertIndex,
             fromCategory.copy(parentCategoryId = targetParentId).apply {
@@ -131,8 +157,13 @@ class CategoryGroupsAdapter(
             group.copy(categories = categoriesByParent[group.parentCategory?.id].orEmpty())
         }
         rows = buildRows()
-        notifyDataSetChanged()
-        onCategoriesOrderChanged(groups.flatMap { it.categories })
+        val newPosition = positionOfCategory(fromCategory)
+        if (newPosition == RecyclerView.NO_POSITION) {
+            notifyDataSetChanged()
+        } else {
+            notifyItemMoved(fromPosition, newPosition)
+        }
+        pendingCategoriesOrderChanged = true
         return true
     }
 
@@ -314,6 +345,12 @@ class CategoryGroupsAdapter(
     private fun orderedParentCategories(): List<ParentCategories> {
         val groupsByKey = groups.associateBy { it.topKey }
         return topOrder.mapNotNull { groupsByKey[it]?.parentCategory }
+    }
+
+    private fun positionOfCategory(category: Categories): Int {
+        return rows.indexOfFirst {
+            it is CategoryTreeRow.CategoryItem && it.category.categoriesId == category.categoriesId
+        }.takeIf { it >= 0 } ?: RecyclerView.NO_POSITION
     }
 
     private fun CategoryTreeRow.isTopRow(): Boolean = this is CategoryTreeRow.ParentHeader ||

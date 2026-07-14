@@ -306,10 +306,24 @@ class CategoriesFragment : Fragment() {
                     target: RecyclerView.ViewHolder
                 ): Boolean {
                     if (!categoryOrderEditMode) return false
+                    val fromPosition = viewHolder.adapterPosition
+                    val toPosition = target.adapterPosition
+                    if (
+                        fromPosition == RecyclerView.NO_POSITION ||
+                        toPosition == RecyclerView.NO_POSITION
+                    ) return false
                     return categoryGroupsAdapter?.moveItem(
-                        viewHolder.adapterPosition,
-                        target.adapterPosition
+                        fromPosition,
+                        toPosition
                     ) == true
+                }
+
+                override fun clearView(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder
+                ) {
+                    super.clearView(recyclerView, viewHolder)
+                    categoryGroupsAdapter?.commitPendingOrderChanges()
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
