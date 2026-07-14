@@ -1,18 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/selectCurrencyAsDefaultCardView"
-    style="@style/RecyclerViewCard">
+    style="@style/RecyclerViewCard.Categories">
 
     <LinearLayout
-        style="@style/MatchParent_WrapContent"
-        android:orientation="horizontal">
+        android:id="@+id/selectCurrencyAsDefaultItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_child_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_double"
+        android:paddingEnd="@dimen/margin_normal"
+        android:paddingVertical="@dimen/margin_normal">
 
-        <TextView
-            android:id="@+id/nameCurrency"
-            tools:text="EUR"
-            style="@style/MatchParent_WrapContent"
-            android:gravity="center" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameCurrency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/H4"
+                android:textStyle="bold"
+                tools:text="United States dollar" />
+
+            <TextView
+                android:id="@+id/isoCurrency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H6"
+                tools:text="USD" />
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/defaultCurrencyRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            tools:checked="true" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

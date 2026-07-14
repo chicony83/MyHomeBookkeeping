@@ -1,43 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/DialogLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:background="@drawable/category_group_background">
 
     <TextView
-        android:id="@+id/dialogTitle"
+        android:id="@+id/confirmCryptoTitle"
         style="@style/Description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/message_select_default_currency"
+        android:text="@string/message_confirm_crypto_default_currency"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/iconsHolderLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:layout_marginBottom="@dimen/margin_normal"
-        android:clipToPadding="false"
-        android:nestedScrollingEnabled="true"
-        android:paddingVertical="@dimen/margin_half_normal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="360dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialogTitle"
-        tools:itemCount="4"
-        tools:listitem="@layout/recycler_view_item_select_currency_as_default_dialog" />
 
     <Button
         android:id="@+id/submitButton"
@@ -46,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/buttonsCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iconsHolderLayout" />
+        app:layout_constraintTop_toBottomOf="@id/confirmCryptoTitle" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -55,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/buttonsCenter"
-        app:layout_constraintTop_toBottomOf="@id/iconsHolderLayout" />
+        app:layout_constraintTop_toBottomOf="@id/confirmCryptoTitle" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/buttonsCenter"

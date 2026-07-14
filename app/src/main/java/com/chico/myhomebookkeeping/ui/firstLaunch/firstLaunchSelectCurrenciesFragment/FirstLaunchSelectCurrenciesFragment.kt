@@ -1,10 +1,12 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFragment
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,11 +16,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.chico.myhomebookkeeping.MainActivity
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenciesBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemSelectCurrencyAsDefaultDialogBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
@@ -92,32 +93,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 
             when (viewModel.isCurrenciesListNotEmpty()) {
                 true -> {
-                    Toast.makeText(
-                        requireContext(),
-                        requireContext().getString(R.string.message_select_default_currency),
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    MaterialDialog(requireContext()).show {
-                        var defaultCurrency = viewModel.getSelectedCurrencies()[0]
-                        title(R.string.message_select_default_currency)
-                        listItemsSingleChoice(
-                            items = viewModel.getSelectedCurrencies()
-                                .map { it.currencyName },
-                            initialSelection = 0,
-                            waitForPositiveButton = false
-                        ) { _, index, _ ->
-                            defaultCurrency = viewModel.getSelectedCurrencies()[index]
-                        }
-                        positiveButton(R.string.text_on_button_submit) {
-                            if (FirstLaunchCurrenciesList.isCryptoCurrency(defaultCurrency.iso4217)) {
-                                showConfirmCryptoDefaultCurrencyDialog(defaultCurrency)
-                            } else {
-                                saveSelectedCurrencies(defaultCurrency)
-                            }
-                        }
-                        negativeButton(R.string.text_on_button_cancel)
-                    }
+                    showSelectDefaultCurrencyDialog()
                 }
                 false -> Toast.makeText(
                     context,
@@ -192,8 +168,8 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
     ) {
         recyclerView.visibility = if (isExpanded) View.VISIBLE else View.GONE
         expandImageView.setImageResource(
-            if (isExpanded) R.drawable.category_arrow_drop_up
-            else R.drawable.category_arrow_drop_down
+            if (isExpanded) R.drawable.ic_expand_remove
+            else R.drawable.ic_expand_add
         )
     }
 
@@ -202,19 +178,104 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
     }
 
     @SuppressLint("CheckResult")
-    private fun showConfirmCryptoDefaultCurrencyDialog(defaultCurrency: Currencies) {
-        MaterialDialog(requireContext()).show {
-            title(R.string.message_confirm_crypto_default_currency)
-            positiveButton(R.string.text_on_button_submit) {
+    private fun showSelectDefaultCurrencyDialog() {
+        val layout = layoutInflater.inflate(R.layout.dialog_select_currency_as_default, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(layout)
+            .create()
+        var defaultCurrency = viewModel.getSelectedCurrencies()[0]
+        val adapter = SelectDefaultCurrencyAdapter(
+            currencies = viewModel.getSelectedCurrencies(),
+            selectedCurrencyIso = defaultCurrency.iso4217
+        ) {
+            defaultCurrency = it
+        }
+
+        layout.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.iconsHolderLayout).adapter = adapter
+        layout.findViewById<Button>(R.id.submitButton).setOnClickListener {
+            dialog.dismiss()
+            if (FirstLaunchCurrenciesList.isCryptoCurrency(defaultCurrency.iso4217)) {
+                showConfirmCryptoDefaultCurrencyDialog(defaultCurrency)
+            } else {
                 saveSelectedCurrencies(defaultCurrency)
             }
-            negativeButton(R.string.text_on_button_cancel)
         }
+        layout.findViewById<Button>(R.id.cancelButton).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showConfirmCryptoDefaultCurrencyDialog(defaultCurrency: Currencies) {
+        val layout = layoutInflater.inflate(R.layout.dialog_first_launch_confirm_crypto_default, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(layout)
+            .create()
+
+        layout.findViewById<Button>(R.id.submitButton).setOnClickListener {
+            dialog.dismiss()
+            saveSelectedCurrencies(defaultCurrency)
+        }
+        layout.findViewById<Button>(R.id.cancelButton).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun saveSelectedCurrencies(defaultCurrency: Currencies) {
         viewModel.addCurrenciesToDB(viewModel.getSelectedCurrencies().map {
             it.copy(isCurrencyDefault = it.iso4217 == defaultCurrency.iso4217)
         }.sortedByDescending { it.isCurrencyDefault })
+    }
+
+    private class SelectDefaultCurrencyAdapter(
+        private val currencies: List<Currencies>,
+        selectedCurrencyIso: String?,
+        private val onCurrencySelected: (Currencies) -> Unit
+    ) : androidx.recyclerview.widget.RecyclerView.Adapter<SelectDefaultCurrencyAdapter.ViewHolder>() {
+        private var selectedCurrencyIso = selectedCurrencyIso
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val binding = RecyclerViewItemSelectCurrencyAsDefaultDialogBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ViewHolder(binding)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bind(currencies[position])
+        }
+
+        override fun getItemCount() = currencies.size
+
+        inner class ViewHolder(
+            private val binding: RecyclerViewItemSelectCurrencyAsDefaultDialogBinding
+        ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
+            fun bind(currency: Currencies) {
+                with(binding) {
+                    nameCurrency.text = currency.currencyName
+                    isoCurrency.text = currency.iso4217
+                    defaultCurrencyRadioButton.isChecked = currency.iso4217 == selectedCurrencyIso
+                    selectCurrencyAsDefaultItem.setOnClickListener {
+                        selectCurrency(currency)
+                    }
+                }
+            }
+
+            private fun selectCurrency(currency: Currencies) {
+                val previousIso = selectedCurrencyIso
+                val currentPosition = adapterPosition
+                selectedCurrencyIso = currency.iso4217
+                onCurrencySelected(currency)
+                currencies.indexOfFirst { it.iso4217 == previousIso }
+                    .takeIf { it >= 0 }
+                    ?.let { notifyItemChanged(it) }
+                currentPosition
+                    .takeIf { it >= 0 }
+                    ?.let { notifyItemChanged(it) }
+            }
+        }
     }
 }

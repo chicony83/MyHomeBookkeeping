@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/categoryScreenBackground"
     tools:context=".ui.firstLaunch.firstLaunchSelectCurrenciesFragment.FirstLaunchSelectCurrenciesFragment">
 
     <TextView
@@ -80,7 +81,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:contentDescription="@string/first_launch_currencies_major"
-                    android:src="@drawable/category_arrow_drop_up" />
+                    android:src="@drawable/ic_expand_remove" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -114,7 +115,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:contentDescription="@string/first_launch_currencies_other"
-                    android:src="@drawable/category_arrow_drop_down" />
+                    android:src="@drawable/ic_expand_add" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -150,7 +151,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:contentDescription="@string/first_launch_currencies_crypto"
-                    android:src="@drawable/category_arrow_drop_down" />
+                    android:src="@drawable/ic_expand_add" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
