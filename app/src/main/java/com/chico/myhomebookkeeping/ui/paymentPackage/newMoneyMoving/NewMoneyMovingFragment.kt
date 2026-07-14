@@ -1,7 +1,6 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -183,7 +182,7 @@ class NewMoneyMovingFragment : Fragment() {
                     if (checkAmount) {
                         addNewMoneyMoving()
                     } else {
-                        setBackgroundWarningColor(binding.amountEditText)
+                        setBackgroundWarningColor()
                         message(getString(R.string.message_enter_amount))
                     }
                 } else {
@@ -225,10 +224,8 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
 
-    private fun setBackgroundWarningColor(editText: EditText) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            editText.setBackgroundColor(resources.getColor(R.color.warning, null))
-        }
+    private fun setBackgroundWarningColor() {
+        binding.amountInputContainer.setBackgroundResource(R.drawable.input_field_error_background)
     }
 
 //    private fun setBackgroundDefaultColor(editText: EditText) {

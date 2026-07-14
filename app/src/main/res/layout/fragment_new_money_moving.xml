@@ -78,9 +78,10 @@
                 android:text="@string/description_amount" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/amountInputContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/category_child_background"
+                android:background="@drawable/input_field_background"
                 android:paddingTop="@dimen/margin_half_normal"
                 android:paddingBottom="@dimen/margin_half_normal"
                 android:orientation="horizontal">
@@ -89,7 +90,7 @@
                     android:id="@+id/amountEditText"
                     style="@style/EditTextAmount"
                     android:layout_width="0dp"
-                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/eraseButton"
                     app:layout_constraintStart_toStartOf="parent"
@@ -129,8 +130,7 @@
 
             <EditText
                 android:id="@+id/description"
-                style="@style/EditTextDescription"
-                android:backgroundTint="@color/colorPrimary" />
+                style="@style/EditTextDescription" />
 
         </LinearLayout>
     </ScrollView>
@@ -139,6 +139,7 @@
         android:id="@+id/submitButton"
         style="@style/ButtonFullWidth"
         android:background="@drawable/button_primary_background"
+        android:backgroundTint="@null"
         android:gravity="center"
         android:layout_marginHorizontal="@dimen/margin_normal"
         android:textColor="@color/buttonPrimaryText"

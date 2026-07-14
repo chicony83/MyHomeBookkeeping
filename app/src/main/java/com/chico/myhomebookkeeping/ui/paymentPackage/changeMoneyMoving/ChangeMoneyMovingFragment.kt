@@ -1,6 +1,5 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.changeMoneyMoving
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -168,9 +167,7 @@ class ChangeMoneyMovingFragment : Fragment() {
     }
 
     private fun setBackgroundWarningColor(editText: EditText) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            editText.setBackgroundColor(resources.getColor(R.color.warning, null))
-        }
+        editText.setBackgroundResource(R.drawable.input_field_error_background)
     }
 
     private fun pressSelectButton(fragment: Int) {

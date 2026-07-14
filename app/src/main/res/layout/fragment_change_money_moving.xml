@@ -85,8 +85,7 @@
 
             <EditText
                 android:id="@+id/amountEditText"
-                style="@style/EditTextAmount"
-                android:backgroundTint="@color/colorPrimary" />
+                style="@style/EditTextAmount" />
 
             <TextView
                 style="@style/TextDescriptions"
@@ -97,8 +96,7 @@
 
             <EditText
                 android:id="@+id/description"
-                style="@style/EditTextDescription"
-                android:backgroundTint="@color/colorPrimary" />
+                style="@style/EditTextDescription" />
 
         </LinearLayout>
     </ScrollView>
@@ -116,6 +114,7 @@
         android:id="@+id/deleteButton"
         style="@style/DialogButtonRight.Negative"
         android:background="@drawable/button_danger_background"
+        android:backgroundTint="@null"
         android:layout_marginEnd="@dimen/margin_normal"
         android:textColor="@color/buttonDangerText"
         android:text="@string/text_on_button_delete"

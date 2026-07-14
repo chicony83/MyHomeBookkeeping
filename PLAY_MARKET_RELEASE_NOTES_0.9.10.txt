@@ -9,6 +9,7 @@ What's new in 0.9.10
 - Added more fiat currencies and optional cryptocurrency choices.
 - Added text symbols for major cryptocurrencies where they render reliably.
 - Added confirmation when a cryptocurrency is selected as the default currency.
+- Updated input fields and dialog buttons: cleaner outline styling, darker text on white buttons, and better aligned paired buttons in dialogs.
 
 Что нового в 0.9.10
 
@@ -21,3 +22,4 @@ What's new in 0.9.10
 - Добавлены дополнительные валюты и отдельный список популярных криптовалют.
 - Добавлены текстовые символы для основных криптовалют, где они корректно отображаются.
 - Добавлено подтверждение, если криптовалюта выбирается основной валютой.
+- Обновлены поля ввода и кнопки диалогов: аккуратный outline-стиль, более темный текст на белых кнопках и стабильное выравнивание парных кнопок.
