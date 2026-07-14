@@ -35,13 +35,14 @@
                 tools:text="USD" />
         </LinearLayout>
 
-        <TextView
-            style="@style/RecyclerViewItem"
-            android:id="@+id/addButton"
+        <CheckBox
+            android:id="@+id/currencyCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_view_arrow_to_the_right"
-            android:textColor="?attr/colorPrimary" />
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="false"
+            tools:checked="true" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

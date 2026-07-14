@@ -9,10 +9,7 @@ import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.helpers.Message
-import com.chico.myhomebookkeeping.utils.launchIo
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -35,8 +32,6 @@ class FirstLaunchSelectCurrenciesViewModel(
     private val _onDefaultCurrencyAdded = MutableSharedFlow<Unit>()
     val onDefaultCurrencyAdded: SharedFlow<Unit> = _onDefaultCurrencyAdded.asSharedFlow()
 
-    private val emptyCurrency = Currencies("", "", "", null, null)
-
     init {
         viewModelScope.launch {
             _firstLaunchCurrenciesList.postValue(FirstLaunchCurrenciesList.getCurrenciesList())
@@ -44,94 +39,40 @@ class FirstLaunchSelectCurrenciesViewModel(
         }
     }
 
-    fun moveCurrencyToSelectList(iso4217: String) {
-        if (_firstLaunchCurrenciesList.value?.isNotEmpty() == true) {
+    fun toggleCurrencySelection(iso4217: String) {
+        val selectedCurrencies = _selectedCurrenciesList.value.orEmpty().toMutableList()
+        val selectedCurrency = selectedCurrencies.firstOrNull { it.iso4217 == iso4217 }
 
-            var currencyForAdd: Currencies = emptyCurrency
-            _firstLaunchCurrenciesList.apply {
-                val firstLaunchCurrenciesListAsList =
-                    _firstLaunchCurrenciesList.value?.toMutableList()
-                val id = getSelectedId(iso4217, firstLaunchCurrenciesListAsList)
-                currencyForAdd =
-                    findSelectedCurrencyInMutableList(id, firstLaunchCurrenciesListAsList)
-                        ?: currencyForAdd
-
-                _firstLaunchCurrenciesList.postValue(
-                    removeSelectedCurrencyFromMutableList(id, firstLaunchCurrenciesListAsList)
-                )
-
-            }
-            postingSelectedCurrenciesList(currencyForAdd)
-        }
-    }
-
-    private fun findSelectedCurrencyInMutableList(
-        id: Int,
-        list: MutableList<Currencies>?
-    ): Currencies? {
-        return list?.get(id)
-    }
-
-    private fun removeSelectedCurrencyFromMutableList(
-        id: Int,
-        list: MutableList<Currencies>?
-    ): MutableList<Currencies> {
-
-        return list?.apply { removeAt(id) } ?: mutableListOf()
-
-//        _firstLaunchCurrenciesList.value =
-//            _firstLaunchCurrenciesList.value?.toMutableList()?.apply {
-//                removeAt(id)
-//            }
-    }
-
-
-    private fun postingSelectedCurrenciesList(currencyForAdd: Currencies) {
-        val listForPost: MutableList<Currencies>? =
-            _selectedCurrenciesList.value?.toMutableList()
-        Message.log("-- size of list${listForPost?.size}")
-        listForPost?.add(currencyForAdd)
-        _selectedCurrenciesList.postValue(sortedByISO(listForPost!!))
-        Message.log("size after add ${_selectedCurrenciesList.value?.size}")
-    }
-
-    private fun getSelectedId(
-        iso4217: String,
-        list: MutableList<Currencies>?
-    ): Int {
-        var id = 0
-        for (i in 0 until list?.size!!) {
-            if (list[i].iso4217?.equals(iso4217) == true) {
-                id = i
-            }
-        }
-        return id
-    }
-
-    fun moveCurrencyToFirstLaunchCurrenciesList(iso4217: String) {
-//        Message.log("move back")
-        if (_selectedCurrenciesList.value?.isNotEmpty() == true) {
-            var currencyForRemove: Currencies = emptyCurrency
-            _selectedCurrenciesList.apply {
-                val selectCurrenciesListAsList = _selectedCurrenciesList.value?.toMutableList()
-                val id = getSelectedId(iso4217, selectCurrenciesListAsList)
-                currencyForRemove =
-                    findSelectedCurrencyInMutableList(id, selectCurrenciesListAsList)
-                        ?: currencyForRemove
-                _selectedCurrenciesList.postValue(
-                    removeSelectedCurrencyFromMutableList(id, selectCurrenciesListAsList)
-                )
-            }
-            postingFirstLaunchCurrenciesList(currencyForRemove)
+        if (selectedCurrency == null) {
+            _firstLaunchCurrenciesList.value
+                .orEmpty()
+                .firstOrNull { it.iso4217 == iso4217 }
+                ?.let { selectedCurrencies.add(it) }
+        } else {
+            selectedCurrencies.removeAll { it.iso4217 == iso4217 }
         }
 
+        _selectedCurrenciesList.postValue(sortedByISO(selectedCurrencies))
     }
 
-    private fun postingFirstLaunchCurrenciesList(currencyForAdd: Currencies) {
-        val listForPost: MutableList<Currencies>? =
-            _firstLaunchCurrenciesList.value?.toMutableList()
-        listForPost?.add(currencyForAdd)
-        _firstLaunchCurrenciesList.postValue(sortedByISO(listForPost!!))
+    fun showMoreCurrencies() {
+        appendCurrencies(FirstLaunchCurrenciesList.getMoreFiatCurrenciesList())
+    }
+
+    fun showCryptoCurrencies() {
+        appendCurrencies(FirstLaunchCurrenciesList.getCryptoCurrenciesList())
+    }
+
+    private fun appendCurrencies(currencies: List<Currencies>) {
+        val currentCurrencies = _firstLaunchCurrenciesList.value.orEmpty()
+        val currentCodes = currentCurrencies.mapNotNull { it.iso4217 }.toSet()
+        val currenciesForAdd = currencies.filter { it.iso4217 !in currentCodes }
+
+        if (currenciesForAdd.isNotEmpty()) {
+            _firstLaunchCurrenciesList.postValue(
+                sortedByISO((currentCurrencies + currenciesForAdd).toMutableList())
+            )
+        }
     }
 
     private fun sortedByISO(listForPost: MutableList<Currencies>): List<Currencies> {

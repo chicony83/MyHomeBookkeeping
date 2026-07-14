@@ -18,7 +18,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.chico.myhomebookkeeping.MainActivity
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchSelectCurrenciesBinding
-import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -40,33 +40,13 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 
         with(viewModel) {
             firstLaunchCurrenciesList.observe(viewLifecycleOwner) {
-                binding.availableCurrenciesTitle.text =
-                    getString(R.string.first_launch_currencies_available_count, it.size)
-                binding.currenciesForSelectHolder.adapter =
-                    FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-                        it, object : OnChangeCurrencyByTextCallBack {
-                            override fun onClick(string: String) {
-                                viewModel
-                                    .moveCurrencyToSelectList(string)
-                            }
-                        }
-                    )
-//                Message.log("--- size of getFirstLaunchList ${it.size}")
+                renderCurrenciesList()
             }
             selectedCurrenciesList.observe(viewLifecycleOwner) {
-                binding.selectedCurrenciesTitle.text =
+                binding.availableCurrenciesTitle.text =
                     getString(R.string.first_launch_currencies_selected_count, it.size)
                 binding.submitButton.isEnabled = it.isNotEmpty()
-                binding.selectedCurrenciesHolder.adapter =
-                    FirstLaunchSelectCurrencySelectedCurrencyAdapter(
-                        it, object : OnChangeCurrencyByTextCallBack {
-                            override fun onClick(string: String) {
-                                Message.log("press to remove $string")
-                                viewModel
-                                    .moveCurrencyToFirstLaunchCurrenciesList(string)
-                            }
-                        }
-                    )
+                renderCurrenciesList()
             }
         }
         lifecycleScope.launchWhenStarted {
@@ -91,6 +71,14 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         view.hideKeyboard()
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
+        binding.showMoreCurrenciesButton.setOnClickListener {
+            viewModel.showMoreCurrencies()
+            binding.showMoreCurrenciesButton.visibility = View.GONE
+        }
+        binding.showCryptoCurrenciesButton.setOnClickListener {
+            viewModel.showCryptoCurrencies()
+            binding.showCryptoCurrenciesButton.visibility = View.GONE
+        }
         binding.submitButton.setOnClickListener {
 
             when (viewModel.isCurrenciesListNotEmpty()) {
@@ -113,13 +101,11 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                             defaultCurrency = viewModel.getSelectedCurrencies()[index]
                         }
                         positiveButton(R.string.text_on_button_submit) {
-
-                            viewModel.addCurrenciesToDB(viewModel.getSelectedCurrencies().map {
-                                if (it.currencyName == defaultCurrency.currencyName) {
-                                    it.isCurrencyDefault = true
-                                }
-                                it
-                            }.sortedByDescending { it.isCurrencyDefault })
+                            if (FirstLaunchCurrenciesList.isCryptoCurrency(defaultCurrency.iso4217)) {
+                                showConfirmCryptoDefaultCurrencyDialog(defaultCurrency)
+                            } else {
+                                saveSelectedCurrencies(defaultCurrency)
+                            }
                         }
                         negativeButton(R.string.text_on_button_cancel)
                     }
@@ -131,5 +117,35 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun renderCurrenciesList() {
+        binding.currenciesForSelectHolder.adapter =
+            FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
+                viewModel.firstLaunchCurrenciesList.value.orEmpty(),
+                viewModel.getSelectedCurrencies().mapNotNull { it.iso4217 }.toSet(),
+                object : OnChangeCurrencyByTextCallBack {
+                    override fun onClick(string: String) {
+                        viewModel.toggleCurrencySelection(string)
+                    }
+                }
+            )
+    }
+
+    @SuppressLint("CheckResult")
+    private fun showConfirmCryptoDefaultCurrencyDialog(defaultCurrency: Currencies) {
+        MaterialDialog(requireContext()).show {
+            title(R.string.message_confirm_crypto_default_currency)
+            positiveButton(R.string.text_on_button_submit) {
+                saveSelectedCurrencies(defaultCurrency)
+            }
+            negativeButton(R.string.text_on_button_cancel)
+        }
+    }
+
+    private fun saveSelectedCurrencies(defaultCurrency: Currencies) {
+        viewModel.addCurrenciesToDB(viewModel.getSelectedCurrencies().map {
+            it.copy(isCurrencyDefault = it.iso4217 == defaultCurrency.iso4217)
+        }.sortedByDescending { it.isCurrencyDefault })
     }
 }

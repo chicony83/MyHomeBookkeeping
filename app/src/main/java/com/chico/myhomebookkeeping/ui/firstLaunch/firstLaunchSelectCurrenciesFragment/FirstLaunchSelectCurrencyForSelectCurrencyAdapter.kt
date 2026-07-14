@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFirstLaunchForSelectCurrencyBinding
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
 
 class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
     private val currenciesForSelectList: List<Currencies>,
+    private val selectedCurrenciesIso: Set<String>,
     private val listener: OnChangeCurrencyByTextCallBack
 ) : RecyclerView.Adapter<FirstLaunchSelectCurrencyForSelectCurrencyAdapter.ViewHolder>() {
 
@@ -26,10 +26,7 @@ class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
         holder.bind(currenciesForSelectList[position])
     }
 
-    override fun getItemCount(): Int {
-        Message.log("----size of currencies for select list = ${currenciesForSelectList.size}")
-    return currenciesForSelectList.size
-    }
+    override fun getItemCount() = currenciesForSelectList.size
 
     inner class ViewHolder(
         private val binding: RecyclerViewItemFirstLaunchForSelectCurrencyBinding
@@ -38,7 +35,13 @@ class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
             with(binding){
                 nameCurrency.text = currencies.currencyName
                 isoCurrency.text = currencies.iso4217
+                currencyCheckBox.isChecked = selectedCurrenciesIso.contains(currencies.iso4217)
                 firstLaunchCurrencyItem.setOnClickListener {
+                    currencies.iso4217?.let {
+                        it1->listener.onClick(it1)
+                    }
+                }
+                currencyCheckBox.setOnClickListener {
                     currencies.iso4217?.let {
                         it1->listener.onClick(it1)
                     }

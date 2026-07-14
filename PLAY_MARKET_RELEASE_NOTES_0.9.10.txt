@@ -3,9 +3,15 @@ What's new in 0.9.10
 - Improved add-category and add-subcategory dialogs: cleaner layout, better field sizing, and more consistent spacing.
 - Fixed add actions on the category screen so the whole row can be tapped, not only the plus icon.
 - Renamed category actions to make categories and subcategories clearer.
+- Reworked first-launch currency selection: currencies are now selected with checkboxes in one list.
+- Added more fiat currencies and optional cryptocurrency choices.
+- Added confirmation when a cryptocurrency is selected as the default currency.
 
 Что нового в 0.9.10
 
 - Улучшены диалоги добавления категории и подкатегории: аккуратнее расположены поля, размеры и отступы.
 - Исправлены действия добавления на экране категорий: теперь нажимается вся строка, а не только значок плюса.
 - Переименованы действия добавления, чтобы понятнее разделять категории и подкатегории.
+- Переработан выбор валют при первом запуске: теперь валюты выбираются флажками в одном списке.
+- Добавлены дополнительные валюты и отдельный список популярных криптовалют.
+- Добавлено подтверждение, если криптовалюта выбирается основной валютой.

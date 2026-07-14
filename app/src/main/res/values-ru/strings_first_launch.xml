@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="first_launch_currencies_title">Выберите валюты</string>
-    <string name="first_launch_currencies_hint">Нажмите на валюту, чтобы добавить её.\nНа следующем шаге нужно будет выбрать валюту по умолчанию.</string>
-    <string name="first_launch_currencies_available_count">Доступные · %1$d</string>
+    <string name="first_launch_currencies_hint">Отметьте валюты, которыми будете пользоваться.\nНа следующем шаге нужно будет выбрать валюту по умолчанию.</string>
+    <string name="first_launch_currencies_available_count">Валюты · %1$d</string>
     <string name="first_launch_currencies_selected_count">Выбранные · %1$d</string>
     <string name="first_launch_currencies_continue">Продолжить · выбрать основную</string>
     <string name="first_launch_currencies_empty_message">Добавьте хотя бы одну валюту</string>
+    <string name="first_launch_currencies_show_more">Показать больше валют</string>
+    <string name="first_launch_currencies_show_crypto">Показать криптовалюты</string>
     <string name="quick_setup_add_Cash_account">Счета</string>
     <string name="quick_setup_name_Card">Карточка</string>
     <string name="quick_setup_name_Cash">Наличные</string>
 
-    <string name="quick_setup_name_Currency">Рубли</string>
+    <string name="quick_setup_name_Currency">USD</string>
 
     <string name="quick_setup_add_Category">Категории</string>
     <string name="quick_setup_name_The_Income">Заработок</string>

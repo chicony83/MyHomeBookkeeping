@@ -33,7 +33,7 @@ class BackupTransferInstrumentedTest {
         val database = dataBase.getDataBase(context)
 
         val currencyId = database.currenciesDao().addCurrency(
-            Currencies("Российский рубль", "₽", "RUB", null, true)
+            Currencies("United States dollar", "$", "USD", null, true)
         ).toInt()
         val accountId = database.cashAccountDao().addCashAccount(
             CashAccount("Тестовый счёт", "", OLD_RESOURCE_ID, true)
