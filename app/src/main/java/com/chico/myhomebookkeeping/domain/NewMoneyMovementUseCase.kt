@@ -7,4 +7,12 @@ object NewMoneyMovementUseCase {
     suspend fun addInDataBase(db: MoneyMovementDao, moneyMovement: MoneyMovement): Long {
         return db.addMovingMoney(moneyMovement)
     }
+
+    suspend fun addTransferInDataBase(
+        db: MoneyMovementDao,
+        source: MoneyMovement,
+        destination: MoneyMovement
+    ): List<Long> {
+        return db.addTransfer(source, destination)
+    }
 }

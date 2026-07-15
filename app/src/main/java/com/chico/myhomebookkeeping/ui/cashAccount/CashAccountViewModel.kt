@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
@@ -35,6 +36,8 @@ class CashAccountViewModel(
 //    private val argsForChange = Constants.FOR_CHANGE_CASH_ACCOUNT_KEY
 
     private val setSP = SetSP(spEditor)
+    private val argsCreateTransferCashAccount = Constants.ARGS_NEW_PAYMENT_TRANSFER_CASH_ACCOUNT_KEY
+    private val argsCreateCashAccountSelectMode = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_SELECT_MODE_KEY
 
     private val _cashAccountsList = MutableLiveData<List<CashAccount>>()
     val cashAccountList: LiveData<List<CashAccount>>
@@ -76,12 +79,25 @@ class CashAccountViewModel(
 //            argsForQuery = argsForQuery,
 //            id = id
 //        )
-        setSP.checkAndSaveToSP(
-            navControlHelper = navControlHelper,
-            id = id
-        )
+        if (isSelectingTransferDestination(navControlHelper)) {
+            setSP.saveToSP(argsCreateTransferCashAccount, id)
+        } else {
+            setSP.checkAndSaveToSP(
+                navControlHelper = navControlHelper,
+                id = id
+            )
+        }
 
 
+    }
+
+    private fun isSelectingTransferDestination(navControlHelper: NavControlHelper): Boolean {
+        return navControlHelper.previousFragment() == R.id.nav_new_money_moving &&
+                navControlHelper.currentFragment() == R.id.nav_cash_account &&
+                sharedPreferences.getString(
+                    argsCreateCashAccountSelectMode,
+                    Constants.CASH_ACCOUNT_SELECT_MODE_SOURCE
+                ) == Constants.CASH_ACCOUNT_SELECT_MODE_DESTINATION
     }
 
     suspend fun loadSelectedCashAccount(selectedId: Int): CashAccount? {

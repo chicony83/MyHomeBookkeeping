@@ -30,6 +30,7 @@ object DatabaseRestoreManager {
         "fast_payments_table", "parent_categories_table", "icon_resource_table",
         "icon_category_table"
     )
+    private val version8Tables = setOf("payment_type_table")
 
     fun stageRestore(context: Context, source: Uri, password: CharArray) {
         val appContext = context.applicationContext
@@ -146,11 +147,15 @@ object DatabaseRestoreManager {
                     "Database integrity check failed"
                 }
             }
-            check(database.version in 1..6) { "Unsupported database schema" }
+            val databaseVersion = database.version
+            check(databaseVersion in 1..8) { "Unsupported database schema" }
             val actualTables = mutableSetOf<String>()
             database.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
                 .use { cursor -> while (cursor.moveToNext()) actualTables += cursor.getString(0) }
             check(actualTables.containsAll(requiredTables)) { "Database tables are missing" }
+            if (databaseVersion >= 8) {
+                check(actualTables.containsAll(version8Tables)) { "Database tables are missing" }
+            }
         } finally {
             database.close()
         }

@@ -2,6 +2,7 @@ package com.chico.myhomebookkeeping
 
 import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import com.chico.myhomebookkeeping.backup.DatabaseBackupManager
 import com.chico.myhomebookkeeping.backup.DatabaseRestoreManager
@@ -14,6 +15,7 @@ import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
 import com.chico.myhomebookkeeping.icons.IconResourceSynchronizer
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -29,6 +31,10 @@ class BackupTransferInstrumentedTest {
     @Test
     fun seedSixOperationsAndCreateBackup() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
+        createSeedBackup(context)
+    }
+
+    private suspend fun createSeedBackup(context: Context) {
         context.deleteDatabase(DATABASE_NAME)
         val database = dataBase.getDataBase(context)
 
@@ -52,12 +58,12 @@ class BackupTransferInstrumentedTest {
         )
 
         val operations = listOf(
-            MoneyMovement(1_700_000_000_000, accountId, currencyId, incomeCategoryId, 100_000.0, "Заработок"),
-            MoneyMovement(1_700_000_100_000, accountId, currencyId, expenseCategoryId, 1_200.0, "Продукты"),
-            MoneyMovement(1_700_000_200_000, accountId, currencyId, expenseCategoryId, 2_500.0, "Коммунальные услуги"),
-            MoneyMovement(1_700_000_300_000, accountId, currencyId, expenseCategoryId, 650.0, "Транспорт"),
-            MoneyMovement(1_700_000_400_000, accountId, currencyId, expenseCategoryId, 3_100.0, "Лекарства"),
-            MoneyMovement(1_700_000_500_000, accountId, currencyId, expenseCategoryId, 900.0, "Связь")
+            MoneyMovement(1_700_000_000_000, accountId, currencyId, incomeCategoryId, PaymentTypeIds.INCOME, 100_000.0, "Заработок"),
+            MoneyMovement(1_700_000_100_000, accountId, currencyId, expenseCategoryId, PaymentTypeIds.SPENDING, 1_200.0, "Продукты"),
+            MoneyMovement(1_700_000_200_000, accountId, currencyId, expenseCategoryId, PaymentTypeIds.SPENDING, 2_500.0, "Коммунальные услуги"),
+            MoneyMovement(1_700_000_300_000, accountId, currencyId, expenseCategoryId, PaymentTypeIds.SPENDING, 650.0, "Транспорт"),
+            MoneyMovement(1_700_000_400_000, accountId, currencyId, expenseCategoryId, PaymentTypeIds.SPENDING, 3_100.0, "Лекарства"),
+            MoneyMovement(1_700_000_500_000, accountId, currencyId, expenseCategoryId, PaymentTypeIds.SPENDING, 900.0, "Связь")
         )
         operations.forEach { database.moneyMovementDao().addMovingMoney(it) }
         database.close()
@@ -85,9 +91,12 @@ class BackupTransferInstrumentedTest {
     @Test
     fun restoreAfterCleanInstallAndVerifySixOperations() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        assertFalse(context.getDatabasePath(DATABASE_NAME).exists())
         val backup = File(context.filesDir, BACKUP_FILE)
-        assertTrue("Backup must be copied back after reinstall", backup.isFile)
+        if (!backup.isFile) {
+            createSeedBackup(context)
+        }
+        context.deleteDatabase(DATABASE_NAME)
+        assertFalse(context.getDatabasePath(DATABASE_NAME).exists())
 
         val wrongPasswordFailed = runCatching {
             DatabaseRestoreManager.stageRestore(

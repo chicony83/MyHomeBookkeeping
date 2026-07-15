@@ -7,6 +7,8 @@
     <string name="description_selected_entry">Выбрана запись #</string>
     <string name="description_date_time_text">Дата/время</string>
     <string name="description_cash_account">Счет</string>
+    <string name="description_cash_account_from">Со счёта</string>
+    <string name="description_cash_account_to">На счёт</string>
     <string name="description_currency">Валюта</string>
     <string name="description_category">Категория</string>
     <string name="description_amount">Сумма</string>

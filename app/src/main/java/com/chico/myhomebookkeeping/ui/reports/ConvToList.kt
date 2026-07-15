@@ -32,8 +32,9 @@ object ConvToList {
 
     fun moneyMovementListToMap(list: List<FullMoneyMoving>): Map<String, Double> {
         return list
+            .filter { it.categoryNameValue != null }
             .sortedBy { it.categoryNameValue }
-            .groupBy { it.categoryNameValue }
+            .groupBy { it.categoryNameValue.orEmpty() }
             .mapValues { it.value.sumOf { it.amount } }
     }
 

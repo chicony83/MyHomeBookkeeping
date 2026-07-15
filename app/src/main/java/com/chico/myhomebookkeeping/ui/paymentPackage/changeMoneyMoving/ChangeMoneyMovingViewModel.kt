@@ -20,6 +20,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -153,6 +154,7 @@ class ChangeMoneyMovingViewModel(
             } else {
                 moneyMovement?.category ?: 0
             }
+            if (!modelCheck.isPositiveValue(postingId)) return@launchUi
             _selectedCategory.postValue(
                 CategoriesUseCase.getOneCategory(
                     dbCategory,
@@ -261,10 +263,19 @@ class ChangeMoneyMovingViewModel(
             dateTime = dateTimeVal,
             cashAccountId = _selectedCashAccount.value?.cashAccountId ?: 0,
             categoryId = _selectedCategory.value?.categoriesId ?: 0,
+            paymentTypeId = getPaymentTypeId(),
             currencyId = _selectedCurrency.value?.currencyId ?: 0,
             amount = amount,
             description = description
         )
+    }
+
+    private fun getPaymentTypeId(): Int {
+        return if (_selectedCategory.value?.isIncome == true) {
+            PaymentTypeIds.INCOME
+        } else {
+            PaymentTypeIds.SPENDING
+        }
     }
 
     suspend fun deleteLine(): Int {

@@ -5,15 +5,19 @@ import com.chico.myhomebookkeeping.helpers.Message
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(): String {
-        return "SELECT id,time_stamp, " +
+        return "SELECT money_moving_table.id,time_stamp, " +
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
                 "category_name AS category_name_value, " +
-                "amount, is_income, description " +
-                "FROM money_moving_table,cash_account_table,currency_table,category_table " +
-                "WHERE cash_account == cashAccountId " +
-                "AND currency == currencyId " +
-                "AND category == categoriesId"
+                "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
+                "money_moving_table.payment_type_id, payment_type_name, " +
+                "transfer_group_id, transfer_direction, description " +
+                "FROM money_moving_table " +
+                "INNER JOIN cash_account_table ON cash_account == cashAccountId " +
+                "INNER JOIN currency_table ON currency == currencyId " +
+                "INNER JOIN payment_type_table ON money_moving_table.payment_type_id == payment_type_table.id " +
+                "INNER JOIN category_table ON category == categoriesId " +
+                "WHERE money_moving_table.payment_type_id IN (0, 1)"
     }
 
     private fun checkTimePeriod(

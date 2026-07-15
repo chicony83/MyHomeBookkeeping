@@ -34,12 +34,40 @@
                 style="@style/ButtonFullWidth"
                 android:layout_marginTop="@dimen/margin_half_normal" />
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/paymentTypeToggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                app:checkedButton="@id/paymentModeButton"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/paymentModeButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/text_on_button_payment" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/transferModeButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/text_on_button_transfer_between_accounts" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <TextView
+                android:id="@+id/sourceCashAccountLabel"
                 style="@style/TextDescriptions"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:textColor="@color/categoryTextSecondary"
                 android:textSize="@dimen/H5"
-                android:text="@string/description_cash_account" />
+                android:text="@string/description_cash_account_from" />
 
             <Button
                 android:id="@+id/selectCashAccountButton"
@@ -47,6 +75,24 @@
                 android:text="@string/text_on_button_select_cash_account" />
 
             <TextView
+                android:id="@+id/destinationCashAccountLabel"
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                android:text="@string/description_cash_account_to"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/selectTransferCashAccountButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_cash_account"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/categoryLabel"
                 style="@style/TextDescriptions"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:textColor="@color/categoryTextSecondary"

@@ -19,10 +19,22 @@ class FullMoneyMoving (
     val currencyNameValue:String,
 
     @ColumnInfo(name = "category_name_value")
-    val categoryNameValue:String,
+    val categoryNameValue:String?,
 
     @ColumnInfo(name = "is_income")
     val isIncome:Boolean,
+
+    @ColumnInfo(name = "payment_type_id")
+    val paymentTypeId: Int,
+
+    @ColumnInfo(name = "payment_type_name")
+    val paymentTypeName: String,
+
+    @ColumnInfo(name = "transfer_group_id")
+    val transferGroupId: Long?,
+
+    @ColumnInfo(name = "transfer_direction")
+    val transferDirection: Int?,
 
     val description:String?
 

@@ -64,7 +64,7 @@ class SelectMoneyMovingDialog(
             dateTime.text = fullMoneyMoving.timeStamp.parseTimeFromMillis()
             amount.text = fullMoneyMoving.amount.toString()
             currency.text = fullMoneyMoving.currencyNameValue
-            category.text = fullMoneyMoving.categoryNameValue
+            category.text = fullMoneyMoving.categoryNameValue ?: fullMoneyMoving.paymentTypeName
             cashAccount.text = fullMoneyMoving.cashAccountNameValue
             if (!fullMoneyMoving.description.isNullOrEmpty()) {
                 description.visibility = View.VISIBLE

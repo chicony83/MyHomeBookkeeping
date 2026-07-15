@@ -13,11 +13,17 @@ data class MoneyMovement(
     @ColumnInfo(name = "currency")
     val currency:Int,
     @ColumnInfo(name = "category")
-    val category:Int,
+    val category:Int?,
+    @ColumnInfo(name = "payment_type_id")
+    val paymentTypeId: Int,
     @ColumnInfo(name = "amount")
     val amount: Double,
     @ColumnInfo(name = "description")
     val description: String,
+    @ColumnInfo(name = "transfer_group_id")
+    val transferGroupId: Long? = null,
+    @ColumnInfo(name = "transfer_direction")
+    val transferDirection: Int? = null,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null

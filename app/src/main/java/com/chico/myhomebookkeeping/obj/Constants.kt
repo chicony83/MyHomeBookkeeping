@@ -4,6 +4,9 @@ object Constants {
 
     const val ARGS_NEW_PAYMENT_DATE_TIME_KEY = "dateTimeForCreate"
     const val ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY = "cashAccountForCreate"
+    const val ARGS_NEW_PAYMENT_TRANSFER_CASH_ACCOUNT_KEY = "transferCashAccountForCreate"
+    const val ARGS_NEW_PAYMENT_IS_TRANSFER_KEY = "isTransferForCreate"
+    const val ARGS_NEW_PAYMENT_CASH_ACCOUNT_SELECT_MODE_KEY = "cashAccountSelectModeForCreate"
     const val ARGS_NEW_PAYMENT_CURRENCY_KEY = "currencyForCreate"
     const val ARGS_NEW_PAYMENT_CATEGORY_KEY = "categoryForCreate"
     const val ARGS_NEW_PAYMENT_AMOUNT_KEY = "amountForCreate"
@@ -82,5 +85,8 @@ object Constants {
     const val CATEGORIES_TOP_ORDER = "categories_top_order"
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
+
+    const val CASH_ACCOUNT_SELECT_MODE_SOURCE = "source"
+    const val CASH_ACCOUNT_SELECT_MODE_DESTINATION = "destination"
 
 }

@@ -11,6 +11,7 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBindin
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.DayNightMode
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 
 
@@ -90,7 +91,7 @@ class MoneyMovingAdapter(
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
-                categoryName.text = moneyMovement.categoryNameValue
+                categoryName.text = moneyMovement.categoryNameValue ?: moneyMovement.paymentTypeName
 
                 if (!moneyMovement.description.isNullOrEmpty()) {
                     description.text = moneyMovement.description
@@ -109,7 +110,7 @@ class MoneyMovingAdapter(
                     description.text = null
                     uiHelper.hideUiElement(description)
                 }
-                if (moneyMovement.isIncome) {
+                if (moneyMovement.paymentTypeId == PaymentTypeIds.INCOME) {
                     amountEditText.text = plus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         with(binding){
@@ -122,12 +123,27 @@ class MoneyMovingAdapter(
                         }
                     }
                 }
-                if (!moneyMovement.isIncome) {
+                if (moneyMovement.paymentTypeId == PaymentTypeIds.SPENDING) {
                     amountEditText.text = minus + moneyMovement.amount.toString()
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         binding.amountEditText.setTextColor(
                             itemView.resources.getColor(
                                 R.color.spendingTextColor,
+                                null
+                            )
+                        )
+                    }
+                }
+                if (moneyMovement.paymentTypeId == PaymentTypeIds.TRANSFER) {
+                    amountEditText.text = if (moneyMovement.transferDirection == PaymentTypeIds.TRANSFER_DIRECTION_FROM) {
+                        minus + moneyMovement.amount.toString()
+                    } else {
+                        plus + moneyMovement.amount.toString()
+                    }
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        amountEditText.setTextColor(
+                            itemView.resources.getColor(
+                                R.color.categoryTextSecondary,
                                 null
                             )
                         )

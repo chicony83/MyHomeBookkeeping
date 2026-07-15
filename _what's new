@@ -1,4 +1,8 @@
 0.9.10
+Added transfers between own cash accounts: the new payment screen now has a clear Payment / Transfer selector, transfer entries are stored without categories, and reports exclude transfers from income and spending totals.
+Added a payment type table and database migration to make income, spending, and transfer entries explicit and scalable.
+Protected the database so regular payments must keep a category while transfers must use linked category-free rows.
+Added migration, database integrity, backup, and on-device tests for payment types and transfers.
 Redesigned the main directory screens: categories, currencies, and cash accounts now use a shared card-based layout and more consistent spacing.
 Updated category expand/collapse indicators to use the same plus/minus icons as the first-launch currency picker.
 Refined dialogs for categories, currencies, cash accounts, and journal entries while keeping existing element ids and data flow intact.

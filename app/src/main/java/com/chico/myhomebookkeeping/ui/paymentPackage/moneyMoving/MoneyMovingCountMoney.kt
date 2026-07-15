@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -19,14 +20,25 @@ class MoneyMovingCountMoney(
         for (i in listFullMoneyMoving.indices) {
             val amount = listFullMoneyMoving[i].amount
 
-            if (listFullMoneyMoving[i].isIncome) {
-                inc += amount
-                bal += amount
-            }
+            when (listFullMoneyMoving[i].paymentTypeId) {
+                PaymentTypeIds.INCOME -> {
+                    inc += amount
+                    bal += amount
+                }
 
-            if (!listFullMoneyMoving[i].isIncome) {
-                spe -= amount
-                bal -= amount
+                PaymentTypeIds.SPENDING -> {
+                    spe -= amount
+                    bal -= amount
+                }
+
+                PaymentTypeIds.TRANSFER -> {
+                    if (listFullMoneyMoving[i].transferDirection == PaymentTypeIds.TRANSFER_DIRECTION_FROM) {
+                        bal -= amount
+                    }
+                    if (listFullMoneyMoving[i].transferDirection == PaymentTypeIds.TRANSFER_DIRECTION_TO) {
+                        bal += amount
+                    }
+                }
             }
         }
         income = roundedNumber(inc)

@@ -17,7 +17,7 @@ object MoneyMovingCreateSimpleQuery {
 
         if (id > 0) {
             queryString += addAnd()
-            queryString += " id = :id"
+            queryString += " money_moving_table.id = :id"
             argsList.add(id)
         }
         val args = argsList.toArray()
@@ -155,7 +155,7 @@ object MoneyMovingCreateSimpleQuery {
         var queryString1 = queryString
         if (incomeSpendingSP == argsSpending) {
             queryString1 += addAnd()
-            queryString1 += " is_income = 0 "
+            queryString1 += " money_moving_table.payment_type_id = 1 "
         }
         return queryString1
     }
@@ -167,7 +167,7 @@ object MoneyMovingCreateSimpleQuery {
         var queryString1 = queryString
         if (incomeSpendingSP == argsIncome) {
             queryString1 += addAnd()
-            queryString1 += " is_income = 1 "
+            queryString1 += " money_moving_table.payment_type_id = 0 "
         }
         return queryString1
     }
@@ -231,19 +231,23 @@ object MoneyMovingCreateSimpleQuery {
     }
 
     private fun mainQueryFullMoneyMoving(): String {
-        return "SELECT id,time_stamp, " +
+        return "SELECT money_moving_table.id,time_stamp, " +
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
                 "category_name AS category_name_value, " +
-                "amount, is_income, description " +
-                "FROM money_moving_table, cash_account_table, currency_table, category_table " +
-                "WHERE cash_account == cashAccountId " +
-                "AND currency == currencyId " +
-                "AND category == categoriesId"
+                "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
+                "money_moving_table.payment_type_id, payment_type_name, " +
+                "transfer_group_id, transfer_direction, description " +
+                "FROM money_moving_table " +
+                "INNER JOIN cash_account_table ON cash_account == cashAccountId " +
+                "INNER JOIN currency_table ON currency == currencyId " +
+                "INNER JOIN payment_type_table ON money_moving_table.payment_type_id == payment_type_table.id " +
+                "LEFT JOIN category_table ON category == categoriesId " +
+                "WHERE 1 = 1"
     }
 
     private fun addMainQueryMoneyMoving(): String {
-        return "SELECT id,time_stamp, cash_account, currency, category, amount, description " +
+        return "SELECT id,time_stamp, cash_account, currency, category, payment_type_id, amount, description, transfer_group_id, transfer_direction " +
                 "FROM money_moving_table"
     }
 

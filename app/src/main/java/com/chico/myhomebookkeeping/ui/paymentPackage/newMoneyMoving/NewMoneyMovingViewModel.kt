@@ -22,6 +22,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.helpers.Around
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.*
 import kotlinx.coroutines.flow.*
@@ -34,6 +35,9 @@ class NewMoneyMovingViewModel(
 
     private val argsDateTimeCreateKey = Constants.ARGS_NEW_PAYMENT_DATE_TIME_KEY
     private val argsCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_KEY
+    private val argsTransferCashAccountCreateKey = Constants.ARGS_NEW_PAYMENT_TRANSFER_CASH_ACCOUNT_KEY
+    private val argsIsTransferCreateKey = Constants.ARGS_NEW_PAYMENT_IS_TRANSFER_KEY
+    private val argsCashAccountSelectModeCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_SELECT_MODE_KEY
     private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
     private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
@@ -84,6 +88,10 @@ class NewMoneyMovingViewModel(
     val selectedCashAccount: LiveData<CashAccount>
         get() = _selectedCashAccount
 
+    private val _selectedTransferCashAccount = MutableLiveData<CashAccount>()
+    val selectedTransferCashAccount: LiveData<CashAccount>
+        get() = _selectedTransferCashAccount
+
     private val _selectedCategory = MutableLiveData<Categories>()
     val selectedCategory: LiveData<Categories>
         get() = _selectedCategory
@@ -103,12 +111,18 @@ class NewMoneyMovingViewModel(
     private var _onCalcAmountSelected = MutableStateFlow("")
     val onCalcAmountSelected: StateFlow<String> = _onCalcAmountSelected
 
+    private val _isTransfer = MutableLiveData(false)
+    val isTransfer: LiveData<Boolean>
+        get() = _isTransfer
+
     //    private var idMoneyMovingForChange: Long = -1
 
     private var dateTimeSPLong = minusOneLong
     private var cashAccountSPInt = minusOneInt
+    private var transferCashAccountSPInt = minusOneInt
     private var currencySPInt = minusOneInt
     private var categorySPInt = minusOneInt
+    private var isTransferSPBoolean = false
     private var amountSPString = ""
     private var descriptionSPString = ""
 //    var id: Long = -1
@@ -124,8 +138,10 @@ class NewMoneyMovingViewModel(
 //        idMoneyMovingForChange = viewModelCheck.getValueSPLong(argsIdMoneyMovingForChange)
         dateTimeSPLong = getSP.getLong(argsDateTimeCreateKey)
         cashAccountSPInt = getSP.getInt(argsCashAccountCreateKey)
+        transferCashAccountSPInt = getSP.getInt(argsTransferCashAccountCreateKey)
         currencySPInt = getSP.getInt(argsCurrencyCreateKey)
         categorySPInt = getSP.getInt(argsCategoryCreateKey)
+        isTransferSPBoolean = getSP.getBooleanElseReturnFalse(argsIsTransferCreateKey)
         amountSPString = getSP.getString(argsAmountCreateKey).toString()
         descriptionSPString = getSP.getString(argsDescriptionCreateKey).toString()
     }
@@ -142,6 +158,13 @@ class NewMoneyMovingViewModel(
             if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi {
                 postCashAccount(
                     cashAccountSPInt
+                )
+            }
+        }
+        launchIo {
+            if (modelCheck.isPositiveValue(transferCashAccountSPInt)) launchUi {
+                postTransferCashAccount(
+                    transferCashAccountSPInt
                 )
             }
         }
@@ -169,6 +192,7 @@ class NewMoneyMovingViewModel(
                 )
             }
         }
+        postIsTransfer(isTransferSPBoolean)
     }
 
     private fun postAmount(amount: Double) {
@@ -201,6 +225,16 @@ class NewMoneyMovingViewModel(
         )
     }
 
+    private suspend fun postTransferCashAccount(idNum: Int) {
+        _selectedTransferCashAccount.postValue(
+            CashAccountsUseCase.getOneCashAccountById(dbCashAccount, idNum)
+        )
+    }
+
+    private fun postIsTransfer(isTransfer: Boolean) {
+        _isTransfer.postValue(isTransfer)
+    }
+
     fun saveDataToSP(amount: Double, description: String) {
         with(setSP) {
             saveToSP(argsDateTimeCreateKey, _dateTime.value?.parseTimeToMillis())
@@ -214,9 +248,14 @@ class NewMoneyMovingViewModel(
                 _selectedCashAccount.value?.cashAccountId
             )
             saveToSP(
+                argsTransferCashAccountCreateKey,
+                _selectedTransferCashAccount.value?.cashAccountId
+            )
+            saveToSP(
                 argsCategoryCreateKey,
                 _selectedCategory.value?.categoriesId
             )
+            saveToSP(argsIsTransferCreateKey, _isTransfer.value == true)
             if (amount > 0) {
                 saveToSP(argsAmountCreateKey, amount.toString())
             }
@@ -232,15 +271,55 @@ class NewMoneyMovingViewModel(
         val cashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
         val categoryValue: Int = _selectedCategory.value?.categoriesId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
+        val paymentTypeId = if (_selectedCategory.value?.isIncome == true) {
+            PaymentTypeIds.INCOME
+        } else {
+            PaymentTypeIds.SPENDING
+        }
         val moneyMovement = MoneyMovement(
             timeStamp = dateTime,
             amount = amount,
             cashAccount = cashAccountValue,
             category = categoryValue,
+            paymentTypeId = paymentTypeId,
             currency = currencyValue,
             description = description
         )
         return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+    }
+
+    suspend fun addNewTransfer(
+        amount: Double,
+        description: String
+    ): List<Long> {
+        val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
+        val sourceCashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
+        val destinationCashAccountValue: Int = _selectedTransferCashAccount.value?.cashAccountId ?: 0
+        val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
+        val transferGroupId = System.currentTimeMillis()
+        val source = MoneyMovement(
+            timeStamp = dateTime,
+            cashAccount = sourceCashAccountValue,
+            currency = currencyValue,
+            category = null,
+            paymentTypeId = PaymentTypeIds.TRANSFER,
+            amount = amount,
+            description = description,
+            transferGroupId = transferGroupId,
+            transferDirection = PaymentTypeIds.TRANSFER_DIRECTION_FROM
+        )
+        val destination = MoneyMovement(
+            timeStamp = dateTime,
+            cashAccount = destinationCashAccountValue,
+            currency = currencyValue,
+            category = null,
+            paymentTypeId = PaymentTypeIds.TRANSFER,
+            amount = amount,
+            description = description,
+            transferGroupId = transferGroupId,
+            transferDirection = PaymentTypeIds.TRANSFER_DIRECTION_TO
+        )
+        return NewMoneyMovementUseCase.addTransferInDataBase(dbMoneyMovement, source, destination)
     }
 
     fun setDate(it: Long?) {
@@ -284,11 +363,25 @@ class NewMoneyMovingViewModel(
         return selectedCategory.value != null
     }
 
+    fun isTransferCashAccountNotNull(): Boolean {
+        return selectedTransferCashAccount.value != null
+    }
+
+    fun isTransferMode(): Boolean {
+        return _isTransfer.value == true
+    }
+
+    fun isTransferAccountsDifferent(): Boolean {
+        return _selectedCashAccount.value?.cashAccountId != _selectedTransferCashAccount.value?.cashAccountId
+    }
+
     fun clearSPAfterSave() {
         with(setSP) {
             saveToSP(argsDateTimeCreateKey, minusOneLong)
             saveToSP(argsAmountCreateKey, "")
             saveToSP(argsDescriptionCreateKey, "")
+            saveToSP(argsIsTransferCreateKey, false)
+            saveToSP(argsCashAccountSelectModeCreateKey, Constants.CASH_ACCOUNT_SELECT_MODE_SOURCE)
         }
     }
 
@@ -305,5 +398,24 @@ class NewMoneyMovingViewModel(
                 _onCalcAmountSelected.value = clearedAmount
             }
         }
+    }
+
+    fun setTransferMode(isTransfer: Boolean) {
+        _isTransfer.postValue(isTransfer)
+        setSP.saveToSP(argsIsTransferCreateKey, isTransfer)
+    }
+
+    fun setSourceCashAccountSelectMode() {
+        setSP.saveToSP(
+            argsCashAccountSelectModeCreateKey,
+            Constants.CASH_ACCOUNT_SELECT_MODE_SOURCE
+        )
+    }
+
+    fun setDestinationCashAccountSelectMode() {
+        setSP.saveToSP(
+            argsCashAccountSelectModeCreateKey,
+            Constants.CASH_ACCOUNT_SELECT_MODE_DESTINATION
+        )
     }
 }

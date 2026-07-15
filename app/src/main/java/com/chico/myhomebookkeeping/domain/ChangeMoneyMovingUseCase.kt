@@ -10,7 +10,8 @@ object ChangeMoneyMovingUseCase {
         dateTime: Long,
         amount: Double,
         cashAccountId: Int,
-        categoryId: Int,
+        categoryId: Int?,
+        paymentTypeId: Int,
         currencyId: Int,
         description: String
 
@@ -21,6 +22,7 @@ object ChangeMoneyMovingUseCase {
             amount,
             cashAccountId,
             categoryId,
+            paymentTypeId,
             currencyId,
             description
         )

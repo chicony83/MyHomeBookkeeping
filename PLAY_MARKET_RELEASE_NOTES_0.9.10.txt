@@ -1,5 +1,8 @@
 What's new in 0.9.10
 
+- Added transfers between own cash accounts with a clear Payment / Transfer selector.
+- Transfers are stored as linked entries without categories and are excluded from income/spending reports.
+- Added database migration and integrity checks for the new payment type table.
 - Improved add-category and add-subcategory dialogs: cleaner layout, better field sizing, and more consistent spacing.
 - Fixed add actions on the category screen so the whole row can be tapped, not only the plus icon.
 - Renamed category actions to make categories and subcategories clearer.
@@ -14,6 +17,9 @@ What's new in 0.9.10
 
 Что нового в 0.9.10
 
+- Добавлены переводы между своими счетами с понятным переключателем Платёж / Перевод.
+- Переводы сохраняются связанными записями без категории и не попадают в отчёты доходов/расходов.
+- Добавлена миграция БД и проверки целостности для новой таблицы типов платежей.
 - Улучшены диалоги добавления категории и подкатегории: аккуратнее расположены поля, размеры и отступы.
 - Исправлены действия добавления на экране категорий: теперь нажимается вся строка, а не только значок плюса.
 - Переименованы действия добавления, чтобы понятнее разделять категории и подкатегории.
