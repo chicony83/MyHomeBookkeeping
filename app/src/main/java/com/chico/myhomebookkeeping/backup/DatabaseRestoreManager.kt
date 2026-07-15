@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.backup
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
-import android.preference.PreferenceManager
 import com.chico.myhomebookkeeping.obj.Constants
 import org.json.JSONObject
 import java.io.BufferedInputStream
@@ -167,14 +166,6 @@ object DatabaseRestoreManager {
                 ?.let { putString(Constants.SORTING_CATEGORIES, it) }
             settings.optString("sortingFastPayments").takeIf(String::isNotEmpty)
                 ?.let { putString(Constants.SORTING_FAST_PAYMENTS, it) }
-            apply()
-        }
-        PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
-            settings.optString("calculatorHistorySize").takeIf(String::isNotEmpty)
-                ?.let { putString("HISTORY_SIZE", it) }
-            settings.optString("calculatorNumberPrecision").takeIf(String::isNotEmpty)
-                ?.let { putString("NUMBER_PRECISION", it) }
-            putBoolean("PREVENT_PHONE_FROM_SLEEPING", settings.optBoolean("calculatorPreventSleep"))
             apply()
         }
     }

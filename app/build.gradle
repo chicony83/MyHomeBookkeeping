@@ -44,9 +44,6 @@ android {
 
 dependencies {
 
-    implementation 'com.sothree.slidinguppanel:library:3.4.0'
-
-
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
     // versions

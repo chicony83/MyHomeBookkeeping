@@ -6,6 +6,7 @@ What's new in 0.9.10
 - Reworked first-launch currency selection: currencies are now selected with checkboxes and grouped into major currencies, other currencies, and cryptocurrencies.
 - Updated first-launch currency dialogs and currency rows: symbol, code, and name are shown compactly in one line.
 - Refined starter currency names to make the list easier to read for Russian, English, and European users.
+- Replaced the broken borrowed calculator with a simple payment calculator and a two-entry calculation history.
 - Added more fiat currencies and optional cryptocurrency choices.
 - Added text symbols for major cryptocurrencies where they render reliably.
 - Added confirmation when a cryptocurrency is selected as the default currency.
@@ -19,6 +20,7 @@ What's new in 0.9.10
 - Переработан выбор валют при первом запуске: теперь валюты выбираются флажками и разделены на основные, остальные и криптовалюты.
 - Обновлен дизайн диалогов первого выбора валют и строк валют: символ, код и название отображаются компактно в одну строку.
 - Уточнены названия стартовых валют, чтобы список был понятнее для русско/англо/европейской аудитории.
+- Сломанный старый калькулятор заменен простым калькулятором для платежей с историей на два вычисления.
 - Добавлены дополнительные валюты и отдельный список популярных криптовалют.
 - Добавлены текстовые символы для основных криптовалют, где они корректно отображаются.
 - Добавлено подтверждение, если криптовалюта выбирается основной валютой.

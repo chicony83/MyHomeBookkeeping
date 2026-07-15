@@ -2,7 +2,6 @@ package com.chico.myhomebookkeeping.backup
 
 import android.content.Context
 import android.net.Uri
-import android.preference.PreferenceManager
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.obj.Constants
 import org.json.JSONObject
@@ -100,16 +99,9 @@ object DatabaseBackupManager {
 
     private fun createPersistentSettings(context: Context): JSONObject {
         val appPreferences = context.getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE)
-        val calculatorPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return JSONObject()
             .put("sortingCategories", appPreferences.getString(Constants.SORTING_CATEGORIES, null))
             .put("sortingFastPayments", appPreferences.getString(Constants.SORTING_FAST_PAYMENTS, null))
-            .put("calculatorHistorySize", calculatorPreferences.getString("HISTORY_SIZE", null))
-            .put("calculatorNumberPrecision", calculatorPreferences.getString("NUMBER_PRECISION", null))
-            .put(
-                "calculatorPreventSleep",
-                calculatorPreferences.getBoolean("PREVENT_PHONE_FROM_SLEEPING", false)
-            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {
