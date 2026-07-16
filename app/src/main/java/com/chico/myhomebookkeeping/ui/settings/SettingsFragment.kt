@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.settings
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
@@ -41,8 +42,17 @@ class SettingsFragment : Fragment() {
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var control: NavController
     private val uiHelper = UiHelper()
+    private lateinit var getVersionCode: GetVersionCode
     private var pendingBackupPassword: CharArray? = null
     private var pendingRestoreUri: Uri? = null
+    private val updateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        _binding?.checkNewVersionButton?.isEnabled = true
+        if (result.resultCode != Activity.RESULT_OK) {
+            message(getString(R.string.message_update_not_completed))
+        }
+    }
     private val createBackupDocument = registerForActivityResult(
         ActivityResultContracts.CreateDocument("application/octet-stream")
     ) { uri ->
@@ -87,6 +97,7 @@ class SettingsFragment : Fragment() {
         navControlHelper = NavControlHelper(control)
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+        getVersionCode = GetVersionCode(requireActivity(), updateLauncher)
 
         with(binding) {
 //            changePasswordButton.setOnClickListener {
@@ -122,8 +133,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun checkNewVersion() {
-        val getVersionCode = GetVersionCode(requireContext())
-        val version: Any = getVersionCode.getNewVersion()
+        binding.checkNewVersionButton.isEnabled = false
+        getVersionCode.getNewVersion {
+            _binding?.checkNewVersionButton?.isEnabled = true
+        }
     }
 
     private fun showBackupPasswordDialog() {
@@ -230,6 +243,13 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::getVersionCode.isInitialized) {
+            getVersionCode.completeDownloadedUpdateIfNeeded()
+        }
     }
 
     override fun onDestroy() {

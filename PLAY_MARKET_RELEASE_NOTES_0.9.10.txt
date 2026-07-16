@@ -1,5 +1,7 @@
 What's new in 0.9.10
 
+- Added current app version display on the Settings screen.
+- Restored Google Play update checking from Settings with clear success/failure messages.
 - Added transfers between own cash accounts with a clear Payment / Transfer selector.
 - Transfers are stored as linked entries without categories and are excluded from income/spending reports.
 - Added database migration and integrity checks for the new payment type table.

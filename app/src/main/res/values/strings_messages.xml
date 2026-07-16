@@ -23,6 +23,8 @@
 
     <string name="message_you_have_latest_version">You have latest version</string>
     <string name="message_you_can_update_the_program">You can update the program</string>
+    <string name="message_update_check_failed">Could not check updates in Google Play</string>
+    <string name="message_update_not_completed">Update was not completed</string>
 
     <string name="message_icon_is_not_selected">Icon is not selected</string>
 

@@ -23,6 +23,8 @@
 
     <string name="message_you_have_latest_version">У вас последняя версия программы</string>
     <string name="message_you_can_update_the_program">Можно обновить программу</string>
+    <string name="message_update_check_failed">Не удалось проверить обновление в Google Play</string>
+    <string name="message_update_not_completed">Обновление не было завершено</string>
 
     <string name="message_icon_is_not_selected">Иконка не выбрана</string>
 
