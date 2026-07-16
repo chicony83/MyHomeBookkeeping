@@ -20,6 +20,15 @@ interface CurrenciesDao {
     @Query("SELECT * FROM currency_table ORDER BY currency_name ASC")
     suspend fun getAllCurrenciesSortNameAsc(): List<Currencies>
 
+    @Query("SELECT * FROM currency_table WHERE is_currency_default = 1 ORDER BY currencyId ASC LIMIT 1")
+    suspend fun getDefaultCurrency(): Currencies?
+
+    @Query("SELECT * FROM currency_table ORDER BY currencyId ASC LIMIT 1")
+    suspend fun getFirstCurrency(): Currencies?
+
+    @Query("UPDATE currency_table SET is_currency_default = CASE WHEN currencyId = :id THEN 1 ELSE 0 END")
+    suspend fun setDefaultCurrency(id: Int): Int
+
     @Query("SELECT * FROM currency_table WHERE currencyId = :id")
     suspend fun getOneCurrency(id: Int): Currencies
 

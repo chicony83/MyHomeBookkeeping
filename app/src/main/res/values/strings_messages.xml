@@ -27,5 +27,6 @@
     <string name="message_icon_is_not_selected">Icon is not selected</string>
 
     <string name="message_select_default_currency">Select default currency</string>
+    <string name="message_select_default_cash_account">Select default cash account</string>
     <string name="message_confirm_crypto_default_currency">Do you really want to make a cryptocurrency the default currency?</string>
 </resources>

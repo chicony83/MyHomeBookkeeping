@@ -49,6 +49,8 @@
                 android:id="@+id/add_cash_accounts_card_check_box"
                 style="@style/Description.CashAccounts.FirstLaunch"
                 android:layout_width="0dp"
+                android:checked="true"
+                android:enabled="false"
                 android:text="@string/quick_setup_name_Card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cardCashAccountIcon"

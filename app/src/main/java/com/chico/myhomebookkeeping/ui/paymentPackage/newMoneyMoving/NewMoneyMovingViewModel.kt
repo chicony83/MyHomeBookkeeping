@@ -155,10 +155,12 @@ class NewMoneyMovingViewModel(
             }
         }
         launchIo {
-            if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi {
-                postCashAccount(
-                    cashAccountSPInt
-                )
+            launchUi {
+                if (modelCheck.isPositiveValue(cashAccountSPInt)) {
+                    postCashAccount(cashAccountSPInt)
+                } else {
+                    postDefaultCashAccount()
+                }
             }
         }
         launchIo {
@@ -169,10 +171,12 @@ class NewMoneyMovingViewModel(
             }
         }
         launchIo {
-            if (modelCheck.isPositiveValue(currencySPInt)) launchUi {
-                postCurrency(
-                    currencySPInt
-                )
+            launchUi {
+                if (modelCheck.isPositiveValue(currencySPInt)) {
+                    postCurrency(currencySPInt)
+                } else {
+                    postDefaultCurrency()
+                }
             }
         }
         launchIo {
@@ -219,9 +223,21 @@ class NewMoneyMovingViewModel(
         )
     }
 
+    private suspend fun postDefaultCurrency() {
+        _selectedCurrency.postValue(
+            CurrenciesUseCase.getDefaultCurrency(dbCurrencies)
+        )
+    }
+
     private suspend fun postCashAccount(idNum: Int) {
         _selectedCashAccount.postValue(
             CashAccountsUseCase.getOneCashAccountById(dbCashAccount, idNum)
+        )
+    }
+
+    private suspend fun postDefaultCashAccount() {
+        _selectedCashAccount.postValue(
+            CashAccountsUseCase.getDefaultCashAccount(dbCashAccount)
         )
     }
 

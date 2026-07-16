@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/selectCashAccountAsDefaultCardView"
+    style="@style/RecyclerViewCard.Categories">
+
+    <LinearLayout
+        android:id="@+id/selectCashAccountAsDefaultItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_child_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_normal"
+        android:paddingEnd="@dimen/margin_normal"
+        android:paddingVertical="@dimen/margin_normal">
+
+        <ImageView
+            android:id="@+id/iconImg"
+            style="@style/ImageIcon.RecyclerView"
+            android:contentDescription="@string/content_description_icon_item_of_cash_account"
+            tools:src="@drawable/cash_account_card" />
+
+        <TextView
+            android:id="@+id/nameCashAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/H4"
+            android:textStyle="bold"
+            tools:text="@string/quick_setup_name_Card" />
+
+        <RadioButton
+            android:id="@+id/defaultCashAccountRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            tools:checked="true" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

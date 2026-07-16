@@ -113,8 +113,24 @@ class NewFastPaymentViewModel(
         launchIo { if (descriptionFastPaymentSPString.isNotEmpty()) launchUi { postDescriptionFastPayment() } }
         launchIo { if (modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating() }
         if(!modelCheck.isPositiveValue(ratingSPInt)) launchUi { postRating(0) }}
-        launchIo { if (modelCheck.isPositiveValue(cashAccountSPInt)) launchUi { postCashAccount() } }
-        launchIo { if (modelCheck.isPositiveValue(currencySPInt)) launchUi { postCurrency() } }
+        launchIo {
+            launchUi {
+                if (modelCheck.isPositiveValue(cashAccountSPInt)) {
+                    postCashAccount()
+                } else {
+                    postDefaultCashAccount()
+                }
+            }
+        }
+        launchIo {
+            launchUi {
+                if (modelCheck.isPositiveValue(currencySPInt)) {
+                    postCurrency()
+                } else {
+                    postDefaultCurrency()
+                }
+            }
+        }
         launchIo { if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory() } }
         launchIo { if (modelCheck.isPositiveValue(amountSPString)) launchUi { postAmount() } }
         launchIo { if (descriptionSPString.isNotEmpty()) launchUi { postDescription() } }
@@ -141,6 +157,10 @@ class NewFastPaymentViewModel(
         _currency.postValue(CurrenciesUseCase.getOneCurrency(dbCurrencies, currencySPInt))
     }
 
+    private suspend fun postDefaultCurrency() {
+        _currency.postValue(CurrenciesUseCase.getDefaultCurrency(dbCurrencies))
+    }
+
     private suspend fun postCashAccount() {
         _cashAccount.postValue(
             CashAccountsUseCase.getOneCashAccountById(
@@ -148,6 +168,10 @@ class NewFastPaymentViewModel(
                 cashAccountSPInt
             )
         )
+    }
+
+    private suspend fun postDefaultCashAccount() {
+        _cashAccount.postValue(CashAccountsUseCase.getDefaultCashAccount(dbCashAccount))
     }
 
     private fun postRating() {

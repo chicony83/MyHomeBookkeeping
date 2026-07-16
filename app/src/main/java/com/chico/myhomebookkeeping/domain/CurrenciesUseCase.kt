@@ -53,4 +53,17 @@ object CurrenciesUseCase {
     ): List<Currencies> {
         return db.getAllCurrenciesSortNameAsc()
     }
+
+    suspend fun getDefaultCurrency(
+        db: CurrenciesDao
+    ): Currencies? {
+        return db.getDefaultCurrency() ?: db.getFirstCurrency()
+    }
+
+    suspend fun setDefaultCurrency(
+        db: CurrenciesDao,
+        id: Int
+    ): Int {
+        return db.setDefaultCurrency(id)
+    }
 }

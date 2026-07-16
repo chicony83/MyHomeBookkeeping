@@ -34,6 +34,15 @@ object CashAccountsUseCase {
     suspend fun getAllCashAccountsSortNameAsc(db: CashAccountDao): List<CashAccount> {
         return db.getAllCashAccountsSortNameAsc()
     }
+
+    suspend fun getDefaultCashAccount(db: CashAccountDao): CashAccount? {
+        return db.getDefaultCashAccount() ?: db.getFirstCashAccount()
+    }
+
+    suspend fun setDefaultCashAccount(db: CashAccountDao, id: Int): Int {
+        return db.setDefaultCashAccount(id)
+    }
+
     suspend fun getAllCashAccountsSortIdAsc(db:CashAccountDao):List<CashAccount>{
         return db.getAllCashAccountsSortIdAsc()
     }

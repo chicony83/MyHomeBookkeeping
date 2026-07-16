@@ -1,18 +1,23 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemSelectCashAccountAsDefaultDialogBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -89,25 +94,59 @@ class FirstLaunchFragment : Fragment() {
         navControlHelper = NavControlHelper(control)
 
         binding.submitButton.setOnClickListener {
-            launchUi {
-                val listCashAccounts = getListCashAccounts()
-                val listIncomingCategories =
-                    getListSelectedIncomeCategories(getListIncomeCheckBoxes())
-                val listSpendingCategories =
-                    getListSelectedSpendingCategories(getListSpendingCheckBoxes())
-
-                launchIo {
-                    firstLaunchViewModel.addFirstLaunchElements(
-                        listCashAccounts,
-                        listIncomingCategories,
-                        listSpendingCategories
-                    )
-                }
-            }
-
-            firstLaunchViewModel.setIsFirstLaunchFalse()
-            control.navigate(R.id.nav_fast_payments_fragment)
+            showSelectDefaultCashAccountDialog()
         }
+    }
+
+    private fun showSelectDefaultCashAccountDialog() {
+        val selectedCashAccounts = getListSelectedItems(getListCashAccounts())
+        if (selectedCashAccounts.isEmpty()) return
+
+        val layout = layoutInflater.inflate(R.layout.dialog_select_currency_as_default, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(layout)
+            .create()
+        var defaultCashAccount = selectedCashAccounts[0]
+        val adapter = SelectDefaultCashAccountAdapter(
+            cashAccounts = selectedCashAccounts,
+            selectedCashAccountName = getCashAccountName(defaultCashAccount)
+        ) {
+            defaultCashAccount = it
+        }
+
+        layout.findViewById<TextView>(R.id.dialogTitle)
+            .setText(R.string.message_select_default_cash_account)
+        layout.findViewById<RecyclerView>(R.id.iconsHolderLayout).adapter = adapter
+        layout.findViewById<Button>(R.id.submitButton).setOnClickListener {
+            dialog.dismiss()
+            addFirstLaunchElements(getCashAccountName(defaultCashAccount))
+        }
+        layout.findViewById<Button>(R.id.cancelButton).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun addFirstLaunchElements(defaultCashAccountName: String) {
+        launchUi {
+            val listCashAccounts = getListCashAccounts()
+            val listIncomingCategories =
+                getListSelectedIncomeCategories(getListIncomeCheckBoxes())
+            val listSpendingCategories =
+                getListSelectedSpendingCategories(getListSpendingCheckBoxes())
+
+            launchIo {
+                firstLaunchViewModel.addFirstLaunchElements(
+                    listCashAccounts,
+                    listIncomingCategories,
+                    listSpendingCategories,
+                    defaultCashAccountName
+                )
+            }
+        }
+
+        firstLaunchViewModel.setIsFirstLaunchFalse()
+        control.navigate(R.id.nav_fast_payments_fragment)
     }
 
 
@@ -175,6 +214,63 @@ class FirstLaunchFragment : Fragment() {
             item.value ?: R.drawable.no_image,
             checkBox
         )
+    }
+
+    private fun getCashAccountName(item: SelectedItemOfImageAndCheckBox): String {
+        return item.checkBox.text.toString()
+    }
+
+    private class SelectDefaultCashAccountAdapter(
+        private val cashAccounts: List<SelectedItemOfImageAndCheckBox>,
+        selectedCashAccountName: String,
+        private val onCashAccountSelected: (SelectedItemOfImageAndCheckBox) -> Unit
+    ) : RecyclerView.Adapter<SelectDefaultCashAccountAdapter.ViewHolder>() {
+        private var selectedCashAccountName = selectedCashAccountName
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val binding = RecyclerViewItemSelectCashAccountAsDefaultDialogBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ViewHolder(binding)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bind(cashAccounts[position])
+        }
+
+        override fun getItemCount() = cashAccounts.size
+
+        inner class ViewHolder(
+            private val binding: RecyclerViewItemSelectCashAccountAsDefaultDialogBinding
+        ) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(cashAccount: SelectedItemOfImageAndCheckBox) {
+                val cashAccountName = cashAccount.checkBox.text.toString()
+                with(binding) {
+                    iconImg.setImageResource(cashAccount.img)
+                    nameCashAccount.text = cashAccountName
+                    defaultCashAccountRadioButton.isChecked =
+                        cashAccountName == selectedCashAccountName
+                    selectCashAccountAsDefaultItem.setOnClickListener {
+                        selectCashAccount(cashAccount)
+                    }
+                }
+            }
+
+            private fun selectCashAccount(cashAccount: SelectedItemOfImageAndCheckBox) {
+                val previousName = selectedCashAccountName
+                val currentPosition = adapterPosition
+                selectedCashAccountName = cashAccount.checkBox.text.toString()
+                onCashAccountSelected(cashAccount)
+                cashAccounts.indexOfFirst { it.checkBox.text.toString() == previousName }
+                    .takeIf { it >= 0 }
+                    ?.let { notifyItemChanged(it) }
+                currentPosition
+                    .takeIf { it >= 0 }
+                    ?.let { notifyItemChanged(it) }
+            }
+        }
     }
 
     override fun onDestroy() {

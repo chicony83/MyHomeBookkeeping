@@ -95,14 +95,16 @@ class FirstLaunchViewModel(
     fun addFirstLaunchElements(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
         listIncomeCategories: List<SelectedItemOfImageAndCheckBox>,
-        listSpendingCategories: List<SelectedItemOfImageAndCheckBox>
+        listSpendingCategories: List<SelectedItemOfImageAndCheckBox>,
+        defaultCashAccountName: String
     ) = runBlocking {
         val resultAddedIncomeCategories =
             async(Dispatchers.IO) { addIncomeCategories(listIncomeCategories) }
         val resultAddSpendingCategories =
             async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
 
-        val resultAddCashAccount = async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes) }
+        val resultAddCashAccount =
+            async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes, defaultCashAccountName) }
 
         val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
 
@@ -172,20 +174,26 @@ class FirstLaunchViewModel(
         )
     }
 
-    private fun addCashAccounts(listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>): Boolean {
+    private fun addCashAccounts(
+        listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
+        defaultCashAccountName: String
+    ): Boolean {
         for (i in listImageAndCheckBoxes.indices) {
             if (uiHelper.isCheckedCheckBox(listImageAndCheckBoxes[i].checkBox)) {
-                addCashAccount(listImageAndCheckBoxes[i])
+                addCashAccount(listImageAndCheckBoxes[i], defaultCashAccountName)
             }
         }
         return true
     }
 
-    private fun addCashAccount(item: SelectedItemOfImageAndCheckBox) {
+    private fun addCashAccount(
+        item: SelectedItemOfImageAndCheckBox,
+        defaultCashAccountName: String
+    ) {
         val cashAccount = CashAccount(
             accountName = item.checkBox.text.toString(),
             bankAccountNumber = "",
-            isCashAccountDefault = false,
+            isCashAccountDefault = item.checkBox.text.toString() == defaultCashAccountName,
             icon = item.img
         )
         launchIo {
