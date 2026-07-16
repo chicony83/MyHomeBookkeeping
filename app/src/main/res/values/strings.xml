@@ -1,3 +1,16 @@
 <resources>
+    <string name="quick_payment_settings_title">Quick payment settings</string>
+    <string name="quick_payment_default_currency">Default currency</string>
+    <string name="quick_payment_default_cash_account">Default cash account</string>
+    <string name="quick_payment_currency_scroll">Select currencies by scrolling</string>
+    <string name="quick_payment_cash_account_scroll">Select cash accounts by scrolling</string>
+    <string name="quick_payment_show_calculator">Show calculator button</string>
+    <string name="quick_payment_amount_input">Amount input</string>
+    <string name="quick_payment_amount_input_digits">Numbers</string>
+    <string name="quick_payment_amount_input_scroll">Scroll, experimental</string>
+    <string name="quick_payment_amount_whole_digits">Digits before point</string>
+    <string name="quick_payment_amount_fraction_digits">Digits after point</string>
+    <string name="quick_payment_amount_whole_group">Whole</string>
+    <string name="quick_payment_amount_fraction_group">Fraction</string>
     <string name="text_on_button_category_order">Category order</string>
 </resources>

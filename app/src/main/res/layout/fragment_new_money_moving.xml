@@ -74,6 +74,21 @@
                 style="@style/ButtonFullWidth"
                 android:text="@string/text_on_button_select_cash_account" />
 
+            <HorizontalScrollView
+                android:id="@+id/cashAccountQuickSelectScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/cashAccountQuickSelectRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
             <TextView
                 android:id="@+id/destinationCashAccountLabel"
                 style="@style/TextDescriptions"
@@ -103,6 +118,21 @@
                 android:id="@+id/selectCurrenciesButton"
                 style="@style/ButtonFullWidth"
                 android:text="@string/text_on_button_select_currency" />
+
+            <HorizontalScrollView
+                android:id="@+id/currencyQuickSelectScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/currencyQuickSelectRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
             <TextView
                 style="@style/TextDescriptions"
@@ -149,6 +179,7 @@
                     android:background="?android:selectableItemBackground"
                     android:contentDescription="@string/content_description_erase_button"
                     android:src="@drawable/button_clear"
+                    app:tint="@color/inputText"
                     app:layout_constraintEnd_toStartOf="@id/calc_button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -161,11 +192,100 @@
                     android:background="?android:selectableItemBackground"
                     android:contentDescription="@string/content_description_erase_button"
                     android:src="@drawable/ic_outline_calc"
+                    app:tint="@color/inputText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/amountScrollContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/margin_half_normal"
+                android:paddingBottom="@dimen/margin_half_normal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/amountWholeGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/decreaseAmountWholeDigitsButton"
+                        android:layout_width="44dp"
+                        android:layout_height="120dp"
+                        android:text="-"
+                        android:textSize="@dimen/H3" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/amountWholeDigitsScroll"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:fillViewport="false"
+                        android:overScrollMode="ifContentScrolls">
+
+                        <LinearLayout
+                            android:id="@+id/amountWholeDigitsRow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+
+                    <Button
+                        android:id="@+id/increaseAmountWholeDigitsButton"
+                        android:layout_width="44dp"
+                        android:layout_height="120dp"
+                        android:text="+"
+                        android:textSize="@dimen/H3" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/amountDecimalSeparator"
+                    style="@style/Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/margin_normal"
+                    android:paddingEnd="@dimen/margin_normal"
+                    android:text="."
+                    android:textColor="@color/inputText" />
+
+                <LinearLayout
+                    android:id="@+id/amountFractionGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <HorizontalScrollView
+                        android:id="@+id/amountFractionDigitsScroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:fillViewport="false"
+                        android:overScrollMode="ifContentScrolls">
+
+                        <LinearLayout
+                            android:id="@+id/amountFractionDigitsRow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
                 style="@style/TextDescriptions"

@@ -24,6 +24,7 @@
     <string name="text_on_button_delete">Удалить</string>
     <string name="text_on_button_yes">Да</string>
     <string name="text_on_button_no">Нет</string>
+    <string name="text_on_button_more">Больше</string>
 
     <string name="text_on_button_all_income">Доходы</string>
     <string name="text_on_button_all_spending">Расходы</string>

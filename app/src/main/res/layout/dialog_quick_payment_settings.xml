@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DialogLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/category_group_background">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        style="@style/Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/quick_payment_settings_title"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/settingsScroll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:clipToPadding="false"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="520dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialogTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/defaultCurrencyButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/quick_payment_default_currency" />
+
+            <Button
+                android:id="@+id/defaultCashAccountButton"
+                style="@style/ButtonFullWidth"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:text="@string/quick_payment_default_cash_account" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/currencyScrollSwitch"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/quick_payment_currency_scroll" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cashAccountScrollSwitch"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quick_payment_cash_account_scroll" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/showCalculatorSwitch"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quick_payment_show_calculator" />
+
+            <TextView
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/quick_payment_amount_input"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5" />
+
+            <RadioGroup
+                android:id="@+id/amountInputModeRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/amountDigitsRadioButton"
+                    style="@style/Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quick_payment_amount_input_digits" />
+
+                <RadioButton
+                    android:id="@+id/amountScrollRadioButton"
+                    style="@style/Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quick_payment_amount_input_scroll" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/amountScrollDigitsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextDescriptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/quick_payment_amount_whole_digits"
+                        android:textColor="@color/categoryTextSecondary"
+                        android:textSize="@dimen/H5" />
+
+                    <NumberPicker
+                        android:id="@+id/amountWholeDigitsPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:descendantFocusability="blocksDescendants" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextDescriptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/quick_payment_amount_fraction_digits"
+                        android:textColor="@color/categoryTextSecondary"
+                        android:textSize="@dimen/H5" />
+
+                    <NumberPicker
+                        android:id="@+id/amountFractionDigitsPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:descendantFocusability="blocksDescendants" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_submit"
+        app:layout_constraintEnd_toStartOf="@id/buttonsCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingsScroll" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonsCenter"
+        app:layout_constraintTop_toBottomOf="@id/settingsScroll" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/buttonsCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

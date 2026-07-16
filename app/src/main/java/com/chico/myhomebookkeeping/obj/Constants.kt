@@ -86,6 +86,17 @@ object Constants {
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
 
+    const val QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL = "quick_payment_currency_selection_scroll"
+    const val QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL = "quick_payment_cash_account_selection_scroll"
+    const val QUICK_PAYMENT_SHOW_CALCULATOR = "quick_payment_show_calculator"
+    const val QUICK_PAYMENT_AMOUNT_INPUT_MODE = "quick_payment_amount_input_mode"
+    const val QUICK_PAYMENT_AMOUNT_INPUT_DIGITS = "digits"
+    const val QUICK_PAYMENT_AMOUNT_INPUT_SCROLL = "scroll"
+    const val QUICK_PAYMENT_AMOUNT_WHOLE_DIGITS = "quick_payment_amount_whole_digits"
+    const val QUICK_PAYMENT_AMOUNT_FRACTION_DIGITS = "quick_payment_amount_fraction_digits"
+    const val QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS = 4
+    const val QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS = 2
+
     const val CASH_ACCOUNT_SELECT_MODE_SOURCE = "source"
     const val CASH_ACCOUNT_SELECT_MODE_DESTINATION = "destination"
 

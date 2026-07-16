@@ -17,5 +17,11 @@
     <color name="buttonFilterBackground">#1E2B2D</color>
     <color name="buttonPressedOverlay">#26383A</color>
     <color name="buttonDangerText">#F07B72</color>
+    <color name="inputBackground">#121A1B</color>
+    <color name="inputBorder">#4A5A5D</color>
+    <color name="inputBorderFocused">#5DAEB3</color>
+    <color name="inputBorderError">#F07B72</color>
+    <color name="inputText">#E6F0F1</color>
+    <color name="inputHint">#A4B0B3</color>
 
 </resources>

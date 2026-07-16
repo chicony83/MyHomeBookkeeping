@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.NumberPicker
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,9 +19,12 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentNewMoneyMovingBinding
+import com.chico.myhomebookkeeping.db.entity.CashAccount
+import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -28,6 +35,7 @@ import com.google.android.material.timepicker.TimeFormat
 //import kotlinx.android.synthetic.main.fragment_new_money_moving.amountEditText
 //import kotlinx.android.synthetic.main.fragment_new_money_moving.eraseButton
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -43,6 +51,14 @@ class NewMoneyMovingFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
     private val uiHelper = UiHelper()
+    private var latestQuickPaymentSettings: QuickPaymentSettings? = null
+    private var quickCurrencies: List<Currencies> = emptyList()
+    private var quickCashAccounts: List<CashAccount> = emptyList()
+    private val amountWholeDigitPickers = mutableListOf<NumberPicker>()
+    private val amountFractionDigitPickers = mutableListOf<NumberPicker>()
+    private var amountWholeDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS
+    private var amountFractionDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
+    private var isSyncingAmountPickers = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,6 +115,13 @@ class NewMoneyMovingFragment : Fragment() {
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
+            decreaseAmountWholeDigitsButton.setOnClickListener {
+                changeAmountWholeDigits(-1)
+            }
+            increaseAmountWholeDigitsButton.setOnClickListener {
+                changeAmountWholeDigits(1)
+            }
+            setupAmountPickers()
         }
         with(viewModel) {
             dataTime.observe(viewLifecycleOwner) {
@@ -106,12 +129,14 @@ class NewMoneyMovingFragment : Fragment() {
             }
             selectedCashAccount.observe(viewLifecycleOwner) {
                 binding.selectCashAccountButton.text = it.accountName
+                rebuildQuickCashAccountRow()
             }
             selectedTransferCashAccount.observe(viewLifecycleOwner) {
                 binding.selectTransferCashAccountButton.text = it.accountName
             }
             selectedCurrency.observe(viewLifecycleOwner) {
                 binding.selectCurrenciesButton.text = it.currencyName
+                rebuildQuickCurrencyRow()
             }
             selectedCategory.observe(viewLifecycleOwner) {
                 binding.selectCategoryButton.text = it.categoryName
@@ -121,6 +146,7 @@ class NewMoneyMovingFragment : Fragment() {
 
             enteredAmount.observe(viewLifecycleOwner) {
                 binding.amountEditText.setText(it.toString())
+                syncAmountPickersFromAmountText()
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -134,6 +160,9 @@ class NewMoneyMovingFragment : Fragment() {
                 )
                 updateTransferModeUi(it)
             }
+            quickPaymentSettings.observe(viewLifecycleOwner) {
+                applyQuickPaymentSettings(it)
+            }
         }
         viewModel.getAndCheckArgsSp()
 
@@ -146,6 +175,271 @@ class NewMoneyMovingFragment : Fragment() {
         }
 
         showHideEraseButton(binding.amountEditText, binding.eraseButton)
+    }
+
+    fun openQuickPaymentSettings() {
+        lifecycleScope.launch {
+            val dialog = QuickPaymentSettingsDialog(
+                settings = viewModel.getQuickPaymentSettings(),
+                currencies = viewModel.getAllCurrencies(),
+                cashAccounts = viewModel.getAllCashAccounts(),
+                defaultCurrency = viewModel.getDefaultCurrency(),
+                defaultCashAccount = viewModel.getDefaultCashAccount(),
+                onSettingsSubmitted = {
+                    viewModel.saveQuickPaymentSettings(it)
+                },
+                onDefaultCurrencySubmitted = {
+                    viewModel.setDefaultCurrency(it)
+                },
+                onDefaultCashAccountSubmitted = {
+                    viewModel.setDefaultCashAccount(it)
+                }
+            )
+            dialog.show(childFragmentManager, "quickPaymentSettingsDialog")
+        }
+    }
+
+    private fun applyQuickPaymentSettings(settings: QuickPaymentSettings) {
+        latestQuickPaymentSettings = settings
+        val isScrollAmountInput =
+            settings.amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL
+        configureAmountPickers(settings)
+        binding.amountInputContainer.visibility = if (isScrollAmountInput) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        binding.amountScrollContainer.visibility = if (isScrollAmountInput) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        if (isScrollAmountInput) {
+            syncAmountPickersFromAmountText()
+        }
+        binding.calcButton.visibility = if (settings.isCalculatorButtonVisible) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.selectCurrenciesButton.visibility = if (settings.isCurrencyScrollEnabled) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        binding.currencyQuickSelectScroll.visibility = if (settings.isCurrencyScrollEnabled) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.selectCashAccountButton.visibility = if (settings.isCashAccountScrollEnabled) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        binding.cashAccountQuickSelectScroll.visibility = if (settings.isCashAccountScrollEnabled) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        lifecycleScope.launch {
+            if (quickCurrencies.isEmpty()) quickCurrencies = viewModel.getAllCurrencies()
+            if (quickCashAccounts.isEmpty()) quickCashAccounts = viewModel.getAllCashAccounts()
+            rebuildQuickCurrencyRow()
+            rebuildQuickCashAccountRow()
+        }
+    }
+
+    private fun rebuildQuickCurrencyRow() {
+        if (latestQuickPaymentSettings?.isCurrencyScrollEnabled != true || _binding == null) return
+        binding.currencyQuickSelectRow.removeAllViews()
+        quickCurrencies.forEach { currency ->
+            binding.currencyQuickSelectRow.addView(
+                createQuickSelectButton(
+                    text = currency.iso4217
+                        ?.takeIf { it.isNotBlank() }
+                        ?: currency.currencyNameShort
+                        ?: currency.currencyName,
+                    isSelected = currency.currencyId == viewModel.selectedCurrency.value?.currencyId
+                ) {
+                    viewModel.selectCurrency(currency)
+                }
+            )
+        }
+        binding.currencyQuickSelectRow.addView(
+            createQuickSelectButton(getString(R.string.text_on_button_more), false) {
+                pressSelectButton(R.id.nav_currencies)
+            }
+        )
+    }
+
+    private fun rebuildQuickCashAccountRow() {
+        if (latestQuickPaymentSettings?.isCashAccountScrollEnabled != true || _binding == null) return
+        binding.cashAccountQuickSelectRow.removeAllViews()
+        quickCashAccounts.forEach { cashAccount ->
+            binding.cashAccountQuickSelectRow.addView(
+                createQuickSelectButton(
+                    text = cashAccount.bankAccountNumber.takeIf { it.isNotBlank() }?.let {
+                        "${cashAccount.accountName} *${it.takeLast(4)}"
+                    } ?: cashAccount.accountName,
+                    isSelected = cashAccount.cashAccountId ==
+                        viewModel.selectedCashAccount.value?.cashAccountId
+                ) {
+                    viewModel.selectCashAccount(cashAccount)
+                }
+            )
+        }
+        binding.cashAccountQuickSelectRow.addView(
+            createQuickSelectButton(getString(R.string.text_on_button_more), false) {
+                viewModel.setSourceCashAccountSelectMode()
+                pressSelectButton(R.id.nav_cash_account)
+            }
+        )
+    }
+
+    private fun createQuickSelectButton(
+        text: String,
+        isSelected: Boolean,
+        onClick: () -> Unit
+    ): Button {
+        return Button(requireContext()).apply {
+            this.text = text
+            isAllCaps = false
+            maxLines = 1
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.margin_normal),
+                0,
+                resources.getDimensionPixelSize(R.dimen.margin_normal),
+                0
+            )
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginEnd = resources.getDimensionPixelSize(R.dimen.margin_half_normal)
+            }
+            if (isSelected) {
+                setBackgroundResource(R.drawable.button_primary_background)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.buttonPrimaryText))
+            } else {
+                setBackgroundResource(R.drawable.button_neutral_background)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.buttonNeutralText))
+            }
+            setOnClickListener { onClick() }
+        }
+    }
+
+    private fun setupAmountPickers() {
+        rebuildAmountDigitPickers()
+    }
+
+    private fun createAmountDigitPicker(onValueChanged: () -> Unit): NumberPicker {
+        return NumberPicker(requireContext()).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                1f
+            ).apply {
+                marginEnd = resources.getDimensionPixelSize(R.dimen.margin_half_normal)
+            }
+            minValue = 0
+            maxValue = 9
+            wrapSelectorWheel = true
+            descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+            setOnValueChangedListener { _, _, _ ->
+                if (!isSyncingAmountPickers) onValueChanged()
+            }
+            setOnClickListener {
+                value = (value + 1) % 10
+                onValueChanged()
+            }
+        }
+    }
+
+    private fun rebuildAmountDigitPickers() {
+        if (_binding == null) return
+        binding.amountWholeDigitsRow.removeAllViews()
+        amountWholeDigitPickers.clear()
+        repeat(amountWholeDigitsCount) {
+            val picker = createAmountDigitPicker(::updateAmountFromPickers)
+            amountWholeDigitPickers += picker
+            binding.amountWholeDigitsRow.addView(picker)
+        }
+
+        binding.amountFractionDigitsRow.removeAllViews()
+        amountFractionDigitPickers.clear()
+        repeat(amountFractionDigitsCount) {
+            val picker = createAmountDigitPicker(::updateAmountFromPickers)
+            amountFractionDigitPickers += picker
+            binding.amountFractionDigitsRow.addView(picker)
+        }
+        binding.amountFractionGroup.visibility = if (amountFractionDigitsCount > 0) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.amountDecimalSeparator.visibility = binding.amountFractionGroup.visibility
+        syncAmountPickersFromAmountText()
+    }
+
+    private fun configureAmountPickers(settings: QuickPaymentSettings) {
+        val newWholeDigitsCount = settings.amountWholeDigits.coerceIn(1, 9)
+        val newFractionDigitsCount = settings.amountFractionDigits.coerceIn(0, 4)
+        if (
+            newWholeDigitsCount != amountWholeDigitsCount ||
+            newFractionDigitsCount != amountFractionDigitsCount ||
+            amountWholeDigitPickers.isEmpty()
+        ) {
+            amountWholeDigitsCount = newWholeDigitsCount
+            amountFractionDigitsCount = newFractionDigitsCount
+            rebuildAmountDigitPickers()
+        } else {
+            syncAmountPickersFromAmountText()
+        }
+    }
+
+    private fun changeAmountWholeDigits(delta: Int) {
+        amountWholeDigitsCount = (amountWholeDigitsCount + delta).coerceIn(1, 9)
+        rebuildAmountDigitPickers()
+    }
+
+    private fun syncAmountPickersFromAmountText() {
+        val amountText = binding.amountEditText.text.toString()
+        val parts = amountText.split(".", limit = 2)
+        val wholeDigits = parts.getOrNull(0)
+            .orEmpty()
+            .filter(Char::isDigit)
+            .takeLast(amountWholeDigitsCount)
+            .padStart(amountWholeDigitsCount, '0')
+        val fractionDigits = parts.getOrNull(1)
+            .orEmpty()
+            .filter(Char::isDigit)
+            .padEnd(amountFractionDigitsCount, '0')
+            .take(amountFractionDigitsCount)
+
+        isSyncingAmountPickers = true
+        amountWholeDigitPickers.forEachIndexed { index, picker ->
+            picker.value = wholeDigits.getOrNull(index)?.digitToIntOrNull() ?: 0
+        }
+        amountFractionDigitPickers.forEachIndexed { index, picker ->
+            picker.value = fractionDigits.getOrNull(index)?.digitToIntOrNull() ?: 0
+        }
+        isSyncingAmountPickers = false
+    }
+
+    private fun updateAmountFromPickers() {
+        val wholeText = amountWholeDigitPickers
+            .joinToString("") { it.value.toString() }
+            .trimStart('0')
+        val fractionText = amountFractionDigitPickers.joinToString("") { it.value.toString() }
+        val amount = when {
+            wholeText.isBlank() && fractionText.all { it == '0' } -> ""
+            amountFractionDigitsCount == 0 -> wholeText.ifBlank { "0" }
+            else -> "${wholeText.ifBlank { "0" }}.$fractionText"
+        }
+        if (binding.amountEditText.text.toString() != amount) {
+            binding.amountEditText.setText(amount)
+        }
     }
 
     private fun showHideEraseButton(amountEditText: EditText, eraseButton: ImageButton) {

@@ -102,6 +102,39 @@ object DatabaseBackupManager {
         return JSONObject()
             .put("sortingCategories", appPreferences.getString(Constants.SORTING_CATEGORIES, null))
             .put("sortingFastPayments", appPreferences.getString(Constants.SORTING_FAST_PAYMENTS, null))
+            .put(
+                "quickPaymentCurrencySelectionScroll",
+                appPreferences.getBoolean(Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL, false)
+            )
+            .put(
+                "quickPaymentCashAccountSelectionScroll",
+                appPreferences.getBoolean(Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL, false)
+            )
+            .put(
+                "quickPaymentShowCalculator",
+                appPreferences.getBoolean(Constants.QUICK_PAYMENT_SHOW_CALCULATOR, true)
+            )
+            .put(
+                "quickPaymentAmountInputMode",
+                appPreferences.getString(
+                    Constants.QUICK_PAYMENT_AMOUNT_INPUT_MODE,
+                    Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS
+                )
+            )
+            .put(
+                "quickPaymentAmountWholeDigits",
+                appPreferences.getInt(
+                    Constants.QUICK_PAYMENT_AMOUNT_WHOLE_DIGITS,
+                    Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS
+                )
+            )
+            .put(
+                "quickPaymentAmountFractionDigits",
+                appPreferences.getInt(
+                    Constants.QUICK_PAYMENT_AMOUNT_FRACTION_DIGITS,
+                    Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
+                )
+            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {

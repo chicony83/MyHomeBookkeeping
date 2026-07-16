@@ -29,6 +29,7 @@ import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
+import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.NewMoneyMovingFragment
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var eraseSP: EraseSP
     private var searchMenuItem: MenuItem? = null
     private var categoryOrderMenuItem: MenuItem? = null
+    private var quickPaymentSettingsMenuItem: MenuItem? = null
 
     private lateinit var spEditor: SharedPreferences.Editor
 
@@ -167,9 +169,13 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         searchMenuItem = menu.findItem(R.id.search_button)
         categoryOrderMenuItem = menu.findItem(R.id.category_order_button)
+        quickPaymentSettingsMenuItem = menu.findItem(R.id.quick_payment_settings_button)
         val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
+        val isNewMoneyMovingDestination =
+            navController.currentDestination?.id == R.id.nav_new_money_moving
         searchMenuItem?.isVisible = isCategoriesDestination
         categoryOrderMenuItem?.isVisible = isCategoriesDestination
+        quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         return true
     }
 
@@ -181,6 +187,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.category_order_button -> {
                 getCurrentFragment<CategoriesFragment>()?.toggleCategoryOrderEditMode()
+                true
+            }
+            R.id.quick_payment_settings_button -> {
+                getCurrentFragment<NewMoneyMovingFragment>()?.openQuickPaymentSettings()
                 true
             }
             R.id.help_button -> {
@@ -207,8 +217,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearchMenuVisibility() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isCategoriesDestination = destination.id == R.id.nav_categories
+            val isNewMoneyMovingDestination = destination.id == R.id.nav_new_money_moving
             searchMenuItem?.isVisible = isCategoriesDestination
             categoryOrderMenuItem?.isVisible = isCategoriesDestination
+            quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         }
     }
 

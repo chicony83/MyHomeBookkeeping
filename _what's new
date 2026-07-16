@@ -1,4 +1,6 @@
 0.9.10
+Added quick payment settings from the add-payment toolbar: default currency/account selection, quick scroll rows for currencies and cash accounts, calculator visibility, and an experimental digit-wheel amount input.
+Improved dark-theme input fields so amount, description, calculator, and clear controls use theme-aware colors.
 Added transfers between own cash accounts: the new payment screen now has a clear Payment / Transfer selector, transfer entries are stored without categories, and reports exclude transfers from income and spending totals.
 Added a payment type table and database migration to make income, spending, and transfer entries explicit and scalable.
 Protected the database so regular payments must keep a category while transfers must use linked category-free rows.

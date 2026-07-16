@@ -12,6 +12,7 @@
     <string name="text_on_button_time_period_to_end">To end</string>
 
     <string name="text_on_button_help">Help</string>
+    <string name="text_on_button_quick_payment_settings">Quick payment settings</string>
     <string name="text_on_button_submit">Submit</string>
     <string name="text_on_button_change">Change</string>
     <string name="text_on_button_save">Save</string>
@@ -24,6 +25,7 @@
     <string name="text_on_button_delete">Delete</string>
     <string name="text_on_button_yes">Yes</string>
     <string name="text_on_button_no">No</string>
+    <string name="text_on_button_more">More</string>
 
     <string name="text_on_button_all_income">Income</string>
     <string name="text_on_button_all_spending">Spending</string>

@@ -19,6 +19,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/quick_payment_settings_button"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="25"
+        android:title="@string/text_on_button_quick_payment_settings"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/help_button"
         android:icon="@drawable/ic_baseline_help_outline_24"
         android:orderInCategory="30"

@@ -171,6 +171,37 @@ object DatabaseRestoreManager {
                 ?.let { putString(Constants.SORTING_CATEGORIES, it) }
             settings.optString("sortingFastPayments").takeIf(String::isNotEmpty)
                 ?.let { putString(Constants.SORTING_FAST_PAYMENTS, it) }
+            putBoolean(
+                Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL,
+                settings.optBoolean("quickPaymentCurrencySelectionScroll", false)
+            )
+            putBoolean(
+                Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL,
+                settings.optBoolean("quickPaymentCashAccountSelectionScroll", false)
+            )
+            putBoolean(
+                Constants.QUICK_PAYMENT_SHOW_CALCULATOR,
+                settings.optBoolean("quickPaymentShowCalculator", true)
+            )
+            settings.optString(
+                "quickPaymentAmountInputMode",
+                Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS
+            ).takeIf(String::isNotEmpty)
+                ?.let { putString(Constants.QUICK_PAYMENT_AMOUNT_INPUT_MODE, it) }
+            putInt(
+                Constants.QUICK_PAYMENT_AMOUNT_WHOLE_DIGITS,
+                settings.optInt(
+                    "quickPaymentAmountWholeDigits",
+                    Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS
+                )
+            )
+            putInt(
+                Constants.QUICK_PAYMENT_AMOUNT_FRACTION_DIGITS,
+                settings.optInt(
+                    "quickPaymentAmountFractionDigits",
+                    Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
+                )
+            )
             apply()
         }
     }

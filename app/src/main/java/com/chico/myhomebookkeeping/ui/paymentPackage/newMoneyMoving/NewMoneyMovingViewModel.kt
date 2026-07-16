@@ -115,6 +115,10 @@ class NewMoneyMovingViewModel(
     val isTransfer: LiveData<Boolean>
         get() = _isTransfer
 
+    private val _quickPaymentSettings = MutableLiveData<QuickPaymentSettings>()
+    val quickPaymentSettings: LiveData<QuickPaymentSettings>
+        get() = _quickPaymentSettings
+
     //    private var idMoneyMovingForChange: Long = -1
 
     private var dateTimeSPLong = minusOneLong
@@ -197,6 +201,11 @@ class NewMoneyMovingViewModel(
             }
         }
         postIsTransfer(isTransferSPBoolean)
+        postQuickPaymentSettings()
+    }
+
+    private fun postQuickPaymentSettings() {
+        _quickPaymentSettings.postValue(getQuickPaymentSettings())
     }
 
     private fun postAmount(amount: Double) {
@@ -433,5 +442,91 @@ class NewMoneyMovingViewModel(
             argsCashAccountSelectModeCreateKey,
             Constants.CASH_ACCOUNT_SELECT_MODE_DESTINATION
         )
+    }
+
+    fun selectCurrency(currency: Currencies) {
+        _selectedCurrency.postValue(currency)
+    }
+
+    fun selectCashAccount(cashAccount: CashAccount) {
+        _selectedCashAccount.postValue(cashAccount)
+    }
+
+    fun getQuickPaymentSettings(): QuickPaymentSettings {
+        return QuickPaymentSettings(
+            isCurrencyScrollEnabled = getSP.getBooleanElseReturnFalse(
+                Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL
+            ),
+            isCashAccountScrollEnabled = getSP.getBooleanElseReturnFalse(
+                Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL
+            ),
+            isCalculatorButtonVisible = getSP.getBooleanElseReturnTrue(
+                Constants.QUICK_PAYMENT_SHOW_CALCULATOR
+            ),
+            amountInputMode = getSP.getString(Constants.QUICK_PAYMENT_AMOUNT_INPUT_MODE)
+                ?.takeIf { it.isNotBlank() }
+                ?: Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS,
+            amountWholeDigits = getSP.getInt(Constants.QUICK_PAYMENT_AMOUNT_WHOLE_DIGITS)
+                .takeIf { it > 0 }
+                ?: Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS,
+            amountFractionDigits = getSP.getInt(Constants.QUICK_PAYMENT_AMOUNT_FRACTION_DIGITS)
+                .takeIf { it >= 0 }
+                ?: Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
+        )
+    }
+
+    fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
+        with(setSP) {
+            saveToSP(
+                Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL,
+                settings.isCurrencyScrollEnabled
+            )
+            saveToSP(
+                Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL,
+                settings.isCashAccountScrollEnabled
+            )
+            saveToSP(
+                Constants.QUICK_PAYMENT_SHOW_CALCULATOR,
+                settings.isCalculatorButtonVisible
+            )
+            saveToSP(Constants.QUICK_PAYMENT_AMOUNT_INPUT_MODE, settings.amountInputMode)
+            saveToSP(Constants.QUICK_PAYMENT_AMOUNT_WHOLE_DIGITS, settings.amountWholeDigits)
+            saveToSP(Constants.QUICK_PAYMENT_AMOUNT_FRACTION_DIGITS, settings.amountFractionDigits)
+        }
+        _quickPaymentSettings.postValue(settings)
+    }
+
+    suspend fun getAllCurrencies(): List<Currencies> {
+        return CurrenciesUseCase.getAllCurrenciesSortNameAsc(dbCurrencies)
+    }
+
+    suspend fun getAllCashAccounts(): List<CashAccount> {
+        return CashAccountsUseCase.getAllCashAccountsSortNameAsc(dbCashAccount)
+    }
+
+    suspend fun getDefaultCurrency(): Currencies? {
+        return CurrenciesUseCase.getDefaultCurrency(dbCurrencies)
+    }
+
+    suspend fun getDefaultCashAccount(): CashAccount? {
+        return CashAccountsUseCase.getDefaultCashAccount(dbCashAccount)
+    }
+
+    fun setDefaultCurrency(currency: Currencies) {
+        currency.currencyId?.let { currencyId ->
+            launchIo {
+                CurrenciesUseCase.setDefaultCurrency(dbCurrencies, currencyId)
+                postCurrency(currencyId)
+            }
+        }
+    }
+
+    fun setDefaultCashAccount(cashAccount: CashAccount) {
+        cashAccount.cashAccountId?.let { cashAccountId ->
+            launchIo {
+                CashAccountsUseCase.setDefaultCashAccount(dbCashAccount, cashAccountId)
+                postCashAccount(cashAccountId)
+            }
+        }
     }
 }
