@@ -49,6 +49,7 @@
 
     <string name="text_on_button_make_payment">Make payment</string>
     <string name="text_on_button_payment">Payment</string>
+    <string name="text_on_button_transfer">Transfer</string>
     <string name="text_on_button_transfer_between_accounts">Transfer between accounts</string>
     <string name="text_on_button_select">Select</string>
     <string name="text_on_button_cancel">Cancel</string>

@@ -1,15 +1,22 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
 
 import android.annotation.SuppressLint
+import android.animation.ValueAnimator
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.os.Bundle
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -38,6 +45,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.math.abs
 
 
 class NewMoneyMovingFragment : Fragment() {
@@ -54,8 +62,8 @@ class NewMoneyMovingFragment : Fragment() {
     private var latestQuickPaymentSettings: QuickPaymentSettings? = null
     private var quickCurrencies: List<Currencies> = emptyList()
     private var quickCashAccounts: List<CashAccount> = emptyList()
-    private val amountWholeDigitPickers = mutableListOf<NumberPicker>()
-    private val amountFractionDigitPickers = mutableListOf<NumberPicker>()
+    private val amountWholeDigitPickers = mutableListOf<DigitWheelView>()
+    private val amountFractionDigitPickers = mutableListOf<DigitWheelView>()
     private var amountWholeDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS
     private var amountFractionDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
     private var isSyncingAmountPickers = false
@@ -93,7 +101,12 @@ class NewMoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_currencies)
             }
             selectCategoryButton.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                if (viewModel.isTransferMode()) {
+                    viewModel.setDestinationCashAccountSelectMode()
+                    pressSelectButton(R.id.nav_cash_account)
+                } else {
+                    pressSelectButton(R.id.nav_categories)
+                }
             }
             eraseButton.setOnClickListener {
                 eraseAmountEditText()
@@ -101,12 +114,10 @@ class NewMoneyMovingFragment : Fragment() {
             submitButton.setOnClickListener {
                 pressSubmitButton()
             }
-            paymentTypeToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-                if (isChecked) {
-                    val isTransfer = checkedId == R.id.transferModeButton
-                    viewModel.setTransferMode(isTransfer)
-                    updateTransferModeUi(isTransfer)
-                }
+            paymentTypeSwitchButton.setOnClickListener {
+                val isTransfer = !viewModel.isTransferMode()
+                viewModel.setTransferMode(isTransfer)
+                updateTransferModeUi(isTransfer)
             }
             calcButton.setOnClickListener {
                 requireView().hideKeyboard()
@@ -133,13 +144,18 @@ class NewMoneyMovingFragment : Fragment() {
             }
             selectedTransferCashAccount.observe(viewLifecycleOwner) {
                 binding.selectTransferCashAccountButton.text = it.accountName
+                if (viewModel.isTransferMode()) {
+                    binding.selectCategoryButton.text = it.accountName
+                }
             }
             selectedCurrency.observe(viewLifecycleOwner) {
                 binding.selectCurrenciesButton.text = it.currencyName
                 rebuildQuickCurrencyRow()
             }
             selectedCategory.observe(viewLifecycleOwner) {
-                binding.selectCategoryButton.text = it.categoryName
+                if (!viewModel.isTransferMode()) {
+                    binding.selectCategoryButton.text = it.categoryName
+                }
             }
 
             setDateTimeOnButton(currentDateTimeMillis)
@@ -155,9 +171,6 @@ class NewMoneyMovingFragment : Fragment() {
                 binding.submitButton.text = it.toString()
             }
             isTransfer.observe(viewLifecycleOwner) {
-                binding.paymentTypeToggleGroup.check(
-                    if (it) R.id.transferModeButton else R.id.paymentModeButton
-                )
                 updateTransferModeUi(it)
             }
             quickPaymentSettings.observe(viewLifecycleOwner) {
@@ -333,43 +346,94 @@ class NewMoneyMovingFragment : Fragment() {
         rebuildAmountDigitPickers()
     }
 
-    private fun createAmountDigitPicker(onValueChanged: () -> Unit): NumberPicker {
-        return NumberPicker(requireContext()).apply {
+    private fun createAmountDigitPicker(onValueChanged: (oldValue: Int, newValue: Int) -> Unit): DigitWheelView {
+        return DigitWheelView(
+            requireContext(),
+            resources.getDimension(R.dimen.H2),
+            resources.getDimension(R.dimen.H3)
+        ).apply {
             layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                1f
+                resources.getDimensionPixelSize(R.dimen.amount_digit_picker_width),
+                LinearLayout.LayoutParams.MATCH_PARENT
             ).apply {
                 marginEnd = resources.getDimensionPixelSize(R.dimen.margin_half_normal)
             }
-            minValue = 0
-            maxValue = 9
-            wrapSelectorWheel = true
-            descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-            setOnValueChangedListener { _, _, _ ->
-                if (!isSyncingAmountPickers) onValueChanged()
+            onHorizontalTouchEvent = { event ->
+                binding.amountScrollContainer.onTouchEvent(event)
             }
-            setOnClickListener {
+            onDoubleTap = {
+                showAmountInputDialog()
+            }
+            onSingleTap = {
+                val oldValue = value
                 value = (value + 1) % 10
-                onValueChanged()
+                if (oldValue == value) {
+                    onValueChanged(oldValue, value)
+                }
+            }
+            onValueChangedByScroll = { oldValue, newValue ->
+                if (!isSyncingAmountPickers) {
+                    onValueChanged(oldValue, newValue)
+                }
             }
         }
+    }
+
+    private fun showAmountInputDialog() {
+        val amountInput = EditText(requireContext()).apply {
+            setText(binding.amountEditText.text.toString())
+            setSelectAllOnFocus(true)
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER or
+                android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+            setSingleLine(true)
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.margin_double),
+                resources.getDimensionPixelSize(R.dimen.margin_normal),
+                resources.getDimensionPixelSize(R.dimen.margin_double),
+                resources.getDimensionPixelSize(R.dimen.margin_normal)
+            )
+        }
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.description_amount))
+            .setView(amountInput)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                binding.amountEditText.setText(amountInput.text.toString())
+                syncAmountPickersFromAmountText()
+            }
+            .setNegativeButton(R.string.text_on_button_cancel, null)
+            .create()
+        dialog.setOnShowListener {
+            amountInput.requestFocus()
+            dialog.window?.setSoftInputMode(
+                android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+            )
+            val inputMethodManager = ContextCompat.getSystemService(
+                requireContext(),
+                InputMethodManager::class.java
+            )
+            inputMethodManager?.showSoftInput(amountInput, InputMethodManager.SHOW_IMPLICIT)
+        }
+        dialog.show()
     }
 
     private fun rebuildAmountDigitPickers() {
         if (_binding == null) return
         binding.amountWholeDigitsRow.removeAllViews()
         amountWholeDigitPickers.clear()
-        repeat(amountWholeDigitsCount) {
-            val picker = createAmountDigitPicker(::updateAmountFromPickers)
+        repeat(amountWholeDigitsCount) { index ->
+            val picker = createAmountDigitPicker { oldValue, newValue ->
+                handleAmountWholeDigitChanged(index, oldValue, newValue)
+            }
             amountWholeDigitPickers += picker
             binding.amountWholeDigitsRow.addView(picker)
         }
 
         binding.amountFractionDigitsRow.removeAllViews()
         amountFractionDigitPickers.clear()
-        repeat(amountFractionDigitsCount) {
-            val picker = createAmountDigitPicker(::updateAmountFromPickers)
+        repeat(amountFractionDigitsCount) { index ->
+            val picker = createAmountDigitPicker { oldValue, newValue ->
+                handleAmountFractionDigitChanged(index, oldValue, newValue)
+            }
             amountFractionDigitPickers += picker
             binding.amountFractionDigitsRow.addView(picker)
         }
@@ -380,6 +444,46 @@ class NewMoneyMovingFragment : Fragment() {
         }
         binding.amountDecimalSeparator.visibility = binding.amountFractionGroup.visibility
         syncAmountPickersFromAmountText()
+    }
+
+    private fun handleAmountWholeDigitChanged(index: Int, oldValue: Int, newValue: Int) {
+        applyAmountDigitCarry(amountWholeDigitPickers, index, oldValue, newValue, null)
+        updateAmountFromPickers()
+    }
+
+    private fun handleAmountFractionDigitChanged(index: Int, oldValue: Int, newValue: Int) {
+        applyAmountDigitCarry(
+            amountFractionDigitPickers,
+            index,
+            oldValue,
+            newValue,
+            amountWholeDigitPickers.lastOrNull()
+        )
+        updateAmountFromPickers()
+    }
+
+    private fun applyAmountDigitCarry(
+        pickers: List<DigitWheelView>,
+        index: Int,
+        oldValue: Int,
+        newValue: Int,
+        carryTargetBeforeFirst: DigitWheelView?
+    ) {
+        val delta = when {
+            oldValue == 9 && newValue == 0 -> 1
+            oldValue == 0 && newValue == 9 -> -1
+            else -> return
+        }
+        val carryTarget = pickers.getOrNull(index - 1) ?: carryTargetBeforeFirst ?: return
+        carryAmountDigit(carryTarget, delta)
+    }
+
+    private fun carryAmountDigit(picker: DigitWheelView, delta: Int) {
+        picker.value = if (delta > 0) {
+            (picker.value + 1) % 10
+        } else {
+            if (picker.value == 0) 9 else picker.value - 1
+        }
     }
 
     private fun configureAmountPickers(settings: QuickPaymentSettings) {
@@ -608,16 +712,27 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun updateTransferModeUi(isTransfer: Boolean) {
+        binding.paymentTypeSwitchButton.text = getString(
+            if (isTransfer) R.string.text_on_button_transfer
+            else R.string.text_on_button_payment
+        )
         binding.sourceCashAccountLabel.text = getString(
             if (isTransfer) R.string.description_cash_account_from
             else R.string.description_cash_account
         )
-        val transferVisibility = if (isTransfer) View.VISIBLE else View.GONE
-        val paymentVisibility = if (isTransfer) View.GONE else View.VISIBLE
-        binding.destinationCashAccountLabel.visibility = transferVisibility
-        binding.selectTransferCashAccountButton.visibility = transferVisibility
-        binding.categoryLabel.visibility = paymentVisibility
-        binding.selectCategoryButton.visibility = paymentVisibility
+        binding.destinationCashAccountLabel.visibility = View.GONE
+        binding.selectTransferCashAccountButton.visibility = View.GONE
+        binding.categoryLabel.text = getString(
+            if (isTransfer) R.string.description_cash_account_to
+            else R.string.description_category
+        )
+        binding.selectCategoryButton.text = if (isTransfer) {
+            viewModel.selectedTransferCashAccount.value?.accountName
+                ?: getString(R.string.text_on_button_select_cash_account)
+        } else {
+            viewModel.selectedCategory.value?.categoryName
+                ?: getString(R.string.text_on_button_select_category)
+        }
     }
 
     private fun getDescription(): String {
@@ -643,5 +758,171 @@ class NewMoneyMovingFragment : Fragment() {
 
 
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+    }
+}
+
+private class DigitWheelView(
+    context: Context,
+    private val selectedTextSizePx: Float,
+    private val sideTextSizePx: Float
+) : View(context) {
+
+    var value: Int = 0
+        set(newValue) {
+            field = ((newValue % 10) + 10) % 10
+            invalidate()
+        }
+
+    var onValueChangedByScroll: ((oldValue: Int, newValue: Int) -> Unit)? = null
+    var onSingleTap: (() -> Unit)? = null
+    var onDoubleTap: (() -> Unit)? = null
+    var onHorizontalTouchEvent: ((MotionEvent) -> Unit)? = null
+
+    private val selectedPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFE8F5F4.toInt()
+        textAlign = Paint.Align.CENTER
+        textSize = selectedTextSizePx
+    }
+    private val sidePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFF889697.toInt()
+        textAlign = Paint.Align.CENTER
+        textSize = sideTextSizePx
+    }
+    private val gestureDetector = GestureDetector(
+        context,
+        object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDown(e: MotionEvent): Boolean = true
+
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                onSingleTap?.invoke()
+                return true
+            }
+
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                onDoubleTap?.invoke()
+                return true
+            }
+        }
+    )
+    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+    private var startX = 0f
+    private var startY = 0f
+    private var lastY = 0f
+    private var accumulatedY = 0f
+    private var isHorizontalDrag = false
+    private var isVerticalDrag = false
+    private var settleAnimator: ValueAnimator? = null
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        val centerX = width / 2f
+        val centerY = height / 2f
+        val verticalGap = digitStep()
+        for (offset in -2..2) {
+            val paint = if (offset == 0) selectedPaint else sidePaint
+            drawCenteredText(
+                canvas,
+                digitAt(offset).toString(),
+                centerX,
+                centerY + accumulatedY + offset * verticalGap,
+                paint
+            )
+        }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        gestureDetector.onTouchEvent(event)
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                settleAnimator?.cancel()
+                startX = event.x
+                startY = event.y
+                lastY = event.y
+                accumulatedY = 0f
+                isHorizontalDrag = false
+                isVerticalDrag = false
+                parent?.requestDisallowInterceptTouchEvent(true)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val dx = event.x - startX
+                val dy = event.y - startY
+                if (!isHorizontalDrag && !isVerticalDrag) {
+                    isHorizontalDrag = abs(dx) > touchSlop && abs(dx) > abs(dy)
+                    isVerticalDrag = abs(dy) > touchSlop && abs(dy) > abs(dx)
+                    if (isHorizontalDrag) {
+                        accumulatedY = 0f
+                        invalidate()
+                        parent?.requestDisallowInterceptTouchEvent(false)
+                        onHorizontalTouchEvent?.invoke(MotionEvent.obtain(event).apply {
+                            action = MotionEvent.ACTION_DOWN
+                        })
+                    }
+                }
+                if (isHorizontalDrag) {
+                    onHorizontalTouchEvent?.invoke(event)
+                    return true
+                }
+                if (isVerticalDrag) {
+                    accumulatedY += event.y - lastY
+                    val step = digitStep()
+                    while (abs(accumulatedY) >= step) {
+                        if (accumulatedY < 0f) {
+                            changeBy(1)
+                            accumulatedY += step
+                        } else {
+                            changeBy(-1)
+                            accumulatedY -= step
+                        }
+                    }
+                    invalidate()
+                }
+                lastY = event.y
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                if (isHorizontalDrag) {
+                    onHorizontalTouchEvent?.invoke(event)
+                }
+                if (isVerticalDrag) {
+                    settleOffsetToCenter()
+                }
+                parent?.requestDisallowInterceptTouchEvent(false)
+            }
+        }
+        return true
+    }
+
+    private fun changeBy(delta: Int) {
+        val oldValue = value
+        value += delta
+        if (oldValue != value) {
+            onValueChangedByScroll?.invoke(oldValue, value)
+        }
+    }
+
+    private fun settleOffsetToCenter() {
+        settleAnimator?.cancel()
+        settleAnimator = ValueAnimator.ofFloat(accumulatedY, 0f).apply {
+            duration = 120L
+            addUpdateListener {
+                accumulatedY = it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+    }
+
+    private fun digitStep(): Float = (height / 3.4f).coerceAtLeast(1f)
+
+    private fun digitAt(offset: Int): Int = ((value + offset) % 10 + 10) % 10
+
+    private fun drawCenteredText(
+        canvas: Canvas,
+        text: String,
+        centerX: Float,
+        centerY: Float,
+        paint: Paint
+    ) {
+        val baseline = centerY - (paint.descent() + paint.ascent()) / 2f
+        canvas.drawText(text, centerX, baseline, paint)
     }
 }

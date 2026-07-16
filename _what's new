@@ -1,4 +1,6 @@
 0.9.10
+Updated the add-payment screen: compact date/type row, payment/transfer toggle, transfer destination inside the category slot, and a custom smooth amount wheel.
+Added Russian localization for the quick payment settings dialog.
 Added quick payment settings from the add-payment toolbar: default currency/account selection, quick scroll rows for currencies and cash accounts, calculator visibility, and an experimental digit-wheel amount input.
 Improved dark-theme input fields so amount, description, calculator, and clear controls use theme-aware colors.
 Added transfers between own cash accounts: the new payment screen now has a clear Payment / Transfer selector, transfer entries are stored without categories, and reports exclude transfers from income and spending totals.

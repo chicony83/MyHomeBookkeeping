@@ -29,37 +29,28 @@
                 android:textSize="@dimen/H5"
                 android:text="@string/description_date_time_text" />
 
-            <Button
-                android:id="@+id/selectDateTimeButton"
-                style="@style/ButtonFullWidth"
-                android:layout_marginTop="@dimen/margin_half_normal" />
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/paymentTypeToggleGroup"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                app:checkedButton="@id/paymentModeButton"
-                app:selectionRequired="true"
-                app:singleSelection="true">
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/selectDateTimeButton"
+                    style="@style/ButtonFullWidth"
+                    android:layout_width="0dp"
+                    android:layout_weight="1" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/paymentModeButton"
+                    android:id="@+id/paymentTypeSwitchButton"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_half_normal"
+                    android:minWidth="96dp"
                     android:text="@string/text_on_button_payment" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/transferModeButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/text_on_button_transfer_between_accounts" />
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/sourceCashAccountLabel"
@@ -107,7 +98,7 @@
                 tools:visibility="visible" />
 
             <TextView
-                android:id="@+id/categoryLabel"
+                android:id="@+id/currencyLabel"
                 style="@style/TextDescriptions"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:textColor="@color/categoryTextSecondary"
@@ -135,6 +126,7 @@
             </HorizontalScrollView>
 
             <TextView
+                android:id="@+id/categoryLabel"
                 style="@style/TextDescriptions"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:textColor="@color/categoryTextSecondary"
@@ -199,40 +191,38 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <HorizontalScrollView
                 android:id="@+id/amountScrollContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/margin_half_normal"
-                android:paddingBottom="@dimen/margin_half_normal"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:overScrollMode="ifContentScrolls"
                 android:visibility="gone"
                 tools:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/amountWholeGroup"
-                    android:layout_width="0dp"
+                    android:id="@+id/amountDigitsRow"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_half_normal"
+                    android:paddingBottom="@dimen/margin_half_normal">
 
                     <Button
                         android:id="@+id/decreaseAmountWholeDigitsButton"
-                        android:layout_width="44dp"
-                        android:layout_height="120dp"
+                        android:layout_width="@dimen/amount_digit_adjust_button_width"
+                        android:layout_height="@dimen/amount_digit_picker_height"
                         android:text="-"
                         android:textSize="@dimen/H3" />
 
-                    <HorizontalScrollView
-                        android:id="@+id/amountWholeDigitsScroll"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_weight="1"
-                        android:clipToPadding="false"
-                        android:fillViewport="false"
-                        android:overScrollMode="ifContentScrolls">
+                    <LinearLayout
+                        android:id="@+id/amountWholeGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/amount_digit_picker_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/amountWholeDigitsRow"
@@ -240,42 +230,32 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="horizontal" />
-                    </HorizontalScrollView>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/increaseAmountWholeDigitsButton"
-                        android:layout_width="44dp"
-                        android:layout_height="120dp"
+                        android:layout_width="@dimen/amount_digit_adjust_button_width"
+                        android:layout_height="@dimen/amount_digit_picker_height"
                         android:text="+"
                         android:textSize="@dimen/H3" />
-                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/amountDecimalSeparator"
-                    style="@style/Header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/margin_normal"
-                    android:paddingEnd="@dimen/margin_normal"
-                    android:text="."
-                    android:textColor="@color/inputText" />
+                    <TextView
+                        android:id="@+id/amountDecimalSeparator"
+                        style="@style/Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/amount_digit_picker_height"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/margin_normal"
+                        android:paddingEnd="@dimen/margin_normal"
+                        android:text="."
+                        android:textColor="@color/inputText" />
 
-                <LinearLayout
-                    android:id="@+id/amountFractionGroup"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <HorizontalScrollView
-                        android:id="@+id/amountFractionDigitsScroll"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:clipToPadding="false"
-                        android:fillViewport="false"
-                        android:overScrollMode="ifContentScrolls">
+                    <LinearLayout
+                        android:id="@+id/amountFractionGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/amount_digit_picker_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/amountFractionDigitsRow"
@@ -283,9 +263,9 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="horizontal" />
-                    </HorizontalScrollView>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </HorizontalScrollView>
 
             <TextView
                 style="@style/TextDescriptions"

@@ -17,6 +17,10 @@
     <dimen name="H6">12sp</dimen>
     <dimen name="bottom_navigation_height">56dp</dimen>
 
+    <dimen name="amount_digit_picker_width">52dp</dimen>
+    <dimen name="amount_digit_picker_height">112dp</dimen>
+    <dimen name="amount_digit_adjust_button_width">44dp</dimen>
+
     <dimen name="icon_xl">36dp</dimen>
     <dimen name="icon_l">24dp</dimen>
 
