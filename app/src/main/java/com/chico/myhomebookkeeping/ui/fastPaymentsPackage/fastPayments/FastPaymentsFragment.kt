@@ -240,7 +240,7 @@ class FastPaymentsFragment : Fragment() {
 
     private fun sortingFastPayments(sorting: String) {
         with(fastPaymentsViewModel) {
-            setSortingCategories(sorting)
+            setSortingFastPayments(sorting)
             reloadRecycler()
         }
     }

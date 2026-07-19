@@ -19,13 +19,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/category_sorting_button"
-        android:icon="@drawable/ic_baseline_sort"
-        android:orderInCategory="22"
-        android:title="@string/settings_category_sorting_title"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/quick_payment_settings_button"
         android:icon="@drawable/ic_settings"
         android:orderInCategory="25"

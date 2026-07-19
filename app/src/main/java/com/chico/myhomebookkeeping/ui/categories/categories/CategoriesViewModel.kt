@@ -13,9 +13,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
-import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
-import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -43,7 +41,6 @@ class CategoriesViewModel(
     private val argsIncome = Constants.ARGS_QUERY_PAYMENT_INCOME
     private val argsSpending = Constants.ARGS_QUERY_PAYMENT_SPENDING
     private val argsNone = Constants.FOR_QUERY_NONE
-    private val argsSortingCategories = Constants.SORTING_CATEGORIES
 
     private val getSP = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor)
@@ -57,60 +54,16 @@ class CategoriesViewModel(
     private var _changeCategory = MutableLiveData<Categories?>()
 //    val changeCategory: LiveData<Categories?> get() = _changeCategory
 
-    private var _sortedByTextOnButton = MutableLiveData<String>()
-    val sortedByTextOnButton: LiveData<String> get() = _sortedByTextOnButton
-
     private var selectedIsIncomeSpending: String = argsNone
-    private var sortingCategoriesStringSP = getSP.getString(argsSortingCategories)
-    private val setTextOnButtons = SetTextOnButtons(app.resources)
 
     init {
         loadCategories()
     }
 
     private fun loadCategories() {
-        sortingCategoriesStringSP = getSortingValueFromSP()
-//        Message.log("get sortingCategoriesStringSP = $sortingCategoriesStringSP")
         launchIo {
-            when (sortingCategoriesStringSP) {
-                SortingCategories.NumbersByASC.toString() -> {
-                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdAsc(db))
-                    setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_ASC))
-                }
-
-                SortingCategories.NumbersByDESC.toString() -> {
-                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortIdDesc(db))
-                    setTextOnButton(getString(R.string.text_on_button_sorting_as_numbers_DESC))
-                }
-
-                SortingCategories.AlphabetByASC.toString() -> {
-                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameAsc(db))
-                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_ASC))
-                }
-
-                SortingCategories.AlphabetByDESC.toString() -> {
-                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortNameDesc(db))
-                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
-                }
-
-                else -> {
-                    _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortOrderAsc(db))
-                    setTextOnButton(getString(R.string.text_on_button_sorting_as_alphabet_DESC))
-                }
-            }
+            _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortOrderAsc(db))
         }
-    }
-
-    private fun getString(string: Int) = app.getString(string)
-
-    private fun setTextOnButton(string: String) {
-        launchUi {
-            setTextOnButtons.setTextOnSortingCategoriesButton(_sortedByTextOnButton, string)
-        }
-    }
-
-    private fun getSortingValueFromSP(): String? {
-        return getSP.getString(argsSortingCategories)
     }
 
     fun reloadCategories() {
@@ -229,10 +182,6 @@ class CategoriesViewModel(
 
     private fun getItemsList(): List<Categories>? {
         return categoriesList.value?.toList()
-    }
-
-    fun setSortingCategories(sorting: String) {
-        setSP.saveToSP(argsSortingCategories, sorting)
     }
 
     fun saveChangedCategoryWithoutParentCategory(

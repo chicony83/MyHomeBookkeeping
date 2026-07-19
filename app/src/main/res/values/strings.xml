@@ -13,7 +13,6 @@
     <string name="quick_payment_amount_whole_group">Whole</string>
     <string name="quick_payment_amount_fraction_group">Fraction</string>
     <string name="text_on_button_category_order">Category order</string>
-    <string name="settings_category_sorting_title">Category sorting</string>
     <string name="settings_start_fragment_title">Open on app start</string>
     <string name="message_settings_saved">Settings saved</string>
 </resources>

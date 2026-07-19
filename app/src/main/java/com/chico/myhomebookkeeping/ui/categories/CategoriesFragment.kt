@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,7 +27,6 @@ import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
-import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroup
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroupsAdapter
@@ -160,24 +158,6 @@ class CategoriesFragment : Fragment() {
     fun toggleCategoryOrderEditMode() {
         if (searchMode) hideSearch()
         setCategoryOrderEditMode(!categoryOrderEditMode)
-    }
-
-    fun showSortingMenu(anchor: View) {
-        if (searchMode) hideSearch()
-        if (categoryOrderEditMode) setCategoryOrderEditMode(false)
-        PopupMenu(requireContext(), anchor).apply {
-            menuInflater.inflate(R.menu.pop_up_menu_sorting_categories, menu)
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.sort_by_numbers_ASC -> sortingCategories(SortingCategories.NumbersByASC.toString())
-                    R.id.sort_by_numbers_DESC -> sortingCategories(SortingCategories.NumbersByDESC.toString())
-                    R.id.sort_by_alphabet_ASC -> sortingCategories(SortingCategories.AlphabetByASC.toString())
-                    R.id.sort_by_alphabet_DESC -> sortingCategories(SortingCategories.AlphabetByDESC.toString())
-                }
-                true
-            }
-            show()
-        }
     }
 
     private fun setCategoryOrderEditMode(isEnabled: Boolean) {
@@ -365,11 +345,6 @@ class CategoriesFragment : Fragment() {
             .edit()
             .putString(Constants.CATEGORIES_TOP_ORDER, topOrder.joinToString(","))
             .apply()
-    }
-
-    private fun sortingCategories(sorting: String) {
-        categoriesViewModel.setSortingCategories(sorting)
-        categoriesViewModel.reloadCategories()
     }
 
     private fun showSelectCategoryDialog(selectedId: Int) {

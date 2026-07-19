@@ -226,7 +226,7 @@ class FastPaymentsViewModel(
         }
     }
 
-    fun setSortingCategories(sorting: String) {
+    fun setSortingFastPayments(sorting: String) {
         setSP.saveToSP(argsSortingFastPayments, sorting)
     }
 

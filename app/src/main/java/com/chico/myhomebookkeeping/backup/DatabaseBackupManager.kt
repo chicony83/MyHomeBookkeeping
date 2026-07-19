@@ -100,7 +100,6 @@ object DatabaseBackupManager {
     private fun createPersistentSettings(context: Context): JSONObject {
         val appPreferences = context.getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE)
         return JSONObject()
-            .put("sortingCategories", appPreferences.getString(Constants.SORTING_CATEGORIES, null))
             .put("sortingFastPayments", appPreferences.getString(Constants.SORTING_FAST_PAYMENTS, null))
             .put(
                 "quickPaymentCurrencySelectionScroll",

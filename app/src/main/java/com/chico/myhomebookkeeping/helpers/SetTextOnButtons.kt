@@ -164,12 +164,4 @@ class SetTextOnButtons(val resources: Resources) {
         return "\n"
     }
 
-    fun setTextOnSortingCategoriesButton(
-        textOnButton: MutableLiveData<String>,
-        additionalTextForTheButton: String,
-        ) {
-//        val nameButton = getResourceText(R.string.text_on_button_sorting_as)
-        textOnButton.postValue(createButtonText(additionalTextForTheButton))
-    }
-
 }

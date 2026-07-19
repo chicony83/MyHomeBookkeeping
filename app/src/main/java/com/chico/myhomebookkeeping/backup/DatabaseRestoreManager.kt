@@ -167,8 +167,6 @@ object DatabaseRestoreManager {
         } else JSONObject()
         context.getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE).edit().apply {
             putBoolean(Constants.IS_FIRST_LAUNCH, false)
-            settings.optString("sortingCategories").takeIf(String::isNotEmpty)
-                ?.let { putString(Constants.SORTING_CATEGORIES, it) }
             settings.optString("sortingFastPayments").takeIf(String::isNotEmpty)
                 ?.let { putString(Constants.SORTING_FAST_PAYMENTS, it) }
             putBoolean(

@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var eraseSP: EraseSP
     private var searchMenuItem: MenuItem? = null
     private var categoryOrderMenuItem: MenuItem? = null
-    private var categorySortingMenuItem: MenuItem? = null
     private var quickPaymentSettingsMenuItem: MenuItem? = null
 
     private lateinit var spEditor: SharedPreferences.Editor
@@ -183,14 +182,12 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         searchMenuItem = menu.findItem(R.id.search_button)
         categoryOrderMenuItem = menu.findItem(R.id.category_order_button)
-        categorySortingMenuItem = menu.findItem(R.id.category_sorting_button)
         quickPaymentSettingsMenuItem = menu.findItem(R.id.quick_payment_settings_button)
         val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
         val isNewMoneyMovingDestination =
             navController.currentDestination?.id == R.id.nav_new_money_moving
         searchMenuItem?.isVisible = isCategoriesDestination
         categoryOrderMenuItem?.isVisible = isCategoriesDestination
-        categorySortingMenuItem?.isVisible = isCategoriesDestination
         quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         return true
     }
@@ -203,10 +200,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.category_order_button -> {
                 getCurrentFragment<CategoriesFragment>()?.toggleCategoryOrderEditMode()
-                true
-            }
-            R.id.category_sorting_button -> {
-                getCurrentFragment<CategoriesFragment>()?.showSortingMenu(findViewById(R.id.toolbar))
                 true
             }
             R.id.quick_payment_settings_button -> {
@@ -240,7 +233,6 @@ class MainActivity : AppCompatActivity() {
             val isNewMoneyMovingDestination = destination.id == R.id.nav_new_money_moving
             searchMenuItem?.isVisible = isCategoriesDestination
             categoryOrderMenuItem?.isVisible = isCategoriesDestination
-            categorySortingMenuItem?.isVisible = isCategoriesDestination
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         }
     }
