@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -36,7 +37,7 @@ class FirstLaunchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFirstLaunchBinding.inflate(inflater, container, false)
-        firstLaunchViewModel = ViewModelProvider(this).get(FirstLaunchViewModel::class.java)
+        firstLaunchViewModel = ViewModelProvider(parentFragment ?: this).get(FirstLaunchViewModel::class.java)
 //        noImage = firstLaunchViewModel.getNoImageImage()!!
         with(firstLaunchViewModel) {
             cardCashAccountItem.observe(viewLifecycleOwner) {
@@ -93,7 +94,25 @@ class FirstLaunchFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
 
-        binding.submitButton.setOnClickListener {
+        if (parentFragment is FirstLaunchSetupFragment) {
+            binding.submitButton.visibility = View.GONE
+        } else {
+            binding.submitButton.setOnClickListener {
+                submitStep()
+            }
+        }
+    }
+
+    fun submitStep() {
+        val setupFragment = parentFragment as? FirstLaunchSetupFragment
+        if (setupFragment != null) {
+            firstLaunchViewModel.saveFirstLaunchSelections(
+                getSelectedSetupItems(getListCashAccounts()),
+                getSelectedSetupItems(getListIncomeCheckBoxes()),
+                getSelectedSetupItems(getListSpendingCheckBoxes())
+            )
+            setupFragment.showDefaultCashAccountStep()
+        } else {
             showSelectDefaultCashAccountDialog()
         }
     }
@@ -146,7 +165,12 @@ class FirstLaunchFragment : Fragment() {
         }
 
         firstLaunchViewModel.setIsFirstLaunchFalse()
-        control.navigate(R.id.nav_fast_payments_fragment)
+        val setupFragment = parentFragment as? FirstLaunchSetupFragment
+        if (setupFragment != null) {
+            setupFragment.finishFirstLaunch()
+        } else {
+            control.navigate(R.id.nav_fast_payments_fragment)
+        }
     }
 
 
@@ -177,6 +201,12 @@ class FirstLaunchFragment : Fragment() {
             }
         }
         return listSelectedItems.toList()
+    }
+
+    private fun getSelectedSetupItems(listOfItems: List<SelectedItemOfImageAndCheckBox>): List<FirstLaunchSetupItem> {
+        return getListSelectedItems(listOfItems).map {
+            FirstLaunchSetupItem(it.img, it.checkBox.text.toString())
+        }
     }
 
     private fun getListIncomeCheckBoxes() = listOf(

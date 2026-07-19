@@ -112,7 +112,16 @@ class MainActivity : AppCompatActivity() {
         setupSearchMenuVisibility()
 //        eraseSP.eraseTempSP()
 
-        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_select_currencies_fragment)
+        if (savedInstanceState == null) {
+            if (mainActivityViewModel.checkIsFirstLaunch()) {
+                navController.navigate(R.id.nav_first_launch_setup_fragment)
+            } else {
+                val startDestinationId = mainActivityViewModel.getStartDestinationId()
+                if (startDestinationId != R.id.nav_fast_payments_fragment) {
+                    navController.navigate(startDestinationId)
+                }
+            }
+        }
 //        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_fragment)
     }
 
@@ -138,6 +147,10 @@ class MainActivity : AppCompatActivity() {
 //                    R.id.nav_fast_payments_fragment->{
 //                        bottomNavigationView.selectedItemId = R.id.nav_fast_payments_fragment
 //                    }
+                    R.id.nav_first_launch_setup_fragment -> {
+                        uiHelper.hideUiElement(toolbar)
+                        uiHelper.hideUiElement(bottomNavigationView)
+                    }
                     R.id.nav_first_launch_select_currencies_fragment->{
                         uiHelper.hideUiElement(toolbar)
                         uiHelper.hideUiElement(bottomNavigationView)

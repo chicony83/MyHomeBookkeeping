@@ -167,8 +167,7 @@ class MoneyMovingFragment : Fragment() {
 
     private fun checkIsFirstLaunch() {
         if (moneyMovingViewModel.isFirstLaunch()) {
-            moneyMovingViewModel.setIsFirstLaunchFalse()
-            control.navigate(R.id.nav_first_launch_select_currencies_fragment)
+            control.navigate(R.id.nav_first_launch_setup_fragment)
         }
     }
 

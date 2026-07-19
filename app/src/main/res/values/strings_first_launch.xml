@@ -7,8 +7,17 @@
     <string name="first_launch_currencies_continue">Continue · choose default</string>
     <string name="first_launch_currencies_empty_message">Add at least one currency to continue</string>
     <string name="first_launch_currencies_major">Major currencies</string>
+    <string name="first_launch_currencies_fiat">Currencies</string>
     <string name="first_launch_currencies_other">Other currencies</string>
     <string name="first_launch_currencies_crypto">Cryptocurrencies</string>
+    <string name="first_launch_setup_step_title">Setup: step %1$d of %2$d</string>
+    <string name="first_launch_setup_next">Next</string>
+    <string name="first_launch_setup_done">Done</string>
+    <string name="first_launch_default_currency_crypto_notice">Cryptocurrencies are included in your list. You can choose any selected currency as the default one.</string>
+    <string name="first_launch_start_destination_title">Choose which section opens when the app starts. You can change this later in app settings.</string>
+    <string name="first_launch_start_destination_fast_payments">Fast payments</string>
+    <string name="first_launch_start_destination_categories">Categories</string>
+    <string name="first_launch_start_destination_journal">Journal</string>
     <string name="quick_setup_add_Cash_account">Cash accounts</string>
     <string name="quick_setup_name_Card">Card</string>
     <string name="quick_setup_name_Cash">Cash</string>

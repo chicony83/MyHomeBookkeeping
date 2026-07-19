@@ -23,20 +23,21 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemSelectCurrencyAsD
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
+import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchSetupFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import kotlinx.coroutines.flow.collect
 
 class FirstLaunchSelectCurrenciesFragment : Fragment() {
     private var _binding: FragmentFirstLaunchSelectCurrenciesBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: FirstLaunchSelectCurrenciesViewModel by viewModels()
+    private val viewModel: FirstLaunchSelectCurrenciesViewModel by viewModels(
+        ownerProducer = { parentFragment ?: this }
+    )
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var majorCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
-    private lateinit var otherCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
     private lateinit var cryptoCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
     private var isMajorCurrenciesExpanded = true
-    private var isOtherCurrenciesExpanded = false
     private var isCryptoCurrenciesExpanded = false
 
     override fun onCreateView(
@@ -56,6 +57,12 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         }
         lifecycleScope.launchWhenStarted {
             viewModel.onDefaultCurrencyAdded.collect {
+                val setupFragment = parentFragment as? FirstLaunchSetupFragment
+                if (setupFragment != null) {
+                    setupFragment.showCashAccountsAndCategoriesStep()
+                    return@collect
+                }
+
                 (requireActivity() as MainActivity).mainActivityViewModel.setFirstLaunchFlag(false)
 
                 findNavController().navigate(
@@ -81,26 +88,34 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             isMajorCurrenciesExpanded = !isMajorCurrenciesExpanded
             renderCurrenciesSections()
         }
-        binding.otherCurrenciesHeader.setOnClickListener {
-            isOtherCurrenciesExpanded = !isOtherCurrenciesExpanded
-            renderCurrenciesSections()
-        }
         binding.cryptoCurrenciesHeader.setOnClickListener {
             isCryptoCurrenciesExpanded = !isCryptoCurrenciesExpanded
             renderCurrenciesSections()
         }
-        binding.submitButton.setOnClickListener {
+        if (parentFragment is FirstLaunchSetupFragment) {
+            binding.submitButton.visibility = View.GONE
+        } else {
+            binding.submitButton.setOnClickListener {
+                submitStep()
+            }
+        }
+    }
 
-            when (viewModel.isCurrenciesListNotEmpty()) {
-                true -> {
+    fun submitStep() {
+        when (viewModel.isCurrenciesListNotEmpty()) {
+            true -> {
+                val setupFragment = parentFragment as? FirstLaunchSetupFragment
+                if (setupFragment != null) {
+                    setupFragment.showDefaultCurrencyStep()
+                } else {
                     showSelectDefaultCurrencyDialog()
                 }
-                false -> Toast.makeText(
-                    context,
-                    R.string.first_launch_currencies_empty_message,
-                    Toast.LENGTH_LONG
-                ).show()
             }
+            false -> Toast.makeText(
+                context,
+                R.string.first_launch_currencies_empty_message,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -113,12 +128,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         }
 
         majorCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-            FirstLaunchCurrenciesList.getMajorCurrenciesList(),
-            selectedCurrenciesIso,
-            listener
-        )
-        otherCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-            FirstLaunchCurrenciesList.getOtherFiatCurrenciesList(),
+            FirstLaunchCurrenciesList.getFiatCurrenciesList(),
             selectedCurrenciesIso,
             listener
         )
@@ -129,7 +139,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         )
 
         binding.majorCurrenciesHolder.adapter = majorCurrenciesAdapter
-        binding.otherCurrenciesHolder.adapter = otherCurrenciesAdapter
         binding.cryptoCurrenciesHolder.adapter = cryptoCurrenciesAdapter
         renderCurrenciesSections()
     }
@@ -139,7 +148,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 
         val selectedCurrenciesIso = getSelectedCurrenciesIso()
         majorCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
-        otherCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
         cryptoCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
     }
 
@@ -148,11 +156,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             isMajorCurrenciesExpanded,
             binding.majorCurrenciesHolder,
             binding.majorCurrenciesExpandImageView
-        )
-        renderCurrenciesSection(
-            isOtherCurrenciesExpanded,
-            binding.otherCurrenciesHolder,
-            binding.otherCurrenciesExpandImageView
         )
         renderCurrenciesSection(
             isCryptoCurrenciesExpanded,
@@ -192,26 +195,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         }
 
         layout.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.iconsHolderLayout).adapter = adapter
-        layout.findViewById<Button>(R.id.submitButton).setOnClickListener {
-            dialog.dismiss()
-            if (FirstLaunchCurrenciesList.isCryptoCurrency(defaultCurrency.iso4217)) {
-                showConfirmCryptoDefaultCurrencyDialog(defaultCurrency)
-            } else {
-                saveSelectedCurrencies(defaultCurrency)
-            }
-        }
-        layout.findViewById<Button>(R.id.cancelButton).setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
-    private fun showConfirmCryptoDefaultCurrencyDialog(defaultCurrency: Currencies) {
-        val layout = layoutInflater.inflate(R.layout.dialog_first_launch_confirm_crypto_default, null)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(layout)
-            .create()
-
         layout.findViewById<Button>(R.id.submitButton).setOnClickListener {
             dialog.dismiss()
             saveSelectedCurrencies(defaultCurrency)

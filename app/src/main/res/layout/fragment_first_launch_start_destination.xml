@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/categoryScreenBackground">
+
+    <TextView
+        android:id="@+id/startDestinationTitle"
+        style="@style/Description.first_launch_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:text="@string/first_launch_start_destination_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/startDestinationRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_double"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startDestinationTitle">
+
+        <RadioButton
+            android:id="@+id/startFastPaymentsRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:text="@string/first_launch_start_destination_fast_payments" />
+
+        <RadioButton
+            android:id="@+id/startCategoriesRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:text="@string/first_launch_start_destination_categories" />
+
+        <RadioButton
+            android:id="@+id/startJournalRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:text="@string/first_launch_start_destination_journal" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

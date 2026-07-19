@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.checks.AppVersion
 import com.chico.myhomebookkeeping.db.dataBase
@@ -52,6 +53,14 @@ class MainActivityViewModel(
 
     fun setFirstLaunchFlag(flag: Boolean) {
         getSP.setBoolean(Constants.IS_FIRST_LAUNCH, flag)
+    }
+
+    fun getStartDestinationId(): Int {
+        return when (getSP.getString(Constants.START_FRAGMENT)) {
+            Constants.START_FRAGMENT_CATEGORIES -> R.id.nav_categories
+            Constants.START_FRAGMENT_JOURNAL -> R.id.nav_money_moving
+            else -> R.id.nav_fast_payments_fragment
+        }
     }
 
     private fun fixFirstLaunchFlagForExistingDatabase() {

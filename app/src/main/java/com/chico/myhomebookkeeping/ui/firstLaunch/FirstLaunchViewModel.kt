@@ -76,6 +76,10 @@ class FirstLaunchViewModel(
 //    private val addIconCategories = AddIconCategories()
 
     private var listIconResource = listOf<IconsResource>()
+    private var selectedCashAccounts = listOf<FirstLaunchSetupItem>()
+    private var selectedIncomeCategories = listOf<FirstLaunchSetupItem>()
+    private var selectedSpendingCategories = listOf<FirstLaunchSetupItem>()
+    private var selectedDefaultCashAccountName = ""
 
     @SuppressLint("NewApi")
     private val addIcons = AddIcons(
@@ -107,6 +111,61 @@ class FirstLaunchViewModel(
             async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes, defaultCashAccountName) }
 
         val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
+
+        launchIo {
+            while (getCategoriesList().size < sizeCategoriesList) {
+                delay(100)
+                addFreeFastPayments()
+            }
+        }
+    }
+
+    fun saveFirstLaunchSelections(
+        cashAccounts: List<FirstLaunchSetupItem>,
+        incomeCategories: List<FirstLaunchSetupItem>,
+        spendingCategories: List<FirstLaunchSetupItem>
+    ) {
+        selectedCashAccounts = cashAccounts
+        selectedIncomeCategories = incomeCategories
+        selectedSpendingCategories = spendingCategories
+    }
+
+    fun getSelectedCashAccounts(): List<FirstLaunchSetupItem> {
+        return selectedCashAccounts
+    }
+
+    fun saveDefaultCashAccount(defaultCashAccountName: String) {
+        selectedDefaultCashAccountName = defaultCashAccountName
+    }
+
+    fun saveStartFragment(startFragment: String) {
+        setSP.saveToSP(Constants.START_FRAGMENT, startFragment)
+    }
+
+    fun getStartFragmentDestinationId(): Int {
+        return when (sharedPreferences.getString(
+            Constants.START_FRAGMENT,
+            Constants.START_FRAGMENT_FAST_PAYMENTS
+        )) {
+            Constants.START_FRAGMENT_CATEGORIES -> com.chico.myhomebookkeeping.R.id.nav_categories
+            Constants.START_FRAGMENT_JOURNAL -> com.chico.myhomebookkeeping.R.id.nav_money_moving
+            else -> com.chico.myhomebookkeeping.R.id.nav_fast_payments_fragment
+        }
+    }
+
+    fun addSavedFirstLaunchElements() = runBlocking {
+        val resultAddedIncomeCategories =
+            async(Dispatchers.IO) { addSavedIncomeCategories(selectedIncomeCategories) }
+        val resultAddSpendingCategories =
+            async(Dispatchers.IO) { addSavedSpendingCategories(selectedSpendingCategories) }
+
+        val resultAddCashAccount =
+            async(Dispatchers.IO) {
+                addSavedCashAccounts(selectedCashAccounts, selectedDefaultCashAccountName)
+            }
+
+        val sizeCategoriesList: Int =
+            selectedIncomeCategories.size + selectedSpendingCategories.size
 
         launchIo {
             while (getCategoriesList().size < sizeCategoriesList) {
@@ -153,7 +212,27 @@ class FirstLaunchViewModel(
         return result
     }
 
+    private fun addSavedSpendingCategories(listSpendingCategories: List<FirstLaunchSetupItem>): Long {
+        var result: Long = 0
+        launchIo {
+            for (i in listSpendingCategories.indices) {
+                result += addCategory(listSpendingCategories[i], false)
+            }
+        }
+        return result
+    }
+
     private fun addIncomeCategories(listIncomeCategories: List<SelectedItemOfImageAndCheckBox>): Long {
+        var result: Long = 0
+        launchIo {
+            for (i in listIncomeCategories.indices) {
+                result += addCategory(listIncomeCategories[i], true)
+            }
+        }
+        return result
+    }
+
+    private fun addSavedIncomeCategories(listIncomeCategories: List<FirstLaunchSetupItem>): Long {
         var result: Long = 0
         launchIo {
             for (i in listIncomeCategories.indices) {
@@ -174,6 +253,17 @@ class FirstLaunchViewModel(
         )
     }
 
+    private suspend fun addCategory(item: FirstLaunchSetupItem, isIncome: Boolean): Long {
+        return dbCategories.addCategory(
+            Categories(
+                categoryName = item.name,
+                isIncome = isIncome,
+                icon = item.img,
+                parentCategoryId = null
+            )
+        )
+    }
+
     private fun addCashAccounts(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
         defaultCashAccountName: String
@@ -186,6 +276,16 @@ class FirstLaunchViewModel(
         return true
     }
 
+    private fun addSavedCashAccounts(
+        cashAccounts: List<FirstLaunchSetupItem>,
+        defaultCashAccountName: String
+    ): Boolean {
+        for (i in cashAccounts.indices) {
+            addCashAccount(cashAccounts[i], defaultCashAccountName)
+        }
+        return true
+    }
+
     private fun addCashAccount(
         item: SelectedItemOfImageAndCheckBox,
         defaultCashAccountName: String
@@ -194,6 +294,21 @@ class FirstLaunchViewModel(
             accountName = item.checkBox.text.toString(),
             bankAccountNumber = "",
             isCashAccountDefault = item.checkBox.text.toString() == defaultCashAccountName,
+            icon = item.img
+        )
+        launchIo {
+            dbCashAccount.addCashAccount(cashAccount)
+        }
+    }
+
+    private fun addCashAccount(
+        item: FirstLaunchSetupItem,
+        defaultCashAccountName: String
+    ) {
+        val cashAccount = CashAccount(
+            accountName = item.name,
+            bankAccountNumber = "",
+            isCashAccountDefault = item.name == defaultCashAccountName,
             icon = item.img
         )
         launchIo {

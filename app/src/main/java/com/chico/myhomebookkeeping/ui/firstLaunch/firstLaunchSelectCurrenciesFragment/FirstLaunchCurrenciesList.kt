@@ -103,10 +103,13 @@ object FirstLaunchCurrenciesList {
 
     fun getOtherFiatCurrenciesList(): List<Currencies> = sortedByCode(otherFiatCurrenciesList)
 
+    fun getFiatCurrenciesList(): List<Currencies> =
+        getMajorCurrenciesList() + getOtherFiatCurrenciesList()
+
     fun getCryptoCurrenciesList(): List<Currencies> = sortedByCode(cryptoCurrenciesList)
 
     fun getAllCurrenciesList(): List<Currencies> =
-        getMajorCurrenciesList() + getOtherFiatCurrenciesList() + getCryptoCurrenciesList()
+        getFiatCurrenciesList() + getCryptoCurrenciesList()
 
     fun getCurrenciesList(): List<Currencies> = getMajorCurrenciesList()
 

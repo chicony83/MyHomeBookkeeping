@@ -2,7 +2,9 @@ What's new in 0.9.10
 
 - Added current app version display on the Settings screen.
 - Restored Google Play update checking from Settings with clear success/failure messages.
+- Added a step-by-step first-launch setup screen with shared Next / Done controls.
 - Added default cash account selection during first launch.
+- Added startup section selection: Fast payments, Categories, or Journal.
 - Free payments and new quick payments now preselect the default currency and cash account when no custom values are chosen.
 - Existing installations now get default currency/account values filled when they are missing.
 - Added transfers between own cash accounts with a clear Payment / Transfer selector.
@@ -11,13 +13,13 @@ What's new in 0.9.10
 - Improved add-category and add-subcategory dialogs: cleaner layout, better field sizing, and more consistent spacing.
 - Fixed add actions on the category screen so the whole row can be tapped, not only the plus icon.
 - Renamed category actions to make categories and subcategories clearer.
-- Reworked first-launch currency selection: currencies are now selected with checkboxes and grouped into major currencies, other currencies, and cryptocurrencies.
-- Updated first-launch currency dialogs and currency rows: symbol, code, and name are shown compactly in one line.
+- Reworked first-launch currency selection: currencies are now selected with checkboxes and grouped into currencies and cryptocurrencies.
+- Updated first-launch currency setup and currency rows: symbol, code, and name are shown compactly in one line.
 - Refined starter currency names to make the list easier to read for Russian, English, and European users.
 - Replaced the broken borrowed calculator with a simple payment calculator and a two-entry calculation history.
 - Added more fiat currencies and optional cryptocurrency choices.
 - Added text symbols for major cryptocurrencies where they render reliably.
-- Added confirmation when a cryptocurrency is selected as the default currency.
+- Default currency selection now treats fiat currencies and cryptocurrencies as equal choices when selected.
 - Updated input fields and dialog buttons: cleaner outline styling, darker text on white buttons, and better aligned paired buttons in dialogs.
 
 Что нового в 0.9.10

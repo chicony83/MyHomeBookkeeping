@@ -100,4 +100,9 @@ object Constants {
     const val CASH_ACCOUNT_SELECT_MODE_SOURCE = "source"
     const val CASH_ACCOUNT_SELECT_MODE_DESTINATION = "destination"
 
+    const val START_FRAGMENT = "startFragment"
+    const val START_FRAGMENT_FAST_PAYMENTS = "fast_payments"
+    const val START_FRAGMENT_CATEGORIES = "categories"
+    const val START_FRAGMENT_JOURNAL = "journal"
+
 }
