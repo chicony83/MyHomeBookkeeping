@@ -1,0 +1,15 @@
+What's new in 0.9.9
+
+- Fixed category screen list glitches.
+- Added category search from the top app bar.
+- Improved category filtering and long parent category names.
+- Fixed creating and editing categories without a parent category.
+- Updated the app to target Android SDK 35.
+
+Что нового в 0.9.9
+
+- Исправлены ошибки экрана категорий.
+- Добавлен поиск категорий из верхней панели.
+- Улучшены фильтрация категорий и длинные названия родительских категорий.
+- Исправлено создание и изменение категорий без родительской категории.
+- Приложение обновлено под Android SDK 35.

@@ -1,0 +1,15 @@
+What's new in 0.9.10
+
+- Added one Settings screen for app options and version history.
+- Added startup section selection and default currency/account setup.
+- Added transfers between your own accounts.
+- Improved first-launch currency setup and payment entry.
+- Refreshed category dialogs, input fields, buttons, and the payment calculator.
+
+Что нового в 0.9.10
+
+- Настройки приложения собраны на одном экране.
+- Добавлен выбор стартового раздела, валюты и счета по умолчанию.
+- Добавлены переводы между своими счетами.
+- Улучшены первый запуск, выбор валют и добавление платежей.
+- Обновлены диалоги категорий, поля ввода, кнопки и калькулятор.
