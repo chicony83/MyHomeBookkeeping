@@ -13,7 +13,6 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
-import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 
@@ -35,10 +34,6 @@ class SettingsViewModel(
     val quickPaymentSettings: LiveData<QuickPaymentSettings>
         get() = _quickPaymentSettings
 
-    private val _categorySorting = MutableLiveData<String>()
-    val categorySorting: LiveData<String>
-        get() = _categorySorting
-
     private val _startFragment = MutableLiveData<String>()
     val startFragment: LiveData<String>
         get() = _startFragment
@@ -50,7 +45,6 @@ class SettingsViewModel(
         val versionCode = packageInfo.versionCode
         _appVersion.value = "$currentVersion ${packageInfo.versionName} ($versionCode)"
         _quickPaymentSettings.value = getQuickPaymentSettings()
-        _categorySorting.value = getCategorySorting()
         _startFragment.value = getStartFragment()
     }
 
@@ -73,13 +67,6 @@ class SettingsViewModel(
             .putInt(Constants.QUICK_PAYMENT_AMOUNT_FRACTION_DIGITS, settings.amountFractionDigits)
             .apply()
         _quickPaymentSettings.value = settings
-    }
-
-    fun saveCategorySorting(sorting: String) {
-        sharedPreferences.edit()
-            .putString(Constants.SORTING_CATEGORIES, sorting)
-            .apply()
-        _categorySorting.value = sorting
     }
 
     fun saveStartFragment(startFragment: String) {
@@ -140,13 +127,6 @@ class SettingsViewModel(
                 Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
             ).coerceIn(0, 4)
         )
-    }
-
-    private fun getCategorySorting(): String {
-        return sharedPreferences.getString(
-            Constants.SORTING_CATEGORIES,
-            SortingCategories.AlphabetByASC.toString()
-        ) ?: SortingCategories.AlphabetByASC.toString()
     }
 
     private fun getStartFragment(): String {

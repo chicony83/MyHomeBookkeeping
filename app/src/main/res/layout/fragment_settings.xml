@@ -148,54 +148,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/categorySortingSection"
-            style="@style/Description.ItemsSettings"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/settings_category_sorting_title"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/categorySortingRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/categorySortNumbersAscRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_sorting_as_numbers_ASC" />
-
-            <RadioButton
-                android:id="@+id/categorySortNumbersDescRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_sorting_as_numbers_DESC" />
-
-            <RadioButton
-                android:id="@+id/categorySortAlphabetAscRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_sorting_as_alphabet_ASC" />
-
-            <RadioButton
-                android:id="@+id/categorySortAlphabetDescRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_sorting_as_alphabet_DESC" />
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/editCategoryListsButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/settings_edit_category_lists" />
-
-        <TextView
             android:id="@+id/startFragmentSection"
             style="@style/Description.ItemsSettings"
             android:layout_marginTop="@dimen/margin_normal"

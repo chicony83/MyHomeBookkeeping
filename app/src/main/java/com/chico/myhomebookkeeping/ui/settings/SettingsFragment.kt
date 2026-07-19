@@ -25,11 +25,9 @@ import com.chico.myhomebookkeeping.checks.GetVersionCode
 import com.chico.myhomebookkeeping.databinding.FragmentSettingsBinding
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Currencies
-import com.chico.myhomebookkeeping.enums.SortingCategories
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +42,6 @@ class SettingsFragment : Fragment() {
     companion object {
         const val ARG_SECTION = "settingsSection"
         const val SECTION_QUICK_PAYMENT = "quickPayment"
-        const val SECTION_CATEGORY_SORTING = "categorySorting"
     }
 
     private lateinit var settingsViewModel: SettingsViewModel
@@ -123,9 +120,6 @@ class SettingsFragment : Fragment() {
             amountInputModeRadioGroup.setOnCheckedChangeListener { _, _ ->
                 updateDigitsSettingsVisibility()
             }
-            editCategoryListsButton.setOnClickListener {
-                openCategoryListsEditor()
-            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -153,9 +147,6 @@ class SettingsFragment : Fragment() {
             })
             quickPaymentSettings.observe(viewLifecycleOwner) {
                 bindQuickPaymentSettings(it)
-            }
-            categorySorting.observe(viewLifecycleOwner) {
-                binding.categorySortingRadioGroup.check(categorySortingRadioButtonId(it))
             }
             startFragment.observe(viewLifecycleOwner) {
                 binding.startFragmentRadioGroup.check(startFragmentRadioButtonId(it))
@@ -269,18 +260,7 @@ class SettingsFragment : Fragment() {
 
     private fun saveSettings() {
         settingsViewModel.saveQuickPaymentSettings(createQuickPaymentSettings())
-        settingsViewModel.saveCategorySorting(selectedCategorySorting())
         settingsViewModel.saveStartFragment(selectedStartFragment())
-    }
-
-    private fun openCategoryListsEditor() {
-        saveSettings()
-        control.navigate(
-            R.id.nav_categories,
-            Bundle().apply {
-                putBoolean(CategoriesFragment.ARG_ENABLE_ORDER_EDIT_MODE, true)
-            }
-        )
     }
 
     private fun createQuickPaymentSettings(): QuickPaymentSettings {
@@ -298,24 +278,6 @@ class SettingsFragment : Fragment() {
             amountWholeDigits = binding.amountWholeDigitsPicker.value,
             amountFractionDigits = binding.amountFractionDigitsPicker.value
         )
-    }
-
-    private fun selectedCategorySorting(): String {
-        return when (binding.categorySortingRadioGroup.checkedRadioButtonId) {
-            R.id.categorySortNumbersAscRadioButton -> SortingCategories.NumbersByASC.toString()
-            R.id.categorySortNumbersDescRadioButton -> SortingCategories.NumbersByDESC.toString()
-            R.id.categorySortAlphabetDescRadioButton -> SortingCategories.AlphabetByDESC.toString()
-            else -> SortingCategories.AlphabetByASC.toString()
-        }
-    }
-
-    private fun categorySortingRadioButtonId(sorting: String): Int {
-        return when (sorting) {
-            SortingCategories.NumbersByASC.toString() -> R.id.categorySortNumbersAscRadioButton
-            SortingCategories.NumbersByDESC.toString() -> R.id.categorySortNumbersDescRadioButton
-            SortingCategories.AlphabetByDESC.toString() -> R.id.categorySortAlphabetDescRadioButton
-            else -> R.id.categorySortAlphabetAscRadioButton
-        }
     }
 
     private fun selectedStartFragment(): String {
@@ -452,7 +414,6 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         when (arguments?.getString(ARG_SECTION)) {
             SECTION_QUICK_PAYMENT -> binding.quickPaymentSection
-            SECTION_CATEGORY_SORTING -> binding.categorySortingSection
             else -> null
         }?.let { section ->
             binding.settingsScroll.post {

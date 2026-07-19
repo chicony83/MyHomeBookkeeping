@@ -15,6 +15,13 @@
         android:id="@+id/category_order_button"
         android:icon="@drawable/ic_settings"
         android:orderInCategory="20"
+        android:title="@string/text_on_button_category_order"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/category_sorting_button"
+        android:icon="@drawable/ic_baseline_sort"
+        android:orderInCategory="22"
         android:title="@string/settings_category_sorting_title"
         app:showAsAction="ifRoom" />
 
