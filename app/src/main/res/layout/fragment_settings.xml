@@ -6,6 +6,7 @@
     tools:context=".ui.settings.SettingsFragment">
 
     <ScrollView
+        android:id="@+id/settingsScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -21,20 +22,214 @@
             android:orientation="vertical">
 
         <TextView
-            android:id="@+id/appVersion"
+            android:id="@+id/quickPaymentSection"
             style="@style/Description.ItemsSettings"
             android:layout_marginTop="@dimen/margin_normal"
-            android:hint="@string/current_version" />
+            android:text="@string/quick_payment_settings_title"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/checkNewVersionButton"
+            android:id="@+id/defaultCurrencyButton"
             style="@style/ButtonFullWidth"
-            android:text="@string/text_on_button_check_update" />
+            android:text="@string/quick_payment_default_currency" />
 
         <Button
-            android:id="@+id/versionHistoryButton"
+            android:id="@+id/defaultCashAccountButton"
             style="@style/ButtonFullWidth"
-            android:text="@string/version_history_button" />
+            android:text="@string/quick_payment_default_cash_account" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/currencyScrollSwitch"
+            style="@style/Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:text="@string/quick_payment_currency_scroll" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/cashAccountScrollSwitch"
+            style="@style/Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:text="@string/quick_payment_cash_account_scroll" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/showCalculatorSwitch"
+            style="@style/Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:text="@string/quick_payment_show_calculator" />
+
+        <TextView
+            style="@style/Description.ItemsSettings"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/quick_payment_amount_input"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/amountInputModeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/amountDigitsRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quick_payment_amount_input_digits" />
+
+            <RadioButton
+                android:id="@+id/amountScrollRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quick_payment_amount_input_scroll" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/amountScrollDigitsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextDescriptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/quick_payment_amount_whole_digits"
+                    android:textColor="@color/categoryTextSecondary"
+                    android:textSize="@dimen/H5" />
+
+                <NumberPicker
+                    android:id="@+id/amountWholeDigitsPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:descendantFocusability="blocksDescendants" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextDescriptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/quick_payment_amount_fraction_digits"
+                    android:textColor="@color/categoryTextSecondary"
+                    android:textSize="@dimen/H5" />
+
+                <NumberPicker
+                    android:id="@+id/amountFractionDigitsPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:descendantFocusability="blocksDescendants" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/categorySortingSection"
+            style="@style/Description.ItemsSettings"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/settings_category_sorting_title"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/categorySortingRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/categorySortNumbersAscRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_sorting_as_numbers_ASC" />
+
+            <RadioButton
+                android:id="@+id/categorySortNumbersDescRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_sorting_as_numbers_DESC" />
+
+            <RadioButton
+                android:id="@+id/categorySortAlphabetAscRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_sorting_as_alphabet_ASC" />
+
+            <RadioButton
+                android:id="@+id/categorySortAlphabetDescRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_on_button_sorting_as_alphabet_DESC" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/editCategoryListsButton"
+            style="@style/ButtonFullWidth"
+            android:text="@string/settings_edit_category_lists" />
+
+        <TextView
+            android:id="@+id/startFragmentSection"
+            style="@style/Description.ItemsSettings"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/settings_start_fragment_title"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/startFragmentRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/startFastPaymentsRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_launch_start_destination_fast_payments" />
+
+            <RadioButton
+                android:id="@+id/startCategoriesRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_launch_start_destination_categories" />
+
+            <RadioButton
+                android:id="@+id/startJournalRadioButton"
+                style="@style/Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_launch_start_destination_journal" />
+        </RadioGroup>
 
         <TextView
             style="@style/Description.ItemsSettings"
@@ -60,6 +255,22 @@
             android:id="@+id/restoreBackupButton"
             style="@style/ButtonFullWidth"
             android:text="@string/backup_restore_button" />
+
+        <TextView
+            android:id="@+id/appVersion"
+            style="@style/Description.ItemsSettings"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:hint="@string/current_version" />
+
+        <Button
+            android:id="@+id/checkNewVersionButton"
+            style="@style/ButtonFullWidth"
+            android:text="@string/text_on_button_check_update" />
+
+        <Button
+            android:id="@+id/versionHistoryButton"
+            style="@style/ButtonFullWidth"
+            android:text="@string/version_history_button" />
         <!--        <CheckBox-->
         <!--            android:id="@+id/enterInProgramWithPassword"-->
         <!--            android:layout_width="match_parent"-->

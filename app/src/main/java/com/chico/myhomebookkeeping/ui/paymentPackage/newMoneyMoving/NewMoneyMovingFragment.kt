@@ -190,28 +190,6 @@ class NewMoneyMovingFragment : Fragment() {
         showHideEraseButton(binding.amountEditText, binding.eraseButton)
     }
 
-    fun openQuickPaymentSettings() {
-        lifecycleScope.launch {
-            val dialog = QuickPaymentSettingsDialog(
-                settings = viewModel.getQuickPaymentSettings(),
-                currencies = viewModel.getAllCurrencies(),
-                cashAccounts = viewModel.getAllCashAccounts(),
-                defaultCurrency = viewModel.getDefaultCurrency(),
-                defaultCashAccount = viewModel.getDefaultCashAccount(),
-                onSettingsSubmitted = {
-                    viewModel.saveQuickPaymentSettings(it)
-                },
-                onDefaultCurrencySubmitted = {
-                    viewModel.setDefaultCurrency(it)
-                },
-                onDefaultCashAccountSubmitted = {
-                    viewModel.setDefaultCashAccount(it)
-                }
-            )
-            dialog.show(childFragmentManager, "quickPaymentSettingsDialog")
-        }
-    }
-
     private fun applyQuickPaymentSettings(settings: QuickPaymentSettings) {
         latestQuickPaymentSettings = settings
         val isScrollAmountInput =

@@ -55,11 +55,21 @@
             android:paddingTop="@dimen/margin_normal"
             android:paddingBottom="@dimen/margin_double"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/categoryOrderDoneButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_til"
             tools:listitem="@layout/recycler_view_item_category_group" />
+
+        <Button
+            android:id="@+id/categoryOrderDoneButton"
+            style="@style/ButtonFullWidth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_on_button_apply"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

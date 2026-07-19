@@ -1,4 +1,8 @@
 0.9.10
+Moved scattered settings into one Settings screen with sections for quick payment, category sorting, startup behavior, data transfer, and app information.
+Quick payment and category toolbar settings now open the shared Settings screen directly on the relevant section.
+Added category list editing from Settings: it returns to Categories in drag-and-drop order mode with a Done button.
+Removed the old quick payment settings dialog and the old category sorting popup.
 Added a step-by-step first-launch setup screen with shared Next / Done controls.
 Added startup section selection: Fast payments, Categories, or Journal.
 Added current app version display on the Settings screen.

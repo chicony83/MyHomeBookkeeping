@@ -29,7 +29,7 @@ import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
-import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.NewMoneyMovingFragment
+import com.chico.myhomebookkeeping.ui.settings.SettingsFragment
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -199,11 +199,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.category_order_button -> {
-                getCurrentFragment<CategoriesFragment>()?.toggleCategoryOrderEditMode()
+                openSettingsSection(SettingsFragment.SECTION_CATEGORY_SORTING)
                 true
             }
             R.id.quick_payment_settings_button -> {
-                getCurrentFragment<NewMoneyMovingFragment>()?.openQuickPaymentSettings()
+                openSettingsSection(SettingsFragment.SECTION_QUICK_PAYMENT)
                 true
             }
             R.id.help_button -> {
@@ -235,6 +235,15 @@ class MainActivity : AppCompatActivity() {
             categoryOrderMenuItem?.isVisible = isCategoriesDestination
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         }
+    }
+
+    private fun openSettingsSection(section: String) {
+        navController.navigate(
+            R.id.nav_setting,
+            Bundle().apply {
+                putString(SettingsFragment.ARG_SECTION, section)
+            }
+        )
     }
 
     private inline fun <reified T> getCurrentFragment(): T? {

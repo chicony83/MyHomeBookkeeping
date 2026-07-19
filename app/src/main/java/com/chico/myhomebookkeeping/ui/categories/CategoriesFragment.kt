@@ -43,6 +43,9 @@ import com.chico.myhomebookkeeping.utils.launchUi
 import java.util.*
 
 class CategoriesFragment : Fragment() {
+    companion object {
+        const val ARG_ENABLE_ORDER_EDIT_MODE = "enableCategoryOrderEditMode"
+    }
 
     private val categoriesViewModel: CategoriesViewModel by viewModels()
     private val parentCategoriesViewModel: ParentCategoriesViewModel by viewModels()
@@ -107,6 +110,14 @@ class CategoriesFragment : Fragment() {
         navControlHelper = NavControlHelper(control)
 
         view.hideKeyboard()
+        binding.categoryOrderDoneButton.setOnClickListener {
+            setCategoryOrderEditMode(false)
+        }
+        if (arguments?.getBoolean(ARG_ENABLE_ORDER_EDIT_MODE) == true) {
+            setCategoryOrderEditMode(true)
+        } else {
+            updateCategoryOrderDoneButtonVisibility()
+        }
 //        with(binding) {
 //            selectAllIncomeButton.setOnClickListener {
 //                viewModel.selectIncomeCategory(navControlHelper)
@@ -119,38 +130,6 @@ class CategoriesFragment : Fragment() {
 //            selectAllButton.setOnClickListener {
 //                viewModel.selectAllCategories(navControlHelper)
 //                navControlHelper.moveToMoneyMovingFragment()
-//            }
-//            sortingButton.setOnClickListener {
-//                val popupMenu = PopupMenu(context, sortingButton)
-//                popupMenu.menuInflater.inflate(
-//                    R.menu.pop_up_menu_sorting_categories,
-//                    popupMenu.menu
-//                )
-//                popupMenu.setOnMenuItemClickListener { item ->
-//                    when (item.itemId) {
-//                        R.id.sort_by_numbers_ASC -> {
-////                            Message.log("sort by numbers ASC")
-//                            sortingCategories(SortingCategories.NumbersByASC.toString())
-//                        }
-//
-//                        R.id.sort_by_numbers_DESC -> {
-//                            sortingCategories(SortingCategories.NumbersByDESC.toString())
-////                            Message.log("Sort by numbers DESC")
-//                        }
-//
-//                        R.id.sort_by_alphabet_ASC -> {
-//                            sortingCategories(SortingCategories.AlphabetByASC.toString())
-////                            Message.log("Sorting by alphabet ASC")
-//                        }
-//
-//                        R.id.sort_by_alphabet_DESC -> {
-//                            sortingCategories(SortingCategories.AlphabetByDESC.toString())
-////                            Message.log("Sorting by alphabet DESC")
-//                        }
-//                    }
-//                    true
-//                }
-//                popupMenu.show()
 //            }
 //        }
 //        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
@@ -178,8 +157,22 @@ class CategoriesFragment : Fragment() {
 
     fun toggleCategoryOrderEditMode() {
         if (searchMode) hideSearch()
-        categoryOrderEditMode = !categoryOrderEditMode
+        setCategoryOrderEditMode(!categoryOrderEditMode)
+    }
+
+    private fun setCategoryOrderEditMode(isEnabled: Boolean) {
+        if (isEnabled && searchMode) hideSearch()
+        categoryOrderEditMode = isEnabled
         categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
+        updateCategoryOrderDoneButtonVisibility()
+    }
+
+    private fun updateCategoryOrderDoneButtonVisibility() {
+        binding.categoryOrderDoneButton.visibility = if (categoryOrderEditMode) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 
     private fun hideSearch() {
@@ -354,13 +347,6 @@ class CategoriesFragment : Fragment() {
             .apply()
     }
 
-//    private fun sortingCategories(sorting: String) {
-//        with(categoriesViewModel) {
-//            setSortingCategories(sorting)
-//            reloadCategories()
-//        }
-//    }
-
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
             val category: Categories? = categoriesViewModel.getSelectedCategory(selectedId)
@@ -503,6 +489,11 @@ class CategoriesFragment : Fragment() {
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        categoriesViewModel.reloadCategories()
     }
 
     override fun onDestroyView() {
