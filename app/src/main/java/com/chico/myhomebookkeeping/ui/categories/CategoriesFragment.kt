@@ -113,35 +113,25 @@ class CategoriesFragment : Fragment() {
         binding.categoryOrderDoneButton.setOnClickListener {
             setCategoryOrderEditMode(false)
         }
+        with(binding) {
+            selectAllIncomeButton.setOnClickListener {
+                categoriesViewModel.selectIncomeCategory(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
+            }
+            selectAllSpendingButton.setOnClickListener {
+                categoriesViewModel.selectSpendingCategory(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
+            }
+            selectAllButton.setOnClickListener {
+                categoriesViewModel.selectAllCategories(navControlHelper)
+                navControlHelper.moveToMoneyMovingFragment()
+            }
+        }
         if (arguments?.getBoolean(ARG_ENABLE_ORDER_EDIT_MODE) == true) {
             setCategoryOrderEditMode(true)
         } else {
             updateCategoryOrderDoneButtonVisibility()
         }
-//        with(binding) {
-//            selectAllIncomeButton.setOnClickListener {
-//                viewModel.selectIncomeCategory(navControlHelper)
-//                navControlHelper.moveToMoneyMovingFragment()
-//            }
-//            selectAllSpendingButton.setOnClickListener {
-//                viewModel.selectSpendingCategory(navControlHelper)
-//                navControlHelper.moveToMoneyMovingFragment()
-//            }
-//            selectAllButton.setOnClickListener {
-//                viewModel.selectAllCategories(navControlHelper)
-//                navControlHelper.moveToMoneyMovingFragment()
-//            }
-//        }
-//        if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
-//            or
-//            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
-//        ) {
-//            with(uiHelper) {
-//                hideUiElement(binding.selectAllButton)
-//                hideUiElement(binding.selectAllIncomeButton)
-//                hideUiElement(binding.selectAllSpendingButton)
-//            }
-//        }
     }
 
     fun toggleSearch() {
@@ -172,6 +162,14 @@ class CategoriesFragment : Fragment() {
             View.VISIBLE
         } else {
             View.GONE
+        }
+        binding.topButtonsHolder.visibility = if (
+            categoryOrderEditMode || navControlHelper.isPreviousFragment(R.id.nav_new_money_moving) ||
+            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
+        ) {
+            View.GONE
+        } else {
+            View.VISIBLE
         }
     }
 

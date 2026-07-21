@@ -81,11 +81,11 @@ class CategoriesViewModel(
         return CategoriesUseCase.getOneCategory(db, selectedId)
     }
 
-//    private fun resetCategoryForSelect() {
-//        launchIo {
-//            _selectedCategory.postValue(null)
-//        }
-//    }
+    private fun resetCategoryForSelect() {
+        launchIo {
+            _selectedCategory.postValue(null)
+        }
+    }
 
 //    fun resetCategoryForChange() {
 //        launchIo {
@@ -93,15 +93,15 @@ class CategoriesViewModel(
 //        }
 //    }
 
-//    private fun setIsIncomeCategoriesSelect(value: String) {
-//        selectedIsIncomeSpending = value
-//    }
-//
-//    private fun saveIsIncomeCategory() {
-//        setSP.saveIsIncomeCategoryToSP(
-//            argsIncomeSpending, selectedIsIncomeSpending
-//        )
-//    }
+    private fun setIsIncomeCategoriesSelect(value: String) {
+        selectedIsIncomeSpending = value
+    }
+
+    private fun saveIsIncomeCategory() {
+        setSP.saveIsIncomeCategoryToSP(
+            argsIncomeSpending, selectedIsIncomeSpending
+        )
+    }
 
 //    private fun saveData(navControlHelper: NavControlHelper) {
 //        setSP.checkAndSaveToSP(
@@ -114,6 +114,10 @@ class CategoriesViewModel(
 //    }
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
+        if (navControlHelper.previousFragment() == R.id.nav_money_moving) {
+            isIncomeSpendingSetNone()
+            saveIsIncomeCategory()
+        }
         setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,
             id = id
@@ -128,30 +132,30 @@ class CategoriesViewModel(
 //        )
     }
 
-//    fun selectSpendingCategory(navControlHelper: NavControlHelper) {
-//        resetCategoryForSelect()
-//        setIsIncomeCategoriesSelect(argsSpending)
-//        saveIsIncomeCategory()
-//        saveData(navControlHelper, -1)
-//    }
+    fun selectSpendingCategory(navControlHelper: NavControlHelper) {
+        resetCategoryForSelect()
+        setIsIncomeCategoriesSelect(argsSpending)
+        saveIsIncomeCategory()
+        setSP.checkAndSaveToSP(navControlHelper, -1)
+    }
 
-//    fun selectIncomeCategory(navControlHelper: NavControlHelper) {
-//        resetCategoryForSelect()
-//        setIsIncomeCategoriesSelect(argsIncome)
-//        saveIsIncomeCategory()
-//        saveData(navControlHelper, -1)
-//    }
+    fun selectIncomeCategory(navControlHelper: NavControlHelper) {
+        resetCategoryForSelect()
+        setIsIncomeCategoriesSelect(argsIncome)
+        saveIsIncomeCategory()
+        setSP.checkAndSaveToSP(navControlHelper, -1)
+    }
 
-//    fun selectAllCategories(navControlHelper: NavControlHelper) {
-//        isIncomeSpendingSetNone()
-//        resetCategoryForSelect()
-//        saveIsIncomeCategory()
-//        saveData(navControlHelper, -1)
-//    }
+    fun selectAllCategories(navControlHelper: NavControlHelper) {
+        isIncomeSpendingSetNone()
+        resetCategoryForSelect()
+        saveIsIncomeCategory()
+        setSP.checkAndSaveToSP(navControlHelper, -1)
+    }
 
-//    private fun isIncomeSpendingSetNone() {
-//        selectedIsIncomeSpending = argsNone
-//    }
+    private fun isIncomeSpendingSetNone() {
+        selectedIsIncomeSpending = argsNone
+    }
 
     fun addNewCategory(newCategory: Categories): Long = runBlocking {
         val add = async {
