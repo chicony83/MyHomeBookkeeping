@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
@@ -51,6 +52,14 @@ class SettingsFragment : Fragment() {
     private lateinit var control: NavController
     private val uiHelper = UiHelper()
     private lateinit var getVersionCode: GetVersionCode
+    private var isCurrencyScrollEnabled = false
+    private var isCashAccountScrollEnabled = false
+    private var isCalculatorButtonVisible = true
+    private var amountInputMode = Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS
+    private var amountWholeDigits = 6
+    private var amountFractionDigits = 2
+    private var selectedStartFragmentValue = Constants.START_FRAGMENT_FAST_PAYMENTS
+    private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
     private var pendingRestoreUri: Uri? = null
     private val updateLauncher = registerForActivityResult(
@@ -111,14 +120,101 @@ class SettingsFragment : Fragment() {
 //            changePasswordButton.setOnClickListener {
 //                navControlHelper.moveToSelectedFragment(R.id.nav_select_password)
 //            }
-            defaultCurrencyButton.setOnClickListener {
+            defaultCurrencyRow.setOnClickListener {
                 showSelectDefaultCurrencyDialog()
             }
-            defaultCashAccountButton.setOnClickListener {
+            defaultCashAccountRow.setOnClickListener {
                 showSelectDefaultCashAccountDialog()
             }
-            amountInputModeRadioGroup.setOnCheckedChangeListener { _, _ ->
-                updateDigitsSettingsVisibility()
+            currencySelectionModeRow.setOnClickListener {
+                showBooleanChoiceDialog(
+                    title = getString(R.string.quick_payment_currency_selection_mode),
+                    currentValue = isCurrencyScrollEnabled,
+                    trueLabel = getString(R.string.settings_value_scroll),
+                    falseLabel = getString(R.string.settings_value_list)
+                ) {
+                    isCurrencyScrollEnabled = it
+                    updateSettingsValues()
+                    saveQuickPaymentSettings()
+                }
+            }
+            cashAccountSelectionModeRow.setOnClickListener {
+                showBooleanChoiceDialog(
+                    title = getString(R.string.quick_payment_cash_account_selection_mode),
+                    currentValue = isCashAccountScrollEnabled,
+                    trueLabel = getString(R.string.settings_value_scroll),
+                    falseLabel = getString(R.string.settings_value_list)
+                ) {
+                    isCashAccountScrollEnabled = it
+                    updateSettingsValues()
+                    saveQuickPaymentSettings()
+                }
+            }
+            calculatorCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isCalculatorButtonVisible = isChecked
+                if (!isBindingSettings) saveQuickPaymentSettings()
+            }
+            amountInputModeRow.setOnClickListener {
+                showChoiceDialog(
+                    title = getString(R.string.quick_payment_amount_input),
+                    labels = arrayOf(
+                        getString(R.string.quick_payment_amount_input_digits),
+                        getString(R.string.quick_payment_amount_input_scroll)
+                    ),
+                    selectedIndex = if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) 1 else 0
+                ) { index ->
+                    amountInputMode = if (index == 1) {
+                        Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL
+                    } else {
+                        Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS
+                    }
+                    updateSettingsValues()
+                    saveQuickPaymentSettings()
+                }
+            }
+            amountWholeDigitsRow.setOnClickListener {
+                showNumberChoiceDialog(
+                    title = getString(R.string.quick_payment_amount_whole_digits),
+                    min = 1,
+                    max = 9,
+                    currentValue = amountWholeDigits
+                ) {
+                    amountWholeDigits = it
+                    updateSettingsValues()
+                    saveQuickPaymentSettings()
+                }
+            }
+            amountFractionDigitsRow.setOnClickListener {
+                showNumberChoiceDialog(
+                    title = getString(R.string.quick_payment_amount_fraction_digits),
+                    min = 0,
+                    max = 4,
+                    currentValue = amountFractionDigits
+                ) {
+                    amountFractionDigits = it
+                    updateSettingsValues()
+                    saveQuickPaymentSettings()
+                }
+            }
+            startFragmentRow.setOnClickListener {
+                val values = arrayOf(
+                    Constants.START_FRAGMENT_FAST_PAYMENTS,
+                    Constants.START_FRAGMENT_CATEGORIES,
+                    Constants.START_FRAGMENT_JOURNAL
+                )
+                showChoiceDialog(
+                    title = getString(R.string.settings_start_fragment_title),
+                    labels = arrayOf(
+                        getString(R.string.first_launch_start_destination_fast_payments),
+                        getString(R.string.first_launch_start_destination_categories),
+                        getString(R.string.first_launch_start_destination_journal)
+                    ),
+                    selectedIndex = values.indexOf(selectedStartFragmentValue).coerceAtLeast(0)
+                ) { index ->
+                    selectedStartFragmentValue = values[index]
+                    updateSettingsValues()
+                    settingsViewModel.saveStartFragment(selectedStartFragmentValue)
+                }
             }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
@@ -135,11 +231,6 @@ class SettingsFragment : Fragment() {
             restoreBackupButton.setOnClickListener {
                 openBackupDocument.launch(arrayOf("application/octet-stream", "*/*"))
             }
-            submitButton.setOnClickListener {
-                message(getString(R.string.message_settings_saved))
-                saveSettings()
-                navControlHelper.moveToPreviousFragment()
-            }
         }
         with(settingsViewModel){
             appVersion.observe(viewLifecycleOwner, {
@@ -149,7 +240,10 @@ class SettingsFragment : Fragment() {
                 bindQuickPaymentSettings(it)
             }
             startFragment.observe(viewLifecycleOwner) {
-                binding.startFragmentRadioGroup.check(startFragmentRadioButtonId(it))
+                selectedStartFragmentValue = it
+                isBindingSettings = true
+                updateSettingsValues()
+                isBindingSettings = false
             }
         }
         loadDefaultSelectionTitles()
@@ -165,42 +259,43 @@ class SettingsFragment : Fragment() {
     }
 
     private fun bindQuickPaymentSettings(settings: QuickPaymentSettings) {
-        with(binding) {
-            currencyScrollSwitch.isChecked = settings.isCurrencyScrollEnabled
-            cashAccountScrollSwitch.isChecked = settings.isCashAccountScrollEnabled
-            showCalculatorSwitch.isChecked = settings.isCalculatorButtonVisible
-            amountInputModeRadioGroup.check(
-                if (settings.amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
-                    R.id.amountScrollRadioButton
-                } else {
-                    R.id.amountDigitsRadioButton
-                }
-            )
-            setupDigitsPicker(amountWholeDigitsPicker, 1, 9, settings.amountWholeDigits)
-            setupDigitsPicker(amountFractionDigitsPicker, 0, 4, settings.amountFractionDigits)
-            updateDigitsSettingsVisibility()
-        }
+        isBindingSettings = true
+        isCurrencyScrollEnabled = settings.isCurrencyScrollEnabled
+        isCashAccountScrollEnabled = settings.isCashAccountScrollEnabled
+        isCalculatorButtonVisible = settings.isCalculatorButtonVisible
+        amountInputMode = settings.amountInputMode
+        amountWholeDigits = settings.amountWholeDigits.coerceIn(1, 9)
+        amountFractionDigits = settings.amountFractionDigits.coerceIn(0, 4)
+        updateSettingsValues()
+        isBindingSettings = false
     }
 
-    private fun setupDigitsPicker(
-        picker: android.widget.NumberPicker,
-        minValue: Int,
-        maxValue: Int,
-        value: Int
-    ) {
-        picker.minValue = minValue
-        picker.maxValue = maxValue
-        picker.wrapSelectorWheel = false
-        picker.value = value.coerceIn(minValue, maxValue)
-    }
-
-    private fun updateDigitsSettingsVisibility() {
+    private fun updateSettingsValues() {
+        binding.currencySelectionModeValue.text = selectionModeTitle(isCurrencyScrollEnabled)
+        binding.cashAccountSelectionModeValue.text = selectionModeTitle(isCashAccountScrollEnabled)
+        binding.calculatorCheckBox.isChecked = isCalculatorButtonVisible
+        binding.amountInputModeValue.text = getString(
+            if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
+                R.string.quick_payment_amount_input_scroll
+            } else {
+                R.string.quick_payment_amount_input_digits
+            }
+        )
+        binding.amountWholeDigitsValue.text = amountWholeDigits.toString()
+        binding.amountFractionDigitsValue.text = amountFractionDigits.toString()
+        binding.startFragmentValue.text = startFragmentTitle(selectedStartFragmentValue)
         binding.amountScrollDigitsContainer.visibility =
-            if (binding.amountInputModeRadioGroup.checkedRadioButtonId == R.id.amountScrollRadioButton) {
+            if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
+    }
+
+    private fun selectionModeTitle(isScrollEnabled: Boolean): String {
+        return getString(
+            if (isScrollEnabled) R.string.settings_value_scroll else R.string.settings_value_list
+        )
     }
 
     private fun loadDefaultSelectionTitles() {
@@ -211,9 +306,9 @@ class SettingsFragment : Fragment() {
             val defaultCashAccount = withContext(Dispatchers.IO) {
                 settingsViewModel.getDefaultCashAccount()
             }
-            binding.defaultCurrencyButton.text = defaultCurrency?.let(::currencyTitle)
+            binding.defaultCurrencyValue.text = defaultCurrency?.let(::currencyTitle)
                 ?: getString(R.string.quick_payment_default_currency)
-            binding.defaultCashAccountButton.text = defaultCashAccount?.let(::cashAccountTitle)
+            binding.defaultCashAccountValue.text = defaultCashAccount?.let(::cashAccountTitle)
                 ?: getString(R.string.quick_payment_default_cash_account)
         }
     }
@@ -231,7 +326,7 @@ class SettingsFragment : Fragment() {
                         withContext(Dispatchers.IO) {
                             settingsViewModel.setDefaultCurrency(currency)
                         }
-                        binding.defaultCurrencyButton.text = currencyTitle(currency)
+                        binding.defaultCurrencyValue.text = currencyTitle(currency)
                     }
                 }
                 .show()
@@ -251,49 +346,36 @@ class SettingsFragment : Fragment() {
                         withContext(Dispatchers.IO) {
                             settingsViewModel.setDefaultCashAccount(cashAccount)
                         }
-                        binding.defaultCashAccountButton.text = cashAccountTitle(cashAccount)
+                        binding.defaultCashAccountValue.text = cashAccountTitle(cashAccount)
                     }
                 }
                 .show()
         }
     }
 
-    private fun saveSettings() {
+    private fun saveQuickPaymentSettings() {
         settingsViewModel.saveQuickPaymentSettings(createQuickPaymentSettings())
-        settingsViewModel.saveStartFragment(selectedStartFragment())
     }
 
     private fun createQuickPaymentSettings(): QuickPaymentSettings {
-        val amountInputMode =
-            if (binding.amountInputModeRadioGroup.checkedRadioButtonId == R.id.amountScrollRadioButton) {
-                Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL
-            } else {
-                Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS
-            }
         return QuickPaymentSettings(
-            isCurrencyScrollEnabled = binding.currencyScrollSwitch.isChecked,
-            isCashAccountScrollEnabled = binding.cashAccountScrollSwitch.isChecked,
-            isCalculatorButtonVisible = binding.showCalculatorSwitch.isChecked,
+            isCurrencyScrollEnabled = isCurrencyScrollEnabled,
+            isCashAccountScrollEnabled = isCashAccountScrollEnabled,
+            isCalculatorButtonVisible = isCalculatorButtonVisible,
             amountInputMode = amountInputMode,
-            amountWholeDigits = binding.amountWholeDigitsPicker.value,
-            amountFractionDigits = binding.amountFractionDigitsPicker.value
+            amountWholeDigits = amountWholeDigits,
+            amountFractionDigits = amountFractionDigits
         )
     }
 
-    private fun selectedStartFragment(): String {
-        return when (binding.startFragmentRadioGroup.checkedRadioButtonId) {
-            R.id.startCategoriesRadioButton -> Constants.START_FRAGMENT_CATEGORIES
-            R.id.startJournalRadioButton -> Constants.START_FRAGMENT_JOURNAL
-            else -> Constants.START_FRAGMENT_FAST_PAYMENTS
-        }
-    }
-
-    private fun startFragmentRadioButtonId(startFragment: String): Int {
-        return when (startFragment) {
-            Constants.START_FRAGMENT_CATEGORIES -> R.id.startCategoriesRadioButton
-            Constants.START_FRAGMENT_JOURNAL -> R.id.startJournalRadioButton
-            else -> R.id.startFastPaymentsRadioButton
-        }
+    private fun startFragmentTitle(startFragment: String): String {
+        return getString(
+            when (startFragment) {
+                Constants.START_FRAGMENT_CATEGORIES -> R.string.first_launch_start_destination_categories
+                Constants.START_FRAGMENT_JOURNAL -> R.string.first_launch_start_destination_journal
+                else -> R.string.first_launch_start_destination_fast_payments
+            }
+        )
     }
 
     private fun currencyTitle(currency: Currencies): String {
@@ -307,6 +389,60 @@ class SettingsFragment : Fragment() {
         return cashAccount.bankAccountNumber.takeIf { it.isNotBlank() }?.let {
             "${cashAccount.accountName} *${it.takeLast(4)}"
         } ?: cashAccount.accountName
+    }
+
+    private fun showBooleanChoiceDialog(
+        title: String,
+        currentValue: Boolean,
+        trueLabel: String,
+        falseLabel: String,
+        onSelected: (Boolean) -> Unit
+    ) {
+        showChoiceDialog(
+            title = title,
+            labels = arrayOf(falseLabel, trueLabel),
+            selectedIndex = if (currentValue) 1 else 0
+        ) { index ->
+            onSelected(index == 1)
+        }
+    }
+
+    private fun showChoiceDialog(
+        title: String,
+        labels: Array<String>,
+        selectedIndex: Int,
+        onSelected: (Int) -> Unit
+    ) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setSingleChoiceItems(labels, selectedIndex) { dialog, which ->
+                onSelected(which)
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun showNumberChoiceDialog(
+        title: String,
+        min: Int,
+        max: Int,
+        currentValue: Int,
+        onSelected: (Int) -> Unit
+    ) {
+        val picker = NumberPicker(requireContext()).apply {
+            minValue = min
+            maxValue = max
+            wrapSelectorWheel = false
+            value = currentValue.coerceIn(min, max)
+        }
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setView(picker)
+            .setNegativeButton(R.string.text_on_button_cancel, null)
+            .setPositiveButton(R.string.text_on_button_submit) { _, _ ->
+                onSelected(picker.value)
+            }
+            .show()
     }
 
     private fun showBackupPasswordDialog() {

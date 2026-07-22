@@ -9,6 +9,9 @@
     <string name="quick_payment_currency_scroll">&#1042;&#1099;&#1073;&#1086;&#1088; &#1074;&#1072;&#1083;&#1102;&#1090;&#1099; &#1087;&#1088;&#1086;&#1082;&#1088;&#1091;&#1090;&#1082;&#1086;&#1081;</string>
     <string name="quick_payment_cash_account_scroll">&#1042;&#1099;&#1073;&#1086;&#1088; &#1089;&#1095;&#1077;&#1090;&#1072; &#1087;&#1088;&#1086;&#1082;&#1088;&#1091;&#1090;&#1082;&#1086;&#1081;</string>
     <string name="quick_payment_show_calculator">&#1055;&#1086;&#1082;&#1072;&#1079;&#1099;&#1074;&#1072;&#1090;&#1100; &#1082;&#1085;&#1086;&#1087;&#1082;&#1091; &#1082;&#1072;&#1083;&#1100;&#1082;&#1091;&#1083;&#1103;&#1090;&#1086;&#1088;&#1072;</string>
+    <string name="quick_payment_currency_selection_mode">&#1042;&#1099;&#1073;&#1086;&#1088; &#1074;&#1072;&#1083;&#1102;&#1090;&#1099;</string>
+    <string name="quick_payment_cash_account_selection_mode">&#1042;&#1099;&#1073;&#1086;&#1088; &#1089;&#1095;&#1077;&#1090;&#1072;</string>
+    <string name="quick_payment_calculator">&#1050;&#1072;&#1083;&#1100;&#1082;&#1091;&#1083;&#1103;&#1090;&#1086;&#1088;</string>
     <string name="quick_payment_amount_input">&#1042;&#1074;&#1086;&#1076; &#1089;&#1091;&#1084;&#1084;&#1099;</string>
     <string name="quick_payment_amount_input_digits">&#1062;&#1080;&#1092;&#1088;&#1072;&#1084;&#1080;</string>
     <string name="quick_payment_amount_input_scroll">&#1055;&#1088;&#1086;&#1082;&#1088;&#1091;&#1090;&#1082;&#1086;&#1081;</string>
@@ -17,5 +20,14 @@
     <string name="quick_payment_amount_whole_group">&#1062;&#1077;&#1083;&#1099;&#1077;</string>
     <string name="quick_payment_amount_fraction_group">&#1050;&#1086;&#1087;&#1077;&#1081;&#1082;&#1080;</string>
     <string name="settings_start_fragment_title">&#1054;&#1090;&#1082;&#1088;&#1099;&#1074;&#1072;&#1090;&#1100; &#1087;&#1088;&#1080; &#1089;&#1090;&#1072;&#1088;&#1090;&#1077;</string>
+    <string name="settings_start_fragment_value_title">&#1057;&#1090;&#1072;&#1088;&#1090;&#1086;&#1074;&#1099;&#1081; &#1101;&#1082;&#1088;&#1072;&#1085;</string>
+    <string name="settings_group_defaults">&#1055;&#1086; &#1091;&#1084;&#1086;&#1083;&#1095;&#1072;&#1085;&#1080;&#1102;</string>
+    <string name="settings_group_selection">&#1057;&#1087;&#1086;&#1089;&#1086;&#1073; &#1074;&#1099;&#1073;&#1086;&#1088;&#1072;</string>
+    <string name="settings_group_amount">&#1057;&#1091;&#1084;&#1084;&#1072;</string>
+    <string name="settings_value_list">&#1057;&#1087;&#1080;&#1089;&#1082;&#1086;&#1084;</string>
+    <string name="settings_value_scroll">&#1055;&#1088;&#1086;&#1082;&#1088;&#1091;&#1090;&#1082;&#1086;&#1081;</string>
+    <string name="settings_value_on">&#1042;&#1082;&#1083;</string>
+    <string name="settings_value_off">&#1042;&#1099;&#1082;&#1083;</string>
+    <string name="settings_about_section_title">&#1054; &#1087;&#1088;&#1080;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1080;</string>
     <string name="message_settings_saved">&#1053;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1077;&#1085;&#1099;</string>
 </resources>

@@ -9,4 +9,35 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:weightSum">2</item>
     </style>
+
+    <style name="SettingsValueRow" parent="MatchParent_WrapContent">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingTop">@dimen/margin_half_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_half_normal</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="SettingsValueLabel" parent="WrapContent_WrapContent">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/inputText</item>
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
+
+    <style name="SettingsValueText" parent="WrapContent_WrapContent">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/categoryTextSecondary</item>
+        <item name="android:textSize">@dimen/H4</item>
+    </style>
 </resources>

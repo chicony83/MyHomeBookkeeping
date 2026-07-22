@@ -3,14 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
+    android:background="@color/categoryScreenBackground"
     tools:context=".ui.settings.SettingsFragment">
 
     <ScrollView
         android:id="@+id/settingsScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        android:padding="@dimen/margin_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,233 +24,254 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/quickPaymentSection"
-            style="@style/Description.ItemsSettings"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/quick_payment_settings_title"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/defaultCurrencyButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/quick_payment_default_currency" />
-
-        <Button
-            android:id="@+id/defaultCashAccountButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/quick_payment_default_cash_account" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/currencyScrollSwitch"
-            style="@style/Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:text="@string/quick_payment_currency_scroll" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/cashAccountScrollSwitch"
-            style="@style/Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:text="@string/quick_payment_cash_account_scroll" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/showCalculatorSwitch"
-            style="@style/Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:text="@string/quick_payment_show_calculator" />
-
-        <TextView
-            style="@style/Description.ItemsSettings"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/quick_payment_amount_input"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/amountInputModeRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/amountDigitsRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quick_payment_amount_input_digits" />
-
-            <RadioButton
-                android:id="@+id/amountScrollRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quick_payment_amount_input_scroll" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:id="@+id/amountScrollDigitsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/quickPaymentBlock"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="@drawable/category_group_background"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_normal">
 
                 <TextView
+                    android:id="@+id/quickPaymentSection"
                     style="@style/TextDescriptions"
+                    android:layout_marginLeft="@dimen/margin_zero"
+                    android:text="@string/quick_payment_settings_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H3"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/defaultCurrencyRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/quick_payment_default_currency" />
+
+                    <TextView
+                        android:id="@+id/defaultCurrencyValue"
+                        style="@style/SettingsValueText"
+                        android:text="@string/quick_payment_default_currency" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/defaultCashAccountRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/quick_payment_default_cash_account" />
+
+                    <TextView
+                        android:id="@+id/defaultCashAccountValue"
+                        style="@style/SettingsValueText"
+                        android:text="@string/quick_payment_default_cash_account" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/currencySelectionModeRow"
+                    style="@style/SettingsValueRow"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/quick_payment_currency_selection_mode" />
+
+                    <TextView
+                        android:id="@+id/currencySelectionModeValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cashAccountSelectionModeRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/quick_payment_cash_account_selection_mode" />
+
+                    <TextView
+                        android:id="@+id/cashAccountSelectionModeValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/calculatorCheckBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/quick_payment_amount_whole_digits"
-                    android:textColor="@color/categoryTextSecondary"
-                    android:textSize="@dimen/H5" />
+                    android:minHeight="48dp"
+                    android:text="@string/quick_payment_show_calculator"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
 
-                <NumberPicker
-                    android:id="@+id/amountWholeDigitsPicker"
+                <LinearLayout
+                    android:id="@+id/amountInputModeRow"
+                    style="@style/SettingsValueRow"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/quick_payment_amount_input" />
+
+                    <TextView
+                        android:id="@+id/amountInputModeValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/amountScrollDigitsContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:descendantFocusability="blocksDescendants" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/amountWholeDigitsRow"
+                        style="@style/SettingsValueRow">
+
+                        <TextView
+                            style="@style/SettingsValueLabel"
+                            android:text="@string/quick_payment_amount_whole_digits" />
+
+                        <TextView
+                            android:id="@+id/amountWholeDigitsValue"
+                            style="@style/SettingsValueText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/amountFractionDigitsRow"
+                        style="@style/SettingsValueRow">
+
+                        <TextView
+                            style="@style/SettingsValueLabel"
+                            android:text="@string/quick_payment_amount_fraction_digits" />
+
+                        <TextView
+                            android:id="@+id/amountFractionDigitsValue"
+                            style="@style/SettingsValueText" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/startupBlock"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@drawable/category_group_background"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_normal">
 
                 <TextView
+                    android:id="@+id/startupSection"
                     style="@style/TextDescriptions"
+                    android:layout_marginLeft="@dimen/margin_zero"
+                    android:text="@string/settings_start_fragment_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H3"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/startFragmentRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_start_fragment_value_title" />
+
+                    <TextView
+                        android:id="@+id/startFragmentValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/backupBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@drawable/category_group_background"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/backupSection"
+                    style="@style/TextDescriptions"
+                    android:layout_marginLeft="@dimen/margin_zero"
+                    android:text="@string/backup_section_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H3"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/quick_payment_amount_fraction_digits"
+                    android:layout_marginTop="@dimen/margin_half_normal"
+                    android:text="@string/backup_section_description"
                     android:textColor="@color/categoryTextSecondary"
                     android:textSize="@dimen/H5" />
 
-                <NumberPicker
-                    android:id="@+id/amountFractionDigitsPicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:descendantFocusability="blocksDescendants" />
+                <Button
+                    android:id="@+id/createBackupButton"
+                    style="@style/ButtonFullWidth"
+                    android:layout_marginHorizontal="@dimen/margin_zero"
+                    android:text="@string/backup_create_button" />
+
+                <Button
+                    android:id="@+id/restoreBackupButton"
+                    style="@style/ButtonFullWidth"
+                    android:layout_marginHorizontal="@dimen/margin_zero"
+                    android:text="@string/backup_restore_button" />
             </LinearLayout>
-        </LinearLayout>
 
-        <TextView
-            android:id="@+id/startFragmentSection"
-            style="@style/Description.ItemsSettings"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/settings_start_fragment_title"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/startFragmentRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/startFastPaymentsRadioButton"
-                style="@style/Description"
+            <LinearLayout
+                android:id="@+id/aboutBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/first_launch_start_destination_fast_payments" />
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_double"
+                android:background="@drawable/category_group_background"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_normal">
 
-            <RadioButton
-                android:id="@+id/startCategoriesRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/first_launch_start_destination_categories" />
+                <TextView
+                    android:id="@+id/aboutSection"
+                    style="@style/TextDescriptions"
+                    android:layout_marginLeft="@dimen/margin_zero"
+                    android:text="@string/settings_about_section_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H3"
+                    android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/startJournalRadioButton"
-                style="@style/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/first_launch_start_destination_journal" />
-        </RadioGroup>
+                <LinearLayout
+                    style="@style/SettingsValueRow"
+                    android:clickable="false"
+                    android:foreground="@null">
 
-        <TextView
-            style="@style/Description.ItemsSettings"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:layout_marginTop="@dimen/margin_double"
-            android:text="@string/backup_section_title"
-            android:textStyle="bold" />
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/current_version" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_double"
-            android:gravity="center"
-            android:text="@string/backup_section_description"
-            android:textColor="@color/text_second_color" />
+                    <TextView
+                        android:id="@+id/appVersion"
+                        style="@style/SettingsValueText"
+                        android:hint="@string/current_version" />
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/createBackupButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/backup_create_button" />
+                <Button
+                    android:id="@+id/checkNewVersionButton"
+                    style="@style/ButtonFullWidth"
+                    android:layout_marginHorizontal="@dimen/margin_zero"
+                    android:text="@string/text_on_button_check_update" />
 
-        <Button
-            android:id="@+id/restoreBackupButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/backup_restore_button" />
-
-        <TextView
-            android:id="@+id/appVersion"
-            style="@style/Description.ItemsSettings"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:hint="@string/current_version" />
-
-        <Button
-            android:id="@+id/checkNewVersionButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/text_on_button_check_update" />
-
-        <Button
-            android:id="@+id/versionHistoryButton"
-            style="@style/ButtonFullWidth"
-            android:text="@string/version_history_button" />
-        <!--        <CheckBox-->
-        <!--            android:id="@+id/enterInProgramWithPassword"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="вход в программу по паролю" />-->
-
-        <!--        <CheckBox-->
-        <!--            android:id="@+id/changeLinesWithPassword"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="изменять записи по паролю" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/changePasswordButton"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="изменить пароль" />-->
-
+                <Button
+                    android:id="@+id/versionHistoryButton"
+                    style="@style/ButtonFullWidth"
+                    android:layout_marginHorizontal="@dimen/margin_zero"
+                    android:text="@string/version_history_button" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/submitButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_on_button_save"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
