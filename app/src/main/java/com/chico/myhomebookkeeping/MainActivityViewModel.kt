@@ -26,18 +26,7 @@ class MainActivityViewModel(
     private val currenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
 
     init {
-        initializeVersionTrackingForNewInstallation()
         fixFirstLaunchFlagForExistingDatabase()
-    }
-
-    private fun initializeVersionTrackingForNewInstallation() {
-        val isNewInstallation = !sharedPreferences.contains(Constants.IS_FIRST_LAUNCH)
-        val hasTrackedVersion = sharedPreferences.contains(ConstantsOfUpdate.LAST_CHECKED_VERSION)
-        if (isNewInstallation && !hasTrackedVersion) {
-            sharedPreferences.edit()
-                .putInt(ConstantsOfUpdate.LAST_CHECKED_VERSION, AppVersion.code(app))
-                .apply()
-        }
     }
 
     fun checkIsFirstLaunch(): Boolean {
@@ -61,6 +50,17 @@ class MainActivityViewModel(
             Constants.START_FRAGMENT_JOURNAL -> R.id.nav_money_moving
             else -> R.id.nav_fast_payments_fragment
         }
+    }
+
+    fun isLastVersionOfProgramChecked(): Boolean {
+        val lastCheckedVersion = getSP.getInt(ConstantsOfUpdate.LAST_CHECKED_VERSION)
+        return lastCheckedVersion == AppVersion.code(app)
+    }
+
+    fun setLastVersionChecked() {
+        sharedPreferences.edit()
+            .putInt(ConstantsOfUpdate.LAST_CHECKED_VERSION, AppVersion.code(app))
+            .apply()
     }
 
     private fun fixFirstLaunchFlagForExistingDatabase() {

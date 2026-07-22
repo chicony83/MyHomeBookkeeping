@@ -2,7 +2,7 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
-## 0.9.10
+## 0.10.0
 
 ### User-facing
 - Moved scattered settings into one Settings screen.
@@ -13,8 +13,10 @@ This file is the full internal release log. Keep all useful development notes he
 - Kept the Add button usable while the amount keyboard is open and the description field reachable.
 - Improved category dialogs, category add actions, input fields, dialog buttons, and the payment calculator.
 - Reworked first-launch currency setup with grouped currency and cryptocurrency selection.
+- Updated the app target to Android 16 API level 36 for Google Play release requirements.
 
 ### Development
+- Updated Android Gradle Plugin to 8.13.0 and compile SDK to Android 16 QPR2 API level 36.1.
 - Settings shortcuts now open the shared Settings screen on the relevant section.
 - Category list editing from Settings opens Categories in drag-and-drop order mode.
 - Old quick payment settings and category sorting dialogs were removed.

@@ -1,0 +1,23 @@
+What's new in 0.10.0
+
+- Added transfers between your own accounts.
+- Updated first launch: choose currencies, accounts, defaults, and the start screen.
+- Settings are now collected on one screen.
+- Added quick payment settings and faster currency/account selection.
+- Updated the calculator and amount entry.
+- Improved journal, category, currency, and account screens.
+- Fixed keyboard behavior, filters, updates, backups, and zero-amount confirmation.
+
+Thank you for using the app. May tracking money feel calmer, clearer, and a little easier every day.
+
+Что нового в 0.10.0
+
+- Добавлены переводы между своими счетами.
+- Обновлен первый запуск: теперь можно выбрать валюты, счета, значения по умолчанию и стартовый экран.
+- Настройки приложения собраны на одном экране.
+- Добавлены новые настройки быстрого платежа и быстрый выбор валюты/счета.
+- Обновлен калькулятор и ввод суммы.
+- Улучшены экраны журнала, категорий, валют и счетов.
+- Исправлены ошибки и улучшена работа с клавиатурой, фильтрами, обновлениями, резервными копиями и нулевой суммой.
+
+Спасибо, что пользуетесь приложением. Пусть учет денег становится спокойнее, понятнее и чуть легче каждый день.
