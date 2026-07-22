@@ -592,7 +592,13 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressSubmitPaymentButton(isCategoryNotNull: Boolean, checkAmount: Boolean) {
         if (isCategoryNotNull) {
             if (checkAmount) {
-                addNewMoneyMoving()
+                if (shouldConfirmZeroAmount()) {
+                    showZeroAmountConfirmDialog {
+                        addNewMoneyMoving()
+                    }
+                } else {
+                    addNewMoneyMoving()
+                }
             } else {
                 setBackgroundWarningColor()
                 message(getString(R.string.message_enter_amount))
@@ -615,11 +621,43 @@ class NewMoneyMovingFragment : Fragment() {
             return
         }
         if (checkAmount) {
-            addNewTransfer()
+            if (shouldConfirmZeroAmount()) {
+                showZeroAmountConfirmDialog {
+                    addNewTransfer()
+                }
+            } else {
+                addNewTransfer()
+            }
         } else {
             setBackgroundWarningColor()
             message(getString(R.string.message_enter_amount))
         }
+    }
+
+    private fun shouldConfirmZeroAmount(): Boolean {
+        val isDigitsAmountInput =
+            latestQuickPaymentSettings?.amountInputMode != Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL
+        val amountText = binding.amountEditText.text.toString().trim()
+        if (!isDigitsAmountInput || amountText.isEmpty()) return false
+
+        return parseAmountOrNull(amountText) == 0.0
+    }
+
+    private fun parseAmountOrNull(amountText: String): Double? {
+        return try {
+            Around.double(amountText)
+        } catch (_: NumberFormatException) {
+            null
+        }
+    }
+
+    private fun showZeroAmountConfirmDialog(onConfirm: () -> Unit) {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.zero_amount_confirm_title)
+            .setMessage(R.string.zero_amount_confirm_message)
+            .setPositiveButton(R.string.text_on_button_add) { _, _ -> onConfirm() }
+            .setNegativeButton(R.string.text_on_button_cancel, null)
+            .show()
     }
 
     private fun addNewMoneyMoving() {
