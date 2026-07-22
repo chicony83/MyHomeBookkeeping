@@ -7,6 +7,7 @@
     tools:context=".ui.paymentPackage.newMoneyMoving.NewMoneyMovingFragment">
 
     <ScrollView
+        android:id="@+id/newMoneyMovingScrollView"
         style="@style/MoneyMovingScrollView"
         android:clipToPadding="false"
         android:padding="@dimen/margin_normal"

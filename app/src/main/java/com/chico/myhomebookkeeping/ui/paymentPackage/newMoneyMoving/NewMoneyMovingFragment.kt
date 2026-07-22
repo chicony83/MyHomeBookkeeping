@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -67,6 +69,7 @@ class NewMoneyMovingFragment : Fragment() {
     private var amountWholeDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS
     private var amountFractionDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
     private var isSyncingAmountPickers = false
+    private var keyboardLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -126,6 +129,16 @@ class NewMoneyMovingFragment : Fragment() {
                 )
                 calcFragment.show(childFragmentManager, "dialog")
             }
+            amountEditText.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus && isDigitsAmountInput()) {
+                    scrollDescriptionIntoView()
+                }
+            }
+            amountEditText.setOnClickListener {
+                if (isDigitsAmountInput()) {
+                    scrollDescriptionIntoView()
+                }
+            }
             decreaseAmountWholeDigitsButton.setOnClickListener {
                 changeAmountWholeDigits(-1)
             }
@@ -133,6 +146,7 @@ class NewMoneyMovingFragment : Fragment() {
                 changeAmountWholeDigits(1)
             }
             setupAmountPickers()
+            setupKeyboardAwareSubmitButton()
         }
         with(viewModel) {
             dataTime.observe(viewLifecycleOwner) {
@@ -634,11 +648,62 @@ class NewMoneyMovingFragment : Fragment() {
         }
     }
 
+    private fun isDigitsAmountInput(): Boolean {
+        return latestQuickPaymentSettings?.amountInputMode !=
+            Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL
+    }
+
+    private fun scrollDescriptionIntoView() {
+        binding.newMoneyMovingScrollView.postDelayed({
+            if (_binding == null || !binding.amountEditText.hasFocus()) return@postDelayed
+
+            val bottomPadding = resources.getDimensionPixelSize(R.dimen.margin_normal)
+            val descriptionBottom = binding.description.bottom + bottomPadding
+            val visibleBottom =
+                binding.newMoneyMovingScrollView.scrollY + binding.newMoneyMovingScrollView.height
+
+            if (descriptionBottom > visibleBottom) {
+                binding.newMoneyMovingScrollView.smoothScrollTo(
+                    0,
+                    descriptionBottom - binding.newMoneyMovingScrollView.height
+                )
+            }
+        }, KEYBOARD_SCROLL_DELAY_MS)
+    }
+
+    private fun setupKeyboardAwareSubmitButton() {
+        val submitButtonLayoutParams =
+            binding.submitButton.layoutParams as ViewGroup.MarginLayoutParams
+        val submitButtonBottomMargin = submitButtonLayoutParams.bottomMargin
+        val scrollPaddingBottom = binding.newMoneyMovingScrollView.paddingBottom
+        val visibleFrame = Rect()
+
+        keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            if (_binding == null) return@OnGlobalLayoutListener
+
+            binding.root.getWindowVisibleDisplayFrame(visibleFrame)
+            val keyboardOffset =
+                (binding.root.rootView.height - visibleFrame.bottom).coerceAtLeast(0)
+            val isKeyboardVisible = keyboardOffset > binding.root.rootView.height * 0.15
+            val effectiveKeyboardOffset = if (isKeyboardVisible) keyboardOffset else 0
+
+            submitButtonLayoutParams.bottomMargin =
+                submitButtonBottomMargin + effectiveKeyboardOffset
+            binding.submitButton.layoutParams = submitButtonLayoutParams
+
+            binding.newMoneyMovingScrollView.setPadding(
+                binding.newMoneyMovingScrollView.paddingLeft,
+                binding.newMoneyMovingScrollView.paddingTop,
+                binding.newMoneyMovingScrollView.paddingRight,
+                scrollPaddingBottom + effectiveKeyboardOffset
+            )
+        }
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+    }
+
     private fun shouldConfirmZeroAmount(): Boolean {
-        val isDigitsAmountInput =
-            latestQuickPaymentSettings?.amountInputMode != Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL
         val amountText = binding.amountEditText.text.toString().trim()
-        if (!isDigitsAmountInput || amountText.isEmpty()) return false
+        if (!isDigitsAmountInput() || amountText.isEmpty()) return false
 
         return parseAmountOrNull(amountText) == 0.0
     }
@@ -683,6 +748,8 @@ class NewMoneyMovingFragment : Fragment() {
                 viewModel.saveSPOfNewEntryIsAdded()
                 control.navigate(R.id.nav_money_moving)
                 viewModel.clearSPAfterSave()
+            } else {
+                message(getString(R.string.message_entry_add_failed))
             }
         }
     }
@@ -701,6 +768,8 @@ class NewMoneyMovingFragment : Fragment() {
                 viewModel.saveSPOfNewEntryIsAdded()
                 control.navigate(R.id.nav_money_moving)
                 viewModel.clearSPAfterSave()
+            } else {
+                message(getString(R.string.message_entry_add_failed))
             }
         }
     }
@@ -766,6 +835,10 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        keyboardLayoutListener?.let {
+            binding.root.viewTreeObserver.removeOnGlobalLayoutListener(it)
+        }
+        keyboardLayoutListener = null
         super.onDestroyView()
         _binding = null
     }
@@ -942,3 +1015,5 @@ private class DigitWheelView(
         canvas.drawText(text, centerX, baseline, paint)
     }
 }
+
+private const val KEYBOARD_SCROLL_DELAY_MS = 250L

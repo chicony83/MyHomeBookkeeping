@@ -9,6 +9,8 @@ This file is the full internal release log. Keep all useful development notes he
 - Added startup section selection: Fast payments, Categories, or Journal.
 - Added default currency and cash account selection and automatic preselection in new payments.
 - Added transfers between own cash accounts.
+- Added zero-amount confirmation for digit-based quick payment entry.
+- Kept the Add button usable while the amount keyboard is open and the description field reachable.
 - Improved category dialogs, category add actions, input fields, dialog buttons, and the payment calculator.
 - Reworked first-launch currency setup with grouped currency and cryptocurrency selection.
 
