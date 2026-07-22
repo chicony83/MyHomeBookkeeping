@@ -672,33 +672,55 @@ class NewMoneyMovingFragment : Fragment() {
     }
 
     private fun setupKeyboardAwareSubmitButton() {
-        val submitButtonLayoutParams =
-            binding.submitButton.layoutParams as ViewGroup.MarginLayoutParams
-        val submitButtonBottomMargin = submitButtonLayoutParams.bottomMargin
         val scrollPaddingBottom = binding.newMoneyMovingScrollView.paddingBottom
         val visibleFrame = Rect()
+        val submitButtonLocation = IntArray(2)
 
         keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
             if (_binding == null) return@OnGlobalLayoutListener
 
             binding.root.getWindowVisibleDisplayFrame(visibleFrame)
+            binding.submitButton.getLocationOnScreen(submitButtonLocation)
+
             val keyboardOffset =
                 (binding.root.rootView.height - visibleFrame.bottom).coerceAtLeast(0)
             val isKeyboardVisible = keyboardOffset > binding.root.rootView.height * 0.15
-            val effectiveKeyboardOffset = if (isKeyboardVisible) keyboardOffset else 0
+            val submitButtonBottomWithoutTranslation =
+                submitButtonLocation[1] + binding.submitButton.height - binding.submitButton.translationY
+            val buttonOverlap =
+                (submitButtonBottomWithoutTranslation - visibleFrame.bottom).coerceAtLeast(0f)
+            val keyboardTranslation = if (isKeyboardVisible) -buttonOverlap else 0f
 
-            submitButtonLayoutParams.bottomMargin =
-                submitButtonBottomMargin + effectiveKeyboardOffset
-            binding.submitButton.layoutParams = submitButtonLayoutParams
-
+            binding.submitButton.translationY = keyboardTranslation
             binding.newMoneyMovingScrollView.setPadding(
                 binding.newMoneyMovingScrollView.paddingLeft,
                 binding.newMoneyMovingScrollView.paddingTop,
                 binding.newMoneyMovingScrollView.paddingRight,
-                scrollPaddingBottom + effectiveKeyboardOffset
+                scrollPaddingBottom + buttonOverlap.toInt()
             )
+            if (isKeyboardVisible && binding.amountEditText.hasFocus()) {
+                keepViewAboveSubmitButton(binding.amountInputContainer)
+            }
         }
         binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+    }
+
+    private fun keepViewAboveSubmitButton(view: View) {
+        binding.newMoneyMovingScrollView.post {
+            if (_binding == null) return@post
+
+            val viewLocation = IntArray(2)
+            val submitButtonLocation = IntArray(2)
+            view.getLocationOnScreen(viewLocation)
+            binding.submitButton.getLocationOnScreen(submitButtonLocation)
+
+            val bottomPadding = resources.getDimensionPixelSize(R.dimen.margin_normal)
+            val viewBottom = viewLocation[1] + view.height + bottomPadding
+            val submitButtonTop = submitButtonLocation[1]
+            if (viewBottom > submitButtonTop) {
+                binding.newMoneyMovingScrollView.smoothScrollBy(0, viewBottom - submitButtonTop)
+            }
+        }
     }
 
     private fun shouldConfirmZeroAmount(): Boolean {
