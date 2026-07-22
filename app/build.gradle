@@ -8,13 +8,17 @@ plugins {
 android {
     namespace "com.chico.myhomebookkeeping"
 
-    compileSdk 35
+    compileSdk {
+        version = release(36) {
+            it.minorApiLevel = 1
+        }
+    }
     defaultConfig {
         applicationId "com.chico.myhomebookkeeping"
         minSdk 21
-        targetSdk 35
-        versionCode 59
-        versionName "0.9.10"
+        targetSdk 36
+        versionCode 60
+        versionName "0.10.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,7 +53,7 @@ dependencies {
     // versions
     def nav_version        = "2.7.7"
     def lifecycle_version  = "2.8.4"
-    def room_version       = "2.6.1"
+    def room_version       = "2.7.2"
     def coroutines_version = "1.8.1"
     def gson_version       = "2.11.0"
     def dialogs_version    = "3.3.0"

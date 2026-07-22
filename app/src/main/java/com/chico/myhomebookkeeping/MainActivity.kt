@@ -29,6 +29,8 @@ import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
+import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
+import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.UpdateViewModel
 import com.chico.myhomebookkeeping.ui.settings.SettingsFragment
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
     private val uiHelper = UiHelper()
     lateinit var mainActivityViewModel: MainActivityViewModel
+    private var hasCheckedWhatsNewThisSession = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +116,8 @@ class MainActivity : AppCompatActivity() {
 //        eraseSP.eraseTempSP()
 
         if (savedInstanceState == null) {
-            if (mainActivityViewModel.checkIsFirstLaunch()) {
+            val isFirstLaunch = mainActivityViewModel.checkIsFirstLaunch()
+            if (isFirstLaunch) {
                 navController.navigate(R.id.nav_first_launch_setup_fragment)
             } else {
                 val startDestinationId = mainActivityViewModel.getStartDestinationId()
@@ -123,6 +127,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 //        if (mainActivityViewModel.checkIsFirstLaunch()) navController.navigate(R.id.nav_first_launch_fragment)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        maybeShowWhatsNewAfterUpdate()
+    }
+
+    private fun maybeShowWhatsNewAfterUpdate() {
+        if (hasCheckedWhatsNewThisSession) return
+
+        hasCheckedWhatsNewThisSession = true
+        window.decorView.post {
+            checkVersionUpdateAndShowWhatsNew()
+        }
+    }
+
+    private fun checkVersionUpdateAndShowWhatsNew() {
+        if (mainActivityViewModel.isLastVersionOfProgramChecked()) return
+
+        ViewModelProvider(this).get(UpdateViewModel::class.java).update()
+        WhatNewInLastVersionDialog().show(
+            supportFragmentManager,
+            getString(R.string.tag_show_dialog)
+        )
+        mainActivityViewModel.setLastVersionChecked()
     }
 
     private fun uiMode() {

@@ -2,6 +2,7 @@
 <resources>
     <string name="string_last_version_title">Version history</string>
     <string name="version_history_button">Version history</string>
+    <string name="string_last_version_0_10_0">0.10.0\nAdded transfers between your own accounts.\nUpdated first launch: choose currencies, accounts, defaults, and the start screen.\nSettings are now collected on one screen.\nAdded quick payment settings and faster currency/account selection.\nUpdated the calculator and amount entry.\nImproved journal, category, currency, and account screens.\nFixed keyboard, filters, updates, backups, and zero-amount confirmation.\nThank you for using the app. May tracking money feel calmer, clearer, and a little easier every day.</string>
     <string name="string_last_version_0_9_10">0.9.10\nSettings are now collected on one screen.\nAdded startup section selection and default currency/account setup.\nAdded transfers between your own accounts.\nImproved first-launch currency setup and payment entry.\nRefreshed category dialogs, input fields, buttons, and the payment calculator.</string>
     <string name="string_last_version_0_9_9">0.9.9\nFixed several category screen glitches: list items no longer overlap while scrolling, category search is opened from the toolbar, and parent category names wrap more cleanly.</string>
     <string name="string_last_version_0_9_8">0.9.8\nFixed issues that could cause icons to change after an application update.\nAdded encrypted backup and restore for transferring data between phones.</string>
