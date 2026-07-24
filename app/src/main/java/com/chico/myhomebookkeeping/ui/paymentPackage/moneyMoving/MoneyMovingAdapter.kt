@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
@@ -91,7 +92,7 @@ class MoneyMovingAdapter(
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
                 currencyName.text = moneyMovement.currencyNameValue
-                categoryName.text = moneyMovement.categoryNameValue ?: moneyMovement.paymentTypeName
+                bindCategoryName(moneyMovement)
 
                 if (!moneyMovement.description.isNullOrEmpty()) {
                     description.text = moneyMovement.description
@@ -151,6 +152,36 @@ class MoneyMovingAdapter(
                 }
                 moneyMovingItem.setOnClickListener {
                     moneyMovement.id.let { listener.onClick(it) }
+                }
+            }
+        }
+
+        private fun bindCategoryName(moneyMovement: FullMoneyMoving) {
+            with(binding) {
+                val parentName = moneyMovement.parentCategoryNameValue
+                val category = moneyMovement.categoryNameValue
+                val singleLineCategory =
+                    moneyMovement.categoryDisplayName ?: moneyMovement.paymentTypeName
+
+                categoryName.text = singleLineCategory
+                childCategoryName.visibility = View.GONE
+                childCategoryName.text = null
+
+                if (parentName.isNullOrBlank() || category.isNullOrBlank()) return
+
+                categoryName.post {
+                    if (categoryName.text != singleLineCategory) return@post
+
+                    // Split only when the full category path cannot fit next to the date.
+                    val isSingleLineTooLong = categoryName.layout
+                        ?.let { it.getEllipsisCount(0) > 0 }
+                        ?: false
+
+                    if (isSingleLineTooLong) {
+                        categoryName.text = parentName
+                        childCategoryName.text = category
+                        childCategoryName.visibility = View.VISIBLE
+                    }
                 }
             }
         }

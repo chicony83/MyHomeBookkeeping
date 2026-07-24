@@ -235,6 +235,7 @@ object MoneyMovingCreateSimpleQuery {
                 "cash_account_name AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
                 "category_name AS category_name_value, " +
+                "parent_category_name AS parent_category_name_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
                 "money_moving_table.payment_type_id, payment_type_name, " +
                 "transfer_group_id, transfer_direction, description " +
@@ -243,6 +244,7 @@ object MoneyMovingCreateSimpleQuery {
                 "INNER JOIN currency_table ON currency == currencyId " +
                 "INNER JOIN payment_type_table ON money_moving_table.payment_type_id == payment_type_table.id " +
                 "LEFT JOIN category_table ON category == categoriesId " +
+                "LEFT JOIN parent_categories_table ON category_table.parent_category_id == parent_categories_table.id " +
                 "WHERE 1 = 1"
     }
 

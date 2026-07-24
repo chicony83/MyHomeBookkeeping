@@ -11,6 +11,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Added a language setting for testing the app in any bundled language: system default, English, or Russian.
 - New installs now start with Fast payments, Accounts, Journal, and Settings in the bottom panel; existing installs keep the previous panel and receive Settings as an extra shortcut.
 - Categories can now be used as a fast payment start screen: tapping a category outside selector flows opens Free payment with that category already selected.
+- Journal entries and the Free payment category button now show parent category paths, with long names split or truncated safely.
 
 ### Development
 - Parent category drag-and-drop now mirrors subcategory reordering: the in-memory order is updated during drag with `notifyItemMoved`, and the saved order is committed when the drag ends.
@@ -21,6 +22,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Added an `AppLanguage` helper around AppCompat application locales, with SharedPreferences persistence and backup/restore support for the selected app language.
 - Category taps now distinguish selector sources from standalone Categories navigation, preserving existing selector SharedPreferences while writing standalone picks to the new-payment category key.
 - Query category selection now handles `nav_money_moving_query` in the shared selector persistence path.
+- Full money movement queries now include parent category names for UI-only category path rendering.
 
 ## 0.10.0
 

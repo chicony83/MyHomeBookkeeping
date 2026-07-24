@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.db.dao.CashAccountDao
 import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
+import com.chico.myhomebookkeeping.db.dao.ParentCategoriesDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
@@ -22,6 +23,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.helpers.Around
+import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.*
@@ -61,6 +63,8 @@ class NewMoneyMovingViewModel(
         dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val dbCategory: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
+    private val dbParentCategory: ParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
 
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, MODE_PRIVATE)
@@ -450,6 +454,17 @@ class NewMoneyMovingViewModel(
 
     fun selectCashAccount(cashAccount: CashAccount) {
         _selectedCashAccount.postValue(cashAccount)
+    }
+
+    suspend fun getSelectedCategoryDisplayName(category: Categories): String {
+        val parentCategoryName = category.parentCategoryId
+            ?.takeIf { it > 0 }
+            ?.let { ParentCategoriesUseCase.getSelectedParentCategory(dbParentCategory, it).name }
+
+        return ParentCategoryHelper.getCategoryDisplayName(
+            parentCategoryName,
+            category.categoryName
+        ) ?: category.categoryName
     }
 
     fun getQuickPaymentSettings(): QuickPaymentSettings {

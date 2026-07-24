@@ -168,7 +168,10 @@ class NewMoneyMovingFragment : Fragment() {
             }
             selectedCategory.observe(viewLifecycleOwner) {
                 if (!viewModel.isTransferMode()) {
-                    binding.selectCategoryButton.text = it.categoryName
+                    lifecycleScope.launch {
+                        binding.selectCategoryButton.text =
+                            viewModel.getSelectedCategoryDisplayName(it)
+                    }
                 }
             }
 
@@ -837,8 +840,15 @@ class NewMoneyMovingFragment : Fragment() {
             viewModel.selectedTransferCashAccount.value?.accountName
                 ?: getString(R.string.text_on_button_select_cash_account)
         } else {
-            viewModel.selectedCategory.value?.categoryName
-                ?: getString(R.string.text_on_button_select_category)
+            getString(R.string.text_on_button_select_category)
+        }
+        if (!isTransfer) {
+            viewModel.selectedCategory.value?.let { category ->
+                lifecycleScope.launch {
+                    binding.selectCategoryButton.text =
+                        viewModel.getSelectedCategoryDisplayName(category)
+                }
+            }
         }
     }
 

@@ -33,6 +33,22 @@ class ParentCategoryHelperTest {
         )
     }
 
+    @Test
+    fun categoryDisplayNameIncludesParentCategoryWhenItExists() {
+        assertEquals(
+            "Car -> Fuel",
+            ParentCategoryHelper.getCategoryDisplayName("Car", "Fuel")
+        )
+    }
+
+    @Test
+    fun categoryDisplayNameFallsBackToCategoryWhenParentIsMissing() {
+        assertEquals(
+            "Fuel",
+            ParentCategoryHelper.getCategoryDisplayName(null, "Fuel")
+        )
+    }
+
     private fun parentCategory(id: Int, name: String) = ParentCategories(name, null).apply {
         this.id = id
     }

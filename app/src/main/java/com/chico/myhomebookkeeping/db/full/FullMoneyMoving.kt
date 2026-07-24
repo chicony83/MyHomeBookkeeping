@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.db.full
 
 import androidx.room.ColumnInfo
+import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
 
 class FullMoneyMoving (
     @ColumnInfo(name = "id")
@@ -21,6 +22,9 @@ class FullMoneyMoving (
     @ColumnInfo(name = "category_name_value")
     val categoryNameValue:String?,
 
+    @ColumnInfo(name = "parent_category_name_value")
+    val parentCategoryNameValue:String?,
+
     @ColumnInfo(name = "is_income")
     val isIncome:Boolean,
 
@@ -38,4 +42,10 @@ class FullMoneyMoving (
 
     val description:String?
 
-)
+) {
+    val categoryDisplayName: String?
+        get() = ParentCategoryHelper.getCategoryDisplayName(
+            parentCategoryNameValue,
+            categoryNameValue
+        )
+}

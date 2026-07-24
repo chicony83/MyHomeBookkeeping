@@ -76,6 +76,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_normal"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/H5"
@@ -86,17 +87,36 @@
                 tool:text="заработал" />
 
             <TextView
+                android:id="@+id/childCategoryName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/H5"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@id/amountEditText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/categoryName"
+                tool:text="дочерняя категория"
+                tool:visibility="visible" />
+
+            <TextView
                 android:id="@+id/cashAccountName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_half_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/categoryTextSecondary"
                 android:textSize="@dimen/H6"
                 app:layout_constraintEnd_toStartOf="@id/amountEditText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/categoryName"
+                app:layout_constraintTop_toBottomOf="@id/childCategoryName"
                 tool:text="наличка" />
 
             <TextView

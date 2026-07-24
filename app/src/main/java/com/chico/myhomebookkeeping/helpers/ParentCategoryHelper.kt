@@ -7,4 +7,14 @@ object ParentCategoryHelper {
         name: String,
         parentCategoriesList: List<ParentCategories>
     ): Int? = parentCategoriesList.firstOrNull { it.name == name }?.id
+
+    fun getCategoryDisplayName(
+        parentCategoryName: String?,
+        categoryName: String?
+    ): String? {
+        if (categoryName.isNullOrBlank()) return categoryName
+        if (parentCategoryName.isNullOrBlank()) return categoryName
+
+        return "$parentCategoryName -> $categoryName"
+    }
 }
