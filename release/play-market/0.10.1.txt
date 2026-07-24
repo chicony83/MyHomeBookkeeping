@@ -4,6 +4,7 @@ What's new in 0.10.1
 - Parent categories can now be dragged freely through the list.
 - Added Quick access panel settings for choosing 3 to 5 bottom navigation buttons.
 - Existing users keep their current bottom panel and get Settings as an extra shortcut.
+- Tapping a category from the Categories start screen now opens Free payment with that category selected.
 
 Что нового в 0.10.1
 
@@ -11,3 +12,4 @@ What's new in 0.10.1
 - Родительские категории теперь можно свободно перетаскивать по списку.
 - Добавлены настройки панели быстрого доступа для выбора 3-5 кнопок нижней панели.
 - У существующих пользователей сохраняется текущая нижняя панель и добавляется кнопка Настроек.
+- Нажатие категории со стартового экрана Категорий теперь открывает свободный платеж с выбранной категорией.

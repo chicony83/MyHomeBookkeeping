@@ -61,6 +61,13 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
                     R.id.nav_currencies -> args = argsQueryCurrency
                 }
             }
+            navMoneyMovingQuery -> {
+                when (navControlHelper.currentFragment()) {
+                    R.id.nav_categories -> args = argsQueryCategory
+                    R.id.nav_cash_account -> args = argsQueryCashAccount
+                    R.id.nav_currencies -> args = argsQueryCurrency
+                }
+            }
             navNewMoneyMoving -> {
                 when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsCreateCategory

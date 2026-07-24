@@ -41,6 +41,13 @@ class CategoriesViewModel(
     private val argsIncome = Constants.ARGS_QUERY_PAYMENT_INCOME
     private val argsSpending = Constants.ARGS_QUERY_PAYMENT_SPENDING
     private val argsNone = Constants.FOR_QUERY_NONE
+    private val argsCreateDateTime = Constants.ARGS_NEW_PAYMENT_DATE_TIME_KEY
+    private val argsCreateCategory = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
+    private val argsCreateTransferCashAccount = Constants.ARGS_NEW_PAYMENT_TRANSFER_CASH_ACCOUNT_KEY
+    private val argsCreateIsTransfer = Constants.ARGS_NEW_PAYMENT_IS_TRANSFER_KEY
+    private val argsCreateCashAccountSelectMode = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_SELECT_MODE_KEY
+    private val argsCreateAmount = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
+    private val argsCreateDescription = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
 
     private val getSP = GetSP(sharedPreferences)
     private val setSP = SetSP(spEditor)
@@ -130,6 +137,20 @@ class CategoriesViewModel(
 //            argsForQuery = argsForQuery,
 //            id = id
 //        )
+    }
+
+    fun saveCategoryForNewMoneyMoving(id: Int) {
+        isIncomeSpendingSetNone()
+        saveIsIncomeCategory()
+        with(setSP) {
+            saveToSP(argsCreateCategory, id)
+            saveToSP(argsCreateDateTime, Constants.MINUS_ONE_VAL_LONG)
+            saveToSP(argsCreateTransferCashAccount, Constants.MINUS_ONE_VAL_INT)
+            saveToSP(argsCreateIsTransfer, false)
+            saveToSP(argsCreateCashAccountSelectMode, Constants.CASH_ACCOUNT_SELECT_MODE_SOURCE)
+            saveToSP(argsCreateAmount, "")
+            saveToSP(argsCreateDescription, "")
+        }
     }
 
     fun selectSpendingCategory(navControlHelper: NavControlHelper) {

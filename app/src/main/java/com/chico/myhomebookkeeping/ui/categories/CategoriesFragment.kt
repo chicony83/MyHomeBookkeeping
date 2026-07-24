@@ -63,6 +63,14 @@ class CategoriesFragment : Fragment() {
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
     private val searchMinLength = 4
+    private val categorySelectionSources = setOf(
+        R.id.nav_money_moving,
+        R.id.nav_money_moving_query,
+        R.id.nav_new_money_moving,
+        R.id.nav_change_money_moving,
+        R.id.nav_new_fast_payment_fragment,
+        R.id.nav_change_fast_payment_fragment
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -249,8 +257,7 @@ class CategoriesFragment : Fragment() {
                 object : OnItemViewClickListener {
                     override fun onShortClick(selectedId: Int) {
                         if (categoryOrderEditMode) return
-                        categoriesViewModel.saveData(navControlHelper, selectedId)
-                        navControlHelper.moveToPreviousFragment()
+                        selectCategory(selectedId)
                     }
 
                     override fun onLongClick(selectedId: Int) {
@@ -359,13 +366,26 @@ class CategoriesFragment : Fragment() {
                     },
                     object : OnItemSelectForSelectCallBackInt {
                         override fun onSelect(id: Int) {
-                            categoriesViewModel.saveData(navControlHelper, id)
-                            navControlHelper.moveToPreviousFragment()
+                            selectCategory(id)
                         }
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }
+    }
+
+    private fun selectCategory(selectedId: Int) {
+        if (isOpenedForCategorySelection()) {
+            categoriesViewModel.saveData(navControlHelper, selectedId)
+            navControlHelper.moveToPreviousFragment()
+        } else {
+            categoriesViewModel.saveCategoryForNewMoneyMoving(selectedId)
+            navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
+        }
+    }
+
+    private fun isOpenedForCategorySelection(): Boolean {
+        return navControlHelper.previousFragment() in categorySelectionSources
     }
 
     private fun showChangeCategoryDialog(category: Categories?) {
@@ -436,8 +456,7 @@ class CategoriesFragment : Fragment() {
                         )
                         val result: Long = categoriesViewModel.addNewCategory(category)
                         if (isSelect) {
-                            categoriesViewModel.saveData(navControlHelper, result.toInt())
-                            navControlHelper.moveToPreviousFragment()
+                            selectCategory(result.toInt())
                         }
                     }
 
@@ -456,8 +475,7 @@ class CategoriesFragment : Fragment() {
                         )
                         val result: Long = categoriesViewModel.addNewCategory(category)
                         if (isSelect) {
-                            categoriesViewModel.saveData(navControlHelper, result.toInt())
-                            navControlHelper.moveToPreviousFragment()
+                            selectCategory(result.toInt())
                         }
                     }
                 })
