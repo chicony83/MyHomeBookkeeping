@@ -22,12 +22,11 @@ import com.chico.myhomebookkeeping.backup.DatabaseRestoreManager
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.icons.IconResourceSynchronizer
-import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.sp.EraseSP
+import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.UpdateViewModel
@@ -49,6 +48,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var sharedPreferences: SharedPreferences
+    private var isQuickAccessDestinationListenerAdded = false
+    private val quickAccessSettingsListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == Constants.QUICK_ACCESS_PANEL_ITEMS && ::bottomNavigationView.isInitialized) {
+                setupQuickAccessPanel()
+            }
+        }
     private val uiHelper = UiHelper()
     lateinit var mainActivityViewModel: MainActivityViewModel
     private var hasCheckedWhatsNewThisSession = false
@@ -60,12 +67,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        sharedPreferences = getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(quickAccessSettingsListener)
 
         uiMode()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.isSaveEnabled = false
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -80,7 +90,9 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_money_moving_query,
                 R.id.nav_money_moving,
-//                R.id.nav_reports,
+                R.id.nav_reports,
+                R.id.nav_fast_payments_fragment,
+                R.id.nav_new_money_moving,
                 R.id.nav_categories,
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
@@ -93,23 +105,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.journal_money_moving -> {
-                    navController.navigate(R.id.nav_money_moving)
-                }
-                R.id.add_money_moving -> {
-                    navController.navigate(R.id.nav_new_money_moving)
-                }
-                R.id.reports -> {
-                    navController.navigate(R.id.nav_reports)
-                }
-                R.id.nav_fast_payments_fragment -> {
-                    navController.navigate(R.id.nav_fast_payments_fragment)
-                }
-            }
-            true
-        }
+        setupQuickAccessPanel()
 
         hideToolbarAndBottomNavigation(toolbar)
         setupSearchMenuVisibility()
@@ -266,6 +262,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupQuickAccessPanel() {
+        val menu = bottomNavigationView.menu
+        val selectedDestinationId = navController.currentDestination?.id
+        while (menu.size() > 0) {
+            menu.removeItem(menu.getItem(0).itemId)
+        }
+        QuickAccessPanel.getItems(sharedPreferences).forEachIndexed { index, item ->
+            menu.add(Menu.NONE, item.destinationId, index, item.titleRes)
+                .setIcon(item.iconRes)
+        }
+        selectedDestinationId?.let {
+            if (menu.findItem(it) != null) bottomNavigationView.selectedItemId = it
+        }
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            if (navController.currentDestination?.id != item.itemId) {
+                navController.navigate(item.itemId)
+            }
+            true
+        }
+        if (!isQuickAccessDestinationListenerAdded) {
+            isQuickAccessDestinationListenerAdded = true
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (bottomNavigationView.menu.findItem(destination.id) != null) {
+                    bottomNavigationView.selectedItemId = destination.id
+                }
+            }
+        }
+    }
+
     private fun openSettingsSection(section: String) {
         navController.navigate(
             R.id.nav_setting,
@@ -281,5 +306,12 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment
             ?.childFragmentManager
             ?.primaryNavigationFragment as? T
+    }
+
+    override fun onDestroy() {
+        if (::sharedPreferences.isInitialized) {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(quickAccessSettingsListener)
+        }
+        super.onDestroy()
     }
 }

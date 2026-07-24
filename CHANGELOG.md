@@ -6,10 +6,16 @@ This file is the full internal release log. Keep all useful development notes he
 
 ### User-facing
 - Fixed parent category sorting on the Categories screen: parent categories can now be dragged freely through the list.
+- Added a Quick access panel section in Settings.
+- Users can choose 3 to 5 bottom navigation buttons from Fast payments, Free payment, Categories, Currencies, Accounts, Journal, Reports, and Settings.
+- New installs now start with Fast payments, Accounts, Journal, and Settings in the bottom panel; existing installs keep the previous panel and receive Settings as an extra shortcut.
 
 ### Development
 - Parent category drag-and-drop now mirrors subcategory reordering: the in-memory order is updated during drag with `notifyItemMoved`, and the saved order is committed when the drag ends.
 - Added unit coverage for moving parent category order keys up and down.
+- Added `QuickAccessPanel` as the shared source of truth for available bottom navigation destinations, default panel layouts, icons, limits, and SharedPreferences persistence.
+- Bottom navigation is now built programmatically from saved quick access settings and updates when the Settings screen saves a new panel.
+- The Settings screen now renders quick access rows dynamically, supports adding/removing panel buttons within the 3-5 limit, and prevents duplicate selections with a user message.
 
 ## 0.10.0
 

@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 
 class SettingsViewModel(
@@ -38,6 +39,10 @@ class SettingsViewModel(
     val startFragment: LiveData<String>
         get() = _startFragment
 
+    private val _quickAccessItems = MutableLiveData<List<String>>()
+    val quickAccessItems: LiveData<List<String>>
+        get() = _quickAccessItems
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -46,6 +51,7 @@ class SettingsViewModel(
         _appVersion.value = "$currentVersion ${packageInfo.versionName} ($versionCode)"
         _quickPaymentSettings.value = getQuickPaymentSettings()
         _startFragment.value = getStartFragment()
+        _quickAccessItems.value = QuickAccessPanel.getKeys(sharedPreferences)
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -74,6 +80,11 @@ class SettingsViewModel(
             .putString(Constants.START_FRAGMENT, startFragment)
             .apply()
         _startFragment.value = startFragment
+    }
+
+    fun saveQuickAccessItems(items: List<String>) {
+        QuickAccessPanel.saveKeys(sharedPreferences, items)
+        _quickAccessItems.value = QuickAccessPanel.getKeys(sharedPreferences)
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {

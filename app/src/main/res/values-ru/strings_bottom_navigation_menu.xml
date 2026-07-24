@@ -4,4 +4,8 @@
     <string name="bottom_navigation_free_fast_payment">Свободный</string>
     <string name="bottom_navigation_fast_payments">Платежи</string>
     <string name="bottom_navigation_reports">Отчеты</string>
+    <string name="bottom_navigation_categories">Категории</string>
+    <string name="bottom_navigation_currencies">Валюты</string>
+    <string name="bottom_navigation_cash_accounts">Счета</string>
+    <string name="bottom_navigation_settings">Настройки</string>
 </resources>

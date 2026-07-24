@@ -4,4 +4,8 @@
     <string name="bottom_navigation_free_fast_payment">Free</string>
     <string name="bottom_navigation_fast_payments">Fast</string>
     <string name="bottom_navigation_reports">Reports</string>
+    <string name="bottom_navigation_categories">Categories</string>
+    <string name="bottom_navigation_currencies">Currencies</string>
+    <string name="bottom_navigation_cash_accounts">Accounts</string>
+    <string name="bottom_navigation_settings">Settings</string>
 </resources>

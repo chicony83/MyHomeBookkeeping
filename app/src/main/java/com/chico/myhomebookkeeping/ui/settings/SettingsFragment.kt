@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 import kotlinx.coroutines.Dispatchers
@@ -59,6 +61,7 @@ class SettingsFragment : Fragment() {
     private var amountWholeDigits = 6
     private var amountFractionDigits = 2
     private var selectedStartFragmentValue = Constants.START_FRAGMENT_FAST_PAYMENTS
+    private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
     private var pendingRestoreUri: Uri? = null
@@ -245,6 +248,10 @@ class SettingsFragment : Fragment() {
                 updateSettingsValues()
                 isBindingSettings = false
             }
+            quickAccessItems.observe(viewLifecycleOwner) {
+                quickAccessItemKeys = it
+                bindQuickAccessSettings()
+            }
         }
         loadDefaultSelectionTitles()
 
@@ -290,6 +297,105 @@ class SettingsFragment : Fragment() {
             } else {
                 View.GONE
             }
+    }
+
+    private fun bindQuickAccessSettings() {
+        binding.quickAccessButtonsContainer.removeAllViews()
+        quickAccessItemKeys.forEachIndexed { index, key ->
+            val item = QuickAccessPanel.findByKey(key) ?: return@forEachIndexed
+            binding.quickAccessButtonsContainer.addView(
+                createQuickAccessRow(
+                    label = getString(R.string.quick_access_button_title, index + 1),
+                    value = getString(item.titleRes)
+                ) {
+                    showQuickAccessChoiceDialog(index)
+                }
+            )
+        }
+        if (quickAccessItemKeys.size < QuickAccessPanel.MAX_ITEMS) {
+            binding.quickAccessButtonsContainer.addView(
+                createQuickAccessRow(
+                    label = getString(R.string.quick_access_button_title, quickAccessItemKeys.size + 1),
+                    value = getString(R.string.quick_access_add_button)
+                ) {
+                    showQuickAccessChoiceDialog(quickAccessItemKeys.size)
+                }
+            )
+        }
+    }
+
+    private fun createQuickAccessRow(
+        label: String,
+        value: String,
+        onClick: () -> Unit
+    ): View {
+        val row = LinearLayout(requireContext(), null, 0, R.style.SettingsValueRow).apply {
+            setOnClickListener { onClick() }
+        }
+        val labelView = TextView(requireContext(), null, 0, R.style.SettingsValueLabel).apply {
+            text = label
+        }
+        val valueView = TextView(requireContext(), null, 0, R.style.SettingsValueText).apply {
+            text = value
+        }
+        row.addView(
+            labelView,
+            LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        )
+        row.addView(
+            valueView,
+            LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f).apply {
+                marginStart = resources.getDimensionPixelSize(R.dimen.margin_double)
+            }
+        )
+        return row
+    }
+
+    private fun showQuickAccessChoiceDialog(position: Int) {
+        val isExistingPosition = position < quickAccessItemKeys.size
+        val currentKey = quickAccessItemKeys.getOrNull(position)
+        val canRemove = isExistingPosition && quickAccessItemKeys.size > QuickAccessPanel.MIN_ITEMS
+        val items = QuickAccessPanel.availableItems
+        val labels = items
+            .map { getString(it.titleRes) }
+            .let { if (canRemove) it + getString(R.string.quick_access_none) else it }
+            .toTypedArray()
+        val selectedIndex = items.indexOfFirst { it.key == currentKey }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.quick_access_select_title)
+            .setSingleChoiceItems(labels, selectedIndex) { dialog, which ->
+                if (canRemove && which == items.size) {
+                    settingsViewModel.saveQuickAccessItems(
+                        quickAccessItemKeys.toMutableList().apply { removeAt(position) }
+                    )
+                    dialog.dismiss()
+                    return@setSingleChoiceItems
+                }
+
+                val selectedKey = items[which].key
+                if (selectedKey != currentKey && quickAccessItemKeys.contains(selectedKey)) {
+                    message(getString(R.string.quick_access_already_added))
+                    val alertDialog = dialog as AlertDialog
+                    if (selectedIndex >= 0) {
+                        alertDialog.listView.setItemChecked(selectedIndex, true)
+                    } else {
+                        alertDialog.listView.clearChoices()
+                        alertDialog.listView.requestLayout()
+                    }
+                    return@setSingleChoiceItems
+                }
+
+                val updatedItems = quickAccessItemKeys.toMutableList()
+                if (isExistingPosition) {
+                    updatedItems[position] = selectedKey
+                } else {
+                    updatedItems.add(selectedKey)
+                }
+                settingsViewModel.saveQuickAccessItems(updatedItems)
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun selectionModeTitle(isScrollEnabled: Boolean): String {

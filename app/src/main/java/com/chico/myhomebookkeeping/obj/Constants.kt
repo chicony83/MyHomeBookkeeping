@@ -104,4 +104,6 @@ object Constants {
     const val START_FRAGMENT_CATEGORIES = "categories"
     const val START_FRAGMENT_JOURNAL = "journal"
 
+    const val QUICK_ACCESS_PANEL_ITEMS = "quick_access_panel_items"
+
 }
