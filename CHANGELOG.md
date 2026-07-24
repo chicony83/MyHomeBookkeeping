@@ -8,6 +8,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Fixed parent category sorting on the Categories screen: parent categories can now be dragged freely through the list.
 - Added a Quick access panel section in Settings.
 - Users can choose 3 to 5 bottom navigation buttons from Fast payments, Free payment, Categories, Currencies, Accounts, Journal, Reports, and Settings.
+- Added a language setting for testing the app in any bundled language: system default, English, or Russian.
 - New installs now start with Fast payments, Accounts, Journal, and Settings in the bottom panel; existing installs keep the previous panel and receive Settings as an extra shortcut.
 - Categories can now be used as a fast payment start screen: tapping a category outside selector flows opens Free payment with that category already selected.
 
@@ -17,6 +18,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Added `QuickAccessPanel` as the shared source of truth for available bottom navigation destinations, default panel layouts, icons, limits, and SharedPreferences persistence.
 - Bottom navigation is now built programmatically from saved quick access settings and updates when the Settings screen saves a new panel.
 - The Settings screen now renders quick access rows dynamically, supports adding/removing panel buttons within the 3-5 limit, and prevents duplicate selections with a user message.
+- Added an `AppLanguage` helper around AppCompat application locales, with SharedPreferences persistence and backup/restore support for the selected app language.
 - Category taps now distinguish selector sources from standalone Categories navigation, preserving existing selector SharedPreferences while writing standalone picks to the new-payment category key.
 - Query category selection now handles `nav_money_moving_query` in the shared selector persistence path.
 

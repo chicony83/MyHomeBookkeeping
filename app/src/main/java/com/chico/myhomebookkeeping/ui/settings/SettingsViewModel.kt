@@ -13,6 +13,7 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
@@ -43,6 +44,10 @@ class SettingsViewModel(
     val quickAccessItems: LiveData<List<String>>
         get() = _quickAccessItems
 
+    private val _appLanguage = MutableLiveData<String>()
+    val appLanguage: LiveData<String>
+        get() = _appLanguage
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -52,6 +57,7 @@ class SettingsViewModel(
         _quickPaymentSettings.value = getQuickPaymentSettings()
         _startFragment.value = getStartFragment()
         _quickAccessItems.value = QuickAccessPanel.getKeys(sharedPreferences)
+        _appLanguage.value = AppLanguage.getSelectedTag(app.applicationContext)
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -85,6 +91,11 @@ class SettingsViewModel(
     fun saveQuickAccessItems(items: List<String>) {
         QuickAccessPanel.saveKeys(sharedPreferences, items)
         _quickAccessItems.value = QuickAccessPanel.getKeys(sharedPreferences)
+    }
+
+    fun saveAppLanguage(languageTag: String) {
+        AppLanguage.saveSelectedTag(app.applicationContext, languageTag)
+        _appLanguage.value = AppLanguage.getSelectedTag(app.applicationContext)
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {

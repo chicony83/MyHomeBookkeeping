@@ -134,6 +134,10 @@ object DatabaseBackupManager {
                     Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
                 )
             )
+            .put(
+                "appLanguage",
+                appPreferences.getString(Constants.APP_LANGUAGE, Constants.APP_LANGUAGE_SYSTEM)
+            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {

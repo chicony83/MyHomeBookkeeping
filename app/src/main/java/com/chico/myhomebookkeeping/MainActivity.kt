@@ -22,6 +22,7 @@ import com.chico.myhomebookkeeping.backup.DatabaseRestoreManager
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.icons.IconResourceSynchronizer
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.Colors
 import com.chico.myhomebookkeeping.obj.DayNightMode
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppLanguage.applySelectedLanguage(applicationContext)
         DatabaseRestoreManager.applyPendingRestore(applicationContext)
         IconResourceSynchronizer.synchronize(applicationContext)
         setContentView(R.layout.activity_main)

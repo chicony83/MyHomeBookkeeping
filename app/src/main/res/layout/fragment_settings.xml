@@ -181,6 +181,38 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/applicationBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@drawable/category_group_background"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/applicationSection"
+                    style="@style/TextDescriptions"
+                    android:layout_marginLeft="@dimen/margin_zero"
+                    android:text="@string/settings_application_section_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H3"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/appLanguageRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_app_language_title" />
+
+                    <TextView
+                        android:id="@+id/appLanguageValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/startupBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

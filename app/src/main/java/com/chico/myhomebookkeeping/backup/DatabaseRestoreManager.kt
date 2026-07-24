@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.backup
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import org.json.JSONObject
 import java.io.BufferedInputStream
@@ -200,6 +201,9 @@ object DatabaseRestoreManager {
                     Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
                 )
             )
+            settings.optString("appLanguage", Constants.APP_LANGUAGE_SYSTEM)
+                .takeIf { AppLanguage.supportedTags.contains(it) }
+                ?.let { putString(Constants.APP_LANGUAGE, it) }
             apply()
         }
     }

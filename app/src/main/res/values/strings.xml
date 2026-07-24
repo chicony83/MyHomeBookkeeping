@@ -33,4 +33,9 @@
     <string name="quick_access_select_title">Select button</string>
     <string name="quick_access_none">Nothing</string>
     <string name="quick_access_already_added">This item is already selected</string>
+    <string name="settings_application_section_title">Application</string>
+    <string name="settings_app_language_title">Language</string>
+    <string name="settings_app_language_system">System default</string>
+    <string name="settings_app_language_english">English</string>
+    <string name="settings_app_language_russian">Russian</string>
 </resources>

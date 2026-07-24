@@ -106,4 +106,9 @@ object Constants {
 
     const val QUICK_ACCESS_PANEL_ITEMS = "quick_access_panel_items"
 
+    const val APP_LANGUAGE = "app_language"
+    const val APP_LANGUAGE_SYSTEM = ""
+    const val APP_LANGUAGE_ENGLISH = "en"
+    const val APP_LANGUAGE_RUSSIAN = "ru"
+
 }

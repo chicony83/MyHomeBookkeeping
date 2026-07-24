@@ -29,6 +29,7 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
@@ -61,6 +62,7 @@ class SettingsFragment : Fragment() {
     private var amountWholeDigits = 6
     private var amountFractionDigits = 2
     private var selectedStartFragmentValue = Constants.START_FRAGMENT_FAST_PAYMENTS
+    private var selectedAppLanguageTag = Constants.APP_LANGUAGE_SYSTEM
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -219,6 +221,9 @@ class SettingsFragment : Fragment() {
                     settingsViewModel.saveStartFragment(selectedStartFragmentValue)
                 }
             }
+            appLanguageRow.setOnClickListener {
+                showAppLanguageDialog()
+            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -251,6 +256,10 @@ class SettingsFragment : Fragment() {
             quickAccessItems.observe(viewLifecycleOwner) {
                 quickAccessItemKeys = it
                 bindQuickAccessSettings()
+            }
+            appLanguage.observe(viewLifecycleOwner) {
+                selectedAppLanguageTag = it
+                binding.appLanguageValue.text = appLanguageTitle(it)
             }
         }
         loadDefaultSelectionTitles()
@@ -291,6 +300,7 @@ class SettingsFragment : Fragment() {
         binding.amountWholeDigitsValue.text = amountWholeDigits.toString()
         binding.amountFractionDigitsValue.text = amountFractionDigits.toString()
         binding.startFragmentValue.text = startFragmentTitle(selectedStartFragmentValue)
+        binding.appLanguageValue.text = appLanguageTitle(selectedAppLanguageTag)
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE
@@ -480,6 +490,31 @@ class SettingsFragment : Fragment() {
                 Constants.START_FRAGMENT_CATEGORIES -> R.string.first_launch_start_destination_categories
                 Constants.START_FRAGMENT_JOURNAL -> R.string.first_launch_start_destination_journal
                 else -> R.string.first_launch_start_destination_fast_payments
+            }
+        )
+    }
+
+    private fun showAppLanguageDialog() {
+        val values = AppLanguage.supportedTags.toTypedArray()
+        showChoiceDialog(
+            title = getString(R.string.settings_app_language_title),
+            labels = values.map(::appLanguageTitle).toTypedArray(),
+            selectedIndex = values.indexOf(selectedAppLanguageTag).coerceAtLeast(0)
+        ) { index ->
+            val languageTag = values[index]
+            if (languageTag == selectedAppLanguageTag) return@showChoiceDialog
+            selectedAppLanguageTag = languageTag
+            settingsViewModel.saveAppLanguage(languageTag)
+            AppLanguage.applyLanguageTag(languageTag)
+        }
+    }
+
+    private fun appLanguageTitle(languageTag: String): String {
+        return getString(
+            when (languageTag) {
+                Constants.APP_LANGUAGE_ENGLISH -> R.string.settings_app_language_english
+                Constants.APP_LANGUAGE_RUSSIAN -> R.string.settings_app_language_russian
+                else -> R.string.settings_app_language_system
             }
         )
     }

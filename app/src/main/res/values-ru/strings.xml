@@ -36,4 +36,9 @@
     <string name="quick_access_select_title">&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1082;&#1085;&#1086;&#1087;&#1082;&#1091;</string>
     <string name="quick_access_none">&#1053;&#1080;&#1095;&#1077;&#1075;&#1086;</string>
     <string name="quick_access_already_added">&#1069;&#1090;&#1086;&#1090; &#1101;&#1083;&#1077;&#1084;&#1077;&#1085;&#1090; &#1091;&#1078;&#1077; &#1074;&#1099;&#1073;&#1088;&#1072;&#1085;</string>
+    <string name="settings_application_section_title">&#1055;&#1088;&#1080;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1077;</string>
+    <string name="settings_app_language_title">&#1071;&#1079;&#1099;&#1082;</string>
+    <string name="settings_app_language_system">&#1050;&#1072;&#1082; &#1074; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1077;</string>
+    <string name="settings_app_language_english">&#1040;&#1085;&#1075;&#1083;&#1080;&#1081;&#1089;&#1082;&#1080;&#1081;</string>
+    <string name="settings_app_language_russian">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</string>
 </resources>
