@@ -1,0 +1,9 @@
+What's new in 0.10.1
+
+- Fixed parent category sorting on the Categories screen.
+- Parent categories can now be dragged freely through the list.
+
+Что нового в 0.10.1
+
+- Исправлена сортировка родительских категорий на экране категорий.
+- Родительские категории теперь можно свободно перетаскивать по списку.

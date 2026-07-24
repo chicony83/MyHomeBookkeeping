@@ -46,6 +46,7 @@ class CategoryGroupsAdapter(
     private var rows = buildRows()
     private var editMode = false
     private var dragStartListener: ((RecyclerView.ViewHolder) -> Unit)? = null
+    private var draggingTopKey: String? = null
     private var pendingTopOrderChanged = false
     private var pendingCategoriesOrderChanged = false
 
@@ -75,8 +76,9 @@ class CategoryGroupsAdapter(
         if (fromPosition !in rows.indices || toPosition !in rows.indices) return false
         val fromRow = rows[fromPosition]
         val toRow = rows[toPosition]
+        draggingTopKey?.let { return moveTopRow(it, toRow) }
         return when {
-            fromRow.isTopRow() && toRow.isTopRow() -> moveTopRow(fromRow, toRow)
+            fromRow.isTopRow() -> moveTopRow(fromRow.topKey() ?: return false, toRow)
             fromRow is CategoryTreeRow.CategoryItem -> moveCategory(
                 fromRow,
                 toRow,
@@ -88,6 +90,7 @@ class CategoryGroupsAdapter(
     }
 
     fun commitPendingOrderChanges() {
+        draggingTopKey = null
         if (pendingTopOrderChanged) {
             onTopOrderChanged(topOrder, orderedParentCategories())
             pendingTopOrderChanged = false
@@ -98,19 +101,19 @@ class CategoryGroupsAdapter(
         }
     }
 
-    private fun moveTopRow(fromRow: CategoryTreeRow, toRow: CategoryTreeRow): Boolean {
-        val fromKey = fromRow.topKey() ?: return false
-        val toKey = toRow.topKey() ?: return false
-        val mutableTopOrder = topOrder.toMutableList()
-        val fromIndex = mutableTopOrder.indexOf(fromKey)
-        val toIndex = mutableTopOrder.indexOf(toKey)
-        if (fromIndex == toIndex) return false
-        if (fromIndex == -1 || toIndex == -1) return false
-        mutableTopOrder.removeAt(fromIndex)
-        mutableTopOrder.add(toIndex, fromKey)
-        topOrder = mutableTopOrder
+    private fun moveTopRow(fromKey: String, toRow: CategoryTreeRow): Boolean {
+        val toKey = toRow.targetTopKey() ?: return false
+        val fromPosition = positionOfTopKey(fromKey)
+        val newTopOrder = moveTopKey(topOrder, fromKey, toKey)
+        if (newTopOrder == topOrder) return false
+        topOrder = newTopOrder
         rows = buildRows()
-        notifyDataSetChanged()
+        val newPosition = positionOfTopKey(fromKey)
+        if (fromPosition == RecyclerView.NO_POSITION || newPosition == RecyclerView.NO_POSITION) {
+            notifyDataSetChanged()
+        } else {
+            notifyItemMoved(fromPosition, newPosition)
+        }
         pendingTopOrderChanged = true
         return true
     }
@@ -223,6 +226,7 @@ class CategoryGroupsAdapter(
                 groupDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 groupDragHandleImageView.setOnTouchListener { _, event ->
                     if (editMode && event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        draggingTopKey = group.topKey
                         dragStartListener?.invoke(this@HeaderViewHolder)
                     }
                     false
@@ -261,6 +265,7 @@ class CategoryGroupsAdapter(
                 }
                 categoryDragHandleImageView.setOnTouchListener { _, event ->
                     if (editMode && event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        draggingTopKey = null
                         dragStartListener?.invoke(this@CategoryViewHolder)
                     }
                     false
@@ -310,6 +315,7 @@ class CategoryGroupsAdapter(
                 }
                 newParentCategoriesItem.setOnTouchListener { _, event ->
                     if (editMode && event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        draggingTopKey = TOP_ADD_PARENT
                         dragStartListener?.invoke(this@AddParentCategoryViewHolder)
                     }
                     false
@@ -353,6 +359,11 @@ class CategoryGroupsAdapter(
         }.takeIf { it >= 0 } ?: RecyclerView.NO_POSITION
     }
 
+    private fun positionOfTopKey(topKey: String): Int {
+        return rows.indexOfFirst { it.topKey() == topKey }
+            .takeIf { it >= 0 } ?: RecyclerView.NO_POSITION
+    }
+
     private fun CategoryTreeRow.isTopRow(): Boolean = this is CategoryTreeRow.ParentHeader ||
         this is CategoryTreeRow.NoParentHeader ||
         this is CategoryTreeRow.AddParent
@@ -362,6 +373,14 @@ class CategoryGroupsAdapter(
         is CategoryTreeRow.NoParentHeader -> TOP_WITHOUT_PARENT
         CategoryTreeRow.AddParent -> TOP_ADD_PARENT
         else -> null
+    }
+
+    private fun CategoryTreeRow.targetTopKey(): String? = when (this) {
+        is CategoryTreeRow.ParentHeader -> group.topKey
+        is CategoryTreeRow.NoParentHeader -> TOP_WITHOUT_PARENT
+        is CategoryTreeRow.CategoryItem -> parentCategoryId?.let { TOP_PARENT_PREFIX + it } ?: TOP_WITHOUT_PARENT
+        is CategoryTreeRow.AddCategory -> parentCategory?.id?.let { TOP_PARENT_PREFIX + it } ?: TOP_WITHOUT_PARENT
+        CategoryTreeRow.AddParent -> TOP_ADD_PARENT
     }
 
     private companion object {
@@ -379,4 +398,14 @@ const val TOP_ADD_PARENT = "add_parent"
 fun normalizeTopOrder(savedOrder: List<String>, groups: List<CategoryGroup>): List<String> {
     val actualKeys = groups.map { it.topKey } + TOP_ADD_PARENT
     return (savedOrder.filter { it in actualKeys } + actualKeys).distinct()
+}
+
+fun moveTopKey(topOrder: List<String>, fromKey: String, toKey: String): List<String> {
+    val fromIndex = topOrder.indexOf(fromKey)
+    val toIndex = topOrder.indexOf(toKey)
+    if (fromIndex == -1 || toIndex == -1 || fromIndex == toIndex) return topOrder
+    return topOrder.toMutableList().apply {
+        removeAt(fromIndex)
+        add(toIndex, fromKey)
+    }
 }

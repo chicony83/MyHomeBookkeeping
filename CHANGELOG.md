@@ -2,6 +2,15 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.10.1
+
+### User-facing
+- Fixed parent category sorting on the Categories screen: parent categories can now be dragged freely through the list.
+
+### Development
+- Parent category drag-and-drop now mirrors subcategory reordering: the in-memory order is updated during drag with `notifyItemMoved`, and the saved order is committed when the drag ends.
+- Added unit coverage for moving parent category order keys up and down.
+
 ## 0.10.0
 
 ### User-facing
