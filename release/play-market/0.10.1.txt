@@ -3,6 +3,7 @@ What's new in 0.10.1
 - Fixed parent category sorting on the Categories screen.
 - Parent categories can now be dragged freely through the list.
 - Added Quick access panel settings for choosing 3 to 5 bottom navigation buttons.
+- New installs now start with Fast payments, Categories, Journal, and Settings in the bottom panel.
 - Added a language setting for switching between system default, English, and Russian.
 - Existing users keep their current bottom panel and get Settings as an extra shortcut.
 - Tapping a category from the Categories start screen now opens Free payment with that category selected.
@@ -12,5 +13,6 @@ What's new in 0.10.1
 - Исправлена сортировка родительских категорий на экране категорий.
 - Родительские категории теперь можно свободно перетаскивать по списку.
 - Добавлены настройки панели быстрого доступа для выбора 3-5 кнопок нижней панели.
+- При чистой установке нижняя панель начинается с Платежей, Категорий, Журнала и Настроек.
 - У существующих пользователей сохраняется текущая нижняя панель и добавляется кнопка Настроек.
 - Нажатие категории со стартового экрана Категорий теперь открывает свободный платеж с выбранной категорией.

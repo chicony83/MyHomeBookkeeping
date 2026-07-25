@@ -55,8 +55,8 @@ class SettingsFragment : Fragment() {
     private lateinit var control: NavController
     private val uiHelper = UiHelper()
     private lateinit var getVersionCode: GetVersionCode
-    private var isCurrencyScrollEnabled = false
-    private var isCashAccountScrollEnabled = false
+    private var isCurrencyScrollEnabled = Constants.QUICK_PAYMENT_DEFAULT_CURRENCY_SELECTION_SCROLL
+    private var isCashAccountScrollEnabled = Constants.QUICK_PAYMENT_DEFAULT_CASH_ACCOUNT_SELECTION_SCROLL
     private var isCalculatorButtonVisible = true
     private var amountInputMode = Constants.QUICK_PAYMENT_AMOUNT_INPUT_DIGITS
     private var amountWholeDigits = 6

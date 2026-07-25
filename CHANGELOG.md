@@ -9,7 +9,8 @@ This file is the full internal release log. Keep all useful development notes he
 - Added a Quick access panel section in Settings.
 - Users can choose 3 to 5 bottom navigation buttons from Fast payments, Free payment, Categories, Currencies, Accounts, Journal, Reports, and Settings.
 - Added a language setting for testing the app in any bundled language: system default, English, or Russian.
-- New installs now start with Fast payments, Accounts, Journal, and Settings in the bottom panel; existing installs keep the previous panel and receive Settings as an extra shortcut.
+- New installs now start with Fast payments, Categories, Journal, and Settings in the bottom panel; existing installs keep the previous panel and receive Settings as an extra shortcut.
+- Settings rows now keep labels and values on one line for a cleaner quick payment settings layout.
 - Categories can now be used as a fast payment start screen: tapping a category outside selector flows opens Free payment with that category already selected.
 - Journal entries and the Free payment category button now show parent category paths, with long names split or truncated safely.
 

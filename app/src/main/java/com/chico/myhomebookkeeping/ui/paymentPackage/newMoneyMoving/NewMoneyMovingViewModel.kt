@@ -469,11 +469,13 @@ class NewMoneyMovingViewModel(
 
     fun getQuickPaymentSettings(): QuickPaymentSettings {
         return QuickPaymentSettings(
-            isCurrencyScrollEnabled = getSP.getBooleanElseReturnFalse(
-                Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL
+            isCurrencyScrollEnabled = getSP.getBoolean(
+                Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL,
+                Constants.QUICK_PAYMENT_DEFAULT_CURRENCY_SELECTION_SCROLL
             ),
-            isCashAccountScrollEnabled = getSP.getBooleanElseReturnFalse(
-                Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL
+            isCashAccountScrollEnabled = getSP.getBoolean(
+                Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL,
+                Constants.QUICK_PAYMENT_DEFAULT_CASH_ACCOUNT_SELECTION_SCROLL
             ),
             isCalculatorButtonVisible = getSP.getBooleanElseReturnTrue(
                 Constants.QUICK_PAYMENT_SHOW_CALCULATOR

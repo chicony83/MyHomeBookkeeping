@@ -87,6 +87,8 @@ object Constants {
 
     const val QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL = "quick_payment_currency_selection_scroll"
     const val QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL = "quick_payment_cash_account_selection_scroll"
+    const val QUICK_PAYMENT_DEFAULT_CURRENCY_SELECTION_SCROLL = true
+    const val QUICK_PAYMENT_DEFAULT_CASH_ACCOUNT_SELECTION_SCROLL = true
     const val QUICK_PAYMENT_SHOW_CALCULATOR = "quick_payment_show_calculator"
     const val QUICK_PAYMENT_AMOUNT_INPUT_MODE = "quick_payment_amount_input_mode"
     const val QUICK_PAYMENT_AMOUNT_INPUT_DIGITS = "digits"

@@ -172,11 +172,17 @@ object DatabaseRestoreManager {
                 ?.let { putString(Constants.SORTING_FAST_PAYMENTS, it) }
             putBoolean(
                 Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL,
-                settings.optBoolean("quickPaymentCurrencySelectionScroll", false)
+                settings.optBoolean(
+                    "quickPaymentCurrencySelectionScroll",
+                    Constants.QUICK_PAYMENT_DEFAULT_CURRENCY_SELECTION_SCROLL
+                )
             )
             putBoolean(
                 Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL,
-                settings.optBoolean("quickPaymentCashAccountSelectionScroll", false)
+                settings.optBoolean(
+                    "quickPaymentCashAccountSelectionScroll",
+                    Constants.QUICK_PAYMENT_DEFAULT_CASH_ACCOUNT_SELECTION_SCROLL
+                )
             )
             putBoolean(
                 Constants.QUICK_PAYMENT_SHOW_CALCULATOR,

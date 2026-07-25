@@ -103,11 +103,17 @@ object DatabaseBackupManager {
             .put("sortingFastPayments", appPreferences.getString(Constants.SORTING_FAST_PAYMENTS, null))
             .put(
                 "quickPaymentCurrencySelectionScroll",
-                appPreferences.getBoolean(Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL, false)
+                appPreferences.getBoolean(
+                    Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL,
+                    Constants.QUICK_PAYMENT_DEFAULT_CURRENCY_SELECTION_SCROLL
+                )
             )
             .put(
                 "quickPaymentCashAccountSelectionScroll",
-                appPreferences.getBoolean(Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL, false)
+                appPreferences.getBoolean(
+                    Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL,
+                    Constants.QUICK_PAYMENT_DEFAULT_CASH_ACCOUNT_SELECTION_SCROLL
+                )
             )
             .put(
                 "quickPaymentShowCalculator",

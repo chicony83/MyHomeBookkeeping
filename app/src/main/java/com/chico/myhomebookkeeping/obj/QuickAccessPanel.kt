@@ -63,16 +63,9 @@ object QuickAccessPanel {
         )
     )
 
-    private val oldDefaultKeys = listOf(
+    private val defaultKeys = listOf(
         "fast_payments",
-        "free_payment",
-        "journal",
-        "reports",
-        "settings"
-    )
-    private val newDefaultKeys = listOf(
-        "fast_payments",
-        "cash_accounts",
+        "categories",
         "journal",
         "settings"
     )
@@ -88,7 +81,7 @@ object QuickAccessPanel {
             ?.split(SEPARATOR)
             ?.map { it.trim() }
             ?.filter { it.isNotBlank() }
-            ?: defaultKeys(sharedPreferences)
+            ?: defaultKeys
 
         return normalizeKeys(keys)
     }
@@ -107,18 +100,13 @@ object QuickAccessPanel {
         return availableItems.firstOrNull { it.destinationId == destinationId }
     }
 
-    private fun defaultKeys(sharedPreferences: SharedPreferences): List<String> {
-        val isFirstLaunch = sharedPreferences.getBoolean(Constants.IS_FIRST_LAUNCH, true)
-        return if (isFirstLaunch) newDefaultKeys else oldDefaultKeys
-    }
-
     private fun normalizeKeys(keys: List<String>): List<String> {
         return keys
             .distinct()
             .filter { key -> availableItems.any { it.key == key } }
             .take(MAX_ITEMS)
             .let { normalized ->
-                if (normalized.size >= MIN_ITEMS) normalized else newDefaultKeys
+                if (normalized.size >= MIN_ITEMS) normalized else defaultKeys
             }
     }
 

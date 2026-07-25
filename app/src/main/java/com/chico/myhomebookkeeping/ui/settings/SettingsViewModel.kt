@@ -126,11 +126,11 @@ class SettingsViewModel(
         return QuickPaymentSettings(
             isCurrencyScrollEnabled = sharedPreferences.getBoolean(
                 Constants.QUICK_PAYMENT_CURRENCY_SELECTION_SCROLL,
-                false
+                Constants.QUICK_PAYMENT_DEFAULT_CURRENCY_SELECTION_SCROLL
             ),
             isCashAccountScrollEnabled = sharedPreferences.getBoolean(
                 Constants.QUICK_PAYMENT_CASH_ACCOUNT_SELECTION_SCROLL,
-                false
+                Constants.QUICK_PAYMENT_DEFAULT_CASH_ACCOUNT_SELECTION_SCROLL
             ),
             isCalculatorButtonVisible = sharedPreferences.getBoolean(
                 Constants.QUICK_PAYMENT_SHOW_CALCULATOR,
