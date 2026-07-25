@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentChangeMoneyMovingBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiColors
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -73,7 +74,10 @@ class ChangeMoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_currencies)
             }
             selectCategoryButton.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                pressSelectButton(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_CHANGE_PAYMENT)
+                )
             }
             submitButton.setOnClickListener {
                 pressSubmitButton()
@@ -170,10 +174,10 @@ class ChangeMoneyMovingFragment : Fragment() {
         editText.setBackgroundResource(R.drawable.input_field_error_background)
     }
 
-    private fun pressSelectButton(fragment: Int) {
+    private fun pressSelectButton(fragment: Int, args: Bundle? = null) {
         changeMoneyMovingViewModel.saveDataToSp()
 //        control.navigate(fragment)
-        navControlHelper.toSelectedFragment(fragment)
+        navControlHelper.toSelectedFragment(fragment, args)
     }
 
     override fun onDestroy() {

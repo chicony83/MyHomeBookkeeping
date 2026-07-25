@@ -14,6 +14,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentNewFastPaymentBinding
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -75,7 +76,12 @@ class NewFastPaymentFragment : Fragment() {
             ratingButton.setOnClickListener { showSelectRatingDialog() }
             selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
             selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
-            selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
+            selectCategoryButton.setOnClickListener {
+                pressSelectButton(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_NEW_FAST_PAYMENT)
+                )
+            }
             submitButton.setOnClickListener {
                 presSubmitButton()
             }
@@ -126,13 +132,13 @@ class NewFastPaymentFragment : Fragment() {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 
-    private fun pressSelectButton(fragment: Int) {
+    private fun pressSelectButton(fragment: Int, args: Bundle? = null) {
         newFastPaymentViewModel.saveDataToSP(
             descriptionFastPayment = getNameOfPayment(),
             description = getDescription(),
             amount = getAmount()
         )
-        navControlHelper.toSelectedFragment(fragment)
+        navControlHelper.toSelectedFragment(fragment, args)
     }
 
     private fun getDescription(): String {

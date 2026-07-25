@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingQueryBinding
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 
 class QueryMoneyMovingFragment : Fragment() {
 
@@ -46,7 +47,10 @@ class QueryMoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_cash_account)
             }
             selectCategory.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                pressSelectButton(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_JOURNAL_FILTER)
+                )
             }
             applyButton.setOnClickListener {
                 pressApplyButton()
@@ -76,9 +80,9 @@ class QueryMoneyMovingFragment : Fragment() {
         control.navigate(R.id.nav_money_moving)
     }
 
-    private fun pressSelectButton(fragment: Int) {
+    private fun pressSelectButton(fragment: Int, args: Bundle? = null) {
         queryMoneyMovingViewModel.saveData()
-        control.navigate(fragment)
+        control.navigate(fragment, args)
     }
 
     override fun onDestroy() {

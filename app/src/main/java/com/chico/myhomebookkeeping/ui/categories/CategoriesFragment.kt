@@ -45,6 +45,38 @@ import java.util.*
 class CategoriesFragment : Fragment() {
     companion object {
         const val ARG_ENABLE_ORDER_EDIT_MODE = "enableCategoryOrderEditMode"
+        const val ARG_OPEN_MODE = "categoryOpenMode"
+
+        // This mode is the source of truth for short-tap behavior on the Categories screen.
+        // Do not infer user intent from the previous back stack entry here: Categories can be
+        // opened as a normal app section right after Journal, and that must not turn the next
+        // category tap into a journal filter selection.
+
+        // Categories opened as a main app section; short tap starts a free payment.
+        const val OPEN_MODE_STANDALONE = "standalone"
+
+        // Categories opened from Journal filters; short tap applies the journal category filter.
+        const val OPEN_MODE_JOURNAL_FILTER = "journal_filter"
+
+        // Categories opened from New payment; short tap selects a category for the draft payment.
+        const val OPEN_MODE_NEW_PAYMENT = "new_payment"
+
+        // Categories opened from Edit payment; short tap replaces the edited payment category.
+        const val OPEN_MODE_CHANGE_PAYMENT = "change_payment"
+
+        // Categories opened from New fast payment; short tap selects its category.
+        const val OPEN_MODE_NEW_FAST_PAYMENT = "new_fast_payment"
+
+        // Categories opened from Edit fast payment; short tap replaces its category.
+        const val OPEN_MODE_CHANGE_FAST_PAYMENT = "change_fast_payment"
+
+        // Reports use ReportsSelectCategoriesFragment for multi-select, not this Categories screen.
+        // If reports later need a single-category picker, add a separate reports-specific mode here.
+        fun openModeArgs(openMode: String): Bundle {
+            return Bundle().apply {
+                putString(ARG_OPEN_MODE, openMode)
+            }
+        }
     }
 
     private val categoriesViewModel: CategoriesViewModel by viewModels()
@@ -63,6 +95,9 @@ class CategoriesFragment : Fragment() {
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
     private val searchMinLength = 4
+    // Legacy fallback for old navigation paths that still do not pass ARG_OPEN_MODE.
+    // New code should pass an explicit open mode instead of relying on the previous back stack entry.
+    // After the explicit mode flow is tested in all selectors, remove this list and the fallback below.
     private val categorySelectionSources = setOf(
         R.id.nav_money_moving,
         R.id.nav_money_moving_query,
@@ -385,6 +420,12 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun isOpenedForCategorySelection(): Boolean {
+        val openMode = arguments?.getString(ARG_OPEN_MODE)
+        if (openMode != null) return openMode != OPEN_MODE_STANDALONE
+
+        // Temporary compatibility path: before explicit modes, Categories inferred its purpose
+        // from previousFragment(). That breaks when the user opens Categories as a main section
+        // right after Journal, because it looks like a journal filter selector.
         return navControlHelper.previousFragment() in categorySelectionSources
     }
 

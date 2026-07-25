@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
@@ -116,7 +117,10 @@ class MoneyMovingFragment : Fragment() {
 
         with(binding) {
             selectCategory.setOnClickListener {
-                pressSelectButton(R.id.nav_categories)
+                control.navigate(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_JOURNAL_FILTER)
+                )
             }
             selectCurrency.setOnClickListener {
                 pressSelectButton(R.id.nav_currencies)

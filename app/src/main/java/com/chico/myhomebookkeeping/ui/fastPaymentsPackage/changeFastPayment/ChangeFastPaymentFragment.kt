@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemSubmitForDeleteCallBack
 import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCallBack
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.dialogs.SubmitDeleteDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.dialogs.SelectRatingDialog
 import com.chico.myhomebookkeeping.utils.hideKeyboard
@@ -52,7 +53,12 @@ class ChangeFastPaymentFragment : Fragment() {
                 showSelectRatingDialog()
             }
             selectCashAccountButton.setOnClickListener { pressSelectButton(R.id.nav_cash_account) }
-            selectCategoryButton.setOnClickListener { pressSelectButton(R.id.nav_categories) }
+            selectCategoryButton.setOnClickListener {
+                pressSelectButton(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_CHANGE_FAST_PAYMENT)
+                )
+            }
             selectCurrenciesButton.setOnClickListener { pressSelectButton(R.id.nav_currencies) }
             submitButton.setOnClickListener { pressSubmitButton() }
             deleteButton.setOnClickListener { pressDeleteButton() }
@@ -160,13 +166,13 @@ class ChangeFastPaymentFragment : Fragment() {
         }
     }
 
-    private fun pressSelectButton(fragment: Int) {
+    private fun pressSelectButton(fragment: Int, args: Bundle? = null) {
         changeFastPaymentViewModel.saveDataToSP(
             binding.nameFastPayment.text.toString(),
             binding.amountEditText.text.toString(),
             binding.description.text.toString()
         )
-        navControlHelper.toSelectedFragment(fragment)
+        navControlHelper.toSelectedFragment(fragment, args)
 
     }
 

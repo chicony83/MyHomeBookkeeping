@@ -36,6 +36,7 @@ import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -108,7 +109,10 @@ class NewMoneyMovingFragment : Fragment() {
                     viewModel.setDestinationCashAccountSelectMode()
                     pressSelectButton(R.id.nav_cash_account)
                 } else {
-                    pressSelectButton(R.id.nav_categories)
+                    pressSelectButton(
+                        R.id.nav_categories,
+                        CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_NEW_PAYMENT)
+                    )
                 }
             }
             eraseButton.setOnClickListener {
@@ -815,9 +819,9 @@ class NewMoneyMovingFragment : Fragment() {
 //        }
 //    }
 
-    private fun pressSelectButton(fragment: Int) {
+    private fun pressSelectButton(fragment: Int, args: Bundle? = null) {
         viewModel.saveDataToSP(getAmount(), getDescription())
-        navControlHelper.toSelectedFragment(fragment)
+        navControlHelper.toSelectedFragment(fragment, args)
 //        control.navigate(fragment)
     }
 
