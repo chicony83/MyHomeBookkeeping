@@ -20,6 +20,9 @@
     <string name="first_launch_start_destination_fast_payments">Fast payments</string>
     <string name="first_launch_start_destination_categories">Categories</string>
     <string name="first_launch_start_destination_journal">Journal</string>
+    <string name="first_launch_categories_title">Choose categories</string>
+    <string name="first_launch_categories_hint">Only parent categories are shown here. Subcategories will be added automatically.</string>
+    <string name="first_launch_categories_subcategory_count">%1$d subcategories</string>
     <string name="quick_setup_add_Cash_account">Cash accounts</string>
     <string name="quick_setup_name_Card">Card</string>
     <string name="quick_setup_name_Cash">Cash</string>

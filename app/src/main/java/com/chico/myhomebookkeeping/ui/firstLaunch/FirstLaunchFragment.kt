@@ -46,36 +46,6 @@ class FirstLaunchFragment : Fragment() {
             cashCashAccountItem.observe(viewLifecycleOwner) {
                 setImageResourceOnIcon(binding.cashCashAccountIcon, cashCashAccountItem)
             }
-            salaryCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(binding.incomeMoneyIcon, salaryCategoryItem)
-            }
-            productsCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(binding.productsCategoryIcon, productsCategoryItem)
-            }
-            fuelForCarCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(binding.fuelCategoryIcon, fuelForCarCategoryItem)
-            }
-            cellularCommunicationCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(
-                    binding.cellularCommunicationCategoryIcon,
-                    cellularCommunicationCategoryItem
-                )
-            }
-            creditsCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(
-                    binding.creditCategoryIcon, creditsCategoryItem
-                )
-            }
-            medicinesCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(
-                    binding.medicalCategoryIcon, medicinesCategoryItem
-                )
-            }
-            publicTransportCategoryItem.observe(viewLifecycleOwner) {
-                setImageResourceOnIcon(
-                    binding.publicTransportCategoryIcon, publicTransportCategoryItem
-                )
-            }
         }
 
         return binding.root
@@ -106,10 +76,8 @@ class FirstLaunchFragment : Fragment() {
     fun submitStep() {
         val setupFragment = parentFragment as? FirstLaunchSetupFragment
         if (setupFragment != null) {
-            firstLaunchViewModel.saveFirstLaunchSelections(
-                getSelectedSetupItems(getListCashAccounts()),
-                getSelectedSetupItems(getListIncomeCheckBoxes()),
-                getSelectedSetupItems(getListSpendingCheckBoxes())
+            firstLaunchViewModel.saveSelectedCashAccounts(
+                getSelectedSetupItems(getListCashAccounts())
             )
             setupFragment.showDefaultCashAccountStep()
         } else {
@@ -149,16 +117,11 @@ class FirstLaunchFragment : Fragment() {
     private fun addFirstLaunchElements(defaultCashAccountName: String) {
         launchUi {
             val listCashAccounts = getListCashAccounts()
-            val listIncomingCategories =
-                getListSelectedIncomeCategories(getListIncomeCheckBoxes())
-            val listSpendingCategories =
-                getListSelectedSpendingCategories(getListSpendingCheckBoxes())
 
             launchIo {
                 firstLaunchViewModel.addFirstLaunchElements(
                     listCashAccounts,
-                    listIncomingCategories,
-                    listSpendingCategories,
+                    emptyList(),
                     defaultCashAccountName
                 )
             }
@@ -185,14 +148,6 @@ class FirstLaunchFragment : Fragment() {
         }
     }
 
-    private fun getListSelectedSpendingCategories(listCheckBoxes: List<SelectedItemOfImageAndCheckBox>): List<SelectedItemOfImageAndCheckBox> {
-        return getListSelectedItems(listCheckBoxes)
-    }
-
-    private fun getListSelectedIncomeCategories(listCheckBoxes: List<SelectedItemOfImageAndCheckBox>): List<SelectedItemOfImageAndCheckBox> {
-        return getListSelectedItems(listCheckBoxes)
-    }
-
     private fun getListSelectedItems(listOfItems: List<SelectedItemOfImageAndCheckBox>): List<SelectedItemOfImageAndCheckBox> {
         val listSelectedItems = mutableListOf<SelectedItemOfImageAndCheckBox>()
         for (i in listOfItems.indices) {
@@ -208,28 +163,6 @@ class FirstLaunchFragment : Fragment() {
             FirstLaunchSetupItem(it.img, it.checkBox.text.toString())
         }
     }
-
-    private fun getListIncomeCheckBoxes() = listOf(
-        getItem(firstLaunchViewModel.salaryCategoryItem, binding.addCategoryTheSalary)
-    )
-
-    private fun getListSpendingCheckBoxes() = listOf(
-        getItem(
-            firstLaunchViewModel.cellularCommunicationCategoryItem,
-            binding.addCategoryCellularCommunicationCheckBox
-        ),
-        getItem(firstLaunchViewModel.creditsCategoryItem, binding.addCategoryCreditCheckBox),
-        getItem(
-            firstLaunchViewModel.fuelForCarCategoryItem,
-            binding.addCategoryFuelForTheCarCheckBox
-        ),
-        getItem(firstLaunchViewModel.productsCategoryItem, binding.addCategoryProductsCheckBox),
-        getItem(firstLaunchViewModel.medicinesCategoryItem, binding.addCategoryMedicinesCheckBox),
-        getItem(
-            firstLaunchViewModel.publicTransportCategoryItem,
-            binding.addCategoryPublicTransportCheckBox
-        )
-    )
 
     private fun getListCashAccounts() = listOf<SelectedItemOfImageAndCheckBox>(
         getItem(firstLaunchViewModel.cardCashAccountItem, binding.addCashAccountsCardCheckBox),

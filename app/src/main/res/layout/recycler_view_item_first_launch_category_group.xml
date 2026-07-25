@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/defaultCategoryCard"
+    style="@style/RecyclerViewCard.Categories">
+
+    <LinearLayout
+        android:id="@+id/defaultCategoryItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_child_background"
+        android:gravity="center_vertical"
+        android:minHeight="68dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_double"
+        android:paddingEnd="@dimen/margin_normal"
+        android:paddingVertical="@dimen/margin_normal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/defaultCategoryName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/H4"
+                android:textStyle="bold"
+                tools:text="Продукты" />
+
+            <TextView
+                android:id="@+id/defaultCategorySubcategoryCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                tools:text="5 подкатегорий" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/defaultCategoryCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            tools:checked="true" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

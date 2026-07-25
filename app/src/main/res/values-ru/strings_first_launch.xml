@@ -34,5 +34,7 @@
     <string name="quick_setup_name_Credit">Кредиты</string>
     <string name="quick_setup_name_Medicines">Медикоменты</string>
     <string name="quick_setup_name_Public_transport">Общественный транспорт</string>
-
+    <string name="first_launch_categories_title">\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438</string>
+    <string name="first_launch_categories_hint">\u0417\u0434\u0435\u0441\u044c \u043f\u043e\u043a\u0430\u0437\u0430\u043d\u044b \u0442\u043e\u043b\u044c\u043a\u043e \u0440\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0435 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438. \u041f\u043e\u0434\u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438 \u0434\u043e\u0431\u0430\u0432\u044f\u0442\u0441\u044f \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438.</string>
+    <string name="first_launch_categories_subcategory_count">%1$d \u043f\u043e\u0434\u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0439</string>
 </resources>

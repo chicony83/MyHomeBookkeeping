@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collect
 
 class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) {
     private val viewModel: FirstLaunchSelectCurrenciesViewModel by viewModels()
-    private val totalSteps = 5
+    private val totalSteps = 6
     private var currentStep = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,9 +71,19 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
         updateStepUi()
     }
 
+    fun showCategoriesStep() {
+        val fragment = FirstLaunchCategoriesFragment()
+        currentStep = 4
+        childFragmentManager.beginTransaction()
+            .replace(R.id.firstLaunchStepContainer, fragment)
+            .setPrimaryNavigationFragment(fragment)
+            .commit()
+        updateStepUi()
+    }
+
     fun showDefaultCashAccountStep() {
         val fragment = FirstLaunchDefaultCashAccountFragment()
-        currentStep = 4
+        currentStep = 5
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -83,7 +93,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showStartDestinationStep() {
         val fragment = FirstLaunchStartDestinationFragment()
-        currentStep = 5
+        currentStep = 6
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -106,6 +116,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
             is FirstLaunchSelectCurrenciesFragment -> stepFragment.submitStep()
             is FirstLaunchDefaultCurrencyFragment -> stepFragment.submitStep()
             is FirstLaunchFragment -> stepFragment.submitStep()
+            is FirstLaunchCategoriesFragment -> stepFragment.submitStep()
             is FirstLaunchDefaultCashAccountFragment -> stepFragment.submitStep()
             is FirstLaunchStartDestinationFragment -> stepFragment.submitStep()
         }

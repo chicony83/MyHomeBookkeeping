@@ -4,3 +4,9 @@ data class FirstLaunchSetupItem(
     val img: Int,
     val name: String
 )
+
+data class FirstLaunchCategoryGroupItem(
+    val parentName: String,
+    val isIncome: Boolean,
+    val subcategories: List<String>
+)

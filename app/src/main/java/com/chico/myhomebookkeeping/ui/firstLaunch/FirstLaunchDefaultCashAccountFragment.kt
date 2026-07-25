@@ -40,7 +40,7 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
     fun submitStep() {
         val selectedDefaultCashAccount = defaultCashAccount ?: return
         viewModel.saveDefaultCashAccount(selectedDefaultCashAccount.name)
-        (parentFragment as? FirstLaunchSetupFragment)?.showStartDestinationStep()
+        (parentFragment as? FirstLaunchSetupFragment)?.showCategoriesStep()
     }
 
     override fun onDestroyView() {

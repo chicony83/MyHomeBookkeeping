@@ -32,6 +32,8 @@ class FirstLaunchViewModel(
         dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val dbCategories: CategoryDao =
         dataBase.getDataBase(app.applicationContext).categoryDao()
+    private val dbParentCategories: ParentCategoriesDao =
+        dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
     private val dbFastPayments: FastPaymentsDao =
         dataBase.getDataBase(app.applicationContext).fastPaymentsDao()
     private val dbIconCategories: IconCategoryDao =
@@ -77,8 +79,7 @@ class FirstLaunchViewModel(
 
     private var listIconResource = listOf<IconsResource>()
     private var selectedCashAccounts = listOf<FirstLaunchSetupItem>()
-    private var selectedIncomeCategories = listOf<FirstLaunchSetupItem>()
-    private var selectedSpendingCategories = listOf<FirstLaunchSetupItem>()
+    private var selectedCategoryGroups = listOf<FirstLaunchCategoryGroupItem>()
     private var selectedDefaultCashAccountName = ""
 
     @SuppressLint("NewApi")
@@ -98,36 +99,41 @@ class FirstLaunchViewModel(
 
     fun addFirstLaunchElements(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
-        listIncomeCategories: List<SelectedItemOfImageAndCheckBox>,
-        listSpendingCategories: List<SelectedItemOfImageAndCheckBox>,
+        categoryGroups: List<FirstLaunchCategoryGroupItem>,
         defaultCashAccountName: String
     ) = runBlocking {
-        val resultAddedIncomeCategories =
-            async(Dispatchers.IO) { addIncomeCategories(listIncomeCategories) }
-        val resultAddSpendingCategories =
-            async(Dispatchers.IO) { addSpendingCategories(listSpendingCategories) }
+        val resultAddedCategoryGroups =
+            async(Dispatchers.IO) { addCategoryGroups(categoryGroups) }
 
         val resultAddCashAccount =
             async(Dispatchers.IO) { addCashAccounts(listImageAndCheckBoxes, defaultCashAccountName) }
 
-        val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
-
-        launchIo {
-            while (getCategoriesList().size < sizeCategoriesList) {
-                delay(100)
-                addFreeFastPayments()
-            }
-        }
+//        Automatic fast payment creation is disabled for first launch.
+//        Keep this block commented: it may be restored when quick payments get a new setup flow.
+//        val sizeCategoriesList: Int = listIncomeCategories.size + listSpendingCategories.size
+//
+//        launchIo {
+//            while (getCategoriesList().size < sizeCategoriesList) {
+//                delay(100)
+//                addFreeFastPayments()
+//            }
+//        }
     }
 
     fun saveFirstLaunchSelections(
         cashAccounts: List<FirstLaunchSetupItem>,
-        incomeCategories: List<FirstLaunchSetupItem>,
-        spendingCategories: List<FirstLaunchSetupItem>
+        categoryGroups: List<FirstLaunchCategoryGroupItem>
     ) {
         selectedCashAccounts = cashAccounts
-        selectedIncomeCategories = incomeCategories
-        selectedSpendingCategories = spendingCategories
+        selectedCategoryGroups = categoryGroups
+    }
+
+    fun saveSelectedCashAccounts(cashAccounts: List<FirstLaunchSetupItem>) {
+        selectedCashAccounts = cashAccounts
+    }
+
+    fun saveSelectedCategoryGroups(categoryGroups: List<FirstLaunchCategoryGroupItem>) {
+        selectedCategoryGroups = categoryGroups
     }
 
     fun getSelectedCashAccounts(): List<FirstLaunchSetupItem> {
@@ -154,25 +160,25 @@ class FirstLaunchViewModel(
     }
 
     fun addSavedFirstLaunchElements() = runBlocking {
-        val resultAddedIncomeCategories =
-            async(Dispatchers.IO) { addSavedIncomeCategories(selectedIncomeCategories) }
-        val resultAddSpendingCategories =
-            async(Dispatchers.IO) { addSavedSpendingCategories(selectedSpendingCategories) }
+        val resultAddedCategoryGroups =
+            async(Dispatchers.IO) { addCategoryGroups(selectedCategoryGroups) }
 
         val resultAddCashAccount =
             async(Dispatchers.IO) {
                 addSavedCashAccounts(selectedCashAccounts, selectedDefaultCashAccountName)
             }
 
-        val sizeCategoriesList: Int =
-            selectedIncomeCategories.size + selectedSpendingCategories.size
-
-        launchIo {
-            while (getCategoriesList().size < sizeCategoriesList) {
-                delay(100)
-                addFreeFastPayments()
-            }
-        }
+//        Automatic fast payment creation is disabled for first launch.
+//        Keep this block commented: it may be restored when quick payments get a new setup flow.
+//        val sizeCategoriesList: Int =
+//            selectedIncomeCategories.size + selectedSpendingCategories.size
+//
+//        launchIo {
+//            while (getCategoriesList().size < sizeCategoriesList) {
+//                delay(100)
+//                addFreeFastPayments()
+//            }
+//        }
     }
 
     private suspend fun addFreeFastPayments() {
@@ -202,64 +208,42 @@ class FirstLaunchViewModel(
         return CategoriesUseCase.getAllCategoriesSortIdAsc(dbCategories)
     }
 
-    private fun addSpendingCategories(listSpendingCategories: List<SelectedItemOfImageAndCheckBox>): Long {
+    private suspend fun addCategoryGroups(categoryGroups: List<FirstLaunchCategoryGroupItem>): Long {
         var result: Long = 0
-        launchIo {
-            for (i in listSpendingCategories.indices) {
-                result += addCategory(listSpendingCategories[i], false)
-            }
-        }
-        return result
-    }
-
-    private fun addSavedSpendingCategories(listSpendingCategories: List<FirstLaunchSetupItem>): Long {
-        var result: Long = 0
-        launchIo {
-            for (i in listSpendingCategories.indices) {
-                result += addCategory(listSpendingCategories[i], false)
-            }
-        }
-        return result
-    }
-
-    private fun addIncomeCategories(listIncomeCategories: List<SelectedItemOfImageAndCheckBox>): Long {
-        var result: Long = 0
-        launchIo {
-            for (i in listIncomeCategories.indices) {
-                result += addCategory(listIncomeCategories[i], true)
-            }
-        }
-        return result
-    }
-
-    private fun addSavedIncomeCategories(listIncomeCategories: List<FirstLaunchSetupItem>): Long {
-        var result: Long = 0
-        launchIo {
-            for (i in listIncomeCategories.indices) {
-                result += addCategory(listIncomeCategories[i], true)
-            }
-        }
-        return result
-    }
-
-    private suspend fun addCategory(item: SelectedItemOfImageAndCheckBox, isIncome: Boolean): Long {
-        return dbCategories.addCategory(
-            Categories(
-                categoryName = item.checkBox.text.toString(),
-                isIncome = isIncome,
-                icon = item.img,
-                parentCategoryId = null
+        for (i in categoryGroups.indices) {
+            val parentCategoryId = dbParentCategories.addNewParentCategory(
+                ParentCategories(
+                    name = categoryGroups[i].parentName,
+                    icon = null,
+                    parentCategoryOrder = i
+                )
             )
-        )
+            result += parentCategoryId
+            for (j in categoryGroups[i].subcategories.indices) {
+                result += addCategory(
+                    name = categoryGroups[i].subcategories[j],
+                    isIncome = categoryGroups[i].isIncome,
+                    parentCategoryId = parentCategoryId.toInt(),
+                    order = j
+                )
+            }
+        }
+        return result
     }
 
-    private suspend fun addCategory(item: FirstLaunchSetupItem, isIncome: Boolean): Long {
+    private suspend fun addCategory(
+        name: String,
+        isIncome: Boolean,
+        parentCategoryId: Int,
+        order: Int
+    ): Long {
         return dbCategories.addCategory(
             Categories(
-                categoryName = item.name,
+                categoryName = name,
                 isIncome = isIncome,
-                icon = item.img,
-                parentCategoryId = null
+                icon = null,
+                parentCategoryId = parentCategoryId,
+                categoryOrder = order
             )
         )
     }

@@ -17,6 +17,8 @@ This file is the full internal release log. Keep all useful development notes he
 - First-launch currency selection now shows only major currencies first, keeps more fiat currencies and crypto behind separate expanders, and includes quick search.
 - First launch now defaults the start section to Categories, opens Journal after setup, blocks accidental Back navigation during setup, and shows an empty-journal hint for creating the first entry from Categories.
 - The first-launch Belarusian ruble entry now uses the Belarusian display name `Беларускi Рубель`.
+- First launch now separates cash account setup, default account selection, and category selection into distinct steps.
+- First-launch categories now show selectable parent category groups; selected groups create their subcategories automatically without generating quick payments.
 
 ### Development
 - Parent category drag-and-drop now mirrors subcategory reordering: the in-memory order is updated during drag with `notifyItemMoved`, and the saved order is committed when the drag ends.
@@ -31,6 +33,8 @@ This file is the full internal release log. Keep all useful development notes he
 - Quick payment currency and cash account selection now share explicit default constants across Free payment, Settings, backup, and restore.
 - First-launch currency groups now sort by ISO code for stable mixed-language ordering, and the setup flow blocks Back navigation until onboarding is complete.
 - Removed the first-launch selected-currency counter from the currency picker layout and added a Journal empty-state card that is shown only when there are no entries.
+- Added a reusable default category catalog for future standard-category restore/add flows and unit coverage for its first-launch defaults.
+- Disabled automatic first-launch quick payment creation while keeping the old creation block commented for a future setup flow.
 
 ## 0.10.0
 
