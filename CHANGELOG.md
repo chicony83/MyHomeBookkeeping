@@ -2,6 +2,19 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.10.2
+
+### User-facing
+- Improved first launch: category and currency setup is simpler for new users.
+- New users can choose starter category groups, and the app no longer creates quick payments automatically during setup.
+- Categories navigation is more reliable and can open a new payment with the selected category.
+- Added small stability and setup-flow fixes.
+
+### Development
+- Added a reusable default category catalog and unit coverage for first-launch defaults.
+- Split first-launch account, default account, and category setup into separate steps.
+- Fixed standalone Categories navigation state handling.
+
 ## 0.10.1
 
 ### User-facing
