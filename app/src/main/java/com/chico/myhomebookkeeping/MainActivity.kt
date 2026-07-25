@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 val startDestinationId = mainActivityViewModel.getStartDestinationId()
                 if (startDestinationId != R.id.nav_fast_payments_fragment) {
-                    navController.navigate(startDestinationId)
+                    navigateToTopLevelDestination(startDestinationId)
                 }
             }
         }
@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
         }
         bottomNavigationView.setOnItemSelectedListener { item ->
             if (navController.currentDestination?.id != item.itemId) {
-                navController.navigate(item.itemId)
+                navigateToTopLevelDestination(item.itemId)
             }
             true
         }
@@ -303,6 +303,17 @@ class MainActivity : AppCompatActivity() {
                 putString(SettingsFragment.ARG_SECTION, section)
             }
         )
+    }
+
+    private fun navigateToTopLevelDestination(destinationId: Int) {
+        if (destinationId == R.id.nav_categories) {
+            navController.navigate(
+                R.id.nav_categories,
+                CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_STANDALONE)
+            )
+        } else {
+            navController.navigate(destinationId)
+        }
     }
 
     private inline fun <reified T> getCurrentFragment(): T? {

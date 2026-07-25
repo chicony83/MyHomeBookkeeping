@@ -95,18 +95,6 @@ class CategoriesFragment : Fragment() {
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
     private val searchMinLength = 4
-    // Legacy fallback for old navigation paths that still do not pass ARG_OPEN_MODE.
-    // New code should pass an explicit open mode instead of relying on the previous back stack entry.
-    // After the explicit mode flow is tested in all selectors, remove this list and the fallback below.
-    private val categorySelectionSources = setOf(
-        R.id.nav_money_moving,
-        R.id.nav_money_moving_query,
-        R.id.nav_new_money_moving,
-        R.id.nav_change_money_moving,
-        R.id.nav_new_fast_payment_fragment,
-        R.id.nav_change_fast_payment_fragment
-    )
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -420,13 +408,14 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun isOpenedForCategorySelection(): Boolean {
-        val openMode = arguments?.getString(ARG_OPEN_MODE)
-        if (openMode != null) return openMode != OPEN_MODE_STANDALONE
-
-        // Temporary compatibility path: before explicit modes, Categories inferred its purpose
-        // from previousFragment(). That breaks when the user opens Categories as a main section
-        // right after Journal, because it looks like a journal filter selector.
-        return navControlHelper.previousFragment() in categorySelectionSources
+        return when (arguments?.getString(ARG_OPEN_MODE)) {
+            OPEN_MODE_JOURNAL_FILTER,
+            OPEN_MODE_NEW_PAYMENT,
+            OPEN_MODE_CHANGE_PAYMENT,
+            OPEN_MODE_NEW_FAST_PAYMENT,
+            OPEN_MODE_CHANGE_FAST_PAYMENT -> true
+            else -> false
+        }
     }
 
     private fun showChangeCategoryDialog(category: Categories?) {
