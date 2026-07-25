@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +23,18 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.message_complete_first_launch_setup,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
         currentStep = savedInstanceState?.getInt(KEY_CURRENT_STEP) ?: currentStep
         if (savedInstanceState == null) {
             showCurrenciesStep()

@@ -15,6 +15,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Journal entries and the Free payment category button now show parent category paths, with long names split or truncated safely.
 - New installs now show currency and cash account selectors as horizontal scrolling quick selectors in Free payment by default.
 - First-launch currency selection now shows only major currencies first, keeps more fiat currencies and crypto behind separate expanders, and includes quick search.
+- First launch now defaults the start section to Categories, opens Journal after setup, blocks accidental Back navigation during setup, and shows an empty-journal hint for creating the first entry from Categories.
 - The first-launch Belarusian ruble entry now uses the Belarusian display name `Беларускi Рубель`.
 
 ### Development
@@ -29,6 +30,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Full money movement queries now include parent category names for UI-only category path rendering.
 - Quick payment currency and cash account selection now share explicit default constants across Free payment, Settings, backup, and restore.
 - First-launch currency groups now sort by ISO code for stable mixed-language ordering, and the setup flow blocks Back navigation until onboarding is complete.
+- Removed the first-launch selected-currency counter from the currency picker layout and added a Journal empty-state card that is shown only when there are no entries.
 
 ## 0.10.0
 

@@ -16,6 +16,8 @@
     <string name="message_entry_changed">Entry changed</string>
     <string name="message_entry_added">Entry added</string>
     <string name="message_entry_add_failed">Entry was not added</string>
+    <string name="message_empty_journal_title">Welcome! 👋</string>
+    <string name="message_empty_journal_first_payment_hint">This is the first app launch. Let’s create your first entry.\n\nTap Categories at the bottom of the screen and simply choose a category from the list.</string>
 
     <string name="message_start_date_can_not_be_more_than_the_current">Start Date can not be more than the current</string>
     <string name="message_the_end_date_is_greater_than_the_current_one">Looking to the future?\nThe end date is greater than the current one !!!</string>
@@ -33,5 +35,6 @@
 
     <string name="message_select_default_currency">Select default currency</string>
     <string name="message_select_default_cash_account">Select default cash account</string>
+    <string name="message_complete_first_launch_setup">Complete app setup</string>
     <string name="message_confirm_crypto_default_currency">Do you really want to make a cryptocurrency the default currency?</string>
 </resources>

@@ -74,6 +74,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollViewButtons" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/emptyJournalCard"
+        style="@style/RecyclerViewCard.MoneyMoving"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollViewButtons"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="96dp"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/margin_double"
+            android:paddingTop="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_double"
+            android:paddingBottom="@dimen/margin_normal">
+
+            <TextView
+                android:id="@+id/emptyJournalTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/message_empty_journal_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/H4"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/emptyJournalHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/message_empty_journal_first_payment_hint"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:id="@+id/info"
         android:layout_width="match_parent"

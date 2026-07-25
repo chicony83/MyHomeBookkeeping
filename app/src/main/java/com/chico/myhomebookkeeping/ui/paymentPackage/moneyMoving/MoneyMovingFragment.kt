@@ -59,6 +59,8 @@ class MoneyMovingFragment : Fragment() {
                 binding.selectCashAccount.text = it
             })
             moneyMovementList.observe(viewLifecycleOwner, {
+                binding.emptyJournalCard.visibility =
+                    if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
                 binding.moneyMovingHolder.adapter = it?.let { it1 ->
                     MoneyMovingAdapter(it1, object :
                         OnItemViewClickListenerLong {

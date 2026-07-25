@@ -26,20 +26,20 @@ class FirstLaunchStartDestinationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.startFastPaymentsRadioButton.isChecked = true
+        binding.startCategoriesRadioButton.isChecked = true
     }
 
     fun submitStep() {
         val startFragment = when (binding.startDestinationRadioGroup.checkedRadioButtonId) {
             R.id.startCategoriesRadioButton -> Constants.START_FRAGMENT_CATEGORIES
             R.id.startJournalRadioButton -> Constants.START_FRAGMENT_JOURNAL
-            else -> Constants.START_FRAGMENT_FAST_PAYMENTS
+            else -> Constants.START_FRAGMENT_CATEGORIES
         }
         viewModel.saveStartFragment(startFragment)
         viewModel.addSavedFirstLaunchElements()
         viewModel.setIsFirstLaunchFalse()
         (parentFragment as? FirstLaunchSetupFragment)?.finishFirstLaunch(
-            viewModel.getStartFragmentDestinationId()
+            R.id.nav_money_moving
         )
     }
 

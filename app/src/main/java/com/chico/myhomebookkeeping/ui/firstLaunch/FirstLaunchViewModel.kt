@@ -145,7 +145,7 @@ class FirstLaunchViewModel(
     fun getStartFragmentDestinationId(): Int {
         return when (sharedPreferences.getString(
             Constants.START_FRAGMENT,
-            Constants.START_FRAGMENT_FAST_PAYMENTS
+            Constants.START_FRAGMENT_CATEGORIES
         )) {
             Constants.START_FRAGMENT_CATEGORIES -> com.chico.myhomebookkeeping.R.id.nav_categories
             Constants.START_FRAGMENT_JOURNAL -> com.chico.myhomebookkeeping.R.id.nav_money_moving

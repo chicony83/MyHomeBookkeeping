@@ -52,8 +52,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 
         with(viewModel) {
             selectedCurrenciesList.observe(viewLifecycleOwner) {
-                binding.availableCurrenciesTitle.text =
-                    getString(R.string.first_launch_currencies_selected_count, it.size)
                 binding.submitButton.isEnabled = it.isNotEmpty()
                 updateSelectedCurrencies()
             }
