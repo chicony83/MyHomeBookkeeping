@@ -8,6 +8,8 @@
     <string name="first_launch_currencies_empty_message">Add at least one currency to continue</string>
     <string name="first_launch_currencies_major">Major currencies</string>
     <string name="first_launch_currencies_fiat">Currencies</string>
+    <string name="first_launch_currencies_search_hint">Search currency</string>
+    <string name="first_launch_currencies_more">More currencies</string>
     <string name="first_launch_currencies_other">Other currencies</string>
     <string name="first_launch_currencies_crypto">Cryptocurrencies</string>
     <string name="first_launch_setup_step_title">Setup: step %1$d of %2$d</string>

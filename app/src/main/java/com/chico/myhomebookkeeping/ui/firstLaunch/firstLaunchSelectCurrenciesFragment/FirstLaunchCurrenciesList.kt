@@ -4,7 +4,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 
 object FirstLaunchCurrenciesList {
     private val majorCurrenciesList = listOf(
-        Currencies("Белорусский рубль", "Br.", "BYN", null, false),
+        Currencies("Беларускi Рубель", "Br.", "BYN", null, false),
         Currencies("Euro", "€", "EUR", null, false),
         Currencies("Pound sterling", "£", "GBP", null, false),
         Currencies("Swiss franc", "CHF", "CHF", null, false),
@@ -117,7 +117,6 @@ object FirstLaunchCurrenciesList {
         return cryptoCurrenciesList.any { it.iso4217 == iso4217 }
     }
 
-    private fun sortedByCode(currencies: List<Currencies>): List<Currencies> = currencies.sortedBy {
-        it.iso4217
-    }
+    private fun sortedByCode(currencies: List<Currencies>): List<Currencies> =
+        currencies.sortedBy { it.iso4217 }
 }

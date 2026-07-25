@@ -19,18 +19,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/selectCurrenciesHint"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_double"
-        android:gravity="center"
-        android:text="@string/first_launch_currencies_hint"
-        android:textColor="@color/text_second_color"
-        android:textSize="@dimen/H5"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:hint="@string/first_launch_currencies_search_hint"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="1dp"
+        app:endIconDrawable="@drawable/ic_close"
+        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectCurrenciesTextView" />
+        app:layout_constraintTop_toBottomOf="@id/selectCurrenciesTextView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/availableCurrenciesTitle"
@@ -41,7 +50,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectCurrenciesHint"
+        app:layout_constraintTop_toBottomOf="@id/search_til"
         tools:text="Selected · 0" />
 
     <androidx.core.widget.NestedScrollView
@@ -59,31 +68,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/majorCurrenciesHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/category_group_background"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/margin_normal">
-
-                <TextView
-                    android:id="@+id/majorCurrenciesTitle"
-                    style="@style/RecyclerViewItem"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/first_launch_currencies_fiat" />
-
-                <ImageView
-                    android:id="@+id/majorCurrenciesExpandImageView"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="@string/first_launch_currencies_fiat"
-                    android:src="@drawable/ic_expand_remove" />
-            </LinearLayout>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/majorCurrenciesHolder"
                 android:layout_width="match_parent"
@@ -92,6 +76,42 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="4"
                 tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency" />
+
+            <LinearLayout
+                android:id="@+id/otherCurrenciesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/category_group_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/otherCurrenciesTitle"
+                    style="@style/RecyclerViewItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/first_launch_currencies_more" />
+
+                <ImageView
+                    android:id="@+id/otherCurrenciesExpandImageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/first_launch_currencies_more"
+                    android:src="@drawable/ic_expand_add" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/otherCurrenciesHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency"
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/cryptoCurrenciesHeader"

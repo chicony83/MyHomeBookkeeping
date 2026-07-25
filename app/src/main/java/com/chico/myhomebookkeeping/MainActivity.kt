@@ -242,10 +242,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (navController.currentDestination?.id == R.id.nav_money_moving) {
-            finish()
-        } else {
-            super.onBackPressed()
+        when (navController.currentDestination?.id) {
+            // First launch must be completed through the setup steps.
+            R.id.nav_first_launch_setup_fragment,
+            R.id.nav_first_launch_select_currencies_fragment,
+            R.id.nav_first_launch_fragment -> return
+            R.id.nav_money_moving -> finish()
+            else -> super.onBackPressed()
         }
     }
 

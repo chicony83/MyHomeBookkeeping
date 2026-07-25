@@ -14,6 +14,8 @@ This file is the full internal release log. Keep all useful development notes he
 - Categories can now be used as a fast payment start screen: tapping a category outside selector flows opens Free payment with that category already selected.
 - Journal entries and the Free payment category button now show parent category paths, with long names split or truncated safely.
 - New installs now show currency and cash account selectors as horizontal scrolling quick selectors in Free payment by default.
+- First-launch currency selection now shows only major currencies first, keeps more fiat currencies and crypto behind separate expanders, and includes quick search.
+- The first-launch Belarusian ruble entry now uses the Belarusian display name `Беларускi Рубель`.
 
 ### Development
 - Parent category drag-and-drop now mirrors subcategory reordering: the in-memory order is updated during drag with `notifyItemMoved`, and the saved order is committed when the drag ends.
@@ -26,6 +28,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Query category selection now handles `nav_money_moving_query` in the shared selector persistence path.
 - Full money movement queries now include parent category names for UI-only category path rendering.
 - Quick payment currency and cash account selection now share explicit default constants across Free payment, Settings, backup, and restore.
+- First-launch currency groups now sort by ISO code for stable mixed-language ordering, and the setup flow blocks Back navigation until onboarding is complete.
 
 ## 0.10.0
 

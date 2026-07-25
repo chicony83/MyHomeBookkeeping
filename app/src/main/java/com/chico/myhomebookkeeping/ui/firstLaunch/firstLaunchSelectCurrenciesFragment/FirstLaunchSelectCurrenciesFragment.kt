@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,7 @@ import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextC
 import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchSetupFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import kotlinx.coroutines.flow.collect
+import java.util.Locale
 
 class FirstLaunchSelectCurrenciesFragment : Fragment() {
     private var _binding: FragmentFirstLaunchSelectCurrenciesBinding? = null
@@ -36,8 +38,9 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
     private lateinit var majorCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
+    private lateinit var otherCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
     private lateinit var cryptoCurrenciesAdapter: FirstLaunchSelectCurrencyForSelectCurrencyAdapter
-    private var isMajorCurrenciesExpanded = true
+    private var isOtherCurrenciesExpanded = false
     private var isCryptoCurrenciesExpanded = false
 
     override fun onCreateView(
@@ -84,13 +87,19 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
         initCurrenciesLists()
-        binding.majorCurrenciesHeader.setOnClickListener {
-            isMajorCurrenciesExpanded = !isMajorCurrenciesExpanded
-            renderCurrenciesSections()
+        binding.searchTil.setEndIconOnClickListener {
+            binding.searchTil.editText?.text?.clear()
+        }
+        binding.searchTil.editText?.doAfterTextChanged {
+            filterCurrenciesLists(it?.toString().orEmpty())
+        }
+        binding.otherCurrenciesHeader.setOnClickListener {
+            isOtherCurrenciesExpanded = !isOtherCurrenciesExpanded
+            renderCurrenciesForCurrentSearch()
         }
         binding.cryptoCurrenciesHeader.setOnClickListener {
             isCryptoCurrenciesExpanded = !isCryptoCurrenciesExpanded
-            renderCurrenciesSections()
+            renderCurrenciesForCurrentSearch()
         }
         if (parentFragment is FirstLaunchSetupFragment) {
             binding.submitButton.visibility = View.GONE
@@ -128,7 +137,12 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         }
 
         majorCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-            FirstLaunchCurrenciesList.getFiatCurrenciesList(),
+            FirstLaunchCurrenciesList.getMajorCurrenciesList(),
+            selectedCurrenciesIso,
+            listener
+        )
+        otherCurrenciesAdapter = FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
+            FirstLaunchCurrenciesList.getOtherFiatCurrenciesList(),
             selectedCurrenciesIso,
             listener
         )
@@ -139,6 +153,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         )
 
         binding.majorCurrenciesHolder.adapter = majorCurrenciesAdapter
+        binding.otherCurrenciesHolder.adapter = otherCurrenciesAdapter
         binding.cryptoCurrenciesHolder.adapter = cryptoCurrenciesAdapter
         renderCurrenciesSections()
     }
@@ -148,20 +163,29 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
 
         val selectedCurrenciesIso = getSelectedCurrenciesIso()
         majorCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
+        otherCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
         cryptoCurrenciesAdapter.updateSelectedCurrencies(selectedCurrenciesIso)
     }
 
     private fun renderCurrenciesSections() {
+        binding.majorCurrenciesHolder.visibility = View.VISIBLE
+        binding.otherCurrenciesHeader.visibility = View.VISIBLE
+        binding.cryptoCurrenciesHeader.visibility = View.VISIBLE
         renderCurrenciesSection(
-            isMajorCurrenciesExpanded,
-            binding.majorCurrenciesHolder,
-            binding.majorCurrenciesExpandImageView
+            isOtherCurrenciesExpanded,
+            binding.otherCurrenciesHolder,
+            binding.otherCurrenciesExpandImageView
         )
         renderCurrenciesSection(
             isCryptoCurrenciesExpanded,
             binding.cryptoCurrenciesHolder,
             binding.cryptoCurrenciesExpandImageView
         )
+    }
+
+    private fun renderCurrenciesForCurrentSearch() {
+        val query = binding.searchTil.editText?.text?.toString().orEmpty()
+        if (query.isBlank()) renderCurrenciesSections() else filterCurrenciesLists(query)
     }
 
     private fun renderCurrenciesSection(
@@ -174,6 +198,72 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             if (isExpanded) R.drawable.ic_expand_remove
             else R.drawable.ic_expand_add
         )
+    }
+
+    private fun filterCurrenciesLists(query: String) {
+        val normalizedQuery = query.trim().lowercase(Locale.getDefault())
+        val majorCurrencies = filterCurrencies(
+            FirstLaunchCurrenciesList.getMajorCurrenciesList(),
+            normalizedQuery
+        )
+        val otherCurrencies = filterCurrencies(
+            FirstLaunchCurrenciesList.getOtherFiatCurrenciesList(),
+            normalizedQuery
+        )
+        val cryptoCurrencies = filterCurrencies(
+            FirstLaunchCurrenciesList.getCryptoCurrenciesList(),
+            normalizedQuery
+        )
+
+        majorCurrenciesAdapter.updateCurrencies(majorCurrencies)
+        otherCurrenciesAdapter.updateCurrencies(otherCurrencies)
+        cryptoCurrenciesAdapter.updateCurrencies(cryptoCurrencies)
+
+        if (normalizedQuery.isBlank()) {
+            renderCurrenciesSections()
+            return
+        }
+
+        binding.majorCurrenciesHolder.visibility =
+            if (majorCurrencies.isEmpty()) View.GONE else View.VISIBLE
+        renderSearchSection(
+            binding.otherCurrenciesHeader,
+            binding.otherCurrenciesHolder,
+            binding.otherCurrenciesExpandImageView,
+            otherCurrencies.isNotEmpty()
+        )
+        renderSearchSection(
+            binding.cryptoCurrenciesHeader,
+            binding.cryptoCurrenciesHolder,
+            binding.cryptoCurrenciesExpandImageView,
+            cryptoCurrencies.isNotEmpty()
+        )
+    }
+
+    private fun filterCurrencies(
+        currencies: List<Currencies>,
+        normalizedQuery: String
+    ): List<Currencies> {
+        if (normalizedQuery.isBlank()) return currencies
+
+        return currencies.filter { currency ->
+            listOf(
+                currency.currencyName,
+                currency.currencyNameShort.orEmpty(),
+                currency.iso4217.orEmpty()
+            ).any { it.lowercase(Locale.getDefault()).contains(normalizedQuery) }
+        }
+    }
+
+    private fun renderSearchSection(
+        header: View,
+        recyclerView: View,
+        expandImageView: ImageView,
+        hasResults: Boolean
+    ) {
+        header.visibility = if (hasResults) View.VISIBLE else View.GONE
+        recyclerView.visibility = if (hasResults) View.VISIBLE else View.GONE
+        expandImageView.setImageResource(R.drawable.ic_expand_remove)
     }
 
     private fun getSelectedCurrenciesIso(): Set<String> {

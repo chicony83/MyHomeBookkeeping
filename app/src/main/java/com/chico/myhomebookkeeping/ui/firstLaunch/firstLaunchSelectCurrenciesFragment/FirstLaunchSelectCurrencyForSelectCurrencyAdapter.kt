@@ -8,10 +8,11 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
 
 class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
-    private val currenciesForSelectList: List<Currencies>,
+    currenciesForSelectList: List<Currencies>,
     selectedCurrenciesIso: Set<String>,
     private val listener: OnChangeCurrencyByTextCallBack
 ) : RecyclerView.Adapter<FirstLaunchSelectCurrencyForSelectCurrencyAdapter.ViewHolder>() {
+    private var currenciesForSelectList: List<Currencies> = currenciesForSelectList
     private var selectedCurrenciesIso: Set<String> = selectedCurrenciesIso
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +29,11 @@ class FirstLaunchSelectCurrencyForSelectCurrencyAdapter(
     }
 
     override fun getItemCount() = currenciesForSelectList.size
+
+    fun updateCurrencies(currencies: List<Currencies>) {
+        currenciesForSelectList = currencies
+        notifyDataSetChanged()
+    }
 
     fun updateSelectedCurrencies(newSelectedCurrenciesIso: Set<String>) {
         val oldSelectedCurrenciesIso = selectedCurrenciesIso

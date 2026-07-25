@@ -8,6 +8,8 @@
     <string name="first_launch_currencies_empty_message">Добавьте хотя бы одну валюту</string>
     <string name="first_launch_currencies_major">Основные валюты</string>
     <string name="first_launch_currencies_fiat">Валюты</string>
+    <string name="first_launch_currencies_search_hint">Поиск валюты</string>
+    <string name="first_launch_currencies_more">Больше валют</string>
     <string name="first_launch_currencies_other">Остальные валюты</string>
     <string name="first_launch_currencies_crypto">Криптовалюты</string>
     <string name="first_launch_setup_step_title">Настройка: шаг %1$d из %2$d</string>
