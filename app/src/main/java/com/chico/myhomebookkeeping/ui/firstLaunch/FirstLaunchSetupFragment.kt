@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collect
 
 class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) {
     private val viewModel: FirstLaunchSelectCurrenciesViewModel by viewModels()
-    private val totalSteps = 5
+    private val totalSteps = 6
     private var currentStep = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
         )
         currentStep = savedInstanceState?.getInt(KEY_CURRENT_STEP) ?: currentStep
         if (savedInstanceState == null) {
-            showCurrenciesStep()
+            showLanguageStep()
         } else {
             updateStepUi()
         }
@@ -51,9 +51,19 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
         }
     }
 
-    private fun showCurrenciesStep() {
-        val fragment = FirstLaunchSelectCurrenciesFragment()
+    private fun showLanguageStep() {
+        val fragment = FirstLaunchLanguageFragment()
         currentStep = 1
+        childFragmentManager.beginTransaction()
+            .replace(R.id.firstLaunchStepContainer, fragment)
+            .setPrimaryNavigationFragment(fragment)
+            .commit()
+        updateStepUi()
+    }
+
+    fun showCurrenciesStep() {
+        val fragment = FirstLaunchSelectCurrenciesFragment()
+        currentStep = 2
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -63,7 +73,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showCategoriesStep() {
         val fragment = FirstLaunchCategoriesFragment()
-        currentStep = 4
+        currentStep = 5
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -73,7 +83,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showDefaultCashAccountStep() {
         val fragment = FirstLaunchDefaultCashAccountFragment()
-        currentStep = 3
+        currentStep = 4
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -83,7 +93,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showStartDestinationStep() {
         val fragment = FirstLaunchStartDestinationFragment()
-        currentStep = 5
+        currentStep = 6
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -103,6 +113,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     private fun submitCurrentStep() {
         when (val stepFragment = childFragmentManager.primaryNavigationFragment) {
+            is FirstLaunchLanguageFragment -> stepFragment.submitStep()
             is FirstLaunchSelectCurrenciesFragment -> stepFragment.submitStep()
             is FirstLaunchDefaultCurrencyFragment -> stepFragment.submitStep()
             is FirstLaunchCategoriesFragment -> stepFragment.submitStep()
@@ -113,7 +124,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showDefaultCurrencyStep() {
         val fragment = FirstLaunchDefaultCurrencyFragment()
-        currentStep = 2
+        currentStep = 3
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)

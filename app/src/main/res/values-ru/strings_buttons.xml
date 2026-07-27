@@ -66,4 +66,5 @@
 
     <string name="text_on_button_no_parent_category">Без родительской категории</string>
 
+    <string name="text_on_button_choose_period">Выбрать период</string>
 </resources>

@@ -28,15 +28,15 @@
 
             <Button
                 style="@style/ButtonsMatchParent_WrapContent"
-                android:text="выбрать период" />
+                android:text="@string/text_on_button_choose_period" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="начальная дата" />
+                android:text="@string/text_view_start_date" />
 
             <TextView
                 style="@style/TextDescriptions"
-                android:text="конечная дата" />
+                android:text="@string/text_view_end_date" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,7 +62,7 @@
                     android:id="@+id/nameSelectedCashAccount"
                     style="@style/SelectedParamName"
                     android:text="@string/text_on_button_all_text"
-                    tools:text="наличные" />
+                    tools:text="cash" />
             </LinearLayout>
 
             <Button

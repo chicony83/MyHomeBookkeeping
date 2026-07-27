@@ -160,11 +160,11 @@ private object migration_7_to_8 : Migration(7, 8) {
 
 private object migration_8_to_9 : Migration(8, 9) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        // Prepare localized display names; English values are filled by a later localization migration.
-        database.execSQL("ALTER TABLE `cash_account_table` ADD COLUMN `cash_account_name_en` TEXT")
-        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `category_name_en` TEXT")
-        database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_en` TEXT")
-        database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_en` TEXT")
+        // Keep existing English names as canonical values and add optional Russian display names.
+        database.execSQL("ALTER TABLE `cash_account_table` ADD COLUMN `cash_account_name_ru` TEXT")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `category_name_ru` TEXT")
+        database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_ru` TEXT")
+        database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_ru` TEXT")
     }
 }
 

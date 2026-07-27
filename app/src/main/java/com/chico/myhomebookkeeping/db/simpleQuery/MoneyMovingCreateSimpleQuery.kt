@@ -11,8 +11,11 @@ object MoneyMovingCreateSimpleQuery {
     private const val argsSpending = Constants.ARGS_QUERY_PAYMENT_SPENDING
     private const val argsNone = Constants.FOR_QUERY_NONE
 
-    fun createQueryOneLine(id: Long): SimpleSQLiteQuery {
-        var queryString = mainQueryFullMoneyMoving()
+    fun createQueryOneLine(
+        id: Long,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
+    ): SimpleSQLiteQuery {
+        var queryString = mainQueryFullMoneyMoving(languageTag)
         val argsList: ArrayList<Any> = arrayListOf()
 
         if (id > 0) {
@@ -31,10 +34,11 @@ object MoneyMovingCreateSimpleQuery {
         cashAccountVal: Int,
         incomeSpendingSP: String,
         startTimePeriodLongSP: Long,
-        endTimePeriodLongSP: Long
+        endTimePeriodLongSP: Long,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): SimpleSQLiteQuery {
 
-        var queryString = mainQueryFullMoneyMoving()
+        var queryString = mainQueryFullMoneyMoving(languageTag)
         val argsList: ArrayList<Any> = arrayListOf()
 
         queryString =
@@ -60,10 +64,11 @@ object MoneyMovingCreateSimpleQuery {
         cashAccountVal: Int,
         incomeSpendingStringSP: String,
         startTimePeriodLongSP: Long,
-        endTimePeriodLongSP: Long
+        endTimePeriodLongSP: Long,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): SimpleSQLiteQuery {
 
-        var queryString = mainQueryFullMoneyMoving()
+        var queryString = mainQueryFullMoneyMoving(languageTag)
         val argsList: ArrayList<Any> = arrayListOf()
 
         if (
@@ -230,12 +235,15 @@ object MoneyMovingCreateSimpleQuery {
         return queryString1
     }
 
-    private fun mainQueryFullMoneyMoving(): String {
+    private fun mainQueryFullMoneyMoving(languageTag: String = Constants.APP_LANGUAGE_ENGLISH): String {
+        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", languageTag)
+        val categoryName = localizedColumn("category_name", "category_name_ru", languageTag)
+        val parentCategoryName = localizedColumn("parent_category_name", "parent_category_name_ru", languageTag)
         return "SELECT money_moving_table.id,time_stamp, " +
-                "cash_account_name AS cash_account_name_value, " +
+                "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
-                "category_name AS category_name_value, " +
-                "parent_category_name AS parent_category_name_value, " +
+                "$categoryName AS category_name_value, " +
+                "$parentCategoryName AS parent_category_name_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
                 "money_moving_table.payment_type_id, payment_type_name, " +
                 "transfer_group_id, transfer_direction, description " +
@@ -255,6 +263,14 @@ object MoneyMovingCreateSimpleQuery {
 
     private fun addAnd(): String {
         return " AND "
+    }
+
+    private fun localizedColumn(baseColumn: String, ruColumn: String, languageTag: String): String {
+        return if (languageTag == Constants.APP_LANGUAGE_RUSSIAN) {
+            "COALESCE($ruColumn, $baseColumn)"
+        } else {
+            baseColumn
+        }
     }
 
 //    private fun addWhere(): String {

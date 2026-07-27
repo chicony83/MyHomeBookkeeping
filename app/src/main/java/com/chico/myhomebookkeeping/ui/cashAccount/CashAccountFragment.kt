@@ -54,7 +54,8 @@ class CashAccountFragment : Fragment() {
 
         with(cashAccountViewModel) {
             selectedCashAccount.observe(viewLifecycleOwner) {
-                binding.confirmationLayout.selectedItemName.text = it?.accountName
+                binding.confirmationLayout.selectedItemName.text =
+                    it?.displayName(com.chico.myhomebookkeeping.obj.AppLanguage.getSelectedTag(requireContext()))
             }
             cashAccountList.observe(viewLifecycleOwner) {
                 binding.cashAccountHolder.adapter =

@@ -13,8 +13,10 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoryGroupBind
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemParentCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
+import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
+import com.chico.myhomebookkeeping.obj.AppLanguage
 
 data class CategoryGroup(
     val parentCategory: ParentCategories?,
@@ -212,7 +214,8 @@ class CategoryGroupsAdapter(
         fun bind(group: CategoryGroup) {
             val parentCategory = group.parentCategory
             val isExpanded = expandedGroupIds.contains(parentCategory?.id)
-            val title = parentCategory?.name
+            val languageTag = AppLanguage.getSelectedTag(itemView.context)
+            val title = parentCategory?.displayName(languageTag)
                 ?: itemView.context.getString(R.string.text_on_button_no_parent_category)
             with(binding) {
                 groupCategoriesRecyclerView.visibility = View.GONE
@@ -249,13 +252,14 @@ class CategoryGroupsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
         fun bind(category: Categories) {
+            val languageTag = AppLanguage.getSelectedTag(itemView.context)
             with(binding) {
                 addNewCategoryItem.visibility = View.GONE
                 categoriesItem.visibility = View.VISIBLE
                 categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
                 idCategories.text = category.categoriesId.toString()
-                categoryNameTextView.text = category.categoryName
+                categoryNameTextView.text = category.displayName(languageTag)
                 categoriesItem.setOnClickListener {
                     category.categoriesId?.let { categoryListener.onShortClick(it) }
                 }

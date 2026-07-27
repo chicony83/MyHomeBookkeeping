@@ -37,4 +37,7 @@
     <string name="message_select_default_cash_account">Select default cash account</string>
     <string name="message_complete_first_launch_setup">Complete app setup</string>
     <string name="message_confirm_crypto_default_currency">Do you really want to make a cryptocurrency the default currency?</string>
+    <string name="message_passwords_do_not_match">Passwords do not match</string>
+    <string name="message_passwords_match">Passwords match</string>
+    <string name="message_password_too_short">Password is too short</string>
 </resources>

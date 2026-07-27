@@ -27,17 +27,25 @@ class DefaultCategoryCatalogTest {
             .filter { it.isIncome }
             .map { it.parentName }
 
-        assertEquals(listOf("Доходы"), incomeGroups)
+        assertEquals(listOf("Income"), incomeGroups)
     }
 
     @Test
     fun otherWithoutCategoryGroupIsNotInCatalog() {
-        assertFalse(DefaultCategoryCatalog.groups.any { it.parentName == "Другое" })
+        assertFalse(DefaultCategoryCatalog.groups.any { it.parentName == "Other" })
         assertFalse(
             DefaultCategoryCatalog.groups.any {
-                it.parentName == "Другое" && "Без категории" in it.subcategories
+                it.parentName == "Other" && "No category" in it.subcategories
             }
         )
         assertTrue(DefaultCategoryCatalog.groups.all { it.subcategories.isNotEmpty() })
+    }
+
+    @Test
+    fun russianCatalogIsAvailableForRussianLanguage() {
+        val groups = DefaultCategoryCatalog.groupsForLanguage("ru")
+
+        assertEquals("Доходы", groups.first().parentName)
+        assertTrue(groups.first().subcategories.contains("Другое"))
     }
 }

@@ -33,6 +33,8 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.Around
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.helpers.displayName
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
@@ -157,13 +159,16 @@ class NewMoneyMovingFragment : Fragment() {
                 binding.selectDateTimeButton.text = it.toString()
             }
             selectedCashAccount.observe(viewLifecycleOwner) {
-                binding.selectCashAccountButton.text = it.accountName
+                binding.selectCashAccountButton.text =
+                    it.displayName(AppLanguage.getSelectedTag(requireContext()))
                 rebuildQuickCashAccountRow()
             }
             selectedTransferCashAccount.observe(viewLifecycleOwner) {
-                binding.selectTransferCashAccountButton.text = it.accountName
+                val transferCashAccountName =
+                    it.displayName(AppLanguage.getSelectedTag(requireContext()))
+                binding.selectTransferCashAccountButton.text = transferCashAccountName
                 if (viewModel.isTransferMode()) {
-                    binding.selectCategoryButton.text = it.accountName
+                    binding.selectCategoryButton.text = transferCashAccountName
                 }
             }
             selectedCurrency.observe(viewLifecycleOwner) {
@@ -289,11 +294,12 @@ class NewMoneyMovingFragment : Fragment() {
         if (latestQuickPaymentSettings?.isCashAccountScrollEnabled != true || _binding == null) return
         binding.cashAccountQuickSelectRow.removeAllViews()
         quickCashAccounts.forEach { cashAccount ->
+            val cashAccountName = cashAccount.displayName(AppLanguage.getSelectedTag(requireContext()))
             binding.cashAccountQuickSelectRow.addView(
                 createQuickSelectButton(
                     text = cashAccount.bankAccountNumber.takeIf { it.isNotBlank() }?.let {
-                        "${cashAccount.accountName} *${it.takeLast(4)}"
-                    } ?: cashAccount.accountName,
+                        "$cashAccountName *${it.takeLast(4)}"
+                    } ?: cashAccountName,
                     isSelected = cashAccount.cashAccountId ==
                         viewModel.selectedCashAccount.value?.cashAccountId
                 ) {
@@ -841,7 +847,9 @@ class NewMoneyMovingFragment : Fragment() {
             else R.string.description_category
         )
         binding.selectCategoryButton.text = if (isTransfer) {
-            viewModel.selectedTransferCashAccount.value?.accountName
+            viewModel.selectedTransferCashAccount.value?.displayName(
+                AppLanguage.getSelectedTag(requireContext())
+            )
                 ?: getString(R.string.text_on_button_select_cash_account)
         } else {
             getString(R.string.text_on_button_select_category)

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-style="@style/Fragment"
+    style="@style/Fragment"
     tools:context="ui.timePeriod.TimePeriodFragment">
 
     <TextView
@@ -10,7 +10,7 @@ style="@style/Fragment"
         style="@style/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="начало периода"
+        android:text="@string/text_view_period_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@ style="@style/Fragment"
         style="@style/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="конец периода"
+        android:text="@string/text_view_period_end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectStartPeriodButton" />
@@ -64,8 +64,8 @@ style="@style/Fragment"
         app:layout_constraintTop_toBottomOf="@id/descriptionEndPeriod" />
 
     <Button
-        style="@style/ButtonFullWidth"
         android:id="@+id/submitButton"
+        style="@style/ButtonFullWidth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/text_on_button_submit"

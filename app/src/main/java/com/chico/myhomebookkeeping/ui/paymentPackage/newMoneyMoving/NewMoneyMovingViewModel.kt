@@ -23,7 +23,9 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.helpers.Around
+import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.*
@@ -457,14 +459,18 @@ class NewMoneyMovingViewModel(
     }
 
     suspend fun getSelectedCategoryDisplayName(category: Categories): String {
+        val languageTag = AppLanguage.getSelectedTag(app.applicationContext)
         val parentCategoryName = category.parentCategoryId
             ?.takeIf { it > 0 }
-            ?.let { ParentCategoriesUseCase.getSelectedParentCategory(dbParentCategory, it).name }
+            ?.let {
+                ParentCategoriesUseCase.getSelectedParentCategory(dbParentCategory, it)
+                    .displayName(languageTag)
+            }
 
         return ParentCategoryHelper.getCategoryDisplayName(
             parentCategoryName,
-            category.categoryName
-        ) ?: category.categoryName
+            category.displayName(languageTag)
+        ) ?: category.displayName(languageTag)
     }
 
     fun getQuickPaymentSettings(): QuickPaymentSettings {

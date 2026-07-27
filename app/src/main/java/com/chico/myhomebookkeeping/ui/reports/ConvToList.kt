@@ -7,15 +7,18 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.ui.reports.selectCategories.ReportsCategoriesItem
 import com.chico.myhomebookkeeping.data.reports.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.data.reports.ReportsCurrenciesItem
+import com.chico.myhomebookkeeping.helpers.displayName
+import com.chico.myhomebookkeeping.obj.Constants
 
 object ConvToList {
 
     fun cashAccountsListToReportsItemsList(
-        cashAccountsList: List<CashAccount>
+        cashAccountsList: List<CashAccount>,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): MutableList<ReportsCashAccountItem> {
         val list: MutableList<ReportsCashAccountItem> = mutableListOf()
         for (i in cashAccountsList.indices) {
-            list.add(ReportsCashAccountItem(i, cashAccountsList[i].accountName, false))
+            list.add(ReportsCashAccountItem(i, cashAccountsList[i].displayName(languageTag), false))
         }
         return list
     }
@@ -42,11 +45,14 @@ object ConvToList {
         return categoriesList.map { it.categoriesId ?: 0 }.toSet()
     }
 
-    fun categoriesListToCategoriesItemsList(categoriesList: List<Categories>):
+    fun categoriesListToCategoriesItemsList(
+        categoriesList: List<Categories>,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
+    ):
             List<ReportsCategoriesItem> {
         return categoriesList.map {
 //            Message.log("line categories list id = ${it.categoriesId}")
-            ReportsCategoriesItem(it.categoriesId ?: 0, it.categoryName, " ", it.isIncome, false)
+            ReportsCategoriesItem(it.categoriesId ?: 0, it.displayName(languageTag), " ", it.isIncome, false)
 
         }
     }

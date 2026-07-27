@@ -19,6 +19,7 @@ import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
@@ -113,7 +114,8 @@ class ReportsMainViewModel(
     private fun getLists(): Boolean {
         launchIo {
             listItemsOfCashAccounts = ConvToList.cashAccountsListToReportsItemsList(
-                CashAccountsUseCase.getAllCashAccountsSortNameAsc(dbCashAccount)
+                CashAccountsUseCase.getAllCashAccountsSortNameAsc(dbCashAccount),
+                AppLanguage.getSelectedTag(app.applicationContext)
             )
         }
         launchIo {
@@ -193,7 +195,8 @@ class ReportsMainViewModel(
             startTimePeriodLong = startTimePeriodLongSP,
             endTimePeriodLong = endTimePeriodLongSP,
             setItemsOfCategories = selectedCategoriesSet,
-            numbersOfAllCategories = numbersOfAllCategories
+            numbersOfAllCategories = numbersOfAllCategories,
+            languageTag = AppLanguage.getSelectedTag(app.applicationContext)
         )
     }
 

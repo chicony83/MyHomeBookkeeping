@@ -11,6 +11,7 @@ import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -61,7 +62,8 @@ class SetTextOnButtons(val resources: Resources) {
     fun textOnCashAccountButton(
         _buttonTextOfQueryCashAccount: MutableLiveData<String>,
         dbCashAccount: CashAccountDao,
-        cashAccountIntSP: Int
+        cashAccountIntSP: Int,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ) {
 
         val nameButton: String = getResourceText(R.string.text_on_button_cash_account)
@@ -71,7 +73,7 @@ class SetTextOnButtons(val resources: Resources) {
                 nameCashAccount = CashAccountsUseCase.getOneCashAccountById(
                     dbCashAccount,
                     cashAccountIntSP
-                )?.accountName.toString()
+                )?.displayName(languageTag).toString()
             }
         }
         if (!modelCheck.isPositiveValue(cashAccountIntSP)) {
@@ -114,7 +116,8 @@ class SetTextOnButtons(val resources: Resources) {
         dbCategory: CategoryDao,
         categoryIntSP: Int,
         getSP: GetSP,
-        argsIncomeSpendingKey: String
+        argsIncomeSpendingKey: String,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ) {
         val nameButton: String = getResourceText(R.string.text_on_button_category)
         var nameCategory = ""
@@ -123,7 +126,7 @@ class SetTextOnButtons(val resources: Resources) {
                 nameCategory = CategoriesUseCase.getOneCategory(
                     dbCategory,
                     categoryIntSP
-                )?.categoryName.toString()
+                )?.displayName(languageTag).toString()
             }
         }
         if (getSP.isIncomeSpendingNone(argsIncomeSpendingKey)) {

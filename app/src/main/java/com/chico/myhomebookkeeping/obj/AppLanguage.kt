@@ -13,16 +13,16 @@ object AppLanguage {
 
     fun getSelectedTag(context: Context): String {
         return context.getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE)
-            .getString(Constants.APP_LANGUAGE, Constants.APP_LANGUAGE_SYSTEM)
+            .getString(Constants.APP_LANGUAGE, Constants.APP_LANGUAGE_ENGLISH)
             ?.takeIf { supportedTags.contains(it) }
-            ?: Constants.APP_LANGUAGE_SYSTEM
+            ?: Constants.APP_LANGUAGE_ENGLISH
     }
 
     fun saveSelectedTag(context: Context, languageTag: String) {
         context.getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE)
             .edit()
             .putString(Constants.APP_LANGUAGE, languageTag.takeIf { supportedTags.contains(it) }
-                ?: Constants.APP_LANGUAGE_SYSTEM)
+                ?: Constants.APP_LANGUAGE_ENGLISH)
             .apply()
     }
 

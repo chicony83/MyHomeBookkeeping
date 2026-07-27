@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.simpleQuery.MoneyMovingCreateSimpleQuery
 import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchForResult
 import kotlinx.coroutines.*
@@ -132,7 +133,8 @@ class MoneyMovingViewModel(
                 dbCategory,
                 categoryIntSP,
                 getSP,
-                argsIncomeSpendingKey
+                argsIncomeSpendingKey,
+                AppLanguage.getSelectedTag(app.applicationContext)
             )
             textOnCurrencyButton(
                 _buttonTextOfQueryCurrency,
@@ -142,7 +144,8 @@ class MoneyMovingViewModel(
             textOnCashAccountButton(
                 _buttonTextOfQueryCashAccount,
                 dbCashAccount,
-                cashAccountIntSP
+                cashAccountIntSP,
+                AppLanguage.getSelectedTag(app.applicationContext)
             )
             textOnTimePeriodButton(
                 _buttonTextOfTimePeriod,
@@ -172,7 +175,8 @@ class MoneyMovingViewModel(
             cashAccountIntSP,
             incomeSpendingStringSP,
             startTimePeriodLongSP,
-            endTimePeriodLongSP
+            endTimePeriodLongSP,
+            AppLanguage.getSelectedTag(app.applicationContext)
         )
         return@launchForResult getListMoneyMovement(query)
     }
@@ -250,7 +254,10 @@ class MoneyMovingViewModel(
     suspend fun loadSelectedMoneyMoving(selectedId: Long): FullMoneyMoving? {
         return MoneyMovingUseCase.getOneFullMoneyMoving(
             db,
-            MoneyMovingCreateSimpleQuery.createQueryOneLine(selectedId)
+            MoneyMovingCreateSimpleQuery.createQueryOneLine(
+                selectedId,
+                AppLanguage.getSelectedTag(app.applicationContext)
+            )
         )
 
     }

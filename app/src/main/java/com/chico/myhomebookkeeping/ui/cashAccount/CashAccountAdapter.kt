@@ -9,7 +9,9 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCashAccountBinding
 import com.chico.myhomebookkeeping.db.entity.CashAccount
+import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.AppLanguage
 
 class CashAccountAdapter(
     private var cashAccountList: List<CashAccount>,
@@ -47,14 +49,15 @@ class CashAccountAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(cashAccount: CashAccount) {
+            val name = cashAccount.displayName(AppLanguage.getSelectedTag(itemView.context))
             with(binding) {
-                root.contentDescription = cashAccount.accountName
+                root.contentDescription = name
 
                 cashAccount.icon.let {
                     it?.let { it1 -> iconImg.setImageResource(it1) }
                 }
 
-                nameCashAccount.text = cashAccount.accountName
+                nameCashAccount.text = name
 
                 if (cashAccount.bankAccountNumber.isEmpty()) {
                     uiHelper.hideUiElement(numberCashAccount)

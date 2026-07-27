@@ -215,13 +215,15 @@ class FirstLaunchViewModel(
                 ParentCategories(
                     name = categoryGroups[i].parentName,
                     icon = null,
-                    parentCategoryOrder = i
+                    parentCategoryOrder = i,
+                    nameRu = categoryGroups[i].parentNameRu
                 )
             )
             result += parentCategoryId
             for (j in categoryGroups[i].subcategories.indices) {
                 result += addCategory(
                     name = categoryGroups[i].subcategories[j],
+                    nameRu = categoryGroups[i].subcategoriesRu.getOrNull(j),
                     isIncome = categoryGroups[i].isIncome,
                     parentCategoryId = parentCategoryId.toInt(),
                     order = j
@@ -233,6 +235,7 @@ class FirstLaunchViewModel(
 
     private suspend fun addCategory(
         name: String,
+        nameRu: String?,
         isIncome: Boolean,
         parentCategoryId: Int,
         order: Int
@@ -243,7 +246,8 @@ class FirstLaunchViewModel(
                 isIncome = isIncome,
                 icon = null,
                 parentCategoryId = parentCategoryId,
-                categoryOrder = order
+                categoryOrder = order,
+                categoryNameRu = nameRu
             )
         )
     }

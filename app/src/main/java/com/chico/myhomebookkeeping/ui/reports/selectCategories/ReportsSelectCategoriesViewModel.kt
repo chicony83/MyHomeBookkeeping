@@ -10,6 +10,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.domain.CategoriesUseCase
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
@@ -57,7 +58,8 @@ class ReportsSelectCategoriesViewModel(
         runBlocking {
             _categoriesItemsList.postValue(
                 ConvToList.categoriesListToCategoriesItemsList(
-                    CategoriesUseCase.getAllCategoriesSortIdAsc(db)
+                    CategoriesUseCase.getAllCategoriesSortIdAsc(db),
+                    AppLanguage.getSelectedTag(app.applicationContext)
                 )
             )
         }

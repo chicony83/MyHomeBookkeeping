@@ -12,6 +12,8 @@ import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchCategoriesBind
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFirstLaunchCategoryGroupBinding
 import com.chico.myhomebookkeeping.domain.DefaultCategoryCatalog
 import com.chico.myhomebookkeeping.domain.DefaultCategoryGroup
+import com.chico.myhomebookkeeping.obj.AppLanguage
+import com.chico.myhomebookkeeping.obj.Constants
 
 class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_categories) {
     private var _binding: FragmentFirstLaunchCategoriesBinding? = null
@@ -22,8 +24,14 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
     override fun onViewCreated(view: View, savedInstanceState: android.os.Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentFirstLaunchCategoriesBinding.bind(view)
-        adapter = DefaultCategoryGroupsAdapter(DefaultCategoryCatalog.groups)
+        adapter = DefaultCategoryGroupsAdapter(DefaultCategoryCatalog.groups, getLanguageTag())
         binding.defaultCategoriesHolder.adapter = adapter
+    }
+
+    private fun getLanguageTag(): String {
+        return AppLanguage.getSelectedTag(requireContext()).ifEmpty {
+            resources.configuration.locales[0]?.language ?: Constants.APP_LANGUAGE_ENGLISH
+        }
     }
 
     fun submitStep() {
@@ -37,7 +45,8 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
     }
 
     private class DefaultCategoryGroupsAdapter(
-        groups: List<DefaultCategoryGroup>
+        groups: List<DefaultCategoryGroup>,
+        private val languageTag: String
     ) : RecyclerView.Adapter<DefaultCategoryGroupsAdapter.ViewHolder>() {
         private val items = groups.map {
             SelectableDefaultCategoryGroup(
@@ -67,8 +76,10 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
                 .map {
                     FirstLaunchCategoryGroupItem(
                         parentName = it.group.parentName,
+                        parentNameRu = it.group.parentNameRu,
                         isIncome = it.group.isIncome,
-                        subcategories = it.group.subcategories
+                        subcategories = it.group.subcategories,
+                        subcategoriesRu = it.group.subcategoriesRu
                     )
                 }
         }
@@ -78,7 +89,11 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
         ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(item: SelectableDefaultCategoryGroup) {
                 with(binding) {
-                    defaultCategoryName.text = item.group.parentName
+                    defaultCategoryName.text = if (languageTag == Constants.APP_LANGUAGE_RUSSIAN) {
+                        item.group.parentNameRu
+                    } else {
+                        item.group.parentName
+                    }
                     defaultCategorySubcategoryCount.text = itemView.context.getString(
                         R.string.first_launch_categories_subcategory_count,
                         item.group.subcategories.size

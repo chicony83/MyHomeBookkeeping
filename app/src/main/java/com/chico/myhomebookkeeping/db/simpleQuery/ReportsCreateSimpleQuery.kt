@@ -2,14 +2,18 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.obj.Constants
 
 object ReportsCreateSimpleQuery {
-    private fun mainQueryFullMoneyMoving(): String {
+    private fun mainQueryFullMoneyMoving(languageTag: String): String {
+        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", languageTag)
+        val categoryName = localizedColumn("category_name", "category_name_ru", languageTag)
+        val parentCategoryName = localizedColumn("parent_category_name", "parent_category_name_ru", languageTag)
         return "SELECT money_moving_table.id,time_stamp, " +
-                "cash_account_name AS cash_account_name_value, " +
+                "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
-                "category_name AS category_name_value, " +
-                "parent_category_name AS parent_category_name_value, " +
+                "$categoryName AS category_name_value, " +
+                "$parentCategoryName AS parent_category_name_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
                 "money_moving_table.payment_type_id, payment_type_name, " +
                 "transfer_group_id, transfer_direction, description " +
@@ -64,9 +68,10 @@ object ReportsCreateSimpleQuery {
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
         setItemsOfCategories: Set<Int>,
-        numbersOfAllCategories: Int
+        numbersOfAllCategories: Int,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): SimpleSQLiteQuery {
-        var query = mainQueryFullMoneyMoving()
+        var query = mainQueryFullMoneyMoving(languageTag)
         val argsList: ArrayList<Any> = arrayListOf()
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
@@ -105,6 +110,14 @@ object ReportsCreateSimpleQuery {
 
     private fun addOr(): String {
         return " OR "
+    }
+
+    private fun localizedColumn(baseColumn: String, ruColumn: String, languageTag: String): String {
+        return if (languageTag == Constants.APP_LANGUAGE_RUSSIAN) {
+            "COALESCE($ruColumn, $baseColumn)"
+        } else {
+            baseColumn
+        }
     }
 
 }

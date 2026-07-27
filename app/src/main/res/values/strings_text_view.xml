@@ -7,4 +7,11 @@
     <string name="text_view_All_categories">All</string>
     <string name="text_view_parent_category">Parent category</string>">
     <string name="text_view_no_parent_category">no parent category</string>
+    <string name="text_view_password_code_prompt">Create a 4-digit code</string>
+    <string name="text_view_password_hint_label">Hint</string>
+    <string name="text_view_period_start">Start period</string>
+    <string name="text_view_period_end">End period</string>
+    <string name="text_view_start_date">Start date</string>
+    <string name="text_view_end_date">End date</string>
+    <string name="chart_label_report">Report</string>
 </resources>

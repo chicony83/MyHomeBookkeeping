@@ -9,4 +9,6 @@
     <string name="hint_enter_amount_be_inserted">Amount (will be inserted in the payment)</string>
     <string name="hint_add_you_description_be_inserted">Add you description\n(will be inserted in the payment)</string>
     <string name="hint_category">Search category</string>
+    <string name="hint_enter_password">Enter password</string>
+    <string name="hint_repeat_password">Repeat password</string>
 </resources>

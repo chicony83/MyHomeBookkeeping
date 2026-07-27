@@ -19,4 +19,6 @@
     <string name="fragment_label_help">Help</string>
     <string name="fragment_label_first_launch_select_currencies">Select currencies</string>
 
+    <string name="fragment_label_first_launch">First launch</string>
+    <string name="fragment_label_first_launch_setup">Setup</string>
 </resources>

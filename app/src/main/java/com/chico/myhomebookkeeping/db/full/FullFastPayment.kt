@@ -9,7 +9,7 @@ class FullFastPayment(
     @ColumnInfo(name = "icon")
     val icon: Int?,
 
-    @ColumnInfo(name = "name_fast_payment")
+    @ColumnInfo(name = "name_fast_payment_value")
     val nameFastPayment:String,
 
     @ColumnInfo(name = "rating")

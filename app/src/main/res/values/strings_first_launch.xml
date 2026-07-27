@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="first_launch_language_title">Choose app language</string>
     <string name="first_launch_currencies_title">Choose your currencies</string>
     <string name="first_launch_currencies_hint">Tick the currencies you want to use.\nOn the next step, you will need to choose the default currency.</string>
-    <string name="first_launch_currencies_available_count">Currencies · %1$d</string>
-    <string name="first_launch_currencies_selected_count">Selected · %1$d</string>
-    <string name="first_launch_currencies_continue">Continue · choose default</string>
+    <string name="first_launch_currencies_available_count">Currencies - %1$d</string>
+    <string name="first_launch_currencies_selected_count">Selected - %1$d</string>
+    <string name="first_launch_currencies_continue">Continue - choose default</string>
     <string name="first_launch_currencies_empty_message">Add at least one currency to continue</string>
     <string name="first_launch_currencies_major">Major currencies</string>
     <string name="first_launch_currencies_fiat">Currencies</string>
@@ -29,9 +30,7 @@
     <string name="quick_setup_add_Cash_account">Cash accounts</string>
     <string name="quick_setup_name_Card">Card</string>
     <string name="quick_setup_name_Cash">Cash</string>
-
     <string name="quick_setup_name_Currency">USD</string>
-
     <string name="quick_setup_add_Category">Categories</string>
     <string name="quick_setup_name_The_Income">Income</string>
     <string name="quick_setup_name_Products">Products</string>
@@ -40,5 +39,4 @@
     <string name="quick_setup_name_Credit">Credit</string>
     <string name="quick_setup_name_Medicines">Medicines</string>
     <string name="quick_setup_name_Public_transport">Public transport</string>
-
 </resources>

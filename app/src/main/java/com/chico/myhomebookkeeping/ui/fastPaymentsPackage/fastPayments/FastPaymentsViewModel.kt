@@ -19,6 +19,7 @@ import com.chico.myhomebookkeeping.enums.SortingFastPayments
 import com.chico.myhomebookkeeping.enums.StateRecyclerFastPaymentByType
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
 import com.chico.myhomebookkeeping.checks.AppVersion
@@ -127,27 +128,28 @@ class FastPaymentsViewModel(
     private suspend fun loadListFullFastPayments() = launchForResult {
 
         val query: SimpleSQLiteQuery
+        val languageTag = AppLanguage.getSelectedTag(app.applicationContext)
 
         when (getSorting()) {
             SortingFastPayments.AlphabetByAsc.toString() -> {
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc()
+                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByAsc(languageTag)
             }
             SortingFastPayments.AlphabetByDesc.toString() -> {
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc()
+                    FastPaymentCreateSimpleQuery.createQuerySortingAlphabetByDesc(languageTag)
             }
             SortingFastPayments.RatingByAsc.toString() -> {
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc()
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByAsc(languageTag)
             }
             SortingFastPayments.RatingByDesc.toString() -> {
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(languageTag)
             }
             else -> {
                 query =
-                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc()
+                    FastPaymentCreateSimpleQuery.createQuerySortingRatingByDesc(languageTag)
             }
         }
         Message.log(query.sql)
@@ -169,7 +171,10 @@ class FastPaymentsViewModel(
     suspend fun loadSelectedFullFastPayment(id: Long): FullFastPayment {
         return FastPaymentsUseCase.getOneFullFastPayment(
             db,
-            FastPaymentCreateSimpleQuery.createQueryOneFullFastPayment(id)
+            FastPaymentCreateSimpleQuery.createQueryOneFullFastPayment(
+                id,
+                AppLanguage.getSelectedTag(app.applicationContext)
+            )
         )
     }
 

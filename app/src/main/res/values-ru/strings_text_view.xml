@@ -5,4 +5,11 @@
     <string name="text_view_All_categories">Все</string>
     <string name="text_view_parent_category">Родительская категория</string>">
     <string name="text_view_no_parent_category">Нет родительской категории</string>
+    <string name="text_view_password_code_prompt">Придумайте код из 4-х цифр</string>
+    <string name="text_view_password_hint_label">Подсказка</string>
+    <string name="text_view_period_start">Начало периода</string>
+    <string name="text_view_period_end">Конец периода</string>
+    <string name="text_view_start_date">Начальная дата</string>
+    <string name="text_view_end_date">Конечная дата</string>
+    <string name="chart_label_report">Отчет</string>
 </resources>

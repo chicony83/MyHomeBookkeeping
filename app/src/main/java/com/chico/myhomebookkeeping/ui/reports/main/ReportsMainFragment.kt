@@ -51,7 +51,7 @@ class ReportsMainFragment : Fragment() {
                 map?.let { it1 ->
                     val sortedMap: MutableMap<String, Double> = LinkedHashMap()
                     it1.entries.sortedBy { it.value }.forEach { sortedMap[it.key] = it.value }
-                    charts.showPieChart(chartView = pieChartView, sortedMap)
+                    charts.showPieChart(requireContext(), chartView = pieChartView, sortedMap)
                     charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
                 }
             })

@@ -11,7 +11,9 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
+import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.interfaces.categories.OnPressCreateNewCategory
+import com.chico.myhomebookkeeping.obj.AppLanguage
 
 class CategoriesAdapter(
     categoriesList: List<Categories>,
@@ -84,16 +86,17 @@ class CategoriesAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(category: Categories) {
+            val name = category.displayName(AppLanguage.getSelectedTag(itemView.context))
             with(binding) {
                 resetItemState()
                 categoriesItem.visibility = View.VISIBLE
                 categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
-                root.contentDescription = category.categoryName
+                root.contentDescription = name
                 idCategories.text = category.categoriesId.toString()
 
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
 
-                categoryNameTextView.text = category.categoryName
+                categoryNameTextView.text = name
                 categoriesItem.setOnLongClickListener {
                     category.categoriesId?.let { it1 -> listener.onLongClick(it1) }
                     true

@@ -26,7 +26,7 @@ class SelectCurrencyAsDefaultDialog(
             val submitButton = layout.findViewById<Button>(R.id.submitButton)
 
             submitButton.setOnClickListener {
-                Toast.makeText(requireContext(),"select icon",Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.message_select_default_currency, Toast.LENGTH_LONG).show()
             }
 
             builder.create()

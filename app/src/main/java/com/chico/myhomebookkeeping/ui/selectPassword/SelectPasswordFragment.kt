@@ -39,7 +39,7 @@ class SelectPasswordFragment : Fragment() {
         control = findNavController()
         navControlHelper = NavControlHelper(control)
         _binding = FragmentSelectPasswordBinding.inflate(inflater, container, false)
-        validatePassword = Validate(selectedPasswordViewModel)
+        validatePassword = Validate(selectedPasswordViewModel, ::getString)
 
         with(selectedPasswordViewModel) {
             passwordMessage.observe(viewLifecycleOwner, {
