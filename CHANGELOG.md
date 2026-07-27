@@ -17,6 +17,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Added a reusable default category catalog and unit coverage for first-launch defaults.
 - Split first-launch account, default account, and category setup into separate steps.
 - Consolidated first-launch cash account creation into the default-account step and reduced setup from 6 steps to 5.
+- Added database version 9 with nullable English-name columns for cash accounts, categories, parent categories, and quick payments.
 - Added localized confirmation strings for turning off vital first-launch categories.
 - Fixed standalone Categories navigation state handling.
 - Routed the post-save next-entry action through standalone Categories mode instead of Fast payments.

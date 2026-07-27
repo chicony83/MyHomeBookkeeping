@@ -13,7 +13,9 @@ data class CashAccount(
     @ColumnInfo(name = "icon_cash_account")
     val icon: Int?,
     @ColumnInfo(name = "is_cash_account_default")
-    val isCashAccountDefault: Boolean?
+    val isCashAccountDefault: Boolean?,
+    @ColumnInfo(name = "cash_account_name_en")
+    val accountNameEn: String? = null
     ) {
     @PrimaryKey(autoGenerate = true)
     var cashAccountId: Int? = null

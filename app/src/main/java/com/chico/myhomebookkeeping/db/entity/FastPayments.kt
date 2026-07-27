@@ -22,6 +22,8 @@ data class FastPayments(
     val amount:Double?,
     @ColumnInfo(name = "description")
     val description: String?,
+    @ColumnInfo(name = "name_fast_payment_en")
+    val nameFastPaymentEn: String? = null,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null

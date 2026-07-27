@@ -15,7 +15,9 @@ data class Categories(
     @ColumnInfo(name = "parent_category_id")
     val parentCategoryId:Int?,
     @ColumnInfo(name = "category_order")
-    val categoryOrder: Int = 0
+    val categoryOrder: Int = 0,
+    @ColumnInfo(name = "category_name_en")
+    val categoryNameEn: String? = null
 ) {
     @PrimaryKey(autoGenerate = true)
     var categoriesId: Int? = null
