@@ -10,6 +10,7 @@ This file is the full internal release log. Keep all useful development notes he
 - First-launch category groups are now selected by default; Income and Products ask for confirmation before being turned off.
 - First launch now shows Card and Cash directly on the default account step, then adds both accounts with the selected default.
 - Categories navigation is more reliable and can open a new payment with the selected category.
+- The "Add next entry" button after saving a payment now opens Categories so the next payment can start from category selection.
 - Added small stability and setup-flow fixes.
 
 ### Development
@@ -18,6 +19,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Consolidated first-launch cash account creation into the default-account step and reduced setup from 6 steps to 5.
 - Added localized confirmation strings for turning off vital first-launch categories.
 - Fixed standalone Categories navigation state handling.
+- Routed the post-save next-entry action through standalone Categories mode instead of Fast payments.
 
 ## 0.10.1
 

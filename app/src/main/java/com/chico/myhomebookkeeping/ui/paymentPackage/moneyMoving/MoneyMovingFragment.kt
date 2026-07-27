@@ -152,7 +152,12 @@ class MoneyMovingFragment : Fragment() {
                 val entryIsAddedBottomSheet = EntryIsAddedBottomSheet(
                     object : OnNextEntryButtonClickedCallBack{
                         override fun onClick() {
-                            control.navigate(R.id.nav_fast_payments_fragment)
+                            control.navigate(
+                                R.id.nav_categories,
+                                CategoriesFragment.openModeArgs(
+                                    CategoriesFragment.OPEN_MODE_STANDALONE
+                                )
+                            )
                         }
                     }
                 )
