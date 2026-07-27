@@ -23,6 +23,9 @@
     <string name="first_launch_categories_title">Choose categories</string>
     <string name="first_launch_categories_hint">Only parent categories are shown here. Subcategories will be added automatically.</string>
     <string name="first_launch_categories_subcategory_count">%1$d subcategories</string>
+    <string name="first_launch_required_category_confirmation">This is a vital category. Do you really want to turn it off?</string>
+    <string name="first_launch_required_category_confirm">Yes</string>
+    <string name="first_launch_required_category_cancel">No</string>
     <string name="quick_setup_add_Cash_account">Cash accounts</string>
     <string name="quick_setup_name_Card">Card</string>
     <string name="quick_setup_name_Cash">Cash</string>

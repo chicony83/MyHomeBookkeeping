@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collect
 
 class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) {
     private val viewModel: FirstLaunchSelectCurrenciesViewModel by viewModels()
-    private val totalSteps = 6
+    private val totalSteps = 5
     private var currentStep = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
         }
         lifecycleScope.launchWhenStarted {
             viewModel.onDefaultCurrencyAdded.collect {
-                showCashAccountsAndCategoriesStep()
+                showDefaultCashAccountStep()
             }
         }
     }
@@ -54,16 +54,6 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
     private fun showCurrenciesStep() {
         val fragment = FirstLaunchSelectCurrenciesFragment()
         currentStep = 1
-        childFragmentManager.beginTransaction()
-            .replace(R.id.firstLaunchStepContainer, fragment)
-            .setPrimaryNavigationFragment(fragment)
-            .commit()
-        updateStepUi()
-    }
-
-    fun showCashAccountsAndCategoriesStep() {
-        val fragment = FirstLaunchFragment()
-        currentStep = 3
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -83,7 +73,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showDefaultCashAccountStep() {
         val fragment = FirstLaunchDefaultCashAccountFragment()
-        currentStep = 5
+        currentStep = 3
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -93,7 +83,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
 
     fun showStartDestinationStep() {
         val fragment = FirstLaunchStartDestinationFragment()
-        currentStep = 6
+        currentStep = 5
         childFragmentManager.beginTransaction()
             .replace(R.id.firstLaunchStepContainer, fragment)
             .setPrimaryNavigationFragment(fragment)
@@ -115,7 +105,6 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
         when (val stepFragment = childFragmentManager.primaryNavigationFragment) {
             is FirstLaunchSelectCurrenciesFragment -> stepFragment.submitStep()
             is FirstLaunchDefaultCurrencyFragment -> stepFragment.submitStep()
-            is FirstLaunchFragment -> stepFragment.submitStep()
             is FirstLaunchCategoriesFragment -> stepFragment.submitStep()
             is FirstLaunchDefaultCashAccountFragment -> stepFragment.submitStep()
             is FirstLaunchStartDestinationFragment -> stepFragment.submitStep()

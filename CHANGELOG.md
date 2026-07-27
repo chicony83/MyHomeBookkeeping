@@ -7,12 +7,16 @@ This file is the full internal release log. Keep all useful development notes he
 ### User-facing
 - Improved first launch: category and currency setup is simpler for new users.
 - New users can choose starter category groups, and the app no longer creates quick payments automatically during setup.
+- First-launch category groups are now selected by default; Income and Products ask for confirmation before being turned off.
+- First launch now shows Card and Cash directly on the default account step, then adds both accounts with the selected default.
 - Categories navigation is more reliable and can open a new payment with the selected category.
 - Added small stability and setup-flow fixes.
 
 ### Development
 - Added a reusable default category catalog and unit coverage for first-launch defaults.
 - Split first-launch account, default account, and category setup into separate steps.
+- Consolidated first-launch cash account creation into the default-account step and reduced setup from 6 steps to 5.
+- Added localized confirmation strings for turning off vital first-launch categories.
 - Fixed standalone Categories navigation state handling.
 
 ## 0.10.1

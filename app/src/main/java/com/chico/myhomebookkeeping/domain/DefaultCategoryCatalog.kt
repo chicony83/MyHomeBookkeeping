@@ -3,7 +3,8 @@ package com.chico.myhomebookkeeping.domain
 data class DefaultCategoryGroup(
     val parentName: String,
     val isIncome: Boolean,
-    val isSelectedByDefault: Boolean = false,
+    val isSelectedByDefault: Boolean = true,
+    val isRequired: Boolean = false,
     val subcategories: List<String>
 )
 
@@ -13,6 +14,7 @@ object DefaultCategoryCatalog {
             parentName = "Доходы",
             isIncome = true,
             isSelectedByDefault = true,
+            isRequired = true,
             subcategories = listOf(
                 "Выплата",
                 "Пенсия",
@@ -29,6 +31,7 @@ object DefaultCategoryCatalog {
             parentName = "Продукты",
             isIncome = false,
             isSelectedByDefault = true,
+            isRequired = true,
             subcategories = listOf(
                 "Супермаркет",
                 "Рынок",

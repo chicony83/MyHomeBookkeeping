@@ -14,7 +14,6 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## First Launch And Defaults
 
 - Allow choosing or entering a custom currency name during first launch.
-- Allow choosing card and/or cash account types during first launch.
 - Support opening balance when creating a new account.
 
 ## Directories

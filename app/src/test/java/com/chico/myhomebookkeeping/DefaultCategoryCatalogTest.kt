@@ -9,12 +9,16 @@ import org.junit.Test
 class DefaultCategoryCatalogTest {
 
     @Test
-    fun incomeAndProductsAreSelectedByDefault() {
-        val selectedByDefault = DefaultCategoryCatalog.groups
-            .filter { it.isSelectedByDefault }
-            .map { it.parentName }
+    fun allGroupsAreSelectedByDefault() {
+        assertTrue(DefaultCategoryCatalog.groups.all { it.isSelectedByDefault })
+    }
 
-        assertEquals(listOf("Доходы", "Продукты"), selectedByDefault)
+    @Test
+    fun incomeAndProductsAreRequired() {
+        val requiredByDefault = DefaultCategoryCatalog.groups
+            .filter { it.isRequired }
+
+        assertEquals(DefaultCategoryCatalog.groups.take(2), requiredByDefault)
     }
 
     @Test

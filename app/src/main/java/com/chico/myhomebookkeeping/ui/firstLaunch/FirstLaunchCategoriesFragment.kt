@@ -1,5 +1,6 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,8 +93,23 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
             private fun toggleSelection() {
                 val position = adapterPosition
                 if (position == RecyclerView.NO_POSITION) return
+                if (items[position].group.isRequired && items[position].isSelected) {
+                    showRequiredCategoryConfirmation(position)
+                    return
+                }
                 items[position] = items[position].copy(isSelected = !items[position].isSelected)
                 notifyItemChanged(position)
+            }
+
+            private fun showRequiredCategoryConfirmation(position: Int) {
+                AlertDialog.Builder(itemView.context)
+                    .setMessage(R.string.first_launch_required_category_confirmation)
+                    .setPositiveButton(R.string.first_launch_required_category_confirm) { _, _ ->
+                        items[position] = items[position].copy(isSelected = false)
+                        notifyItemChanged(position)
+                    }
+                    .setNegativeButton(R.string.first_launch_required_category_cancel, null)
+                    .show()
             }
         }
     }

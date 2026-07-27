@@ -60,7 +60,7 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             viewModel.onDefaultCurrencyAdded.collect {
                 val setupFragment = parentFragment as? FirstLaunchSetupFragment
                 if (setupFragment != null) {
-                    setupFragment.showCashAccountsAndCategoriesStep()
+                    setupFragment.showDefaultCashAccountStep()
                     return@collect
                 }
 
