@@ -1,6 +1,8 @@
 package com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -15,6 +17,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
@@ -136,6 +139,7 @@ class MoneyMovingFragment : Fragment() {
         }
 //        checkLinesFound()
         checkIsFirstLaunch()
+        showCleanInstallMessageIfNeeded()
 
         moneyMovingViewModel.cleaningSP()
     }
@@ -180,6 +184,22 @@ class MoneyMovingFragment : Fragment() {
         if (moneyMovingViewModel.isFirstLaunch()) {
             control.navigate(R.id.nav_first_launch_setup_fragment)
         }
+    }
+
+    private fun showCleanInstallMessageIfNeeded() {
+        val sharedPreferences = requireContext().getSharedPreferences(
+            Constants.SP_NAME,
+            Context.MODE_PRIVATE
+        )
+        if (!sharedPreferences.getBoolean(Constants.CLEAN_INSTALL_MESSAGE_PENDING, false)) return
+
+        sharedPreferences.edit()
+            .putBoolean(Constants.CLEAN_INSTALL_MESSAGE_PENDING, false)
+            .apply()
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.first_launch_clean_install_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     //    private fun checkLinesFound() {

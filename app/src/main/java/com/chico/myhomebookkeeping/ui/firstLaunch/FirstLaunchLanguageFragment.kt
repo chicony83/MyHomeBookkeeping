@@ -28,7 +28,7 @@ class FirstLaunchLanguageFragment : Fragment(R.layout.fragment_first_launch_lang
             }
 
         AppLanguage.saveSelectedTag(requireContext(), languageTag)
-        (parentFragment as? FirstLaunchSetupFragment)?.showCurrenciesStep()
         AppLanguage.applyLanguageTag(languageTag)
+        (parentFragment as? FirstLaunchSetupFragment)?.showInstallModeStep()
     }
 }

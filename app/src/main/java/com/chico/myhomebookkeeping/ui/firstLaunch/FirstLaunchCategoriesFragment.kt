@@ -29,9 +29,7 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
     }
 
     private fun getLanguageTag(): String {
-        return AppLanguage.getSelectedTag(requireContext()).ifEmpty {
-            resources.configuration.locales[0]?.language ?: Constants.APP_LANGUAGE_ENGLISH
-        }
+        return AppLanguage.getSelectedTag(requireContext())
     }
 
     fun submitStep() {

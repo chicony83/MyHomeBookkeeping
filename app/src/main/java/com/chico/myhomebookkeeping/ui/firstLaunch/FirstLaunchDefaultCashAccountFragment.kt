@@ -54,17 +54,19 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
         val selectedDefaultCashAccount = defaultCashAccount ?: return
         viewModel.saveSelectedCashAccounts(getDefaultCashAccounts())
         viewModel.saveDefaultCashAccount(selectedDefaultCashAccount.name)
-        (parentFragment as? FirstLaunchSetupFragment)?.showCategoriesStep()
+        val setupFragment = parentFragment as? FirstLaunchSetupFragment
+        if (setupFragment?.getInstallMode() == FirstLaunchInstallMode.DEFAULT) {
+            setupFragment.completeDefaultInstall()
+        } else {
+            setupFragment?.showCategoriesStep()
+        }
     }
 
     override fun onStart() {
         super.onStart()
         launchIo {
-            with(viewModel) {
-                addIconCategories()
-                addIconsResources()
-                updateValues()
-            }
+            viewModel.installTechnicalIconDictionaries()
+            viewModel.updateValuesNow()
         }
     }
 

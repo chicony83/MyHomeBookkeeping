@@ -5,6 +5,9 @@ This file is the full internal release log. Keep all useful development notes he
 ## 0.10.2
 
 ### User-facing
+- First launch now offers three setup modes after language selection: default setup, custom setup, and clean setup for database transfer.
+- Default setup now skips category selection, adds all default categories automatically, asks for default currency in a dialog, and opens Journal after setup.
+- Clean setup now creates only technical icon dictionaries, leaves user directories empty for database transfer, opens Journal, and shows a restore hint.
 - Improved first launch: category and currency setup is simpler for new users.
 - New users can choose starter category groups, and the app no longer creates quick payments automatically during setup.
 - First-launch category groups are now selected by default; Income and Products ask for confirmation before being turned off.
@@ -14,6 +17,11 @@ This file is the full internal release log. Keep all useful development notes he
 - Added small stability and setup-flow fixes.
 
 ### Development
+- Split language selection and setup-mode selection into separate first-launch steps so locale changes do not interrupt setup routing.
+- Persist first-launch setup mode temporarily in SharedPreferences and clear it when setup finishes.
+- Made first-launch technical icon dictionary seeding idempotent and synchronous before default account selection.
+- Removed fire-and-forget cash account inserts from first-launch completion.
+- Replaced an API 24+ locale lookup in first-launch categories with the existing AppLanguage helper for minSdk 21 compatibility.
 - Added a reusable default category catalog and unit coverage for first-launch defaults.
 - Split first-launch account, default account, and category setup into separate steps.
 - Consolidated first-launch cash account creation into the default-account step and reduced setup from 6 steps to 5.

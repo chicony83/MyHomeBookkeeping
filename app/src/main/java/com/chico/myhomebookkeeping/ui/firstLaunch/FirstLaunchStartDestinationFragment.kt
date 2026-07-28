@@ -37,6 +37,7 @@ class FirstLaunchStartDestinationFragment : Fragment() {
         }
         viewModel.saveStartFragment(startFragment)
         viewModel.addSavedFirstLaunchElements()
+        viewModel.clearSavedInstallMode()
         viewModel.setIsFirstLaunchFalse()
         (parentFragment as? FirstLaunchSetupFragment)?.finishFirstLaunch(
             R.id.nav_money_moving

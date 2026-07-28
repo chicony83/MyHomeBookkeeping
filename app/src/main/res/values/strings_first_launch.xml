@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="first_launch_language_title">Choose app language</string>
+    <string name="first_launch_install_mode_title">Choose setup type</string>
+    <string name="first_launch_install_mode_default">Default setup</string>
+    <string name="first_launch_install_mode_custom">Custom setup</string>
+    <string name="first_launch_install_mode_clean_transfer">Clean setup for database transfer</string>
+    <string name="first_launch_clean_install_message">Clean setup is complete. To move data from another phone, open Settings and restore the database from your backup.</string>
     <string name="first_launch_currencies_title">Choose your currencies</string>
     <string name="first_launch_currencies_hint">Tick the currencies you want to use.\nOn the next step, you will need to choose the default currency.</string>
     <string name="first_launch_currencies_available_count">Currencies - %1$d</string>

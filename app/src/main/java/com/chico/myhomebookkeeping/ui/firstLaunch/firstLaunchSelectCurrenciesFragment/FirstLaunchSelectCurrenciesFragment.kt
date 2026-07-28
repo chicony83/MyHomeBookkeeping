@@ -24,6 +24,7 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemSelectCurrencyAsD
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyByTextCallBack
+import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchInstallMode
 import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchSetupFragment
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import kotlinx.coroutines.flow.collect
@@ -60,7 +61,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             viewModel.onDefaultCurrencyAdded.collect {
                 val setupFragment = parentFragment as? FirstLaunchSetupFragment
                 if (setupFragment != null) {
-                    setupFragment.showDefaultCashAccountStep()
                     return@collect
                 }
 
@@ -113,7 +113,11 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
             true -> {
                 val setupFragment = parentFragment as? FirstLaunchSetupFragment
                 if (setupFragment != null) {
-                    setupFragment.showDefaultCurrencyStep()
+                    if (setupFragment.getInstallMode() == FirstLaunchInstallMode.DEFAULT) {
+                        showSelectDefaultCurrencyDialog()
+                    } else {
+                        setupFragment.showDefaultCurrencyStep()
+                    }
                 } else {
                     showSelectDefaultCurrencyDialog()
                 }

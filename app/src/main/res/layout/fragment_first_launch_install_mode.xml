@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/categoryScreenBackground">
+
+    <TextView
+        android:id="@+id/firstLaunchInstallModeTitle"
+        style="@style/Description.first_launch_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:text="@string/first_launch_install_mode_title"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/firstLaunchInstallModeRadioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <RadioGroup
+        android:id="@+id/firstLaunchInstallModeRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstLaunchInstallModeTitle">
+
+        <RadioButton
+            android:id="@+id/firstLaunchDefaultInstallRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:layout_width="match_parent"
+            android:text="@string/first_launch_install_mode_default" />
+
+        <RadioButton
+            android:id="@+id/firstLaunchCustomInstallRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:layout_width="match_parent"
+            android:text="@string/first_launch_install_mode_custom" />
+
+        <RadioButton
+            android:id="@+id/firstLaunchCleanTransferInstallRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:layout_width="match_parent"
+            android:text="@string/first_launch_install_mode_clean_transfer" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

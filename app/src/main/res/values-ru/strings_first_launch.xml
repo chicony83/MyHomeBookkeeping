@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="first_launch_install_mode_title">Выберите тип установки</string>
+    <string name="first_launch_install_mode_default">Обычная установка</string>
+    <string name="first_launch_install_mode_custom">Настраиваемая установка</string>
+    <string name="first_launch_install_mode_clean_transfer">Чистая установка для переноса базы</string>
+    <string name="first_launch_clean_install_message">Чистая установка выполнена. Чтобы перенести данные с другого телефона, откройте настройки и восстановите базу данных из резервной копии.</string>
     <string name="first_launch_language_title">Выберите язык приложения</string>
     <string name="first_launch_currencies_title">Выберите валюты</string>
     <string name="first_launch_currencies_hint">Отметьте валюты, которыми будете пользоваться.\nНа следующем шаге нужно будет выбрать валюту по умолчанию.</string>

@@ -19,9 +19,10 @@ import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.icons.AddIconCategories
 import com.chico.myhomebookkeeping.icons.AddIcons
+import com.chico.myhomebookkeeping.icons.IconsMaps
+import com.chico.myhomebookkeeping.enums.icon.names.CategoriesOfIconsNames
 //import com.chico.myhomebookkeeping.icons.IconsMaps
 import com.chico.myhomebookkeeping.utils.launchIo
-import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.*
 
 class FirstLaunchViewModel(
@@ -136,6 +137,18 @@ class FirstLaunchViewModel(
         selectedCategoryGroups = categoryGroups
     }
 
+    fun saveAllDefaultCategoryGroups() {
+        selectedCategoryGroups = DefaultCategoryCatalog.groups.map {
+            FirstLaunchCategoryGroupItem(
+                parentName = it.parentName,
+                parentNameRu = it.parentNameRu,
+                isIncome = it.isIncome,
+                subcategories = it.subcategories,
+                subcategoriesRu = it.subcategoriesRu
+            )
+        }
+    }
+
     fun getSelectedCashAccounts(): List<FirstLaunchSetupItem> {
         return selectedCashAccounts
     }
@@ -146,6 +159,27 @@ class FirstLaunchViewModel(
 
     fun saveStartFragment(startFragment: String) {
         setSP.saveToSP(Constants.START_FRAGMENT, startFragment)
+    }
+
+    fun saveInstallMode(mode: FirstLaunchInstallMode) {
+        setSP.saveToSP(Constants.FIRST_LAUNCH_INSTALL_MODE, mode.name)
+    }
+
+    fun getSavedInstallMode(): FirstLaunchInstallMode {
+        val savedMode = sharedPreferences.getString(
+            Constants.FIRST_LAUNCH_INSTALL_MODE,
+            FirstLaunchInstallMode.DEFAULT.name
+        )
+        return FirstLaunchInstallMode.values().firstOrNull { it.name == savedMode }
+            ?: FirstLaunchInstallMode.DEFAULT
+    }
+
+    fun clearSavedInstallMode() {
+        spEditor.remove(Constants.FIRST_LAUNCH_INSTALL_MODE).commit()
+    }
+
+    fun setCleanInstallMessagePending() {
+        setSP.saveToSP(Constants.CLEAN_INSTALL_MESSAGE_PENDING, true)
     }
 
     fun getStartFragmentDestinationId(): Int {
@@ -252,7 +286,7 @@ class FirstLaunchViewModel(
         )
     }
 
-    private fun addCashAccounts(
+    private suspend fun addCashAccounts(
         listImageAndCheckBoxes: List<SelectedItemOfImageAndCheckBox>,
         defaultCashAccountName: String
     ): Boolean {
@@ -264,7 +298,7 @@ class FirstLaunchViewModel(
         return true
     }
 
-    private fun addSavedCashAccounts(
+    private suspend fun addSavedCashAccounts(
         cashAccounts: List<FirstLaunchSetupItem>,
         defaultCashAccountName: String
     ): Boolean {
@@ -274,7 +308,7 @@ class FirstLaunchViewModel(
         return true
     }
 
-    private fun addCashAccount(
+    private suspend fun addCashAccount(
         item: SelectedItemOfImageAndCheckBox,
         defaultCashAccountName: String
     ) {
@@ -284,12 +318,10 @@ class FirstLaunchViewModel(
             isCashAccountDefault = item.checkBox.text.toString() == defaultCashAccountName,
             icon = item.img
         )
-        launchIo {
-            dbCashAccount.addCashAccount(cashAccount)
-        }
+        dbCashAccount.addCashAccount(cashAccount)
     }
 
-    private fun addCashAccount(
+    private suspend fun addCashAccount(
         item: FirstLaunchSetupItem,
         defaultCashAccountName: String
     ) {
@@ -299,9 +331,7 @@ class FirstLaunchViewModel(
             isCashAccountDefault = item.name == defaultCashAccountName,
             icon = item.img
         )
-        launchIo {
-            dbCashAccount.addCashAccount(cashAccount)
-        }
+        dbCashAccount.addCashAccount(cashAccount)
     }
 
     fun addIconCategories() {
@@ -323,6 +353,51 @@ class FirstLaunchViewModel(
         }
     }
 
+    suspend fun installTechnicalIconDictionaries() = withContext(Dispatchers.IO) {
+        // Clean installs need these dictionaries before a restored database can
+        // remap stored icon names to this build's drawable ids.
+        val iconCategoriesList = listOf(
+            getOrAddIconCategory(CategoriesOfIconsNames.CashAccounts.name),
+            getOrAddIconCategory(CategoriesOfIconsNames.Categories.name),
+            getOrAddIconCategory(CategoriesOfIconsNames.Currencies.name),
+            getOrAddIconCategory(CategoriesOfIconsNames.IconHasNoCategory.name)
+        )
+        val iconsMaps = IconsMaps(app.resources, app.packageName)
+        iconCategoriesList.forEach { iconCategory ->
+            val iconsMap = when (iconCategory.iconCategoryName) {
+                CategoriesOfIconsNames.CashAccounts.name -> iconsMaps.getCashAccountIconsList()
+                CategoriesOfIconsNames.Categories.name -> iconsMaps.getCategoriesIconsMap()
+                CategoriesOfIconsNames.IconHasNoCategory.name -> iconsMaps.getNoCategoryIconsList()
+                else -> emptyMap()
+            }
+            iconsMap.forEach { (name, iconRes) ->
+                val iconCategoryId = iconCategory.id ?: 0
+                val existingIcon = IconResourcesUseCase.getIconByNameAndCategory(
+                    dbIconResources,
+                    name,
+                    iconCategoryId
+                )
+                if (existingIcon == null) {
+                    IconResourcesUseCase.addNewIconResource(
+                        dbIconResources,
+                        IconsResource(
+                            iconName = name,
+                            iconCategory = iconCategoryId,
+                            iconResources = iconRes
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun getOrAddIconCategory(name: String): IconCategory {
+        IconCategoriesUseCase.getIconCategoryByName(dbIconCategories, name)?.let { return it }
+        val iconCategory = IconCategory(name)
+        iconCategory.id = IconCategoriesUseCase.addIconCategory(dbIconCategories, iconCategory).toInt()
+        return iconCategory
+    }
+
 //    private fun res(iconCategories: List<IconCategory>) {
 //    }
 
@@ -337,17 +412,20 @@ class FirstLaunchViewModel(
     fun updateValues() {
         Message.log("update value")
         launchIo {
-//            var listIconResources = listOf<IconsResource>()
-            listIconResource = getListOfIconResources()
-
-            Message.log("listOfIconResources size = ${listIconResource.size}")
-
-            if (listIconResource.isEmpty()) {
-                listIconResource = getListOfIconResources()
-            }
-            updateValuesOfCashAccounts()
-            updateValuesOfCategories()
+            updateValuesNow()
         }
+    }
+
+    suspend fun updateValuesNow() {
+        listIconResource = getListOfIconResources()
+
+        Message.log("listOfIconResources size = ${listIconResource.size}")
+
+        if (listIconResource.isEmpty()) {
+            listIconResource = getListOfIconResources()
+        }
+        updateValuesOfCashAccounts()
+        updateValuesOfCategories()
     }
 
     private suspend fun getListOfIconResources(): List<IconsResource> {
@@ -382,14 +460,12 @@ class FirstLaunchViewModel(
     }
 
     private fun updateValuesOfCashAccounts() {
-        launchUi {
-            _cardCashAccountItem.postValue(
-                getIconResource(CashAccountIconNames.Card.name)
-            )
-            _cashCashAccountItem.postValue(
-                getIconResource(CashAccountIconNames.Cash.name)
-            )
-        }
+        _cardCashAccountItem.postValue(
+            getIconResource(CashAccountIconNames.Card.name)
+        )
+        _cashCashAccountItem.postValue(
+            getIconResource(CashAccountIconNames.Cash.name)
+        )
     }
 
     private fun getIconResource(name: String) =
