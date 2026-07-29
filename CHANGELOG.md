@@ -16,6 +16,7 @@ This file is the full internal release log. Keep all useful development notes he
 - First launch now shows Card and Cash directly on the default account step, then adds both accounts with the selected default.
 - Categories navigation is more reliable and can open a new payment with the selected category.
 - The "Add next entry" button after saving a payment now opens Categories so the next payment can start from category selection.
+- Journal totals are now shown separately for each currency, prefixed with ISO codes like PLN and USD.
 - Added small stability and setup-flow fixes.
 
 ### Development
@@ -32,6 +33,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Added localized confirmation strings for turning off vital first-launch categories.
 - Fixed standalone Categories navigation state handling.
 - Routed the post-save next-entry action through standalone Categories mode instead of Fast payments.
+- Journal balance rows now group income, spending, and balance by currency ISO code using the already loaded journal list.
 
 ## 0.10.1
 

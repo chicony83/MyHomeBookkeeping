@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.checks.ModelCheck
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.obj.Constants
@@ -29,7 +28,6 @@ import kotlinx.coroutines.*
 class MoneyMovingViewModel(
     val app: Application
 ) : AndroidViewModel(app) {
-    private val space = " "
     private val spName = Constants.SP_NAME
     private val argsCashAccountKey = Constants.ARGS_QUERY_PAYMENT_CASH_ACCOUNT_KEY
     private val argsCurrencyKey = Constants.ARGS_QUERY_PAYMENT_CURRENCY_KEY
@@ -92,17 +90,9 @@ class MoneyMovingViewModel(
     val buttonTextOfTimePeriod: LiveData<String>
         get() = _buttonTextOfTimePeriod
 
-    private val _incomeBalance = MutableLiveData<String>()
-    val incomeBalance: LiveData<String>
-        get() = _incomeBalance
-
-    private val _spendingBalance = MutableLiveData<String>()
-    val spendingBalance: LiveData<String>
-        get() = _spendingBalance
-
-    private val _totalBalance = MutableLiveData<String>()
-    val totalBalance: LiveData<String>
-        get() = _totalBalance
+    private val _balanceRows = MutableLiveData<List<MoneyMovingCountMoney.CurrencyBalance>>()
+    val balanceRows: LiveData<List<MoneyMovingCountMoney.CurrencyBalance>>
+        get() = _balanceRows
 
 //    private val _selectedMoneyMoving = MutableLiveData<FullMoneyMoving?>()
 //    val selectedMoneyMoving: MutableLiveData<FullMoneyMoving?>
@@ -155,10 +145,6 @@ class MoneyMovingViewModel(
         }
     }
 
-    private fun getResourceText(string: Int): String {
-        return app.getString(string)
-    }
-
     private fun getValuesSP() {
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriod)
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriod)
@@ -191,15 +177,9 @@ class MoneyMovingViewModel(
     private fun postBalanceValues(list: List<FullMoneyMoving>?) = runBlocking {
         if (!list.isNullOrEmpty()) {
             val moneyMovingCountMoney = MoneyMovingCountMoney(list)
-            _incomeBalance.postValue(
-                getResourceText(R.string.description_income) + space + moneyMovingCountMoney.getIncome()
-            )
-            _spendingBalance.postValue(
-                getResourceText(R.string.description_spending) + space + moneyMovingCountMoney.getSpending()
-            )
-            _totalBalance.postValue(
-                getResourceText(R.string.description_balance) + space + moneyMovingCountMoney.getBalance()
-            )
+            _balanceRows.postValue(moneyMovingCountMoney.getBalancesByCurrency())
+        } else {
+            _balanceRows.postValue(emptyList())
         }
 
     }

@@ -5,7 +5,10 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -27,8 +30,6 @@ import com.chico.myhomebookkeeping.utils.launchUi
 
 class MoneyMovingFragment : Fragment() {
 
-    private lateinit var plus: String
-    private lateinit var minus: String
     private lateinit var db: MoneyMovementDao
 
     private lateinit var moneyMovingViewModel: MoneyMovingViewModel
@@ -43,7 +44,6 @@ class MoneyMovingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        getStrings()
         db = dataBase.getDataBase(requireContext()).moneyMovementDao()
         _binding = FragmentMoneyMovingBinding.inflate(inflater, container, false)
         moneyMovingViewModel =
@@ -75,17 +75,65 @@ class MoneyMovingFragment : Fragment() {
                     })
                 }
             })
-            incomeBalance.observe(viewLifecycleOwner, {
-                binding.incomeBalance.text = it.toString()
-            })
-            spendingBalance.observe(viewLifecycleOwner, {
-                binding.spendingBalance.text = it.toString()
-            })
-            totalBalance.observe(viewLifecycleOwner, {
-                binding.totalBalance.text = it.toString()
+            balanceRows.observe(viewLifecycleOwner, {
+                showBalanceRows(it)
             })
         }
         return binding.root
+    }
+
+    private fun showBalanceRows(rows: List<MoneyMovingCountMoney.CurrencyBalance>) {
+        binding.balanceRows.removeAllViews()
+        rows.forEach {
+            binding.balanceRows.addView(createBalanceRow(it))
+        }
+    }
+
+    private fun createBalanceRow(row: MoneyMovingCountMoney.CurrencyBalance): LinearLayout {
+        val rowLayout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.HORIZONTAL
+            weightSum = 3f
+            setPadding(0, 0, 0, 0)
+        }
+        rowLayout.addView(
+            createBalanceTextView(
+                "${row.currencyPrefix} ${getString(R.string.description_income)} ${row.income}",
+                ContextCompat.getColor(requireContext(), R.color.incomeTextColor),
+                Gravity.START
+            )
+        )
+        rowLayout.addView(
+            createBalanceTextView(
+                "${row.currencyPrefix} ${getString(R.string.description_spending)} ${row.spending}",
+                ContextCompat.getColor(requireContext(), R.color.spendingTextColor),
+                Gravity.CENTER
+            )
+        )
+        rowLayout.addView(
+            createBalanceTextView(
+                "${row.currencyPrefix} ${getString(R.string.description_balance)} ${row.balance}",
+                ContextCompat.getColor(requireContext(), R.color.black),
+                Gravity.RIGHT
+            )
+        )
+        return rowLayout
+    }
+
+    private fun createBalanceTextView(text: String, textColor: Int, gravity: Int): TextView {
+        return TextView(requireContext()).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+            this.text = text
+            setTextColor(textColor)
+            setTextSize(
+                android.util.TypedValue.COMPLEX_UNIT_PX,
+                resources.getDimension(R.dimen.H6)
+            )
+            this.gravity = gravity
+        }
     }
 
     private fun showSelectDialog(selectedId: Long) {
@@ -103,11 +151,6 @@ class MoneyMovingFragment : Fragment() {
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
             }
         }
-    }
-
-    private fun getStrings() {
-        plus = requireContext().getString(R.string.sign_plus)
-        minus = requireContext().getString(R.string.sign_minus)
     }
 
     private fun pressSelectButton(fragment: Int) {

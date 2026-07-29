@@ -19,6 +19,9 @@ class FullMoneyMoving (
     @ColumnInfo(name = "currency_name_value")
     val currencyNameValue:String,
 
+    @ColumnInfo(name = "currency_iso_value")
+    val currencyIsoValue:String?,
+
     @ColumnInfo(name = "category_name_value")
     val categoryNameValue:String?,
 

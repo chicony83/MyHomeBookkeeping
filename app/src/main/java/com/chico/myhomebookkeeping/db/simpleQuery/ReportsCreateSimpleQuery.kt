@@ -12,6 +12,7 @@ object ReportsCreateSimpleQuery {
         return "SELECT money_moving_table.id,time_stamp, " +
                 "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
+                "iso_4217 AS currency_iso_value," +
                 "$categoryName AS category_name_value, " +
                 "$parentCategoryName AS parent_category_name_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
