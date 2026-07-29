@@ -1,0 +1,17 @@
+What's new in 0.11.0
+
+- Added app language switching.
+- Added English localization.
+- Simpler first launch with setup modes.
+- Add currencies from the catalog after setup.
+- Journal totals are now grouped by currency.
+- Stability fixes.
+
+Что нового в 0.11.0
+
+- Добавлено переключение языка приложения.
+- Добавлена английская локализация.
+- Первый запуск стал проще, добавлены режимы настройки.
+- Валюты теперь можно добавлять из каталога после настройки.
+- Итоги в Журнале теперь сгруппированы по валютам.
+- Исправления стабильности.
