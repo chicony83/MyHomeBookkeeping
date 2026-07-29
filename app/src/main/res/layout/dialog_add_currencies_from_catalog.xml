@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dialogDayBackground"
+    android:paddingTop="@dimen/margin_normal">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/catalogCurrenciesHolder"
+        android:layout_width="0dp"
+        android:layout_height="420dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/margin_normal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/addButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/recycler_view_item_first_launch_for_select_currency" />
+
+    <Button
+        android:id="@+id/addButton"
+        style="@style/DialogButtonLeft.Positive"
+        android:text="@string/text_on_button_add"
+        app:layout_constraintBottom_toTopOf="@id/verticalCenter"
+        app:layout_constraintEnd_toStartOf="@id/verticalCenter"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/DialogButtonRight.Negative"
+        android:text="@string/text_on_button_cancel"
+        app:layout_constraintBottom_toTopOf="@id/verticalCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/verticalCenter" />
+
+    <LinearLayout
+        android:id="@+id/verticalCenter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

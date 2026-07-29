@@ -5,6 +5,8 @@ This file is the full internal release log. Keep all useful development notes he
 ## 0.10.2
 
 ### User-facing
+- The Currencies screen now adds currencies from the saved first-launch catalog: existing currencies are shown as locked checked items, new ones can be selected with checkboxes and added together.
+- Manual currency creation is still available from the new three-dot menu next to the Add currency button.
 - First launch now offers three setup modes after language selection: default setup, custom setup, and clean setup for database transfer.
 - Default setup now skips category selection, adds all default categories automatically, asks for default currency in a dialog, and opens Journal after setup.
 - Clean setup now creates only technical icon dictionaries, leaves user directories empty for database transfer, opens Journal, and shows a restore hint.
@@ -17,6 +19,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Added small stability and setup-flow fixes.
 
 ### Development
+- Reused the first-launch currency catalog for post-install currency additions and added a split Add currency action with a catalog dialog plus manual-entry overflow menu.
 - Split language selection and setup-mode selection into separate first-launch steps so locale changes do not interrupt setup routing.
 - Persist first-launch setup mode temporarily in SharedPreferences and clear it when setup finishes.
 - Made first-launch technical icon dictionary seeding idempotent and synchronous before default account selection.

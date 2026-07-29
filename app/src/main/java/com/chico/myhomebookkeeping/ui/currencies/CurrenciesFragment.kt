@@ -1,10 +1,13 @@
 package com.chico.myhomebookkeeping.ui.currencies
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +27,7 @@ import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyCallBac
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.ChangeCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.NewCurrencyDialog
 import com.chico.myhomebookkeeping.ui.currencies.dialogs.SelectCurrencyDialog
+import com.chico.myhomebookkeeping.ui.firstLaunch.firstLaunchSelectCurrenciesFragment.FirstLaunchCurrenciesList
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -82,7 +86,10 @@ class CurrenciesFragment : Fragment() {
                 navControlHelper.moveToMoneyMovingFragment()
             }
             showHideAddCurrencyFragmentButton.setOnClickListener {
-                showNewCurrencyDialog()
+                showCurrencyCatalogDialog()
+            }
+            addCurrencyMoreButton.setOnClickListener {
+                showAddCurrencyMenu()
             }
         }
         if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
@@ -91,6 +98,80 @@ class CurrenciesFragment : Fragment() {
         ) {
             uiHelper.hideUiElement(binding.selectAllButton)
         }
+    }
+
+    private fun showAddCurrencyMenu() {
+        val popupMenu = PopupMenu(requireContext(), binding.addCurrencyMoreButton)
+        popupMenu.menu.add(R.string.text_on_button_add_currency_manually)
+        popupMenu.setOnMenuItemClickListener {
+            showNewCurrencyDialog()
+            true
+        }
+        popupMenu.show()
+    }
+
+    private fun showCurrencyCatalogDialog() {
+        val catalogCurrencies = FirstLaunchCurrenciesList.getAllCurrenciesList()
+        val addedCurrencyKeys = currenciesViewModel.currenciesList.value
+            .orEmpty()
+            .map { it.catalogKey() }
+            .toSet()
+
+        if (catalogCurrencies.all { addedCurrencyKeys.contains(it.catalogKey()) }) {
+            showAllCatalogCurrenciesAddedDialog()
+            return
+        }
+
+        val layout = layoutInflater.inflate(R.layout.dialog_add_currencies_from_catalog, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(layout)
+            .create()
+        val selectedCurrencyKeys = mutableSetOf<String>()
+        val addButton = layout.findViewById<Button>(R.id.addButton)
+        val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
+        lateinit var adapter: CurrencyCatalogAdapter
+
+        adapter = CurrencyCatalogAdapter(
+            currencies = catalogCurrencies,
+            addedCurrencyKeys = addedCurrencyKeys,
+            selectedCurrencyKeys = selectedCurrencyKeys
+        ) { currencyKey ->
+            if (!selectedCurrencyKeys.add(currencyKey)) {
+                selectedCurrencyKeys.remove(currencyKey)
+            }
+            adapter.updateSelectedCurrencies(selectedCurrencyKeys)
+            addButton.isEnabled = selectedCurrencyKeys.isNotEmpty()
+        }
+
+        layout.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.catalogCurrenciesHolder)
+            .adapter = adapter
+        addButton.isEnabled = false
+        addButton.setOnClickListener {
+            if (selectedCurrencyKeys.isEmpty()) {
+                showMessage(getString(R.string.message_no_catalog_currency_selected))
+                return@setOnClickListener
+            }
+            val selectedCurrencies = catalogCurrencies
+                .filter { selectedCurrencyKeys.contains(it.catalogKey()) }
+                .map { it.copy(isCurrencyDefault = false) }
+            currenciesViewModel.addCurrenciesFromCatalog(selectedCurrencies)
+            dialog.dismiss()
+        }
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showAllCatalogCurrenciesAddedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.message_all_catalog_currencies_added_title)
+            .setMessage(R.string.message_all_catalog_currencies_added)
+            .setPositiveButton(R.string.text_on_button_add_currency_manually) { _, _ ->
+                showNewCurrencyDialog()
+            }
+            .setNegativeButton(R.string.text_on_button_cancel, null)
+            .show()
     }
 
     private fun showSelectCurrencyDialog(selectedId: Int) {

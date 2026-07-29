@@ -32,15 +32,39 @@
         android:paddingTop="@dimen/margin_normal"
         android:paddingBottom="@dimen/margin_double"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/show_hide_add_currency_fragment_button"
+        app:layout_constraintBottom_toTopOf="@+id/addCurrencyButtonsHolder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topButtonsHolder" />
 
-    <Button
-        android:id="@+id/show_hide_add_currency_fragment_button"
-        style="@style/ButtonFullWidth"
-        android:text="@string/text_on_button_add_new_currency"
-        app:layout_constraintBottom_toBottomOf="parent" />
+    <LinearLayout
+        android:id="@+id/addCurrencyButtonsHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_normal"
+        android:layout_marginVertical="@dimen/margin_normal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/show_hide_add_currency_fragment_button"
+            style="@style/DialogButtonLeft.Positive"
+            android:layout_weight="1"
+            android:layout_margin="0dp"
+            android:text="@string/text_on_button_add_new_currency" />
+
+        <ImageButton
+            android:id="@+id/addCurrencyMoreButton"
+            style="@style/DialogButtons"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_half_normal"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/button_filter_background"
+            android:contentDescription="@string/text_on_button_add_currency_manually"
+            android:src="@drawable/ic_more_vert" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

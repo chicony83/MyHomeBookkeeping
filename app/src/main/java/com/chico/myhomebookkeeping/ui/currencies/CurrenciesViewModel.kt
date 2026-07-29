@@ -79,6 +79,14 @@ class CurrenciesViewModel(
         return@runBlocking add.await()
     }
 
+    fun addCurrenciesFromCatalog(currencies: List<Currencies>) = runBlocking {
+        val add = async {
+            CurrenciesUseCase.addCurrencies(db, currencies)
+        }
+        add.await()
+        loadCurrencies()
+    }
+
     private fun reloadCurrencies(long: Long) {
         if (long > 0) {
             loadCurrencies()

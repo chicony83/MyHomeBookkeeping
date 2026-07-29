@@ -34,6 +34,7 @@
     <string name="text_on_button_add_new_category">New category</string>
     <string name="text_on_button_add_new_subcategory">New subcategory</string>
     <string name="text_on_button_add_new_currency">New currency</string>
+    <string name="text_on_button_add_currency_manually">Add currency manually</string>
     <string name="text_on_button_add_new_cash_account">New cash account</string>
 
     <string name="text_on_button_select_cash_account">Select cash account</string>

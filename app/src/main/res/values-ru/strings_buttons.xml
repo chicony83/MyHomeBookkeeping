@@ -33,6 +33,7 @@
     <string name="text_on_button_add_new_category">Добавить категорию</string>
     <string name="text_on_button_add_new_subcategory">Добавить подкатегорию</string>
     <string name="text_on_button_add_new_currency">Добавить валюту</string>
+    <string name="text_on_button_add_currency_manually">Добавить валюту вручную</string>
     <string name="text_on_button_add_new_cash_account">Добавить счёт</string>
 
     <string name="text_on_button_select_cash_account">Выбрать счёт</string>

@@ -19,7 +19,6 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Directories
 
 - Add currency icons.
-- Add a picker from existing currencies when adding another currency later.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Develop income and spending category groups.
 - Consider usage-frequency sorting for currencies, accounts, and categories.
