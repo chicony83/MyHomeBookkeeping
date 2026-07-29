@@ -5,6 +5,8 @@ What's new in 0.10.2
 - New users can choose starter category groups.
 - Categories navigation is more reliable.
 - Categories can open a new payment with the selected category.
+- Russian language switching now refreshes the app screen immediately.
+- Existing default accounts and standard categories can show missing Russian display names after update.
 - Added small stability fixes.
 
 Что нового в 0.10.2
@@ -14,4 +16,6 @@ What's new in 0.10.2
 - Новые пользователи могут выбрать начальные группы категорий.
 - Навигация по категориям стала надежнее.
 - Категории могут сразу открыть новый платеж с выбранной категорией.
+- Переключение на русский язык теперь сразу обновляет экран приложения.
+- Существующие стандартные счета и категории могут показывать русские названия после обновления.
 - Добавлены небольшие исправления стабильности.

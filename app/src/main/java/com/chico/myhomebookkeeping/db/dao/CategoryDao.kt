@@ -61,4 +61,7 @@ interface CategoryDao {
     @Query("UPDATE category_table SET parent_category_id = :parentCategoryId, category_order = :order WHERE categoriesId = :id")
     suspend fun updateCategoryParentAndOrder(id: Int, parentCategoryId: Int?, order: Int): Int
 
+    @Query("UPDATE category_table SET category_name_ru = :localizedName WHERE category_name = :canonicalName AND (category_name_ru IS NULL OR TRIM(category_name_ru) = '')")
+    suspend fun fillMissingLocalizedName(canonicalName: String, localizedName: String): Int
+
 }

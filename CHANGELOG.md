@@ -10,6 +10,9 @@ This file is the full internal release log. Keep all useful development notes he
 - First launch now offers three setup modes after language selection: default setup, custom setup, and clean setup for database transfer.
 - Default setup now skips category selection, adds all default categories automatically, asks for default currency in a dialog, and opens Journal after setup.
 - Clean setup now creates only technical icon dictionaries, leaves user directories empty for database transfer, opens Journal, and shows a restore hint.
+- Russian language switching now refreshes the app screen immediately, including the toolbar, drawer, and quick access panel.
+- Existing default Card and Cash accounts now show localized Russian names after update.
+- Existing standard categories and parent categories now receive missing Russian display names without overwriting user-entered names.
 - Improved first launch: category and currency setup is simpler for new users.
 - New users can choose starter category groups, and the app no longer creates quick payments automatically during setup.
 - First-launch category groups are now selected by default; Income and Products ask for confirmation before being turned off.
@@ -31,6 +34,9 @@ This file is the full internal release log. Keep all useful development notes he
 - Split first-launch account, default account, and category setup into separate steps.
 - Consolidated first-launch cash account creation into the default-account step and reduced setup from 6 steps to 5.
 - Added database version 9 with nullable English-name columns for cash accounts, categories, parent categories, and quick payments.
+- Added idempotent localized-name backfill for existing database rows so version 9 data can display Russian names even when the localized columns were empty.
+- Added migration-time localized-name backfill for default Card and Cash accounts.
+- Recreated the main Activity after app language changes so already inflated navigation UI is rebuilt with the selected locale.
 - Added localized confirmation strings for turning off vital first-launch categories.
 - Fixed standalone Categories navigation state handling.
 - Routed the post-save next-entry action through standalone Categories mode instead of Fast payments.

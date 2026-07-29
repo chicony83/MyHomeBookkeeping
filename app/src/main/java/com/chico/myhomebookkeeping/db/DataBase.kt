@@ -165,6 +165,7 @@ private object migration_8_to_9 : Migration(8, 9) {
         database.execSQL("ALTER TABLE `category_table` ADD COLUMN `category_name_ru` TEXT")
         database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_ru` TEXT")
         database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_ru` TEXT")
+        fillMissingLocalizedNames(database)
     }
 }
 
@@ -205,6 +206,21 @@ private fun seedPaymentTypes(database: SupportSQLiteDatabase) {
         "INSERT OR IGNORE INTO `payment_type_table` " +
                 "(`id`, `payment_type_code`, `payment_type_name`, `affects_reports`, `requires_category`, `requires_second_account`) " +
                 "VALUES (2, 'transfer', 'Transfer', 0, 0, 1)"
+    )
+}
+
+private fun fillMissingLocalizedNames(database: SupportSQLiteDatabase) {
+    database.execSQL(
+        "UPDATE `cash_account_table` " +
+                "SET `cash_account_name_ru` = 'Карточка' " +
+                "WHERE `cash_account_name` = 'Card' " +
+                "AND (`cash_account_name_ru` IS NULL OR TRIM(`cash_account_name_ru`) = '')"
+    )
+    database.execSQL(
+        "UPDATE `cash_account_table` " +
+                "SET `cash_account_name_ru` = 'Наличные' " +
+                "WHERE `cash_account_name` = 'Cash' " +
+                "AND (`cash_account_name_ru` IS NULL OR TRIM(`cash_account_name_ru`) = '')"
     )
 }
 

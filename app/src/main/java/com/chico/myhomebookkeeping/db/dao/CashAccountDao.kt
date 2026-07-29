@@ -33,4 +33,7 @@ interface CashAccountDao {
 
     @Query("UPDATE cash_account_table SET cash_account_name =:name, cash_account_number = :number WHERE cashAccountId = :id")
     suspend fun changeLine(id: Int, name: String, number: String):Int
+
+    @Query("UPDATE cash_account_table SET cash_account_name_ru = :localizedName WHERE cash_account_name = :canonicalName AND (cash_account_name_ru IS NULL OR TRIM(cash_account_name_ru) = '')")
+    suspend fun fillMissingLocalizedName(canonicalName: String, localizedName: String): Int
 }

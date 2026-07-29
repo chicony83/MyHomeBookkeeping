@@ -8,6 +8,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.checks.AppVersion
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.domain.DefaultCategoryCatalog
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
 import com.chico.myhomebookkeeping.sp.GetSP
@@ -24,9 +25,11 @@ class MainActivityViewModel(
     private val cashAccountDao = dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val categoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
     private val currenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
+    private val parentCategoryDao = dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
 
     init {
         fixFirstLaunchFlagForExistingDatabase()
+        backfillMissingLocalizedNames()
     }
 
     fun checkIsFirstLaunch(): Boolean {
@@ -73,6 +76,21 @@ class MainActivityViewModel(
         cashAccountDao.getCashAccountsCount() > 0 ||
                 categoryDao.getCategoriesCount() > 0 ||
                 currenciesDao.getCurrenciesCount() > 0
+    }
+
+    private fun backfillMissingLocalizedNames() = runBlocking {
+        // Some local databases can already be on version 9, so keep this outside migration_8_to_9.
+        cashAccountDao.fillMissingLocalizedName("Card", "Карточка")
+        cashAccountDao.fillMissingLocalizedName("Cash", "Наличные")
+
+        DefaultCategoryCatalog.groups.forEach { group ->
+            parentCategoryDao.fillMissingLocalizedName(group.parentName, group.parentNameRu)
+            group.subcategories.forEachIndexed { index, subcategory ->
+                group.subcategoriesRu.getOrNull(index)?.let { subcategoryRu ->
+                    categoryDao.fillMissingLocalizedName(subcategory, subcategoryRu)
+                }
+            }
+        }
     }
 
 }

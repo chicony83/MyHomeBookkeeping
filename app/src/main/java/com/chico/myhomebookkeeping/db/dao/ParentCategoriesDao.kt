@@ -19,4 +19,7 @@ interface ParentCategoriesDao {
 
     @Query("UPDATE parent_categories_table SET parent_category_order = :order WHERE id = :id")
     suspend fun updateParentCategoryOrder(id: Int, order: Int): Int
+
+    @Query("UPDATE parent_categories_table SET parent_category_name_ru = :localizedName WHERE parent_category_name = :canonicalName AND (parent_category_name_ru IS NULL OR TRIM(parent_category_name_ru) = '')")
+    suspend fun fillMissingLocalizedName(canonicalName: String, localizedName: String): Int
 }
