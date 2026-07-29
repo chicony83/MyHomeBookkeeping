@@ -1,7 +1,9 @@
 package com.chico.myhomebookkeeping
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -61,9 +63,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainActivityViewModel: MainActivityViewModel
     private var hasCheckedWhatsNewThisSession = false
 
+    override fun attachBaseContext(newBase: Context) {
+        // Apply the saved AppCompat locale before fragments are restored.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            AppLanguage.applySelectedLanguage(newBase)
+        }
+        super.attachBaseContext(newBase)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppLanguage.applySelectedLanguage(applicationContext)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            AppLanguage.applySelectedLanguage(this)
+        }
         DatabaseRestoreManager.applyPendingRestore(applicationContext)
         IconResourceSynchronizer.synchronize(applicationContext)
         setContentView(R.layout.activity_main)

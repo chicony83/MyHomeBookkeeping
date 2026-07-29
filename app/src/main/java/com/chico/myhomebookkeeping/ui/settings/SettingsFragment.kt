@@ -506,7 +506,6 @@ class SettingsFragment : Fragment() {
             selectedAppLanguageTag = languageTag
             settingsViewModel.saveAppLanguage(languageTag)
             AppLanguage.applyLanguageTag(languageTag)
-            requireActivity().recreate()
         }
     }
 
