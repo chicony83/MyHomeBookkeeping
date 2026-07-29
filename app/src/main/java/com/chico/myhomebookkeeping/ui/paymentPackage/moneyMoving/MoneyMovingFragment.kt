@@ -92,39 +92,63 @@ class MoneyMovingFragment : Fragment() {
     private fun createBalanceRow(row: MoneyMovingCountMoney.CurrencyBalance): LinearLayout {
         val rowLayout = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.HORIZONTAL
-            weightSum = 3f
+            weightSum = 4f
             setPadding(0, 0, 0, 0)
         }
         rowLayout.addView(
             createBalanceTextView(
-                "${row.currencyPrefix} ${getString(R.string.description_income)} ${row.income}",
-                ContextCompat.getColor(requireContext(), R.color.incomeTextColor),
-                Gravity.START
-            )
-        )
-        rowLayout.addView(
-            createBalanceTextView(
-                "${row.currencyPrefix} ${getString(R.string.description_spending)} ${row.spending}",
-                ContextCompat.getColor(requireContext(), R.color.spendingTextColor),
-                Gravity.CENTER
-            )
-        )
-        rowLayout.addView(
-            createBalanceTextView(
-                "${row.currencyPrefix} ${getString(R.string.description_balance)} ${row.balance}",
+                row.currencyPrefix,
                 ContextCompat.getColor(requireContext(), R.color.black),
-                Gravity.RIGHT
+                Gravity.START,
+                0.7f
+            )
+        )
+        rowLayout.addView(
+            createBalanceTextView(
+                formatIncome(row.income),
+                ContextCompat.getColor(requireContext(), R.color.incomeTextColor),
+                Gravity.RIGHT,
+                0.85f
+            )
+        )
+        rowLayout.addView(
+            createBalanceTextView(
+                formatSpending(row.spending),
+                ContextCompat.getColor(requireContext(), R.color.spendingTextColor),
+                Gravity.RIGHT,
+                0.95f
+            )
+        )
+        rowLayout.addView(
+            createBalanceTextView(
+                "${getString(R.string.description_balance)} ${row.balance}",
+                ContextCompat.getColor(requireContext(), R.color.black),
+                Gravity.RIGHT,
+                1.5f
             )
         )
         return rowLayout
     }
 
-    private fun createBalanceTextView(text: String, textColor: Int, gravity: Int): TextView {
+    private fun formatIncome(income: String): String {
+        return if (income.startsWith("-")) income else "+$income"
+    }
+
+    private fun formatSpending(spending: String): String {
+        return if (spending.startsWith("-")) spending else "-$spending"
+    }
+
+    private fun createBalanceTextView(
+        text: String,
+        textColor: Int,
+        gravity: Int,
+        weight: Float
+    ): TextView {
         return TextView(requireContext()).apply {
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f
+                weight
             )
             this.text = text
             setTextColor(textColor)

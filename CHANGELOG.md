@@ -17,6 +17,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Categories navigation is more reliable and can open a new payment with the selected category.
 - The "Add next entry" button after saving a payment now opens Categories so the next payment can start from category selection.
 - Journal totals are now shown separately for each currency, prefixed with ISO codes like PLN and USD.
+- Journal currency total rows are more compact: income and spending use signed amounts while balance stays explicitly labeled.
 - Added small stability and setup-flow fixes.
 
 ### Development
