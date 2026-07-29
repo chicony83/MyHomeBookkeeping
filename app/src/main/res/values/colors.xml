@@ -5,61 +5,70 @@
     <color name="gray">#808080</color>
     <color name="light_gray">#BFBFBF</color>
 
-    <color name="incomeTextColor">#BF00C300</color>
-    <color name="spendingTextColor">#BFC30000</color>
+    <color name="incomeTextColor">#146C43</color>
+    <color name="spendingTextColor">#B64A42</color>
 
     <color name="incomeBackgroundColor">#2600FF00</color>
     <color name="spendingBackgroundColor">#26FF0000</color>
-    <color name="categoryScreenBackground">#F5F7F8</color>
+    <color name="categoryScreenBackground">#F3F6F7</color>
     <color name="categoryCardBackground">#FFFFFFFF</color>
-    <color name="categoryChildBackground">#FAFBFB</color>
-    <color name="categoryAddBackground">#F0F8F8</color>
-    <color name="categoryDivider">#1F000000</color>
-    <color name="categoryTextSecondary">#6B7478</color>
-    <color name="categoryIncomeIndicator">#22A66A</color>
-    <color name="categorySpendingIndicator">#D85A50</color>
-    <color name="buttonPrimaryBackground">#2999A6</color>
+    <color name="categoryChildBackground">#EEF4F5</color>
+    <color name="categoryAddBackground">#E9F4F5</color>
+    <color name="categoryDivider">#7A8D92</color>
+    <color name="categoryTextSecondary">#52666B</color>
+    <color name="categoryIncomeIndicator">#146C43</color>
+    <color name="categorySpendingIndicator">#B64A42</color>
+    <color name="buttonPrimaryBackground">#176B73</color>
     <color name="buttonPrimaryText">#FFFFFFFF</color>
-    <color name="buttonPrimaryBorder">#2999A6</color>
+    <color name="buttonPrimaryBorder">#0F5258</color>
     <color name="buttonNeutralBackground">#FFFFFFFF</color>
-    <color name="buttonNeutralText">#455A64</color>
-    <color name="buttonFilterBackground">#F1F6F7</color>
-    <color name="buttonPressedOverlay">#DDE9EA</color>
-    <color name="buttonDangerText">#B84941</color>
+    <color name="buttonNeutralText">#3F5358</color>
+    <color name="buttonDisabledBackground">#E4EAEC</color>
+    <color name="buttonDisabledText">#6F7F84</color>
+    <color name="buttonFilterBackground">#EEF4F5</color>
+    <color name="buttonPressedOverlay">#D9E7E9</color>
+    <color name="buttonDangerText">#B64A42</color>
     <color name="inputBackground">#FFFFFFFF</color>
-    <color name="inputBorder">#D7E1E4</color>
-    <color name="inputBorderFocused">#2999A6</color>
-    <color name="inputBorderError">#D85A50</color>
-    <color name="inputText">#1F2933</color>
-    <color name="inputHint">#7A858A</color>
+    <color name="inputBorder">#7A8D92</color>
+    <color name="inputBorderFocused">#176B73</color>
+    <color name="inputBorderError">#B64A42</color>
+    <color name="inputText">#172326</color>
+    <color name="inputHint">#607174</color>
 
     <color name="warning">#FF0000</color>
 
-    <color name="buttonsTextColorDay">#455A64</color>
+    <color name="buttonsTextColorDay">#3F5358</color>
 
     <color name="dialogDayBackground">#FFFFFFFF</color>
     <color name="dialogNightBackground">#FF000000</color>
 
+    <color name="statusBarColor">#0F5258</color>
+    <color name="navigationBarColor">#FFFFFFFF</color>
+    <color name="bottomNavigationBackground">#FFFFFFFF</color>
+    <color name="bottomNavigationSelected">#176B73</color>
+    <color name="bottomNavigationInactive">#5E6B6F</color>
+    <color name="bottomNavigationDisabled">#9CA7AA</color>
+
     <color name="buttonDayBackground">#FFFFFFFF</color>
     <color name="buttonNightBackground">#000</color>
 
-    <color name="colorPrimary">#2999A6</color>
-    <color name="colorPrimaryVariant">#175973</color>
-    <color name="colorOnPrimary">#D0F2F2</color>
-    <color name="colorSecondary">#7ED9D9</color>
-    <color name="colorSecondaryVariant">#D0F2F2</color>
+    <color name="colorPrimary">#176B73</color>
+    <color name="colorPrimaryVariant">#0F5258</color>
+    <color name="colorOnPrimary">#FFFFFFFF</color>
+    <color name="colorSecondary">#B9E5E2</color>
+    <color name="colorSecondaryVariant">#D9F0EF</color>
 
-    <color name="colorPrimaryNight">#368C6E</color>
-    <color name="colorPrimaryVariantNight">#1C5359</color>
-    <color name="colorOnPrimaryNight">#0E3E2D</color>
-    <color name="colorSecondaryNight">#B8D9C6</color>
-    <color name="colorSecondaryVariantNight">#6AA695</color>
+    <color name="colorPrimaryNight">#7BD7D3</color>
+    <color name="colorPrimaryVariantNight">#4AAEAA</color>
+    <color name="colorOnPrimaryNight">#00363A</color>
+    <color name="colorSecondaryNight">#A8D8D1</color>
+    <color name="colorSecondaryVariantNight">#243234</color>
 
     <color name="calculation_error_color">#F44B3F</color>
 
     <!-- Normal Theme -->
-    <color name="text_color">#000</color>
-    <color name="text_second_color">#595959</color>
+    <color name="text_color">#172326</color>
+    <color name="text_second_color">#52666B</color>
 
     <!-- AMOLED Theme -->
 

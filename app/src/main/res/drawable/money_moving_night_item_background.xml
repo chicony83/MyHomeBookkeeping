@@ -6,7 +6,7 @@
         android:top="@dimen/margin_quarter_of_normal"
         android:bottom="@dimen/margin_quarter_of_normal">
         <shape android:shape="rectangle">
-            <solid android:color="@color/dialogNightBackground"/>
+            <solid android:color="@color/categoryCardBackground"/>
             <corners android:radius="@dimen/margin_half_normal" />
         </shape>
     </item>
