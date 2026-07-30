@@ -5,6 +5,7 @@ This file is the full internal release log. Keep all useful development notes he
 ## 0.10.2
 
 ### User-facing
+- App name is now consistent with the package identity: English `My Home Bookkeeping`, Russian `Моя домашняя бухгалтерия`.
 - The Currencies screen now adds currencies from the saved first-launch catalog: existing currencies are shown as locked checked items, new ones can be selected with checkboxes and added together.
 - Manual currency creation is still available from the new three-dot menu next to the Add currency button.
 - First launch now offers three setup modes after language selection: default setup, custom setup, and clean setup for database transfer.
