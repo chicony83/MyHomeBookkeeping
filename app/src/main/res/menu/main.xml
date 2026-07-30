@@ -25,12 +25,13 @@
         android:title="@string/text_on_button_quick_payment_settings"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/help_button"
-        android:icon="@drawable/ic_baseline_help_outline_24"
-        android:orderInCategory="30"
-        android:title="@string/text_on_button_help"
-        app:showAsAction="ifRoom" />
+<!--    Help will be created later; hide the button for now so it does not confuse users.-->
+<!--    <item-->
+<!--        android:id="@+id/help_button"-->
+<!--        android:icon="@drawable/ic_baseline_help_outline_24"-->
+<!--        android:orderInCategory="30"-->
+<!--        android:title="@string/text_on_button_help"-->
+<!--        app:showAsAction="ifRoom" />-->
 
 <!--    <item-->
 <!--        android:id="@+id/action_settings"-->

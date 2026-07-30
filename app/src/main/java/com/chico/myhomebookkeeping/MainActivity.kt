@@ -261,10 +261,11 @@ class MainActivity : AppCompatActivity() {
                 openSettingsSection(SettingsFragment.SECTION_QUICK_PAYMENT)
                 true
             }
-            R.id.help_button -> {
-                navController.navigate(R.id.nav_help_fragment)
-                true
-            }
+//            Help will be created later; keep the action disabled with the hidden menu item.
+//            R.id.help_button -> {
+//                navController.navigate(R.id.nav_help_fragment)
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }
