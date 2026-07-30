@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.chico.myhomebookkeeping.MainActivity
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
@@ -206,7 +207,7 @@ class MoneyMovingFragment : Fragment() {
         }
 //        checkLinesFound()
         checkIsFirstLaunch()
-        showCleanInstallMessageIfNeeded()
+        showCleanInstallMessageIfNeeded(view)
 
         moneyMovingViewModel.cleaningSP()
     }
@@ -253,20 +254,33 @@ class MoneyMovingFragment : Fragment() {
         }
     }
 
-    private fun showCleanInstallMessageIfNeeded() {
+    private fun showCleanInstallMessageIfNeeded(view: View) {
         val sharedPreferences = requireContext().getSharedPreferences(
             Constants.SP_NAME,
             Context.MODE_PRIVATE
         )
-        if (!sharedPreferences.getBoolean(Constants.CLEAN_INSTALL_MESSAGE_PENDING, false)) return
+        if (!sharedPreferences.getBoolean(Constants.CLEAN_INSTALL_MESSAGE_PENDING, false)) {
+            showWhatsNewAfterFirstLaunchIfNeeded(view)
+            return
+        }
 
         sharedPreferences.edit()
             .putBoolean(Constants.CLEAN_INSTALL_MESSAGE_PENDING, false)
             .apply()
-        AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(requireContext())
             .setMessage(R.string.first_launch_clean_install_message)
             .setPositiveButton(android.R.string.ok, null)
-            .show()
+            .create()
+        dialog.setOnDismissListener {
+            showWhatsNewAfterFirstLaunchIfNeeded(view)
+        }
+        dialog.show()
+    }
+
+    private fun showWhatsNewAfterFirstLaunchIfNeeded(view: View) {
+        view.post {
+            (activity as? MainActivity)?.showWhatsNewAfterFirstLaunchIfNeeded()
+        }
     }
 
     //    private fun checkLinesFound() {

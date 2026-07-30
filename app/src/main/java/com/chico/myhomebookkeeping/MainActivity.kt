@@ -144,8 +144,13 @@ class MainActivity : AppCompatActivity() {
         maybeShowWhatsNewAfterUpdate()
     }
 
+    fun showWhatsNewAfterFirstLaunchIfNeeded() {
+        maybeShowWhatsNewAfterUpdate()
+    }
+
     private fun maybeShowWhatsNewAfterUpdate() {
         if (hasCheckedWhatsNewThisSession) return
+        if (isFirstLaunchFlowActive()) return
 
         hasCheckedWhatsNewThisSession = true
         window.decorView.post {
@@ -162,6 +167,17 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.tag_show_dialog)
         )
         mainActivityViewModel.setLastVersionChecked()
+    }
+
+    private fun isFirstLaunchFlowActive(): Boolean {
+        if (mainActivityViewModel.checkIsFirstLaunch()) return true
+
+        return when (navController.currentDestination?.id) {
+            R.id.nav_first_launch_setup_fragment,
+            R.id.nav_first_launch_select_currencies_fragment,
+            R.id.nav_first_launch_fragment -> true
+            else -> false
+        }
     }
 
     private fun uiMode() {
