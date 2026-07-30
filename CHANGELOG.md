@@ -10,6 +10,7 @@ This file is the full internal release log. Keep all useful development notes he
 - First launch now offers three setup modes after language selection: default setup, custom setup, and clean setup for database transfer.
 - Default setup now skips category selection, adds all default categories automatically, asks for default currency in a dialog, and opens Journal after setup.
 - Clean setup now creates only technical icon dictionaries, leaves user directories empty for database transfer, opens Journal, and shows a restore hint.
+- Added a Personal Care starter category group on first launch with hairdresser, cosmetics, body care, manicure, barbershop, fragrance, hygiene, and other subcategories.
 - Russian language switching now refreshes the app screen immediately, including the toolbar, drawer, and quick access panel.
 - Existing default Card and Cash accounts now show localized Russian names after update.
 - Existing standard categories and parent categories now receive missing Russian display names without overwriting user-entered names.
@@ -29,6 +30,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Persist first-launch setup mode temporarily in SharedPreferences and clear it when setup finishes.
 - Made first-launch technical icon dictionary seeding idempotent and synchronous before default account selection.
 - Removed fire-and-forget cash account inserts from first-launch completion.
+- Expanded `DefaultCategoryCatalog` with the Personal Care group and unit coverage for its English and Russian starter categories.
 - Replaced an API 24+ locale lookup in first-launch categories with the existing AppLanguage helper for minSdk 21 compatibility.
 - Added a reusable default category catalog and unit coverage for first-launch defaults.
 - Split first-launch account, default account, and category setup into separate steps.

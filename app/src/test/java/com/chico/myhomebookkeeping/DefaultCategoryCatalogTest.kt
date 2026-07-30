@@ -48,4 +48,37 @@ class DefaultCategoryCatalogTest {
         assertEquals("Доходы", groups.first().parentName)
         assertTrue(groups.first().subcategories.contains("Другое"))
     }
+
+    @Test
+    fun personalCareGroupIsAvailableForFirstLaunch() {
+        val group = DefaultCategoryCatalog.groups.first { it.parentName == "Personal Care" }
+
+        assertEquals("Уход за собой", group.parentNameRu)
+        assertEquals(
+            listOf(
+                "Hairdresser",
+                "Cosmetics",
+                "Body Care",
+                "Manicure & Pedicure",
+                "Barbershop / Shaving",
+                "Perfume & Fragrances",
+                "Hygiene Products",
+                "Other"
+            ),
+            group.subcategories
+        )
+        assertEquals(
+            listOf(
+                "Парикмахерская",
+                "Косметика",
+                "Уход за телом",
+                "Маникюр и педикюр",
+                "Барбершоп / Бритьё",
+                "Парфюмерия",
+                "Средства гигиены",
+                "Другое"
+            ),
+            group.subcategoriesRu
+        )
+    }
 }

@@ -3,6 +3,7 @@ What's new in 0.11.0
 - Added app language switching.
 - Added English localization.
 - Simpler first launch with setup modes.
+- Added a Personal Care starter category group.
 - Add currencies from the catalog after setup.
 - Journal totals are now grouped by currency.
 - Stability fixes.
@@ -12,6 +13,7 @@ What's new in 0.11.0
 - Добавлено переключение языка приложения.
 - Добавлена английская локализация.
 - Первый запуск стал проще, добавлены режимы настройки.
+- Добавлена начальная группа категорий Уход за собой.
 - Валюты теперь можно добавлять из каталога после настройки.
 - Итоги в Журнале теперь сгруппированы по валютам.
 - Исправления стабильности.

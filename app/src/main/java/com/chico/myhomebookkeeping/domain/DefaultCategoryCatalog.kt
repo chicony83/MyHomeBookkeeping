@@ -66,6 +66,12 @@ object DefaultCategoryCatalog {
             subcategoriesRu = listOf("Аптека", "Врач", "Стоматология", "Анализы", "Страхование", "Спорт", "Другое")
         ),
         group(
+            parentName = "Personal Care",
+            parentNameRu = "Уход за собой",
+            subcategories = listOf("Hairdresser", "Cosmetics", "Body Care", "Manicure & Pedicure", "Barbershop / Shaving", "Perfume & Fragrances", "Hygiene Products", "Other"),
+            subcategoriesRu = listOf("Парикмахерская", "Косметика", "Уход за телом", "Маникюр и педикюр", "Барбершоп / Бритьё", "Парфюмерия", "Средства гигиены", "Другое")
+        ),
+        group(
             parentName = "Children",
             parentNameRu = "Дети",
             subcategories = listOf("Kindergarten", "School", "Toys", "Clothing", "Clubs", "Other"),
