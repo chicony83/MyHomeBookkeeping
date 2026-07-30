@@ -7,6 +7,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Add several ways to create a payment from quick payments.
 - Allow creating a quick payment with changed parameters.
 - Add a shopping-list style helper for entering several purchases inside one payment.
+- Consider using the reserved lower area of the payment entry form for an ad placement without hiding the Add button above the keyboard.
 - Support payments in different currencies with an exchange rate saved at payment time.
 - Add receipt recognition with AI.
 - Add a home-screen widget for quickly adding a receipt.

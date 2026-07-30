@@ -145,6 +145,14 @@ class NewMoneyMovingFragment : Fragment() {
                     scrollDescriptionIntoView()
                 }
             }
+            description.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    keepViewAboveSubmitButton(description)
+                }
+            }
+            description.setOnClickListener {
+                keepViewAboveSubmitButton(description)
+            }
             decreaseAmountWholeDigitsButton.setOnClickListener {
                 changeAmountWholeDigits(-1)
             }
@@ -711,8 +719,15 @@ class NewMoneyMovingFragment : Fragment() {
                 binding.newMoneyMovingScrollView.paddingRight,
                 scrollPaddingBottom + buttonOverlap.toInt()
             )
-            if (isKeyboardVisible && binding.amountEditText.hasFocus()) {
-                keepViewAboveSubmitButton(binding.amountInputContainer)
+            if (isKeyboardVisible) {
+                when {
+                    binding.amountEditText.hasFocus() -> {
+                        keepViewAboveSubmitButton(binding.amountInputContainer)
+                    }
+                    binding.description.hasFocus() -> {
+                        keepViewAboveSubmitButton(binding.description)
+                    }
+                }
             }
         }
         binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)

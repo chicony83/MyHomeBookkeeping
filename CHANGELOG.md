@@ -2,6 +2,14 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## Unreleased
+
+### User-facing
+- Kept the Add button visible and correctly placed above the keyboard when the description field is focused on the Entering screen.
+
+### Development
+- Extended the keyboard-aware scroll adjustment on the new payment form to handle the description field as well as the amount field.
+
 ## 0.10.2
 
 ### User-facing
