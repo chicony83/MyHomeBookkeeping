@@ -29,8 +29,6 @@
         android:hint="@string/first_launch_currencies_search_hint"
         app:boxStrokeWidth="1dp"
         app:boxStrokeWidthFocused="1dp"
-        app:endIconDrawable="@drawable/ic_close"
-        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectCurrenciesTextView">

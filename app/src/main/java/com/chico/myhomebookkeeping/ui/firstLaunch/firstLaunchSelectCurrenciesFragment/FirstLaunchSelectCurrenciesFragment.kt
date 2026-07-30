@@ -85,9 +85,6 @@ class FirstLaunchSelectCurrenciesFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
         initCurrenciesLists()
-        binding.searchTil.setEndIconOnClickListener {
-            binding.searchTil.editText?.text?.clear()
-        }
         binding.searchTil.editText?.doAfterTextChanged {
             filterCurrenciesLists(it?.toString().orEmpty())
         }

@@ -13,6 +13,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 ## First Launch And Defaults
 
+- Keep first-launch currency search simple and visible; refine spacing only if the setup screen gets crowded.
 - Allow choosing or entering a custom currency name during first launch.
 - Support opening balance when creating a new account.
 
