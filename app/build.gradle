@@ -17,8 +17,8 @@ android {
         applicationId "com.chico.myhomebookkeeping"
         minSdk 21
         targetSdk 36
-        versionCode 63
-        versionName "0.11.0"
+        versionCode 64
+        versionName "0.12.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -58,6 +58,7 @@ dependencies {
     def gson_version       = "2.11.0"
     def dialogs_version    = "3.3.0"
     def dagger_version     = "2.51.1"
+    def activity_version   = "1.11.0"
 
     // your 3rd-party
 //    implementation 'com.llollox:androidtoggleswitch:2.0.3'
@@ -68,9 +69,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
 
     // AndroidX core
+    implementation "androidx.activity:activity-ktx:$activity_version"
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' // если реально нужно
 

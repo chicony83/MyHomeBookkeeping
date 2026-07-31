@@ -2,12 +2,16 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
-## Unreleased
+## 0.12.0
 
 ### User-facing
+- Updated the app theme.
+- Added a Personal Care starter category group.
+- Fixed minor interface and stability issues.
 - Kept the Add button visible and correctly placed above the keyboard when the description field is focused on the Entering screen.
 
 ### Development
+- Bumped Play Market release version to 0.12.0 (64).
 - Extended the keyboard-aware scroll adjustment on the new payment form to handle the description field as well as the amount field.
 
 ## 0.10.2

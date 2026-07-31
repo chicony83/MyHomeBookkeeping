@@ -2,12 +2,16 @@ package com.chico.myhomebookkeeping
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Point
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.appbar.AppBarLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -16,6 +20,10 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -51,8 +59,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var navHostView: View
+    private lateinit var appBarLayout: AppBarLayout
+    private lateinit var navView: NavigationView
+    private var navHostInitialPadding = ViewPadding()
     private lateinit var sharedPreferences: SharedPreferences
     private var isQuickAccessDestinationListenerAdded = false
+    private var latestSystemBarInsets = InsetsState()
     private val quickAccessSettingsListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key == Constants.QUICK_ACCESS_PANEL_ITEMS && ::bottomNavigationView.isInitialized) {
@@ -73,6 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             AppLanguage.applySelectedLanguage(this)
         }
@@ -85,14 +99,18 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.registerOnSharedPreferenceChangeListener(quickAccessSettingsListener)
 
         uiMode()
+        setupSystemBarIconAppearance()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        appBarLayout = findViewById(R.id.app_bar_layout)
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.isSaveEnabled = false
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
+        navHostView = findViewById(R.id.nav_host_fragment)
+        setupWindowInsets(drawerLayout)
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -229,9 +247,90 @@ class MainActivity : AppCompatActivity() {
                         uiHelper.showUiElement(bottomNavigationView)
                     }
                 }
+                applyNavHostInsets()
             }
         }
     }
+
+    private fun setupSystemBarIconAppearance() {
+        val isNightMode =
+            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+                    Configuration.UI_MODE_NIGHT_YES
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = !isNightMode
+        }
+    }
+
+    private fun setupWindowInsets(drawerLayout: DrawerLayout) {
+        val appBarInitialPadding = appBarLayout.recordInitialPadding()
+        val navViewInitialPadding = navView.recordInitialPadding()
+        navHostInitialPadding = navHostView.recordInitialPadding()
+        val bottomNavigationInitialPadding = bottomNavigationView.recordInitialPadding()
+        val bottomNavigationInitialHeight = bottomNavigationView.layoutParams.height
+
+        // Edge-to-edge mode draws behind system bars, so each chrome view reapplies its own safe padding.
+        ViewCompat.setOnApplyWindowInsetsListener(drawerLayout) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            latestSystemBarInsets = InsetsState(
+                top = systemBars.top,
+                bottom = systemBars.bottom,
+                imeBottom = ime.bottom
+            )
+
+            appBarLayout.updatePadding(top = appBarInitialPadding.top + systemBars.top)
+            navView.updatePadding(
+                top = navViewInitialPadding.top + systemBars.top,
+                bottom = navViewInitialPadding.bottom + systemBars.bottom
+            )
+            bottomNavigationView.updatePadding(
+                bottom = bottomNavigationInitialPadding.bottom + systemBars.bottom
+            )
+            bottomNavigationView.updateLayoutHeight(
+                baseHeight = bottomNavigationInitialHeight,
+                extraHeight = systemBars.bottom
+            )
+            applyNavHostInsets()
+            insets
+        }
+    }
+
+    private fun applyNavHostInsets() {
+        navHostView.updatePadding(
+            bottom = navHostInitialPadding.bottom +
+                    maxOf(latestSystemBarInsets.bottom, latestSystemBarInsets.imeBottom)
+        )
+    }
+
+    private fun View.recordInitialPadding() = ViewPadding(
+        left = paddingLeft,
+        top = paddingTop,
+        right = paddingRight,
+        bottom = paddingBottom
+    )
+
+    private fun View.updateLayoutHeight(baseHeight: Int, extraHeight: Int) {
+        if (baseHeight <= 0) return
+        val newHeight = baseHeight + extraHeight
+        if (layoutParams.height == newHeight) return
+        layoutParams = (layoutParams as ViewGroup.LayoutParams).apply {
+            height = newHeight
+        }
+    }
+
+    private data class ViewPadding(
+        val left: Int = 0,
+        val top: Int = 0,
+        val right: Int = 0,
+        val bottom: Int = 0
+    )
+
+    private data class InsetsState(
+        val top: Int = 0,
+        val bottom: Int = 0,
+        val imeBottom: Int = 0
+    )
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)

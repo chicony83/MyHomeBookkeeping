@@ -1,0 +1,11 @@
+What's new in 0.12.0
+
+- Updated the app theme.
+- Added a Personal Care starter category group.
+- Fixed minor interface and stability issues.
+
+Что нового в 0.12.0
+
+- Обновлена тема оформления приложения.
+- Добавлена стартовая группа категорий “Уход за собой”.
+- Исправлены мелкие проблемы интерфейса и стабильности.
