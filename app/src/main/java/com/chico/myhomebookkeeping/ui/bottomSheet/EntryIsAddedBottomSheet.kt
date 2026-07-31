@@ -35,6 +35,7 @@ class EntryIsAddedBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val initialBottomPadding = view.paddingBottom
+        // Preserve the layout padding and add only the system navigation inset on edge-to-edge devices.
         ViewCompat.setOnApplyWindowInsetsListener(view) { bottomSheetView, insets ->
             val bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
             bottomSheetView.updatePadding(bottom = initialBottomPadding + bottomInset)

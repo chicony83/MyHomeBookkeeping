@@ -18,6 +18,10 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Allow choosing or entering a custom currency name during first launch.
 - Support opening balance when creating a new account.
 
+## Android Compatibility
+
+- Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
+
 ## Directories
 
 - Add currency icons.

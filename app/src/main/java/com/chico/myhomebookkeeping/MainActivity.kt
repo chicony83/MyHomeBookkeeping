@@ -297,6 +297,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyNavHostInsets() {
+        // IME and navigation bar are mutually exclusive in practice; keep the larger safe area.
         navHostView.updatePadding(
             bottom = navHostInitialPadding.bottom +
                     maxOf(latestSystemBarInsets.bottom, latestSystemBarInsets.imeBottom)
