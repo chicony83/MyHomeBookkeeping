@@ -25,6 +25,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Directories
 
 - Add currency icons.
+- Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.
 - Consider usage-frequency sorting for currencies, accounts, and categories.
