@@ -41,4 +41,9 @@
     <string name="settings_app_language_system">Как в системе</string>
     <string name="settings_app_language_english">Английский</string>
     <string name="settings_app_language_russian">Русский</string>
+    <string name="settings_journal_section_title">Журнал</string>
+    <string name="settings_journal_currency_display_title">Название валюты в журнале</string>
+    <string name="settings_journal_currency_display_name">Полное название</string>
+    <string name="settings_journal_currency_display_short_name">Короткое название</string>
+    <string name="settings_journal_currency_display_iso">ISO-код</string>
 </resources>

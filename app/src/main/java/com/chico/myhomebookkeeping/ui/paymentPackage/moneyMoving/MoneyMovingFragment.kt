@@ -66,7 +66,7 @@ class MoneyMovingFragment : Fragment() {
                 binding.emptyJournalCard.visibility =
                     if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
                 binding.moneyMovingHolder.adapter = it?.let { it1 ->
-                    MoneyMovingAdapter(it1, object :
+                    MoneyMovingAdapter(it1, journalCurrencyDisplayMode(), object :
                         OnItemViewClickListenerLong {
                         override fun onClick(selectedId: Long) {
 //                            getOneFullMoneyMoving(selectedId)
@@ -88,6 +88,17 @@ class MoneyMovingFragment : Fragment() {
         rows.forEach {
             binding.balanceRows.addView(createBalanceRow(it))
         }
+    }
+
+    private fun journalCurrencyDisplayMode(): String {
+        val sharedPreferences = requireContext().getSharedPreferences(
+            Constants.SP_NAME,
+            Context.MODE_PRIVATE
+        )
+        return sharedPreferences.getString(
+            Constants.JOURNAL_CURRENCY_DISPLAY_MODE,
+            Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+        ) ?: Constants.JOURNAL_CURRENCY_DISPLAY_NAME
     }
 
     private fun createBalanceRow(row: MoneyMovingCountMoney.CurrencyBalance): LinearLayout {

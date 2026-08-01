@@ -11,6 +11,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
@@ -18,6 +19,7 @@ import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 
 class MoneyMovingAdapter(
     private val moneyMovementList: List<FullMoneyMoving>,
+    private val currencyDisplayMode: String,
     private val listener: OnItemViewClickListenerLong
 ) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolderMovingItem>() {
     private lateinit var plus: String
@@ -91,7 +93,7 @@ class MoneyMovingAdapter(
 
                 dataTime.text = moneyMovement.timeStamp.parseTimeFromMillisShortDate()
                 cashAccountName.text = moneyMovement.cashAccountNameValue
-                currencyName.text = moneyMovement.currencyNameValue
+                currencyName.text = currencyTitle(moneyMovement)
                 bindCategoryName(moneyMovement)
 
                 if (!moneyMovement.description.isNullOrEmpty()) {
@@ -184,6 +186,16 @@ class MoneyMovingAdapter(
                     }
                 }
             }
+        }
+
+        private fun currencyTitle(moneyMovement: FullMoneyMoving): String {
+            return when (currencyDisplayMode) {
+                Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME ->
+                    moneyMovement.currencyShortNameValue
+                Constants.JOURNAL_CURRENCY_DISPLAY_ISO ->
+                    moneyMovement.currencyIsoValue
+                else -> moneyMovement.currencyNameValue
+            }?.takeIf { it.isNotBlank() } ?: moneyMovement.currencyNameValue
         }
 
 //        private fun changeArray(array: Array<String>): MutableList<String> {

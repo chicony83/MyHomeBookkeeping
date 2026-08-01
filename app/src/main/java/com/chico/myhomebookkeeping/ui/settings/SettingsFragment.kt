@@ -63,6 +63,7 @@ class SettingsFragment : Fragment() {
     private var amountFractionDigits = 2
     private var selectedStartFragmentValue = Constants.START_FRAGMENT_FAST_PAYMENTS
     private var selectedAppLanguageTag = Constants.APP_LANGUAGE_SYSTEM
+    private var selectedJournalCurrencyDisplayMode = Constants.JOURNAL_CURRENCY_DISPLAY_NAME
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -224,6 +225,9 @@ class SettingsFragment : Fragment() {
             appLanguageRow.setOnClickListener {
                 showAppLanguageDialog()
             }
+            journalCurrencyDisplayModeRow.setOnClickListener {
+                showJournalCurrencyDisplayModeDialog()
+            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -260,6 +264,10 @@ class SettingsFragment : Fragment() {
             appLanguage.observe(viewLifecycleOwner) {
                 selectedAppLanguageTag = it
                 binding.appLanguageValue.text = appLanguageTitle(it)
+            }
+            journalCurrencyDisplayMode.observe(viewLifecycleOwner) {
+                selectedJournalCurrencyDisplayMode = it
+                binding.journalCurrencyDisplayModeValue.text = journalCurrencyDisplayModeTitle(it)
             }
         }
         loadDefaultSelectionTitles()
@@ -301,6 +309,8 @@ class SettingsFragment : Fragment() {
         binding.amountFractionDigitsValue.text = amountFractionDigits.toString()
         binding.startFragmentValue.text = startFragmentTitle(selectedStartFragmentValue)
         binding.appLanguageValue.text = appLanguageTitle(selectedAppLanguageTag)
+        binding.journalCurrencyDisplayModeValue.text =
+            journalCurrencyDisplayModeTitle(selectedJournalCurrencyDisplayMode)
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE
@@ -509,12 +519,42 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun showJournalCurrencyDisplayModeDialog() {
+        val values = arrayOf(
+            Constants.JOURNAL_CURRENCY_DISPLAY_NAME,
+            Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME,
+            Constants.JOURNAL_CURRENCY_DISPLAY_ISO
+        )
+        showChoiceDialog(
+            title = getString(R.string.settings_journal_currency_display_title),
+            labels = values.map(::journalCurrencyDisplayModeTitle).toTypedArray(),
+            selectedIndex = values.indexOf(selectedJournalCurrencyDisplayMode).coerceAtLeast(0)
+        ) { index ->
+            selectedJournalCurrencyDisplayMode = values[index]
+            binding.journalCurrencyDisplayModeValue.text =
+                journalCurrencyDisplayModeTitle(selectedJournalCurrencyDisplayMode)
+            settingsViewModel.saveJournalCurrencyDisplayMode(selectedJournalCurrencyDisplayMode)
+        }
+    }
+
     private fun appLanguageTitle(languageTag: String): String {
         return getString(
             when (languageTag) {
                 Constants.APP_LANGUAGE_ENGLISH -> R.string.settings_app_language_english
                 Constants.APP_LANGUAGE_RUSSIAN -> R.string.settings_app_language_russian
                 else -> R.string.settings_app_language_system
+            }
+        )
+    }
+
+    private fun journalCurrencyDisplayModeTitle(displayMode: String): String {
+        return getString(
+            when (displayMode) {
+                Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME ->
+                    R.string.settings_journal_currency_display_short_name
+                Constants.JOURNAL_CURRENCY_DISPLAY_ISO ->
+                    R.string.settings_journal_currency_display_iso
+                else -> R.string.settings_journal_currency_display_name
             }
         )
     }

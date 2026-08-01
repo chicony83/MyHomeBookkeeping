@@ -12,6 +12,10 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Add receipt recognition with AI.
 - Add a home-screen widget for quickly adding a receipt.
 
+## Journal
+
+- Decide whether the journal currency display setting should also apply to fast payment cards and payment detail dialogs.
+
 ## First Launch And Defaults
 
 - Keep first-launch currency search simple and visible; refine spacing only if the setup screen gets crowded.

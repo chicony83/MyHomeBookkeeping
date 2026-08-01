@@ -144,6 +144,13 @@ object DatabaseBackupManager {
                 "appLanguage",
                 appPreferences.getString(Constants.APP_LANGUAGE, Constants.APP_LANGUAGE_SYSTEM)
             )
+            .put(
+                "journalCurrencyDisplayMode",
+                appPreferences.getString(
+                    Constants.JOURNAL_CURRENCY_DISPLAY_MODE,
+                    Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+                )
+            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {

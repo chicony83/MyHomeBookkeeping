@@ -48,6 +48,10 @@ class SettingsViewModel(
     val appLanguage: LiveData<String>
         get() = _appLanguage
 
+    private val _journalCurrencyDisplayMode = MutableLiveData<String>()
+    val journalCurrencyDisplayMode: LiveData<String>
+        get() = _journalCurrencyDisplayMode
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -58,6 +62,7 @@ class SettingsViewModel(
         _startFragment.value = getStartFragment()
         _quickAccessItems.value = QuickAccessPanel.getKeys(sharedPreferences)
         _appLanguage.value = AppLanguage.getSelectedTag(app.applicationContext)
+        _journalCurrencyDisplayMode.value = getJournalCurrencyDisplayMode()
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -96,6 +101,13 @@ class SettingsViewModel(
     fun saveAppLanguage(languageTag: String) {
         AppLanguage.saveSelectedTag(app.applicationContext, languageTag)
         _appLanguage.value = AppLanguage.getSelectedTag(app.applicationContext)
+    }
+
+    fun saveJournalCurrencyDisplayMode(displayMode: String) {
+        sharedPreferences.edit()
+            .putString(Constants.JOURNAL_CURRENCY_DISPLAY_MODE, displayMode)
+            .apply()
+        _journalCurrencyDisplayMode.value = getJournalCurrencyDisplayMode()
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {
@@ -156,5 +168,19 @@ class SettingsViewModel(
             Constants.START_FRAGMENT,
             Constants.START_FRAGMENT_FAST_PAYMENTS
         ) ?: Constants.START_FRAGMENT_FAST_PAYMENTS
+    }
+
+    private fun getJournalCurrencyDisplayMode(): String {
+        return sharedPreferences.getString(
+            Constants.JOURNAL_CURRENCY_DISPLAY_MODE,
+            Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+        )?.takeIf(::isSupportedJournalCurrencyDisplayMode)
+            ?: Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+    }
+
+    private fun isSupportedJournalCurrencyDisplayMode(displayMode: String): Boolean {
+        return displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_NAME ||
+            displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME ||
+            displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_ISO
     }
 }

@@ -210,8 +210,19 @@ object DatabaseRestoreManager {
             settings.optString("appLanguage", Constants.APP_LANGUAGE_SYSTEM)
                 .takeIf { AppLanguage.supportedTags.contains(it) }
                 ?.let { putString(Constants.APP_LANGUAGE, it) }
+            settings.optString(
+                "journalCurrencyDisplayMode",
+                Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+            ).takeIf(::isSupportedJournalCurrencyDisplayMode)
+                ?.let { putString(Constants.JOURNAL_CURRENCY_DISPLAY_MODE, it) }
             apply()
         }
+    }
+
+    private fun isSupportedJournalCurrencyDisplayMode(displayMode: String): Boolean {
+        return displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_NAME ||
+            displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME ||
+            displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_ISO
     }
 
     private fun deriveKey(
