@@ -7,11 +7,12 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemFirstLaunchForSel
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
 class CurrencyCatalogAdapter(
-    private val currencies: List<Currencies>,
+    currencies: List<Currencies>,
     private val addedCurrencyKeys: Set<String>,
     selectedCurrencyKeys: Set<String>,
     private val onCurrencyClicked: (String) -> Unit
 ) : RecyclerView.Adapter<CurrencyCatalogAdapter.ViewHolder>() {
+    private var currencies: List<Currencies> = currencies
     private var selectedCurrencyKeys: Set<String> = selectedCurrencyKeys
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +29,11 @@ class CurrencyCatalogAdapter(
     }
 
     override fun getItemCount() = currencies.size
+
+    fun updateCurrencies(newCurrencies: List<Currencies>) {
+        currencies = newCurrencies
+        notifyDataSetChanged()
+    }
 
     fun updateSelectedCurrencies(newSelectedCurrencyKeys: Set<String>) {
         val oldSelectedCurrencyKeys = selectedCurrencyKeys
