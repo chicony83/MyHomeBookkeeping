@@ -3,6 +3,7 @@
     <string name="text_on_button_cash_account">Счёт</string>
     <string name="text_on_button_currency">Валюта</string>
     <string name="text_on_button_category">Категория</string>
+    <string name="text_on_button_category_order">Порядок категорий</string>
 
     <string name="text_on_button_time_period">Период</string>
     <string name="text_on_button_time_period_from">с</string>
@@ -12,6 +13,7 @@
     <string name="text_on_button_time_period_to_end">До конца</string>
 
     <string name="text_on_button_help">Помощь</string>
+    <string name="text_on_button_quick_payment_settings">Настройки быстрого платежа</string>
     <string name="text_on_button_submit">Принять</string>
     <string name="text_on_button_change">Изменить</string>
     <string name="text_on_button_save">Сохранить</string>

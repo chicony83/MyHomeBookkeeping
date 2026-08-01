@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_access_settings_title">Quick access panel</string>
+    <string name="quick_access_button_title">Button %1$d</string>
+    <string name="quick_access_add_button">Add button</string>
+    <string name="quick_access_select_title">Select button</string>
+    <string name="quick_access_none">Nothing</string>
+    <string name="quick_access_already_added">This item is already selected</string>
+</resources>

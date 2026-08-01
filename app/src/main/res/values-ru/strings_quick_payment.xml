@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_payment_settings_title">Настройки быстрого платежа</string>
+    <string name="quick_payment_default_currency">Валюта по умолчанию</string>
+    <string name="quick_payment_default_cash_account">Счет по умолчанию</string>
+    <string name="quick_payment_currency_scroll">Выбор валюты прокруткой</string>
+    <string name="quick_payment_cash_account_scroll">Выбор счета прокруткой</string>
+    <string name="quick_payment_show_calculator">Показывать кнопку калькулятора</string>
+    <string name="quick_payment_currency_selection_mode">Выбор валюты</string>
+    <string name="quick_payment_cash_account_selection_mode">Выбор счета</string>
+    <string name="quick_payment_calculator">Калькулятор</string>
+    <string name="quick_payment_amount_input">Ввод суммы</string>
+    <string name="quick_payment_amount_input_digits">Цифрами</string>
+    <string name="quick_payment_amount_input_scroll">Прокруткой</string>
+    <string name="quick_payment_amount_whole_digits">Разрядов до точки</string>
+    <string name="quick_payment_amount_fraction_digits">Разрядов после точки</string>
+    <string name="quick_payment_amount_whole_group">Целые</string>
+    <string name="quick_payment_amount_fraction_group">Копейки</string>
+</resources>
