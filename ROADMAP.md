@@ -27,6 +27,11 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
 - Keep string resources split by feature and mirrored between `values` and localized `values-*` folders.
 
+## Repository Hygiene
+
+- Keep release bundles, APKs, temporary screenshots, UI dumps, and device database copies out of git.
+- Keep the current Play Market AAB as a local publication artifact only.
+
 ## Directories
 
 - Add currency icons.
