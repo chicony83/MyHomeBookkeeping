@@ -17,6 +17,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 ## Journal
 
+- Completed: add centered date separators between journal payments, with Today, Yesterday, Day before yesterday, and localized long dates.
 - Decide whether the journal currency display setting should also apply to fast payment cards and payment detail dialogs.
 
 ## First Launch And Defaults

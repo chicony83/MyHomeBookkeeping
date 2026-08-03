@@ -52,6 +52,10 @@ class SettingsViewModel(
     val journalCurrencyDisplayMode: LiveData<String>
         get() = _journalCurrencyDisplayMode
 
+    private val _journalDateSeparatorsEnabled = MutableLiveData<Boolean>()
+    val journalDateSeparatorsEnabled: LiveData<Boolean>
+        get() = _journalDateSeparatorsEnabled
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -63,6 +67,7 @@ class SettingsViewModel(
         _quickAccessItems.value = QuickAccessPanel.getKeys(sharedPreferences)
         _appLanguage.value = AppLanguage.getSelectedTag(app.applicationContext)
         _journalCurrencyDisplayMode.value = getJournalCurrencyDisplayMode()
+        _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -108,6 +113,13 @@ class SettingsViewModel(
             .putString(Constants.JOURNAL_CURRENCY_DISPLAY_MODE, displayMode)
             .apply()
         _journalCurrencyDisplayMode.value = getJournalCurrencyDisplayMode()
+    }
+
+    fun saveJournalDateSeparatorsEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, isEnabled)
+            .apply()
+        _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {
@@ -176,6 +188,10 @@ class SettingsViewModel(
             Constants.JOURNAL_CURRENCY_DISPLAY_NAME
         )?.takeIf(::isSupportedJournalCurrencyDisplayMode)
             ?: Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+    }
+
+    private fun getJournalDateSeparatorsEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, true)
     }
 
     private fun isSupportedJournalCurrencyDisplayMode(displayMode: String): Boolean {

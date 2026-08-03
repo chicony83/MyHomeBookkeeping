@@ -21,4 +21,8 @@
     <string name="settings_journal_currency_display_name">Full name</string>
     <string name="settings_journal_currency_display_short_name">Short name</string>
     <string name="settings_journal_currency_display_iso">ISO code</string>
+    <string name="settings_journal_show_date_separators">Show date separators in journal</string>
+    <string name="journal_date_today">Today</string>
+    <string name="journal_date_yesterday">Yesterday</string>
+    <string name="journal_date_day_before_yesterday">Day before yesterday</string>
 </resources>

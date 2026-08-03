@@ -21,4 +21,8 @@
     <string name="settings_journal_currency_display_name">Полное название</string>
     <string name="settings_journal_currency_display_short_name">Короткое название</string>
     <string name="settings_journal_currency_display_iso">ISO-код</string>
+    <string name="settings_journal_show_date_separators">Отображать разделители дат в журнале</string>
+    <string name="journal_date_today">Сегодня</string>
+    <string name="journal_date_yesterday">Вчера</string>
+    <string name="journal_date_day_before_yesterday">Позавчера</string>
 </resources>

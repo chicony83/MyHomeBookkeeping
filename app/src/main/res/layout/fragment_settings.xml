@@ -242,6 +242,15 @@
                         android:id="@+id/journalCurrencyDisplayModeValue"
                         style="@style/SettingsValueText" />
                 </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/journalDateSeparatorsCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_journal_show_date_separators"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
             </LinearLayout>
 
             <LinearLayout

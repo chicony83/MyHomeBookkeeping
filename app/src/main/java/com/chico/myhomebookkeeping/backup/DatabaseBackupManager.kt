@@ -151,6 +151,10 @@ object DatabaseBackupManager {
                     Constants.JOURNAL_CURRENCY_DISPLAY_NAME
                 )
             )
+            .put(
+                "journalShowDateSeparators",
+                appPreferences.getBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, true)
+            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {

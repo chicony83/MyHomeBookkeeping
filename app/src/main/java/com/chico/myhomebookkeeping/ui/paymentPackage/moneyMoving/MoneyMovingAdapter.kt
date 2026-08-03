@@ -7,36 +7,45 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingDateSeparatorBinding
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
+import java.text.DateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class MoneyMovingAdapter(
     private val moneyMovementList: List<FullMoneyMoving>,
     private val currencyDisplayMode: String,
+    private val showDateSeparators: Boolean,
     private val listener: OnItemViewClickListenerLong
-) : RecyclerView.Adapter<MoneyMovingAdapter.ViewHolderMovingItem>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val adapterItems = createAdapterItems()
     private lateinit var plus: String
     private lateinit var minus: String
-//    private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-//
-//    private var dayToday: Long = 0
-//    private var dayYesterday: Long = 0
     private lateinit var context: Context
     private val uiHelper = UiHelper()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderMovingItem {
-        val binding = RecyclerViewItemMoneyMovingBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         getStrings()
-        return ViewHolderMovingItem(binding)
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            VIEW_TYPE_DATE_SEPARATOR -> ViewHolderDateSeparator(
+                RecyclerViewItemMoneyMovingDateSeparatorBinding.inflate(inflater, parent, false)
+            )
+            else -> ViewHolderMovingItem(
+                RecyclerViewItemMoneyMovingBinding.inflate(inflater, parent, false)
+            )
+        }
     }
 
     private fun getStrings() {
@@ -44,30 +53,96 @@ class MoneyMovingAdapter(
         minus = context.getString(R.string.sign_minus)
     }
 
-    override fun onBindViewHolder(holder: ViewHolderMovingItem, position: Int) {
-//        var showDate = checkTodayAndYesterdayIsOneDate(position)
-        holder.bind(moneyMovementList[position])
-//        holder.bind(moneyMovementList[position], showDate)
+    override fun getItemViewType(position: Int): Int {
+        return when (adapterItems[position]) {
+            is JournalItem.DateSeparator -> VIEW_TYPE_DATE_SEPARATOR
+            is JournalItem.MoneyMovementItem -> VIEW_TYPE_MONEY_MOVEMENT
+        }
     }
 
-//    private fun checkTodayAndYesterdayIsOneDate(position: Int): Boolean {
-//        dayToday = moneyMovementList[position].timeStamp
-//        calendar.timeInMillis = dayToday
-//        val today = calendar.get(Calendar.DAY_OF_YEAR)
-//        calendar.timeInMillis = dayYesterday
-//        val yesterday = calendar.get(Calendar.DAY_OF_YEAR)
-//        var showDate = false
-//        if (today == yesterday) {
-//            showDate = false
-//        }
-//        if (today != yesterday) {
-//            showDate = true
-//            dayYesterday = moneyMovementList[position].timeStamp
-//        }
-//        return showDate
-//    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = adapterItems[position]) {
+            is JournalItem.DateSeparator -> (holder as ViewHolderDateSeparator).bind(item.timeStamp)
+            is JournalItem.MoneyMovementItem -> (holder as ViewHolderMovingItem).bind(item.moneyMovement)
+        }
+    }
 
-    override fun getItemCount() = moneyMovementList.size
+    override fun getItemCount() = adapterItems.size
+
+    private fun createAdapterItems(): List<JournalItem> {
+        if (!showDateSeparators) {
+            return moneyMovementList.map { JournalItem.MoneyMovementItem(it) }
+        }
+
+        val items = mutableListOf<JournalItem>()
+        var previousDayKey: String? = null
+        moneyMovementList.forEach { moneyMovement ->
+            val currentDayKey = moneyMovement.timeStamp.dayKey()
+            if (currentDayKey != previousDayKey) {
+                items.add(JournalItem.DateSeparator(moneyMovement.timeStamp))
+                previousDayKey = currentDayKey
+            }
+            items.add(JournalItem.MoneyMovementItem(moneyMovement))
+        }
+        return items
+    }
+
+    private fun Long.dayKey(): String {
+        val calendar = Calendar.getInstance().apply { timeInMillis = this@dayKey }
+        return "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.DAY_OF_YEAR)}"
+    }
+
+    private sealed class JournalItem {
+        data class DateSeparator(val timeStamp: Long) : JournalItem()
+        data class MoneyMovementItem(val moneyMovement: FullMoneyMoving) : JournalItem()
+    }
+
+    inner class ViewHolderDateSeparator(
+        private val binding: RecyclerViewItemMoneyMovingDateSeparatorBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(timeStamp: Long) {
+            binding.dateSeparatorText.text = dateSeparatorTitle(timeStamp)
+        }
+
+        private fun dateSeparatorTitle(timeStamp: Long): String {
+            val date = Date(timeStamp)
+            val formattedDate = DateFormat
+                .getDateInstance(DateFormat.LONG, Locale.getDefault())
+                .format(date)
+            val relativeTitle = relativeDateTitle(timeStamp)
+            return relativeTitle?.let { "$it, $formattedDate" } ?: formattedDate
+        }
+
+        private fun relativeDateTitle(timeStamp: Long): String? {
+            val today = Calendar.getInstance().dayStart()
+            val itemDate = Calendar.getInstance().apply { timeInMillis = timeStamp }
+            val yesterday = (today.clone() as Calendar).apply { add(Calendar.DAY_OF_YEAR, -1) }
+            val dayBeforeYesterday = (today.clone() as Calendar).apply {
+                add(Calendar.DAY_OF_YEAR, -2)
+            }
+            return when {
+                itemDate.isSameDay(today) -> context.getString(R.string.journal_date_today)
+                itemDate.isSameDay(yesterday) -> context.getString(R.string.journal_date_yesterday)
+                itemDate.isSameDay(dayBeforeYesterday) ->
+                    context.getString(R.string.journal_date_day_before_yesterday)
+                else -> null
+            }
+        }
+
+        private fun Calendar.dayStart(): Calendar {
+            return (clone() as Calendar).apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+        }
+
+        private fun Calendar.isSameDay(other: Calendar): Boolean {
+            return get(Calendar.YEAR) == other.get(Calendar.YEAR) &&
+                get(Calendar.DAY_OF_YEAR) == other.get(Calendar.DAY_OF_YEAR)
+        }
+    }
 
     inner class ViewHolderMovingItem(
         private val binding: RecyclerViewItemMoneyMovingBinding,
@@ -213,5 +288,10 @@ class MoneyMovingAdapter(
 //            val lines: Array<String> = str.split("\n").toTypedArray()
 //            return lines.size
 //        }
+    }
+
+    private companion object {
+        const val VIEW_TYPE_DATE_SEPARATOR = 0
+        const val VIEW_TYPE_MONEY_MOVEMENT = 1
     }
 }

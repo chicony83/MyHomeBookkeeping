@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/margin_normal"
+    android:paddingTop="@dimen/margin_half_normal"
+    android:paddingEnd="@dimen/margin_normal"
+    android:paddingBottom="@dimen/margin_half_normal">
+
+    <TextView
+        android:id="@+id/dateSeparatorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textColor="@color/categoryTextSecondary"
+        android:textSize="@dimen/H5"
+        android:textStyle="bold"
+        tools:text="Today, August 3, 2026" />
+</LinearLayout>

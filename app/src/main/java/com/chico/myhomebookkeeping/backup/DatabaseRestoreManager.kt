@@ -215,6 +215,10 @@ object DatabaseRestoreManager {
                 Constants.JOURNAL_CURRENCY_DISPLAY_NAME
             ).takeIf(::isSupportedJournalCurrencyDisplayMode)
                 ?.let { putString(Constants.JOURNAL_CURRENCY_DISPLAY_MODE, it) }
+            putBoolean(
+                Constants.JOURNAL_SHOW_DATE_SEPARATORS,
+                settings.optBoolean("journalShowDateSeparators", true)
+            )
             apply()
         }
     }

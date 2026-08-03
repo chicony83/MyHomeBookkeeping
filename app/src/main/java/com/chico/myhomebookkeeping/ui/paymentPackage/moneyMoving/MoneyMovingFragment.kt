@@ -66,14 +66,18 @@ class MoneyMovingFragment : Fragment() {
                 binding.emptyJournalCard.visibility =
                     if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
                 binding.moneyMovingHolder.adapter = it?.let { it1 ->
-                    MoneyMovingAdapter(it1, journalCurrencyDisplayMode(), object :
-                        OnItemViewClickListenerLong {
-                        override fun onClick(selectedId: Long) {
-//                            getOneFullMoneyMoving(selectedId)
-                            showSelectDialog(selectedId)
-                        }
+                    MoneyMovingAdapter(
+                        it1,
+                        journalCurrencyDisplayMode(),
+                        showJournalDateSeparators(),
+                        object : OnItemViewClickListenerLong {
+                            override fun onClick(selectedId: Long) {
+//                                getOneFullMoneyMoving(selectedId)
+                                showSelectDialog(selectedId)
+                            }
 
-                    })
+                        }
+                    )
                 }
             })
             balanceRows.observe(viewLifecycleOwner, {
@@ -99,6 +103,14 @@ class MoneyMovingFragment : Fragment() {
             Constants.JOURNAL_CURRENCY_DISPLAY_MODE,
             Constants.JOURNAL_CURRENCY_DISPLAY_NAME
         ) ?: Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+    }
+
+    private fun showJournalDateSeparators(): Boolean {
+        val sharedPreferences = requireContext().getSharedPreferences(
+            Constants.SP_NAME,
+            Context.MODE_PRIVATE
+        )
+        return sharedPreferences.getBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, true)
     }
 
     private fun createBalanceRow(row: MoneyMovingCountMoney.CurrencyBalance): LinearLayout {

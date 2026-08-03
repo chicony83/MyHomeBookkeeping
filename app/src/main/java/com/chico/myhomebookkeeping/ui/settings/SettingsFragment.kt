@@ -64,6 +64,7 @@ class SettingsFragment : Fragment() {
     private var selectedStartFragmentValue = Constants.START_FRAGMENT_FAST_PAYMENTS
     private var selectedAppLanguageTag = Constants.APP_LANGUAGE_SYSTEM
     private var selectedJournalCurrencyDisplayMode = Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+    private var isJournalDateSeparatorsEnabled = true
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -228,6 +229,12 @@ class SettingsFragment : Fragment() {
             journalCurrencyDisplayModeRow.setOnClickListener {
                 showJournalCurrencyDisplayModeDialog()
             }
+            journalDateSeparatorsCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isJournalDateSeparatorsEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveJournalDateSeparatorsEnabled(isChecked)
+                }
+            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -268,6 +275,12 @@ class SettingsFragment : Fragment() {
             journalCurrencyDisplayMode.observe(viewLifecycleOwner) {
                 selectedJournalCurrencyDisplayMode = it
                 binding.journalCurrencyDisplayModeValue.text = journalCurrencyDisplayModeTitle(it)
+            }
+            journalDateSeparatorsEnabled.observe(viewLifecycleOwner) {
+                isJournalDateSeparatorsEnabled = it
+                isBindingSettings = true
+                binding.journalDateSeparatorsCheckBox.isChecked = it
+                isBindingSettings = false
             }
         }
         loadDefaultSelectionTitles()
@@ -311,6 +324,7 @@ class SettingsFragment : Fragment() {
         binding.appLanguageValue.text = appLanguageTitle(selectedAppLanguageTag)
         binding.journalCurrencyDisplayModeValue.text =
             journalCurrencyDisplayModeTitle(selectedJournalCurrencyDisplayMode)
+        binding.journalDateSeparatorsCheckBox.isChecked = isJournalDateSeparatorsEnabled
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE

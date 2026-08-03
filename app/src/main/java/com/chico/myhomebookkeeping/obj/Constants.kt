@@ -121,6 +121,7 @@ object Constants {
     const val JOURNAL_CURRENCY_DISPLAY_NAME = "name"
     const val JOURNAL_CURRENCY_DISPLAY_SHORT_NAME = "short_name"
     const val JOURNAL_CURRENCY_DISPLAY_ISO = "iso"
+    const val JOURNAL_SHOW_DATE_SEPARATORS = "journal_show_date_separators"
 
     const val APP_LANGUAGE = "app_language"
     const val APP_LANGUAGE_SYSTEM = ""

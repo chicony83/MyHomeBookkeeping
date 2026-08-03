@@ -2,6 +2,16 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.12.1
+
+### User-facing
+- Added centered date separators in the Journal: today, yesterday, the day before yesterday, and older dates in the system long-date format.
+- Added a Journal setting to show or hide date separators. It is enabled by default.
+
+### Development
+- Journal entries now render through mixed RecyclerView row types for payments and date separators.
+- Persisted the date separator setting in SharedPreferences and included it in backup/restore settings.
+
 ## 0.12.0
 
 ### User-facing
