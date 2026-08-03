@@ -82,23 +82,6 @@
             </HorizontalScrollView>
 
             <TextView
-                android:id="@+id/destinationCashAccountLabel"
-                style="@style/TextDescriptions"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:textColor="@color/categoryTextSecondary"
-                android:textSize="@dimen/H5"
-                android:text="@string/description_cash_account_to"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <Button
-                android:id="@+id/selectTransferCashAccountButton"
-                style="@style/ButtonFullWidth"
-                android:text="@string/text_on_button_select_cash_account"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <TextView
                 android:id="@+id/currencyLabel"
                 style="@style/TextDescriptions"
                 android:layout_marginTop="@dimen/margin_normal"
@@ -269,6 +252,176 @@
             </HorizontalScrollView>
 
             <TextView
+                android:id="@+id/destinationCashAccountLabel"
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                android:text="@string/description_cash_account_to"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/selectTransferCashAccountButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_cash_account"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <HorizontalScrollView
+                android:id="@+id/transferCashAccountQuickSelectScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/transferCashAccountQuickSelectRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/transferCurrencyLabel"
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                android:text="@string/description_currency_to"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/selectTransferCurrencyButton"
+                style="@style/ButtonFullWidth"
+                android:text="@string/text_on_button_select_currency"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <HorizontalScrollView
+                android:id="@+id/transferCurrencyQuickSelectScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/transferCurrencyQuickSelectRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/transferAmountLabel"
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                android:text="@string/description_amount_to"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/transferAmountEditText"
+                style="@style/EditTextAmount"
+                android:background="@drawable/input_field_background"
+                android:visibility="gone"
+                tools:text="100.00"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/transferMoreSheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@drawable/button_neutral_background"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/transferMoreButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/quick_select_button_height"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/margin_double"
+                android:paddingEnd="@dimen/margin_normal"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/transferMoreText"
+                    style="@style/TextDescriptions"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/text_on_button_more"
+                    android:textColor="@color/buttonNeutralText"
+                    android:textSize="@dimen/H5" />
+
+                <ImageView
+                    android:id="@+id/transferMoreIcon"
+                    android:layout_width="@dimen/icon_l"
+                    android:layout_height="@dimen/icon_l"
+                    android:contentDescription="@string/text_on_button_more"
+                    android:src="@drawable/ic_expand_add"
+                    app:tint="@color/buttonNeutralText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/transferMoreContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/margin_normal"
+                android:paddingEnd="@dimen/margin_normal"
+                android:paddingBottom="@dimen/margin_normal">
+
+            <TextView
+                android:id="@+id/transferRateLabel"
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                android:text="@string/description_exchange_rate"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/transferRateEditText"
+                style="@style/EditTextAmount"
+                android:background="@drawable/input_field_background"
+                android:visibility="gone"
+                tools:text="1.0000"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/transferFeeLabel"
+                style="@style/TextDescriptions"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/categoryTextSecondary"
+                android:textSize="@dimen/H5"
+                android:text="@string/description_transfer_fee"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/transferFeeEditText"
+                style="@style/EditTextAmount"
+                android:background="@drawable/input_field_background"
+                android:text="0"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/descriptionLabel"
                 style="@style/TextDescriptions"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:textColor="@color/categoryTextSecondary"
@@ -278,6 +431,10 @@
             <EditText
                 android:id="@+id/description"
                 style="@style/EditTextDescription" />
+
+            </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

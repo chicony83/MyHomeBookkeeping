@@ -10,8 +10,13 @@
     <string name="description_cash_account_from">Со счёта</string>
     <string name="description_cash_account_to">На счёт</string>
     <string name="description_currency">Валюта</string>
+    <string name="description_currency_from">Валюта отправления</string>
+    <string name="description_currency_to">Валюта прихода</string>
     <string name="description_category">Категория</string>
     <string name="description_amount">Сумма</string>
+    <string name="description_amount_to">Сумма прихода</string>
+    <string name="description_exchange_rate">Курс</string>
+    <string name="description_transfer_fee">Комиссия за перевод</string>
     <string name="description_description">Описание</string>
 
     <string name="descriptions_last_4_digits_of_card">Последних 4 цифры карты</string>

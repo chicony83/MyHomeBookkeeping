@@ -8,6 +8,11 @@ object Constants {
     const val ARGS_NEW_PAYMENT_IS_TRANSFER_KEY = "isTransferForCreate"
     const val ARGS_NEW_PAYMENT_CASH_ACCOUNT_SELECT_MODE_KEY = "cashAccountSelectModeForCreate"
     const val ARGS_NEW_PAYMENT_CURRENCY_KEY = "currencyForCreate"
+    const val ARGS_NEW_PAYMENT_TRANSFER_CURRENCY_KEY = "transferCurrencyForCreate"
+    const val ARGS_NEW_PAYMENT_CURRENCY_SELECT_MODE_KEY = "currencySelectModeForCreate"
+    const val ARGS_NEW_PAYMENT_TRANSFER_AMOUNT_KEY = "transferAmountForCreate"
+    const val ARGS_NEW_PAYMENT_TRANSFER_RATE_KEY = "transferRateForCreate"
+    const val ARGS_NEW_PAYMENT_TRANSFER_FEE_KEY = "transferFeeForCreate"
     const val ARGS_NEW_PAYMENT_CATEGORY_KEY = "categoryForCreate"
     const val ARGS_NEW_PAYMENT_AMOUNT_KEY = "amountForCreate"
     const val ARGS_NEW_PAYMENT_DESCRIPTION_KEY = "descriptionForCreate"
@@ -102,6 +107,8 @@ object Constants {
 
     const val CASH_ACCOUNT_SELECT_MODE_SOURCE = "source"
     const val CASH_ACCOUNT_SELECT_MODE_DESTINATION = "destination"
+    const val CURRENCY_SELECT_MODE_SOURCE = "source"
+    const val CURRENCY_SELECT_MODE_DESTINATION = "destination"
 
     const val START_FRAGMENT = "startFragment"
     const val START_FRAGMENT_FAST_PAYMENTS = "fast_payments"

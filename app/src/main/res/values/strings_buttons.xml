@@ -27,6 +27,7 @@
     <string name="text_on_button_yes">Yes</string>
     <string name="text_on_button_no">No</string>
     <string name="text_on_button_more">More</string>
+    <string name="text_on_button_less">Less</string>
 
     <string name="text_on_button_all_income">Income</string>
     <string name="text_on_button_all_spending">Spending</string>

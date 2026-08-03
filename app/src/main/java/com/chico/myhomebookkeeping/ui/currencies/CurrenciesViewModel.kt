@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.db.dao.CurrenciesDao
 import com.chico.myhomebookkeeping.db.dataBase
@@ -49,6 +50,22 @@ class CurrenciesViewModel(
     }
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
+        if (navControlHelper.previousFragment() == R.id.nav_new_money_moving &&
+            navControlHelper.currentFragment() == R.id.nav_currencies
+        ) {
+            val key = if (
+                sharedPreferences.getString(
+                    Constants.ARGS_NEW_PAYMENT_CURRENCY_SELECT_MODE_KEY,
+                    Constants.CURRENCY_SELECT_MODE_SOURCE
+                ) == Constants.CURRENCY_SELECT_MODE_DESTINATION
+            ) {
+                Constants.ARGS_NEW_PAYMENT_TRANSFER_CURRENCY_KEY
+            } else {
+                Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
+            }
+            setSP.saveToSP(key, id)
+            return
+        }
 
         setSP.checkAndSaveToSP(
             navControlHelper = navControlHelper,

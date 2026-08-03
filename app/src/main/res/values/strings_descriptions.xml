@@ -11,8 +11,13 @@
     <string name="description_cash_account_from">From account</string>
     <string name="description_cash_account_to">To account</string>
     <string name="description_currency">Currency</string>
+    <string name="description_currency_from">From currency</string>
+    <string name="description_currency_to">To currency</string>
     <string name="description_category">Category</string>
     <string name="description_amount">Amount</string>
+    <string name="description_amount_to">Received amount</string>
+    <string name="description_exchange_rate">Exchange rate</string>
+    <string name="description_transfer_fee">Transfer fee</string>
     <string name="description_description">Description</string>
 
     <string name="descriptions_last_4_digits_of_card">Last 4 digits of the card</string>

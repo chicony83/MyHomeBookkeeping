@@ -43,6 +43,11 @@ class NewMoneyMovingViewModel(
     private val argsIsTransferCreateKey = Constants.ARGS_NEW_PAYMENT_IS_TRANSFER_KEY
     private val argsCashAccountSelectModeCreateKey = Constants.ARGS_NEW_PAYMENT_CASH_ACCOUNT_SELECT_MODE_KEY
     private val argsCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_KEY
+    private val argsTransferCurrencyCreateKey = Constants.ARGS_NEW_PAYMENT_TRANSFER_CURRENCY_KEY
+    private val argsCurrencySelectModeCreateKey = Constants.ARGS_NEW_PAYMENT_CURRENCY_SELECT_MODE_KEY
+    private val argsTransferAmountCreateKey = Constants.ARGS_NEW_PAYMENT_TRANSFER_AMOUNT_KEY
+    private val argsTransferRateCreateKey = Constants.ARGS_NEW_PAYMENT_TRANSFER_RATE_KEY
+    private val argsTransferFeeCreateKey = Constants.ARGS_NEW_PAYMENT_TRANSFER_FEE_KEY
     private val argsCategoryCreateKey = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsAmountCreateKey = Constants.ARGS_NEW_PAYMENT_AMOUNT_KEY
     private val argsDescriptionCreateKey = Constants.ARGS_NEW_PAYMENT_DESCRIPTION_KEY
@@ -90,6 +95,10 @@ class NewMoneyMovingViewModel(
     val selectedCurrency: LiveData<Currencies>
         get() = _selectedCurrency
 
+    private val _selectedTransferCurrency = MutableLiveData<Currencies>()
+    val selectedTransferCurrency: LiveData<Currencies>
+        get() = _selectedTransferCurrency
+
     private val _selectedCashAccount = MutableLiveData<CashAccount>()
     val selectedCashAccount: LiveData<CashAccount>
         get() = _selectedCashAccount
@@ -109,6 +118,18 @@ class NewMoneyMovingViewModel(
     private val _enteredAmount = MutableLiveData<Double?>()
     val enteredAmount: LiveData<Double?>
         get() = _enteredAmount
+
+    private val _enteredTransferAmount = MutableLiveData<Double?>()
+    val enteredTransferAmount: LiveData<Double?>
+        get() = _enteredTransferAmount
+
+    private val _enteredTransferRate = MutableLiveData<Double?>()
+    val enteredTransferRate: LiveData<Double?>
+        get() = _enteredTransferRate
+
+    private val _enteredTransferFee = MutableLiveData<Double?>()
+    val enteredTransferFee: LiveData<Double?>
+        get() = _enteredTransferFee
 
     private val _submitButtonText = MutableLiveData<String>()
     val submitButton: LiveData<String>
@@ -131,10 +152,15 @@ class NewMoneyMovingViewModel(
     private var cashAccountSPInt = minusOneInt
     private var transferCashAccountSPInt = minusOneInt
     private var currencySPInt = minusOneInt
+    private var transferCurrencySPInt = minusOneInt
     private var categorySPInt = minusOneInt
     private var isTransferSPBoolean = false
     private var amountSPString = ""
+    private var transferAmountSPString = ""
+    private var transferRateSPString = ""
+    private var transferFeeSPString = ""
     private var descriptionSPString = ""
+    private var isTransferCurrencyManuallySelected = false
 //    var id: Long = -1
 
     fun getAndCheckArgsSp() {
@@ -150,9 +176,13 @@ class NewMoneyMovingViewModel(
         cashAccountSPInt = getSP.getInt(argsCashAccountCreateKey)
         transferCashAccountSPInt = getSP.getInt(argsTransferCashAccountCreateKey)
         currencySPInt = getSP.getInt(argsCurrencyCreateKey)
+        transferCurrencySPInt = getSP.getInt(argsTransferCurrencyCreateKey)
         categorySPInt = getSP.getInt(argsCategoryCreateKey)
         isTransferSPBoolean = getSP.getBooleanElseReturnFalse(argsIsTransferCreateKey)
         amountSPString = getSP.getString(argsAmountCreateKey).toString()
+        transferAmountSPString = getSP.getString(argsTransferAmountCreateKey).toString()
+        transferRateSPString = getSP.getString(argsTransferRateCreateKey).toString()
+        transferFeeSPString = getSP.getString(argsTransferFeeCreateKey).toString()
         descriptionSPString = getSP.getString(argsDescriptionCreateKey).toString()
     }
 
@@ -190,12 +220,45 @@ class NewMoneyMovingViewModel(
             }
         }
         launchIo {
+            launchUi {
+                if (modelCheck.isPositiveValue(transferCurrencySPInt)) {
+                    isTransferCurrencyManuallySelected = true
+                    postTransferCurrency(transferCurrencySPInt)
+                } else if (modelCheck.isPositiveValue(currencySPInt)) {
+                    postTransferCurrency(currencySPInt)
+                } else {
+                    postDefaultTransferCurrency()
+                }
+            }
+        }
+        launchIo {
             if (modelCheck.isPositiveValue(categorySPInt)) launchUi { postCategory(categorySPInt) }
         }
         launchIo {
             if (modelCheck.isPositiveValue(amountSPString)) launchUi {
                 postAmount(
                     Around.double(amountSPString)
+                )
+            }
+        }
+        launchIo {
+            if (modelCheck.isPositiveValue(transferAmountSPString)) launchUi {
+                postTransferAmount(Around.double(transferAmountSPString))
+            }
+        }
+        launchIo {
+            if (modelCheck.isPositiveValue(transferRateSPString)) launchUi {
+                postTransferRate(Around.double(transferRateSPString))
+            }
+        }
+        launchIo {
+            launchUi {
+                postTransferFee(
+                    if (modelCheck.isPositiveValue(transferFeeSPString)) {
+                        Around.double(transferFeeSPString)
+                    } else {
+                        0.0
+                    }
                 )
             }
         }
@@ -218,6 +281,18 @@ class NewMoneyMovingViewModel(
         _enteredAmount.postValue(amount)
     }
 
+    private fun postTransferAmount(amount: Double) {
+        _enteredTransferAmount.postValue(amount)
+    }
+
+    private fun postTransferRate(rate: Double) {
+        _enteredTransferRate.postValue(rate)
+    }
+
+    private fun postTransferFee(fee: Double) {
+        _enteredTransferFee.postValue(fee)
+    }
+
     private fun postDescription(descriptionSPString: String) {
         _enteredDescription.postValue(descriptionSPString)
     }
@@ -238,8 +313,20 @@ class NewMoneyMovingViewModel(
         )
     }
 
+    private suspend fun postTransferCurrency(idNum: Int) {
+        _selectedTransferCurrency.postValue(
+            CurrenciesUseCase.getOneCurrency(dbCurrencies, idNum)
+        )
+    }
+
     private suspend fun postDefaultCurrency() {
-        _selectedCurrency.postValue(
+        val defaultCurrency = CurrenciesUseCase.getDefaultCurrency(dbCurrencies)
+        _selectedCurrency.postValue(defaultCurrency)
+        _selectedTransferCurrency.postValue(defaultCurrency)
+    }
+
+    private suspend fun postDefaultTransferCurrency() {
+        _selectedTransferCurrency.postValue(
             CurrenciesUseCase.getDefaultCurrency(dbCurrencies)
         )
     }
@@ -266,13 +353,23 @@ class NewMoneyMovingViewModel(
         _isTransfer.postValue(isTransfer)
     }
 
-    fun saveDataToSP(amount: Double, description: String) {
+    fun saveDataToSP(
+        amount: Double,
+        description: String,
+        transferAmount: Double = 0.0,
+        transferRate: Double = 0.0,
+        transferFee: Double = 0.0
+    ) {
         with(setSP) {
             saveToSP(argsDateTimeCreateKey, _dateTime.value?.parseTimeToMillis())
 
             saveToSP(
                 argsCurrencyCreateKey,
                 _selectedCurrency.value?.currencyId
+            )
+            saveToSP(
+                argsTransferCurrencyCreateKey,
+                _selectedTransferCurrency.value?.currencyId
             )
             saveToSP(
                 argsCashAccountCreateKey,
@@ -290,6 +387,9 @@ class NewMoneyMovingViewModel(
             if (amount > 0) {
                 saveToSP(argsAmountCreateKey, amount.toString())
             }
+            saveToSP(argsTransferAmountCreateKey, if (transferAmount > 0) transferAmount.toString() else "")
+            saveToSP(argsTransferRateCreateKey, if (transferRate > 0) transferRate.toString() else "")
+            saveToSP(argsTransferFeeCreateKey, if (transferFee > 0) transferFee.toString() else "0")
             saveToSP(argsDescriptionCreateKey, description)
         }
     }
@@ -321,12 +421,15 @@ class NewMoneyMovingViewModel(
 
     suspend fun addNewTransfer(
         amount: Double,
+        transferAmount: Double,
+        transferFee: Double,
         description: String
     ): List<Long> {
         val dateTime: Long = dataTime.value?.parseTimeToMillis() ?: 0
         val sourceCashAccountValue: Int = _selectedCashAccount.value?.cashAccountId ?: 0
         val destinationCashAccountValue: Int = _selectedTransferCashAccount.value?.cashAccountId ?: 0
         val currencyValue: Int = _selectedCurrency.value?.currencyId ?: 0
+        val destinationCurrencyValue: Int = _selectedTransferCurrency.value?.currencyId ?: currencyValue
         val transferGroupId = System.currentTimeMillis()
         val source = MoneyMovement(
             timeStamp = dateTime,
@@ -342,15 +445,51 @@ class NewMoneyMovingViewModel(
         val destination = MoneyMovement(
             timeStamp = dateTime,
             cashAccount = destinationCashAccountValue,
-            currency = currencyValue,
+            currency = destinationCurrencyValue,
             category = null,
             paymentTypeId = PaymentTypeIds.TRANSFER,
-            amount = amount,
+            amount = transferAmount,
             description = description,
             transferGroupId = transferGroupId,
             transferDirection = PaymentTypeIds.TRANSFER_DIRECTION_TO
         )
-        return NewMoneyMovementUseCase.addTransferInDataBase(dbMoneyMovement, source, destination)
+        val feeMovement = if (transferFee > 0) {
+            val feeCategoryId = getOrCreateTransferFeeCategoryId()
+            MoneyMovement(
+                timeStamp = dateTime,
+                cashAccount = sourceCashAccountValue,
+                currency = currencyValue,
+                category = feeCategoryId,
+                paymentTypeId = PaymentTypeIds.SPENDING,
+                amount = transferFee,
+                description = description.takeIf { it.isNotBlank() }
+                    ?: TRANSFER_FEE_CATEGORY_NAME
+            )
+        } else {
+            null
+        }
+        return NewMoneyMovementUseCase.addTransferInDataBase(
+            dbMoneyMovement,
+            source,
+            destination,
+            feeMovement
+        )
+    }
+
+    private suspend fun getOrCreateTransferFeeCategoryId(): Int {
+        val existingCategory = dbCategory.getOneCategoryByCanonicalName(TRANSFER_FEE_CATEGORY_NAME)
+        val existingCategoryId = existingCategory?.categoriesId
+        if (existingCategoryId != null) return existingCategoryId
+
+        return dbCategory.addCategory(
+            Categories(
+                categoryName = TRANSFER_FEE_CATEGORY_NAME,
+                isIncome = false,
+                icon = null,
+                parentCategoryId = null,
+                categoryNameRu = TRANSFER_FEE_CATEGORY_NAME_RU
+            )
+        ).toInt()
     }
 
     fun setDate(it: Long?) {
@@ -390,6 +529,10 @@ class NewMoneyMovingViewModel(
         return selectedCurrency.value != null
     }
 
+    fun isTransferCurrencyNotNull(): Boolean {
+        return selectedTransferCurrency.value != null
+    }
+
     fun isCategoryNotNull(): Boolean {
         return selectedCategory.value != null
     }
@@ -410,9 +553,13 @@ class NewMoneyMovingViewModel(
         with(setSP) {
             saveToSP(argsDateTimeCreateKey, minusOneLong)
             saveToSP(argsAmountCreateKey, "")
+            saveToSP(argsTransferAmountCreateKey, "")
+            saveToSP(argsTransferRateCreateKey, "")
+            saveToSP(argsTransferFeeCreateKey, "0")
             saveToSP(argsDescriptionCreateKey, "")
             saveToSP(argsIsTransferCreateKey, false)
             saveToSP(argsCashAccountSelectModeCreateKey, Constants.CASH_ACCOUNT_SELECT_MODE_SOURCE)
+            saveToSP(argsCurrencySelectModeCreateKey, Constants.CURRENCY_SELECT_MODE_SOURCE)
         }
     }
 
@@ -450,12 +597,38 @@ class NewMoneyMovingViewModel(
         )
     }
 
+    fun setSourceCurrencySelectMode() {
+        setSP.saveToSP(
+            argsCurrencySelectModeCreateKey,
+            Constants.CURRENCY_SELECT_MODE_SOURCE
+        )
+    }
+
+    fun setDestinationCurrencySelectMode() {
+        setSP.saveToSP(
+            argsCurrencySelectModeCreateKey,
+            Constants.CURRENCY_SELECT_MODE_DESTINATION
+        )
+    }
+
     fun selectCurrency(currency: Currencies) {
         _selectedCurrency.postValue(currency)
+        if (!isTransferCurrencyManuallySelected) {
+            _selectedTransferCurrency.postValue(currency)
+        }
+    }
+
+    fun selectTransferCurrency(currency: Currencies) {
+        isTransferCurrencyManuallySelected = true
+        _selectedTransferCurrency.postValue(currency)
     }
 
     fun selectCashAccount(cashAccount: CashAccount) {
         _selectedCashAccount.postValue(cashAccount)
+    }
+
+    fun selectTransferCashAccount(cashAccount: CashAccount) {
+        _selectedTransferCashAccount.postValue(cashAccount)
     }
 
     suspend fun getSelectedCategoryDisplayName(category: Categories): String {
@@ -551,5 +724,10 @@ class NewMoneyMovingViewModel(
                 postCashAccount(cashAccountId)
             }
         }
+    }
+
+    companion object {
+        const val TRANSFER_FEE_CATEGORY_NAME = "Transfer fee"
+        const val TRANSFER_FEE_CATEGORY_NAME_RU = "Комиссия за перевод"
     }
 }

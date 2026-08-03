@@ -7,9 +7,11 @@
     <string name="message_name_not_entered">Введите название</string>
     <string name="message_category_not_selected">Выберите категорию</string>
     <string name="message_currency_not_selected">Выберите валюту</string>
+    <string name="message_transfer_currency_not_selected">Выберите валюту зачисления</string>
     <string name="message_cash_account_not_selected">Выберите счет</string>
     <string name="message_transfer_cash_account_not_selected">Выберите счёт зачисления</string>
     <string name="message_transfer_cash_accounts_must_be_different">Выберите два разных счёта</string>
+    <string name="message_enter_transfer_amount_or_rate">Введите сумму прихода или курс</string>
 
     <string name="message_entry_changed">Запись изменена</string>
     <string name="message_entry_added">Запись добавлена</string>

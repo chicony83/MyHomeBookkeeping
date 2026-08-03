@@ -15,4 +15,13 @@ object NewMoneyMovementUseCase {
     ): List<Long> {
         return db.addTransfer(source, destination)
     }
+
+    suspend fun addTransferInDataBase(
+        db: MoneyMovementDao,
+        source: MoneyMovement,
+        destination: MoneyMovement,
+        fee: MoneyMovement?
+    ): List<Long> {
+        return db.addTransfer(source, destination, fee)
+    }
 }

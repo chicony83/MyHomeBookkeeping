@@ -16,6 +16,20 @@ interface MoneyMovementDao {
         return listOf(addMovingMoney(source), addMovingMoney(destination))
     }
 
+    @Transaction
+    suspend fun addTransfer(
+        source: MoneyMovement,
+        destination: MoneyMovement,
+        fee: MoneyMovement?
+    ): List<Long> {
+        val transferRows = addTransfer(source, destination)
+        return if (fee != null) {
+            transferRows + addMovingMoney(fee)
+        } else {
+            transferRows
+        }
+    }
+
     @Query("SELECT * FROM money_moving_table WHERE id = :id")
     suspend fun getOneMoneyMoving(id:Long):MoneyMovement
 

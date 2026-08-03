@@ -116,8 +116,8 @@ object DefaultCategoryCatalog {
         group(
             parentName = "Finance",
             parentNameRu = "Финансы",
-            subcategories = listOf("Bank fees", "Taxes", "Fines", "Transfers", "Other"),
-            subcategoriesRu = listOf("Банковские комиссии", "Налоги", "Штрафы", "Переводы", "Другое")
+            subcategories = listOf("Bank fees", "Transfer fee", "Taxes", "Fines", "Transfers", "Other"),
+            subcategoriesRu = listOf("Банковские комиссии", "Комиссия за перевод", "Налоги", "Штрафы", "Переводы", "Другое")
         )
     )
 

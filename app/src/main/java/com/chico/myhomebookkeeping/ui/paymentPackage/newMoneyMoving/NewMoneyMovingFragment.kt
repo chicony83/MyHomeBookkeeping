@@ -7,6 +7,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
+import android.view.Gravity
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -21,6 +24,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -72,6 +76,8 @@ class NewMoneyMovingFragment : Fragment() {
     private var amountWholeDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_WHOLE_DIGITS
     private var amountFractionDigitsCount = Constants.QUICK_PAYMENT_AMOUNT_DEFAULT_FRACTION_DIGITS
     private var isSyncingAmountPickers = false
+    private var isSyncingTransferFields = false
+    private var isTransferMoreExpanded = false
     private var keyboardLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
     override fun onCreateView(
@@ -104,6 +110,11 @@ class NewMoneyMovingFragment : Fragment() {
                 pressSelectButton(R.id.nav_cash_account)
             }
             selectCurrenciesButton.setOnClickListener {
+                viewModel.setSourceCurrencySelectMode()
+                pressSelectButton(R.id.nav_currencies)
+            }
+            selectTransferCurrencyButton.setOnClickListener {
+                viewModel.setDestinationCurrencySelectMode()
                 pressSelectButton(R.id.nav_currencies)
             }
             selectCategoryButton.setOnClickListener {
@@ -128,6 +139,13 @@ class NewMoneyMovingFragment : Fragment() {
                 viewModel.setTransferMode(isTransfer)
                 updateTransferModeUi(isTransfer)
             }
+            transferMoreButton.setOnClickListener {
+                isTransferMoreExpanded = !isTransferMoreExpanded
+                updateTransferMoreVisibility(viewModel.isTransferMode(), animate = true)
+                if (isTransferMoreExpanded) {
+                    scrollToTransferMore()
+                }
+            }
             calcButton.setOnClickListener {
                 requireView().hideKeyboard()
                 val calcFragment: CalcDialogFragment = CalcDialogFragment.newInstance(
@@ -143,6 +161,21 @@ class NewMoneyMovingFragment : Fragment() {
             amountEditText.setOnClickListener {
                 if (isDigitsAmountInput()) {
                     scrollDescriptionIntoView()
+                }
+            }
+            amountEditText.doAfterTextChanged {
+                if (viewModel.isTransferMode()) {
+                    syncTransferFieldsFromSourceAmount()
+                }
+            }
+            transferAmountEditText.doAfterTextChanged {
+                if (!isSyncingTransferFields) {
+                    syncTransferRateFromDestinationAmount()
+                }
+            }
+            transferRateEditText.doAfterTextChanged {
+                if (!isSyncingTransferFields) {
+                    syncTransferAmountFromRate()
                 }
             }
             description.setOnFocusChangeListener { _, hasFocus ->
@@ -175,13 +208,17 @@ class NewMoneyMovingFragment : Fragment() {
                 val transferCashAccountName =
                     it.displayName(AppLanguage.getSelectedTag(requireContext()))
                 binding.selectTransferCashAccountButton.text = transferCashAccountName
-                if (viewModel.isTransferMode()) {
-                    binding.selectCategoryButton.text = transferCashAccountName
-                }
+                rebuildQuickTransferCashAccountRow()
             }
             selectedCurrency.observe(viewLifecycleOwner) {
                 binding.selectCurrenciesButton.text = it.currencyName
                 rebuildQuickCurrencyRow()
+                syncSameCurrencyTransferDefaults()
+            }
+            selectedTransferCurrency.observe(viewLifecycleOwner) {
+                binding.selectTransferCurrencyButton.text = it.currencyName
+                rebuildQuickTransferCurrencyRow()
+                syncSameCurrencyTransferDefaults()
             }
             selectedCategory.observe(viewLifecycleOwner) {
                 if (!viewModel.isTransferMode()) {
@@ -197,6 +234,15 @@ class NewMoneyMovingFragment : Fragment() {
             enteredAmount.observe(viewLifecycleOwner) {
                 binding.amountEditText.setText(it.toString())
                 syncAmountPickersFromAmountText()
+            }
+            enteredTransferAmount.observe(viewLifecycleOwner) {
+                binding.transferAmountEditText.setText(it.toString())
+            }
+            enteredTransferRate.observe(viewLifecycleOwner) {
+                binding.transferRateEditText.setText(it.toString())
+            }
+            enteredTransferFee.observe(viewLifecycleOwner) {
+                binding.transferFeeEditText.setText(it?.toString() ?: "0")
             }
             enteredDescription.observe(viewLifecycleOwner) {
                 binding.description.setText(it.toString())
@@ -267,11 +313,14 @@ class NewMoneyMovingFragment : Fragment() {
         } else {
             View.GONE
         }
+        updateTransferModeUi(viewModel.isTransferMode())
         lifecycleScope.launch {
             if (quickCurrencies.isEmpty()) quickCurrencies = viewModel.getAllCurrencies()
             if (quickCashAccounts.isEmpty()) quickCashAccounts = viewModel.getAllCashAccounts()
             rebuildQuickCurrencyRow()
+            rebuildQuickTransferCurrencyRow()
             rebuildQuickCashAccountRow()
+            rebuildQuickTransferCashAccountRow()
         }
     }
 
@@ -287,12 +336,14 @@ class NewMoneyMovingFragment : Fragment() {
                         ?: currency.currencyName,
                     isSelected = currency.currencyId == viewModel.selectedCurrency.value?.currencyId
                 ) {
+                    viewModel.setSourceCurrencySelectMode()
                     viewModel.selectCurrency(currency)
                 }
             )
         }
         binding.currencyQuickSelectRow.addView(
             createQuickSelectButton(getString(R.string.text_on_button_more), false) {
+                viewModel.setSourceCurrencySelectMode()
                 pressSelectButton(R.id.nav_currencies)
             }
         )
@@ -323,6 +374,57 @@ class NewMoneyMovingFragment : Fragment() {
         )
     }
 
+    private fun rebuildQuickTransferCurrencyRow() {
+        if (latestQuickPaymentSettings?.isCurrencyScrollEnabled != true || _binding == null) return
+        binding.transferCurrencyQuickSelectRow.removeAllViews()
+        quickCurrencies.forEach { currency ->
+            binding.transferCurrencyQuickSelectRow.addView(
+                createQuickSelectButton(
+                    text = currency.iso4217
+                        ?.takeIf { it.isNotBlank() }
+                        ?: currency.currencyNameShort
+                        ?: currency.currencyName,
+                    isSelected = currency.currencyId ==
+                        viewModel.selectedTransferCurrency.value?.currencyId
+                ) {
+                    viewModel.selectTransferCurrency(currency)
+                }
+            )
+        }
+        binding.transferCurrencyQuickSelectRow.addView(
+            createQuickSelectButton(getString(R.string.text_on_button_more), false) {
+                viewModel.setDestinationCurrencySelectMode()
+                pressSelectButton(R.id.nav_currencies)
+            }
+        )
+    }
+
+    private fun rebuildQuickTransferCashAccountRow() {
+        if (latestQuickPaymentSettings?.isCashAccountScrollEnabled != true || _binding == null) return
+        binding.transferCashAccountQuickSelectRow.removeAllViews()
+        quickCashAccounts.forEach { cashAccount ->
+            val cashAccountName = cashAccount.displayName(AppLanguage.getSelectedTag(requireContext()))
+            binding.transferCashAccountQuickSelectRow.addView(
+                createQuickSelectButton(
+                    text = cashAccount.bankAccountNumber.takeIf { it.isNotBlank() }?.let {
+                        "$cashAccountName *${it.takeLast(4)}"
+                    } ?: cashAccountName,
+                    isSelected = cashAccount.cashAccountId ==
+                        viewModel.selectedTransferCashAccount.value?.cashAccountId
+                ) {
+                    viewModel.setDestinationCashAccountSelectMode()
+                    viewModel.selectTransferCashAccount(cashAccount)
+                }
+            )
+        }
+        binding.transferCashAccountQuickSelectRow.addView(
+            createQuickSelectButton(getString(R.string.text_on_button_more), false) {
+                viewModel.setDestinationCashAccountSelectMode()
+                pressSelectButton(R.id.nav_cash_account)
+            }
+        )
+    }
+
     private fun createQuickSelectButton(
         text: String,
         isSelected: Boolean,
@@ -332,6 +434,8 @@ class NewMoneyMovingFragment : Fragment() {
             this.text = text
             isAllCaps = false
             maxLines = 1
+            gravity = Gravity.CENTER
+            minHeight = resources.getDimensionPixelSize(R.dimen.quick_select_button_height)
             setPadding(
                 resources.getDimensionPixelSize(R.dimen.margin_normal),
                 0,
@@ -340,7 +444,7 @@ class NewMoneyMovingFragment : Fragment() {
             )
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                resources.getDimensionPixelSize(R.dimen.quick_select_button_height)
             ).apply {
                 marginEnd = resources.getDimensionPixelSize(R.dimen.margin_half_normal)
             }
@@ -606,13 +710,18 @@ class NewMoneyMovingFragment : Fragment() {
     private fun pressSubmitButton() {
         val isCashAccountNotNull = viewModel.isCashAccountNotNull()
         val isCurrencyNotNull = viewModel.isCurrencyNotNull()
+        val isTransferCurrencyNotNull = viewModel.isTransferCurrencyNotNull()
         val isCategoryNotNull = viewModel.isCategoryNotNull()
         val isTransferCashAccountNotNull = viewModel.isTransferCashAccountNotNull()
         val checkAmount = uiHelper.isEntered(binding.amountEditText.text)
         if (isCashAccountNotNull) {
             if (isCurrencyNotNull) {
                 if (viewModel.isTransferMode()) {
-                    pressSubmitTransferButton(isTransferCashAccountNotNull, checkAmount)
+                    pressSubmitTransferButton(
+                        isTransferCashAccountNotNull,
+                        isTransferCurrencyNotNull,
+                        checkAmount
+                    )
                 } else {
                     pressSubmitPaymentButton(isCategoryNotNull, checkAmount)
                 }
@@ -645,10 +754,15 @@ class NewMoneyMovingFragment : Fragment() {
 
     private fun pressSubmitTransferButton(
         isTransferCashAccountNotNull: Boolean,
+        isTransferCurrencyNotNull: Boolean,
         checkAmount: Boolean
     ) {
         if (!isTransferCashAccountNotNull) {
             message(getString(R.string.message_transfer_cash_account_not_selected))
+            return
+        }
+        if (!isTransferCurrencyNotNull) {
+            message(getString(R.string.message_transfer_currency_not_selected))
             return
         }
         if (!viewModel.isTransferAccountsDifferent()) {
@@ -661,7 +775,12 @@ class NewMoneyMovingFragment : Fragment() {
                     addNewTransfer()
                 }
             } else {
-                addNewTransfer()
+                val destinationAmount = getTransferAmount()
+                if (destinationAmount != null && destinationAmount > 0) {
+                    addNewTransfer()
+                } else {
+                    message(getString(R.string.message_enter_transfer_amount_or_rate))
+                }
             }
         } else {
             setBackgroundWarningColor()
@@ -758,6 +877,73 @@ class NewMoneyMovingFragment : Fragment() {
         return parseAmountOrNull(amountText) == 0.0
     }
 
+    private fun syncSameCurrencyTransferDefaults() {
+        if (!viewModel.isTransferMode()) return
+        val sourceCurrencyId = viewModel.selectedCurrency.value?.currencyId
+        val destinationCurrencyId = viewModel.selectedTransferCurrency.value?.currencyId
+        if (sourceCurrencyId != null && sourceCurrencyId == destinationCurrencyId) {
+            setTransferFieldText(binding.transferRateEditText, "1")
+            val sourceAmount = binding.amountEditText.text.toString()
+            if (sourceAmount.isNotBlank()) {
+                setTransferFieldText(binding.transferAmountEditText, sourceAmount)
+            }
+        }
+    }
+
+    private fun syncTransferFieldsFromSourceAmount() {
+        if (isSyncingTransferFields) return
+        val sourceAmount = parseAmountOrNull(binding.amountEditText.text.toString()) ?: return
+        if (isSameTransferCurrency()) {
+            setTransferFieldText(binding.transferRateEditText, "1")
+            setTransferFieldText(binding.transferAmountEditText, formatAmount(sourceAmount))
+            return
+        }
+        val rate = parseAmountOrNull(binding.transferRateEditText.text.toString())
+        if (rate != null && rate > 0) {
+            setTransferFieldText(binding.transferAmountEditText, formatAmount(sourceAmount * rate))
+        }
+    }
+
+    private fun syncTransferRateFromDestinationAmount() {
+        val sourceAmount = parseAmountOrNull(binding.amountEditText.text.toString()) ?: return
+        val destinationAmount =
+            parseAmountOrNull(binding.transferAmountEditText.text.toString()) ?: return
+        if (sourceAmount <= 0) return
+        setTransferFieldText(binding.transferRateEditText, formatRate(destinationAmount / sourceAmount))
+    }
+
+    private fun syncTransferAmountFromRate() {
+        val sourceAmount = parseAmountOrNull(binding.amountEditText.text.toString()) ?: return
+        val rate = parseAmountOrNull(binding.transferRateEditText.text.toString()) ?: return
+        if (sourceAmount <= 0 || rate <= 0) return
+        setTransferFieldText(binding.transferAmountEditText, formatAmount(sourceAmount * rate))
+    }
+
+    private fun isSameTransferCurrency(): Boolean {
+        val sourceCurrencyId = viewModel.selectedCurrency.value?.currencyId
+        val destinationCurrencyId = viewModel.selectedTransferCurrency.value?.currencyId
+        return sourceCurrencyId != null && sourceCurrencyId == destinationCurrencyId
+    }
+
+    private fun setTransferFieldText(editText: EditText, value: String) {
+        if (editText.text.toString() == value) return
+        isSyncingTransferFields = true
+        editText.setText(value)
+        isSyncingTransferFields = false
+    }
+
+    private fun formatAmount(value: Double): String {
+        return String.format(Locale.US, "%.2f", value).trimTrailingZeros()
+    }
+
+    private fun formatRate(value: Double): String {
+        return String.format(Locale.US, "%.6f", value).trimTrailingZeros()
+    }
+
+    private fun String.trimTrailingZeros(): String {
+        return replace(Regex("(\\.\\d*?)0+$"), "$1").removeSuffix(".")
+    }
+
     private fun parseAmountOrNull(amountText: String): Double? {
         return try {
             Around.double(amountText)
@@ -806,11 +992,16 @@ class NewMoneyMovingFragment : Fragment() {
 
     private fun addNewTransfer() {
         val amount: Double = Around.double(binding.amountEditText.text.toString())
+        val transferAmount = getTransferAmount() ?: amount
+        val transferRate = getTransferRate()
+        val transferFee = getTransferFee()
         val description = binding.description.text.toString()
-        viewModel.saveDataToSP(amount, description)
+        viewModel.saveDataToSP(amount, description, transferAmount, transferRate, transferFee)
         runBlocking {
             val result = viewModel.addNewTransfer(
                 amount = amount,
+                transferAmount = transferAmount,
+                transferFee = transferFee,
                 description = description
             )
             if (result.all { it > 0 }) {
@@ -841,12 +1032,20 @@ class NewMoneyMovingFragment : Fragment() {
 //    }
 
     private fun pressSelectButton(fragment: Int, args: Bundle? = null) {
-        viewModel.saveDataToSP(getAmount(), getDescription())
+        viewModel.saveDataToSP(
+            amount = getAmount(),
+            description = getDescription(),
+            transferAmount = getTransferAmount() ?: 0.0,
+            transferRate = getTransferRate(),
+            transferFee = getTransferFee()
+        )
         navControlHelper.toSelectedFragment(fragment, args)
 //        control.navigate(fragment)
     }
 
     private fun updateTransferModeUi(isTransfer: Boolean) {
+        val isCurrencyScrollEnabled = latestQuickPaymentSettings?.isCurrencyScrollEnabled == true
+        val isCashAccountScrollEnabled = latestQuickPaymentSettings?.isCashAccountScrollEnabled == true
         binding.paymentTypeSwitchButton.text = getString(
             if (isTransfer) R.string.text_on_button_transfer
             else R.string.text_on_button_payment
@@ -855,20 +1054,32 @@ class NewMoneyMovingFragment : Fragment() {
             if (isTransfer) R.string.description_cash_account_from
             else R.string.description_cash_account
         )
-        binding.destinationCashAccountLabel.visibility = View.GONE
-        binding.selectTransferCashAccountButton.visibility = View.GONE
-        binding.categoryLabel.text = getString(
-            if (isTransfer) R.string.description_cash_account_to
-            else R.string.description_category
+        binding.currencyLabel.text = getString(
+            if (isTransfer) R.string.description_currency_from
+            else R.string.description_currency
         )
-        binding.selectCategoryButton.text = if (isTransfer) {
-            viewModel.selectedTransferCashAccount.value?.displayName(
-                AppLanguage.getSelectedTag(requireContext())
-            )
-                ?: getString(R.string.text_on_button_select_cash_account)
-        } else {
-            getString(R.string.text_on_button_select_category)
+        binding.destinationCashAccountLabel.visibility = if (isTransfer) View.VISIBLE else View.GONE
+        binding.selectTransferCashAccountButton.visibility =
+            if (isTransfer && !isCashAccountScrollEnabled) View.VISIBLE else View.GONE
+        binding.transferCashAccountQuickSelectScroll.visibility =
+            if (isTransfer && isCashAccountScrollEnabled) View.VISIBLE else View.GONE
+        binding.transferCurrencyLabel.visibility = if (isTransfer) View.VISIBLE else View.GONE
+        binding.selectTransferCurrencyButton.visibility =
+            if (isTransfer && !isCurrencyScrollEnabled) View.VISIBLE else View.GONE
+        binding.transferCurrencyQuickSelectScroll.visibility =
+            if (isTransfer && isCurrencyScrollEnabled) View.VISIBLE else View.GONE
+        binding.transferAmountLabel.visibility = if (isTransfer) View.VISIBLE else View.GONE
+        binding.transferAmountEditText.visibility = if (isTransfer) View.VISIBLE else View.GONE
+        binding.transferMoreSheet.visibility = View.VISIBLE
+        binding.transferMoreButton.visibility = if (isTransfer) View.VISIBLE else View.GONE
+        updateTransferMoreSheetStyle(isTransfer)
+        updateTransferMoreVisibility(isTransfer)
+        if (isTransfer && binding.transferFeeEditText.text.isNullOrBlank()) {
+            binding.transferFeeEditText.setText("0")
         }
+        binding.categoryLabel.visibility = if (isTransfer) View.GONE else View.VISIBLE
+        binding.selectCategoryButton.visibility = if (isTransfer) View.GONE else View.VISIBLE
+        binding.selectCategoryButton.text = getString(R.string.text_on_button_select_category)
         if (!isTransfer) {
             viewModel.selectedCategory.value?.let { category ->
                 lifecycleScope.launch {
@@ -876,7 +1087,80 @@ class NewMoneyMovingFragment : Fragment() {
                         viewModel.getSelectedCategoryDisplayName(category)
                 }
             }
+        } else {
+            syncSameCurrencyTransferDefaults()
         }
+    }
+
+    private fun updateTransferMoreVisibility(isTransfer: Boolean, animate: Boolean = false) {
+        if (animate && _binding != null) {
+            TransitionManager.beginDelayedTransition(
+                binding.linearLayout,
+                AutoTransition().apply { duration = TRANSFER_MORE_ANIMATION_DURATION_MS }
+            )
+        }
+        val showTransferMore = isTransfer && isTransferMoreExpanded
+        binding.transferMoreContainer.visibility = if (!isTransfer || showTransferMore) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.transferRateLabel.visibility = if (showTransferMore) View.VISIBLE else View.GONE
+        binding.transferRateEditText.visibility = if (showTransferMore) View.VISIBLE else View.GONE
+        binding.transferFeeLabel.visibility = if (showTransferMore) View.VISIBLE else View.GONE
+        binding.transferFeeEditText.visibility = if (showTransferMore) View.VISIBLE else View.GONE
+        binding.descriptionLabel.visibility = if (!isTransfer || showTransferMore) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.description.visibility = if (!isTransfer || showTransferMore) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.transferMoreText.text = getString(
+            if (isTransferMoreExpanded) R.string.text_on_button_less
+            else R.string.text_on_button_more
+        )
+        binding.transferMoreIcon.setImageResource(
+            if (isTransferMoreExpanded) R.drawable.ic_expand_remove
+            else R.drawable.ic_expand_add
+        )
+    }
+
+    private fun updateTransferMoreSheetStyle(isTransfer: Boolean) {
+        val normalPadding = resources.getDimensionPixelSize(R.dimen.margin_normal)
+        if (isTransfer) {
+            binding.transferMoreSheet.setBackgroundResource(R.drawable.button_neutral_background)
+            binding.transferMoreContainer.setPadding(
+                normalPadding,
+                0,
+                normalPadding,
+                normalPadding
+            )
+        } else {
+            binding.transferMoreSheet.background = null
+            binding.transferMoreContainer.setPadding(0, 0, 0, 0)
+        }
+    }
+
+    private fun scrollToTransferMore() {
+        binding.transferMoreSheet.postDelayed({
+            if (_binding == null || !isTransferMoreExpanded) return@postDelayed
+
+            val bottomPadding = resources.getDimensionPixelSize(R.dimen.margin_normal)
+            val targetBottom = binding.transferMoreSheet.bottom + bottomPadding
+            val visibleBottom =
+                binding.newMoneyMovingScrollView.scrollY + binding.newMoneyMovingScrollView.height
+
+            if (targetBottom > visibleBottom) {
+                binding.newMoneyMovingScrollView.smoothScrollTo(
+                    0,
+                    targetBottom - binding.newMoneyMovingScrollView.height
+                )
+            }
+        }, TRANSFER_MORE_FOCUS_DELAY_MS)
     }
 
     private fun getDescription(): String {
@@ -891,6 +1175,21 @@ class NewMoneyMovingFragment : Fragment() {
             if (it.isNotEmpty()) Around.double(it)
             else 0.0
         }
+    }
+
+    private fun getTransferAmount(): Double? {
+        return parseAmountOrNull(binding.transferAmountEditText.text.toString())
+            ?: parseAmountOrNull(binding.transferRateEditText.text.toString())?.let {
+                getAmount() * it
+            }
+    }
+
+    private fun getTransferRate(): Double {
+        return parseAmountOrNull(binding.transferRateEditText.text.toString()) ?: 0.0
+    }
+
+    private fun getTransferFee(): Double {
+        return parseAmountOrNull(binding.transferFeeEditText.text.toString()) ?: 0.0
     }
 
     override fun onDestroyView() {
@@ -1076,3 +1375,5 @@ private class DigitWheelView(
 }
 
 private const val KEYBOARD_SCROLL_DELAY_MS = 250L
+private const val TRANSFER_MORE_ANIMATION_DURATION_MS = 180L
+private const val TRANSFER_MORE_FOCUS_DELAY_MS = 190L

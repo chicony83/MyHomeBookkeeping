@@ -22,7 +22,7 @@ import com.chico.myhomebookkeeping.db.entity.*
         IconCategory::class,
         PaymentType::class
     ],
-    version = 9,
+    version = 10,
     exportSchema = true,
 )
 abstract class RoomDataBase : RoomDatabase() {
@@ -53,6 +53,7 @@ object dataBase {
             .addMigrations(migration_6_to_7)
             .addMigrations(migration_7_to_8)
             .addMigrations(migration_8_to_9)
+            .addMigrations(migration_9_to_10)
             .addCallback(seedPaymentTypesOnCreate)
             .build()
 }
@@ -169,6 +170,12 @@ private object migration_8_to_9 : Migration(8, 9) {
     }
 }
 
+private object migration_9_to_10 : Migration(9, 10) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        addTransferFeeCategory(database)
+    }
+}
+
 private object seedPaymentTypesOnCreate : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
@@ -221,6 +228,20 @@ private fun fillMissingLocalizedNames(database: SupportSQLiteDatabase) {
                 "SET `cash_account_name_ru` = 'Наличные' " +
                 "WHERE `cash_account_name` = 'Cash' " +
                 "AND (`cash_account_name_ru` IS NULL OR TRIM(`cash_account_name_ru`) = '')"
+    )
+}
+
+private fun addTransferFeeCategory(database: SupportSQLiteDatabase) {
+    database.execSQL(
+        "INSERT INTO `category_table` " +
+                "(`category_name`, `is_income`, `icon_category`, `parent_category_id`, `category_order`, `category_name_ru`) " +
+                "SELECT 'Transfer fee', 0, NULL, " +
+                "(SELECT `id` FROM `parent_categories_table` WHERE `parent_category_name` = 'Finance' LIMIT 1), " +
+                "COALESCE((SELECT MAX(`category_order`) + 1 FROM `category_table`), 0), " +
+                "'Комиссия за перевод' " +
+                "WHERE NOT EXISTS (" +
+                "SELECT 1 FROM `category_table` WHERE `category_name` = 'Transfer fee'" +
+                ")"
     )
 }
 
