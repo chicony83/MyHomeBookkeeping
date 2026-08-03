@@ -22,6 +22,11 @@
             android:icon="@drawable/ic_add_box"
             android:title="@string/fragment_label_new_money_moving" />
         <item
+            android:contentDescription="@string/fragment_label_new_transfer"
+            android:id="@+id/nav_new_transfer"
+            android:icon="@drawable/ic_attach_money"
+            android:title="@string/fragment_label_new_transfer" />
+        <item
             android:contentDescription="@string/fragment_label_select_fast_payment"
             android:id="@+id/nav_fast_payments_fragment"
             android:icon="@drawable/blanks"

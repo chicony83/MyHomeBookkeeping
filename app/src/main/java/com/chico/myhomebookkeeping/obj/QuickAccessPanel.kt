@@ -26,6 +26,12 @@ object QuickAccessPanel {
             iconRes = R.drawable.ic_add_box
         ),
         Item(
+            key = "transfer",
+            destinationId = R.id.nav_new_transfer,
+            titleRes = R.string.bottom_navigation_transfer,
+            iconRes = R.drawable.ic_attach_money
+        ),
+        Item(
             key = "categories",
             destinationId = R.id.nav_categories,
             titleRes = R.string.bottom_navigation_categories,

@@ -97,6 +97,8 @@ class CurrenciesFragment : Fragment() {
         }
         if (navControlHelper.isPreviousFragment(R.id.nav_new_money_moving)
             or
+            navControlHelper.isPreviousFragment(R.id.nav_new_transfer)
+            or
             navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
         ) {
             uiHelper.hideUiElement(binding.selectAllButton)

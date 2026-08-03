@@ -1,4 +1,4 @@
-package com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving
+package com.chico.myhomebookkeeping.ui.paymentPackage.newTransfer
 
 import android.annotation.SuppressLint
 import android.animation.ValueAnimator
@@ -43,6 +43,7 @@ import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.textWathers.NewMoneyMovingAmountTextWatcher
 import com.chico.myhomebookkeeping.ui.calc.CalcDialogFragment
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
+import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 import com.chico.myhomebookkeeping.utils.hideKeyboard
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -57,9 +58,9 @@ import java.util.*
 import kotlin.math.abs
 
 
-class NewMoneyMovingFragment : Fragment() {
+class NewTransferFragment : Fragment() {
 
-    private val viewModel: NewMoneyMovingViewModel by viewModels()
+    private val viewModel: NewTransferViewModel by viewModels()
     private var _binding: FragmentNewMoneyMovingBinding? = null
     private val binding get() = _binding!!
 
@@ -135,7 +136,7 @@ class NewMoneyMovingFragment : Fragment() {
                 pressSubmitButton()
             }
             paymentTypeSwitchButton.setOnClickListener {
-                pressSelectButton(R.id.nav_new_transfer)
+                pressSelectButton(R.id.nav_new_money_moving)
             }
             transferMoreButton.setOnClickListener {
                 isTransferMoreExpanded = !isTransferMoreExpanded
@@ -256,8 +257,8 @@ class NewMoneyMovingFragment : Fragment() {
             }
         }
         viewModel.getAndCheckArgsSp()
-        viewModel.setTransferMode(false)
-        updateTransferModeUi(false)
+        viewModel.setTransferMode(true)
+        updateTransferModeUi(true)
 
         super.onViewCreated(view, savedInstanceState)
 

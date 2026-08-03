@@ -6,6 +6,7 @@
     <string name="fragment_label_select_categories">Выберите категории</string>
     <string name="fragment_label_time_period">Выберите период времени</string>
     <string name="fragment_label_new_money_moving">Добавление</string>
+    <string name="fragment_label_new_transfer">Перевод</string>
     <string name="fragment_label_select_password">Пароль</string>
     <string name="fragment_label_money_moving_query">Параметры запроса</string>
     <string name="fragment_label_money_moving">Журнал</string>

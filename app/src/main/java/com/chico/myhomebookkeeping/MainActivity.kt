@@ -125,6 +125,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_reports,
                 R.id.nav_fast_payments_fragment,
                 R.id.nav_new_money_moving,
+                R.id.nav_new_transfer,
                 R.id.nav_categories,
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
@@ -340,7 +341,8 @@ class MainActivity : AppCompatActivity() {
         quickPaymentSettingsMenuItem = menu.findItem(R.id.quick_payment_settings_button)
         val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
         val isNewMoneyMovingDestination =
-            navController.currentDestination?.id == R.id.nav_new_money_moving
+            navController.currentDestination?.id == R.id.nav_new_money_moving ||
+                    navController.currentDestination?.id == R.id.nav_new_transfer
         searchMenuItem?.isVisible = isCategoriesDestination
         categoryOrderMenuItem?.isVisible = isCategoriesDestination
         quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
@@ -389,7 +391,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearchMenuVisibility() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isCategoriesDestination = destination.id == R.id.nav_categories
-            val isNewMoneyMovingDestination = destination.id == R.id.nav_new_money_moving
+            val isNewMoneyMovingDestination =
+                destination.id == R.id.nav_new_money_moving || destination.id == R.id.nav_new_transfer
             searchMenuItem?.isVisible = isCategoriesDestination
             categoryOrderMenuItem?.isVisible = isCategoriesDestination
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination

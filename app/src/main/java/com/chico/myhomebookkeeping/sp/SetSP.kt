@@ -9,6 +9,7 @@ import com.chico.myhomebookkeeping.helpers.NavControlHelper
 
 class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navNewMoneyMoving = R.id.nav_new_money_moving
+    private val navNewTransfer = R.id.nav_new_transfer
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
@@ -68,7 +69,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
                     R.id.nav_currencies -> args = argsQueryCurrency
                 }
             }
-            navNewMoneyMoving -> {
+            navNewMoneyMoving, navNewTransfer -> {
                 when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsCreateCategory
                     R.id.nav_cash_account -> args = argsCreateCashAccount
@@ -115,7 +116,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
             navMoneyMovingQuery -> {
                 saveToSP(argsForQuery, id)
             }
-            navNewMoneyMoving -> {
+            navNewMoneyMoving, navNewTransfer -> {
                 saveToSP(argsForNew, id)
             }
             navChangeMoneyMoving -> {
