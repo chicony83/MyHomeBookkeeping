@@ -5,10 +5,15 @@ This file is the full internal release log. Keep all useful development notes he
 ## 0.12.1
 
 ### User-facing
+- Added Polish language support in first launch and Settings.
+- Added Polish translations for app screens and standard category names.
+- Existing standard categories now receive Polish display names after update.
 - Added centered date separators in the Journal: today, yesterday, the day before yesterday, and older dates in the system long-date format.
 - Added a Journal setting to show or hide date separators. It is enabled by default.
 
 ### Development
+- Added database version 11 with nullable Polish display-name columns for cash accounts, categories, parent categories, and quick payments.
+- Added migration-time Polish backfill for standard data and extended localized SQL/display helpers to use Polish names.
 - Journal entries now render through mixed RecyclerView row types for payments and date separators.
 - Persisted the date separator setting in SharedPreferences and included it in backup/restore settings.
 

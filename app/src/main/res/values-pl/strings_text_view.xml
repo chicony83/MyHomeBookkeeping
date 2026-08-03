@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_view_first_launch_select_you_currencies">Wybierz swoje waluty</string>
+    <string name="text_view_select_parent_category">Wybierz kategorię nadrzędną</string>
+    <string name="text_view_All_categories">Wszystkie</string>
+    <string name="text_view_parent_category">Kategoria nadrzędna</string>
+    <string name="text_view_no_parent_category">brak kategorii nadrzędnej</string>
+    <string name="text_view_password_code_prompt">Utwórz 4-cyfrowy kod</string>
+    <string name="text_view_password_hint_label">Podpowiedź</string>
+    <string name="text_view_period_start">Początek okresu</string>
+    <string name="text_view_period_end">Koniec okresu</string>
+    <string name="text_view_start_date">Data początkowa</string>
+    <string name="text_view_end_date">Data końcowa</string>
+    <string name="chart_label_report">Raport</string>
+</resources>

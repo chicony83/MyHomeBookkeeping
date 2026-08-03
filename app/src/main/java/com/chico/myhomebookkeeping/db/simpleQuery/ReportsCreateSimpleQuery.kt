@@ -6,9 +6,9 @@ import com.chico.myhomebookkeeping.obj.Constants
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(languageTag: String): String {
-        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", languageTag)
-        val categoryName = localizedColumn("category_name", "category_name_ru", languageTag)
-        val parentCategoryName = localizedColumn("parent_category_name", "parent_category_name_ru", languageTag)
+        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", "cash_account_name_pl", languageTag)
+        val categoryName = localizedColumn("category_name", "category_name_ru", "category_name_pl", languageTag)
+        val parentCategoryName = localizedColumn("parent_category_name", "parent_category_name_ru", "parent_category_name_pl", languageTag)
         return "SELECT money_moving_table.id,time_stamp, " +
                 "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
@@ -114,11 +114,11 @@ object ReportsCreateSimpleQuery {
         return " OR "
     }
 
-    private fun localizedColumn(baseColumn: String, ruColumn: String, languageTag: String): String {
-        return if (languageTag == Constants.APP_LANGUAGE_RUSSIAN) {
-            "COALESCE($ruColumn, $baseColumn)"
-        } else {
-            baseColumn
+    private fun localizedColumn(baseColumn: String, ruColumn: String, plColumn: String, languageTag: String): String {
+        return when (languageTag) {
+            Constants.APP_LANGUAGE_RUSSIAN -> "COALESCE($ruColumn, $baseColumn)"
+            Constants.APP_LANGUAGE_POLISH -> "COALESCE($plColumn, $baseColumn)"
+            else -> baseColumn
         }
     }
 

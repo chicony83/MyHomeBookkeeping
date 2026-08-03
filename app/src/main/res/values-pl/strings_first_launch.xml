@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="first_launch_language_title">Wybierz język aplikacji</string>
+    <string name="first_launch_install_mode_title">Wybierz typ konfiguracji</string>
+    <string name="first_launch_install_mode_default">Konfiguracja domyślna</string>
+    <string name="first_launch_install_mode_custom">Konfiguracja własna</string>
+    <string name="first_launch_install_mode_clean_transfer">Czysta konfiguracja do przeniesienia bazy</string>
+    <string name="first_launch_clean_install_message">Czysta konfiguracja zakończona. Aby przenieść dane z innego telefonu, otwórz Ustawienia i przywróć bazę danych z kopii zapasowej.</string>
+    <string name="first_launch_currencies_title">Wybierz swoje waluty</string>
+    <string name="first_launch_currencies_hint">Zaznacz waluty, których chcesz używać.\nW następnym kroku wybierzesz walutę domyślną.</string>
+    <string name="first_launch_currencies_available_count">Waluty - %1$d</string>
+    <string name="first_launch_currencies_selected_count">Wybrane - %1$d</string>
+    <string name="first_launch_currencies_continue">Dalej - wybierz domyślną</string>
+    <string name="first_launch_currencies_empty_message">Dodaj co najmniej jedną walutę, aby kontynuować</string>
+    <string name="first_launch_currencies_major">Główne waluty</string>
+    <string name="first_launch_currencies_fiat">Waluty</string>
+    <string name="first_launch_currencies_search_hint">Szukaj waluty</string>
+    <string name="first_launch_currencies_more">Więcej walut</string>
+    <string name="first_launch_currencies_other">Pozostałe waluty</string>
+    <string name="first_launch_currencies_crypto">Kryptowaluty</string>
+    <string name="first_launch_setup_step_title">Konfiguracja: krok %1$d z %2$d</string>
+    <string name="first_launch_setup_next">Dalej</string>
+    <string name="first_launch_setup_done">Gotowe</string>
+    <string name="first_launch_default_currency_crypto_notice">Na liście znajdują się kryptowaluty. Każdą wybraną walutę możesz ustawić jako domyślną.</string>
+    <string name="first_launch_start_destination_title">Wybierz sekcję otwieraną po starcie aplikacji. Możesz to później zmienić w ustawieniach.</string>
+    <string name="first_launch_start_destination_fast_payments">Szybkie płatności</string>
+    <string name="first_launch_start_destination_categories">Kategorie</string>
+    <string name="first_launch_start_destination_journal">Dziennik</string>
+    <string name="first_launch_categories_title">Wybierz kategorie</string>
+    <string name="first_launch_categories_hint">Tutaj widoczne są tylko kategorie nadrzędne. Podkategorie zostaną dodane automatycznie.</string>
+    <string name="first_launch_categories_subcategory_count">%1$d podkategorii</string>
+    <string name="first_launch_required_category_confirmation">To ważna kategoria. Czy na pewno chcesz ją wyłączyć?</string>
+    <string name="first_launch_required_category_confirm">Tak</string>
+    <string name="first_launch_required_category_cancel">Nie</string>
+    <string name="quick_setup_add_Cash_account">Konta</string>
+    <string name="quick_setup_name_Card">Karta</string>
+    <string name="quick_setup_name_Cash">Gotówka</string>
+    <string name="quick_setup_name_Currency">PLN</string>
+    <string name="quick_setup_add_Category">Kategorie</string>
+    <string name="quick_setup_name_The_Income">Przychody</string>
+    <string name="quick_setup_name_Products">Produkty</string>
+    <string name="quick_setup_name_Fuel_for_the_car">Paliwo do samochodu</string>
+    <string name="quick_setup_name_Cellular_communication">Telefon komórkowy</string>
+    <string name="quick_setup_name_Credit">Kredyt</string>
+    <string name="quick_setup_name_Medicines">Leki</string>
+    <string name="quick_setup_name_Public_transport">Transport publiczny</string>
+</resources>

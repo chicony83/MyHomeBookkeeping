@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="message_too_short_name">Za krótka nazwa</string>
+    <string name="message_select_type_of_category">Wybierz typ kategorii</string>
+    <string name="message_enter_amount">Wpisz kwotę</string>
+    <string name="zero_amount_confirm_title">Kwota zerowa</string>
+    <string name="zero_amount_confirm_message">Wpisano kwotę zerową. Kontynuować dodawanie?</string>
+    <string name="message_name_not_entered">Wpisz nazwę</string>
+    <string name="message_category_not_selected">Wybierz kategorię</string>
+    <string name="message_currency_not_selected">Wybierz walutę</string>
+    <string name="message_transfer_currency_not_selected">Wybierz walutę docelową</string>
+    <string name="message_cash_account_not_selected">Wybierz konto</string>
+    <string name="message_transfer_cash_account_not_selected">Wybierz konto docelowe</string>
+    <string name="message_transfer_cash_accounts_must_be_different">Wybierz dwa różne konta</string>
+    <string name="message_enter_transfer_amount_or_rate">Wpisz otrzymaną kwotę lub kurs wymiany</string>
+    <string name="message_entry_changed">Wpis zmieniony</string>
+    <string name="message_entry_added">Wpis dodany</string>
+    <string name="message_entry_add_failed">Wpis nie został dodany</string>
+    <string name="message_empty_journal_title">Witaj!</string>
+    <string name="message_empty_journal_first_payment_hint">To pierwsze uruchomienie aplikacji. Utwórzmy Twój pierwszy wpis.\n\nDotknij Kategorie na dole ekranu i po prostu wybierz kategorię z listy.</string>
+    <string name="message_start_date_can_not_be_more_than_the_current">Data początkowa nie może być późniejsza niż bieżąca</string>
+    <string name="message_the_end_date_is_greater_than_the_current_one">Patrzysz w przyszłość?\nData końcowa jest późniejsza niż bieżąca!</string>
+    <string name="message_end_date_cannot_be_less_than_start_date">Data końcowa nie może być wcześniejsza niż początkowa</string>
+    <string name="message_deletion_canceled">Usuwanie anulowane</string>
+    <string name="message_entry_deleted">Wpis usunięty</string>
+    <string name="message_you_have_latest_version">Masz najnowszą wersję</string>
+    <string name="message_you_can_update_the_program">Możesz zaktualizować program</string>
+    <string name="message_update_check_failed">Nie udało się sprawdzić aktualizacji w Google Play</string>
+    <string name="message_update_not_completed">Aktualizacja nie została ukończona</string>
+    <string name="message_icon_is_not_selected">Ikona nie została wybrana</string>
+    <string name="message_select_default_currency">Wybierz walutę domyślną</string>
+    <string name="message_no_catalog_currency_selected">Wybierz co najmniej jedną nową walutę</string>
+    <string name="message_all_catalog_currencies_added_title">Wszystkie waluty dodane</string>
+    <string name="message_all_catalog_currencies_added">Wszystkie waluty z katalogu zostały już dodane. Możesz dodać własną walutę ręcznie.</string>
+    <string name="message_select_default_cash_account">Wybierz konto domyślne</string>
+    <string name="message_complete_first_launch_setup">Dokończ konfigurację aplikacji</string>
+    <string name="message_confirm_crypto_default_currency">Czy na pewno chcesz ustawić kryptowalutę jako walutę domyślną?</string>
+    <string name="message_passwords_do_not_match">Hasła nie są takie same</string>
+    <string name="message_passwords_match">Hasła są takie same</string>
+    <string name="message_password_too_short">Hasło jest za krótkie</string>
+</resources>

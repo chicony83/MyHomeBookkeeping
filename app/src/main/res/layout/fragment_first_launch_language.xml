@@ -31,6 +31,12 @@
             android:text="@string/settings_app_language_english" />
 
         <RadioButton
+            android:id="@+id/firstLaunchPolishRadioButton"
+            style="@style/Description.CashAccounts.FirstLaunch"
+            android:layout_width="match_parent"
+            android:text="@string/settings_app_language_polish" />
+
+        <RadioButton
             android:id="@+id/firstLaunchRussianRadioButton"
             style="@style/Description.CashAccounts.FirstLaunch"
             android:layout_width="match_parent"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bottom_navigation_journal">Dziennik</string>
+    <string name="bottom_navigation_free_fast_payment">Wolna</string>
+    <string name="bottom_navigation_transfer">Przelew</string>
+    <string name="bottom_navigation_fast_payments">Szybkie</string>
+    <string name="bottom_navigation_reports">Raporty</string>
+    <string name="bottom_navigation_categories">Kategorie</string>
+    <string name="bottom_navigation_currencies">Waluty</string>
+    <string name="bottom_navigation_cash_accounts">Konta</string>
+    <string name="bottom_navigation_settings">Ustawienia</string>
+</resources>

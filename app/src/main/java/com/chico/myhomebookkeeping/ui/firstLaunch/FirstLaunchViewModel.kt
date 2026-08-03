@@ -142,9 +142,11 @@ class FirstLaunchViewModel(
             FirstLaunchCategoryGroupItem(
                 parentName = it.parentName,
                 parentNameRu = it.parentNameRu,
+                parentNamePl = it.parentNamePl,
                 isIncome = it.isIncome,
                 subcategories = it.subcategories,
-                subcategoriesRu = it.subcategoriesRu
+                subcategoriesRu = it.subcategoriesRu,
+                subcategoriesPl = it.subcategoriesPl
             )
         }
     }
@@ -250,7 +252,8 @@ class FirstLaunchViewModel(
                     name = categoryGroups[i].parentName,
                     icon = null,
                     parentCategoryOrder = i,
-                    nameRu = categoryGroups[i].parentNameRu
+                    nameRu = categoryGroups[i].parentNameRu,
+                    namePl = categoryGroups[i].parentNamePl
                 )
             )
             result += parentCategoryId
@@ -258,6 +261,7 @@ class FirstLaunchViewModel(
                 result += addCategory(
                     name = categoryGroups[i].subcategories[j],
                     nameRu = categoryGroups[i].subcategoriesRu.getOrNull(j),
+                    namePl = categoryGroups[i].subcategoriesPl.getOrNull(j),
                     isIncome = categoryGroups[i].isIncome,
                     parentCategoryId = parentCategoryId.toInt(),
                     order = j
@@ -270,6 +274,7 @@ class FirstLaunchViewModel(
     private suspend fun addCategory(
         name: String,
         nameRu: String?,
+        namePl: String?,
         isIncome: Boolean,
         parentCategoryId: Int,
         order: Int
@@ -281,7 +286,8 @@ class FirstLaunchViewModel(
                 icon = null,
                 parentCategoryId = parentCategoryId,
                 categoryOrder = order,
-                categoryNameRu = nameRu
+                categoryNameRu = nameRu,
+                categoryNamePl = namePl
             )
         )
     }

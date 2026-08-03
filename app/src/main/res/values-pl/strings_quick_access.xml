@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_access_settings_title">Panel szybkiego dostępu</string>
+    <string name="quick_access_button_title">Przycisk %1$d</string>
+    <string name="quick_access_add_button">Dodaj przycisk</string>
+    <string name="quick_access_select_title">Wybierz przycisk</string>
+    <string name="quick_access_none">Nic</string>
+    <string name="quick_access_already_added">Ten element jest już wybrany</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_new_currency_only_last_4_digits">Tylko ostatnie 4 cyfry</string>
+    <string name="hint_enter_name">Wpisz nazwę</string>
+    <string name="hint_new_currency_enter_name_short">Wpisz krótką nazwę</string>
+    <string name="hint_new_currency_enter_name_ISO">Wpisz ISO</string>
+    <string name="hint_enter_amount">Wpisz kwotę</string>
+    <string name="hint_add_you_description">Dodaj opis</string>
+    <string name="hint_enter_amount_be_inserted">Kwota (zostanie wstawiona do płatności)</string>
+    <string name="hint_add_you_description_be_inserted">Dodaj opis\n(zostanie wstawiony do płatności)</string>
+    <string name="hint_category">Szukaj kategorii</string>
+    <string name="hint_enter_password">Wpisz hasło</string>
+    <string name="hint_repeat_password">Powtórz hasło</string>
+</resources>

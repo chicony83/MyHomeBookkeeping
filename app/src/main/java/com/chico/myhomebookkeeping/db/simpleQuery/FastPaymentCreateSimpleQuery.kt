@@ -46,9 +46,9 @@ object FastPaymentCreateSimpleQuery {
         return SimpleSQLiteQuery(query, args)
     }
     private fun mainQueryFastPayment(languageTag: String): String {
-        val fastPaymentName = localizedColumn("name_fast_payment", "name_fast_payment_ru", languageTag)
-        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", languageTag)
-        val categoryName = localizedColumn("category_name", "category_name_ru", languageTag)
+        val fastPaymentName = localizedColumn("name_fast_payment", "name_fast_payment_ru", "name_fast_payment_pl", languageTag)
+        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", "cash_account_name_pl", languageTag)
+        val categoryName = localizedColumn("category_name", "category_name_ru", "category_name_pl", languageTag)
         return "SELECT id, icon, $fastPaymentName AS name_fast_payment_value, rating , " +
                 "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value, " +
@@ -79,11 +79,11 @@ object FastPaymentCreateSimpleQuery {
         return " AND "
     }
 
-    private fun localizedColumn(baseColumn: String, ruColumn: String, languageTag: String): String {
-        return if (languageTag == Constants.APP_LANGUAGE_RUSSIAN) {
-            "COALESCE($ruColumn, $baseColumn)"
-        } else {
-            baseColumn
+    private fun localizedColumn(baseColumn: String, ruColumn: String, plColumn: String, languageTag: String): String {
+        return when (languageTag) {
+            Constants.APP_LANGUAGE_RUSSIAN -> "COALESCE($ruColumn, $baseColumn)"
+            Constants.APP_LANGUAGE_POLISH -> "COALESCE($plColumn, $baseColumn)"
+            else -> baseColumn
         }
     }
 }

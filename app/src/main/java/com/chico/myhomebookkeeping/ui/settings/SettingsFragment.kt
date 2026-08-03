@@ -29,6 +29,7 @@ import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.helpers.UiHelper
+import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.QuickAccessPanel
@@ -555,6 +556,7 @@ class SettingsFragment : Fragment() {
         return getString(
             when (languageTag) {
                 Constants.APP_LANGUAGE_ENGLISH -> R.string.settings_app_language_english
+                Constants.APP_LANGUAGE_POLISH -> R.string.settings_app_language_polish
                 Constants.APP_LANGUAGE_RUSSIAN -> R.string.settings_app_language_russian
                 else -> R.string.settings_app_language_system
             }
@@ -581,9 +583,11 @@ class SettingsFragment : Fragment() {
     }
 
     private fun cashAccountTitle(cashAccount: CashAccount): String {
+        val languageTag = AppLanguage.getSelectedTag(requireContext())
+        val accountName = cashAccount.displayName(languageTag)
         return cashAccount.bankAccountNumber.takeIf { it.isNotBlank() }?.let {
-            "${cashAccount.accountName} *${it.takeLast(4)}"
-        } ?: cashAccount.accountName
+            "$accountName *${it.takeLast(4)}"
+        } ?: accountName
     }
 
     private fun showBooleanChoiceDialog(

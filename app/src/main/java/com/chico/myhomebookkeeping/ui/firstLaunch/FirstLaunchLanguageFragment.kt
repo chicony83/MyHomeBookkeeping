@@ -14,18 +14,22 @@ class FirstLaunchLanguageFragment : Fragment(R.layout.fragment_first_launch_lang
         super.onViewCreated(view, savedInstanceState)
         val selectedLanguage = AppLanguage.getSelectedTag(requireContext())
         view.findViewById<RadioButton>(R.id.firstLaunchEnglishRadioButton).isChecked =
-            selectedLanguage != Constants.APP_LANGUAGE_RUSSIAN
+            selectedLanguage == Constants.APP_LANGUAGE_ENGLISH ||
+                    selectedLanguage == Constants.APP_LANGUAGE_SYSTEM
+        view.findViewById<RadioButton>(R.id.firstLaunchPolishRadioButton).isChecked =
+            selectedLanguage == Constants.APP_LANGUAGE_POLISH
         view.findViewById<RadioButton>(R.id.firstLaunchRussianRadioButton).isChecked =
             selectedLanguage == Constants.APP_LANGUAGE_RUSSIAN
     }
 
     fun submitStep() {
-        val languageTag =
-            if (requireView().findViewById<RadioButton>(R.id.firstLaunchRussianRadioButton).isChecked) {
+        val languageTag = when {
+            requireView().findViewById<RadioButton>(R.id.firstLaunchPolishRadioButton).isChecked ->
+                Constants.APP_LANGUAGE_POLISH
+            requireView().findViewById<RadioButton>(R.id.firstLaunchRussianRadioButton).isChecked ->
                 Constants.APP_LANGUAGE_RUSSIAN
-            } else {
-                Constants.APP_LANGUAGE_ENGLISH
-            }
+            else -> Constants.APP_LANGUAGE_ENGLISH
+        }
 
         AppLanguage.saveSelectedTag(requireContext(), languageTag)
         AppLanguage.applyLanguageTag(languageTag)

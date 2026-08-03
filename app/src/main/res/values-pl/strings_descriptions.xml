@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description_income">Przychody</string>
+    <string name="description_spending">Wydatki</string>
+    <string name="description_balance">Saldo</string>
+    <string name="description_selected_entry">Wybrany wpis #</string>
+    <string name="description_date_time_text">Data/godzina</string>
+    <string name="description_cash_account">Konto</string>
+    <string name="description_cash_account_from">Z konta</string>
+    <string name="description_cash_account_to">Na konto</string>
+    <string name="description_currency">Waluta</string>
+    <string name="description_currency_from">Z waluty</string>
+    <string name="description_currency_to">Na walutę</string>
+    <string name="description_category">Kategoria</string>
+    <string name="description_amount">Kwota</string>
+    <string name="description_amount_to">Otrzymana kwota</string>
+    <string name="description_exchange_rate">Kurs wymiany</string>
+    <string name="description_transfer_fee">Opłata za przelew</string>
+    <string name="description_description">Opis</string>
+    <string name="descriptions_last_4_digits_of_card">Ostatnie 4 cyfry karty</string>
+    <string name="description_cash_account_name">Nazwa konta</string>
+    <string name="description_select_date">Wybierz datę</string>
+    <string name="description_select_time">Wybierz godzinę</string>
+    <string name="description_selected_cash_account">Wybrane konto</string>
+    <string name="description_selected_category">Kategoria</string>
+    <string name="description_selected_currency">Wybrana waluta</string>
+    <string name="description_this_name_is_taken">Ta nazwa jest już zajęta</string>
+    <string name="description_you_want_to_delete_the_entry">Chcesz usunąć wpis</string>
+    <string name="description_A_quick_setup_of_the_program_will_be_done_here">Szybka konfiguracja programu.\n Zostaną dodane następujące elementy</string>
+    <string name="current_version">Obecna wersja</string>
+    <string name="name_fast_payment">Nazwa szybkiej płatności</string>
+    <string name="description_rating_payment">Ocena płatności</string>
+</resources>

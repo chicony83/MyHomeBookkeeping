@@ -126,6 +126,7 @@ object Constants {
     const val APP_LANGUAGE = "app_language"
     const val APP_LANGUAGE_SYSTEM = ""
     const val APP_LANGUAGE_ENGLISH = "en"
+    const val APP_LANGUAGE_POLISH = "pl"
     const val APP_LANGUAGE_RUSSIAN = "ru"
 
 }

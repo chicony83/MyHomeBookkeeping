@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_section_title">Kopia zapasowa i przenoszenie</string>
+    <string name="backup_section_description">Twoje dane pozostają na tym urządzeniu. Kopia zapasowa jest szyfrowana Twoim hasłem i aplikacja nigdzie jej nie wysyła.</string>
+    <string name="backup_create_button">Utwórz zaszyfrowaną kopię</string>
+    <string name="backup_restore_button">Przywróć z kopii</string>
+    <string name="backup_password_title">Zabezpiecz kopię</string>
+    <string name="backup_password_hint">Hasło (co najmniej 8 znaków)</string>
+    <string name="backup_password_repeat_hint">Powtórz hasło</string>
+    <string name="backup_password_mismatch">Hasła nie są takie same</string>
+    <string name="backup_password_too_short">Użyj co najmniej 8 znaków</string>
+    <string name="backup_created">Kopia zapasowa utworzona</string>
+    <string name="backup_failed">Nie udało się utworzyć kopii</string>
+    <string name="restore_password_title">Odblokuj kopię</string>
+    <string name="restore_password_hint">Hasło kopii zapasowej</string>
+    <string name="restore_ready_title">Kopia sprawdzona</string>
+    <string name="restore_ready_message">Aplikacja zostanie zamknięta, aby bezpiecznie zastąpić bazę danych. Otwórz ją ponownie, aby zakończyć przywracanie.</string>
+    <string name="restore_failed">Nie udało się sprawdzić lub odszyfrować tej kopii</string>
+</resources>

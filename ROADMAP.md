@@ -28,6 +28,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 ## Android Compatibility
 
+- Completed: add Polish app language, including first-launch/settings selection and localized default category data.
 - Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
 - Keep string resources split by feature and mirrored between `values` and localized `values-*` folders.
 

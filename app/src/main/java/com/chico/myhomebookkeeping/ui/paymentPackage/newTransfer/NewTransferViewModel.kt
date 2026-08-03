@@ -488,7 +488,8 @@ class NewTransferViewModel(
                 isIncome = false,
                 icon = null,
                 parentCategoryId = null,
-                categoryNameRu = TRANSFER_FEE_CATEGORY_NAME_RU
+                categoryNameRu = TRANSFER_FEE_CATEGORY_NAME_RU,
+                categoryNamePl = DefaultPolishNames.categoryName(TRANSFER_FEE_CATEGORY_NAME)
             )
         ).toInt()
     }

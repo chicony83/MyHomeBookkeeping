@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_start_fragment_title">Otwieraj przy starcie aplikacji</string>
+    <string name="settings_start_fragment_value_title">Ekran startowy</string>
+    <string name="settings_group_defaults">Domyślne</string>
+    <string name="settings_group_selection">Sterowanie wyborem</string>
+    <string name="settings_group_amount">Kwota</string>
+    <string name="settings_value_list">Lista</string>
+    <string name="settings_value_scroll">Przewijanie</string>
+    <string name="settings_value_on">Wł.</string>
+    <string name="settings_value_off">Wył.</string>
+    <string name="settings_about_section_title">O aplikacji</string>
+    <string name="message_settings_saved">Ustawienia zapisane</string>
+    <string name="settings_application_section_title">Aplikacja</string>
+    <string name="settings_app_language_title">Język</string>
+    <string name="settings_app_language_system">Domyślny systemowy</string>
+    <string name="settings_app_language_english">🇬🇧 English</string>
+    <string name="settings_app_language_polish">🇵🇱 Polski</string>
+    <string name="settings_app_language_russian">Rosyjski</string>
+    <string name="settings_journal_section_title">Dziennik</string>
+    <string name="settings_journal_currency_display_title">Nazwa waluty w dzienniku</string>
+    <string name="settings_journal_currency_display_name">Pełna nazwa</string>
+    <string name="settings_journal_currency_display_short_name">Krótka nazwa</string>
+    <string name="settings_journal_currency_display_iso">Kod ISO</string>
+    <string name="settings_journal_show_date_separators">Pokazuj separatory dat w dzienniku</string>
+    <string name="journal_date_today">Dzisiaj</string>
+    <string name="journal_date_yesterday">Wczoraj</string>
+    <string name="journal_date_day_before_yesterday">Przedwczoraj</string>
+</resources>

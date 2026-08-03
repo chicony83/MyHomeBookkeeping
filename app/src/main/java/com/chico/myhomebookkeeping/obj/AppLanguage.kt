@@ -8,6 +8,7 @@ object AppLanguage {
     val supportedTags = listOf(
         Constants.APP_LANGUAGE_SYSTEM,
         Constants.APP_LANGUAGE_ENGLISH,
+        Constants.APP_LANGUAGE_POLISH,
         Constants.APP_LANGUAGE_RUSSIAN
     )
 

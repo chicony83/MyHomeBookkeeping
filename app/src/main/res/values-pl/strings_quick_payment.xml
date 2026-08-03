@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_payment_settings_title">Ustawienia szybkiej płatności</string>
+    <string name="quick_payment_default_currency">Waluta domyślna</string>
+    <string name="quick_payment_default_cash_account">Konto domyślne</string>
+    <string name="quick_payment_currency_scroll">Wybieraj waluty przewijaniem</string>
+    <string name="quick_payment_cash_account_scroll">Wybieraj konta przewijaniem</string>
+    <string name="quick_payment_show_calculator">Pokaż przycisk kalkulatora</string>
+    <string name="quick_payment_currency_selection_mode">Wybór waluty</string>
+    <string name="quick_payment_cash_account_selection_mode">Wybór konta</string>
+    <string name="quick_payment_calculator">Kalkulator</string>
+    <string name="quick_payment_amount_input">Wprowadzanie kwoty</string>
+    <string name="quick_payment_amount_input_digits">Cyfry</string>
+    <string name="quick_payment_amount_input_scroll">Przewijanie, eksperymentalne</string>
+    <string name="quick_payment_amount_whole_digits">Cyfry przed przecinkiem</string>
+    <string name="quick_payment_amount_fraction_digits">Cyfry po przecinku</string>
+    <string name="quick_payment_amount_whole_group">Całość</string>
+    <string name="quick_payment_amount_fraction_group">Część ułamkowa</string>
+</resources>

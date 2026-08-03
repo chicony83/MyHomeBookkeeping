@@ -13,7 +13,9 @@ class ParentCategories(
     @ColumnInfo(name = "parent_category_order")
     val parentCategoryOrder: Int = 0,
     @ColumnInfo(name = "parent_category_name_ru")
-    val nameRu: String? = null
+    val nameRu: String? = null,
+    @ColumnInfo(name = "parent_category_name_pl")
+    val namePl: String? = null
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int? = null

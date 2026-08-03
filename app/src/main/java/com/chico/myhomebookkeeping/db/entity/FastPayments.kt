@@ -24,6 +24,8 @@ data class FastPayments(
     val description: String?,
     @ColumnInfo(name = "name_fast_payment_ru")
     val nameFastPaymentRu: String? = null,
+    @ColumnInfo(name = "name_fast_payment_pl")
+    val nameFastPaymentPl: String? = null,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null

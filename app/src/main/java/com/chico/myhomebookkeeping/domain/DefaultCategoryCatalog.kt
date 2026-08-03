@@ -10,7 +10,13 @@ data class DefaultCategoryGroup(
     val isRequired: Boolean = false,
     val subcategories: List<String>,
     val subcategoriesRu: List<String>
-)
+) {
+    val parentNamePl: String
+        get() = DefaultPolishNames.parentCategoryName(parentName)
+
+    val subcategoriesPl: List<String>
+        get() = subcategories.map(DefaultPolishNames::categoryName)
+}
 
 object DefaultCategoryCatalog {
     val groups: List<DefaultCategoryGroup> = listOf(
@@ -122,12 +128,20 @@ object DefaultCategoryCatalog {
     )
 
     fun groupsForLanguage(languageTag: String): List<DefaultCategoryGroup> {
-        return if (languageTag == Constants.APP_LANGUAGE_RUSSIAN) {
-            groups.map {
-                it.copy(parentName = it.parentNameRu, subcategories = it.subcategoriesRu)
+        return when (languageTag) {
+            Constants.APP_LANGUAGE_RUSSIAN -> groups.map {
+                it.copy(
+                    parentName = it.parentNameRu,
+                    subcategories = it.subcategoriesRu
+                )
             }
-        } else {
-            groups
+            Constants.APP_LANGUAGE_POLISH -> groups.map {
+                it.copy(
+                    parentName = it.parentNamePl,
+                    subcategories = it.subcategoriesPl
+                )
+            }
+            else -> groups
         }
     }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_label_change_fast_payment">Zmień szybką płatność</string>
+    <string name="fragment_label_new_fast_payment">Nowa szybka płatność</string>
+    <string name="fragment_label_select_fast_payment">Szybka płatność</string>
+    <string name="fragment_label_select_categories">Wybierz kategorie</string>
+    <string name="fragment_label_time_period">Wybierz okres</string>
+    <string name="fragment_label_new_money_moving">Dodawanie</string>
+    <string name="fragment_label_new_transfer">Przelew</string>
+    <string name="fragment_label_select_password">Hasło</string>
+    <string name="fragment_label_money_moving_query">Ustawienia zapytania</string>
+    <string name="fragment_label_money_moving">Dziennik</string>
+    <string name="fragment_label_change_money_moving">Zmiana wpisu</string>
+    <string name="fragment_label_reports">Raporty</string>
+    <string name="fragment_label_reports_menu">Wybierz raport</string>
+    <string name="fragment_label_categories">Kategorie</string>
+    <string name="fragment_label_currencies">Waluty</string>
+    <string name="fragment_label_cash_account">Konta</string>
+    <string name="fragment_label_settings">Ustawienia</string>
+    <string name="fragment_label_help">Pomoc</string>
+    <string name="fragment_label_first_launch_select_currencies">Wybierz waluty</string>
+    <string name="fragment_label_first_launch">Pierwsze uruchomienie</string>
+    <string name="fragment_label_first_launch_setup">Konfiguracja</string>
+</resources>

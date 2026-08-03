@@ -8,6 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
+import com.chico.myhomebookkeeping.domain.DefaultPolishNames
 
 @Database(
     entities = [
@@ -22,7 +23,7 @@ import com.chico.myhomebookkeeping.db.entity.*
         IconCategory::class,
         PaymentType::class
     ],
-    version = 10,
+    version = 11,
     exportSchema = true,
 )
 abstract class RoomDataBase : RoomDatabase() {
@@ -54,6 +55,7 @@ object dataBase {
             .addMigrations(migration_7_to_8)
             .addMigrations(migration_8_to_9)
             .addMigrations(migration_9_to_10)
+            .addMigrations(migration_10_to_11)
             .addCallback(seedPaymentTypesOnCreate)
             .build()
 }
@@ -176,6 +178,16 @@ private object migration_9_to_10 : Migration(9, 10) {
     }
 }
 
+private object migration_10_to_11 : Migration(10, 11) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE `cash_account_table` ADD COLUMN `cash_account_name_pl` TEXT")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `category_name_pl` TEXT")
+        database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_pl` TEXT")
+        database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_pl` TEXT")
+        fillMissingPolishNames(database)
+    }
+}
+
 private object seedPaymentTypesOnCreate : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
@@ -229,6 +241,55 @@ private fun fillMissingLocalizedNames(database: SupportSQLiteDatabase) {
                 "WHERE `cash_account_name` = 'Cash' " +
                 "AND (`cash_account_name_ru` IS NULL OR TRIM(`cash_account_name_ru`) = '')"
     )
+}
+
+private fun fillMissingPolishNames(database: SupportSQLiteDatabase) {
+    fillMissingLocalizedValues(
+        database = database,
+        tableName = "cash_account_table",
+        canonicalColumn = "cash_account_name",
+        localizedColumn = "cash_account_name_pl",
+        names = DefaultPolishNames.cashAccounts
+    )
+    fillMissingLocalizedValues(
+        database = database,
+        tableName = "parent_categories_table",
+        canonicalColumn = "parent_category_name",
+        localizedColumn = "parent_category_name_pl",
+        names = DefaultPolishNames.parentCategories
+    )
+    fillMissingLocalizedValues(
+        database = database,
+        tableName = "category_table",
+        canonicalColumn = "category_name",
+        localizedColumn = "category_name_pl",
+        names = DefaultPolishNames.categories
+    )
+    fillMissingLocalizedValues(
+        database = database,
+        tableName = "fast_payments_table",
+        canonicalColumn = "name_fast_payment",
+        localizedColumn = "name_fast_payment_pl",
+        names = DefaultPolishNames.categories
+    )
+}
+
+private fun fillMissingLocalizedValues(
+    database: SupportSQLiteDatabase,
+    tableName: String,
+    canonicalColumn: String,
+    localizedColumn: String,
+    names: Map<String, String>
+) {
+    names.forEach { (canonicalName, localizedName) ->
+        database.execSQL(
+            "UPDATE `$tableName` " +
+                    "SET `$localizedColumn` = ? " +
+                    "WHERE `$canonicalColumn` = ? " +
+                    "AND (`$localizedColumn` IS NULL OR TRIM(`$localizedColumn`) = '')",
+            arrayOf(localizedName, canonicalName)
+        )
+    }
 }
 
 private fun addTransferFeeCategory(database: SupportSQLiteDatabase) {
