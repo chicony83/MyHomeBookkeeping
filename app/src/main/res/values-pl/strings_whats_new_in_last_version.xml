@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="string_last_version_0_13_1">0.13.1\n- Zaktualizowano ikonę aplikacji.\n- Naprawiono nawigację na ekranie przelewów między kontami.\n- Naprawiono niektóre błędy i poprawiono stabilność.</string>
     <string name="string_last_version_title">Historia wersji</string>
     <string name="version_history_button">Historia wersji</string>
     <string name="string_last_version_0_13">0.13.0\n- Dodano polską lokalizację aplikacji.\n- Język polski można teraz wybrać przy pierwszym uruchomieniu i w Ustawieniach.\n- Dodano polskie nazwy standardowych kategorii i słowników.\n- Przelewy między kontami przeniesiono na osobny ekran.\n- Ulepszono przelewy między kontami w różnych walutach.\n- Naprawiono nawigację między ekranem przelewów i innymi pozycjami menu.\n- W Dzienniku dodano separatory dat.</string>
