@@ -26,6 +26,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.chico.myhomebookkeeping.checks.CheckNightMode
 import com.chico.myhomebookkeeping.backup.DatabaseRestoreManager
@@ -137,6 +139,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener { item ->
+            navigateToTopLevelDestination(item.itemId)
+            drawerLayout.closeDrawers()
+            true
+        }
 
         setupQuickAccessPanel()
 
@@ -438,13 +445,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToTopLevelDestination(destinationId: Int) {
+        val navOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setPopUpTo(navController.graph.findStartDestination().id, false)
+            .build()
         if (destinationId == R.id.nav_categories) {
             navController.navigate(
                 R.id.nav_categories,
-                CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_STANDALONE)
+                CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_STANDALONE),
+                navOptions
             )
         } else {
-            navController.navigate(destinationId)
+            navController.navigate(destinationId, null, navOptions)
         }
     }
 

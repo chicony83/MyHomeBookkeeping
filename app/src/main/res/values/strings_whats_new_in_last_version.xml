@@ -2,6 +2,7 @@
 <resources>
     <string name="string_last_version_title">Version history</string>
     <string name="version_history_button">Version history</string>
+    <string name="string_last_version_0_13">0.13.0\n- Added Polish localization.\n- Polish can now be selected on first launch and in Settings.\n- Added Polish names for standard categories and dictionaries.\n- Transfers between accounts now have a separate screen.\n- Improved transfers between accounts in different currencies.\n- Fixed navigation between the Transfer screen and other menu items.\n- Added date separators in the Journal.</string>
     <string name="string_last_version_0_12_1">0.12.1\n- Added Polish language support in first launch and Settings.\n- Standard categories can now show Polish names after update.\n- Improved the interface and currency experience.\n- Added a Journal setting for currency display.\n- Added neat date separators in the Journal, with today, yesterday, and older dates shown clearly.\n- Fixed minor issues and improved stability.</string>
     <string name="string_last_version_0_12_0">0.12.0\n- Updated the app theme.\n- Added a Personal Care starter category group.\n- Fixed minor interface and stability issues.</string>
     <string name="string_last_version_0_11_0">0.11.0\n- Added app language switching.\n- Added English localization.\n- First launch is simpler with setup modes.\n- Added a Personal Care starter category group.\n- Currencies can now be added from the catalog.\n- Journal totals are now shown by currency.\n- Bug fixes and stability improvements.</string>

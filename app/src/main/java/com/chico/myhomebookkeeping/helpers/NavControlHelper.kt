@@ -19,11 +19,8 @@ class NavControlHelper(private val controller: NavController) {
     }
 
     fun moveToPreviousFragment() {
-        controller.previousBackStackEntry?.destination?.let {
-            controller.navigate(
-                it.id
-            )
-
+        if (!controller.popBackStack()) {
+            controller.navigate(R.id.nav_money_moving)
         }
     }
 
