@@ -321,7 +321,7 @@ class NewTransferViewModel(
     }
 
     private suspend fun postDefaultCurrency() {
-        val defaultCurrency = CurrenciesUseCase.getDefaultCurrency(dbCurrencies)
+        val defaultCurrency = CurrenciesUseCase.getDefaultCurrency(dbCurrencies) ?: return
         _selectedCurrency.postValue(defaultCurrency)
         _selectedTransferCurrency.postValue(defaultCurrency)
     }

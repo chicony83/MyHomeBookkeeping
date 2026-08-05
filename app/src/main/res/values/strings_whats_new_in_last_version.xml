@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="string_last_version_0_13_1">0.13.1\n- Updated the app icon.\n- Fixed navigation on the transfer screen.\n- Fixed some issues and improved stability.</string>
     <string name="string_last_version_title">Version history</string>
     <string name="version_history_button">Version history</string>
     <string name="string_last_version_0_13">0.13.0\n- Added Polish localization.\n- Polish can now be selected on first launch and in Settings.\n- Added Polish names for standard categories and dictionaries.\n- Transfers between accounts now have a separate screen.\n- Improved transfers between accounts in different currencies.\n- Fixed navigation between the Transfer screen and other menu items.\n- Added date separators in the Journal.</string>
