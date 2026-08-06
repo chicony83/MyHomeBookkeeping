@@ -10,6 +10,8 @@ import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.DefaultPolishNames
 
+const val DATABASE_SCHEMA_VERSION = 11
+
 @Database(
     entities = [
         CashAccount::class,
@@ -23,7 +25,7 @@ import com.chico.myhomebookkeeping.domain.DefaultPolishNames
         IconCategory::class,
         PaymentType::class
     ],
-    version = 11,
+    version = DATABASE_SCHEMA_VERSION,
     exportSchema = true,
 )
 abstract class RoomDataBase : RoomDatabase() {

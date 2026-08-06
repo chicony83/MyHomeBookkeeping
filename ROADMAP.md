@@ -54,6 +54,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 ## Database Ideas
 
+- Completed: keep backup restore validation aligned with the current Room schema version.
 - Add default currency/account fields where still needed.
 - Add parent category support where still needed.
 - Prefer calculated usage counts over stored usage-count columns when possible.

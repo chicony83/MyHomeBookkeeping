@@ -2,6 +2,15 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.13.1
+
+### User-facing
+- Fixed restoring fresh encrypted database backups after database schema updates.
+
+### Development
+- Shared the current Room database schema version with backup validation so restore support advances with future migrations.
+- Verified the backup transfer scenario on device with `BackupTransferInstrumentedTest`.
+
 ## 0.12.1
 
 ### User-facing

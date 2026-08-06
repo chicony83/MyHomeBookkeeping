@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.backup
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import com.chico.myhomebookkeeping.db.DATABASE_SCHEMA_VERSION
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import org.json.JSONObject
@@ -149,7 +150,7 @@ object DatabaseRestoreManager {
                 }
             }
             val databaseVersion = database.version
-            check(databaseVersion in 1..8) { "Unsupported database schema" }
+            check(databaseVersion in 1..DATABASE_SCHEMA_VERSION) { "Unsupported database schema" }
             val actualTables = mutableSetOf<String>()
             database.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
                 .use { cursor -> while (cursor.moveToNext()) actualTables += cursor.getString(0) }
