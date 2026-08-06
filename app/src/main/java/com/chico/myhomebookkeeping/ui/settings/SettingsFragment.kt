@@ -65,6 +65,8 @@ class SettingsFragment : Fragment() {
     private var selectedStartFragmentValue = Constants.START_FRAGMENT_FAST_PAYMENTS
     private var selectedAppLanguageTag = Constants.APP_LANGUAGE_SYSTEM
     private var selectedJournalCurrencyDisplayMode = Constants.JOURNAL_CURRENCY_DISPLAY_NAME
+    private var selectedJournalParentCategoryDisplayMode =
+        Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
     private var isJournalDateSeparatorsEnabled = true
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
@@ -230,6 +232,9 @@ class SettingsFragment : Fragment() {
             journalCurrencyDisplayModeRow.setOnClickListener {
                 showJournalCurrencyDisplayModeDialog()
             }
+            journalParentCategoryDisplayModeRow.setOnClickListener {
+                showJournalParentCategoryDisplayModeDialog()
+            }
             journalDateSeparatorsCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 isJournalDateSeparatorsEnabled = isChecked
                 if (!isBindingSettings) {
@@ -276,6 +281,11 @@ class SettingsFragment : Fragment() {
             journalCurrencyDisplayMode.observe(viewLifecycleOwner) {
                 selectedJournalCurrencyDisplayMode = it
                 binding.journalCurrencyDisplayModeValue.text = journalCurrencyDisplayModeTitle(it)
+            }
+            journalParentCategoryDisplayMode.observe(viewLifecycleOwner) {
+                selectedJournalParentCategoryDisplayMode = it
+                binding.journalParentCategoryDisplayModeValue.text =
+                    journalParentCategoryDisplayModeTitle(it)
             }
             journalDateSeparatorsEnabled.observe(viewLifecycleOwner) {
                 isJournalDateSeparatorsEnabled = it
@@ -325,6 +335,8 @@ class SettingsFragment : Fragment() {
         binding.appLanguageValue.text = appLanguageTitle(selectedAppLanguageTag)
         binding.journalCurrencyDisplayModeValue.text =
             journalCurrencyDisplayModeTitle(selectedJournalCurrencyDisplayMode)
+        binding.journalParentCategoryDisplayModeValue.text =
+            journalParentCategoryDisplayModeTitle(selectedJournalParentCategoryDisplayMode)
         binding.journalDateSeparatorsCheckBox.isChecked = isJournalDateSeparatorsEnabled
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
@@ -552,6 +564,27 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun showJournalParentCategoryDisplayModeDialog() {
+        val values = arrayOf(
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON,
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL,
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL
+        )
+        showChoiceDialog(
+            title = getString(R.string.settings_journal_parent_category_display_title),
+            labels = values.map(::journalParentCategoryDisplayModeTitle).toTypedArray(),
+            selectedIndex = values.indexOf(selectedJournalParentCategoryDisplayMode)
+                .coerceAtLeast(0)
+        ) { index ->
+            selectedJournalParentCategoryDisplayMode = values[index]
+            binding.journalParentCategoryDisplayModeValue.text =
+                journalParentCategoryDisplayModeTitle(selectedJournalParentCategoryDisplayMode)
+            settingsViewModel.saveJournalParentCategoryDisplayMode(
+                selectedJournalParentCategoryDisplayMode
+            )
+        }
+    }
+
     private fun appLanguageTitle(languageTag: String): String {
         return getString(
             when (languageTag) {
@@ -571,6 +604,19 @@ class SettingsFragment : Fragment() {
                 Constants.JOURNAL_CURRENCY_DISPLAY_ISO ->
                     R.string.settings_journal_currency_display_iso
                 else -> R.string.settings_journal_currency_display_name
+            }
+        )
+    }
+
+    private fun journalParentCategoryDisplayModeTitle(displayMode: String): String {
+        return getString(
+            when (displayMode) {
+                Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON ->
+                    R.string.settings_journal_parent_category_display_icon
+                Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL ->
+                    R.string.settings_journal_parent_category_display_label
+                else ->
+                    R.string.settings_journal_parent_category_display_icon_with_label
             }
         )
     }

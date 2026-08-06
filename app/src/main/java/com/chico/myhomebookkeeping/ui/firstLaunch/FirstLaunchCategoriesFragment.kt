@@ -76,10 +76,12 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
                         parentName = it.group.parentName,
                         parentNameRu = it.group.parentNameRu,
                         parentNamePl = it.group.parentNamePl,
+                        parentIcon = it.group.parentIcon,
                         isIncome = it.group.isIncome,
                         subcategories = it.group.subcategories,
                         subcategoriesRu = it.group.subcategoriesRu,
-                        subcategoriesPl = it.group.subcategoriesPl
+                        subcategoriesPl = it.group.subcategoriesPl,
+                        subcategoryIcons = it.group.subcategoryIcons
                     )
                 }
         }

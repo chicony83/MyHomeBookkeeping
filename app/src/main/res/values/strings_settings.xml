@@ -22,6 +22,10 @@
     <string name="settings_journal_currency_display_name">Full name</string>
     <string name="settings_journal_currency_display_short_name">Short name</string>
     <string name="settings_journal_currency_display_iso">ISO code</string>
+    <string name="settings_journal_parent_category_display_title">Parent category in journal</string>
+    <string name="settings_journal_parent_category_display_icon">Icon</string>
+    <string name="settings_journal_parent_category_display_icon_with_label">Icon + label</string>
+    <string name="settings_journal_parent_category_display_label">Label</string>
     <string name="settings_journal_show_date_separators">Show date separators in journal</string>
     <string name="journal_date_today">Today</string>
     <string name="journal_date_yesterday">Yesterday</string>

@@ -25,6 +25,7 @@ import java.util.Locale
 class MoneyMovingAdapter(
     private val moneyMovementList: List<FullMoneyMoving>,
     private val currencyDisplayMode: String,
+    private val parentCategoryDisplayMode: String,
     private val showDateSeparators: Boolean,
     private val listener: OnItemViewClickListenerLong
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -241,10 +242,25 @@ class MoneyMovingAdapter(
                     moneyMovement.categoryDisplayName ?: moneyMovement.paymentTypeName
 
                 categoryName.text = singleLineCategory
+                parentCategoryIcon.visibility = View.GONE
                 childCategoryName.visibility = View.GONE
                 childCategoryName.text = null
 
                 if (parentName.isNullOrBlank() || category.isNullOrBlank()) return
+
+                val parentIcon = moneyMovement.parentCategoryIconValue
+                val shouldShowParentIcon =
+                    parentCategoryDisplayMode != Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL &&
+                        parentIcon != null
+                if (shouldShowParentIcon) {
+                    parentCategoryIcon.setImageResource(parentIcon)
+                    parentCategoryIcon.visibility = View.VISIBLE
+                }
+
+                if (parentCategoryDisplayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON) {
+                    categoryName.text = category
+                    return
+                }
 
                 categoryName.post {
                     if (categoryName.text != singleLineCategory) return@post

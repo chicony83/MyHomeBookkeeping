@@ -19,10 +19,12 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Journal
 
 - Completed: add centered date separators between journal payments, with Today, Yesterday, Day before yesterday, and localized long dates.
+- Completed: add a setting for showing parent categories in the Journal as icon, icon with label, or label.
 - Decide whether the journal currency display setting should also apply to fast payment cards and payment detail dialogs.
 
 ## First Launch And Defaults
 
+- Completed: assign icons to default parent categories and subcategories during first launch.
 - Keep first-launch currency search simple and visible; refine spacing only if the setup screen gets crowded.
 - Allow choosing or entering a custom currency name during first launch.
 - Support opening balance when creating a new account.
@@ -42,6 +44,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Directories
 
 - Add currency icons.
+- Completed: expand the category icon dictionary for default categories and keep new bundled icons backfilled on existing installs.
 - Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.

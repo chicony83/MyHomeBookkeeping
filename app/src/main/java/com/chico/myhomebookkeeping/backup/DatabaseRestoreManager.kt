@@ -220,6 +220,11 @@ object DatabaseRestoreManager {
                 Constants.JOURNAL_SHOW_DATE_SEPARATORS,
                 settings.optBoolean("journalShowDateSeparators", true)
             )
+            settings.optString(
+                "journalParentCategoryDisplayMode",
+                Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+            ).takeIf(::isSupportedJournalParentCategoryDisplayMode)
+                ?.let { putString(Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE, it) }
             apply()
         }
     }
@@ -228,6 +233,12 @@ object DatabaseRestoreManager {
         return displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_NAME ||
             displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME ||
             displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_ISO
+    }
+
+    private fun isSupportedJournalParentCategoryDisplayMode(displayMode: String): Boolean {
+        return displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON ||
+            displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL ||
+            displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL
     }
 
     private fun deriveKey(

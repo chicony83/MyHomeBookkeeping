@@ -246,6 +246,7 @@ object MoneyMovingCreateSimpleQuery {
                 "iso_4217 AS currency_iso_value," +
                 "$categoryName AS category_name_value, " +
                 "$parentCategoryName AS parent_category_name_value, " +
+                "name_icon_parent_category AS parent_category_icon_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
                 "money_moving_table.payment_type_id, payment_type_name, " +
                 "transfer_group_id, transfer_direction, description " +

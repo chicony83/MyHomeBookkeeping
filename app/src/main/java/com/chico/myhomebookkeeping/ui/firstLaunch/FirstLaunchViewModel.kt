@@ -143,10 +143,12 @@ class FirstLaunchViewModel(
                 parentName = it.parentName,
                 parentNameRu = it.parentNameRu,
                 parentNamePl = it.parentNamePl,
+                parentIcon = it.parentIcon,
                 isIncome = it.isIncome,
                 subcategories = it.subcategories,
                 subcategoriesRu = it.subcategoriesRu,
-                subcategoriesPl = it.subcategoriesPl
+                subcategoriesPl = it.subcategoriesPl,
+                subcategoryIcons = it.subcategoryIcons
             )
         }
     }
@@ -246,11 +248,12 @@ class FirstLaunchViewModel(
 
     private suspend fun addCategoryGroups(categoryGroups: List<FirstLaunchCategoryGroupItem>): Long {
         var result: Long = 0
+        val categoryIconsMap = IconsMaps(app.resources, app.packageName).getCategoriesIconsMap()
         for (i in categoryGroups.indices) {
             val parentCategoryId = dbParentCategories.addNewParentCategory(
                 ParentCategories(
                     name = categoryGroups[i].parentName,
-                    icon = null,
+                    icon = categoryIconsMap.getIcon(categoryGroups[i].parentIcon),
                     parentCategoryOrder = i,
                     nameRu = categoryGroups[i].parentNameRu,
                     namePl = categoryGroups[i].parentNamePl
@@ -262,6 +265,7 @@ class FirstLaunchViewModel(
                     name = categoryGroups[i].subcategories[j],
                     nameRu = categoryGroups[i].subcategoriesRu.getOrNull(j),
                     namePl = categoryGroups[i].subcategoriesPl.getOrNull(j),
+                    icon = categoryIconsMap.getIcon(categoryGroups[i].subcategoryIcons.getOrNull(j)),
                     isIncome = categoryGroups[i].isIncome,
                     parentCategoryId = parentCategoryId.toInt(),
                     order = j
@@ -271,10 +275,15 @@ class FirstLaunchViewModel(
         return result
     }
 
+    private fun Map<String, Int>.getIcon(iconName: CategoryIconNames?): Int? {
+        return iconName?.let { this[it.name] }
+    }
+
     private suspend fun addCategory(
         name: String,
         nameRu: String?,
         namePl: String?,
+        icon: Int?,
         isIncome: Boolean,
         parentCategoryId: Int,
         order: Int
@@ -283,7 +292,7 @@ class FirstLaunchViewModel(
             Categories(
                 categoryName = name,
                 isIncome = isIncome,
-                icon = null,
+                icon = icon,
                 parentCategoryId = parentCategoryId,
                 categoryOrder = order,
                 categoryNameRu = nameRu,

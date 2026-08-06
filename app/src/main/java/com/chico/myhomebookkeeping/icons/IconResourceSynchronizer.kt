@@ -1,8 +1,8 @@
 package com.chico.myhomebookkeeping.icons
 
 import android.content.Context
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.dataBase
+import com.chico.myhomebookkeeping.enums.icon.names.CategoriesOfIconsNames
 
 /**
  * Android drawable IDs are build-specific and can change after an application update.
@@ -14,10 +14,11 @@ object IconResourceSynchronizer {
     fun synchronize(context: Context) {
         val roomDatabase = dataBase.getDataBase(context.applicationContext)
         val database = roomDatabase.openHelper.writableDatabase
-        val currentIcons = IconsMaps(context.resources, context.packageName).run {
-            getCategoriesIconsMap() + getCashAccountIconsList() + getNoCategoryIconsList()
-        }
-        val fallbackIcon = R.drawable.no_image
+        val iconsMaps = IconsMaps(context.resources, context.packageName)
+        val currentCategoryIcons = iconsMaps.getCategoriesIconsMap()
+        val currentIcons = currentCategoryIcons +
+            iconsMaps.getCashAccountIconsList() +
+            iconsMaps.getNoCategoryIconsList()
 
         database.beginTransaction()
         try {
@@ -47,14 +48,15 @@ object IconResourceSynchronizer {
             }
 
             storedIcons.forEach { icon ->
-                val currentResource = currentIcons[icon.name] ?: fallbackIcon
+                val currentResource = currentIcons[icon.name] ?: icon.oldResource
                 replaceResource(database, icon.temporaryResource, currentResource)
                 database.execSQL(
                     "UPDATE icon_resource_table SET icon_resource = ? WHERE id = ?",
-                    arrayOf(currentResource, icon.id)
+                    arrayOf<Any>(currentResource, icon.id)
                 )
             }
 
+            addMissingIcons(database, currentCategoryIcons)
             database.setTransactionSuccessful()
         } finally {
             database.endTransaction()
@@ -72,6 +74,42 @@ object IconResourceSynchronizer {
                 "UPDATE $table SET $column = ? WHERE $column = ?",
                 arrayOf(newResource, oldResource)
             )
+        }
+    }
+
+    private fun addMissingIcons(
+        database: androidx.sqlite.db.SupportSQLiteDatabase,
+        currentIcons: Map<String, Int>
+    ) {
+        val categoryId = getIconCategoryId(database, CategoriesOfIconsNames.Categories.name)
+            ?: return
+        currentIcons.forEach { (name, resource) ->
+            val exists = database.query(
+                "SELECT 1 FROM icon_resource_table WHERE icon_name = ? AND icon_category = ? LIMIT 1",
+                arrayOf<Any>(name, categoryId)
+            ).use { cursor -> cursor.moveToFirst() }
+            if (!exists) {
+                database.execSQL(
+                    "INSERT INTO icon_resource_table (icon_name, icon_category, icon_resource) VALUES (?, ?, ?)",
+                    arrayOf<Any>(name, categoryId, resource)
+                )
+            }
+        }
+    }
+
+    private fun getIconCategoryId(
+        database: androidx.sqlite.db.SupportSQLiteDatabase,
+        name: String
+    ): Long? {
+        return database.query(
+            "SELECT id FROM icon_category_table WHERE name = ? LIMIT 1",
+            arrayOf<Any>(name)
+        ).use { cursor ->
+            if (cursor.moveToFirst()) {
+                cursor.getLong(cursor.getColumnIndexOrThrow("id"))
+            } else {
+                null
+            }
         }
     }
 

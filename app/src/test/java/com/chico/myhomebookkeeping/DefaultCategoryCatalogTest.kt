@@ -42,6 +42,13 @@ class DefaultCategoryCatalogTest {
     }
 
     @Test
+    fun everyDefaultCategoryHasIcon() {
+        DefaultCategoryCatalog.groups.forEach { group ->
+            assertEquals(group.subcategories.size, group.subcategoryIcons.size)
+        }
+    }
+
+    @Test
     fun russianCatalogIsAvailableForRussianLanguage() {
         val groups = DefaultCategoryCatalog.groupsForLanguage("ru")
 

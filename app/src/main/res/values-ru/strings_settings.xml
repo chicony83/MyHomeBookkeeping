@@ -26,4 +26,8 @@
     <string name="journal_date_today">Сегодня</string>
     <string name="journal_date_yesterday">Вчера</string>
     <string name="journal_date_day_before_yesterday">Позавчера</string>
+    <string name="settings_journal_parent_category_display_title">Родительская категория в журнале</string>
+    <string name="settings_journal_parent_category_display_icon">Иконка</string>
+    <string name="settings_journal_parent_category_display_icon_with_label">Иконка + подпись</string>
+    <string name="settings_journal_parent_category_display_label">Подпись</string>
 </resources>

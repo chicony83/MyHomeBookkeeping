@@ -26,4 +26,8 @@
     <string name="journal_date_today">Dzisiaj</string>
     <string name="journal_date_yesterday">Wczoraj</string>
     <string name="journal_date_day_before_yesterday">Przedwczoraj</string>
+    <string name="settings_journal_parent_category_display_title">Kategoria nadrzedna w dzienniku</string>
+    <string name="settings_journal_parent_category_display_icon">Ikona</string>
+    <string name="settings_journal_parent_category_display_icon_with_label">Ikona + podpis</string>
+    <string name="settings_journal_parent_category_display_label">Podpis</string>
 </resources>

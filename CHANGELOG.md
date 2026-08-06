@@ -5,9 +5,15 @@ This file is the full internal release log. Keep all useful development notes he
 ## 0.13.1
 
 ### User-facing
+- Added icons for default parent categories and subcategories on first launch.
+- Added more category icons for clearer default category setup.
+- Added a Journal setting for parent category display: icon, icon with label, or label.
 - Fixed restoring fresh encrypted database backups after database schema updates.
 
 ### Development
+- Default category icons now use stable `CategoryIconNames` and are resolved to current drawable resources during first launch.
+- Icon synchronization now preserves unknown user icon entries and backfills newly bundled category icons for existing installs.
+- Journal queries now include parent category icons, and the new parent-category display mode is included in backup/restore settings.
 - Shared the current Room database schema version with backup validation so restore support advances with future migrations.
 - Verified the backup transfer scenario on device with `BackupTransferInstrumentedTest`.
 

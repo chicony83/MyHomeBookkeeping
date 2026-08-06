@@ -68,6 +68,7 @@ class MoneyMovingFragment : Fragment() {
                     MoneyMovingAdapter(
                         it1,
                         journalCurrencyDisplayMode(),
+                        journalParentCategoryDisplayMode(),
                         showJournalDateSeparators(),
                         object : OnItemViewClickListenerLong {
                             override fun onClick(selectedId: Long) {
@@ -110,6 +111,28 @@ class MoneyMovingFragment : Fragment() {
             Context.MODE_PRIVATE
         )
         return sharedPreferences.getBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, true)
+    }
+
+    private fun journalParentCategoryDisplayMode(): String {
+        val sharedPreferences = requireContext().getSharedPreferences(
+            Constants.SP_NAME,
+            Context.MODE_PRIVATE
+        )
+        val mode = sharedPreferences.getString(
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE,
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+        ) ?: Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+        return if (isSupportedJournalParentCategoryDisplayMode(mode)) {
+            mode
+        } else {
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+        }
+    }
+
+    private fun isSupportedJournalParentCategoryDisplayMode(mode: String): Boolean {
+        return mode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON ||
+            mode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL ||
+            mode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL
     }
 
     private fun createBalanceRow(row: MoneyMovingCountMoney.CurrencyBalance): LinearLayout {

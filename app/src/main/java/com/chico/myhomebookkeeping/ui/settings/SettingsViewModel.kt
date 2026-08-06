@@ -56,6 +56,10 @@ class SettingsViewModel(
     val journalDateSeparatorsEnabled: LiveData<Boolean>
         get() = _journalDateSeparatorsEnabled
 
+    private val _journalParentCategoryDisplayMode = MutableLiveData<String>()
+    val journalParentCategoryDisplayMode: LiveData<String>
+        get() = _journalParentCategoryDisplayMode
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -68,6 +72,7 @@ class SettingsViewModel(
         _appLanguage.value = AppLanguage.getSelectedTag(app.applicationContext)
         _journalCurrencyDisplayMode.value = getJournalCurrencyDisplayMode()
         _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
+        _journalParentCategoryDisplayMode.value = getJournalParentCategoryDisplayMode()
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -120,6 +125,13 @@ class SettingsViewModel(
             .putBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, isEnabled)
             .apply()
         _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
+    }
+
+    fun saveJournalParentCategoryDisplayMode(displayMode: String) {
+        sharedPreferences.edit()
+            .putString(Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE, displayMode)
+            .apply()
+        _journalParentCategoryDisplayMode.value = getJournalParentCategoryDisplayMode()
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {
@@ -194,9 +206,23 @@ class SettingsViewModel(
         return sharedPreferences.getBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, true)
     }
 
+    private fun getJournalParentCategoryDisplayMode(): String {
+        return sharedPreferences.getString(
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE,
+            Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+        )?.takeIf(::isSupportedJournalParentCategoryDisplayMode)
+            ?: Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+    }
+
     private fun isSupportedJournalCurrencyDisplayMode(displayMode: String): Boolean {
         return displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_NAME ||
             displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_SHORT_NAME ||
             displayMode == Constants.JOURNAL_CURRENCY_DISPLAY_ISO
+    }
+
+    private fun isSupportedJournalParentCategoryDisplayMode(displayMode: String): Boolean {
+        return displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON ||
+            displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL ||
+            displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL
     }
 }

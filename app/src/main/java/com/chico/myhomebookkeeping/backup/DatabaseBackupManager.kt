@@ -155,6 +155,13 @@ object DatabaseBackupManager {
                 "journalShowDateSeparators",
                 appPreferences.getBoolean(Constants.JOURNAL_SHOW_DATE_SEPARATORS, true)
             )
+            .put(
+                "journalParentCategoryDisplayMode",
+                appPreferences.getString(
+                    Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE,
+                    Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+                )
+            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {
