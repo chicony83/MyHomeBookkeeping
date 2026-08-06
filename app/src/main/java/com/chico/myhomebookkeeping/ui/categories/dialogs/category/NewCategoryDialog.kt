@@ -27,10 +27,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.lang.IllegalStateException
 
 class NewCategoryDialog(
-    private val result: Any,
-    private val parentCategoriesResult: MutableLiveData<ParentCategories?>,
-    private val parentCategoriesList: List<ParentCategories>,
-    private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack,
+    private val result: Any = emptyList<String>(),
+    private val parentCategoriesResult: MutableLiveData<ParentCategories?> = MutableLiveData(null),
+    private val parentCategoriesList: List<ParentCategories> = emptyList(),
+    private val onAddNewCategoryCallBack: OnAddNewCategoryCallBack = NoOpAddNewCategoryCallBack,
 ) : DialogFragment() {
     //    private val dbIcon:IconResourcesDao = dataBase.getDataBase(requireActivity().applicationContext).iconResourcesDao()
     private lateinit var iconImg: ImageView
@@ -276,5 +276,22 @@ class NewCategoryDialog(
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
+    private object NoOpAddNewCategoryCallBack : OnAddNewCategoryCallBack {
+        override fun addAndSelectWithoutParentCategory(
+            name: String,
+            isIncome: Boolean,
+            isSelect: Boolean,
+            icon: Int
+        ) = Unit
+
+        override fun addAndSelectFull(
+            name: String,
+            parentCategoryId: Int,
+            isIncome: Boolean,
+            isSelect: Boolean,
+            icon: Int
+        ) = Unit
     }
 }

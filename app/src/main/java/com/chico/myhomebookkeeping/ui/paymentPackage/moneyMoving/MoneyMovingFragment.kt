@@ -20,7 +20,6 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
-import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
@@ -210,6 +209,19 @@ class MoneyMovingFragment : Fragment() {
         view.hideKeyboard()
 
         control = activity?.findNavController(R.id.nav_host_fragment)!!
+        childFragmentManager.setFragmentResultListener(
+            EntryIsAddedBottomSheet.REQUEST_KEY,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            if (bundle.getBoolean(EntryIsAddedBottomSheet.RESULT_NEXT_ENTRY_CLICKED)) {
+                control.navigate(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(
+                        CategoriesFragment.OPEN_MODE_STANDALONE
+                    )
+                )
+            }
+        }
 
         with(binding) {
             selectCategory.setOnClickListener {
@@ -244,18 +256,7 @@ class MoneyMovingFragment : Fragment() {
     private fun newEntryAdded() {
         if (moneyMovingViewModel.isTheEntryOfMoneyMovingAdded()){
             launchUi {
-                val entryIsAddedBottomSheet = EntryIsAddedBottomSheet(
-                    object : OnNextEntryButtonClickedCallBack{
-                        override fun onClick() {
-                            control.navigate(
-                                R.id.nav_categories,
-                                CategoriesFragment.openModeArgs(
-                                    CategoriesFragment.OPEN_MODE_STANDALONE
-                                )
-                            )
-                        }
-                    }
-                )
+                val entryIsAddedBottomSheet = EntryIsAddedBottomSheet()
                 entryIsAddedBottomSheet.show(childFragmentManager,getString(R.string.tag_show_dialog))
 //                launchIo {
 //                    delay(3500)

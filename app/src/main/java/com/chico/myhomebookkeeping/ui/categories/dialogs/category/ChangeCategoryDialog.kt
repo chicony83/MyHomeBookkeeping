@@ -26,9 +26,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.lang.IllegalStateException
 
 class ChangeCategoryDialog(
-    private val category: Categories?,
-    private val parentCategoriesList: List<ParentCategories>,
-    private val onChangeCategoryCallBack: OnChangeCategoryCallBack
+    private val category: Categories? = null,
+    private val parentCategoriesList: List<ParentCategories> = emptyList(),
+    private val onChangeCategoryCallBack: OnChangeCategoryCallBack = NoOpChangeCategoryCallBack
 ) : DialogFragment() {
 
     private var iconResource: Int = 0
@@ -215,5 +215,22 @@ class ChangeCategoryDialog(
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
+    private object NoOpChangeCategoryCallBack : OnChangeCategoryCallBack {
+        override fun changeCategoryWithoutParentCategory(
+            id: Int,
+            name: String,
+            isIncome: Boolean,
+            iconResource: Int
+        ) = Unit
+
+        override fun changeCategoryFull(
+            id: Int,
+            name: String,
+            isIncome: Boolean,
+            iconResource: Int,
+            parentCategoryId: Int
+        ) = Unit
     }
 }

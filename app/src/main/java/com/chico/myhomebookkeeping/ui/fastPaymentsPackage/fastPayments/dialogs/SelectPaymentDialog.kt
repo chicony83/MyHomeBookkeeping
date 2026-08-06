@@ -15,9 +15,11 @@ import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackLong
 import java.lang.IllegalStateException
 
 class SelectPaymentDialog(
-    private val fastPayment: FullFastPayment?,
-    private val onItemSelectForChangeCallBackLong: OnItemSelectForChangeCallBackLong,
-    private val onItemSelectForSelectCallBackLong: OnItemSelectForSelectCallBackLong
+    private val fastPayment: FullFastPayment? = null,
+    private val onItemSelectForChangeCallBackLong: OnItemSelectForChangeCallBackLong =
+        NoOpItemSelectForChangeCallBackLong,
+    private val onItemSelectForSelectCallBackLong: OnItemSelectForSelectCallBackLong =
+        NoOpItemSelectForSelectCallBackLong
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -95,5 +97,13 @@ class SelectPaymentDialog(
             else -> R.drawable.rating1
 
         }
+    }
+
+    private object NoOpItemSelectForChangeCallBackLong : OnItemSelectForChangeCallBackLong {
+        override fun onSelect(id: Long) = Unit
+    }
+
+    private object NoOpItemSelectForSelectCallBackLong : OnItemSelectForSelectCallBackLong {
+        override fun onSelect(id: Long) = Unit
     }
 }

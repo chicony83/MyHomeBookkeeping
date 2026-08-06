@@ -15,8 +15,9 @@ import java.lang.IllegalStateException
 
 
 class SelectMoneyMovingDialog(
-    val fullMoneyMoving: FullMoneyMoving?,
-    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack
+    val fullMoneyMoving: FullMoneyMoving? = null,
+    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack =
+        NoOpItemSelectForChangeCallBack
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -71,5 +72,9 @@ class SelectMoneyMovingDialog(
                 description.text = fullMoneyMoving.description
             }
         }
+    }
+
+    private object NoOpItemSelectForChangeCallBack : OnItemSelectForChangeCallBack {
+        override fun onSelect(id: Int) = Unit
     }
 }

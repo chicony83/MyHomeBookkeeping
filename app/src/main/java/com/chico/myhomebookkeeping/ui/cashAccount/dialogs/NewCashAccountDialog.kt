@@ -16,8 +16,9 @@ import com.chico.myhomebookkeeping.utils.getString
 import java.lang.IllegalStateException
 
 class NewCashAccountDialog(
-    private val result: Any,
-    private val onAddNewCashAccountsCallBack: OnAddNewCashAccountsCallBack
+    private val result: Any = emptyList<String>(),
+    private val onAddNewCashAccountsCallBack: OnAddNewCashAccountsCallBack =
+        NoOpAddNewCashAccountsCallBack
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -106,4 +107,7 @@ class NewCashAccountDialog(
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
+    private object NoOpAddNewCashAccountsCallBack : OnAddNewCashAccountsCallBack {
+        override fun addAndSelect(name: String, number: String, isSelect: Boolean) = Unit
+    }
 }

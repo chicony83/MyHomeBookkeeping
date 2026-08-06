@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemSubmitForDeleteCallBack
 import java.lang.IllegalStateException
 
 class SubmitDeleteDialog(
-    private val onItemSubmitForDeleteCallBack: OnItemSubmitForDeleteCallBack
+    private val onItemSubmitForDeleteCallBack: OnItemSubmitForDeleteCallBack = NoOpItemSubmitForDeleteCallBack
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->
@@ -43,5 +43,9 @@ class SubmitDeleteDialog(
 
     private fun buildLayout(layout: View) {
 
+    }
+
+    private object NoOpItemSubmitForDeleteCallBack : OnItemSubmitForDeleteCallBack {
+        override fun isDelete(isDelete: Boolean) = Unit
     }
 }

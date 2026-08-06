@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.chico.myhomebookkeeping.R
-import com.chico.myhomebookkeeping.interfaces.moneyMoving.OnNextEntryButtonClickedCallBack
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class EntryIsAddedBottomSheet(
-    private val onNextEntryButtonClickedCallBack: OnNextEntryButtonClickedCallBack
-) : BottomSheetDialogFragment() {
+class EntryIsAddedBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,7 +23,11 @@ class EntryIsAddedBottomSheet(
         val nextEntryButton = layout.findViewById<Button>(R.id.next_entry_button)
 
         nextEntryButton.setOnClickListener {
-            onNextEntryButtonClickedCallBack.onClick()
+            parentFragmentManager.setFragmentResult(
+                REQUEST_KEY,
+                bundleOf(RESULT_NEXT_ENTRY_CLICKED to true)
+            )
+            dismiss()
         }
 
         return layout
@@ -41,6 +43,11 @@ class EntryIsAddedBottomSheet(
             bottomSheetView.updatePadding(bottom = initialBottomPadding + bottomInset)
             insets
         }
+    }
+
+    companion object {
+        const val REQUEST_KEY = "entry_is_added_bottom_sheet_request"
+        const val RESULT_NEXT_ENTRY_CLICKED = "next_entry_clicked"
     }
 
 }

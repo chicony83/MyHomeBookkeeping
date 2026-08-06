@@ -16,10 +16,12 @@ import com.chico.myhomebookkeeping.ui.categories.such.SuchName
 import java.lang.IllegalStateException
 
 class SelectCategoryDialog(
-    private val category: Categories?,
-    private val parentCategoriesList: List<ParentCategories>,
-    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
+    private val category: Categories? = null,
+    private val parentCategoriesList: List<ParentCategories> = emptyList(),
+    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack =
+        NoOpItemSelectForChangeCallBack,
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt =
+        NoOpItemSelectForSelectCallBackInt
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->
@@ -88,5 +90,13 @@ class SelectCategoryDialog(
 
     private fun dialogCancel() {
         dialog?.cancel()
+    }
+
+    private object NoOpItemSelectForChangeCallBack : OnItemSelectForChangeCallBack {
+        override fun onSelect(id: Int) = Unit
+    }
+
+    private object NoOpItemSelectForSelectCallBackInt : OnItemSelectForSelectCallBackInt {
+        override fun onSelect(id: Int) = Unit
     }
 }

@@ -13,9 +13,11 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import java.lang.IllegalStateException
 
 class SelectCurrencyDialog(
-    val currencies: Currencies?,
-    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
+    val currencies: Currencies? = null,
+    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack =
+        NoOpItemSelectForChangeCallBack,
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt =
+        NoOpItemSelectForSelectCallBackInt
 ) :
     DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -68,5 +70,13 @@ class SelectCurrencyDialog(
 
     private fun dialogCancel() {
         dialog?.cancel()
+    }
+
+    private object NoOpItemSelectForChangeCallBack : OnItemSelectForChangeCallBack {
+        override fun onSelect(id: Int) = Unit
+    }
+
+    private object NoOpItemSelectForSelectCallBackInt : OnItemSelectForSelectCallBackInt {
+        override fun onSelect(id: Int) = Unit
     }
 }

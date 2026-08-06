@@ -17,8 +17,8 @@ import com.chico.myhomebookkeeping.utils.getString
 
 
 class NewCurrencyDialog(
-    private val result: Any,
-    private val onAddNewCurrencyCallBack: OnAddNewCurrencyCallBack
+    private val result: Any = emptyList<String>(),
+    private val onAddNewCurrencyCallBack: OnAddNewCurrencyCallBack = NoOpAddNewCurrencyCallBack
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -113,5 +113,16 @@ class NewCurrencyDialog(
 
     private fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+    }
+
+    private object NoOpAddNewCurrencyCallBack : OnAddNewCurrencyCallBack {
+        override fun addAndSelect(name: String, isSelect: Boolean) = Unit
+
+        override fun addAndSelect(
+            currencyName: String,
+            currencyShortName: String,
+            currencyISO: String,
+            isSelect: Boolean
+        ) = Unit
     }
 }

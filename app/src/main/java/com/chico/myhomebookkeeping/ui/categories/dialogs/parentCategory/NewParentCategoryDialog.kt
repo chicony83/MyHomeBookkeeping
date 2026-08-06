@@ -16,7 +16,8 @@ import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCat
 import com.chico.myhomebookkeeping.utils.getString
 
 class NewParentCategoryDialog(
-    private val onAddNewParentCategoryCallBack: OnAddNewParentCategoryCallBack
+    private val onAddNewParentCategoryCallBack: OnAddNewParentCategoryCallBack =
+        NoOpAddNewParentCategoryCallBack
 ) : DialogFragment() {
 
     private lateinit var iconImg: ImageView
@@ -75,5 +76,9 @@ class NewParentCategoryDialog(
 
     private fun showMessage(s: String) {
         Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show()
+    }
+
+    private object NoOpAddNewParentCategoryCallBack : OnAddNewParentCategoryCallBack {
+        override fun add(name: String, icon: Int?) = Unit
     }
 }

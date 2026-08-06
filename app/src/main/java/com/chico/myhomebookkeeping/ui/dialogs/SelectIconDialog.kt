@@ -16,8 +16,8 @@ import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import java.lang.IllegalStateException
 
 class SelectIconDialog(
-    private val iconsList: List<IconsResource>,
-    private val onSelectIconCallBack: OnSelectIconCallBack
+    private val iconsList: List<IconsResource> = emptyList(),
+    private val onSelectIconCallBack: OnSelectIconCallBack = NoOpSelectIconCallBack
 //    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
 ) : DialogFragment() {
 
@@ -112,5 +112,9 @@ class SelectIconDialog(
             }
             parentLayout.addView(imageView, param)
         }
+    }
+
+    private object NoOpSelectIconCallBack : OnSelectIconCallBack {
+        override fun selectIcon(icon: IconsResource) = Unit
     }
 }

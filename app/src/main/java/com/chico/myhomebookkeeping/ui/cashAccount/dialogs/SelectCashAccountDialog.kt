@@ -13,9 +13,11 @@ import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import java.lang.IllegalStateException
 
 class SelectCashAccountDialog(
-    private val cashAccount: CashAccount?,
-    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack,
-    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt
+    private val cashAccount: CashAccount? = null,
+    private val onItemSelectForChangeCallBack: OnItemSelectForChangeCallBack =
+        NoOpItemSelectForChangeCallBack,
+    private val onItemSelectForSelectCallBackInt: OnItemSelectForSelectCallBackInt =
+        NoOpItemSelectForSelectCallBackInt
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -61,5 +63,13 @@ class SelectCashAccountDialog(
 
     private fun dialogCancel() {
         dialog?.cancel()
+    }
+
+    private object NoOpItemSelectForChangeCallBack : OnItemSelectForChangeCallBack {
+        override fun onSelect(id: Int) = Unit
+    }
+
+    private object NoOpItemSelectForSelectCallBackInt : OnItemSelectForSelectCallBackInt {
+        override fun onSelect(id: Int) = Unit
     }
 }

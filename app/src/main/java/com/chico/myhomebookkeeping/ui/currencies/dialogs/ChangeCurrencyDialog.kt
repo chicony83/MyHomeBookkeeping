@@ -14,8 +14,8 @@ import com.chico.myhomebookkeeping.interfaces.currencies.OnChangeCurrencyCallBac
 import java.lang.IllegalStateException
 
 class ChangeCurrencyDialog(
-    val currency: Currencies?,
-    private val onChangeCurrencyCallBack: OnChangeCurrencyCallBack
+    val currency: Currencies? = null,
+    private val onChangeCurrencyCallBack: OnChangeCurrencyCallBack = NoOpChangeCurrencyCallBack
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -86,5 +86,11 @@ class ChangeCurrencyDialog(
 
     private fun dialogCancel() {
         dialog?.cancel()
+    }
+
+    private object NoOpChangeCurrencyCallBack : OnChangeCurrencyCallBack {
+        override fun change(id: Int, name: String) = Unit
+
+        override fun change(id: Int, name: String, nameShort: String?, iSO: String?) = Unit
     }
 }

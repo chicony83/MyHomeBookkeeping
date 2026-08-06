@@ -10,8 +10,8 @@ import com.chico.myhomebookkeeping.interfaces.fastPayments.OnSelectRatingValueCa
 import java.lang.IllegalStateException
 
 class SelectRatingDialog(
-    private val ratingFromParent: Int?,
-    private val onSelectRatingValueCallBack: OnSelectRatingValueCallBack
+    private val ratingFromParent: Int? = null,
+    private val onSelectRatingValueCallBack: OnSelectRatingValueCallBack = NoOpSelectRatingValueCallBack
 ) :
     DialogFragment() {
 
@@ -100,5 +100,9 @@ class SelectRatingDialog(
             else if (fullStarsNum <= 0) listImg[i].setImageResource(R.drawable.empty_star)
             fullStarsNum--
         }
+    }
+
+    private object NoOpSelectRatingValueCallBack : OnSelectRatingValueCallBack {
+        override fun select(value: Int) = Unit
     }
 }

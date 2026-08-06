@@ -15,8 +15,9 @@ import com.chico.myhomebookkeeping.interfaces.cashAccounts.OnChangeCashAccountCa
 import java.lang.IllegalStateException
 
 class ChangeCashAccountDialog(
-    private val cashAccount: CashAccount?,
-    private val onChangeCashAccountCallBack: OnChangeCashAccountCallBack
+    private val cashAccount: CashAccount? = null,
+    private val onChangeCashAccountCallBack: OnChangeCashAccountCallBack =
+        NoOpChangeCashAccountCallBack
 ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -65,4 +66,7 @@ class ChangeCashAccountDialog(
         Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
+    private object NoOpChangeCashAccountCallBack : OnChangeCashAccountCallBack {
+        override fun change(id: Int, name: String, number: String) = Unit
+    }
 }

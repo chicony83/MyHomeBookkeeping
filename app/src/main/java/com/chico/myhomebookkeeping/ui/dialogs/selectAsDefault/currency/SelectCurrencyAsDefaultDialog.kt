@@ -12,7 +12,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.Currencies
 
 class SelectCurrencyAsDefaultDialog(
-    private var selectedCurrencies: List<Currencies>
+    private var selectedCurrencies: List<Currencies> = emptyList()
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
