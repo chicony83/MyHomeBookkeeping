@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentFirstLaunchDefaultCashAccountBinding
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemSelectCashAccountAsDefaultDialogBinding
+import com.chico.myhomebookkeeping.domain.DefaultCashAccountCatalog
+import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class FirstLaunchDefaultCashAccountFragment : Fragment() {
@@ -36,7 +39,7 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
         defaultCashAccount = selectedCashAccounts.first()
         adapter = SelectDefaultCashAccountAdapter(
             cashAccounts = selectedCashAccounts,
-            selectedCashAccountName = defaultCashAccount?.name
+            selectedCashAccountName = defaultCashAccount?.canonicalName
         ) {
             defaultCashAccount = it
         }
@@ -53,7 +56,7 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
     fun submitStep() {
         val selectedDefaultCashAccount = defaultCashAccount ?: return
         viewModel.saveSelectedCashAccounts(getDefaultCashAccounts())
-        viewModel.saveDefaultCashAccount(selectedDefaultCashAccount.name)
+        viewModel.saveDefaultCashAccount(selectedDefaultCashAccount.canonicalName)
         val setupFragment = parentFragment as? FirstLaunchSetupFragment
         if (setupFragment?.getInstallMode() == FirstLaunchInstallMode.DEFAULT) {
             setupFragment.completeDefaultInstall()
@@ -76,29 +79,45 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
     }
 
     private fun getDefaultCashAccounts(): List<FirstLaunchSetupItem> {
-        return listOf(
-            getDefaultCashAccount(viewModel.cardCashAccountItem, R.string.quick_setup_name_Card),
-            getDefaultCashAccount(viewModel.cashCashAccountItem, R.string.quick_setup_name_Cash)
-        )
+        val languageTag = AppLanguage.getSelectedTag(requireContext())
+        return DefaultCashAccountCatalog.accounts.map { account ->
+            getDefaultCashAccount(
+                icon = iconResourceFor(account.iconName),
+                account = account,
+                languageTag = languageTag
+            )
+        }
     }
 
     private fun getDefaultCashAccount(
         icon: LiveData<Int>,
-        nameRes: Int
+        account: DefaultCashAccountCatalog.Account,
+        languageTag: String
     ): FirstLaunchSetupItem {
         return FirstLaunchSetupItem(
             img = icon.value ?: R.drawable.no_image,
-            name = getString(nameRes)
+            name = account.displayName(languageTag),
+            canonicalName = account.canonicalName,
+            nameRu = account.nameRu,
+            namePl = account.namePl
         )
     }
 
     private fun updateCashAccounts() {
         val cashAccounts = getDefaultCashAccounts()
         viewModel.saveSelectedCashAccounts(cashAccounts)
-        val selectedName = defaultCashAccount?.name
-        defaultCashAccount = cashAccounts.firstOrNull { it.name == selectedName }
+        val selectedName = defaultCashAccount?.canonicalName
+        defaultCashAccount = cashAccounts.firstOrNull { it.canonicalName == selectedName }
             ?: cashAccounts.first()
-        adapter.updateCashAccounts(cashAccounts, defaultCashAccount?.name)
+        adapter.updateCashAccounts(cashAccounts, defaultCashAccount?.canonicalName)
+    }
+
+    private fun iconResourceFor(iconName: CashAccountIconNames): LiveData<Int> {
+        return when (iconName) {
+            CashAccountIconNames.Card -> viewModel.cardCashAccountItem
+            CashAccountIconNames.Cash -> viewModel.cashCashAccountItem
+            CashAccountIconNames.CardOff -> viewModel.cardCashAccountItem
+        }
     }
 
     private class SelectDefaultCashAccountAdapter(
@@ -141,7 +160,7 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
                     iconImg.setImageResource(cashAccount.img)
                     nameCashAccount.text = cashAccount.name
                     defaultCashAccountRadioButton.isChecked =
-                        cashAccount.name == selectedCashAccountName
+                        cashAccount.canonicalName == selectedCashAccountName
                     selectCashAccountAsDefaultItem.setOnClickListener {
                         selectCashAccount(cashAccount)
                     }
@@ -151,9 +170,9 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
             private fun selectCashAccount(cashAccount: FirstLaunchSetupItem) {
                 val previousName = selectedCashAccountName
                 val currentPosition = adapterPosition
-                selectedCashAccountName = cashAccount.name
+                selectedCashAccountName = cashAccount.canonicalName
                 onCashAccountSelected(cashAccount)
-                cashAccounts.indexOfFirst { it.name == previousName }
+                cashAccounts.indexOfFirst { it.canonicalName == previousName }
                     .takeIf { it >= 0 }
                     ?.let { notifyItemChanged(it) }
                 currentPosition

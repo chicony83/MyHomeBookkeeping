@@ -4,7 +4,10 @@ import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
 
 data class FirstLaunchSetupItem(
     val img: Int,
-    val name: String
+    val name: String,
+    val canonicalName: String = name,
+    val nameRu: String? = null,
+    val namePl: String? = null
 )
 
 data class FirstLaunchCategoryGroupItem(

@@ -1,8 +1,10 @@
 package com.chico.myhomebookkeeping.ui.firstLaunch
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.obj.AppLanguage
@@ -12,27 +14,44 @@ class FirstLaunchLanguageFragment : Fragment(R.layout.fragment_first_launch_lang
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val radioGroup = view.findViewById<RadioGroup>(R.id.firstLaunchLanguageRadioGroup)
+        radioGroup.removeAllViews()
+
         val selectedLanguage = AppLanguage.getSelectedTag(requireContext())
-        view.findViewById<RadioButton>(R.id.firstLaunchEnglishRadioButton).isChecked =
-            selectedLanguage == Constants.APP_LANGUAGE_ENGLISH ||
-                    selectedLanguage == Constants.APP_LANGUAGE_SYSTEM
-        view.findViewById<RadioButton>(R.id.firstLaunchPolishRadioButton).isChecked =
-            selectedLanguage == Constants.APP_LANGUAGE_POLISH
-        view.findViewById<RadioButton>(R.id.firstLaunchRussianRadioButton).isChecked =
-            selectedLanguage == Constants.APP_LANGUAGE_RUSSIAN
+            .takeIf { it != Constants.APP_LANGUAGE_SYSTEM }
+            ?: Constants.APP_LANGUAGE_ENGLISH
+
+        AppLanguage.firstLaunchLanguages.forEach { language ->
+            val radioButton = RadioButton(
+                ContextThemeWrapper(requireContext(), R.style.Description_CashAccounts_FirstLaunch)
+            ).apply {
+                id = View.generateViewId()
+                tag = language.tag
+                text = getString(language.titleRes)
+                layoutParams = RadioGroup.LayoutParams(
+                    RadioGroup.LayoutParams.MATCH_PARENT,
+                    RadioGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+            radioGroup.addView(radioButton)
+            radioButton.isChecked = language.tag == selectedLanguage
+        }
     }
 
     fun submitStep() {
-        val languageTag = when {
-            requireView().findViewById<RadioButton>(R.id.firstLaunchPolishRadioButton).isChecked ->
-                Constants.APP_LANGUAGE_POLISH
-            requireView().findViewById<RadioButton>(R.id.firstLaunchRussianRadioButton).isChecked ->
-                Constants.APP_LANGUAGE_RUSSIAN
-            else -> Constants.APP_LANGUAGE_ENGLISH
-        }
+        val activity = requireActivity()
+        val context = requireContext()
+        val radioGroup = requireView().findViewById<RadioGroup>(R.id.firstLaunchLanguageRadioGroup)
+        val languageTag = radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
+            ?.tag as? String
+            ?: Constants.APP_LANGUAGE_ENGLISH
+        val previousLanguageTag = AppLanguage.getSelectedTag(context)
 
-        AppLanguage.saveSelectedTag(requireContext(), languageTag)
+        AppLanguage.saveSelectedTag(context, languageTag)
         AppLanguage.applyLanguageTag(languageTag)
         (parentFragment as? FirstLaunchSetupFragment)?.showInstallModeStep()
+        if (languageTag != previousLanguageTag) {
+            activity.recreate()
+        }
     }
 }

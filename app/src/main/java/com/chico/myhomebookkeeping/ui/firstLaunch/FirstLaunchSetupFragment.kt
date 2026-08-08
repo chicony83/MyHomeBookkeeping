@@ -48,6 +48,7 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
         if (savedInstanceState == null) {
             showLanguageStep()
         } else {
+            restoreCurrentStepIfNeeded()
             updateStepUi()
         }
         view.findViewById<Button>(R.id.firstLaunchStepButton).setOnClickListener {
@@ -175,6 +176,25 @@ class FirstLaunchSetupFragment : Fragment(R.layout.fragment_first_launch_setup) 
             is FirstLaunchCategoriesFragment -> stepFragment.submitStep()
             is FirstLaunchDefaultCashAccountFragment -> stepFragment.submitStep()
             is FirstLaunchStartDestinationFragment -> stepFragment.submitStep()
+        }
+    }
+
+    private fun restoreCurrentStepIfNeeded() {
+        if (childFragmentManager.primaryNavigationFragment != null) return
+        when (currentStep) {
+            2 -> showInstallModeStep()
+            3 -> showCurrenciesStep()
+            4 -> {
+                if (installMode == FirstLaunchInstallMode.DEFAULT) {
+                    showDefaultCashAccountStep()
+                } else {
+                    showDefaultCurrencyStep()
+                }
+            }
+            5 -> showDefaultCashAccountStep()
+            6 -> showCategoriesStep()
+            7 -> showStartDestinationStep()
+            else -> showLanguageStep()
         }
     }
 
