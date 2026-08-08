@@ -1,0 +1,17 @@
+What's new in 0.13.2
+
+- Fixed issues with restoring screens and backups.
+- Added new default icons for categories.
+- Improved app stability.
+
+Что нового в 0.13.2
+
+- Исправлены ошибки при восстановлении экранов и резервных копий.
+- Добавлены новые стандартные иконки для категорий.
+- Улучшена стабильность приложения.
+
+Co nowego w 0.13.2
+
+- Naprawiono błędy przy przywracaniu ekranów i kopii zapasowych.
+- Dodano nowe domyślne ikony kategorii.
+- Poprawiono stabilność aplikacji.

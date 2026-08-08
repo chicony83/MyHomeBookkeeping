@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="string_last_version_0_13_2">0.13.2\n- Naprawiono błędy przy przywracaniu ekranów i kopii zapasowych.\n- Dodano nowe domyślne ikony kategorii.\n- Poprawiono stabilność aplikacji.</string>
     <string name="string_last_version_0_13_1">0.13.1\n- Zaktualizowano ikonę aplikacji.\n- Dodano ikony dla kategorii startowych i nadrzędnych.\n- Dodano ustawienie sposobu wyświetlania kategorii nadrzędnych w Dzienniku.\n- Rozszerzono zestaw ikon kategorii.\n- Naprawiono nawigację na ekranie przelewów między kontami.\n- Naprawiono przywracanie świeżych kopii zapasowych po aktualizacjach.\n- Naprawiono niektóre błędy i poprawiono stabilność.</string>
     <string name="string_last_version_title">Historia wersji</string>
     <string name="version_history_button">Historia wersji</string>

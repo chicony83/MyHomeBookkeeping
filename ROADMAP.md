@@ -25,6 +25,8 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## First Launch And Defaults
 
 - Completed: assign icons to default parent categories and subcategories during first launch.
+- Completed: keep first-launch language selection generated from the shared supported-language catalog.
+- Completed: restore the current first-launch setup step after language-change recreation.
 - Keep first-launch currency search simple and visible; refine spacing only if the setup screen gets crowded.
 - Allow choosing or entering a custom currency name during first launch.
 - Support opening balance when creating a new account.
@@ -32,6 +34,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Android Compatibility
 
 - Completed: add Polish app language, including first-launch/settings selection and localized default category data.
+- Completed: declare bundled app locales with Android locale config for English, Polish, and Russian.
 - Completed: update the app launcher icon assets from the wallet artwork, using a 70% foreground scale for better launcher spacing.
 - Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
 - Keep string resources split by feature and mirrored between `values` and localized `values-*` folders.

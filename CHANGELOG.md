@@ -2,6 +2,24 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.13.2
+
+### User-facing
+- Fixed issues when restoring screens and dialogs after configuration changes.
+- Fixed restoring current encrypted database backups after schema updates.
+- Added new default category icons.
+- Improved app language selection stability during first launch.
+- Improved app stability.
+
+### Development
+- Bumped Play Market release version to 0.13.2 (68).
+- Added short 0.13.2 version history strings for English, Russian, and Polish.
+- Added 0.13.2 Play Market notes in English, Russian, and Polish.
+- Declared supported application locales with Android `localeConfig`.
+- Reused the shared `AppLanguage` catalog for first-launch and Settings language titles.
+- First launch now rebuilds the language radio buttons from supported languages and restores the current setup step after recreation.
+- Built and signed the 0.13.2 release bundle with the local release keystore.
+
 ## 0.13.1
 
 ### User-facing
