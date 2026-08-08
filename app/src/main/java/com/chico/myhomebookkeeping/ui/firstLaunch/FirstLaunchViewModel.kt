@@ -81,7 +81,7 @@ class FirstLaunchViewModel(
     private var listIconResource = listOf<IconsResource>()
     private var selectedCashAccounts = listOf<FirstLaunchSetupItem>()
     private var selectedCategoryGroups = listOf<FirstLaunchCategoryGroupItem>()
-    private var selectedDefaultCashAccountName = ""
+    private var selectedDefaultCashAccountCanonicalName = ""
 
     @SuppressLint("NewApi")
     private val addIcons = AddIcons(
@@ -158,7 +158,7 @@ class FirstLaunchViewModel(
     }
 
     fun saveDefaultCashAccount(defaultCashAccountName: String) {
-        selectedDefaultCashAccountName = defaultCashAccountName
+        selectedDefaultCashAccountCanonicalName = defaultCashAccountName
     }
 
     fun saveStartFragment(startFragment: String) {
@@ -203,7 +203,7 @@ class FirstLaunchViewModel(
 
         val resultAddCashAccount =
             async(Dispatchers.IO) {
-                addSavedCashAccounts(selectedCashAccounts, selectedDefaultCashAccountName)
+                addSavedCashAccounts(selectedCashAccounts, selectedDefaultCashAccountCanonicalName)
             }
 
 //        Automatic fast payment creation is disabled for first launch.
@@ -341,10 +341,12 @@ class FirstLaunchViewModel(
         defaultCashAccountName: String
     ) {
         val cashAccount = CashAccount(
-            accountName = item.name,
+            accountName = item.canonicalName,
             bankAccountNumber = "",
-            isCashAccountDefault = item.name == defaultCashAccountName,
-            icon = item.img
+            isCashAccountDefault = item.canonicalName == defaultCashAccountName,
+            icon = item.img,
+            accountNameRu = item.nameRu,
+            accountNamePl = item.namePl
         )
         dbCashAccount.addCashAccount(cashAccount)
     }

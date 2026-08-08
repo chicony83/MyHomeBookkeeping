@@ -24,17 +24,21 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 ## First Launch And Defaults
 
+- Completed: make first-launch language selection data-driven and keep System default out of the setup flow.
+- Completed: keep default cash accounts canonical as Card/Cash on new installs while filling Russian and Polish display names.
 - Completed: assign icons to default parent categories and subcategories during first launch.
 - Completed: keep first-launch language selection generated from the shared supported-language catalog.
 - Completed: restore the current first-launch setup step after language-change recreation.
 - Keep first-launch currency search simple and visible; refine spacing only if the setup screen gets crowded.
 - Allow choosing or entering a custom currency name during first launch.
 - Support opening balance when creating a new account.
+- Later: move default cash accounts, parent categories, and categories to key-based localization through Android string resources so new languages do not require new database name columns.
 
 ## Android Compatibility
 
 - Completed: add Polish app language, including first-launch/settings selection and localized default category data.
 - Completed: declare bundled app locales with Android locale config for English, Polish, and Russian.
+- Completed: recreate the Activity after first-launch language selection so the next setup step uses the selected resources.
 - Completed: update the app launcher icon assets from the wallet artwork, using a 70% foreground scale for better launcher spacing.
 - Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
 - Keep string resources split by feature and mirrored between `values` and localized `values-*` folders.
@@ -61,6 +65,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Database Ideas
 
 - Completed: keep backup restore validation aligned with the current Room schema version.
+- Add nullable stable keys for default cash accounts, parent categories, and categories, then migrate known built-in rows by English/Russian/Polish names while leaving user-created rows keyless.
 - Add default currency/account fields where still needed.
 - Add parent category support where still needed.
 - Prefer calculated usage counts over stored usage-count columns when possible.
