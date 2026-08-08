@@ -586,14 +586,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun appLanguageTitle(languageTag: String): String {
-        return getString(
-            when (languageTag) {
-                Constants.APP_LANGUAGE_ENGLISH -> R.string.settings_app_language_english
-                Constants.APP_LANGUAGE_POLISH -> R.string.settings_app_language_polish
-                Constants.APP_LANGUAGE_RUSSIAN -> R.string.settings_app_language_russian
-                else -> R.string.settings_app_language_system
-            }
-        )
+        return getString(AppLanguage.findLanguage(languageTag).titleRes)
     }
 
     private fun journalCurrencyDisplayModeTitle(displayMode: String): String {

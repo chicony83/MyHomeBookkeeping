@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="string_last_version_0_13_2">0.13.2\n- Fixed issues with restoring screens and backups.\n- Added new default icons for categories.\n- Improved app stability.</string>
     <string name="string_last_version_0_13_1">0.13.1\n- Updated the app icon.\n- Added icons for starter categories and parent categories.\n- Added a Journal setting for how parent categories are shown.\n- Expanded the category icon set.\n- Fixed navigation on the transfer screen.\n- Fixed restoring fresh database backups after updates.\n- Fixed some issues and improved stability.</string>
     <string name="string_last_version_title">Version history</string>
     <string name="version_history_button">Version history</string>
