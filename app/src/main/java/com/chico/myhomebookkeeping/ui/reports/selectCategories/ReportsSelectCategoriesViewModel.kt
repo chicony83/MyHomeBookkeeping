@@ -37,7 +37,13 @@ class ReportsSelectCategoriesViewModel(
     val categoriesItemsList: LiveData<List<ReportsCategoriesItem>>
         get() = _categoriesItemsList
 
+    private val _selectedCount = MutableLiveData<Int>()
+    val selectedCount: LiveData<Int>
+        get() = _selectedCount
+
+    private var allCategoriesItemsList: List<ReportsCategoriesItem> = emptyList()
     private var selectedCategoriesSetFromSp = setOf<Int>()
+    private var currentFilter = FILTER_ALL
 
     init {
         getSelectedCategoriesSetFromSp()
@@ -56,12 +62,17 @@ class ReportsSelectCategoriesViewModel(
 
     private fun loadCategories() {
         runBlocking {
-            _categoriesItemsList.postValue(
-                ConvToList.categoriesListToCategoriesItemsList(
-                    CategoriesUseCase.getAllCategoriesSortIdAsc(db),
-                    AppLanguage.getSelectedTag(app.applicationContext)
+            allCategoriesItemsList = ConvToList.categoriesListToCategoriesItemsList(
+                CategoriesUseCase.getAllCategoriesSortIdAsc(db),
+                AppLanguage.getSelectedTag(app.applicationContext)
+            ).map { item ->
+                item.copy(
+                    isChecked = selectedCategoriesSetFromSp.isEmpty() ||
+                            selectedCategoriesSetFromSp.contains(item.id)
                 )
-            )
+            }
+            postFilteredCategories()
+            postSelectedCount()
         }
     }
 
@@ -72,10 +83,10 @@ class ReportsSelectCategoriesViewModel(
 
     private fun getSetSelectedCategories(): Set<String> {
         val set = mutableSetOf<String>()
-        if (_categoriesItemsList.value?.isNotEmpty() == true) {
-            for (i in _categoriesItemsList.value?.indices!!) {
-                if (_categoriesItemsList.value!![i].isChecked) {
-                    val id = _categoriesItemsList.value!![i].id
+        if (allCategoriesItemsList.isNotEmpty()) {
+            for (i in allCategoriesItemsList.indices) {
+                if (allCategoriesItemsList[i].isChecked) {
+                    val id = allCategoriesItemsList[i].id
                     //                    val id = i+1k
                     set.add(id.toString())
                     Message.log("add to save set $id")
@@ -86,29 +97,33 @@ class ReportsSelectCategoriesViewModel(
     }
 
     fun setCategoryChecked(id: Int) {
-        _categoriesItemsList.value!!.forEach {
+        allCategoriesItemsList.forEach {
             if (it.id == id) {
                 it.isChecked = true
             }
         }
+        postSelectedCount()
     }
 
     fun setCategoryUnChecked(id: Int) {
-        _categoriesItemsList.value!!.forEach {
+        allCategoriesItemsList.forEach {
             if (it.id == id) {
                 it.isChecked = false
             }
         }
+        postSelectedCount()
     }
 
     fun clearSelectedCategories() {
-        _categoriesItemsList.value?.forEach {
+        allCategoriesItemsList.forEach {
             it.isChecked = false
         }
+        postFilteredCategories()
+        postSelectedCount()
     }
 
     fun printResult() {
-        _categoriesItemsList.value?.forEach {
+        allCategoriesItemsList.forEach {
             Message.log("category id = ${it.id}, name = ${it.name}, isChecked = ${it.isChecked}")
         }
     }
@@ -122,28 +137,70 @@ class ReportsSelectCategoriesViewModel(
     }
 
     fun selectAllCategories() {
-        _categoriesItemsList.value?.forEach{
+        allCategoriesItemsList.forEach {
             it.isChecked = true
         }
+        postFilteredCategories()
+        postSelectedCount()
     }
 
     fun selectAllIncomeCategories() {
-        _categoriesItemsList.value?.forEach {
+        allCategoriesItemsList.forEach {
             if (!it.isIncome) it.isChecked = false
             if (it.isIncome) it.isChecked = true
         }
+        postFilteredCategories()
+        postSelectedCount()
     }
 
     fun selectAllSpendingCategories() {
-        _categoriesItemsList.value?.forEach {
+        allCategoriesItemsList.forEach {
             if (!it.isIncome) it.isChecked = true
             if (it.isIncome) it.isChecked = false
         }
+        postFilteredCategories()
+        postSelectedCount()
     }
 
     fun selectNone() {
-        _categoriesItemsList.value?.forEach {
+        allCategoriesItemsList.forEach {
             it.isChecked = false
         }
+        postFilteredCategories()
+        postSelectedCount()
+    }
+
+    fun showAllCategories() {
+        currentFilter = FILTER_ALL
+        postFilteredCategories()
+    }
+
+    fun showIncomeCategories() {
+        currentFilter = FILTER_INCOME
+        postFilteredCategories()
+    }
+
+    fun showSpendingCategories() {
+        currentFilter = FILTER_SPENDING
+        postFilteredCategories()
+    }
+
+    private fun postFilteredCategories() {
+        val filteredList = when (currentFilter) {
+            FILTER_INCOME -> allCategoriesItemsList.filter { it.isIncome }
+            FILTER_SPENDING -> allCategoriesItemsList.filter { !it.isIncome }
+            else -> allCategoriesItemsList
+        }
+        _categoriesItemsList.postValue(filteredList)
+    }
+
+    private fun postSelectedCount() {
+        _selectedCount.postValue(allCategoriesItemsList.count { it.isChecked })
+    }
+
+    companion object {
+        private const val FILTER_ALL = "all"
+        private const val FILTER_INCOME = "income"
+        private const val FILTER_SPENDING = "spending"
     }
 }

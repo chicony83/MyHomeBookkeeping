@@ -22,6 +22,16 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: add a setting for showing parent categories in the Journal as icon, icon with label, or label.
 - Decide whether the journal currency display setting should also apply to fast payment cards and payment detail dialogs.
 
+## Reports
+
+- Completed: redesign the Reports overview with a summary card, filter controls, donut chart, category breakdown list, empty state, and localized income/spending titles.
+- Completed: make report SQL respect the selected report type, ignore transfers, and keep an intentionally empty category selection empty instead of treating it as all categories.
+- Completed: add stable category colors, category icons in the breakdown list, and lightweight filter controls with icons.
+- Completed: add a two-level donut center with localized total-spending/total-income labels.
+- Next design branch: refine donut slice labels so amount and percent never visually merge on device.
+- Next design branch: continue typography and spacing polish from the current reports baseline.
+- Later: add multi-currency report handling instead of assuming a single displayed currency.
+
 ## First Launch And Defaults
 
 - Completed: make first-launch language selection data-driven and keep System default out of the setup flow.

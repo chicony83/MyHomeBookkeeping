@@ -2,6 +2,20 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## Unreleased
+
+### User-facing
+- Redesigned the Reports overview with a lighter summary card, compact filters, a donut chart, and a category breakdown list.
+- Added category icons and progress bars to the Reports breakdown list.
+- Added localized income/spending report titles and donut-center labels.
+
+### Development
+- Reports now query income and spending by report type and ignore transfers.
+- The selected category filter now preserves an intentionally empty selection instead of falling back to all categories.
+- Added stable report category colors, report-specific typography dimensions/styles, and a dedicated breakdown adapter/model.
+- Added a two-line donut center and automatic light/dark label color selection for chart slices.
+- Known follow-up: polish donut slice value formatting because amount and percent can visually merge on narrow slices.
+
 ## 0.13.3
 
 ### User-facing

@@ -12,9 +12,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.FragmentReportsBinding
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.utils.hideKeyboard
-import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
-import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
 
 class ReportsMainFragment : Fragment() {
@@ -23,10 +21,12 @@ class ReportsMainFragment : Fragment() {
     private var _binding: FragmentReportsBinding? = null
     private val binding get() = _binding!!
     private lateinit var pieChartView: PieChart
-    private lateinit var horizontalLineChartView: HorizontalBarChart
     private val charts = Charts()
     private lateinit var control: NavController
     private lateinit var navControlHelper: NavControlHelper
+    private var lastReportItems: List<ReportCategoryItem> = emptyList()
+    private var currentCurrencyShortName: String? = null
+    private var currentDonutCenterLabel: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,21 +39,42 @@ class ReportsMainFragment : Fragment() {
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         navControlHelper = NavControlHelper(control)
 
-        launchIo {
-            binding.recyclerView.setItemViewCacheSize(reportsMainViewModel.getNumbersOfCategories())
-        }
-
         with(reportsMainViewModel) {
             buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
-                binding.selectTimePeriodButton.text = it
+                binding.periodFilterTextView.text = it
             })
-            getMap().observe(viewLifecycleOwner, { map ->
-                map?.let { it1 ->
-                    val sortedMap: MutableMap<String, Double> = LinkedHashMap()
-                    it1.entries.sortedBy { it.value }.forEach { sortedMap[it.key] = it.value }
-                    charts.showPieChart(requireContext(), chartView = pieChartView, sortedMap)
-                    charts.showHorizontalBarChart(horizontalLineChartView, sortedMap)
-                }
+            reportTitle.observe(viewLifecycleOwner, {
+                binding.reportTitleTextView.text = it
+            })
+            donutCenterLabel.observe(viewLifecycleOwner, {
+                currentDonutCenterLabel = it
+                updateDonutChart()
+            })
+            periodText.observe(viewLifecycleOwner, {
+                binding.periodTextView.text = it
+            })
+            totalAmountText.observe(viewLifecycleOwner, {
+                binding.totalAmountTextView.text = it
+                updateDonutChart()
+            })
+            summaryDetailsText.observe(viewLifecycleOwner, {
+                binding.summaryDetailsTextView.text = it
+            })
+            currencyShortName.observe(viewLifecycleOwner, {
+                currentCurrencyShortName = it
+                updateBreakdownAdapter()
+            })
+            categoriesFilterText.observe(viewLifecycleOwner, {
+                binding.categoryFilterTextView.text = it
+            })
+            reportCategoryItems.observe(viewLifecycleOwner, { items ->
+                lastReportItems = items
+                updateBreakdownAdapter()
+                updateDonutChart()
+            })
+            isEmpty.observe(viewLifecycleOwner, { isEmpty ->
+                binding.reportContentGroup.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.emptyStateGroup.visibility = if (isEmpty) View.VISIBLE else View.GONE
             })
         }
         return binding.root
@@ -64,14 +85,20 @@ class ReportsMainFragment : Fragment() {
         view.hideKeyboard()
 
         pieChartView = binding.pieChart
-        horizontalLineChartView = binding.horizontalBarChart
         with(binding) {
-            selectCategoryButton.setOnClickListener {
+            categoryFilterButton.setOnClickListener {
                 navControlHelper.toSelectedFragment(R.id.nav_reports_categories_fragment)
             }
-            selectTimePeriodButton.setOnClickListener {
+            periodFilterButton.setOnClickListener {
                 navControlHelper.moveToSelectTimePeriod()
             }
+            emptyChangePeriodButton.setOnClickListener {
+                navControlHelper.moveToSelectTimePeriod()
+            }
+            emptySelectCategoriesButton.setOnClickListener {
+                navControlHelper.toSelectedFragment(R.id.nav_reports_categories_fragment)
+            }
+            breakdownRecyclerView.isNestedScrollingEnabled = false
         }
     }
 
@@ -85,5 +112,21 @@ class ReportsMainFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun updateBreakdownAdapter() {
+        binding.breakdownRecyclerView.adapter =
+            ReportsBreakdownAdapter(lastReportItems, currentCurrencyShortName)
+    }
+
+    private fun updateDonutChart() {
+        if (!::pieChartView.isInitialized || lastReportItems.isEmpty()) return
+        charts.showDonutChart(
+            requireContext(),
+            chartView = pieChartView,
+            items = lastReportItems,
+            centerAmountText = binding.totalAmountTextView.text.toString(),
+            centerLabelText = currentDonutCenterLabel
+        )
     }
 }

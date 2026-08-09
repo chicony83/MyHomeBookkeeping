@@ -5,14 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesForReportsBinding
-import com.chico.myhomebookkeeping.enums.StatesReportsCategoriesAdapter
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
 
 class ReportsSelectCategoriesAdapter(
     private val list: List<ReportsCategoriesItem>,
-    private val recyclerState: String,
-    private val selectedCategoriesSet: Set<Int>,
     private val onItemCheckedCallBack: OnItemCheckedCallBack
 ) :
     RecyclerView.Adapter<ReportsSelectCategoriesAdapter.ViewHolder>() {
@@ -45,57 +42,24 @@ class ReportsSelectCategoriesAdapter(
             with(binding) {
                 itemId.text = item.id.toString()
                 categoryNameTextView.text = item.name
-                amountEditText.text = " "
-
-                if (selectedCategoriesSet.isNotEmpty()) {
-                    if (selectedCategoriesSet.contains(item.id)) {
-                        isCheckedCheckBox.isChecked = true
-                        setCheckOnItem(item.id)
-                    }
-                }
-
-                else if (selectedCategoriesSet.isEmpty()){
-                    when (recyclerState) {
-                        StatesReportsCategoriesAdapter.SelectNone.name -> {
-                            isCheckedCheckBox.isChecked = false
-                            setUnCheckOnItem(item.id)
-                        }
-                        StatesReportsCategoriesAdapter.SelectAll.name -> {
-                            isCheckedCheckBox.isChecked = true
-                            setCheckOnItem(item.id)
-                        }
-                        StatesReportsCategoriesAdapter.SelectAllIncome.name -> {
-                            if (item.isIncome) {
-                                isCheckedCheckBox.isChecked = true
-                                setCheckOnItem(item.id)
-                            }
-                        }
-                        StatesReportsCategoriesAdapter.SelectAllSpending.name -> {
-                            if (!item.isIncome) {
-                                isCheckedCheckBox.isChecked = true
-                                setCheckOnItem(item.id)
-                            }
-                        }
-                    }
-                }
+                categoryTypeTextView.text = itemView.context.getString(
+                    if (item.isIncome) R.string.text_on_button_all_income
+                    else R.string.text_on_button_all_spending
+                )
+                isCheckedCheckBox.setOnCheckedChangeListener(null)
+                isCheckedCheckBox.isChecked = item.isChecked
 
                 if (item.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoriesItem.setBackgroundColor(
-                            itemView.resources.getColor(
-                                R.color.incomeBackgroundColor,
-                                null
-                            )
+                        categoryTypeIndicator.setBackgroundColor(
+                            itemView.resources.getColor(R.color.incomeTextColor, null)
                         )
                     }
                 }
                 if (!item.isIncome) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoriesItem.setBackgroundColor(
-                            itemView.resources.getColor(
-                                R.color.spendingBackgroundColor,
-                                null
-                            )
+                        categoryTypeIndicator.setBackgroundColor(
+                            itemView.resources.getColor(R.color.spendingTextColor, null)
                         )
                     }
                 }

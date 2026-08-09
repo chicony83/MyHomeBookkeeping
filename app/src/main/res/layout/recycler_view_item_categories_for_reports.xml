@@ -5,6 +5,7 @@
     style="@style/RecyclerViewCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categories_item"
         style="@style/RecyclerViewItem.Dialogs"
@@ -13,34 +14,51 @@
         <TextView
             android:id="@+id/itemId"
             style="@style/WrapContent_WrapContent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
-            android:layout_height="wrap_content"
+            android:id="@+id/isCheckedCheckBox"
+            style="@style/ReportsItemCheckBox"
             android:layout_width="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/isCheckedCheckBox"
-            style="@style/ReportsItemCheckBox" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            tools:text="income"
-            android:id="@+id/category_name_TextView"
+        <View
+            android:id="@+id/categoryTypeIndicator"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_half_normal"
+            app:layout_constraintBottom_toBottomOf="@id/categoryNameTextView"
             app:layout_constraintStart_toEndOf="@id/isCheckedCheckBox"
-            app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox"
-            app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
-            style="@style/WrapContent_WrapContent" />
+            app:layout_constraintTop_toTopOf="@id/categoryNameTextView"
+            tools:background="@color/incomeTextColor" />
 
         <TextView
-            tools:text="10 000"
-            android:layout_marginEnd="@dimen/margin_double"
-            app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
-            app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox"
+            android:id="@+id/category_name_TextView"
+            style="@style/WrapContent_WrapContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@id/categoryTypeTextView"
+            app:layout_constraintStart_toEndOf="@id/categoryTypeIndicator"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Salary" />
+
+        <TextView
+            android:id="@+id/categoryTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:textColor="@color/text_second_color"
+            android:textSize="@dimen/H6"
+            app:layout_constraintBaseline_toBaselineOf="@id/categoryNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/amountEditText"
-            style="@style/WrapContent_WrapContent" />
+            tools:text="Income" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

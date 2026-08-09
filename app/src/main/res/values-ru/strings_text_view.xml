@@ -12,4 +12,26 @@
     <string name="text_view_start_date">Начальная дата</string>
     <string name="text_view_end_date">Конечная дата</string>
     <string name="chart_label_report">Отчет</string>
+    <string name="report_menu_title">Отчёты</string>
+    <string name="report_menu_spending_title">Расходы по категориям</string>
+    <string name="report_menu_spending_subtitle">Куда уходят деньги</string>
+    <string name="report_menu_income_title">Доходы по категориям</string>
+    <string name="report_menu_income_subtitle">Откуда приходят деньги</string>
+    <string name="report_title_spending">Расходы</string>
+    <string name="report_title_income">Доходы</string>
+    <string name="report_donut_center_spending">Общие расходы</string>
+    <string name="report_donut_center_income">Общие доходы</string>
+    <string name="report_total">Всего</string>
+    <string name="report_summary_details">%1$d операций - %2$d категорий</string>
+    <string name="report_filter_all_categories">Все категории</string>
+    <string name="report_filter_selected_categories">%1$d категорий</string>
+    <string name="report_breakdown_title">По категориям</string>
+    <string name="report_empty_title">Нет операций за выбранный период</string>
+    <string name="report_empty_change_period">Изменить период</string>
+    <string name="report_empty_select_categories">Выбрать категории</string>
+    <string name="report_categories_title">Категории</string>
+    <string name="report_categories_selected_count">Выбрано: %1$d</string>
+    <string name="report_categories_filter_all">Все</string>
+    <string name="report_categories_select_all">Выбрать все</string>
+    <string name="report_categories_clear_all">Снять все</string>
 </resources>

@@ -83,4 +83,40 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="ReportTitleText">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/report_title_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ReportTotalAmountText">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/report_total_amount_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ReportSectionTitleText">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/report_section_title_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ReportPrimaryText">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/report_primary_text</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ReportSecondaryText">
+        <item name="android:textColor">@color/text_second_color</item>
+        <item name="android:textSize">@dimen/report_secondary_text</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ReportHelperText">
+        <item name="android:textColor">@color/text_second_color</item>
+        <item name="android:textSize">@dimen/report_helper_text</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>

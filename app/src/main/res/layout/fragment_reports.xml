@@ -3,91 +3,257 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fragment.paddingBottom"
+    android:background="@color/categoryScreenBackground"
     tools:context=".ui.reports.main.ReportsMainFragment">
-
-    <HorizontalScrollView
-        android:id="@+id/scrollViewButtons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/selectQueryButtons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/selectCurrencyButton"
-                style="@style/TopButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/text_on_button_select_currency_2_rows"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/selectCategoryButton"
-                style="@style/TopButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/text_on_button_select_category_2_rows" />
-
-            <Button
-                android:id="@+id/selectCashAccountButton"
-                style="@style/TopButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/text_on_button_select_cash_account_2_rows"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/selectTimePeriodButton"
-                style="@style/TopButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_on_button_time_period" />
-        </LinearLayout>
-    </HorizontalScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollViewButtons">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="@dimen/margin_double">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:visibility="gone"
-                app:layoutManager="LinearLayoutManager"
-                tools:visibility="visible" />
+            <TextView
+                android:id="@+id/reportTitleTextView"
+                style="@style/ReportTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Spending" />
+
+            <TextView
+                android:id="@+id/periodTextView"
+                style="@style/ReportSecondaryText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/reportTitleTextView"
+                tools:text="1-31 Aug 2026" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/summaryContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_double"
+                android:background="@drawable/report_summary_background"
+                android:padding="@dimen/margin_double"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/periodTextView">
+
+                <TextView
+                    android:id="@+id/totalAmountLabelTextView"
+                    style="@style/ReportHelperText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_total"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/totalAmountTextView"
+                    style="@style/ReportTotalAmountText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_half_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalAmountLabelTextView"
+                    tools:text="2 845.30 zl" />
+
+                <TextView
+                    android:id="@+id/summaryDetailsTextView"
+                    style="@style/ReportHelperText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_half_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalAmountTextView"
+                    tools:text="42 entries - 8 categories" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/filtersContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/summaryContainer">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/periodFilterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/button_filter_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1"
+                    android:paddingStart="@dimen/margin_double"
+                    android:paddingEnd="@dimen/margin_double">
+
+                    <ImageView
+                        android:id="@+id/periodFilterIconImageView"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_report_calendar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_second_color" />
+
+                    <TextView
+                        android:id="@+id/periodFilterTextView"
+                        style="@style/ReportHelperText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/text_on_button_time_period"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/periodFilterIconImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:layout_width="@dimen/margin_double"
+                    android:layout_height="1dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/categoryFilterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/button_filter_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1"
+                    android:paddingStart="@dimen/margin_double"
+                    android:paddingEnd="@dimen/margin_double">
+
+                    <ImageView
+                        android:id="@+id/categoryFilterIconImageView"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_menu_category"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_second_color" />
+
+                    <TextView
+                        android:id="@+id/categoryFilterTextView"
+                        style="@style/ReportHelperText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/report_filter_all_categories"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/categoryFilterIconImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
-                android:layout_width="400dp"
-                android:layout_height="400dp"
-                android:layout_gravity="center">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_double"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filtersContainer"
+                app:layout_constraintWidth_max="360dp" />
 
-            </com.github.mikephil.charting.charts.PieChart>
+            <TextView
+                android:id="@+id/breakdownTitleTextView"
+                style="@style/ReportSectionTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_double"
+                android:text="@string/report_breakdown_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pieChart" />
 
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                android:id="@+id/horizontalBarChart"
-                android:layout_width="400dp"
-                android:layout_height="400dp"
-                android:layout_gravity="center" />
-        </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/breakdownRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/breakdownTitleTextView"
+                tools:itemCount="4"
+                tools:listitem="@layout/recycler_view_item_report_breakdown" />
+
+            <TextView
+                android:id="@+id/emptyTitleTextView"
+                style="@style/ReportSectionTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:gravity="center"
+                android:text="@string/report_empty_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filtersContainer" />
+
+            <Button
+                android:id="@+id/emptyChangePeriodButton"
+                style="@style/DialogButtonLeft.Positive"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/margin_double"
+                android:text="@string/report_empty_change_period"
+                app:layout_constraintEnd_toStartOf="@id/emptySelectCategoriesButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emptyTitleTextView" />
+
+            <Button
+                android:id="@+id/emptySelectCategoriesButton"
+                style="@style/DialogButtonRight.Negative"
+                android:layout_width="0dp"
+                android:text="@string/report_empty_select_categories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/emptyChangePeriodButton"
+                app:layout_constraintTop_toTopOf="@id/emptyChangePeriodButton" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/reportContentGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="pieChart,breakdownTitleTextView,breakdownRecyclerView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/emptyStateGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="emptyTitleTextView,emptyChangePeriodButton,emptySelectCategoriesButton" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

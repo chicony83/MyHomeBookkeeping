@@ -28,6 +28,12 @@ class FullMoneyMoving (
     @ColumnInfo(name = "category_name_value")
     val categoryNameValue:String?,
 
+    @ColumnInfo(name = "category_id_value")
+    val categoryIdValue:Int?,
+
+    @ColumnInfo(name = "category_icon_value")
+    val categoryIconValue:Int?,
+
     @ColumnInfo(name = "parent_category_name_value")
     val parentCategoryNameValue:String?,
 

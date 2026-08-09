@@ -49,6 +49,20 @@
         <item name="android:paddingEnd">@dimen/margin_double</item>
     </style>
 
+    <style name="ReportFilterButton" parent="TopButtons">
+        <item name="android:textSize">@dimen/report_helper_text</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/text_second_color</item>
+        <item name="android:layout_margin">@dimen/margin_zero</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+    </style>
+
     <style name="DialogButtonLeft" parent="DialogButtons">
 
     </style>

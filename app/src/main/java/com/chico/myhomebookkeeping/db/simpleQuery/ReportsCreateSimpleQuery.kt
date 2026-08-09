@@ -3,6 +3,7 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(languageTag: String): String {
@@ -15,7 +16,10 @@ object ReportsCreateSimpleQuery {
                 "currency_name_short AS currency_short_name_value," +
                 "iso_4217 AS currency_iso_value," +
                 "$categoryName AS category_name_value, " +
+                "category AS category_id_value, " +
+                "icon_category AS category_icon_value, " +
                 "$parentCategoryName AS parent_category_name_value, " +
+                "name_icon_parent_category AS parent_category_icon_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
                 "money_moving_table.payment_type_id, payment_type_name, " +
                 "transfer_group_id, transfer_direction, description " +
@@ -25,7 +29,7 @@ object ReportsCreateSimpleQuery {
                 "INNER JOIN payment_type_table ON money_moving_table.payment_type_id == payment_type_table.id " +
                 "INNER JOIN category_table ON category == categoriesId " +
                 "LEFT JOIN parent_categories_table ON category_table.parent_category_id == parent_categories_table.id " +
-                "WHERE money_moving_table.payment_type_id IN (0, 1)"
+                "WHERE money_moving_table.payment_type_id = :paymentTypeId"
     }
 
     private fun checkTimePeriod(
@@ -69,16 +73,22 @@ object ReportsCreateSimpleQuery {
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
+        paymentTypeId: Int,
         setItemsOfCategories: Set<Int>,
         numbersOfAllCategories: Int,
         languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving(languageTag)
-        val argsList: ArrayList<Any> = arrayListOf()
+        val argsList: ArrayList<Any> = arrayListOf(paymentTypeId)
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
 
         if (setItemsOfCategories.size != numbersOfAllCategories) {
+            if (countCategories == 0) {
+                query += addAnd()
+                query += " category = :emptyCategory "
+                argsList.add(Constants.MINUS_ONE_VAL_INT)
+            }
             if (countCategories == 1) {
                 query += addAnd()
                 query += addCategory()
@@ -119,6 +129,13 @@ object ReportsCreateSimpleQuery {
             Constants.APP_LANGUAGE_RUSSIAN -> "COALESCE($ruColumn, $baseColumn)"
             Constants.APP_LANGUAGE_POLISH -> "COALESCE($plColumn, $baseColumn)"
             else -> baseColumn
+        }
+    }
+
+    fun paymentTypeIdForReportType(reportType: String?): Int {
+        return when (reportType) {
+            "PieIncome" -> PaymentTypeIds.INCOME
+            else -> PaymentTypeIds.SPENDING
         }
     }
 
