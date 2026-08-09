@@ -2,6 +2,22 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.13.3
+
+### User-facing
+- Fixed language selection during first app setup.
+- Fixed default account creation with localized names.
+- Added a sick leave payments subcategory to the default Income directory.
+- Improved first-launch stability and existing data updates.
+
+### Development
+- Bumped Play Market release version to 0.13.3 (69).
+- Kept first-launch default accounts canonical as Card/Cash while filling Russian and Polish display names.
+- Reused the shared supported-language catalog for first-launch language selection and excluded System default from the setup flow.
+- Existing installs backfill the sick leave payments income category through the app update flow without a Room schema bump.
+- Added short 0.13.3 version history strings and Play Market notes for English, Russian, and Polish.
+- Built and signed the 0.13.3 release bundle with the provided release keystore.
+
 ## 0.13.2
 
 ### User-facing

@@ -1,0 +1,20 @@
+What's new in 0.13.3
+
+- Fixed language selection during first app setup.
+- Fixed creation of default accounts with localized names.
+- Added a new default income category: sick leave payments.
+- Improved first-launch stability and existing data updates.
+
+Что нового в 0.13.3
+
+- Исправлен выбор языка при первом запуске приложения.
+- Исправлено создание стандартных счетов с локализованными названиями.
+- Добавлена новая стандартная категория доходов: больничные выплаты.
+- Улучшена стабильность первого запуска и обновления существующих данных.
+
+Co nowego w 0.13.3
+
+- Naprawiono wybór języka podczas pierwszej konfiguracji aplikacji.
+- Naprawiono tworzenie domyślnych kont z lokalizowanymi nazwami.
+- Dodano nową domyślną kategorię przychodów: zasiłek chorobowy.
+- Poprawiono stabilność pierwszego uruchomienia i aktualizacji danych.
