@@ -31,6 +31,16 @@ class DefaultCategoryCatalogTest {
     }
 
     @Test
+    fun sickLeavePaymentsAreIncomeSubcategory() {
+        val incomeGroup = DefaultCategoryCatalog.groups.first { it.parentName == "Income" }
+        val sickLeaveIndex = incomeGroup.subcategories.indexOf("Sick leave payments")
+
+        assertTrue(sickLeaveIndex >= 0)
+        assertEquals("Выплата по больничным листам", incomeGroup.subcategoriesRu[sickLeaveIndex])
+        assertEquals("Wypłata za zwolnienie lekarskie", incomeGroup.subcategoriesPl[sickLeaveIndex])
+    }
+
+    @Test
     fun otherWithoutCategoryGroupIsNotInCatalog() {
         assertFalse(DefaultCategoryCatalog.groups.any { it.parentName == "Other" })
         assertFalse(

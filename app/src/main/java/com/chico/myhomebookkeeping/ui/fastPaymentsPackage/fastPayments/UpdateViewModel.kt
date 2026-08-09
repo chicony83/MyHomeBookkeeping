@@ -11,6 +11,7 @@ import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.update.Update43To44
 import com.chico.myhomebookkeeping.update.Update44To45
 import com.chico.myhomebookkeeping.update.Update59To60
+import com.chico.myhomebookkeeping.update.UpdateAddSickLeaveIncomeCategory
 import com.chico.myhomebookkeeping.utils.launchIo
 
 class UpdateViewModel(
@@ -25,6 +26,18 @@ class UpdateViewModel(
         update_43_to_44_after_migration_2_to_3()
         update_44_to_45()
         update_59_to_60()
+        updateAddSickLeaveIncomeCategory()
+    }
+
+    private fun updateAddSickLeaveIncomeCategory() {
+        val updateKey = ConstantsOfUpdate.UPDATE_ADD_SICK_LEAVE_INCOME_CATEGORY
+        if (!getSP.getBooleanDefFalse(updateKey)){
+            launchIo {
+                val updateAddSickLeaveIncomeCategory = UpdateAddSickLeaveIncomeCategory()
+                updateAddSickLeaveIncomeCategory.update(app)
+                setSP.saveToSP(updateKey,true)
+            }
+        }
     }
 
     private fun update_59_to_60() {

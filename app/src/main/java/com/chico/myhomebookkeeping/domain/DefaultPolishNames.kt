@@ -31,6 +31,7 @@ object DefaultPolishNames {
         "Pension" to "Emerytura",
         "Side job" to "Praca dodatkowa",
         "Benefits" to "Świadczenia",
+        "Sick leave payments" to "Wypłata za zwolnienie lekarskie",
         "Gifts" to "Prezenty",
         "Sales" to "Sprzedaż",
         "Cashback" to "Cashback",

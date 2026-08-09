@@ -29,9 +29,9 @@ object DefaultCategoryCatalog {
             parentIcon = CategoryIconNames.Wallet,
             isIncome = true,
             isRequired = true,
-            subcategories = listOf("Salary", "Pension", "Side job", "Benefits", "Gifts", "Sales", "Cashback", "Interest and investments", "Other"),
-            subcategoriesRu = listOf("Выплата", "Пенсия", "Подработка", "Пособия", "Подарки", "Продажи", "Кэшбэк", "Проценты и инвестиции", "Другое"),
-            subcategoryIcons = listOf(CategoryIconNames.Wallet, CategoryIconNames.Wallet, CategoryIconNames.Person, CategoryIconNames.Wallet, CategoryIconNames.CardGiftcard, CategoryIconNames.Store, CategoryIconNames.Receipt, CategoryIconNames.Bank, CategoryIconNames.Wallet)
+            subcategories = listOf("Salary", "Pension", "Side job", "Benefits", "Sick leave payments", "Gifts", "Sales", "Cashback", "Interest and investments", "Other"),
+            subcategoriesRu = listOf("Выплата", "Пенсия", "Подработка", "Пособия", "Выплата по больничным листам", "Подарки", "Продажи", "Кэшбэк", "Проценты и инвестиции", "Другое"),
+            subcategoryIcons = listOf(CategoryIconNames.Wallet, CategoryIconNames.Wallet, CategoryIconNames.Person, CategoryIconNames.Wallet, CategoryIconNames.Medical, CategoryIconNames.CardGiftcard, CategoryIconNames.Store, CategoryIconNames.Receipt, CategoryIconNames.Bank, CategoryIconNames.Wallet)
         ),
         group(
             parentName = "Groceries",

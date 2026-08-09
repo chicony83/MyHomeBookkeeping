@@ -8,6 +8,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Fixed issues when restoring screens and dialogs after configuration changes.
 - Fixed restoring current encrypted database backups after schema updates.
 - Added new default category icons.
+- Added a sick leave payments subcategory to the default Income directory.
 - Improved app language selection stability during first launch.
 - Improved app stability.
 
@@ -18,6 +19,7 @@ This file is the full internal release log. Keep all useful development notes he
 - Declared supported application locales with Android `localeConfig`.
 - Reused the shared `AppLanguage` catalog for first-launch and Settings language titles.
 - First launch now rebuilds the language radio buttons from supported languages and restores the current setup step after recreation.
+- Existing installs backfill the sick leave payments income category through the app update flow without a Room schema bump.
 - Built and signed the 0.13.2 release bundle with the local release keystore.
 
 ## 0.13.1
