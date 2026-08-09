@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.chico.myhomebookkeeping.R
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportBreakdownBinding
@@ -14,7 +15,8 @@ import java.util.Locale
 
 class ReportsBreakdownAdapter(
     private val list: List<ReportCategoryItem>,
-    private val currencyShortName: String?
+    private val currencyShortName: String?,
+    private val highlightedPositions: Set<Int>
 ) : RecyclerView.Adapter<ReportsBreakdownAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +29,7 @@ class ReportsBreakdownAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], position)
     }
 
     override fun getItemCount() = list.size
@@ -35,11 +37,18 @@ class ReportsBreakdownAdapter(
     inner class ViewHolder(
         private val binding: RecyclerViewItemReportBreakdownBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ReportCategoryItem) {
+        fun bind(item: ReportCategoryItem, position: Int) {
             with(binding) {
                 categoryNameTextView.text = item.displayName
                 amountTextView.text = formatAmount(item.amount, currencyShortName)
                 percentTextView.text = formatPercent(item.percentage)
+                root.setBackgroundColor(
+                    if (position in highlightedPositions) {
+                        ContextCompat.getColor(root.context, R.color.buttonPressedOverlay)
+                    } else {
+                        Color.TRANSPARENT
+                    }
+                )
                 progressBar.progress = item.percentage.toInt().coerceIn(0, 100)
                 progressBar.progressTintList = ColorStateList.valueOf(item.color)
                 categoryIconImageView.setImageResource(item.iconRes ?: R.drawable.no_image)

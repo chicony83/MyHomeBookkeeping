@@ -28,8 +28,9 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: make report SQL respect the selected report type, ignore transfers, and keep an intentionally empty category selection empty instead of treating it as all categories.
 - Completed: add stable category colors, category icons in the breakdown list, and lightweight filter controls with icons.
 - Completed: add a two-level donut center with localized total-spending/total-income labels.
-- Next design branch: refine donut slice labels so amount and percent never visually merge on device.
-- Next design branch: continue typography and spacing polish from the current reports baseline.
+- Completed: refine donut slice labels so amount and percent never visually merge on device.
+- Completed: continue typography and spacing polish from the current reports baseline.
+- Completed: group tiny donut slices into a neutral unlabeled sector, scroll tapped slices to their breakdown rows, highlight the selected rows, and provide a fading return-to-chart button.
 - Later: add multi-currency report handling instead of assuming a single displayed currency.
 
 ## First Launch And Defaults

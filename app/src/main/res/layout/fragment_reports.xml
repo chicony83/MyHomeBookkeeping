@@ -7,6 +7,7 @@
     tools:context=".ui.reports.main.ReportsMainFragment">
 
     <ScrollView
+        android:id="@+id/reportsScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -48,6 +49,7 @@
                 android:layout_marginTop="@dimen/margin_double"
                 android:background="@drawable/report_summary_background"
                 android:padding="@dimen/margin_double"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/periodTextView">
@@ -95,23 +97,23 @@
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/summaryContainer">
+                app:layout_constraintTop_toBottomOf="@id/periodTextView">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/periodFilterButton"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/button_filter_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_weight="1"
-                    android:paddingStart="@dimen/margin_double"
-                    android:paddingEnd="@dimen/margin_double">
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
 
                     <ImageView
                         android:id="@+id/periodFilterIconImageView"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_report_calendar"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,18 +143,18 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/categoryFilterButton"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/button_filter_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_weight="1"
-                    android:paddingStart="@dimen/margin_double"
-                    android:paddingEnd="@dimen/margin_double">
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
 
                     <ImageView
                         android:id="@+id/categoryFilterIconImageView"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_menu_category"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -180,19 +182,19 @@
                 android:id="@+id/pieChart"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginTop="@dimen/margin_normal"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/filtersContainer"
-                app:layout_constraintWidth_max="360dp" />
+                app:layout_constraintWidth_max="300dp" />
 
             <TextView
                 android:id="@+id/breakdownTitleTextView"
                 style="@style/ReportSectionTitleText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/report_breakdown_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -255,5 +257,21 @@
                 app:constraint_referenced_ids="emptyTitleTextView,emptyChangePeriodButton,emptySelectCategoriesButton" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/scrollToChartButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin_double"
+        android:layout_marginBottom="@dimen/margin_double"
+        android:background="@drawable/report_scroll_top_button_background"
+        android:contentDescription="@string/report_scroll_to_chart"
+        android:elevation="6dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_arrow_up"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/buttonPrimaryText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

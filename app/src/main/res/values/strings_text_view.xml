@@ -31,6 +31,7 @@
     <string name="report_empty_title">No entries for the selected period</string>
     <string name="report_empty_change_period">Change period</string>
     <string name="report_empty_select_categories">Select categories</string>
+    <string name="report_scroll_to_chart">Back to chart</string>
     <string name="report_categories_title">Categories</string>
     <string name="report_categories_selected_count">Selected: %1$d</string>
     <string name="report_categories_filter_all">All</string>

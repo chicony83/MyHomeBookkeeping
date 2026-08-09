@@ -59,7 +59,7 @@
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
-        android:layout_height="5dp"
+        android:layout_height="7dp"
         android:layout_marginTop="@dimen/margin_half_normal"
         android:max="100"
         android:progressBackgroundTint="@color/buttonDisabledBackground"
