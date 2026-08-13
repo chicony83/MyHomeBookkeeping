@@ -21,27 +21,6 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_double">
 
-            <TextView
-                android:id="@+id/reportTitleTextView"
-                style="@style/ReportTitleText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Spending" />
-
-            <TextView
-                android:id="@+id/periodTextView"
-                style="@style/ReportSecondaryText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_half_normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/reportTitleTextView"
-                tools:text="1-31 Aug 2026" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/summaryContainer"
                 android:layout_width="0dp"
@@ -52,7 +31,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/periodTextView">
+                app:layout_constraintTop_toBottomOf="@id/filtersContainer">
 
                 <TextView
                     android:id="@+id/totalAmountLabelTextView"
@@ -91,13 +70,12 @@
                 android:id="@+id/filtersContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/periodTextView">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/periodFilterButton"

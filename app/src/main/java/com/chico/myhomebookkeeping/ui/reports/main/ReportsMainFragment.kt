@@ -46,15 +46,9 @@ class ReportsMainFragment : Fragment() {
             buttonTextOfTimePeriod.observe(viewLifecycleOwner, {
                 binding.periodFilterTextView.text = it
             })
-            reportTitle.observe(viewLifecycleOwner, {
-                binding.reportTitleTextView.text = it
-            })
             donutCenterLabel.observe(viewLifecycleOwner, {
                 currentDonutCenterLabel = it
                 updateDonutChart()
-            })
-            periodText.observe(viewLifecycleOwner, {
-                binding.periodTextView.text = it
             })
             totalAmountText.observe(viewLifecycleOwner, {
                 binding.totalAmountTextView.text = it
