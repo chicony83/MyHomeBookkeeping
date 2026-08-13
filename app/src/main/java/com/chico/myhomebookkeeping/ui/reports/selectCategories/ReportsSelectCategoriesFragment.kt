@@ -80,14 +80,9 @@ class ReportsSelectCategoriesFragment(
 //            recyclerView.setItemViewCacheSize(recyclerCashSize)
 
             clearAllButton.setOnClickListener {
+                categoryFilterGroup.clearChecked()
                 reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
                 reportsSelectCategoriesViewModel.clearSelectedCategories()
-                reportsSelectCategoriesViewModel.selectNone()
-//                reportsSelectCategoriesViewModel.printResult()
-            }
-            selectAllButton.setOnClickListener {
-                reportsSelectCategoriesViewModel.newSelectedCategoriesSetSp()
-                reportsSelectCategoriesViewModel.selectAllCategories()
 //                reportsSelectCategoriesViewModel.printResult()
             }
             categoryFilterGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->

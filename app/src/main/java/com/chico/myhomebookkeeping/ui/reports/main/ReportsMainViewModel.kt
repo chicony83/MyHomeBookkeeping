@@ -40,7 +40,6 @@ class ReportsMainViewModel(
     private val spName = Constants.SP_NAME
     private val argsStartTimePeriodKey = Constants.ARGS_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodKey = Constants.ARGS_REPORTS_END_TIME_PERIOD
-    private val argsSelectedCategoriesSetKey = Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY
     private val argsReportTypeKey = Constants.REPORT_TYPE
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
@@ -192,8 +191,8 @@ class ReportsMainViewModel(
 
     private suspend fun getCategoriesSet() {
         val result: Set<String>? =
-            getSP.getSelectedCategoriesSet(argsSelectedCategoriesSetKey)?.toSet()
-        val hasSavedSelection = getSP.contains(argsSelectedCategoriesSetKey)
+            getSP.getSelectedCategoriesSet(selectedCategoriesSetKey())?.toSet()
+        val hasSavedSelection = getSP.contains(selectedCategoriesSetKey())
 //        Message.log("---size of result = ${result?.size}")
 
         if (!result.isNullOrEmpty()) {
@@ -218,6 +217,10 @@ class ReportsMainViewModel(
     private fun getTimePeriodsSP() {
         startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
         endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
+    }
+
+    private fun selectedCategoriesSetKey(): String {
+        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_${paymentTypeId}"
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {

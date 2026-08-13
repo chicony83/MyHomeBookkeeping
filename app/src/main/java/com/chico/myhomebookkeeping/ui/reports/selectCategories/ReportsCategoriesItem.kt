@@ -4,5 +4,9 @@ data class ReportsCategoriesItem(
     val id: Int,
     val name: String,
     val icon: Int?,
-    var isChecked: Boolean
+    val categoryIds: Set<Int>,
+    val incomeCategoryIds: Set<Int>,
+    val spendingCategoryIds: Set<Int>,
+    var isChecked: Boolean,
+    val isPartiallyChecked: Boolean = false
 )

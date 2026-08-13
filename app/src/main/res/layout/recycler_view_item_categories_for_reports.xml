@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/iconImg"
             style="@style/ImageIcon.RecyclerView"
-            android:contentDescription="@string/content_description_icon_item_of_category"
+            android:contentDescription="@string/content_description_icon_item_of_parent_category"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="@id/iconImg"
             tools:text="Salary" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/isCheckedCheckBox"
             style="@style/ReportsItemCheckBox"
             android:layout_width="wrap_content"

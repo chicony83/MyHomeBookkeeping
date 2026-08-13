@@ -12,17 +12,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_normal"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/categoryFilterGroup"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:checkedButton="@id/showAllButton"
-            app:selectionRequired="true"
+            android:layout_weight="3"
+            app:selectionRequired="false"
             app:singleSelection="true">
 
             <com.google.android.material.button.MaterialButton
@@ -43,37 +43,24 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/showSpendingButton"
-                style="@style/ReportCategoryActionButton.TopRight"
+                style="@style/ReportCategoryActionButton.TopCenter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/text_on_button_all_spending" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <LinearLayout
-            android:id="@+id/massActionsContainer"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clearAllButton"
+            style="@style/ReportCategoryActionButton.TopRight"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-1dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/selectAllButton"
-                style="@style/ReportCategoryActionButton.BottomLeft"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/report_categories_select_all" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/clearAllButton"
-                style="@style/ReportCategoryActionButton.BottomRight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/report_categories_clear_all" />
-        </LinearLayout>
+            android:contentDescription="@string/report_categories_clear_all"
+            android:text=""
+            app:icon="@drawable/ic_close"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/margin_zero"
+            app:iconTint="@color/buttonNeutralText" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

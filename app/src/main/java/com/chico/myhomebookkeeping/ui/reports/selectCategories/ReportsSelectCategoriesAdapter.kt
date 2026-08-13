@@ -7,6 +7,7 @@ import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesForReportsBinding
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
+import com.google.android.material.checkbox.MaterialCheckBox
 
 class ReportsSelectCategoriesAdapter(
     private val list: List<ReportsCategoriesItem>,
@@ -44,7 +45,11 @@ class ReportsSelectCategoriesAdapter(
                 categoryNameTextView.text = item.name
                 iconImg.setImageResource(item.icon ?: R.drawable.no_image)
                 isCheckedCheckBox.setOnCheckedChangeListener(null)
-                isCheckedCheckBox.isChecked = item.isChecked
+                isCheckedCheckBox.checkedState = when {
+                    item.isPartiallyChecked -> MaterialCheckBox.STATE_INDETERMINATE
+                    item.isChecked -> MaterialCheckBox.STATE_CHECKED
+                    else -> MaterialCheckBox.STATE_UNCHECKED
+                }
 
                 isCheckedCheckBox.setOnCheckedChangeListener { _, isChecked ->
                     run {
@@ -60,10 +65,12 @@ class ReportsSelectCategoriesAdapter(
                 }
                 itemView.setOnClickListener {
                     run {
-                        if (isCheckedCheckBox.isChecked) item.id.let {
-                            isCheckedCheckBox.isChecked = false
-                        } else if (!isCheckedCheckBox.isChecked) item.id.let {
-                            isCheckedCheckBox.isChecked = true
+                        if (isCheckedCheckBox.checkedState == MaterialCheckBox.STATE_CHECKED) item.id.let {
+                            isCheckedCheckBox.checkedState = MaterialCheckBox.STATE_UNCHECKED
+                        } else {
+                            item.id.let {
+                                isCheckedCheckBox.checkedState = MaterialCheckBox.STATE_CHECKED
+                            }
                         }
                     }
                 }

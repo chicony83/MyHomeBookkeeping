@@ -4,6 +4,7 @@ import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
+import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.ui.reports.selectCategories.ReportsCategoriesItem
 import com.chico.myhomebookkeeping.data.reports.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.data.reports.ReportsCurrenciesItem
@@ -94,8 +95,48 @@ object ConvToList {
             List<ReportsCategoriesItem> {
         return categoriesList.map {
 //            Message.log("line categories list id = ${it.categoriesId}")
-            ReportsCategoriesItem(it.categoriesId ?: 0, it.displayName(languageTag), it.icon, false)
+            val categoryId = it.categoriesId ?: 0
+            ReportsCategoriesItem(
+                id = categoryId,
+                name = it.displayName(languageTag),
+                icon = it.icon,
+                categoryIds = setOf(categoryId),
+                incomeCategoryIds = if (it.isIncome) setOf(categoryId) else emptySet(),
+                spendingCategoryIds = if (it.isIncome) emptySet() else setOf(categoryId),
+                isChecked = false
+            )
 
+        }
+    }
+
+    fun parentCategoriesListToReportsItemsList(
+        parentCategoriesList: List<ParentCategories>,
+        categoriesList: List<Categories>,
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
+    ): List<ReportsCategoriesItem> {
+        val categoriesByParent = categoriesList.groupBy { it.parentCategoryId }
+
+        return parentCategoriesList.map { parentCategory ->
+            val childCategories = categoriesByParent[parentCategory.id].orEmpty()
+            val categoryIds = childCategories.mapNotNull { it.categoriesId }.toSet()
+            val incomeCategoryIds = childCategories
+                .filter { it.isIncome }
+                .mapNotNull { it.categoriesId }
+                .toSet()
+            val spendingCategoryIds = childCategories
+                .filter { !it.isIncome }
+                .mapNotNull { it.categoriesId }
+                .toSet()
+
+            ReportsCategoriesItem(
+                id = parentCategory.id ?: 0,
+                name = parentCategory.displayName(languageTag),
+                icon = parentCategory.icon,
+                categoryIds = categoryIds,
+                incomeCategoryIds = incomeCategoryIds,
+                spendingCategoryIds = spendingCategoryIds,
+                isChecked = false
+            )
         }
     }
 }
