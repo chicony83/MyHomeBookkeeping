@@ -44,10 +44,6 @@ class ReportsSelectCategoriesFragment(
 //                getListSize(it)
                 binding.recyclerView.setItemViewCacheSize(it.size)
             })
-            selectedCount.observe(viewLifecycleOwner, {
-                binding.selectedCountTextView.text =
-                    getString(R.string.report_categories_selected_count, it)
-            })
 //            printResult()
         }
 //        binding.recyclerView.setItemViewCacheSize(recyclerCashSize)

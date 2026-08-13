@@ -7,93 +7,73 @@
     android:padding="@dimen/margin_double"
     tools:context=".ui.reports.selectCategories.ReportsSelectCategoriesFragment">
 
-    <TextView
-        android:id="@+id/categoriesTitleTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/report_categories_title"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/H1"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/selectedCountTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_half_normal"
-        android:textColor="@color/text_second_color"
-        android:textSize="@dimen/H5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoriesTitleTextView"
-        tools:text="Selected: 8" />
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/categoryFilterGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_double"
-        app:checkedButton="@id/showAllButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectedCountTextView"
-        app:selectionRequired="true"
-        app:singleSelection="true">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/showAllButton"
-            style="@style/TopButtons"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/report_categories_filter_all" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/showIncomeButton"
-            style="@style/TopButtons"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/text_on_button_all_income" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/showSpendingButton"
-            style="@style/TopButtons"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/text_on_button_all_spending" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
     <LinearLayout
-        android:id="@+id/massActionsContainer"
+        android:id="@+id/categoryActionsBlock"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_normal"
-        android:orientation="horizontal"
-        android:weightSum="2"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryFilterGroup">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/selectAllButton"
-            style="@style/DialogButtonLeft"
-            android:layout_width="0dp"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/categoryFilterGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/report_categories_select_all" />
+            app:checkedButton="@id/showAllButton"
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-        <Button
-            android:id="@+id/clearAllButton"
-            style="@style/DialogButtonRight"
-            android:layout_width="0dp"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showAllButton"
+                style="@style/ReportCategoryActionButton.TopLeft"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/report_categories_filter_all" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showIncomeButton"
+                style="@style/ReportCategoryActionButton.TopCenter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_on_button_all_income" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showSpendingButton"
+                style="@style/ReportCategoryActionButton.TopRight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_on_button_all_spending" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <LinearLayout
+            android:id="@+id/massActionsContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/report_categories_clear_all" />
+            android:layout_marginTop="-1dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/selectAllButton"
+                style="@style/ReportCategoryActionButton.BottomLeft"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/report_categories_select_all" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clearAllButton"
+                style="@style/ReportCategoryActionButton.BottomRight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/report_categories_clear_all" />
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -105,13 +85,14 @@
         app:layout_constraintBottom_toTopOf="@id/actionBarContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/massActionsContainer"
+        app:layout_constraintTop_toBottomOf="@id/categoryActionsBlock"
         tools:listitem="@layout/recycler_view_item_categories_for_reports" />
 
     <LinearLayout
         android:id="@+id/actionBarContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bottom_navigation_height"
         android:background="@color/categoryScreenBackground"
         android:orientation="horizontal"
         android:paddingTop="@dimen/margin_normal"

@@ -29,8 +29,6 @@
     <string name="report_empty_title">Brak operacji w wybranym okresie</string>
     <string name="report_empty_change_period">Zmień okres</string>
     <string name="report_empty_select_categories">Wybierz kategorie</string>
-    <string name="report_categories_title">Kategorie</string>
-    <string name="report_categories_selected_count">Wybrano: %1$d</string>
     <string name="report_categories_filter_all">Wszystkie</string>
     <string name="report_categories_select_all">Wybierz wszystkie</string>
     <string name="report_categories_clear_all">Odznacz wszystkie</string>

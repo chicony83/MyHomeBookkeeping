@@ -2,14 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/RecyclerViewCard"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:id="@+id/categoryItemCardView"
+    style="@style/RecyclerViewCard.ReportCategorySelection">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categories_item"
-        style="@style/RecyclerViewItem.Dialogs"
-        android:orientation="horizontal">
+        style="@style/RecyclerViewItem.ReportCategorySelection">
 
         <TextView
             android:id="@+id/itemId"
@@ -18,47 +16,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/iconImg"
+            style="@style/ImageIcon.RecyclerView"
+            android:contentDescription="@string/content_description_icon_item_of_category"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/no_image" />
+
+        <TextView
+            android:id="@+id/category_name_TextView"
+            style="@style/TextView.RecyclerViewHorizontalItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/H5"
+            app:layout_constraintBottom_toBottomOf="@id/iconImg"
+            app:layout_constraintEnd_toStartOf="@id/isCheckedCheckBox"
+            app:layout_constraintStart_toEndOf="@id/iconImg"
+            app:layout_constraintTop_toTopOf="@id/iconImg"
+            tools:text="Salary" />
+
         <CheckBox
             android:id="@+id/isCheckedCheckBox"
             style="@style/ReportsItemCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/categoryTypeIndicator"
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_half_normal"
-            app:layout_constraintBottom_toBottomOf="@id/categoryNameTextView"
-            app:layout_constraintStart_toEndOf="@id/isCheckedCheckBox"
-            app:layout_constraintTop_toTopOf="@id/categoryNameTextView"
-            tools:background="@color/incomeTextColor" />
-
-        <TextView
-            android:id="@+id/category_name_TextView"
-            style="@style/WrapContent_WrapContent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintEnd_toStartOf="@id/categoryTypeTextView"
-            app:layout_constraintStart_toEndOf="@id/categoryTypeIndicator"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Salary" />
-
-        <TextView
-            android:id="@+id/categoryTypeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:textColor="@color/text_second_color"
-            android:textSize="@dimen/H6"
-            app:layout_constraintBaseline_toBaselineOf="@id/categoryNameTextView"
+            app:layout_constraintBottom_toBottomOf="@id/iconImg"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Income" />
+            app:layout_constraintTop_toTopOf="@id/iconImg" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

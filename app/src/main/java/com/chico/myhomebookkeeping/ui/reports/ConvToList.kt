@@ -94,7 +94,7 @@ object ConvToList {
             List<ReportsCategoriesItem> {
         return categoriesList.map {
 //            Message.log("line categories list id = ${it.categoriesId}")
-            ReportsCategoriesItem(it.categoriesId ?: 0, it.displayName(languageTag), " ", it.isIncome, false)
+            ReportsCategoriesItem(it.categoriesId ?: 0, it.displayName(languageTag), it.icon, false)
 
         }
     }

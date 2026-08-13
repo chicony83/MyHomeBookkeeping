@@ -42,27 +42,10 @@ class ReportsSelectCategoriesAdapter(
             with(binding) {
                 itemId.text = item.id.toString()
                 categoryNameTextView.text = item.name
-                categoryTypeTextView.text = itemView.context.getString(
-                    if (item.isIncome) R.string.text_on_button_all_income
-                    else R.string.text_on_button_all_spending
-                )
+                iconImg.setImageResource(item.icon ?: R.drawable.no_image)
                 isCheckedCheckBox.setOnCheckedChangeListener(null)
                 isCheckedCheckBox.isChecked = item.isChecked
 
-                if (item.isIncome) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoryTypeIndicator.setBackgroundColor(
-                            itemView.resources.getColor(R.color.incomeTextColor, null)
-                        )
-                    }
-                }
-                if (!item.isIncome) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        categoryTypeIndicator.setBackgroundColor(
-                            itemView.resources.getColor(R.color.spendingTextColor, null)
-                        )
-                    }
-                }
                 isCheckedCheckBox.setOnCheckedChangeListener { _, isChecked ->
                     run {
                         if (isChecked) item.id.let {

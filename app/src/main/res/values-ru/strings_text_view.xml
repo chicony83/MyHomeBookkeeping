@@ -29,8 +29,6 @@
     <string name="report_empty_title">Нет операций за выбранный период</string>
     <string name="report_empty_change_period">Изменить период</string>
     <string name="report_empty_select_categories">Выбрать категории</string>
-    <string name="report_categories_title">Категории</string>
-    <string name="report_categories_selected_count">Выбрано: %1$d</string>
     <string name="report_categories_filter_all">Все</string>
     <string name="report_categories_select_all">Выбрать все</string>
     <string name="report_categories_clear_all">Снять все</string>
