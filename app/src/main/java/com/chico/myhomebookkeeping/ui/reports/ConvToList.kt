@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.reports
 
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
+import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
@@ -112,31 +113,50 @@ object ConvToList {
     fun parentCategoriesListToReportsItemsList(
         parentCategoriesList: List<ParentCategories>,
         categoriesList: List<Categories>,
-        languageTag: String = Constants.APP_LANGUAGE_ENGLISH
+        languageTag: String = Constants.APP_LANGUAGE_ENGLISH,
+        noParentCategoryName: String
     ): List<ReportsCategoriesItem> {
         val categoriesByParent = categoriesList.groupBy { it.parentCategoryId }
 
-        return parentCategoriesList.map { parentCategory ->
+        val parentItems = parentCategoriesList.map { parentCategory ->
             val childCategories = categoriesByParent[parentCategory.id].orEmpty()
-            val categoryIds = childCategories.mapNotNull { it.categoriesId }.toSet()
-            val incomeCategoryIds = childCategories
-                .filter { it.isIncome }
-                .mapNotNull { it.categoriesId }
-                .toSet()
-            val spendingCategoryIds = childCategories
-                .filter { !it.isIncome }
-                .mapNotNull { it.categoriesId }
-                .toSet()
-
             ReportsCategoriesItem(
                 id = parentCategory.id ?: 0,
                 name = parentCategory.displayName(languageTag),
                 icon = parentCategory.icon,
-                categoryIds = categoryIds,
-                incomeCategoryIds = incomeCategoryIds,
-                spendingCategoryIds = spendingCategoryIds,
+                categoryIds = childCategories.categoryIds(),
+                incomeCategoryIds = childCategories.incomeCategoryIds(),
+                spendingCategoryIds = childCategories.spendingCategoryIds(),
                 isChecked = false
             )
         }
+
+        val categoriesWithoutParent = categoriesByParent[null].orEmpty()
+        val withoutParentItem = categoriesWithoutParent
+            .takeIf { it.isNotEmpty() }
+            ?.let { childCategories ->
+                ReportsCategoriesItem(
+                    id = WITHOUT_PARENT_REPORT_CATEGORY_ID,
+                    name = noParentCategoryName,
+                    icon = R.drawable.no_image,
+                    categoryIds = childCategories.categoryIds(),
+                    incomeCategoryIds = childCategories.incomeCategoryIds(),
+                    spendingCategoryIds = childCategories.spendingCategoryIds(),
+                    isChecked = false
+                )
+            }
+
+        return if (withoutParentItem == null) parentItems else parentItems + withoutParentItem
     }
+
+    private fun List<Categories>.categoryIds(): Set<Int> =
+        mapNotNull { it.categoriesId }.toSet()
+
+    private fun List<Categories>.incomeCategoryIds(): Set<Int> =
+        filter { it.isIncome }.mapNotNull { it.categoriesId }.toSet()
+
+    private fun List<Categories>.spendingCategoryIds(): Set<Int> =
+        filter { !it.isIncome }.mapNotNull { it.categoriesId }.toSet()
+
+    private const val WITHOUT_PARENT_REPORT_CATEGORY_ID = Int.MIN_VALUE
 }

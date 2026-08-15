@@ -67,7 +67,8 @@ class ReportsSelectCategoriesViewModel(
             parentCategoriesItemsList = ConvToList.parentCategoriesListToReportsItemsList(
                 ParentCategoriesUseCase.getAllParentCategoriesSortNameAsc(parentCategoriesDb),
                 categories,
-                AppLanguage.getSelectedTag(app.applicationContext)
+                AppLanguage.getSelectedTag(app.applicationContext),
+                app.getString(com.chico.myhomebookkeeping.R.string.text_on_button_no_parent_category)
             )
 
             if (!hasSavedSelection) {
