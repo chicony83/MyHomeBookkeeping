@@ -123,7 +123,7 @@ class ReportsMainViewModel(
     private lateinit var listFullMoneyMoving: Deferred<List<FullMoneyMoving>?>
     private var numbersOfAllCategories = 0
     private var reportType = getSP.getString(argsReportTypeKey)
-    private var paymentTypeId = ReportsCreateSimpleQuery.paymentTypeIdForReportType(reportType)
+    private var paymentTypeId: Int? = ReportsCreateSimpleQuery.paymentTypeIdForReportType(reportType)
 
     init {
         getTimePeriodsSP()
@@ -156,17 +156,17 @@ class ReportsMainViewModel(
         reportType = getSP.getString(argsReportTypeKey)
         paymentTypeId = ReportsCreateSimpleQuery.paymentTypeIdForReportType(reportType)
         _reportTitle.postValue(
-            if (paymentTypeId == PaymentTypeIds.INCOME) {
-                app.getString(com.chico.myhomebookkeeping.R.string.report_title_income)
-            } else {
-                app.getString(com.chico.myhomebookkeeping.R.string.report_title_spending)
+            when (paymentTypeId) {
+                PaymentTypeIds.INCOME -> app.getString(com.chico.myhomebookkeeping.R.string.report_title_income)
+                PaymentTypeIds.SPENDING -> app.getString(com.chico.myhomebookkeeping.R.string.report_title_spending)
+                else -> app.getString(com.chico.myhomebookkeeping.R.string.report_menu_title)
             }
         )
         _donutCenterLabel.postValue(
-            if (paymentTypeId == PaymentTypeIds.INCOME) {
-                app.getString(com.chico.myhomebookkeeping.R.string.report_donut_center_income)
-            } else {
-                app.getString(com.chico.myhomebookkeeping.R.string.report_donut_center_spending)
+            when (paymentTypeId) {
+                PaymentTypeIds.INCOME -> app.getString(com.chico.myhomebookkeeping.R.string.report_donut_center_income)
+                PaymentTypeIds.SPENDING -> app.getString(com.chico.myhomebookkeeping.R.string.report_donut_center_spending)
+                else -> app.getString(com.chico.myhomebookkeeping.R.string.report_total)
             }
         )
     }
@@ -220,7 +220,8 @@ class ReportsMainViewModel(
     }
 
     private fun selectedCategoriesSetKey(): String {
-        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_${paymentTypeId}"
+        val reportTypeKey = paymentTypeId?.toString() ?: "all"
+        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_$reportTypeKey"
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {

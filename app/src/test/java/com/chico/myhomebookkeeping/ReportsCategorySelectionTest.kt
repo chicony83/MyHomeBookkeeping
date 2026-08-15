@@ -2,9 +2,11 @@ package com.chico.myhomebookkeeping
 
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
+import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -48,6 +50,12 @@ class ReportsCategorySelectionTest {
 
         assertEquals(1, items.size)
         assertTrue(items.none { it.name == "No parent category" })
+    }
+
+    @Test
+    fun missingReportTypeShowsIncomeAndSpending() {
+        assertNull(ReportsCreateSimpleQuery.paymentTypeIdForReportType(null))
+        assertNull(ReportsCreateSimpleQuery.paymentTypeIdForReportType("Unknown"))
     }
 
     private fun category(

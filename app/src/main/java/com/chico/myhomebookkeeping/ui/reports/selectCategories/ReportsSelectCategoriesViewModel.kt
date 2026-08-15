@@ -45,7 +45,7 @@ class ReportsSelectCategoriesViewModel(
     private var selectedCategoriesSetFromSp = setOf<Int>()
     private var selectedCategoryIds = setOf<Int>()
     private var hasSavedSelection = false
-    private val paymentTypeId: Int
+    private val paymentTypeId: Int?
         get() = ReportsCreateSimpleQuery.paymentTypeIdForReportType(getSP.getString(Constants.REPORT_TYPE))
 
     init {
@@ -172,6 +172,7 @@ class ReportsSelectCategoriesViewModel(
     }
 
     private fun selectedCategoriesSetKey(): String {
-        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_${paymentTypeId}"
+        val reportTypeKey = paymentTypeId?.toString() ?: "all"
+        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_$reportTypeKey"
     }
 }

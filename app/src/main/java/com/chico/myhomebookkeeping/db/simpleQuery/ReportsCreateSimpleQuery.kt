@@ -28,8 +28,7 @@ object ReportsCreateSimpleQuery {
                 "INNER JOIN currency_table ON currency == currencyId " +
                 "INNER JOIN payment_type_table ON money_moving_table.payment_type_id == payment_type_table.id " +
                 "INNER JOIN category_table ON category == categoriesId " +
-                "LEFT JOIN parent_categories_table ON category_table.parent_category_id == parent_categories_table.id " +
-                "WHERE money_moving_table.payment_type_id = :paymentTypeId"
+                "LEFT JOIN parent_categories_table ON category_table.parent_category_id == parent_categories_table.id"
     }
 
     private fun checkTimePeriod(
@@ -73,32 +72,43 @@ object ReportsCreateSimpleQuery {
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
-        paymentTypeId: Int,
+        paymentTypeId: Int?,
         setItemsOfCategories: Set<Int>,
         numbersOfAllCategories: Int,
         languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving(languageTag)
-        val argsList: ArrayList<Any> = arrayListOf(paymentTypeId)
+        val argsList: ArrayList<Any> = arrayListOf()
+        var hasWhereClause = false
+        if (paymentTypeId != null) {
+            query += " WHERE money_moving_table.payment_type_id = :paymentTypeId"
+            argsList.add(paymentTypeId)
+            hasWhereClause = true
+        } else {
+            query += " WHERE 1 = 1"
+            hasWhereClause = true
+        }
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
 
         if (setItemsOfCategories.size != numbersOfAllCategories) {
             if (countCategories == 0) {
-                query += addAnd()
+                query += if (hasWhereClause) addAnd() else " WHERE "
                 query += " category = :emptyCategory "
                 argsList.add(Constants.MINUS_ONE_VAL_INT)
+                hasWhereClause = true
             }
             if (countCategories == 1) {
-                query += addAnd()
+                query += if (hasWhereClause) addAnd() else " WHERE "
                 query += addCategory()
                 for (i in listSelectedCategories.indices) {
                     argsList.add(listSelectedCategories[i])
                 }
+                hasWhereClause = true
             }
             if (countCategories > 1) {
                 var counter = 0
-                query += addAnd()
+                query += if (hasWhereClause) addAnd() else " WHERE "
                 query += " ( "
                 for (i in listSelectedCategories.indices) {
                     counter++
@@ -108,6 +118,7 @@ object ReportsCreateSimpleQuery {
                     query += addCategory(listSelectedCategories[i])
                 }
                 query += " ) "
+                hasWhereClause = true
             }
         }
 
@@ -132,10 +143,11 @@ object ReportsCreateSimpleQuery {
         }
     }
 
-    fun paymentTypeIdForReportType(reportType: String?): Int {
+    fun paymentTypeIdForReportType(reportType: String?): Int? {
         return when (reportType) {
             "PieIncome" -> PaymentTypeIds.INCOME
-            else -> PaymentTypeIds.SPENDING
+            "PieSpending" -> PaymentTypeIds.SPENDING
+            else -> null
         }
     }
 
