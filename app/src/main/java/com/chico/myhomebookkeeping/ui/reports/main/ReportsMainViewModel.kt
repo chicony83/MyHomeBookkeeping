@@ -21,7 +21,6 @@ import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
@@ -40,7 +39,6 @@ class ReportsMainViewModel(
     private val spName = Constants.SP_NAME
     private val argsStartTimePeriodKey = Constants.ARGS_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodKey = Constants.ARGS_REPORTS_END_TIME_PERIOD
-    private val argsReportTypeKey = Constants.REPORT_TYPE
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
@@ -122,8 +120,6 @@ class ReportsMainViewModel(
 
     private lateinit var listFullMoneyMoving: Deferred<List<FullMoneyMoving>?>
     private var numbersOfAllCategories = 0
-    private var reportType = getSP.getString(argsReportTypeKey)
-    private var paymentTypeId: Int? = ReportsCreateSimpleQuery.paymentTypeIdForReportType(reportType)
 
     init {
         getTimePeriodsSP()
@@ -153,22 +149,8 @@ class ReportsMainViewModel(
     }
 
     private fun setReportTexts() {
-        reportType = getSP.getString(argsReportTypeKey)
-        paymentTypeId = ReportsCreateSimpleQuery.paymentTypeIdForReportType(reportType)
-        _reportTitle.postValue(
-            when (paymentTypeId) {
-                PaymentTypeIds.INCOME -> app.getString(com.chico.myhomebookkeeping.R.string.report_title_income)
-                PaymentTypeIds.SPENDING -> app.getString(com.chico.myhomebookkeeping.R.string.report_title_spending)
-                else -> app.getString(com.chico.myhomebookkeeping.R.string.report_menu_title)
-            }
-        )
-        _donutCenterLabel.postValue(
-            when (paymentTypeId) {
-                PaymentTypeIds.INCOME -> app.getString(com.chico.myhomebookkeeping.R.string.report_donut_center_income)
-                PaymentTypeIds.SPENDING -> app.getString(com.chico.myhomebookkeeping.R.string.report_donut_center_spending)
-                else -> app.getString(com.chico.myhomebookkeeping.R.string.report_total)
-            }
-        )
+        _reportTitle.postValue(app.getString(com.chico.myhomebookkeeping.R.string.report_menu_title))
+        _donutCenterLabel.postValue(app.getString(com.chico.myhomebookkeeping.R.string.report_total))
     }
 
     private fun getLists(): Boolean {
@@ -220,8 +202,8 @@ class ReportsMainViewModel(
     }
 
     private fun selectedCategoriesSetKey(): String {
-        val reportTypeKey = paymentTypeId?.toString() ?: "all"
-        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_$reportTypeKey"
+        // Keep one report category selection instead of the old per-report-type SharedPreferences keys.
+        return Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY
     }
 
     private suspend fun getListOfFullMoneyMovements(query: SimpleSQLiteQuery): List<FullMoneyMoving>? {
@@ -268,7 +250,6 @@ class ReportsMainViewModel(
         return ReportsCreateSimpleQuery.createSampleQueryForReports(
             startTimePeriodLong = startTimePeriodLongSP,
             endTimePeriodLong = endTimePeriodLongSP,
-            paymentTypeId = paymentTypeId,
             setItemsOfCategories = selectedCategoriesSet,
             numbersOfAllCategories = numbersOfAllCategories,
             languageTag = AppLanguage.getSelectedTag(app.applicationContext)

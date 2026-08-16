@@ -16,7 +16,6 @@ import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.sp.GetSP
 import com.chico.myhomebookkeeping.sp.SetSP
-import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
 import kotlinx.coroutines.runBlocking
 
@@ -45,8 +44,6 @@ class ReportsSelectCategoriesViewModel(
     private var selectedCategoriesSetFromSp = setOf<Int>()
     private var selectedCategoryIds = setOf<Int>()
     private var hasSavedSelection = false
-    private val paymentTypeId: Int?
-        get() = ReportsCreateSimpleQuery.paymentTypeIdForReportType(getSP.getString(Constants.REPORT_TYPE))
 
     init {
         getSelectedCategoriesSetFromSp()
@@ -175,7 +172,7 @@ class ReportsSelectCategoriesViewModel(
     }
 
     private fun selectedCategoriesSetKey(): String {
-        val reportTypeKey = paymentTypeId?.toString() ?: "all"
-        return "${Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY}_$reportTypeKey"
+        // Keep one report category selection instead of the old per-report-type SharedPreferences keys.
+        return Constants.FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY
     }
 }

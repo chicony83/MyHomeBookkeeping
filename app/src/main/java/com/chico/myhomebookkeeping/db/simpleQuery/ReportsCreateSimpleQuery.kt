@@ -3,7 +3,6 @@ package com.chico.myhomebookkeeping.db.simpleQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.obj.Constants
-import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(languageTag: String): String {
@@ -72,43 +71,33 @@ object ReportsCreateSimpleQuery {
     fun createSampleQueryForReports(
         startTimePeriodLong: Long,
         endTimePeriodLong: Long,
-        paymentTypeId: Int?,
         setItemsOfCategories: Set<Int>,
         numbersOfAllCategories: Int,
         languageTag: String = Constants.APP_LANGUAGE_ENGLISH
     ): SimpleSQLiteQuery {
         var query = mainQueryFullMoneyMoving(languageTag)
         val argsList: ArrayList<Any> = arrayListOf()
-        var hasWhereClause = false
-        if (paymentTypeId != null) {
-            query += " WHERE money_moving_table.payment_type_id = :paymentTypeId"
-            argsList.add(paymentTypeId)
-            hasWhereClause = true
-        } else {
-            query += " WHERE 1 = 1"
-            hasWhereClause = true
-        }
+        // Reports are now one category/period view; legacy type filtering is intentionally gone.
+        query += " WHERE 1 = 1"
         val listSelectedCategories = setItemsOfCategories.toList()
         val countCategories = listSelectedCategories.size
 
         if (setItemsOfCategories.size != numbersOfAllCategories) {
             if (countCategories == 0) {
-                query += if (hasWhereClause) addAnd() else " WHERE "
+                query += addAnd()
                 query += " category = :emptyCategory "
                 argsList.add(Constants.MINUS_ONE_VAL_INT)
-                hasWhereClause = true
             }
             if (countCategories == 1) {
-                query += if (hasWhereClause) addAnd() else " WHERE "
+                query += addAnd()
                 query += addCategory()
                 for (i in listSelectedCategories.indices) {
                     argsList.add(listSelectedCategories[i])
                 }
-                hasWhereClause = true
             }
             if (countCategories > 1) {
                 var counter = 0
-                query += if (hasWhereClause) addAnd() else " WHERE "
+                query += addAnd()
                 query += " ( "
                 for (i in listSelectedCategories.indices) {
                     counter++
@@ -118,7 +107,6 @@ object ReportsCreateSimpleQuery {
                     query += addCategory(listSelectedCategories[i])
                 }
                 query += " ) "
-                hasWhereClause = true
             }
         }
 
@@ -140,14 +128,6 @@ object ReportsCreateSimpleQuery {
             Constants.APP_LANGUAGE_RUSSIAN -> "COALESCE($ruColumn, $baseColumn)"
             Constants.APP_LANGUAGE_POLISH -> "COALESCE($plColumn, $baseColumn)"
             else -> baseColumn
-        }
-    }
-
-    fun paymentTypeIdForReportType(reportType: String?): Int? {
-        return when (reportType) {
-            "PieIncome" -> PaymentTypeIds.INCOME
-            "PieSpending" -> PaymentTypeIds.SPENDING
-            else -> null
         }
     }
 
