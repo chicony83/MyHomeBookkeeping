@@ -46,10 +46,16 @@ class ReportsSelectCategoriesAdapter(
                 categoryNameTextView.text = item.name
                 iconImg.setImageResource(item.icon ?: R.drawable.no_image)
                 isCheckedCheckBox.setOnCheckedChangeListener(null)
+                isCheckedCheckBox.buttonIconDrawable = null
                 isCheckedCheckBox.checkedState = when {
                     item.isPartiallyChecked -> MaterialCheckBox.STATE_INDETERMINATE
                     item.isChecked -> MaterialCheckBox.STATE_CHECKED
                     else -> MaterialCheckBox.STATE_UNCHECKED
+                }
+                fullSelectionMark.visibility = if (item.isChecked) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
                 }
                 // Keep the partial state visible on themes that do not draw Material's indeterminate icon.
                 indeterminateMark.visibility = if (item.isPartiallyChecked) {
@@ -59,7 +65,7 @@ class ReportsSelectCategoriesAdapter(
                 }
 
                 isCheckedCheckBox.setOnClickListener {
-                    if (isCheckedCheckBox.checkedState == MaterialCheckBox.STATE_CHECKED) {
+                    if (isCheckedCheckBox.checkedState != MaterialCheckBox.STATE_UNCHECKED) {
                         setCheckOnItem(item.id)
                         Message.log("selected item ${item.id}")
                     } else {

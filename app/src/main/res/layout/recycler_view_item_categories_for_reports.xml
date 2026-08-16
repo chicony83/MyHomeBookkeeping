@@ -49,6 +49,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iconImg" />
 
+        <ImageView
+            android:id="@+id/fullSelectionMark"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/report_checkbox_check_full"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
+            app:layout_constraintEnd_toEndOf="@id/isCheckedCheckBox"
+            app:layout_constraintStart_toStartOf="@id/isCheckedCheckBox"
+            app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox" />
+
         <!-- MaterialCheckBox can keep the state without drawing its indeterminate mark on this theme. -->
         <View
             android:id="@+id/indeterminateMark"
