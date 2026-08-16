@@ -8,9 +8,11 @@ This file is the full internal release log. Keep all useful development notes he
 - Redesigned the Reports overview with a lighter summary card, compact filters, a donut chart, and a category breakdown list.
 - Added category icons and progress bars to the Reports breakdown list.
 - Added localized income/spending report titles and donut-center labels.
+- Added parent and no-parent category selection for Reports, including income/spending presets, clear selection, and partial parent checkboxes.
 
 ### Development
 - Reports now query income and spending by report type and ignore transfers.
+- Reports category selection now recalculates parent checkbox states when individual income or spending categories are selected.
 - The selected category filter now preserves an intentionally empty selection instead of falling back to all categories.
 - Added stable report category colors, report-specific typography dimensions/styles, and a dedicated breakdown adapter/model.
 - Added a two-line donut center and automatic light/dark label color selection for chart slices.

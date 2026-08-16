@@ -1,6 +1,7 @@
 package com.chico.myhomebookkeeping.ui.reports.selectCategories
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
@@ -50,28 +51,27 @@ class ReportsSelectCategoriesAdapter(
                     item.isChecked -> MaterialCheckBox.STATE_CHECKED
                     else -> MaterialCheckBox.STATE_UNCHECKED
                 }
+                // Keep the partial state visible on themes that do not draw Material's indeterminate icon.
+                indeterminateMark.visibility = if (item.isPartiallyChecked) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
 
-                isCheckedCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                    run {
-                        if (isChecked) item.id.let {
-                            setCheckOnItem(it)
-                            Message.log("selected item $it")
-                        }
-                        if (!isChecked) item.id.let {
-                            setUnCheckOnItem(it)
-                            Message.log("unselected item $it")
-                        }
+                isCheckedCheckBox.setOnClickListener {
+                    if (isCheckedCheckBox.checkedState == MaterialCheckBox.STATE_CHECKED) {
+                        setCheckOnItem(item.id)
+                        Message.log("selected item ${item.id}")
+                    } else {
+                        setUnCheckOnItem(item.id)
+                        Message.log("unselected item ${item.id}")
                     }
                 }
                 itemView.setOnClickListener {
-                    run {
-                        if (isCheckedCheckBox.checkedState == MaterialCheckBox.STATE_CHECKED) item.id.let {
-                            isCheckedCheckBox.checkedState = MaterialCheckBox.STATE_UNCHECKED
-                        } else {
-                            item.id.let {
-                                isCheckedCheckBox.checkedState = MaterialCheckBox.STATE_CHECKED
-                            }
-                        }
+                    if (item.isChecked) {
+                        setUnCheckOnItem(item.id)
+                    } else {
+                        setCheckOnItem(item.id)
                     }
                 }
             }

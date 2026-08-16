@@ -25,6 +25,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Reports
 
 - Completed: redesign the Reports overview with a summary card, filter controls, donut chart, category breakdown list, empty state, and localized income/spending titles.
+- Completed: add parent and no-parent category selection for reports, with income/spending presets, clear selection, and partial parent checkboxes.
 - Completed: make report SQL respect the selected report type, ignore transfers, and keep an intentionally empty category selection empty instead of treating it as all categories.
 - Completed: add stable category colors, category icons in the breakdown list, and lightweight filter controls with icons.
 - Completed: add a two-level donut center with localized total-spending/total-income labels.

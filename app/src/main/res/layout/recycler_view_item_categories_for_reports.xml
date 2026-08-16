@@ -48,5 +48,18 @@
             app:layout_constraintBottom_toBottomOf="@id/iconImg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iconImg" />
+
+        <!-- MaterialCheckBox can keep the state without drawing its indeterminate mark on this theme. -->
+        <View
+            android:id="@+id/indeterminateMark"
+            android:layout_width="18dp"
+            android:layout_height="3dp"
+            android:background="?attr/colorControlActivated"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
+            app:layout_constraintEnd_toEndOf="@id/isCheckedCheckBox"
+            app:layout_constraintStart_toStartOf="@id/isCheckedCheckBox"
+            app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

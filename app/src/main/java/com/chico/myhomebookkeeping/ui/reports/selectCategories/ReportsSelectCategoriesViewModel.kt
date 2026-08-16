@@ -99,6 +99,7 @@ class ReportsSelectCategoriesViewModel(
             selectedCategoryIds = selectedCategoryIds + it.categoryIds
         }
         updateParentSelectionStates()
+        postCategories()
     }
 
     fun setCategoryUnChecked(id: Int) {
@@ -106,6 +107,7 @@ class ReportsSelectCategoriesViewModel(
             selectedCategoryIds = selectedCategoryIds - it.categoryIds
         }
         updateParentSelectionStates()
+        postCategories()
     }
 
     fun clearSelectedCategories() {
@@ -160,6 +162,7 @@ class ReportsSelectCategoriesViewModel(
     private fun updateParentSelectionStates() {
         parentCategoriesItemsList = parentCategoriesItemsList.map { item ->
             val selectedChildrenCount = item.categoryIds.count { selectedCategoryIds.contains(it) }
+            // A parent is partial when only part of its child categories is selected.
             item.copy(
                 isChecked = item.categoryIds.isNotEmpty() && selectedChildrenCount == item.categoryIds.size,
                 isPartiallyChecked = selectedChildrenCount > 0 && selectedChildrenCount < item.categoryIds.size
