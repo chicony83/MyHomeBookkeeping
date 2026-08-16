@@ -32,6 +32,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: refine donut slice labels so amount and percent never visually merge on device.
 - Completed: continue typography and spacing polish from the current reports baseline.
 - Completed: group tiny donut slices into a neutral unlabeled sector, scroll tapped slices to their breakdown rows, highlight the selected rows, and provide a fading return-to-chart button.
+- Completed: remove the unused report menu fragment so Reports navigation goes directly to the active report screen.
 - Later: add multi-currency report handling instead of assuming a single displayed currency.
 
 ## First Launch And Defaults

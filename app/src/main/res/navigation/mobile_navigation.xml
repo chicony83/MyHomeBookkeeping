@@ -24,7 +24,7 @@
         android:id="@+id/nav_reports_categories_fragment"
         android:name="com.chico.myhomebookkeeping.ui.reports.selectCategories.ReportsSelectCategoriesFragment"
         android:label="@string/fragment_label_select_categories"
-        tools:layout="@layout/fragment_reports_menu" />
+        tools:layout="@layout/fragment_reports_select_category" />
     <fragment
         android:id="@+id/nav_time_period"
         android:name="com.chico.myhomebookkeeping.ui.timePeriod.TimePeriodFragment"
@@ -113,11 +113,6 @@
             android:id="@+id/action_nav_change_money_moving_to_nav_categories"
             app:destination="@id/nav_categories" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_reports_menu"
-        android:name="com.chico.myhomebookkeeping.ui.reportsMenu.ReportsMenuFragment"
-        android:label="@string/fragment_label_reports_menu"
-        tools:layout="@layout/fragment_reports_menu" />
     <fragment
         android:id="@+id/nav_reports"
         android:name="com.chico.myhomebookkeeping.ui.reports.main.ReportsMainFragment"

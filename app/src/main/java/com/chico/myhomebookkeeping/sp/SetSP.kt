@@ -18,7 +18,6 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
 
     private val navCategory = R.id.nav_categories
 
-    private val navReportsMenu = R.id.nav_reports_menu
     private val navReports = R.id.nav_reports
 
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
@@ -219,10 +218,6 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
             navMoneyMoving -> {
                 saveToSP(argsStartTimePeriodForQuery, startTimePeriodLong)
                 saveToSP(argsEndTimePeriodForQuery, endTimePeriodLong)
-            }
-            navReportsMenu -> {
-                saveToSP(argsStartTimePeriodForReport, startTimePeriodLong)
-                saveToSP(argsEndTimePeriodForReports, endTimePeriodLong)
             }
             navReports -> {
                 saveToSP(argsStartTimePeriodForReport, startTimePeriodLong)
