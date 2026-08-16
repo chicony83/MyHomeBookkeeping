@@ -45,6 +45,9 @@
             style="@style/ReportsItemCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:button="@drawable/report_checkbox_empty"
+            android:buttonTint="#7A7A7A"
+            app:buttonTint="#7A7A7A"
             app:layout_constraintBottom_toBottomOf="@id/iconImg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iconImg" />
@@ -61,12 +64,11 @@
             app:layout_constraintStart_toStartOf="@id/isCheckedCheckBox"
             app:layout_constraintTop_toTopOf="@id/isCheckedCheckBox" />
 
-        <!-- MaterialCheckBox can keep the state without drawing its indeterminate mark on this theme. -->
         <View
             android:id="@+id/indeterminateMark"
-            android:layout_width="18dp"
-            android:layout_height="3dp"
-            android:background="?attr/colorControlActivated"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="#7A7A7A"
             android:importantForAccessibility="no"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/isCheckedCheckBox"
