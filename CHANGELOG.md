@@ -5,12 +5,14 @@ This file is the full internal release log. Keep all useful development notes he
 ## Unreleased
 
 ### User-facing
+- Added a new default category group for Subscriptions & Online Services with Video, Music, Cloud Services, Software & Apps, Games & Gaming Services, and Other subcategories.
 - Redesigned the Reports overview with a lighter summary card, compact filters, a donut chart, and a category breakdown list.
 - Added category icons and progress bars to the Reports breakdown list.
 - Added localized income/spending report titles and donut-center labels.
 - Added parent and no-parent category selection for Reports, including income/spending presets, clear selection, and partial parent checkboxes.
 
 ### Development
+- Added a code-version update from 69 to 70 to backfill the Subscriptions & Online Services category group and its new bundled category icons on existing installs.
 - Reports now query income and spending by report type and ignore transfers.
 - Reports category selection now recalculates parent checkbox states when individual income or spending categories are selected.
 - The selected category filter now preserves an intentionally empty selection instead of falling back to all categories.

@@ -67,6 +67,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Add currency icons.
 - Completed: expand the category icon dictionary for default categories and keep new bundled icons backfilled on existing installs.
 - Completed: add sick leave payments to the default income subcategories and backfill existing installs through the app update flow.
+- Completed: add the Subscriptions & Online Services category group and backfill existing installs through the app update flow.
 - Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.

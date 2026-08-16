@@ -98,4 +98,47 @@ class DefaultCategoryCatalogTest {
             group.subcategoriesRu
         )
     }
+
+    @Test
+    fun subscriptionsOnlineServicesGroupIsAvailableForFirstLaunch() {
+        val group = DefaultCategoryCatalog.groups.first {
+            it.parentName == "Subscriptions & Online Services"
+        }
+
+        assertEquals("Подписки и онлайн-сервисы", group.parentNameRu)
+        assertEquals("Subskrypcje i usługi online", group.parentNamePl)
+        assertEquals(
+            listOf(
+                "Video",
+                "Music",
+                "Cloud Services",
+                "Software & Apps",
+                "Games & Gaming Services",
+                "Other"
+            ),
+            group.subcategories
+        )
+        assertEquals(
+            listOf(
+                "Видео",
+                "Музыка",
+                "Облачные сервисы",
+                "Программы и приложения",
+                "Игры и игровые сервисы",
+                "Другие"
+            ),
+            group.subcategoriesRu
+        )
+        assertEquals(
+            listOf(
+                "Wideo",
+                "Muzyka",
+                "Usługi chmurowe",
+                "Programy i aplikacje",
+                "Gry i usługi gamingowe",
+                "Inne"
+            ),
+            group.subcategoriesPl
+        )
+    }
 }

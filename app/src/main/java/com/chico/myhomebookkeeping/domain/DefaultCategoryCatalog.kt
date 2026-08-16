@@ -123,6 +123,14 @@ object DefaultCategoryCatalog {
             subcategoryIcons = listOf(CategoryIconNames.PhoneIphone, CategoryIconNames.Bank, CategoryIconNames.PhoneAndroid, CategoryIconNames.Computer, CategoryIconNames.Subscriptions, CategoryIconNames.Phone, CategoryIconNames.Phone)
         ),
         group(
+            parentName = "Subscriptions & Online Services",
+            parentNameRu = "Подписки и онлайн-сервисы",
+            parentIcon = CategoryIconNames.Subscriptions,
+            subcategories = listOf("Video", "Music", "Cloud Services", "Software & Apps", "Games & Gaming Services", "Other"),
+            subcategoriesRu = listOf("Видео", "Музыка", "Облачные сервисы", "Программы и приложения", "Игры и игровые сервисы", "Другие"),
+            subcategoryIcons = listOf(CategoryIconNames.Videocam, CategoryIconNames.MusicNote, CategoryIconNames.Cloud, CategoryIconNames.Apps, CategoryIconNames.VideogameAsset, CategoryIconNames.Subscriptions)
+        ),
+        group(
             parentName = "Entertainment",
             parentNameRu = "Развлечения",
             parentIcon = CategoryIconNames.Celebration,
