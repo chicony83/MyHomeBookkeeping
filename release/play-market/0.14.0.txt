@@ -1,0 +1,20 @@
+What's new in 0.14.0
+
+- Updated Reports with a new design, chart, and category breakdown.
+- Improved category selection in Reports.
+- Added a new category group: Subscriptions & Online Services.
+- Fixed bugs and improved stability.
+
+Что нового в 0.14.0
+
+- Обновлены отчёты: новый внешний вид, диаграмма и разбивка по категориям.
+- Улучшен выбор категорий в отчётах.
+- Добавлена новая группа категорий: подписки и онлайн-сервисы.
+- Исправлены ошибки и улучшена стабильность.
+
+Co nowego w 0.14.0
+
+- Odświeżono Raporty: nowy wygląd, wykres i podział według kategorii.
+- Ulepszono wybór kategorii w Raportach.
+- Dodano nową grupę kategorii: subskrypcje i usługi online.
+- Naprawiono błędy i poprawiono stabilność.

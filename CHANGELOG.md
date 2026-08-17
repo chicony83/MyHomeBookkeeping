@@ -2,7 +2,7 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
-## Unreleased
+## 0.14.0
 
 ### User-facing
 - Added a new default category group for Subscriptions & Online Services with Video, Music, Cloud Services, Software & Apps, Games & Gaming Services, and Other subcategories.
@@ -13,6 +13,8 @@ This file is the full internal release log. Keep all useful development notes he
 
 ### Development
 - Added a code-version update from 69 to 70 to backfill the Subscriptions & Online Services category group and its new bundled category icons on existing installs.
+- Bumped Play Market release version to 0.14.0 (70).
+- Added short 0.14.0 version history strings and Play Market notes for English, Russian, and Polish.
 - Reports now query income and spending by report type and ignore transfers.
 - Reports category selection now recalculates parent checkbox states when individual income or spending categories are selected.
 - The selected category filter now preserves an intentionally empty selection instead of falling back to all categories.
