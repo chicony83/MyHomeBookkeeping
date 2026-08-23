@@ -287,27 +287,24 @@ class CategoryGroupsAdapter(
                 addNewCategoryItem.visibility = View.GONE
                 categoriesItem.visibility = View.VISIBLE
                 categoryItemCardView.setTopMargin(
-                    if (isFirstInGroup) -itemView.resources.getDimensionPixelSize(R.dimen.margin_normal)
+                    if (isFirstInGroup) -itemView.resources.getDimensionPixelSize(R.dimen.margin_double)
                     else 0
                 )
                 categoryItemCardView.setBottomMargin(0)
                 categoriesItem.updateLayoutParams<ViewGroup.LayoutParams> {
                     height = if (isFirstInGroup) {
-                        itemView.dpToPx(56)
+                        itemView.dpToPx(68)
                     } else {
                         itemView.dpToPx(52)
                     }
                 }
                 categoriesItem.setPadding(
                     categoriesItem.paddingLeft,
-                    if (isFirstInGroup) itemView.resources.getDimensionPixelSize(R.dimen.margin_normal) else 0,
+                    if (isFirstInGroup) itemView.resources.getDimensionPixelSize(R.dimen.margin_double) else 0,
                     categoriesItem.paddingRight,
                     categoriesItem.paddingBottom
                 )
-                categoriesItem.setBackgroundResource(
-                    if (isFirstInGroup) R.drawable.category_child_row_top_background
-                    else R.drawable.category_child_row_background
-                )
+                categoriesItem.setBackgroundResource(R.drawable.category_child_row_background)
                 categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
                 idCategories.text = category.categoriesId.toString()
