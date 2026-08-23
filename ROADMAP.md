@@ -82,7 +82,8 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Database Ideas
 
 - Completed: keep backup restore validation aligned with the current Room schema version.
+- Completed: add category flags for favorite/hidden state, hidden timestamp, and stored usage count.
 - Add nullable stable keys for default cash accounts, parent categories, and categories, then migrate known built-in rows by English/Russian/Polish names while leaving user-created rows keyless.
 - Add default currency/account fields where still needed.
 - Add parent category support where still needed.
-- Prefer calculated usage counts over stored usage-count columns when possible.
+- Decide how category usage counts should be incremented and used for sorting.
