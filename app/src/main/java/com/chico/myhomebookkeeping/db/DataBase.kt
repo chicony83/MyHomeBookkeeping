@@ -10,7 +10,7 @@ import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.DefaultPolishNames
 
-const val DATABASE_SCHEMA_VERSION = 11
+const val DATABASE_SCHEMA_VERSION = 12
 
 @Database(
     entities = [
@@ -58,6 +58,7 @@ object dataBase {
             .addMigrations(migration_8_to_9)
             .addMigrations(migration_9_to_10)
             .addMigrations(migration_10_to_11)
+            .addMigrations(migration_11_to_12)
             .addCallback(seedPaymentTypesOnCreate)
             .build()
 }
@@ -187,6 +188,15 @@ private object migration_10_to_11 : Migration(10, 11) {
         database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_pl` TEXT")
         database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_pl` TEXT")
         fillMissingPolishNames(database)
+    }
+}
+
+private object migration_11_to_12 : Migration(11, 12) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `is_favorite` INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `usage_count` INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `is_hidden` INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `hidden_at` INTEGER")
     }
 }
 
