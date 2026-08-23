@@ -417,7 +417,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSearchMenuVisibility() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, arguments ->
             val isCategoriesDestination = destination.id == R.id.nav_categories
             val isNewMoneyMovingDestination =
                 destination.id == R.id.nav_new_money_moving || destination.id == R.id.nav_new_transfer
@@ -426,7 +426,22 @@ class MainActivity : AppCompatActivity() {
             updateFavoriteCategoriesMenuIcon(false)
             categoryOrderMenuItem?.isVisible = isCategoriesDestination
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
+            updateCategoriesTitle(destination.id, arguments)
         }
+    }
+
+    private fun updateCategoriesTitle(destinationId: Int, arguments: Bundle?) {
+        if (destinationId != R.id.nav_categories) return
+
+        val titleRes = if (
+            arguments?.getString(CategoriesFragment.ARG_OPEN_MODE) ==
+            CategoriesFragment.OPEN_MODE_JOURNAL_FILTER
+        ) {
+            R.string.fragment_label_categories
+        } else {
+            R.string.fragment_label_category_entry
+        }
+        supportActionBar?.setTitle(titleRes)
     }
 
     private fun setupQuickAccessPanel() {
