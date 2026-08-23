@@ -602,6 +602,9 @@ class CategoriesFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        categoryTouchHelper?.attachToRecyclerView(null)
+        categoryTouchHelper = null
+        categoryGroupsAdapter = null
         _binding = null
     }
 }
