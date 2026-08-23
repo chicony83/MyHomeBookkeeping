@@ -54,6 +54,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: declare bundled app locales with Android locale config for English, Polish, and Russian.
 - Completed: recreate the Activity after first-launch language selection so the next setup step uses the selected resources.
 - Completed: update the app launcher icon assets from the wallet artwork, using a 70% foreground scale for better launcher spacing.
+- Completed: rename the Russian app title to Учёт финансов and add a 0.14.1 version-history note for the trademark-conflict wording.
 - Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
 - Keep string resources split by feature and mirrored between `values` and localized `values-*` folders.
 
