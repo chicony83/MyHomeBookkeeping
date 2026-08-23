@@ -294,4 +294,11 @@ class CategoriesViewModel(
         }
     }
 
+    fun updateCategoryFavorite(id: Int, isFavorite: Boolean) {
+        launchIo {
+            CategoriesUseCase.updateCategoryFavorite(db, id, isFavorite)
+            _categoriesList.postValue(CategoriesUseCase.getAllCategoriesSortOrderAsc(db))
+        }
+    }
+
 }

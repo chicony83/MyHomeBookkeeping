@@ -83,10 +83,22 @@
             android:textColor="@color/black"
             android:textSize="@dimen/H5"
             app:layout_constraintBottom_toBottomOf="@id/iconImg"
-            app:layout_constraintEnd_toStartOf="@id/category_drag_handle_imageView"
+            app:layout_constraintEnd_toStartOf="@id/category_favorite_imageView"
             app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toTopOf="@id/iconImg"
             tool:text="category" />
+
+        <ImageButton
+            android:id="@+id/category_favorite_imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:contentDescription="@string/content_description_icon_category_favorite"
+            android:padding="8dp"
+            android:src="@drawable/ic_star_favorite_outline"
+            app:layout_constraintBottom_toBottomOf="@id/iconImg"
+            app:layout_constraintEnd_toStartOf="@id/category_drag_handle_imageView"
+            app:layout_constraintTop_toTopOf="@id/iconImg" />
 
         <ImageView
             android:id="@+id/category_drag_handle_imageView"

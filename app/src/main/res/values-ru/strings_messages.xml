@@ -15,6 +15,10 @@
 
     <string name="message_entry_changed">Запись изменена</string>
     <string name="message_entry_added">Запись добавлена</string>
+    <string name="message_category_added_to_favorites">Категория добавлена в избранное</string>
+    <string name="message_category_removed_from_favorites">Категория удалена из избранного</string>
+    <string name="message_favorite_categories">Избранные категории</string>
+    <string name="message_all_categories">Все категории</string>
 
     <string name="message_start_date_can_not_be_more_than_the_current">Начальная дата не может быть больше текущей</string>
     <string name="message_the_end_date_is_greater_than_the_current_one">Хотите заглянуть в будущее?\nКонечная дата больше текущей!!!</string>

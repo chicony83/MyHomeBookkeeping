@@ -4,6 +4,7 @@
     <string name="text_on_button_currency">Waluta</string>
     <string name="text_on_button_category">Kategoria</string>
     <string name="text_on_button_category_order">Kolejność kategorii</string>
+    <string name="text_on_button_favorite_categories">Ulubione kategorie</string>
     <string name="text_on_button_time_period">Okres</string>
     <string name="text_on_button_time_period_from">od</string>
     <string name="text_on_button_time_period_to">do</string>

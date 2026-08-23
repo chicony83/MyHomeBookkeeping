@@ -18,6 +18,10 @@
     <string name="message_entry_changed">Entry changed</string>
     <string name="message_entry_added">Entry added</string>
     <string name="message_entry_add_failed">Entry was not added</string>
+    <string name="message_category_added_to_favorites">Category added to favorites</string>
+    <string name="message_category_removed_from_favorites">Category removed from favorites</string>
+    <string name="message_favorite_categories">Favorite categories</string>
+    <string name="message_all_categories">All categories</string>
     <string name="message_empty_journal_title">Welcome! 👋</string>
     <string name="message_empty_journal_first_payment_hint">This is the first app launch. Let’s create your first entry.\n\nTap Categories at the bottom of the screen and simply choose a category from the list.</string>
 

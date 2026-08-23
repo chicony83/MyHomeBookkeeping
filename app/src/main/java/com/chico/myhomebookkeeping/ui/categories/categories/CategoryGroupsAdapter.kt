@@ -37,9 +37,11 @@ class CategoryGroupsAdapter(
     topOrder: List<String>,
     private val categoryListener: OnItemViewClickListener,
     private val onPressCreateNewCategory: (ParentCategories?) -> Unit,
+    private val onFavoriteClick: (Categories) -> Unit,
     private val createNewParentCategoryListener: OnClickCreateNewElementCallBack,
     private val onTopOrderChanged: (List<String>, List<ParentCategories>) -> Unit,
-    private val onCategoriesOrderChanged: (List<Categories>) -> Unit
+    private val onCategoriesOrderChanged: (List<Categories>) -> Unit,
+    private var showAddRows: Boolean = true
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var groups = groups
@@ -51,11 +53,16 @@ class CategoryGroupsAdapter(
     private var draggingTopKey: String? = null
     private var pendingTopOrderChanged = false
     private var pendingCategoriesOrderChanged = false
-
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(groups: List<CategoryGroup>, topOrder: List<String>, expandAll: Boolean) {
+    fun updateList(
+        groups: List<CategoryGroup>,
+        topOrder: List<String>,
+        expandAll: Boolean,
+        showAddRows: Boolean
+    ) {
         this.groups = groups
         this.topOrder = normalizeTopOrder(topOrder, groups)
+        this.showAddRows = showAddRows
         if (expandAll) {
             expandedGroupIds.clear()
             expandedGroupIds.addAll(groups.map { it.parentCategory?.id })
@@ -260,6 +267,14 @@ class CategoryGroupsAdapter(
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
                 idCategories.text = category.categoriesId.toString()
                 categoryNameTextView.text = category.displayName(languageTag)
+                categoryFavoriteImageView.visibility = if (editMode) View.GONE else View.VISIBLE
+                categoryFavoriteImageView.setImageResource(
+                    if (category.isFavorite) R.drawable.ic_star_favorite_full
+                    else R.drawable.ic_star_favorite_outline
+                )
+                categoryFavoriteImageView.setOnClickListener {
+                    onFavoriteClick(category)
+                }
                 categoriesItem.setOnClickListener {
                     category.categoriesId?.let { categoryListener.onShortClick(it) }
                 }
@@ -289,6 +304,7 @@ class CategoryGroupsAdapter(
             with(binding) {
                 categoriesItem.visibility = View.GONE
                 addNewCategoryItem.visibility = View.VISIBLE
+                categoryFavoriteImageView.setOnClickListener(null)
                 addNewCategoryTextView.text = itemView.context.getString(R.string.text_on_button_add_new_subcategory)
                 addNewCategoryItem.setOnClickListener {
                     onPressCreateNewCategory(parentCategory)
@@ -332,7 +348,7 @@ class CategoryGroupsAdapter(
         val groupsByKey = groups.associateBy { it.topKey }
         return topOrder.flatMap { key ->
             when (key) {
-                TOP_ADD_PARENT -> listOf(CategoryTreeRow.AddParent)
+                TOP_ADD_PARENT -> if (showAddRows) listOf(CategoryTreeRow.AddParent) else emptyList()
                 else -> {
                     val group = groupsByKey[key] ?: return@flatMap emptyList()
                     val header = if (group.parentCategory == null) {
@@ -341,9 +357,14 @@ class CategoryGroupsAdapter(
                         CategoryTreeRow.ParentHeader(group)
                     }
                     if (expandedGroupIds.contains(group.parentCategory?.id)) {
-                        listOf(header) + group.categories.map {
+                        val categoryRows = group.categories.map {
                             CategoryTreeRow.CategoryItem(it, group.parentCategory?.id)
-                        } + CategoryTreeRow.AddCategory(group.parentCategory)
+                        }
+                        if (showAddRows) {
+                            listOf(header) + categoryRows + CategoryTreeRow.AddCategory(group.parentCategory)
+                        } else {
+                            listOf(header) + categoryRows
+                        }
                     } else {
                         listOf(header)
                     }

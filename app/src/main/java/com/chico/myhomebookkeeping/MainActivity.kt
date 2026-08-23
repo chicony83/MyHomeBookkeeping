@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.appbar.AppBarLayout
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     private val checkNightMode = CheckNightMode()
     private lateinit var eraseSP: EraseSP
     private var searchMenuItem: MenuItem? = null
+    private var favoriteCategoriesMenuItem: MenuItem? = null
     private var categoryOrderMenuItem: MenuItem? = null
     private var quickPaymentSettingsMenuItem: MenuItem? = null
 
@@ -344,6 +346,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         searchMenuItem = menu.findItem(R.id.search_button)
+        favoriteCategoriesMenuItem = menu.findItem(R.id.favorite_categories_button)
         categoryOrderMenuItem = menu.findItem(R.id.category_order_button)
         quickPaymentSettingsMenuItem = menu.findItem(R.id.quick_payment_settings_button)
         val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
@@ -351,6 +354,8 @@ class MainActivity : AppCompatActivity() {
             navController.currentDestination?.id == R.id.nav_new_money_moving ||
                     navController.currentDestination?.id == R.id.nav_new_transfer
         searchMenuItem?.isVisible = isCategoriesDestination
+        favoriteCategoriesMenuItem?.isVisible = isCategoriesDestination
+        updateFavoriteCategoriesMenuIcon(false)
         categoryOrderMenuItem?.isVisible = isCategoriesDestination
         quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         return true
@@ -359,11 +364,27 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.search_button -> {
-                getCurrentFragment<CategoriesFragment>()?.toggleSearch()
+                val fragment = getCurrentFragment<CategoriesFragment>()
+                fragment?.toggleSearch()
+                updateFavoriteCategoriesMenuIcon(fragment?.isShowingFavoriteCategories() == true)
+                true
+            }
+            R.id.favorite_categories_button -> {
+                val showingFavorites = getCurrentFragment<CategoriesFragment>()
+                    ?.toggleFavoriteCategoriesFilter() == true
+                updateFavoriteCategoriesMenuIcon(showingFavorites)
+                Toast.makeText(
+                    this,
+                    if (showingFavorites) R.string.message_favorite_categories
+                    else R.string.message_all_categories,
+                    Toast.LENGTH_SHORT
+                ).show()
                 true
             }
             R.id.category_order_button -> {
-                getCurrentFragment<CategoriesFragment>()?.toggleCategoryOrderEditMode()
+                val fragment = getCurrentFragment<CategoriesFragment>()
+                fragment?.toggleCategoryOrderEditMode()
+                updateFavoriteCategoriesMenuIcon(fragment?.isShowingFavoriteCategories() == true)
                 true
             }
             R.id.quick_payment_settings_button -> {
@@ -401,6 +422,8 @@ class MainActivity : AppCompatActivity() {
             val isNewMoneyMovingDestination =
                 destination.id == R.id.nav_new_money_moving || destination.id == R.id.nav_new_transfer
             searchMenuItem?.isVisible = isCategoriesDestination
+            favoriteCategoriesMenuItem?.isVisible = isCategoriesDestination
+            updateFavoriteCategoriesMenuIcon(false)
             categoryOrderMenuItem?.isVisible = isCategoriesDestination
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         }
@@ -433,6 +456,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun updateFavoriteCategoriesMenuIcon(showingFavorites: Boolean) {
+        favoriteCategoriesMenuItem?.setIcon(
+            if (showingFavorites) R.drawable.ic_star_toolbar_favorite
+            else R.drawable.ic_star_toolbar_all
+        )
     }
 
     private fun openSettingsSection(section: String) {

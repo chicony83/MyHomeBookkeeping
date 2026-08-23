@@ -89,6 +89,7 @@ class CategoriesFragment : Fragment() {
 
 //    private val uiHelper = UiHelper()
     private var searchMode = false
+    private var favoriteCategoriesMode = false
     private var categoryGroupsAdapter: CategoryGroupsAdapter? = null
     private var categoryOrderEditMode = false
     private var categoryTouchHelper: ItemTouchHelper? = null
@@ -170,14 +171,25 @@ class CategoriesFragment : Fragment() {
             hideSearch()
         } else {
             if (categoryOrderEditMode) toggleCategoryOrderEditMode()
+            if (favoriteCategoriesMode) setFavoriteCategoriesMode(false)
             searchMode = true
             binding.searchTil.visibility = View.VISIBLE
             binding.searchTil.editText?.requestFocus()
         }
     }
 
+    fun toggleFavoriteCategoriesFilter(): Boolean {
+        if (searchMode) hideSearch()
+        if (categoryOrderEditMode) setCategoryOrderEditMode(false)
+        setFavoriteCategoriesMode(!favoriteCategoriesMode)
+        return favoriteCategoriesMode
+    }
+
+    fun isShowingFavoriteCategories(): Boolean = favoriteCategoriesMode
+
     fun toggleCategoryOrderEditMode() {
         if (searchMode) hideSearch()
+        if (!categoryOrderEditMode && favoriteCategoriesMode) setFavoriteCategoriesMode(false)
         setCategoryOrderEditMode(!categoryOrderEditMode)
     }
 
@@ -209,18 +221,33 @@ class CategoriesFragment : Fragment() {
         searchMode = false
     }
 
+    private fun setFavoriteCategoriesMode(enabled: Boolean) {
+        favoriteCategoriesMode = enabled
+        filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
+    }
+
     private fun filterLists(query: String) {
         val normalizedQuery = query.lowercase(Locale.getDefault())
+        val sourceCategories = if (favoriteCategoriesMode) {
+            currentCategoriesList.filter { it.isFavorite }
+        } else {
+            currentCategoriesList
+        }
         if (normalizedQuery.length < searchMinLength) {
+            val parentIds = sourceCategories.mapNotNull { it.parentCategoryId }.toSet()
             updateCategoryTree(
-                parentCategories = currentParentCategoriesList,
-                categories = currentCategoriesList,
-                expandAll = false
+                parentCategories = if (favoriteCategoriesMode) {
+                    currentParentCategoriesList.filter { it.id in parentIds }
+                } else {
+                    currentParentCategoriesList
+                },
+                categories = sourceCategories,
+                expandAll = favoriteCategoriesMode
             )
             return
         }
 
-        val categoryMatches = currentCategoriesList.filter { category ->
+        val categoryMatches = sourceCategories.filter { category ->
             category.categoryName.lowercase(Locale.getDefault()).contains(normalizedQuery)
         }
         val categoryMatchParentIds = categoryMatches.mapNotNull { it.parentCategoryId }.toSet()
@@ -233,11 +260,12 @@ class CategoriesFragment : Fragment() {
                 it in categoryMatchParentIds || it in parentNameMatchIds
             } == true
         }
-        val filteredCategories = currentCategoriesList.filter { category ->
+        val filteredCategories = sourceCategories.filter { category ->
             category in categoryMatches || category.parentCategoryId?.let { it in parentNameMatchIds } == true
         }
+        val filteredCategoryParentIds = filteredCategories.mapNotNull { it.parentCategoryId }.toSet()
         updateCategoryTree(
-            parentCategories = filteredParentCategories,
+            parentCategories = filteredParentCategories.filter { it.id in filteredCategoryParentIds },
             categories = filteredCategories,
             expandAll = true
         )
@@ -259,15 +287,20 @@ class CategoriesFragment : Fragment() {
             )
         }
 
+        val withoutParentCategories = categories.filter {
+            val parentCategoryId = it.parentCategoryId
+            parentCategoryId == null || parentCategoriesById[parentCategoryId] == null
+        }
         val withoutParentGroup = CategoryGroup(
             parentCategory = null,
-            categories = categories.filter {
-                val parentCategoryId = it.parentCategoryId
-                parentCategoryId == null || parentCategoriesById[parentCategoryId] == null
-            }
+            categories = withoutParentCategories
         )
 
-        val groups = parentGroups + withoutParentGroup
+        val groups = if (favoriteCategoriesMode && withoutParentCategories.isEmpty()) {
+            parentGroups
+        } else {
+            parentGroups + withoutParentGroup
+        }
         val topOrder = getTopOrder(groups)
         val adapter = categoryGroupsAdapter
         if (adapter == null) {
@@ -288,6 +321,9 @@ class CategoriesFragment : Fragment() {
                 { parentCategory ->
                     showNewCategoryDialog(MutableLiveData(parentCategory))
                 },
+                { category ->
+                    toggleCategoryFavorite(category)
+                },
                 object : OnClickCreateNewElementCallBack {
                     override fun onPress() {
                         showNewParentCategoryDialog()
@@ -299,13 +335,19 @@ class CategoriesFragment : Fragment() {
                 },
                 { categories ->
                     categoriesViewModel.saveCategoriesOrder(categories)
-                }
+                },
+                showAddRows = !favoriteCategoriesMode
             )
             categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
             binding.categoryTreeHolder.adapter = categoryGroupsAdapter
             setupCategoryTouchHelper()
         } else {
-            adapter.updateList(groups, topOrder, expandAll)
+            adapter.updateList(
+                groups = groups,
+                topOrder = topOrder,
+                expandAll = expandAll,
+                showAddRows = !favoriteCategoriesMode
+            )
         }
     }
 
@@ -402,6 +444,18 @@ class CategoriesFragment : Fragment() {
             categoriesViewModel.saveCategoryForNewMoneyMoving(selectedId)
             navControlHelper.toSelectedFragment(R.id.nav_new_money_moving)
         }
+    }
+
+    private fun toggleCategoryFavorite(category: Categories) {
+        val categoryId = category.categoriesId ?: return
+        val nextFavoriteValue = !category.isFavorite
+        categoriesViewModel.updateCategoryFavorite(categoryId, nextFavoriteValue)
+        showMessage(
+            getString(
+                if (nextFavoriteValue) R.string.message_category_added_to_favorites
+                else R.string.message_category_removed_from_favorites
+            )
+        )
     }
 
     private fun isOpenedForCategorySelection(): Boolean {

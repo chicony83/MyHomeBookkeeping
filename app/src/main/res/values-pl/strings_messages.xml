@@ -16,6 +16,10 @@
     <string name="message_entry_changed">Wpis zmieniony</string>
     <string name="message_entry_added">Wpis dodany</string>
     <string name="message_entry_add_failed">Wpis nie został dodany</string>
+    <string name="message_category_added_to_favorites">Kategoria dodana do ulubionych</string>
+    <string name="message_category_removed_from_favorites">Kategoria usunięta z ulubionych</string>
+    <string name="message_favorite_categories">Ulubione kategorie</string>
+    <string name="message_all_categories">Wszystkie kategorie</string>
     <string name="message_empty_journal_title">Witaj!</string>
     <string name="message_empty_journal_first_payment_hint">To pierwsze uruchomienie aplikacji. Utwórzmy Twój pierwszy wpis.\n\nDotknij Kategorie na dole ekranu i po prostu wybierz kategorię z listy.</string>
     <string name="message_start_date_can_not_be_more_than_the_current">Data początkowa nie może być późniejsza niż bieżąca</string>

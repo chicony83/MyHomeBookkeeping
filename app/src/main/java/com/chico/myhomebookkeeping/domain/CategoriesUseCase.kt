@@ -77,6 +77,10 @@ object CategoriesUseCase {
         return db.updateCategoryOrder(id, order)
     }
 
+    suspend fun updateCategoryFavorite(db: CategoryDao, id: Int, isFavorite: Boolean): Int {
+        return db.updateCategoryFavorite(id, isFavorite)
+    }
+
     suspend fun updateCategoryParentAndOrder(
         db: CategoryDao,
         id: Int,

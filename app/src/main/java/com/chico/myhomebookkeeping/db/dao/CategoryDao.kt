@@ -64,6 +64,9 @@ interface CategoryDao {
     @Query("UPDATE category_table SET category_order = :order WHERE categoriesId = :id")
     suspend fun updateCategoryOrder(id: Int, order: Int): Int
 
+    @Query("UPDATE category_table SET is_favorite = :isFavorite WHERE categoriesId = :id")
+    suspend fun updateCategoryFavorite(id: Int, isFavorite: Boolean): Int
+
     @Query("UPDATE category_table SET parent_category_id = :parentCategoryId, category_order = :order WHERE categoriesId = :id")
     suspend fun updateCategoryParentAndOrder(id: Int, parentCategoryId: Int?, order: Int): Int
 

@@ -12,6 +12,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/favorite_categories_button"
+        android:icon="@drawable/ic_star_toolbar_all"
+        android:orderInCategory="15"
+        android:title="@string/text_on_button_favorite_categories"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/category_order_button"
         android:icon="@drawable/ic_settings"
         android:orderInCategory="20"

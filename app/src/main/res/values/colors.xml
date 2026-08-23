@@ -18,6 +18,7 @@
     <color name="categoryTextSecondary">#52666B</color>
     <color name="categoryIncomeIndicator">#146C43</color>
     <color name="categorySpendingIndicator">#B64A42</color>
+    <color name="categoryFavoriteStar">#D8A21B</color>
     <color name="buttonPrimaryBackground">#176B73</color>
     <color name="buttonPrimaryText">#FFFFFFFF</color>
     <color name="buttonPrimaryBorder">#0F5258</color>
