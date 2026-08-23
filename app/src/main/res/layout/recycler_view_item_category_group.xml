@@ -76,6 +76,18 @@
                 app:layout_constraintTop_toTopOf="@id/group_icon_imageView"
                 tools:visibility="visible" />
 
+            <View
+                android:id="@+id/group_header_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:alpha="0.28"
+                android:background="@color/categoryDivider"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/group_icon_imageView"
+                tools:visibility="visible" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -216,10 +216,7 @@ class CategoryGroupsAdapter(
         when (val row = rows[position]) {
             is CategoryTreeRow.ParentHeader -> (holder as HeaderViewHolder).bind(row.group)
             is CategoryTreeRow.NoParentHeader -> (holder as HeaderViewHolder).bind(row.group)
-            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(
-                row.category,
-                position == 0 || rows[position - 1].isTopRow()
-            )
+            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(row.category)
             is CategoryTreeRow.AddCategory -> (holder as CategoryViewHolder).bindAddCategory(row.parentCategory)
             CategoryTreeRow.AddParent -> (holder as AddParentCategoryViewHolder).bind()
         }
@@ -245,14 +242,14 @@ class CategoryGroupsAdapter(
                     else R.drawable.ic_expand_add
                 )
                 groupDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
-                root.cardElevation = itemView.resources.displayMetrics.density
-                root.radius = 12f * itemView.resources.displayMetrics.density
-                root.translationZ = if (isExpanded) {
-                    4f * itemView.resources.displayMetrics.density
-                } else {
-                    0f
-                }
-                categoryGroupHeader.setBackgroundResource(R.drawable.category_group_background)
+                root.cardElevation = if (isExpanded) 0f else itemView.resources.displayMetrics.density
+                root.radius = if (isExpanded) 0f else 12f * itemView.resources.displayMetrics.density
+                root.translationZ = 0f
+                categoryGroupHeader.setBackgroundResource(
+                    if (isExpanded) R.drawable.category_group_header_expanded_background
+                    else R.drawable.category_group_background
+                )
+                groupHeaderDivider.visibility = if (isExpanded) View.VISIBLE else View.GONE
                 root.setBottomMargin(
                     if (isExpanded) 0
                     else itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
@@ -281,26 +278,18 @@ class CategoryGroupsAdapter(
         private val binding: RecyclerViewItemCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(category: Categories, isFirstInGroup: Boolean) {
+        fun bind(category: Categories) {
             val languageTag = AppLanguage.getSelectedTag(itemView.context)
             with(binding) {
                 addNewCategoryItem.visibility = View.GONE
                 categoriesItem.visibility = View.VISIBLE
-                categoryItemCardView.setTopMargin(
-                    if (isFirstInGroup) -itemView.resources.getDimensionPixelSize(R.dimen.margin_double)
-                    else 0
-                )
                 categoryItemCardView.setBottomMargin(0)
                 categoriesItem.updateLayoutParams<ViewGroup.LayoutParams> {
-                    height = if (isFirstInGroup) {
-                        itemView.dpToPx(68)
-                    } else {
-                        itemView.dpToPx(52)
-                    }
+                    height = itemView.dpToPx(52)
                 }
                 categoriesItem.setPadding(
                     categoriesItem.paddingLeft,
-                    if (isFirstInGroup) itemView.resources.getDimensionPixelSize(R.dimen.margin_double) else 0,
+                    0,
                     categoriesItem.paddingRight,
                     categoriesItem.paddingBottom
                 )
@@ -346,7 +335,6 @@ class CategoryGroupsAdapter(
             with(binding) {
                 categoriesItem.visibility = View.GONE
                 addNewCategoryItem.visibility = View.VISIBLE
-                categoryItemCardView.setTopMargin(0)
                 categoryItemCardView.setBottomMargin(
                     itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
                 )
@@ -465,12 +453,6 @@ class CategoryGroupsAdapter(
 private fun View.setBottomMargin(bottomMargin: Int) {
     updateLayoutParams<ViewGroup.MarginLayoutParams> {
         this.bottomMargin = bottomMargin
-    }
-}
-
-private fun View.setTopMargin(topMargin: Int) {
-    updateLayoutParams<ViewGroup.MarginLayoutParams> {
-        this.topMargin = topMargin
     }
 }
 
