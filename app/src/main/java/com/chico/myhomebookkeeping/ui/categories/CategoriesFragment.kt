@@ -194,13 +194,10 @@ class CategoriesFragment : Fragment() {
         } else {
             View.GONE
         }
-        binding.topButtonsHolder.visibility = if (
-            categoryOrderEditMode || navControlHelper.isPreviousFragment(R.id.nav_new_money_moving) ||
-            navControlHelper.isPreviousFragment(R.id.nav_change_money_moving)
-        ) {
-            View.GONE
-        } else {
+        binding.topButtonsHolder.visibility = if (!categoryOrderEditMode && isOpenedFromJournalFilter()) {
             View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
@@ -416,6 +413,10 @@ class CategoriesFragment : Fragment() {
             OPEN_MODE_CHANGE_FAST_PAYMENT -> true
             else -> false
         }
+    }
+
+    private fun isOpenedFromJournalFilter(): Boolean {
+        return arguments?.getString(ARG_OPEN_MODE) == OPEN_MODE_JOURNAL_FILTER
     }
 
     private fun showChangeCategoryDialog(category: Categories?) {

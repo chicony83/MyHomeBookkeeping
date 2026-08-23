@@ -20,6 +20,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 - Completed: add centered date separators between journal payments, with Today, Yesterday, Day before yesterday, and localized long dates.
 - Completed: add a setting for showing parent categories in the Journal as icon, icon with label, or label.
+- Completed: show category bulk-selection buttons only when Categories is opened from the Journal category filter.
 - Decide whether the journal currency display setting should also apply to fast payment cards and payment detail dialogs.
 
 ## Reports
