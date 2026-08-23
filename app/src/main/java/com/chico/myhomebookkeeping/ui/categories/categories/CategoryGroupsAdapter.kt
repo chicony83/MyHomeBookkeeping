@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesBinding
@@ -215,7 +216,10 @@ class CategoryGroupsAdapter(
         when (val row = rows[position]) {
             is CategoryTreeRow.ParentHeader -> (holder as HeaderViewHolder).bind(row.group)
             is CategoryTreeRow.NoParentHeader -> (holder as HeaderViewHolder).bind(row.group)
-            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(row.category)
+            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(
+                row.category,
+                position == 0 || rows[position - 1].isTopRow()
+            )
             is CategoryTreeRow.AddCategory -> (holder as CategoryViewHolder).bindAddCategory(row.parentCategory)
             CategoryTreeRow.AddParent -> (holder as AddParentCategoryViewHolder).bind()
         }
@@ -241,6 +245,18 @@ class CategoryGroupsAdapter(
                     else R.drawable.ic_expand_add
                 )
                 groupDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
+                root.cardElevation = itemView.resources.displayMetrics.density
+                root.radius = 12f * itemView.resources.displayMetrics.density
+                root.translationZ = if (isExpanded) {
+                    4f * itemView.resources.displayMetrics.density
+                } else {
+                    0f
+                }
+                categoryGroupHeader.setBackgroundResource(R.drawable.category_group_background)
+                root.setBottomMargin(
+                    if (isExpanded) 0
+                    else itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
+                )
                 groupDragHandleImageView.setOnTouchListener { _, event ->
                     if (editMode && event.actionMasked == MotionEvent.ACTION_DOWN) {
                         draggingTopKey = group.topKey
@@ -265,11 +281,33 @@ class CategoryGroupsAdapter(
         private val binding: RecyclerViewItemCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(category: Categories) {
+        fun bind(category: Categories, isFirstInGroup: Boolean) {
             val languageTag = AppLanguage.getSelectedTag(itemView.context)
             with(binding) {
                 addNewCategoryItem.visibility = View.GONE
                 categoriesItem.visibility = View.VISIBLE
+                categoryItemCardView.setTopMargin(
+                    if (isFirstInGroup) -itemView.resources.getDimensionPixelSize(R.dimen.margin_normal)
+                    else 0
+                )
+                categoryItemCardView.setBottomMargin(0)
+                categoriesItem.updateLayoutParams<ViewGroup.LayoutParams> {
+                    height = if (isFirstInGroup) {
+                        itemView.dpToPx(56)
+                    } else {
+                        itemView.dpToPx(52)
+                    }
+                }
+                categoriesItem.setPadding(
+                    categoriesItem.paddingLeft,
+                    if (isFirstInGroup) itemView.resources.getDimensionPixelSize(R.dimen.margin_normal) else 0,
+                    categoriesItem.paddingRight,
+                    categoriesItem.paddingBottom
+                )
+                categoriesItem.setBackgroundResource(
+                    if (isFirstInGroup) R.drawable.category_child_row_top_background
+                    else R.drawable.category_child_row_background
+                )
                 categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
                 idCategories.text = category.categoriesId.toString()
@@ -311,6 +349,10 @@ class CategoryGroupsAdapter(
             with(binding) {
                 categoriesItem.visibility = View.GONE
                 addNewCategoryItem.visibility = View.VISIBLE
+                categoryItemCardView.setTopMargin(0)
+                categoryItemCardView.setBottomMargin(
+                    itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
+                )
                 categoryFavoriteImageView.setOnClickListener(null)
                 addNewCategoryTextView.text = itemView.context.getString(R.string.text_on_button_add_new_subcategory)
                 addNewCategoryItem.setOnClickListener {
@@ -422,6 +464,20 @@ class CategoryGroupsAdapter(
         const val VIEW_TYPE_ADD_PARENT = 3
     }
 }
+
+private fun View.setBottomMargin(bottomMargin: Int) {
+    updateLayoutParams<ViewGroup.MarginLayoutParams> {
+        this.bottomMargin = bottomMargin
+    }
+}
+
+private fun View.setTopMargin(topMargin: Int) {
+    updateLayoutParams<ViewGroup.MarginLayoutParams> {
+        this.topMargin = topMargin
+    }
+}
+
+private fun View.dpToPx(value: Int): Int = (resources.displayMetrics.density * value + 0.5f).toInt()
 
 const val TOP_PARENT_PREFIX = "parent:"
 const val TOP_WITHOUT_PARENT = "without_parent"

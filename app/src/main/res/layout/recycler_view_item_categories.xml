@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/categoryItemCardView"
-    style="@style/RecyclerViewCard.Categories">
+    style="@style/RecyclerViewCard.CategoryChildRow">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_new_category_item"
-        style="@style/RecyclerViewItem.Categories"
-        android:background="@drawable/category_add_background"
+        style="@style/RecyclerViewItem.CategoryChildRow"
+        android:background="@drawable/category_child_row_bottom_background"
+        android:foreground="?android:selectableItemBackground"
         android:visibility="gone"
         tool:visibility="gone">
 
@@ -41,15 +42,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categories_item"
-        style="@style/RecyclerViewItem.Categories"
-        android:background="@drawable/category_child_background"
+        style="@style/RecyclerViewItem.CategoryChildRow"
+        android:background="@drawable/category_child_row_background"
+        android:foreground="?android:selectableItemBackground"
         android:visibility="gone"
         tool:visibility="gone">
 
         <View
             android:id="@+id/category_type_indicator"
-            android:layout_width="5dp"
-            android:layout_height="36dp"
+            android:layout_width="3dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/margin_normal"
             android:background="@drawable/category_indicator_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,5 +114,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iconImg"
             tool:visibility="visible" />
+
+        <View
+            android:id="@+id/category_item_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:alpha="0.28"
+            android:background="@color/categoryDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/iconImg" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
