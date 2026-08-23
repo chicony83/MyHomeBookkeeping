@@ -216,10 +216,18 @@ class CategoryGroupsAdapter(
         when (val row = rows[position]) {
             is CategoryTreeRow.ParentHeader -> (holder as HeaderViewHolder).bind(row.group)
             is CategoryTreeRow.NoParentHeader -> (holder as HeaderViewHolder).bind(row.group)
-            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(row.category)
+            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(
+                row.category,
+                isLastCategoryInGroup(position)
+            )
             is CategoryTreeRow.AddCategory -> (holder as CategoryViewHolder).bindAddCategory(row.parentCategory)
             CategoryTreeRow.AddParent -> (holder as AddParentCategoryViewHolder).bind()
         }
+    }
+
+    private fun isLastCategoryInGroup(position: Int): Boolean {
+        val nextRow = rows.getOrNull(position + 1)
+        return nextRow == null || nextRow.isTopRow()
     }
 
     inner class HeaderViewHolder(
@@ -278,12 +286,15 @@ class CategoryGroupsAdapter(
         private val binding: RecyclerViewItemCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(category: Categories) {
+        fun bind(category: Categories, isLastInGroup: Boolean) {
             val languageTag = AppLanguage.getSelectedTag(itemView.context)
             with(binding) {
                 addNewCategoryItem.visibility = View.GONE
                 categoriesItem.visibility = View.VISIBLE
-                categoryItemCardView.setBottomMargin(0)
+                categoryItemCardView.setBottomMargin(
+                    if (isLastInGroup) itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
+                    else 0
+                )
                 categoriesItem.updateLayoutParams<ViewGroup.LayoutParams> {
                     height = itemView.dpToPx(52)
                 }
@@ -293,7 +304,11 @@ class CategoryGroupsAdapter(
                     categoriesItem.paddingRight,
                     categoriesItem.paddingBottom
                 )
-                categoriesItem.setBackgroundResource(R.drawable.category_child_row_background)
+                categoriesItem.setBackgroundResource(
+                    if (isLastInGroup) R.drawable.category_child_row_bottom_background
+                    else R.drawable.category_child_row_background
+                )
+                categoryItemDivider.visibility = if (isLastInGroup) View.GONE else View.VISIBLE
                 categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
                 iconImg.setImageResource(category.icon ?: R.drawable.no_image)
                 idCategories.text = category.categoriesId.toString()
@@ -338,6 +353,7 @@ class CategoryGroupsAdapter(
                 categoryItemCardView.setBottomMargin(
                     itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
                 )
+                categoryItemDivider.visibility = View.GONE
                 categoryFavoriteImageView.setOnClickListener(null)
                 addNewCategoryTextView.text = itemView.context.getString(R.string.text_on_button_add_new_subcategory)
                 addNewCategoryItem.setOnClickListener {
