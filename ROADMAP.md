@@ -67,7 +67,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Directories
 
 - Add currency icons.
-- Completed: add favorite category toggles on the Categories screen, with a toolbar filter that shows only favorite categories.
+- Completed: add favorite category toggles on the Categories screen, with a toolbar filter that shows only favorite categories and collapses groups when the filter is turned off.
 - Completed: expand the category icon dictionary for default categories and keep new bundled icons backfilled on existing installs.
 - Completed: add sick leave payments to the default income subcategories and backfill existing installs through the app update flow.
 - Completed: add the Subscriptions & Online Services category group and backfill existing installs through the app update flow.

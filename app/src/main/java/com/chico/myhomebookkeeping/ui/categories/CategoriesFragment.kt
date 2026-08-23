@@ -222,6 +222,9 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun setFavoriteCategoriesMode(enabled: Boolean) {
+        if (favoriteCategoriesMode && !enabled) {
+            categoryGroupsAdapter?.collapseAll()
+        }
         favoriteCategoriesMode = enabled
         filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
     }

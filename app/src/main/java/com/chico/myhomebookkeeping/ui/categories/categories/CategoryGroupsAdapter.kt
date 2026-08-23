@@ -72,6 +72,13 @@ class CategoryGroupsAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
+    fun collapseAll() {
+        expandedGroupIds.clear()
+        rows = buildRows()
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun setEditMode(enabled: Boolean) {
         editMode = enabled
         notifyDataSetChanged()
