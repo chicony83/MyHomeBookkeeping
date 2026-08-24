@@ -31,4 +31,31 @@ object ChangeMoneyMovingUseCase {
     suspend fun deleteLine(db: MoneyMovementDao, id: Long): Int {
        return db.deleteLine(id)
     }
+
+    suspend fun getTransferRows(db: MoneyMovementDao, transferGroupId: Long): List<MoneyMovement> {
+        return db.getTransferRows(transferGroupId)
+    }
+
+    suspend fun changeTransferLine(
+        db: MoneyMovementDao,
+        id: Long,
+        dateTime: Long,
+        amount: Double,
+        cashAccountId: Int,
+        currencyId: Int,
+        description: String
+    ): Int {
+        return db.changeTransferLine(
+            id,
+            dateTime,
+            amount,
+            cashAccountId,
+            currencyId,
+            description
+        )
+    }
+
+    suspend fun deleteTransferRows(db: MoneyMovementDao, transferGroupId: Long): Int {
+        return db.deleteTransferRows(transferGroupId)
+    }
 }

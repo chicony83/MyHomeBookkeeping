@@ -51,7 +51,8 @@ class CurrenciesViewModel(
 
     fun saveData(navControlHelper: NavControlHelper, id: Int) {
         if ((navControlHelper.previousFragment() == R.id.nav_new_money_moving ||
-                    navControlHelper.previousFragment() == R.id.nav_new_transfer) &&
+                    navControlHelper.previousFragment() == R.id.nav_new_transfer ||
+                    navControlHelper.previousFragment() == R.id.nav_change_transfer) &&
             navControlHelper.currentFragment() == R.id.nav_currencies
         ) {
             val key = if (

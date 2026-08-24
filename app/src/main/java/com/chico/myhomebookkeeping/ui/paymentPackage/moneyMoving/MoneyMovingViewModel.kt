@@ -246,6 +246,10 @@ class MoneyMovingViewModel(
         setSP.saveToSP(argsIdMoneyMovingForChange, selectedId)
     }
 
+    fun saveTransferForChange(selectedId: Long) {
+        saveIdMoneyMovingForChange(selectedId)
+    }
+
     fun isTheEntryOfMoneyMovingAdded() :Boolean {
         return getSP.getBooleanElseReturnFalse(argsNewEntryOfMoneyMovingInDbIsAdded)
     }

@@ -8,6 +8,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: add transfer to the drawer menu and quick access panel settings.
 - Completed: keep source/destination account and currency selectors working from the separate transfer fragment.
 - Completed: fix drawer and quick access navigation for the separate transfer screen.
+- Completed: add a dedicated transfer edit fragment that updates both linked transfer rows as one operation.
 - Add several ways to create a payment from quick payments.
 - Allow creating a quick payment with changed parameters.
 - Add a shopping-list style helper for entering several purchases inside one payment.

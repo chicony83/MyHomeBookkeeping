@@ -134,6 +134,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
                 R.id.nav_change_money_moving,
+                R.id.nav_change_transfer,
                 R.id.nav_setting,
                 R.id.nav_time_period
             ),

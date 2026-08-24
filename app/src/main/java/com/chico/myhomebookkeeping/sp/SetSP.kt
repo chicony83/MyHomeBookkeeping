@@ -13,6 +13,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val navMoneyMovingQuery = R.id.nav_money_moving_query
     private val navMoneyMoving = R.id.nav_money_moving
     private val navChangeMoneyMoving = R.id.nav_change_money_moving
+    private val navChangeTransfer = R.id.nav_change_transfer
     private val navNewFastPayment = R.id.nav_new_fast_payment_fragment
     private val navChangeFastPayment = R.id.nav_change_fast_payment_fragment
 
@@ -68,7 +69,7 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
                     R.id.nav_currencies -> args = argsQueryCurrency
                 }
             }
-            navNewMoneyMoving, navNewTransfer -> {
+            navNewMoneyMoving, navNewTransfer, navChangeTransfer -> {
                 when (navControlHelper.currentFragment()) {
                     R.id.nav_categories -> args = argsCreateCategory
                     R.id.nav_cash_account -> args = argsCreateCashAccount

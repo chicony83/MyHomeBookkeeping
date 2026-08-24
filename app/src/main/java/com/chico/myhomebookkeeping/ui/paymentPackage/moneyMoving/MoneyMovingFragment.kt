@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.databinding.FragmentMoneyMovingBinding
 import com.chico.myhomebookkeeping.db.dao.MoneyMovementDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.ui.bottomSheet.EntryIsAddedBottomSheet
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.paymentPackage.moneyMoving.dialogs.SelectMoneyMovingDialog
@@ -214,8 +215,13 @@ class MoneyMovingFragment : Fragment() {
                     object : OnItemSelectForChangeCallBack {
                         override fun onSelect(id: Int) {
 //                        Message.log("changing item id = $id")
-                            moneyMovingViewModel.saveIdMoneyMovingForChange(selectedId)
-                            pressSelectButton(R.id.nav_change_money_moving)
+                            if (fullMoneyMoving?.paymentTypeId == PaymentTypeIds.TRANSFER) {
+                                moneyMovingViewModel.saveTransferForChange(selectedId)
+                                pressSelectButton(R.id.nav_change_transfer)
+                            } else {
+                                moneyMovingViewModel.saveIdMoneyMovingForChange(selectedId)
+                                pressSelectButton(R.id.nav_change_money_moving)
+                            }
                         }
                     })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))

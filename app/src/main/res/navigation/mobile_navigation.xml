@@ -114,6 +114,18 @@
             app:destination="@id/nav_categories" />
     </fragment>
     <fragment
+        android:id="@+id/nav_change_transfer"
+        android:name="com.chico.myhomebookkeeping.ui.paymentPackage.changeTransfer.ChangeTransferFragment"
+        android:label="@string/fragment_label_change_transfer"
+        tools:layout="@layout/fragment_new_money_moving">
+        <action
+            android:id="@+id/action_nav_change_transfer_to_nav_currencies"
+            app:destination="@id/nav_currencies" />
+        <action
+            android:id="@+id/action_nav_change_transfer_to_nav_cash_account"
+            app:destination="@id/nav_cash_account" />
+    </fragment>
+    <fragment
         android:id="@+id/nav_reports"
         android:name="com.chico.myhomebookkeeping.ui.reports.main.ReportsMainFragment"
         android:label="@string/fragment_label_reports"

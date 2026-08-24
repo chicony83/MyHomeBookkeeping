@@ -93,7 +93,8 @@ class CashAccountViewModel(
 
     private fun isSelectingTransferDestination(navControlHelper: NavControlHelper): Boolean {
         return (navControlHelper.previousFragment() == R.id.nav_new_money_moving ||
-                navControlHelper.previousFragment() == R.id.nav_new_transfer) &&
+                navControlHelper.previousFragment() == R.id.nav_new_transfer ||
+                navControlHelper.previousFragment() == R.id.nav_change_transfer) &&
                 navControlHelper.currentFragment() == R.id.nav_cash_account &&
                 sharedPreferences.getString(
                     argsCreateCashAccountSelectMode,

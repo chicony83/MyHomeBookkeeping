@@ -33,6 +33,9 @@ interface MoneyMovementDao {
     @Query("SELECT * FROM money_moving_table WHERE id = :id")
     suspend fun getOneMoneyMoving(id:Long):MoneyMovement
 
+    @Query("SELECT * FROM money_moving_table WHERE transfer_group_id = :transferGroupId")
+    suspend fun getTransferRows(transferGroupId: Long): List<MoneyMovement>
+
     @Query("SELECT * FROM money_moving_table")
     suspend fun getAllMovingMoney(): List<MoneyMovement>
 
@@ -60,6 +63,19 @@ interface MoneyMovementDao {
         description: String
     ): Int
 
+    @Query("UPDATE money_moving_table SET description=:description,currency=:currencyId,cash_account=:cashAccountId,amount=:amount,time_stamp=:dateTime WHERE id = :id")
+    suspend fun changeTransferLine(
+        id: Long,
+        dateTime: Long,
+        amount: Double,
+        cashAccountId: Int,
+        currencyId: Int,
+        description: String
+    ): Int
+
     @Query("DELETE FROM money_moving_table WHERE id = :id")
     suspend fun deleteLine(id: Long):Int
+
+    @Query("DELETE FROM money_moving_table WHERE transfer_group_id = :transferGroupId")
+    suspend fun deleteTransferRows(transferGroupId: Long): Int
 }
