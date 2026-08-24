@@ -1,0 +1,18 @@
+What's new in 0.14.1
+
+- Favorite categories have been added.
+- The interface has been improved.
+- Stability has been improved.
+
+Что нового в 0.14.1
+
+- Русская версия приложения переименована в «Учёт финансов» в связи с возможным нарушением авторских прав.
+- Добавлены избранные категории.
+- Улучшен интерфейс.
+- Повышена стабильность.
+
+Co nowego w 0.14.1
+
+- Dodano ulubione kategorie.
+- Ulepszono interfejs.
+- Poprawiono stabilność.

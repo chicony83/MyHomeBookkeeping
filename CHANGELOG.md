@@ -2,6 +2,21 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.14.1
+
+### User-facing
+- Renamed the Russian version of the app to `Учёт финансов` due to a possible copyright issue.
+- Added favorite categories.
+- Improved the category interface.
+- Improved stability.
+
+### Development
+- Bumped Play Market release version to 0.14.1 (71).
+- Added short 0.14.1 version history strings for English, Russian, and Polish.
+- Added 0.14.1 Play Market notes in English, Russian, and Polish.
+- Added category state columns and favorite-category filtering support.
+- Improved expanded category group layout and fixed empty categories after returning from payment.
+
 ## 0.14.0
 
 ### User-facing
