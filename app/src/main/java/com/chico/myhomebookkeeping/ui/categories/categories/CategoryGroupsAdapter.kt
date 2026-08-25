@@ -42,7 +42,8 @@ class CategoryGroupsAdapter(
     private val createNewParentCategoryListener: OnClickCreateNewElementCallBack,
     private val onTopOrderChanged: (List<String>, List<ParentCategories>) -> Unit,
     private val onCategoriesOrderChanged: (List<Categories>) -> Unit,
-    private var showAddRows: Boolean = true
+    private var showAddRows: Boolean = true,
+    private var showUsageCount: Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var groups = groups
@@ -59,11 +60,13 @@ class CategoryGroupsAdapter(
         groups: List<CategoryGroup>,
         topOrder: List<String>,
         expandAll: Boolean,
-        showAddRows: Boolean
+        showAddRows: Boolean,
+        showUsageCount: Boolean
     ) {
         this.groups = groups
         this.topOrder = normalizeTopOrder(topOrder, groups)
         this.showAddRows = showAddRows
+        this.showUsageCount = showUsageCount
         if (expandAll) {
             expandedGroupIds.clear()
             expandedGroupIds.addAll(groups.map { it.parentCategory?.id })
@@ -243,7 +246,6 @@ class CategoryGroupsAdapter(
             with(binding) {
                 groupCategoriesRecyclerView.visibility = View.GONE
                 groupNameTextView.text = title
-                groupCountTextView.text = group.categories.size.toString()
                 groupIconImageView.setImageResource(parentCategory?.icon ?: R.drawable.no_image)
                 groupExpandImageView.setImageResource(
                     if (isExpanded) R.drawable.ic_expand_remove
@@ -314,6 +316,9 @@ class CategoryGroupsAdapter(
                 idCategories.text = category.categoriesId.toString()
                 categoryNameTextView.text = category.displayName(languageTag)
                 categoryFavoriteImageView.visibility = if (editMode) View.GONE else View.VISIBLE
+                categoryUsageCountTextView.visibility =
+                    if (!editMode && showUsageCount) View.VISIBLE else View.GONE
+                categoryUsageCountTextView.text = category.usageCount.toString()
                 categoryFavoriteImageView.setImageResource(
                     if (category.isFavorite) R.drawable.ic_star_favorite_full
                     else R.drawable.ic_star_favorite_outline

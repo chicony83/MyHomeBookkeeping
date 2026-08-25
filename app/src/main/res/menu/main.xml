@@ -19,10 +19,10 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/category_order_button"
+        android:id="@+id/category_settings_button"
         android:icon="@drawable/ic_settings"
         android:orderInCategory="20"
-        android:title="@string/text_on_button_category_order"
+        android:title="@string/fragment_label_settings"
         app:showAsAction="ifRoom" />
 
     <item

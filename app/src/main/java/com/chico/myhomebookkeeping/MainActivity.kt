@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var eraseSP: EraseSP
     private var searchMenuItem: MenuItem? = null
     private var favoriteCategoriesMenuItem: MenuItem? = null
-    private var categoryOrderMenuItem: MenuItem? = null
+    private var categorySettingsMenuItem: MenuItem? = null
     private var quickPaymentSettingsMenuItem: MenuItem? = null
 
     private lateinit var spEditor: SharedPreferences.Editor
@@ -348,7 +348,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         searchMenuItem = menu.findItem(R.id.search_button)
         favoriteCategoriesMenuItem = menu.findItem(R.id.favorite_categories_button)
-        categoryOrderMenuItem = menu.findItem(R.id.category_order_button)
+        categorySettingsMenuItem = menu.findItem(R.id.category_settings_button)
         quickPaymentSettingsMenuItem = menu.findItem(R.id.quick_payment_settings_button)
         val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
         val isNewMoneyMovingDestination =
@@ -356,8 +356,8 @@ class MainActivity : AppCompatActivity() {
                     navController.currentDestination?.id == R.id.nav_new_transfer
         searchMenuItem?.isVisible = isCategoriesDestination
         favoriteCategoriesMenuItem?.isVisible = isCategoriesDestination
+        categorySettingsMenuItem?.isVisible = isCategoriesDestination
         updateFavoriteCategoriesMenuIcon(false)
-        categoryOrderMenuItem?.isVisible = isCategoriesDestination
         quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         return true
     }
@@ -382,14 +382,12 @@ class MainActivity : AppCompatActivity() {
                 ).show()
                 true
             }
-            R.id.category_order_button -> {
-                val fragment = getCurrentFragment<CategoriesFragment>()
-                fragment?.toggleCategoryOrderEditMode()
-                updateFavoriteCategoriesMenuIcon(fragment?.isShowingFavoriteCategories() == true)
-                true
-            }
             R.id.quick_payment_settings_button -> {
                 openSettingsSection(SettingsFragment.SECTION_QUICK_PAYMENT)
+                true
+            }
+            R.id.category_settings_button -> {
+                openSettingsSection(SettingsFragment.SECTION_CATEGORIES)
                 true
             }
 //            Help will be created later; keep the action disabled with the hidden menu item.
@@ -424,8 +422,8 @@ class MainActivity : AppCompatActivity() {
                 destination.id == R.id.nav_new_money_moving || destination.id == R.id.nav_new_transfer
             searchMenuItem?.isVisible = isCategoriesDestination
             favoriteCategoriesMenuItem?.isVisible = isCategoriesDestination
+            categorySettingsMenuItem?.isVisible = isCategoriesDestination
             updateFavoriteCategoriesMenuIcon(false)
-            categoryOrderMenuItem?.isVisible = isCategoriesDestination
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
             updateCategoriesTitle(destination.id, arguments)
         }
@@ -436,7 +434,8 @@ class MainActivity : AppCompatActivity() {
 
         val titleRes = if (
             arguments?.getString(CategoriesFragment.ARG_OPEN_MODE) ==
-            CategoriesFragment.OPEN_MODE_JOURNAL_FILTER
+            CategoriesFragment.OPEN_MODE_JOURNAL_FILTER ||
+            arguments?.getBoolean(CategoriesFragment.ARG_ENABLE_ORDER_EDIT_MODE) == true
         ) {
             R.string.fragment_label_categories
         } else {

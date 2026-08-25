@@ -78,6 +78,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: close expanded favorite-only category groups with rounded bottom corners when the add-subcategory row is hidden.
 - Completed: keep Categories populated after returning from new payment with the Back button.
 - Completed: show an entry-oriented Categories title except when opened from Journal category filtering.
+- Completed: move category order editing into Settings, add a Categories settings shortcut, add an optional usage-frequency display, and remove parent-row subcategory counts.
 - Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.

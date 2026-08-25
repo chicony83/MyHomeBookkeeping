@@ -213,6 +213,46 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/categoriesBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@drawable/category_group_background"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_normal">
+
+                <TextView
+                    android:id="@+id/categoriesSection"
+                    style="@style/TextDescriptions"
+                    android:layout_marginLeft="@dimen/margin_zero"
+                    android:text="@string/settings_categories_section_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H3"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/changeCategoryOrderRow"
+                    style="@style/SettingsValueLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_categories_change_order" />
+
+                <CheckBox
+                    android:id="@+id/categoryUsageCountCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_categories_show_usage_count"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/journalBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

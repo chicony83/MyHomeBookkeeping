@@ -60,6 +60,10 @@ class SettingsViewModel(
     val journalParentCategoryDisplayMode: LiveData<String>
         get() = _journalParentCategoryDisplayMode
 
+    private val _categoryUsageCountEnabled = MutableLiveData<Boolean>()
+    val categoryUsageCountEnabled: LiveData<Boolean>
+        get() = _categoryUsageCountEnabled
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -73,6 +77,7 @@ class SettingsViewModel(
         _journalCurrencyDisplayMode.value = getJournalCurrencyDisplayMode()
         _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
         _journalParentCategoryDisplayMode.value = getJournalParentCategoryDisplayMode()
+        _categoryUsageCountEnabled.value = getCategoryUsageCountEnabled()
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -132,6 +137,13 @@ class SettingsViewModel(
             .putString(Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE, displayMode)
             .apply()
         _journalParentCategoryDisplayMode.value = getJournalParentCategoryDisplayMode()
+    }
+
+    fun saveCategoryUsageCountEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, isEnabled)
+            .apply()
+        _categoryUsageCountEnabled.value = getCategoryUsageCountEnabled()
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {
@@ -212,6 +224,10 @@ class SettingsViewModel(
             Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
         )?.takeIf(::isSupportedJournalParentCategoryDisplayMode)
             ?: Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
+    }
+
+    private fun getCategoryUsageCountEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, false)
     }
 
     private fun isSupportedJournalCurrencyDisplayMode(displayMode: String): Boolean {

@@ -86,10 +86,25 @@
             android:textColor="@color/black"
             android:textSize="@dimen/H5"
             app:layout_constraintBottom_toBottomOf="@id/iconImg"
-            app:layout_constraintEnd_toStartOf="@id/category_favorite_imageView"
+            app:layout_constraintEnd_toStartOf="@id/category_usage_count_textView"
             app:layout_constraintStart_toEndOf="@id/iconImg"
             app:layout_constraintTop_toTopOf="@id/iconImg"
             tool:text="category" />
+
+        <TextView
+            android:id="@+id/category_usage_count_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_half_normal"
+            android:textColor="@color/categoryTextSecondary"
+            android:textSize="@dimen/H6"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iconImg"
+            app:layout_constraintEnd_toStartOf="@id/category_favorite_imageView"
+            app:layout_constraintTop_toTopOf="@id/iconImg"
+            tool:text="12"
+            tool:visibility="visible" />
 
         <ImageButton
             android:id="@+id/category_favorite_imageView"

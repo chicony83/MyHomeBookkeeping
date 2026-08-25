@@ -87,6 +87,7 @@ object Constants {
     const val LOCAL_ASSETS_URL = "file:///android_asset/"
 
     const val CATEGORIES_TOP_ORDER = "categories_top_order"
+    const val CATEGORIES_SHOW_USAGE_COUNT = "categories_show_usage_count"
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
 

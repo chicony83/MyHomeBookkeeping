@@ -95,6 +95,7 @@ class CategoriesFragment : Fragment() {
     private var categoryTouchHelper: ItemTouchHelper? = null
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
+    private var showUsageCount = false
     private val searchMinLength = 4
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -102,6 +103,7 @@ class CategoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         db = dataBase.getDataBase(requireContext()).categoryDao()
+        showUsageCount = getShowUsageCountSetting()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         control = activity?.findNavController(R.id.nav_host_fragment)!!
@@ -195,6 +197,9 @@ class CategoriesFragment : Fragment() {
 
     private fun setCategoryOrderEditMode(isEnabled: Boolean) {
         if (isEnabled && searchMode) hideSearch()
+        if (!isEnabled) {
+            arguments?.putBoolean(ARG_ENABLE_ORDER_EDIT_MODE, false)
+        }
         categoryOrderEditMode = isEnabled
         categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
         updateCategoryOrderDoneButtonVisibility()
@@ -339,7 +344,8 @@ class CategoriesFragment : Fragment() {
                 { categories ->
                     categoriesViewModel.saveCategoriesOrder(categories)
                 },
-                showAddRows = !favoriteCategoriesMode
+                showAddRows = !favoriteCategoriesMode,
+                showUsageCount = showUsageCount
             )
             categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
             binding.categoryTreeHolder.adapter = categoryGroupsAdapter
@@ -349,7 +355,8 @@ class CategoriesFragment : Fragment() {
                 groups = groups,
                 topOrder = topOrder,
                 expandAll = expandAll,
-                showAddRows = !favoriteCategoriesMode
+                showAddRows = !favoriteCategoriesMode,
+                showUsageCount = showUsageCount
             )
         }
     }
@@ -415,6 +422,12 @@ class CategoriesFragment : Fragment() {
             .edit()
             .putString(Constants.CATEGORIES_TOP_ORDER, topOrder.joinToString(","))
             .apply()
+    }
+
+    private fun getShowUsageCountSetting(): Boolean {
+        return requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+            .getBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, false)
     }
 
     private fun showSelectCategoryDialog(selectedId: Int) {
@@ -597,6 +610,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        showUsageCount = getShowUsageCountSetting()
         categoriesViewModel.reloadCategories()
     }
 

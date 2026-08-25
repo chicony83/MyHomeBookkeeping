@@ -33,6 +33,7 @@ import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.QuickAccessPanel
+import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +48,7 @@ class SettingsFragment : Fragment() {
     companion object {
         const val ARG_SECTION = "settingsSection"
         const val SECTION_QUICK_PAYMENT = "quickPayment"
+        const val SECTION_CATEGORIES = "categories"
     }
 
     private lateinit var settingsViewModel: SettingsViewModel
@@ -68,6 +70,7 @@ class SettingsFragment : Fragment() {
     private var selectedJournalParentCategoryDisplayMode =
         Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
     private var isJournalDateSeparatorsEnabled = true
+    private var isCategoryUsageCountEnabled = false
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -241,6 +244,20 @@ class SettingsFragment : Fragment() {
                     settingsViewModel.saveJournalDateSeparatorsEnabled(isChecked)
                 }
             }
+            changeCategoryOrderRow.setOnClickListener {
+                navControlHelper.toSelectedFragment(
+                    R.id.nav_categories,
+                    CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_STANDALONE).apply {
+                        putBoolean(CategoriesFragment.ARG_ENABLE_ORDER_EDIT_MODE, true)
+                    }
+                )
+            }
+            categoryUsageCountCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isCategoryUsageCountEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveCategoryUsageCountEnabled(isChecked)
+                }
+            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -293,6 +310,12 @@ class SettingsFragment : Fragment() {
                 binding.journalDateSeparatorsCheckBox.isChecked = it
                 isBindingSettings = false
             }
+            categoryUsageCountEnabled.observe(viewLifecycleOwner) {
+                isCategoryUsageCountEnabled = it
+                isBindingSettings = true
+                binding.categoryUsageCountCheckBox.isChecked = it
+                isBindingSettings = false
+            }
         }
         loadDefaultSelectionTitles()
 
@@ -338,6 +361,7 @@ class SettingsFragment : Fragment() {
         binding.journalParentCategoryDisplayModeValue.text =
             journalParentCategoryDisplayModeTitle(selectedJournalParentCategoryDisplayMode)
         binding.journalDateSeparatorsCheckBox.isChecked = isJournalDateSeparatorsEnabled
+        binding.categoryUsageCountCheckBox.isChecked = isCategoryUsageCountEnabled
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE
@@ -788,6 +812,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         when (arguments?.getString(ARG_SECTION)) {
             SECTION_QUICK_PAYMENT -> binding.quickPaymentSection
+            SECTION_CATEGORIES -> binding.categoriesBlock
             else -> null
         }?.let { section ->
             binding.settingsScroll.post {

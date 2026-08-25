@@ -17,6 +17,9 @@
     <string name="settings_app_language_english">🇬🇧 Английский</string>
     <string name="settings_app_language_polish">🇵🇱 Polski</string>
     <string name="settings_app_language_russian">Русский</string>
+    <string name="settings_categories_section_title">Категории</string>
+    <string name="settings_categories_change_order">Изменить порядок категорий</string>
+    <string name="settings_categories_show_usage_count">Показывать частоту использования категорий</string>
     <string name="settings_journal_section_title">Журнал</string>
     <string name="settings_journal_currency_display_title">Название валюты в журнале</string>
     <string name="settings_journal_currency_display_name">Полное название</string>
