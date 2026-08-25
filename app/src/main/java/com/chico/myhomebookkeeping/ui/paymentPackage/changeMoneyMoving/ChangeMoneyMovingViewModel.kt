@@ -256,18 +256,33 @@ class ChangeMoneyMovingViewModel(
 
     suspend fun changeMoneyMovementInDB(amount: Double, description: String): Int {
         val dateTimeVal = _dateTime.value?.parseTimeToMillis() ?: 0
+        val oldMoneyMovement = MoneyMovingUseCase.getOneMoneyMoving(
+            dbMoneyMovement,
+            idMoneyMovingForChangeLong
+        )
+        val newCategoryId = _selectedCategory.value?.categoriesId
+        val newPaymentTypeId = getPaymentTypeId()
         messageLog("amount = $amount")
-        return ChangeMoneyMovingUseCase.changeMoneyMovingLine(
+        val result = ChangeMoneyMovingUseCase.changeMoneyMovingLine(
             db = dbMoneyMovement,
             id = idMoneyMovingForChangeLong,
             dateTime = dateTimeVal,
             cashAccountId = _selectedCashAccount.value?.cashAccountId ?: 0,
-            categoryId = _selectedCategory.value?.categoriesId ?: 0,
-            paymentTypeId = getPaymentTypeId(),
+            categoryId = newCategoryId ?: 0,
+            paymentTypeId = newPaymentTypeId,
             currencyId = _selectedCurrency.value?.currencyId ?: 0,
             amount = amount,
             description = description
         )
+        if (result > 0 && oldMoneyMovement?.category != newCategoryId) {
+            oldMoneyMovement?.category
+                ?.takeIf { isUsageCountedCategory(oldMoneyMovement.paymentTypeId, it) }
+                ?.let { CategoriesUseCase.decrementUsageCount(dbCategory, it) }
+            newCategoryId
+                ?.takeIf { isUsageCountedCategory(newPaymentTypeId, it) }
+                ?.let { CategoriesUseCase.incrementUsageCount(dbCategory, it) }
+        }
+        return result
     }
 
     private fun getPaymentTypeId(): Int {
@@ -279,6 +294,26 @@ class ChangeMoneyMovingViewModel(
     }
 
     suspend fun deleteLine(): Int {
-        return ChangeMoneyMovingUseCase.deleteLine(dbMoneyMovement, idMoneyMovingForChangeLong)
+        val oldMoneyMovement = MoneyMovingUseCase.getOneMoneyMoving(
+            dbMoneyMovement,
+            idMoneyMovingForChangeLong
+        )
+        val result = ChangeMoneyMovingUseCase.deleteLine(dbMoneyMovement, idMoneyMovingForChangeLong)
+        if (result > 0) {
+            oldMoneyMovement?.category
+                ?.takeIf { isUsageCountedCategory(oldMoneyMovement.paymentTypeId, it) }
+                ?.let { CategoriesUseCase.decrementUsageCount(dbCategory, it) }
+        }
+        return result
+    }
+
+    private suspend fun isUsageCountedCategory(paymentTypeId: Int, categoryId: Int): Boolean {
+        val category = CategoriesUseCase.getOneCategory(dbCategory, categoryId) ?: return false
+        return (paymentTypeId == PaymentTypeIds.INCOME || paymentTypeId == PaymentTypeIds.SPENDING) &&
+            category.categoryName != TRANSFER_FEE_CATEGORY_NAME
+    }
+
+    companion object {
+        private const val TRANSFER_FEE_CATEGORY_NAME = "Transfer fee"
     }
 }

@@ -67,6 +67,26 @@ interface CategoryDao {
     @Query("UPDATE category_table SET is_favorite = :isFavorite WHERE categoriesId = :id")
     suspend fun updateCategoryFavorite(id: Int, isFavorite: Boolean): Int
 
+    @Query("UPDATE category_table SET usage_count = usage_count + 1 WHERE categoriesId = :id")
+    suspend fun incrementUsageCount(id: Int): Int
+
+    @Query("UPDATE category_table SET usage_count = CASE WHEN usage_count > 0 THEN usage_count - 1 ELSE 0 END WHERE categoriesId = :id")
+    suspend fun decrementUsageCount(id: Int): Int
+
+    @Query(
+        "UPDATE category_table " +
+                "SET usage_count = (" +
+                "SELECT COUNT(*) FROM money_moving_table " +
+                "WHERE money_moving_table.category = category_table.categoriesId " +
+                "AND money_moving_table.payment_type_id IN (0, 1)" +
+                ") " +
+                "WHERE category_name != 'Transfer fee'"
+    )
+    suspend fun rebuildUsageCount(): Int
+
+    @Query("UPDATE category_table SET usage_count = 0 WHERE category_name = 'Transfer fee'")
+    suspend fun clearTransferFeeUsageCount(): Int
+
     @Query("UPDATE category_table SET parent_category_id = :parentCategoryId, category_order = :order WHERE categoriesId = :id")
     suspend fun updateCategoryParentAndOrder(id: Int, parentCategoryId: Int?, order: Int): Int
 

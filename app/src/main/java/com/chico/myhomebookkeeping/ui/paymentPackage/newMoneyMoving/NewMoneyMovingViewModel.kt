@@ -416,7 +416,11 @@ class NewMoneyMovingViewModel(
             currency = currencyValue,
             description = description
         )
-        return NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+        val result = NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
+        if (result > 0 && _selectedCategory.value?.categoryName != TRANSFER_FEE_CATEGORY_NAME) {
+            CategoriesUseCase.incrementUsageCount(dbCategory, categoryValue)
+        }
+        return result
     }
 
     suspend fun addNewTransfer(

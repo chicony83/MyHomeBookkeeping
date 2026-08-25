@@ -81,6 +81,14 @@ object CategoriesUseCase {
         return db.updateCategoryFavorite(id, isFavorite)
     }
 
+    suspend fun incrementUsageCount(db: CategoryDao, id: Int): Int {
+        return db.incrementUsageCount(id)
+    }
+
+    suspend fun decrementUsageCount(db: CategoryDao, id: Int): Int {
+        return db.decrementUsageCount(id)
+    }
+
     suspend fun updateCategoryParentAndOrder(
         db: CategoryDao,
         id: Int,

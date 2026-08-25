@@ -9,6 +9,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: keep source/destination account and currency selectors working from the separate transfer fragment.
 - Completed: fix drawer and quick access navigation for the separate transfer screen.
 - Completed: add a dedicated transfer edit fragment that updates both linked transfer rows as one operation.
+- Completed: maintain category usage counts when regular payments are created, changed, or deleted; transfers and transfer fees stay out of the count.
 - Add several ways to create a payment from quick payments.
 - Allow creating a quick payment with changed parameters.
 - Add a shopping-list style helper for entering several purchases inside one payment.
@@ -91,7 +92,8 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 - Completed: keep backup restore validation aligned with the current Room schema version.
 - Completed: add category flags for favorite/hidden state, hidden timestamp, and stored usage count.
+- Completed: backfill category usage counts from existing regular payments through the app update flow.
 - Add nullable stable keys for default cash accounts, parent categories, and categories, then migrate known built-in rows by English/Russian/Polish names while leaving user-created rows keyless.
 - Add default currency/account fields where still needed.
 - Add parent category support where still needed.
-- Decide how category usage counts should be incremented and used for sorting.
+- Decide how category usage counts should be used for sorting.
