@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import com.chico.myhomebookkeeping.db.dao.CategoryDao
 import com.chico.myhomebookkeeping.db.dataBase
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
+import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
@@ -27,7 +30,9 @@ import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
+import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.RecentCategoriesPanel
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroup
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroupsAdapter
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoriesViewModel
@@ -96,6 +101,9 @@ class CategoriesFragment : Fragment() {
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
     private var showUsageCount = false
+    private var recentCategoriesExpanded = true
+    private var recentCategoriesShowLabels = false
+    private var recentCategoriesShowTitle = true
     private val searchMinLength = 4
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -104,6 +112,7 @@ class CategoriesFragment : Fragment() {
     ): View {
         db = dataBase.getDataBase(requireContext()).categoryDao()
         showUsageCount = getShowUsageCountSetting()
+        loadRecentCategoriesSettings()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         control = activity?.findNavController(R.id.nav_host_fragment)!!
@@ -112,6 +121,9 @@ class CategoriesFragment : Fragment() {
         }
         binding.searchTil.setEndIconOnClickListener {
             hideSearch()
+        }
+        binding.recentCategoriesHeader.setOnClickListener {
+            setRecentCategoriesExpanded(!recentCategoriesExpanded, animate = true, persist = true)
         }
         with(parentCategoriesViewModel) {
             parentCategoriesList.observe(viewLifecycleOwner) {
@@ -125,6 +137,7 @@ class CategoriesFragment : Fragment() {
 //            }
             categoriesList.observe(viewLifecycleOwner) {
                 currentCategoriesList = it
+                bindRecentCategoriesPanel()
                 filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
             }
         }
@@ -216,6 +229,7 @@ class CategoriesFragment : Fragment() {
         } else {
             View.GONE
         }
+        bindRecentCategoriesPanel()
     }
 
     private fun hideSearch() {
@@ -430,6 +444,92 @@ class CategoriesFragment : Fragment() {
             .getBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, false)
     }
 
+    private fun loadRecentCategoriesSettings() {
+        val sharedPreferences = requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+        recentCategoriesExpanded = RecentCategoriesPanel.isExpanded(sharedPreferences)
+        recentCategoriesShowLabels = RecentCategoriesPanel.shouldShowLabels(sharedPreferences)
+        recentCategoriesShowTitle = RecentCategoriesPanel.shouldShowTitle(sharedPreferences)
+    }
+
+    private fun bindRecentCategoriesPanel() {
+        if (_binding == null) return
+        val sharedPreferences = requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+        val recentIds = RecentCategoriesPanel.ids(sharedPreferences)
+        val categoriesById = currentCategoriesList.mapNotNull { category ->
+            category.categoriesId?.let { it to category }
+        }.toMap()
+        val recentCategories = recentIds.mapNotNull { categoriesById[it] }
+        val isPanelVisible = RecentCategoriesPanel.isEnabled(sharedPreferences) &&
+            !categoryOrderEditMode &&
+            recentCategories.isNotEmpty()
+
+        binding.recentCategoriesPanel.visibility = if (isPanelVisible) View.VISIBLE else View.GONE
+        if (!isPanelVisible) return
+
+        binding.recentCategoriesTitle.visibility =
+            if (recentCategoriesShowTitle) View.VISIBLE else View.GONE
+        binding.recentCategoriesRow.removeAllViews()
+        val languageTag = AppLanguage.getSelectedTag(requireContext())
+        recentCategories.forEach { category ->
+            val item = layoutInflater.inflate(
+                R.layout.view_recent_category_item,
+                binding.recentCategoriesRow,
+                false
+            )
+            val name = category.displayName(languageTag)
+            item.contentDescription = name
+            item.findViewById<ImageView>(R.id.recentCategoryIcon)
+                .setImageResource(category.icon ?: R.drawable.no_image)
+            item.findViewById<TextView>(R.id.recentCategoryLabel).apply {
+                text = name.lowercase(Locale.getDefault())
+                visibility = if (recentCategoriesShowLabels) View.VISIBLE else View.GONE
+            }
+            item.setOnClickListener {
+                category.categoriesId?.let(::selectCategory)
+            }
+            binding.recentCategoriesRow.addView(item)
+        }
+        setRecentCategoriesExpanded(recentCategoriesExpanded, animate = false, persist = false)
+    }
+
+    private fun setRecentCategoriesExpanded(
+        expanded: Boolean,
+        animate: Boolean,
+        persist: Boolean
+    ) {
+        recentCategoriesExpanded = expanded
+        binding.recentCategoriesExpandButton.setImageResource(
+            if (expanded) R.drawable.category_arrow_drop_up else R.drawable.category_arrow_drop_down
+        )
+        val targetHeight = if (expanded) requireContext().dpToPx(52) else 0
+        val scroll = binding.recentCategoriesScroll
+        if (animate) {
+            val startHeight = scroll.height
+            android.animation.ValueAnimator.ofInt(startHeight, targetHeight).apply {
+                duration = 250L
+                addUpdateListener { animator ->
+                    scroll.layoutParams = scroll.layoutParams.apply {
+                        height = animator.animatedValue as Int
+                    }
+                }
+                start()
+            }
+        } else {
+            scroll.layoutParams = scroll.layoutParams.apply {
+                height = targetHeight
+            }
+        }
+        if (persist) {
+            requireContext()
+                .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(Constants.RECENT_CATEGORIES_PANEL_EXPANDED, expanded)
+                .apply()
+        }
+    }
+
     private fun showSelectCategoryDialog(selectedId: Int) {
         launchIo {
             val category: Categories? = categoriesViewModel.getSelectedCategory(selectedId)
@@ -611,6 +711,7 @@ class CategoriesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         showUsageCount = getShowUsageCountSetting()
+        loadRecentCategoriesSettings()
         categoriesViewModel.reloadCategories()
     }
 
@@ -621,4 +722,8 @@ class CategoriesFragment : Fragment() {
         categoryGroupsAdapter = null
         _binding = null
     }
+}
+
+private fun android.content.Context.dpToPx(value: Int): Int {
+    return (resources.displayMetrics.density * value + 0.5f).toInt()
 }

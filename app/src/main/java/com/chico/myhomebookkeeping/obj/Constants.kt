@@ -88,6 +88,15 @@ object Constants {
 
     const val CATEGORIES_TOP_ORDER = "categories_top_order"
     const val CATEGORIES_SHOW_USAGE_COUNT = "categories_show_usage_count"
+    const val RECENT_CATEGORIES_PANEL_ENABLED = "recent_categories_panel_enabled"
+    const val RECENT_CATEGORIES_PANEL_EXPANDED = "recent_categories_panel_expanded"
+    const val RECENT_CATEGORIES_PANEL_SHOW_TITLE = "recent_categories_panel_show_title"
+    const val RECENT_CATEGORIES_SHOW_LABELS = "recent_categories_show_labels"
+    const val RECENT_CATEGORIES_LIMIT = "recent_categories_limit"
+    const val RECENT_CATEGORIES_IDS = "recent_categories_ids"
+    const val RECENT_CATEGORIES_DEFAULT_LIMIT = 10
+    const val RECENT_CATEGORIES_MIN_LIMIT = 5
+    const val RECENT_CATEGORIES_MAX_LIMIT = 20
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
 

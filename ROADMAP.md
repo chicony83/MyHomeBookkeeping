@@ -71,6 +71,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 - Add currency icons.
 - Completed: add favorite category toggles on the Categories screen, with a toolbar filter that shows only favorite categories and collapses groups when the filter is turned off.
+- Completed: add the recent used categories panel on the Categories screen, with a remembered collapse state, localized tiny title, optional tiny category labels, and a 5-20 item setting.
 - Completed: expand the category icon dictionary for default categories and keep new bundled icons backfilled on existing installs.
 - Completed: add sick leave payments to the default income subcategories and backfill existing installs through the app update flow.
 - Completed: add the Subscriptions & Online Services category group and backfill existing installs through the app update flow.
@@ -83,6 +84,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.
 - Consider usage-frequency sorting for currencies, accounts, and categories.
+- Add a frequently used categories panel in a separate branch, visually matching the recent used categories panel.
 
 ## Security
 
@@ -98,3 +100,10 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Add default currency/account fields where still needed.
 - Add parent category support where still needed.
 - Decide how category usage counts should be used for sorting.
+
+## Notes For Future Category Panels
+
+- Recent used categories are stored in `SharedPreferences` through `RecentCategoriesPanel`; the list is a left-to-right queue where a repeated category moves to the first position.
+- The recent panel is updated only when a regular income/spending payment successfully increments `usage_count`; transfers and transfer fees stay out.
+- A future frequently used panel should reuse the same Categories screen placement, tiny title style, centered clickable header, gray expand indicator, 250 ms collapse animation, and localized settings pattern.
+- For frequently used categories, prefer deriving order from `usage_count` instead of mutating the recent queue; keep parent categories hidden and display only real categories.

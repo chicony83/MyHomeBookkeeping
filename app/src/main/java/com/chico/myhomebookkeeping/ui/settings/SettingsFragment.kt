@@ -71,6 +71,10 @@ class SettingsFragment : Fragment() {
         Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
     private var isJournalDateSeparatorsEnabled = true
     private var isCategoryUsageCountEnabled = false
+    private var isRecentCategoriesPanelEnabled = true
+    private var recentCategoriesLimit = Constants.RECENT_CATEGORIES_DEFAULT_LIMIT
+    private var isRecentCategoriesPanelTitleEnabled = true
+    private var isRecentCategoriesLabelsEnabled = false
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -258,6 +262,27 @@ class SettingsFragment : Fragment() {
                     settingsViewModel.saveCategoryUsageCountEnabled(isChecked)
                 }
             }
+            recentCategoriesPanelCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isRecentCategoriesPanelEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveRecentCategoriesPanelEnabled(isChecked)
+                }
+            }
+            recentCategoriesLimitRow.setOnClickListener {
+                showRecentCategoriesLimitDialog()
+            }
+            recentCategoriesPanelTitleCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isRecentCategoriesPanelTitleEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveRecentCategoriesPanelTitleEnabled(isChecked)
+                }
+            }
+            recentCategoriesLabelsCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isRecentCategoriesLabelsEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveRecentCategoriesLabelsEnabled(isChecked)
+                }
+            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -316,6 +341,30 @@ class SettingsFragment : Fragment() {
                 binding.categoryUsageCountCheckBox.isChecked = it
                 isBindingSettings = false
             }
+            recentCategoriesPanelEnabled.observe(viewLifecycleOwner) {
+                isRecentCategoriesPanelEnabled = it
+                isBindingSettings = true
+                updateRecentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
+            recentCategoriesLimit.observe(viewLifecycleOwner) {
+                this@SettingsFragment.recentCategoriesLimit = it
+                isBindingSettings = true
+                updateRecentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
+            recentCategoriesPanelTitleEnabled.observe(viewLifecycleOwner) {
+                isRecentCategoriesPanelTitleEnabled = it
+                isBindingSettings = true
+                updateRecentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
+            recentCategoriesLabelsEnabled.observe(viewLifecycleOwner) {
+                isRecentCategoriesLabelsEnabled = it
+                isBindingSettings = true
+                updateRecentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
         }
         loadDefaultSelectionTitles()
 
@@ -362,12 +411,20 @@ class SettingsFragment : Fragment() {
             journalParentCategoryDisplayModeTitle(selectedJournalParentCategoryDisplayMode)
         binding.journalDateSeparatorsCheckBox.isChecked = isJournalDateSeparatorsEnabled
         binding.categoryUsageCountCheckBox.isChecked = isCategoryUsageCountEnabled
+        updateRecentCategoriesSettingsValues()
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
+    }
+
+    private fun updateRecentCategoriesSettingsValues() {
+        binding.recentCategoriesPanelCheckBox.isChecked = isRecentCategoriesPanelEnabled
+        binding.recentCategoriesLimitValue.text = recentCategoriesLimit.toString()
+        binding.recentCategoriesPanelTitleCheckBox.isChecked = isRecentCategoriesPanelTitleEnabled
+        binding.recentCategoriesLabelsCheckBox.isChecked = isRecentCategoriesLabelsEnabled
     }
 
     private fun bindQuickAccessSettings() {
@@ -705,6 +762,47 @@ class SettingsFragment : Fragment() {
                 onSelected(picker.value)
             }
             .show()
+    }
+
+    private fun showRecentCategoriesLimitDialog() {
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        val input = EditText(requireContext()).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            setText(recentCategoriesLimit.toString())
+            selectAll()
+            hint = getString(R.string.settings_recent_categories_limit_range)
+        }
+        val fields = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(padding, 0, padding, 0)
+            addView(TextView(requireContext()).apply {
+                text = getString(R.string.settings_recent_categories_limit_range)
+                textSize = 12f
+            })
+            addView(input)
+        }
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.settings_recent_categories_limit)
+            .setView(fields)
+            .setNegativeButton(R.string.text_on_button_cancel, null)
+            .setPositiveButton(R.string.text_on_button_submit, null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val value = input.text.toString().toIntOrNull()
+                if (value == null ||
+                    value !in Constants.RECENT_CATEGORIES_MIN_LIMIT..Constants.RECENT_CATEGORIES_MAX_LIMIT
+                ) {
+                    input.error = getString(R.string.settings_recent_categories_limit_range)
+                    return@setOnClickListener
+                }
+                recentCategoriesLimit = value
+                updateRecentCategoriesSettingsValues()
+                settingsViewModel.saveRecentCategoriesLimit(value)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
     }
 
     private fun showBackupPasswordDialog() {

@@ -21,6 +21,7 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.db.entity.MoneyMovement
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
+import com.chico.myhomebookkeeping.obj.RecentCategoriesPanel
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -280,7 +281,10 @@ class ChangeMoneyMovingViewModel(
                 ?.let { CategoriesUseCase.decrementUsageCount(dbCategory, it) }
             newCategoryId
                 ?.takeIf { isUsageCountedCategory(newPaymentTypeId, it) }
-                ?.let { CategoriesUseCase.incrementUsageCount(dbCategory, it) }
+                ?.let {
+                    CategoriesUseCase.incrementUsageCount(dbCategory, it)
+                    RecentCategoriesPanel.record(sharedPreferences, it)
+                }
         }
         return result
     }

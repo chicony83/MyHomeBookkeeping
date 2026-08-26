@@ -20,6 +20,11 @@
     <string name="settings_categories_section_title">Categories</string>
     <string name="settings_categories_change_order">Change category order</string>
     <string name="settings_categories_show_usage_count">Show category usage frequency</string>
+    <string name="settings_recent_categories_panel_enabled">Recent used categories</string>
+    <string name="settings_recent_categories_limit">Number of shown categories</string>
+    <string name="settings_recent_categories_limit_range">min 5 - max 20</string>
+    <string name="settings_recent_categories_panel_show_title">Show recent used categories panel title</string>
+    <string name="settings_recent_categories_show_labels">Show category labels in recent used categories</string>
     <string name="settings_journal_section_title">Journal</string>
     <string name="settings_journal_currency_display_title">Currency name in journal</string>
     <string name="settings_journal_currency_display_name">Full name</string>

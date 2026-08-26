@@ -27,6 +27,7 @@ import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
+import com.chico.myhomebookkeeping.obj.RecentCategoriesPanel
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.utils.*
 import kotlinx.coroutines.flow.*
@@ -419,6 +420,7 @@ class NewMoneyMovingViewModel(
         val result = NewMoneyMovementUseCase.addInDataBase(dbMoneyMovement, moneyMovement)
         if (result > 0 && _selectedCategory.value?.categoryName != TRANSFER_FEE_CATEGORY_NAME) {
             CategoriesUseCase.incrementUsageCount(dbCategory, categoryValue)
+            RecentCategoriesPanel.record(sharedPreferences, categoryValue)
         }
         return result
     }

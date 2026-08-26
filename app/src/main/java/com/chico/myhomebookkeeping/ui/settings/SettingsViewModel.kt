@@ -16,6 +16,7 @@ import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.QuickAccessPanel
+import com.chico.myhomebookkeeping.obj.RecentCategoriesPanel
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
 
 class SettingsViewModel(
@@ -64,6 +65,22 @@ class SettingsViewModel(
     val categoryUsageCountEnabled: LiveData<Boolean>
         get() = _categoryUsageCountEnabled
 
+    private val _recentCategoriesPanelEnabled = MutableLiveData<Boolean>()
+    val recentCategoriesPanelEnabled: LiveData<Boolean>
+        get() = _recentCategoriesPanelEnabled
+
+    private val _recentCategoriesLimit = MutableLiveData<Int>()
+    val recentCategoriesLimit: LiveData<Int>
+        get() = _recentCategoriesLimit
+
+    private val _recentCategoriesPanelTitleEnabled = MutableLiveData<Boolean>()
+    val recentCategoriesPanelTitleEnabled: LiveData<Boolean>
+        get() = _recentCategoriesPanelTitleEnabled
+
+    private val _recentCategoriesLabelsEnabled = MutableLiveData<Boolean>()
+    val recentCategoriesLabelsEnabled: LiveData<Boolean>
+        get() = _recentCategoriesLabelsEnabled
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -78,6 +95,12 @@ class SettingsViewModel(
         _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
         _journalParentCategoryDisplayMode.value = getJournalParentCategoryDisplayMode()
         _categoryUsageCountEnabled.value = getCategoryUsageCountEnabled()
+        _recentCategoriesPanelEnabled.value = RecentCategoriesPanel.isEnabled(sharedPreferences)
+        _recentCategoriesLimit.value = RecentCategoriesPanel.limit(sharedPreferences)
+        _recentCategoriesPanelTitleEnabled.value =
+            RecentCategoriesPanel.shouldShowTitle(sharedPreferences)
+        _recentCategoriesLabelsEnabled.value =
+            RecentCategoriesPanel.shouldShowLabels(sharedPreferences)
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -144,6 +167,42 @@ class SettingsViewModel(
             .putBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, isEnabled)
             .apply()
         _categoryUsageCountEnabled.value = getCategoryUsageCountEnabled()
+    }
+
+    fun saveRecentCategoriesPanelEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.RECENT_CATEGORIES_PANEL_ENABLED, isEnabled)
+            .apply()
+        _recentCategoriesPanelEnabled.value = RecentCategoriesPanel.isEnabled(sharedPreferences)
+    }
+
+    fun saveRecentCategoriesLimit(limit: Int) {
+        sharedPreferences.edit()
+            .putInt(
+                Constants.RECENT_CATEGORIES_LIMIT,
+                limit.coerceIn(
+                    Constants.RECENT_CATEGORIES_MIN_LIMIT,
+                    Constants.RECENT_CATEGORIES_MAX_LIMIT
+                )
+            )
+            .apply()
+        _recentCategoriesLimit.value = RecentCategoriesPanel.limit(sharedPreferences)
+    }
+
+    fun saveRecentCategoriesPanelTitleEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.RECENT_CATEGORIES_PANEL_SHOW_TITLE, isEnabled)
+            .apply()
+        _recentCategoriesPanelTitleEnabled.value =
+            RecentCategoriesPanel.shouldShowTitle(sharedPreferences)
+    }
+
+    fun saveRecentCategoriesLabelsEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.RECENT_CATEGORIES_SHOW_LABELS, isEnabled)
+            .apply()
+        _recentCategoriesLabelsEnabled.value =
+            RecentCategoriesPanel.shouldShowLabels(sharedPreferences)
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {

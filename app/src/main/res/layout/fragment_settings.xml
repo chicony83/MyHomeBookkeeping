@@ -250,6 +250,46 @@
                     android:text="@string/settings_categories_show_usage_count"
                     android:textColor="@color/inputText"
                     android:textSize="@dimen/H4" />
+
+                <CheckBox
+                    android:id="@+id/recentCategoriesPanelCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_recent_categories_panel_enabled"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
+
+                <LinearLayout
+                    android:id="@+id/recentCategoriesLimitRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_recent_categories_limit" />
+
+                    <TextView
+                        android:id="@+id/recentCategoriesLimitValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/recentCategoriesPanelTitleCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_recent_categories_panel_show_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
+
+                <CheckBox
+                    android:id="@+id/recentCategoriesLabelsCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_recent_categories_show_labels"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
             </LinearLayout>
 
             <LinearLayout
