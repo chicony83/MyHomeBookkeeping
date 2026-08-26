@@ -33,4 +33,5 @@
     <string name="report_categories_select_all">Wybierz wszystkie</string>
     <string name="report_categories_clear_all">Odznacz wszystkie</string>
     <string name="recent_categories_panel_title">ostatnio używane</string>
+    <string name="frequent_categories_panel_title">często używane</string>
 </resources>

@@ -88,6 +88,9 @@ object Constants {
 
     const val CATEGORIES_TOP_ORDER = "categories_top_order"
     const val CATEGORIES_SHOW_USAGE_COUNT = "categories_show_usage_count"
+    const val CATEGORIES_PANELS_ORDER = "categories_panels_order"
+    const val CATEGORIES_PANEL_RECENT = "recent"
+    const val CATEGORIES_PANEL_FREQUENT = "frequent"
     const val RECENT_CATEGORIES_PANEL_ENABLED = "recent_categories_panel_enabled"
     const val RECENT_CATEGORIES_PANEL_EXPANDED = "recent_categories_panel_expanded"
     const val RECENT_CATEGORIES_PANEL_SHOW_TITLE = "recent_categories_panel_show_title"
@@ -97,6 +100,14 @@ object Constants {
     const val RECENT_CATEGORIES_DEFAULT_LIMIT = 10
     const val RECENT_CATEGORIES_MIN_LIMIT = 5
     const val RECENT_CATEGORIES_MAX_LIMIT = 20
+    const val FREQUENT_CATEGORIES_PANEL_ENABLED = "frequent_categories_panel_enabled"
+    const val FREQUENT_CATEGORIES_PANEL_EXPANDED = "frequent_categories_panel_expanded"
+    const val FREQUENT_CATEGORIES_PANEL_SHOW_TITLE = "frequent_categories_panel_show_title"
+    const val FREQUENT_CATEGORIES_SHOW_LABELS = "frequent_categories_show_labels"
+    const val FREQUENT_CATEGORIES_LIMIT = "frequent_categories_limit"
+    const val FREQUENT_CATEGORIES_DEFAULT_LIMIT = 10
+    const val FREQUENT_CATEGORIES_MIN_LIMIT = 5
+    const val FREQUENT_CATEGORIES_MAX_LIMIT = 20
     const val SORTING_FAST_PAYMENTS = "sorting_fast_payments"
     const val ARGS_GET_FAST_PAYMENTS_BY_TYPE = "get_fast_payments_by_type"
 

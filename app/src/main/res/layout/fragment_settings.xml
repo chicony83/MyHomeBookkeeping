@@ -290,6 +290,53 @@
                     android:text="@string/settings_recent_categories_show_labels"
                     android:textColor="@color/inputText"
                     android:textSize="@dimen/H4" />
+
+                <View
+                    android:id="@+id/categoryPanelsDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="@dimen/margin_half_normal"
+                    android:background="@color/categoryDivider" />
+
+                <CheckBox
+                    android:id="@+id/frequentCategoriesPanelCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_frequent_categories_panel_enabled"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
+
+                <LinearLayout
+                    android:id="@+id/frequentCategoriesLimitRow"
+                    style="@style/SettingsValueRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_frequent_categories_limit" />
+
+                    <TextView
+                        android:id="@+id/frequentCategoriesLimitValue"
+                        style="@style/SettingsValueText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/frequentCategoriesPanelTitleCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_frequent_categories_panel_show_title"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
+
+                <CheckBox
+                    android:id="@+id/frequentCategoriesLabelsCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/settings_frequent_categories_show_labels"
+                    android:textColor="@color/inputText"
+                    android:textSize="@dimen/H4" />
             </LinearLayout>
 
             <LinearLayout

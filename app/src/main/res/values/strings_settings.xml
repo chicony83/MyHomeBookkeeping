@@ -25,6 +25,11 @@
     <string name="settings_recent_categories_limit_range">min 5 - max 20</string>
     <string name="settings_recent_categories_panel_show_title">Show recent used categories panel title</string>
     <string name="settings_recent_categories_show_labels">Show category labels in recent used categories</string>
+    <string name="settings_frequent_categories_panel_enabled">Frequently used categories</string>
+    <string name="settings_frequent_categories_limit">Number of shown categories</string>
+    <string name="settings_frequent_categories_limit_range">min 5 - max 20</string>
+    <string name="settings_frequent_categories_panel_show_title">Show frequently used categories panel title</string>
+    <string name="settings_frequent_categories_show_labels">Show category labels in frequently used categories</string>
     <string name="settings_journal_section_title">Journal</string>
     <string name="settings_journal_currency_display_title">Currency name in journal</string>
     <string name="settings_journal_currency_display_name">Full name</string>

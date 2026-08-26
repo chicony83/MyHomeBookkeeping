@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
@@ -31,7 +32,9 @@ import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBac
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.parentCategories.OnAddNewParentCategoryCallBack
 import com.chico.myhomebookkeeping.obj.AppLanguage
+import com.chico.myhomebookkeeping.obj.CategoriesPanelsOrder
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.FrequentCategoriesPanel
 import com.chico.myhomebookkeeping.obj.RecentCategoriesPanel
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroup
 import com.chico.myhomebookkeeping.ui.categories.categories.CategoryGroupsAdapter
@@ -104,6 +107,9 @@ class CategoriesFragment : Fragment() {
     private var recentCategoriesExpanded = true
     private var recentCategoriesShowLabels = false
     private var recentCategoriesShowTitle = true
+    private var frequentCategoriesExpanded = true
+    private var frequentCategoriesShowLabels = false
+    private var frequentCategoriesShowTitle = true
     private val searchMinLength = 4
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -125,6 +131,13 @@ class CategoriesFragment : Fragment() {
         binding.recentCategoriesHeader.setOnClickListener {
             setRecentCategoriesExpanded(!recentCategoriesExpanded, animate = true, persist = true)
         }
+        binding.frequentCategoriesHeader.setOnClickListener {
+            setFrequentCategoriesExpanded(
+                !frequentCategoriesExpanded,
+                animate = true,
+                persist = true
+            )
+        }
         with(parentCategoriesViewModel) {
             parentCategoriesList.observe(viewLifecycleOwner) {
                 currentParentCategoriesList = it
@@ -137,7 +150,7 @@ class CategoriesFragment : Fragment() {
 //            }
             categoriesList.observe(viewLifecycleOwner) {
                 currentCategoriesList = it
-                bindRecentCategoriesPanel()
+                bindCategoriesPanels()
                 filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
             }
         }
@@ -229,7 +242,7 @@ class CategoriesFragment : Fragment() {
         } else {
             View.GONE
         }
-        bindRecentCategoriesPanel()
+        bindCategoriesPanels()
     }
 
     private fun hideSearch() {
@@ -450,6 +463,24 @@ class CategoriesFragment : Fragment() {
         recentCategoriesExpanded = RecentCategoriesPanel.isExpanded(sharedPreferences)
         recentCategoriesShowLabels = RecentCategoriesPanel.shouldShowLabels(sharedPreferences)
         recentCategoriesShowTitle = RecentCategoriesPanel.shouldShowTitle(sharedPreferences)
+        frequentCategoriesExpanded = FrequentCategoriesPanel.isExpanded(sharedPreferences)
+        frequentCategoriesShowLabels = FrequentCategoriesPanel.shouldShowLabels(sharedPreferences)
+        frequentCategoriesShowTitle = FrequentCategoriesPanel.shouldShowTitle(sharedPreferences)
+    }
+
+    private fun bindCategoriesPanels() {
+        if (_binding == null) return
+        bindRecentCategoriesPanel()
+        bindFrequentCategoriesPanel()
+        orderCategoriesPanels()
+        binding.categoriesPanelsContainer.visibility =
+            if (binding.recentCategoriesPanel.visibility == View.VISIBLE ||
+                binding.frequentCategoriesPanel.visibility == View.VISIBLE
+            ) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
     }
 
     private fun bindRecentCategoriesPanel() {
@@ -494,6 +525,73 @@ class CategoriesFragment : Fragment() {
         setRecentCategoriesExpanded(recentCategoriesExpanded, animate = false, persist = false)
     }
 
+    private fun bindFrequentCategoriesPanel() {
+        if (_binding == null) return
+        val sharedPreferences = requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+        val frequentCategories = FrequentCategoriesPanel.categories(
+            sourceCategories = currentCategoriesList,
+            sharedPreferences = sharedPreferences
+        )
+        val isPanelVisible = FrequentCategoriesPanel.isEnabled(sharedPreferences) &&
+            !categoryOrderEditMode &&
+            frequentCategories.isNotEmpty()
+
+        binding.frequentCategoriesPanel.visibility = if (isPanelVisible) View.VISIBLE else View.GONE
+        if (!isPanelVisible) return
+
+        binding.frequentCategoriesTitle.visibility =
+            if (frequentCategoriesShowTitle) View.VISIBLE else View.GONE
+        binding.frequentCategoriesRow.removeAllViews()
+        val languageTag = AppLanguage.getSelectedTag(requireContext())
+        frequentCategories.forEach { category ->
+            val item = layoutInflater.inflate(
+                R.layout.view_recent_category_item,
+                binding.frequentCategoriesRow,
+                false
+            )
+            val name = category.displayName(languageTag)
+            item.contentDescription = name
+            item.findViewById<ImageView>(R.id.recentCategoryIcon)
+                .setImageResource(category.icon ?: R.drawable.no_image)
+            item.findViewById<TextView>(R.id.recentCategoryLabel).apply {
+                text = name.lowercase(Locale.getDefault())
+                visibility = if (frequentCategoriesShowLabels) View.VISIBLE else View.GONE
+            }
+            item.setOnClickListener {
+                category.categoriesId?.let(::selectCategory)
+            }
+            binding.frequentCategoriesRow.addView(item)
+        }
+        setFrequentCategoriesExpanded(frequentCategoriesExpanded, animate = false, persist = false)
+    }
+
+    private fun orderCategoriesPanels() {
+        val container = binding.categoriesPanelsContainer
+        val panels = mapOf(
+            Constants.CATEGORIES_PANEL_RECENT to binding.recentCategoriesPanel,
+            Constants.CATEGORIES_PANEL_FREQUENT to binding.frequentCategoriesPanel
+        )
+        val visiblePanelKeys = CategoriesPanelsOrder.get(
+            requireContext().getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+        ).filter { panels[it]?.visibility == View.VISIBLE }
+        val panelGap = resources.getDimensionPixelSize(R.dimen.margin_half_normal)
+        CategoriesPanelsOrder.get(
+            requireContext().getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+        ).forEach { panelKey ->
+            panels[panelKey]?.let { panel ->
+                container.removeView(panel)
+                panel.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    topMargin = if (visiblePanelKeys.firstOrNull() == panelKey) 0 else panelGap
+                }
+                container.addView(panel)
+            }
+        }
+    }
+
     private fun setRecentCategoriesExpanded(
         expanded: Boolean,
         animate: Boolean,
@@ -526,6 +624,42 @@ class CategoriesFragment : Fragment() {
                 .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
                 .edit()
                 .putBoolean(Constants.RECENT_CATEGORIES_PANEL_EXPANDED, expanded)
+                .apply()
+        }
+    }
+
+    private fun setFrequentCategoriesExpanded(
+        expanded: Boolean,
+        animate: Boolean,
+        persist: Boolean
+    ) {
+        frequentCategoriesExpanded = expanded
+        binding.frequentCategoriesExpandButton.setImageResource(
+            if (expanded) R.drawable.category_arrow_drop_up else R.drawable.category_arrow_drop_down
+        )
+        val targetHeight = if (expanded) requireContext().dpToPx(52) else 0
+        val scroll = binding.frequentCategoriesScroll
+        if (animate) {
+            val startHeight = scroll.height
+            android.animation.ValueAnimator.ofInt(startHeight, targetHeight).apply {
+                duration = 250L
+                addUpdateListener { animator ->
+                    scroll.layoutParams = scroll.layoutParams.apply {
+                        height = animator.animatedValue as Int
+                    }
+                }
+                start()
+            }
+        } else {
+            scroll.layoutParams = scroll.layoutParams.apply {
+                height = targetHeight
+            }
+        }
+        if (persist) {
+            requireContext()
+                .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(Constants.FREQUENT_CATEGORIES_PANEL_EXPANDED, expanded)
                 .apply()
         }
     }

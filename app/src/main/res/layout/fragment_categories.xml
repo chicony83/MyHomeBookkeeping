@@ -98,81 +98,159 @@
             app:layout_constraintBottom_toTopOf="@id/categoryOrderDoneButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recentCategoriesPanel"
+            app:layout_constraintTop_toBottomOf="@id/categoriesPanelsContainer"
             tools:listitem="@layout/recycler_view_item_category_group" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/recentCategoriesPanel"
+        <LinearLayout
+            android:id="@+id/categoriesPanelsContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_half_normal"
-            android:background="@drawable/category_group_background"
-            android:minHeight="28dp"
-            android:paddingStart="@dimen/margin_half_normal"
-            android:paddingTop="@dimen/margin_quarter_of_normal"
-            android:paddingEnd="@dimen/margin_half_normal"
-            android:paddingBottom="@dimen/margin_quarter_of_normal"
+            android:orientation="vertical"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_til"
             tools:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/recentCategoriesHeader"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recentCategoriesPanel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:minHeight="24dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/recentCategoriesTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/recent_categories_panel_title"
-                    android:textColor="@color/categoryTextSecondary"
-                    android:textSize="9sp" />
-
-                <ImageButton
-                    android:id="@+id/recentCategoriesExpandButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:clickable="false"
-                    android:contentDescription="@string/content_description_recent_categories_expand"
-                    android:focusable="false"
-                    android:padding="2dp"
-                    android:src="@drawable/category_arrow_drop_up"
-                    app:tint="@color/categoryTextSecondary" />
-            </LinearLayout>
-
-            <HorizontalScrollView
-                android:id="@+id/recentCategoriesScroll"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:clipToPadding="false"
-                android:overScrollMode="ifContentScrolls"
-                android:scrollbars="none"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recentCategoriesHeader">
+                android:background="@drawable/category_group_background"
+                android:minHeight="28dp"
+                android:paddingStart="@dimen/margin_half_normal"
+                android:paddingTop="@dimen/margin_quarter_of_normal"
+                android:paddingEnd="@dimen/margin_half_normal"
+                android:paddingBottom="@dimen/margin_quarter_of_normal"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/recentCategoriesRow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:id="@+id/recentCategoriesHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:minHeight="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/recentCategoriesTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/recent_categories_panel_title"
+                        android:textColor="@color/categoryTextSecondary"
+                        android:textSize="9sp" />
+
+                    <ImageButton
+                        android:id="@+id/recentCategoriesExpandButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:clickable="false"
+                        android:contentDescription="@string/content_description_recent_categories_expand"
+                        android:focusable="false"
+                        android:padding="2dp"
+                        android:src="@drawable/category_arrow_drop_up"
+                        app:tint="@color/categoryTextSecondary" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:id="@+id/recentCategoriesScroll"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:clipToPadding="false"
+                    android:overScrollMode="ifContentScrolls"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recentCategoriesHeader">
+
+                    <LinearLayout
+                        android:id="@+id/recentCategoriesRow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/frequentCategoriesPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_half_normal"
+                android:background="@drawable/category_group_background"
+                android:minHeight="28dp"
+                android:paddingStart="@dimen/margin_half_normal"
+                android:paddingTop="@dimen/margin_quarter_of_normal"
+                android:paddingEnd="@dimen/margin_half_normal"
+                android:paddingBottom="@dimen/margin_quarter_of_normal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/frequentCategoriesHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:minHeight="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/frequentCategoriesTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/frequent_categories_panel_title"
+                        android:textColor="@color/categoryTextSecondary"
+                        android:textSize="9sp" />
+
+                    <ImageButton
+                        android:id="@+id/frequentCategoriesExpandButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:clickable="false"
+                        android:contentDescription="@string/content_description_frequent_categories_expand"
+                        android:focusable="false"
+                        android:padding="2dp"
+                        android:src="@drawable/category_arrow_drop_up"
+                        app:tint="@color/categoryTextSecondary" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:id="@+id/frequentCategoriesScroll"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:clipToPadding="false"
+                    android:overScrollMode="ifContentScrolls"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frequentCategoriesHeader">
+
+                    <LinearLayout
+                        android:id="@+id/frequentCategoriesRow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/categoryOrderDoneButton"

@@ -14,7 +14,9 @@ import com.chico.myhomebookkeeping.db.entity.Currencies
 import com.chico.myhomebookkeeping.domain.CashAccountsUseCase
 import com.chico.myhomebookkeeping.domain.CurrenciesUseCase
 import com.chico.myhomebookkeeping.obj.AppLanguage
+import com.chico.myhomebookkeeping.obj.CategoriesPanelsOrder
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.obj.FrequentCategoriesPanel
 import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.obj.RecentCategoriesPanel
 import com.chico.myhomebookkeeping.ui.paymentPackage.newMoneyMoving.QuickPaymentSettings
@@ -81,6 +83,22 @@ class SettingsViewModel(
     val recentCategoriesLabelsEnabled: LiveData<Boolean>
         get() = _recentCategoriesLabelsEnabled
 
+    private val _frequentCategoriesPanelEnabled = MutableLiveData<Boolean>()
+    val frequentCategoriesPanelEnabled: LiveData<Boolean>
+        get() = _frequentCategoriesPanelEnabled
+
+    private val _frequentCategoriesLimit = MutableLiveData<Int>()
+    val frequentCategoriesLimit: LiveData<Int>
+        get() = _frequentCategoriesLimit
+
+    private val _frequentCategoriesPanelTitleEnabled = MutableLiveData<Boolean>()
+    val frequentCategoriesPanelTitleEnabled: LiveData<Boolean>
+        get() = _frequentCategoriesPanelTitleEnabled
+
+    private val _frequentCategoriesLabelsEnabled = MutableLiveData<Boolean>()
+    val frequentCategoriesLabelsEnabled: LiveData<Boolean>
+        get() = _frequentCategoriesLabelsEnabled
+
     init {
         val currentVersion = app.getString(R.string.current_version)
         val packageInfo = app.packageManager.getPackageInfo(app.packageName, 0)
@@ -101,6 +119,12 @@ class SettingsViewModel(
             RecentCategoriesPanel.shouldShowTitle(sharedPreferences)
         _recentCategoriesLabelsEnabled.value =
             RecentCategoriesPanel.shouldShowLabels(sharedPreferences)
+        _frequentCategoriesPanelEnabled.value = FrequentCategoriesPanel.isEnabled(sharedPreferences)
+        _frequentCategoriesLimit.value = FrequentCategoriesPanel.limit(sharedPreferences)
+        _frequentCategoriesPanelTitleEnabled.value =
+            FrequentCategoriesPanel.shouldShowTitle(sharedPreferences)
+        _frequentCategoriesLabelsEnabled.value =
+            FrequentCategoriesPanel.shouldShowLabels(sharedPreferences)
     }
 
     fun saveQuickPaymentSettings(settings: QuickPaymentSettings) {
@@ -173,6 +197,9 @@ class SettingsViewModel(
         sharedPreferences.edit()
             .putBoolean(Constants.RECENT_CATEGORIES_PANEL_ENABLED, isEnabled)
             .apply()
+        if (isEnabled) {
+            CategoriesPanelsOrder.moveToBottom(sharedPreferences, Constants.CATEGORIES_PANEL_RECENT)
+        }
         _recentCategoriesPanelEnabled.value = RecentCategoriesPanel.isEnabled(sharedPreferences)
     }
 
@@ -203,6 +230,49 @@ class SettingsViewModel(
             .apply()
         _recentCategoriesLabelsEnabled.value =
             RecentCategoriesPanel.shouldShowLabels(sharedPreferences)
+    }
+
+    fun saveFrequentCategoriesPanelEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.FREQUENT_CATEGORIES_PANEL_ENABLED, isEnabled)
+            .apply()
+        if (isEnabled) {
+            CategoriesPanelsOrder.moveToBottom(
+                sharedPreferences,
+                Constants.CATEGORIES_PANEL_FREQUENT
+            )
+        }
+        _frequentCategoriesPanelEnabled.value =
+            FrequentCategoriesPanel.isEnabled(sharedPreferences)
+    }
+
+    fun saveFrequentCategoriesLimit(limit: Int) {
+        sharedPreferences.edit()
+            .putInt(
+                Constants.FREQUENT_CATEGORIES_LIMIT,
+                limit.coerceIn(
+                    Constants.FREQUENT_CATEGORIES_MIN_LIMIT,
+                    Constants.FREQUENT_CATEGORIES_MAX_LIMIT
+                )
+            )
+            .apply()
+        _frequentCategoriesLimit.value = FrequentCategoriesPanel.limit(sharedPreferences)
+    }
+
+    fun saveFrequentCategoriesPanelTitleEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.FREQUENT_CATEGORIES_PANEL_SHOW_TITLE, isEnabled)
+            .apply()
+        _frequentCategoriesPanelTitleEnabled.value =
+            FrequentCategoriesPanel.shouldShowTitle(sharedPreferences)
+    }
+
+    fun saveFrequentCategoriesLabelsEnabled(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(Constants.FREQUENT_CATEGORIES_SHOW_LABELS, isEnabled)
+            .apply()
+        _frequentCategoriesLabelsEnabled.value =
+            FrequentCategoriesPanel.shouldShowLabels(sharedPreferences)
     }
 
     suspend fun getAllCurrencies(): List<Currencies> {

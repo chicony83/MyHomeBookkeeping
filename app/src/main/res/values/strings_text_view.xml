@@ -36,4 +36,5 @@
     <string name="report_categories_select_all">Select all</string>
     <string name="report_categories_clear_all">Clear all</string>
     <string name="recent_categories_panel_title">recent used</string>
+    <string name="frequent_categories_panel_title">frequently used</string>
 </resources>

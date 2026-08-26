@@ -75,6 +75,10 @@ class SettingsFragment : Fragment() {
     private var recentCategoriesLimit = Constants.RECENT_CATEGORIES_DEFAULT_LIMIT
     private var isRecentCategoriesPanelTitleEnabled = true
     private var isRecentCategoriesLabelsEnabled = false
+    private var isFrequentCategoriesPanelEnabled = false
+    private var frequentCategoriesLimit = Constants.FREQUENT_CATEGORIES_DEFAULT_LIMIT
+    private var isFrequentCategoriesPanelTitleEnabled = true
+    private var isFrequentCategoriesLabelsEnabled = false
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -283,6 +287,27 @@ class SettingsFragment : Fragment() {
                     settingsViewModel.saveRecentCategoriesLabelsEnabled(isChecked)
                 }
             }
+            frequentCategoriesPanelCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isFrequentCategoriesPanelEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveFrequentCategoriesPanelEnabled(isChecked)
+                }
+            }
+            frequentCategoriesLimitRow.setOnClickListener {
+                showFrequentCategoriesLimitDialog()
+            }
+            frequentCategoriesPanelTitleCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isFrequentCategoriesPanelTitleEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveFrequentCategoriesPanelTitleEnabled(isChecked)
+                }
+            }
+            frequentCategoriesLabelsCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                isFrequentCategoriesLabelsEnabled = isChecked
+                if (!isBindingSettings) {
+                    settingsViewModel.saveFrequentCategoriesLabelsEnabled(isChecked)
+                }
+            }
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -365,6 +390,30 @@ class SettingsFragment : Fragment() {
                 updateRecentCategoriesSettingsValues()
                 isBindingSettings = false
             }
+            frequentCategoriesPanelEnabled.observe(viewLifecycleOwner) {
+                isFrequentCategoriesPanelEnabled = it
+                isBindingSettings = true
+                updateFrequentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
+            frequentCategoriesLimit.observe(viewLifecycleOwner) {
+                this@SettingsFragment.frequentCategoriesLimit = it
+                isBindingSettings = true
+                updateFrequentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
+            frequentCategoriesPanelTitleEnabled.observe(viewLifecycleOwner) {
+                isFrequentCategoriesPanelTitleEnabled = it
+                isBindingSettings = true
+                updateFrequentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
+            frequentCategoriesLabelsEnabled.observe(viewLifecycleOwner) {
+                isFrequentCategoriesLabelsEnabled = it
+                isBindingSettings = true
+                updateFrequentCategoriesSettingsValues()
+                isBindingSettings = false
+            }
         }
         loadDefaultSelectionTitles()
 
@@ -412,6 +461,7 @@ class SettingsFragment : Fragment() {
         binding.journalDateSeparatorsCheckBox.isChecked = isJournalDateSeparatorsEnabled
         binding.categoryUsageCountCheckBox.isChecked = isCategoryUsageCountEnabled
         updateRecentCategoriesSettingsValues()
+        updateFrequentCategoriesSettingsValues()
         binding.amountScrollDigitsContainer.visibility =
             if (amountInputMode == Constants.QUICK_PAYMENT_AMOUNT_INPUT_SCROLL) {
                 View.VISIBLE
@@ -425,6 +475,14 @@ class SettingsFragment : Fragment() {
         binding.recentCategoriesLimitValue.text = recentCategoriesLimit.toString()
         binding.recentCategoriesPanelTitleCheckBox.isChecked = isRecentCategoriesPanelTitleEnabled
         binding.recentCategoriesLabelsCheckBox.isChecked = isRecentCategoriesLabelsEnabled
+    }
+
+    private fun updateFrequentCategoriesSettingsValues() {
+        binding.frequentCategoriesPanelCheckBox.isChecked = isFrequentCategoriesPanelEnabled
+        binding.frequentCategoriesLimitValue.text = frequentCategoriesLimit.toString()
+        binding.frequentCategoriesPanelTitleCheckBox.isChecked =
+            isFrequentCategoriesPanelTitleEnabled
+        binding.frequentCategoriesLabelsCheckBox.isChecked = isFrequentCategoriesLabelsEnabled
     }
 
     private fun bindQuickAccessSettings() {
@@ -765,24 +823,59 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showRecentCategoriesLimitDialog() {
+        showCategoriesLimitDialog(
+            titleRes = R.string.settings_recent_categories_limit,
+            rangeRes = R.string.settings_recent_categories_limit_range,
+            currentValue = recentCategoriesLimit,
+            min = Constants.RECENT_CATEGORIES_MIN_LIMIT,
+            max = Constants.RECENT_CATEGORIES_MAX_LIMIT
+        ) { value ->
+            recentCategoriesLimit = value
+            updateRecentCategoriesSettingsValues()
+            settingsViewModel.saveRecentCategoriesLimit(value)
+        }
+    }
+
+    private fun showFrequentCategoriesLimitDialog() {
+        showCategoriesLimitDialog(
+            titleRes = R.string.settings_frequent_categories_limit,
+            rangeRes = R.string.settings_frequent_categories_limit_range,
+            currentValue = frequentCategoriesLimit,
+            min = Constants.FREQUENT_CATEGORIES_MIN_LIMIT,
+            max = Constants.FREQUENT_CATEGORIES_MAX_LIMIT
+        ) { value ->
+            frequentCategoriesLimit = value
+            updateFrequentCategoriesSettingsValues()
+            settingsViewModel.saveFrequentCategoriesLimit(value)
+        }
+    }
+
+    private fun showCategoriesLimitDialog(
+        titleRes: Int,
+        rangeRes: Int,
+        currentValue: Int,
+        min: Int,
+        max: Int,
+        onSubmit: (Int) -> Unit
+    ) {
         val padding = (20 * resources.displayMetrics.density).toInt()
         val input = EditText(requireContext()).apply {
             inputType = InputType.TYPE_CLASS_NUMBER
-            setText(recentCategoriesLimit.toString())
+            setText(currentValue.toString())
             selectAll()
-            hint = getString(R.string.settings_recent_categories_limit_range)
+            hint = getString(rangeRes)
         }
         val fields = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(padding, 0, padding, 0)
             addView(TextView(requireContext()).apply {
-                text = getString(R.string.settings_recent_categories_limit_range)
+                text = getString(rangeRes)
                 textSize = 12f
             })
             addView(input)
         }
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle(R.string.settings_recent_categories_limit)
+            .setTitle(titleRes)
             .setView(fields)
             .setNegativeButton(R.string.text_on_button_cancel, null)
             .setPositiveButton(R.string.text_on_button_submit, null)
@@ -790,15 +883,11 @@ class SettingsFragment : Fragment() {
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val value = input.text.toString().toIntOrNull()
-                if (value == null ||
-                    value !in Constants.RECENT_CATEGORIES_MIN_LIMIT..Constants.RECENT_CATEGORIES_MAX_LIMIT
-                ) {
-                    input.error = getString(R.string.settings_recent_categories_limit_range)
+                if (value == null || value !in min..max) {
+                    input.error = getString(rangeRes)
                     return@setOnClickListener
                 }
-                recentCategoriesLimit = value
-                updateRecentCategoriesSettingsValues()
-                settingsViewModel.saveRecentCategoriesLimit(value)
+                onSubmit(value)
                 dialog.dismiss()
             }
         }

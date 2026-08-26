@@ -25,6 +25,11 @@
     <string name="settings_recent_categories_limit_range">min 5 - max 20</string>
     <string name="settings_recent_categories_panel_show_title">Показывать подпись панели последних использованных категорий</string>
     <string name="settings_recent_categories_show_labels">Показывать подписи категорий в последних использованных</string>
+    <string name="settings_frequent_categories_panel_enabled">Часто используемые категории</string>
+    <string name="settings_frequent_categories_limit">Количество показываемых категорий</string>
+    <string name="settings_frequent_categories_limit_range">min 5 - max 20</string>
+    <string name="settings_frequent_categories_panel_show_title">Показывать подпись панели часто используемых категорий</string>
+    <string name="settings_frequent_categories_show_labels">Показывать подписи категорий в часто используемых</string>
     <string name="settings_journal_section_title">Журнал</string>
     <string name="settings_journal_currency_display_title">Название валюты в журнале</string>
     <string name="settings_journal_currency_display_name">Полное название</string>

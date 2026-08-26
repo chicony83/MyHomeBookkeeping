@@ -80,11 +80,11 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: keep Categories populated after returning from new payment with the Back button.
 - Completed: show an entry-oriented Categories title except when opened from Journal category filtering.
 - Completed: move category order editing into Settings, add a Categories settings shortcut, add an optional usage-frequency display, and remove parent-row subcategory counts.
+- Completed: add a frequently used categories panel on the Categories screen, sorted left-to-right by usage count, with matching settings and switchable panel order.
 - Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.
 - Consider usage-frequency sorting for currencies, accounts, and categories.
-- Add a frequently used categories panel in a separate branch, visually matching the recent used categories panel.
 
 ## Security
 
@@ -105,5 +105,5 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 - Recent used categories are stored in `SharedPreferences` through `RecentCategoriesPanel`; the list is a left-to-right queue where a repeated category moves to the first position.
 - The recent panel is updated only when a regular income/spending payment successfully increments `usage_count`; transfers and transfer fees stay out.
-- A future frequently used panel should reuse the same Categories screen placement, tiny title style, centered clickable header, gray expand indicator, 250 ms collapse animation, and localized settings pattern.
-- For frequently used categories, prefer deriving order from `usage_count` instead of mutating the recent queue; keep parent categories hidden and display only real categories.
+- Categories panel order is stored in `SharedPreferences` through `CategoriesPanelsOrder`; when a panel is enabled in Settings, it moves below the other enabled panels.
+- Frequently used categories reuse the recent panel style and derive their order from `usage_count`; parent categories stay hidden and only real categories are displayed.
