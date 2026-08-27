@@ -199,7 +199,7 @@ object MoneyMovingCreateSimpleQuery {
         var queryString1 = queryString
         if (endTimePeriodLongSP > 0) {
             queryString1 += addAnd()
-            queryString1 += "time_stamp < :time_stamp"
+            queryString1 += "time_stamp <= :time_stamp"
             argsList.add(endTimePeriodLongSP)
         }
         return queryString1
@@ -213,7 +213,7 @@ object MoneyMovingCreateSimpleQuery {
         var queryString1 = queryString
         if (startTimePeriodLongSP > 0) {
             queryString1 += addAnd()
-            queryString1 += "time_stamp > :time_stamp"
+            queryString1 += "time_stamp >= :time_stamp"
             argsList.add(startTimePeriodLongSP)
         }
         return queryString1

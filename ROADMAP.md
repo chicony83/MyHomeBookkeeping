@@ -23,6 +23,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: add centered date separators between journal payments, with Today, Yesterday, Day before yesterday, and localized long dates.
 - Completed: add a setting for showing parent categories in the Journal as icon, icon with label, or label.
 - Completed: show category bulk-selection buttons only when Categories is opened from the Journal category filter.
+- Completed: add a reusable time-period picker for the Journal with local-day boundaries, dynamic presets, and a separately stored period mode.
 - Decide whether the journal currency display setting should also apply to fast payment cards and payment detail dialogs.
 
 ## Reports
@@ -37,6 +38,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: continue typography and spacing polish from the current reports baseline.
 - Completed: group tiny donut slices into a neutral unlabeled sector, scroll tapped slices to their breakdown rows, highlight the selected rows, and provide a fading return-to-chart button.
 - Completed: remove the unused report menu fragment so Reports navigation goes directly to the active report screen.
+- Completed: add the reusable time-period picker to Reports with local-day boundaries, dynamic presets, and an independently stored period mode.
 - Later: add multi-currency report handling instead of assuming a single displayed currency.
 
 ## First Launch And Defaults

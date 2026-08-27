@@ -25,22 +25,27 @@ class SetTextOnButtons(val resources: Resources) {
     fun textOnTimePeriodButton(
         _buttonTextOfTimePeriod: MutableLiveData<String>,
         startTimePeriodLongSP: Long,
-        endTimePeriodLongSP: Long
+        endTimePeriodLongSP: Long,
+        timePeriodMode: String = Constants.TIME_PERIOD_MODE_CUSTOM
     ) {
 
         val text: String = getResourceText(R.string.text_on_button_time_period)
+        val presetText = timePeriodModeText(timePeriodMode)
         var timePeriod = ""
         val textFrom = getResourceText(R.string.text_on_button_time_period_from)
         val textTo = getResourceText(R.string.text_on_button_time_period_to)
         val textAllTime = getResourceText(R.string.text_on_button_time_period_all_time)
-        if (modelCheck.isPositiveValue(startTimePeriodLongSP)) {
+        if (presetText.isNotEmpty()) {
+            timePeriod = presetText
+        }
+        if (presetText.isEmpty() && modelCheck.isPositiveValue(startTimePeriodLongSP)) {
             timePeriod =
                 textFrom +
                         space +
                         startTimePeriodLongSP.parseTimeFromMillisShortDate() +
                         space
         }
-        if (modelCheck.isPositiveValue(endTimePeriodLongSP)) {
+        if (presetText.isEmpty() && modelCheck.isPositiveValue(endTimePeriodLongSP)) {
             timePeriod =
                 timePeriod +
                         space +
@@ -48,7 +53,7 @@ class SetTextOnButtons(val resources: Resources) {
                         space +
                         endTimePeriodLongSP.parseTimeFromMillisShortDate()
         }
-        if ((!modelCheck.isPositiveValue(startTimePeriodLongSP))
+        if (presetText.isEmpty() && (!modelCheck.isPositiveValue(startTimePeriodLongSP))
             and (!modelCheck.isPositiveValue(endTimePeriodLongSP))
         ) {
             timePeriod = textAllTime
@@ -56,6 +61,22 @@ class SetTextOnButtons(val resources: Resources) {
         Message.log(timePeriod)
         launchUi {
             _buttonTextOfTimePeriod.postValue(createButtonText(text, timePeriod))
+        }
+    }
+
+    fun timePeriodModeText(timePeriodMode: String): String {
+        return when (timePeriodMode) {
+            Constants.TIME_PERIOD_MODE_ALL_TIME -> getResourceText(R.string.text_on_button_time_period_all_time)
+            Constants.TIME_PERIOD_MODE_THIS_WEEK -> getResourceText(R.string.text_on_button_time_period_this_week)
+            Constants.TIME_PERIOD_MODE_LAST_WEEK -> getResourceText(R.string.text_on_button_time_period_last_week)
+            Constants.TIME_PERIOD_MODE_THIS_MONTH -> getResourceText(R.string.text_on_button_time_period_this_month)
+            Constants.TIME_PERIOD_MODE_LAST_MONTH -> getResourceText(R.string.text_on_button_time_period_last_month)
+            Constants.TIME_PERIOD_MODE_LAST_28_DAYS -> getResourceText(R.string.text_on_button_time_period_last_28_days)
+            Constants.TIME_PERIOD_MODE_LAST_30_DAYS -> getResourceText(R.string.text_on_button_time_period_last_30_days)
+            Constants.TIME_PERIOD_MODE_LAST_90_DAYS -> getResourceText(R.string.text_on_button_time_period_last_90_days)
+            Constants.TIME_PERIOD_MODE_LAST_180_DAYS -> getResourceText(R.string.text_on_button_time_period_last_180_days)
+            Constants.TIME_PERIOD_MODE_LAST_365_DAYS -> getResourceText(R.string.text_on_button_time_period_last_365_days)
+            else -> ""
         }
     }
 

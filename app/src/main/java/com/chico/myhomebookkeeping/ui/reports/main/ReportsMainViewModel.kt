@@ -26,6 +26,7 @@ import com.chico.myhomebookkeeping.db.simpleQuery.ReportsCreateSimpleQuery
 import com.chico.myhomebookkeeping.ui.reports.ConvToList
 import com.chico.myhomebookkeeping.data.reports.ReportsCashAccountItem
 import com.chico.myhomebookkeeping.data.reports.ReportsCurrenciesItem
+import com.chico.myhomebookkeeping.ui.timePeriod.TimePeriodResolver
 import com.chico.myhomebookkeeping.utils.launchIo
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
 import kotlinx.coroutines.*
@@ -39,12 +40,14 @@ class ReportsMainViewModel(
     private val spName = Constants.SP_NAME
     private val argsStartTimePeriodKey = Constants.ARGS_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodKey = Constants.ARGS_REPORTS_END_TIME_PERIOD
+    private val argsTimePeriodModeKey = Constants.ARGS_REPORTS_TIME_PERIOD_MODE
 
     private val minusOneInt = Constants.MINUS_ONE_VAL_INT
     private val minusOneLong = Constants.MINUS_ONE_VAL_LONG
 
     private var startTimePeriodLongSP = minusOneLong
     private var endTimePeriodLongSP = minusOneLong
+    private var timePeriodModeSP = Constants.TIME_PERIOD_MODE_CUSTOM
 
     private val sharedPreferences: SharedPreferences =
         app.getSharedPreferences(spName, Context.MODE_PRIVATE)
@@ -142,7 +145,8 @@ class ReportsMainViewModel(
             textOnTimePeriodButton(
                 _buttonTextOfTimePeriod,
                 startTimePeriodLongSP,
-                endTimePeriodLongSP
+                endTimePeriodLongSP,
+                timePeriodModeSP
             )
         }
         _periodText.postValue(createPeriodText())
@@ -197,8 +201,17 @@ class ReportsMainViewModel(
     }
 
     private fun getTimePeriodsSP() {
-        startTimePeriodLongSP = getSP.getLong(argsStartTimePeriodKey)
-        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriodKey)
+        val savedStartTimePeriod = getSP.getLong(argsStartTimePeriodKey)
+        val savedEndTimePeriod = getSP.getLong(argsEndTimePeriodKey)
+        timePeriodModeSP = getSP.getString(argsTimePeriodModeKey).takeUnless { it.isNullOrBlank() }
+            ?: Constants.TIME_PERIOD_MODE_CUSTOM
+        val resolvedPeriod = TimePeriodResolver.resolve(
+            timePeriodModeSP,
+            savedStartTimePeriod,
+            savedEndTimePeriod
+        )
+        startTimePeriodLongSP = resolvedPeriod.startTime
+        endTimePeriodLongSP = resolvedPeriod.endTime
     }
 
     private fun selectedCategoriesSetKey(): String {
@@ -297,6 +310,9 @@ class ReportsMainViewModel(
     }
 
     private fun createPeriodText(): String {
+        val presetText = setText.timePeriodModeText(timePeriodModeSP)
+        if (presetText.isNotEmpty()) return presetText
+
         val allTime = app.getString(com.chico.myhomebookkeeping.R.string.text_on_button_time_period_all_time)
         val from = app.getString(com.chico.myhomebookkeeping.R.string.text_on_button_time_period_from)
         val to = app.getString(com.chico.myhomebookkeeping.R.string.text_on_button_time_period_to)

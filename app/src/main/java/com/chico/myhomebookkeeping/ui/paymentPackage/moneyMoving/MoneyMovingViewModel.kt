@@ -22,6 +22,7 @@ import com.chico.myhomebookkeeping.domain.MoneyMovingUseCase
 import com.chico.myhomebookkeeping.helpers.SetTextOnButtons
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.sp.SetSP
+import com.chico.myhomebookkeeping.ui.timePeriod.TimePeriodResolver
 import com.chico.myhomebookkeeping.utils.launchForResult
 import kotlinx.coroutines.*
 
@@ -38,6 +39,7 @@ class MoneyMovingViewModel(
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
     private val argsStartTimePeriod = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
     private val argsEndTimePeriod = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
+    private val argsTimePeriodMode = Constants.ARGS_QUERY_PAYMENT_TIME_PERIOD_MODE
 
     private val argsNewEntryOfMoneyMovingInDbIsAdded = Constants.ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED
 
@@ -47,6 +49,7 @@ class MoneyMovingViewModel(
 
     private var startTimePeriodLongSP = minusOneLong
     private var endTimePeriodLongSP = minusOneLong
+    private var timePeriodModeSP = Constants.TIME_PERIOD_MODE_CUSTOM
     private var cashAccountIntSP = -1
     private var currencyIntSP: Int = -1
     private var categoryIntSP = -1
@@ -140,14 +143,24 @@ class MoneyMovingViewModel(
             textOnTimePeriodButton(
                 _buttonTextOfTimePeriod,
                 startTimePeriodLongSP,
-                endTimePeriodLongSP
+                endTimePeriodLongSP,
+                timePeriodModeSP
             )
         }
     }
 
     private fun getValuesSP() {
-        startTimePeriodLongSP = getSP.getLong(argsStartTimePeriod)
-        endTimePeriodLongSP = getSP.getLong(argsEndTimePeriod)
+        val savedStartTimePeriod = getSP.getLong(argsStartTimePeriod)
+        val savedEndTimePeriod = getSP.getLong(argsEndTimePeriod)
+        timePeriodModeSP = getSP.getString(argsTimePeriodMode).takeUnless { it.isNullOrBlank() }
+            ?: Constants.TIME_PERIOD_MODE_CUSTOM
+        val resolvedPeriod = TimePeriodResolver.resolve(
+            timePeriodModeSP,
+            savedStartTimePeriod,
+            savedEndTimePeriod
+        )
+        startTimePeriodLongSP = resolvedPeriod.startTime
+        endTimePeriodLongSP = resolvedPeriod.endTime
         incomeSpendingStringSP = getSP.getString(argsIncomeSpendingKey) ?: argsNone
         cashAccountIntSP = getSP.getInt(argsCashAccountKey)
         currencyIntSP = getSP.getInt(argsCurrencyKey)

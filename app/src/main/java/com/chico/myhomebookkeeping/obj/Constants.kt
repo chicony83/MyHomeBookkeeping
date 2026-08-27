@@ -27,6 +27,7 @@ object Constants {
 
     const val ARGS_QUERY_PAYMENT_START_TIME_PERIOD = "queryStartTimePeriod"
     const val ARGS_QUERY_PAYMENT_END_TIME_PERIOD = "queryEndTimePeriod"
+    const val ARGS_QUERY_PAYMENT_TIME_PERIOD_MODE = "queryTimePeriodMode"
     const val ARGS_QUERY_PAYMENT_CASH_ACCOUNT_KEY = "queryCashAccount"
     const val ARGS_QUERY_PAYMENT_CURRENCY_KEY = "queryCurrency"
     const val ARGS_QUERY_PAYMENT_CATEGORY_KEY = "queryCategory"
@@ -36,6 +37,7 @@ object Constants {
 
     const val ARGS_REPORTS_START_TIME_PERIOD = "startTimePeriodForReports"
     const val ARGS_REPORTS_END_TIME_PERIOD = "endTimePeriodForReports"
+    const val ARGS_REPORTS_TIME_PERIOD_MODE = "timePeriodModeForReports"
     const val ARGS_REPORTS_CASH_ACCOUNT_KEY = "cashAccountForReports"
     const val ARGS_REPORTS_CURRENCY_KEY = "currencyForReports"
     const val ARGS_REPORTS_CATEGORY_KEY = "categoryForReports"
@@ -62,6 +64,18 @@ object Constants {
     const val ARGS_CHANGE_FAST_PAYMENT_DESCRIPTION = "descriptionFastPaymentForChange"
 
     const val FOR_REPORTS_SELECTED_CATEGORIES_LIST_KEY = "reportsSelectedCategoriesList"
+
+    const val TIME_PERIOD_MODE_CUSTOM = "custom"
+    const val TIME_PERIOD_MODE_ALL_TIME = "all_time"
+    const val TIME_PERIOD_MODE_THIS_WEEK = "this_week"
+    const val TIME_PERIOD_MODE_LAST_WEEK = "last_week"
+    const val TIME_PERIOD_MODE_THIS_MONTH = "this_month"
+    const val TIME_PERIOD_MODE_LAST_MONTH = "last_month"
+    const val TIME_PERIOD_MODE_LAST_28_DAYS = "last_28_days"
+    const val TIME_PERIOD_MODE_LAST_30_DAYS = "last_30_days"
+    const val TIME_PERIOD_MODE_LAST_90_DAYS = "last_90_days"
+    const val TIME_PERIOD_MODE_LAST_180_DAYS = "last_180_days"
+    const val TIME_PERIOD_MODE_LAST_365_DAYS = "last_365_days"
 
     const val ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED = "newEntryOfMoneyMovingInDbIsAdded"
 

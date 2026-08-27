@@ -12,6 +12,16 @@
     <string name="text_on_button_time_period_all_time">Всё время</string>
     <string name="text_on_button_time_period_at_first">С начала</string>
     <string name="text_on_button_time_period_to_end">До конца</string>
+    <string name="text_on_button_time_period_custom">Другой диапазон</string>
+    <string name="text_on_button_time_period_this_week">На этой неделе</string>
+    <string name="text_on_button_time_period_last_week">На прошлой неделе</string>
+    <string name="text_on_button_time_period_this_month">В этом месяце</string>
+    <string name="text_on_button_time_period_last_month">В прошлом месяце</string>
+    <string name="text_on_button_time_period_last_28_days">Последние 28 дней</string>
+    <string name="text_on_button_time_period_last_30_days">Последние 30 дней</string>
+    <string name="text_on_button_time_period_last_90_days">Последние 90 дней</string>
+    <string name="text_on_button_time_period_last_180_days">Последние 180 дней</string>
+    <string name="text_on_button_time_period_last_365_days">Последние 365 дней</string>
 
     <string name="text_on_button_help">Помощь</string>
     <string name="text_on_button_quick_payment_settings">Настройки быстрого платежа</string>

@@ -44,11 +44,11 @@ object ReportsCreateSimpleQuery {
         }
         if ((startTimePeriodLong > 0) xor (endTimePeriodLong > 0)) {
             if (startTimePeriodLong > 0) {
-                query1 += " AND time_stamp > :startTime "
+                query1 += " AND time_stamp >= :startTime "
                 argsList.add(startTimePeriodLong)
             }
             if (endTimePeriodLong > 0) {
-                query1 += " AND time_stamp < :endTime"
+                query1 += " AND time_stamp <= :endTime"
                 argsList.add(endTimePeriodLong)
             }
         }

@@ -24,8 +24,10 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     private val argsIsFirstLaunch = Constants.IS_FIRST_LAUNCH
     private val argsStartTimePeriodForQuery = Constants.ARGS_QUERY_PAYMENT_START_TIME_PERIOD
     private val argsEndTimePeriodForQuery = Constants.ARGS_QUERY_PAYMENT_END_TIME_PERIOD
+    private val argsTimePeriodModeForQuery = Constants.ARGS_QUERY_PAYMENT_TIME_PERIOD_MODE
     private val argsStartTimePeriodForReport = Constants.ARGS_REPORTS_START_TIME_PERIOD
     private val argsEndTimePeriodForReports = Constants.ARGS_REPORTS_END_TIME_PERIOD
+    private val argsTimePeriodModeForReports = Constants.ARGS_REPORTS_TIME_PERIOD_MODE
 
     private val argsCreateCategory = Constants.ARGS_NEW_PAYMENT_CATEGORY_KEY
     private val argsQueryCategory = Constants.ARGS_QUERY_PAYMENT_CATEGORY_KEY
@@ -213,16 +215,19 @@ class SetSP(private val spEditor: SharedPreferences.Editor) {
     fun checkAndSaveToSpTimePeriod(
         navControlHelper: NavControlHelper,
         startTimePeriodLong: Long,
-        endTimePeriodLong: Long
+        endTimePeriodLong: Long,
+        timePeriodMode: String
     ) {
         when (navControlHelper.previousFragment()) {
             navMoneyMoving -> {
                 saveToSP(argsStartTimePeriodForQuery, startTimePeriodLong)
                 saveToSP(argsEndTimePeriodForQuery, endTimePeriodLong)
+                saveToSP(argsTimePeriodModeForQuery, timePeriodMode)
             }
             navReports -> {
                 saveToSP(argsStartTimePeriodForReport, startTimePeriodLong)
                 saveToSP(argsEndTimePeriodForReports, endTimePeriodLong)
+                saveToSP(argsTimePeriodModeForReports, timePeriodMode)
             }
         }
     }

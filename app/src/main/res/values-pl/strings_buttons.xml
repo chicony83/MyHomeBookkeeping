@@ -11,6 +11,16 @@
     <string name="text_on_button_time_period_all_time">Cały czas</string>
     <string name="text_on_button_time_period_at_first">Na początku</string>
     <string name="text_on_button_time_period_to_end">Do końca</string>
+    <string name="text_on_button_time_period_custom">Inny zakres</string>
+    <string name="text_on_button_time_period_this_week">W tym tygodniu</string>
+    <string name="text_on_button_time_period_last_week">W zeszłym tygodniu</string>
+    <string name="text_on_button_time_period_this_month">W tym miesiącu</string>
+    <string name="text_on_button_time_period_last_month">W zeszłym miesiącu</string>
+    <string name="text_on_button_time_period_last_28_days">Ostatnie 28 dni</string>
+    <string name="text_on_button_time_period_last_30_days">Ostatnie 30 dni</string>
+    <string name="text_on_button_time_period_last_90_days">Ostatnie 90 dni</string>
+    <string name="text_on_button_time_period_last_180_days">Ostatnie 180 dni</string>
+    <string name="text_on_button_time_period_last_365_days">Ostatnie 365 dni</string>
     <string name="text_on_button_help">Pomoc</string>
     <string name="text_on_button_quick_payment_settings">Ustawienia szybkiej płatności</string>
     <string name="text_on_button_submit">Zatwierdź</string>
