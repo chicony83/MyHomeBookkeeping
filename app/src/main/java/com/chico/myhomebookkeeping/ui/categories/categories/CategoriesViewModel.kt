@@ -213,12 +213,12 @@ class CategoriesViewModel(
         id: Int,
         name: String,
         isIncome: Boolean,
-        iconResource: Int
+        iconKey: String
     ) =
         runBlocking {
             val change = async {
                 CategoriesUseCase.changeCategoryLineWithoutParentCategory(
-                    db = db, id = id, name = name, isIncome = isIncome, iconResource
+                    db = db, id = id, name = name, isIncome = isIncome, iconKey
                 )
             }
             reloadCategories(change.await().toLong())
@@ -228,7 +228,7 @@ class CategoriesViewModel(
         id: Int,
         name: String,
         isIncome: Boolean,
-        iconResource: Int,
+        iconKey: String,
         parentCategoryId: Int
     ) = runBlocking {
         val change = async {
@@ -237,7 +237,7 @@ class CategoriesViewModel(
                 id = id,
                 name = name,
                 isIncome = isIncome,
-                iconResource = iconResource,
+                iconKey = iconKey,
                 parentCategoryId = parentCategoryId
             )
         }

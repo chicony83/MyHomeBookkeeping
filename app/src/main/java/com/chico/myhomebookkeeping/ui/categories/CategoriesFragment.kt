@@ -24,6 +24,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.helpers.displayName
 import com.chico.myhomebookkeeping.helpers.NavControlHelper
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
@@ -512,7 +513,7 @@ class CategoriesFragment : Fragment() {
             val name = category.displayName(languageTag)
             item.contentDescription = name
             item.findViewById<ImageView>(R.id.recentCategoryIcon)
-                .setImageResource(category.icon ?: R.drawable.no_image)
+                .setCategoryIcon(category.iconKey)
             item.findViewById<TextView>(R.id.recentCategoryLabel).apply {
                 text = name.lowercase(Locale.getDefault())
                 visibility = if (recentCategoriesShowLabels) View.VISIBLE else View.GONE
@@ -553,7 +554,7 @@ class CategoriesFragment : Fragment() {
             val name = category.displayName(languageTag)
             item.contentDescription = name
             item.findViewById<ImageView>(R.id.recentCategoryIcon)
-                .setImageResource(category.icon ?: R.drawable.no_image)
+                .setCategoryIcon(category.iconKey)
             item.findViewById<TextView>(R.id.recentCategoryLabel).apply {
                 text = name.lowercase(Locale.getDefault())
                 visibility = if (frequentCategoriesShowLabels) View.VISIBLE else View.GONE
@@ -737,13 +738,13 @@ class CategoriesFragment : Fragment() {
                         id: Int,
                         name: String,
                         isIncome: Boolean,
-                        iconResource: Int
+                        iconKey: String
                     ) {
                         categoriesViewModel.saveChangedCategoryWithoutParentCategory(
                             id,
                             name,
                             isIncome,
-                            iconResource
+                            iconKey
                         )
                     }
 
@@ -751,14 +752,14 @@ class CategoriesFragment : Fragment() {
                         id: Int,
                         name: String,
                         isIncome: Boolean,
-                        iconResource: Int,
+                        iconKey: String,
                         parentCategoryId: Int
                     ) {
                         categoriesViewModel.saveChangedCategoryFull(
                             id,
                             name,
                             isIncome,
-                            iconResource,
+                            iconKey,
                             parentCategoryId
                         )
                     }
@@ -781,13 +782,14 @@ class CategoriesFragment : Fragment() {
                         name: String,
                         isIncome: Boolean,
                         isSelect: Boolean,
-                        icon: Int
+                        iconKey: String
                     ) {
                         val category = Categories(
                             categoryName = name,
                             isIncome = isIncome,
-                            icon = icon,
-                            parentCategoryId = null
+                            icon = R.drawable.no_image,
+                            parentCategoryId = null,
+                            iconKey = iconKey
                         )
                         val result: Long = categoriesViewModel.addNewCategory(category)
                         if (isSelect) {
@@ -800,13 +802,14 @@ class CategoriesFragment : Fragment() {
                         parentCategoryId: Int,
                         isIncome: Boolean,
                         isSelect: Boolean,
-                        icon: Int
+                        iconKey: String
                     ) {
                         val category = Categories(
                             categoryName = name,
                             isIncome = isIncome,
-                            icon = icon,
-                            parentCategoryId = parentCategoryId
+                            icon = R.drawable.no_image,
+                            parentCategoryId = parentCategoryId,
+                            iconKey = iconKey
                         )
                         val result: Long = categoriesViewModel.addNewCategory(category)
                         if (isSelect) {

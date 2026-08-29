@@ -12,6 +12,7 @@ import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForChangeCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemSelectForSelectCallBackInt
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.ui.categories.such.SuchName
 import java.lang.IllegalStateException
 
@@ -41,7 +42,7 @@ class SelectCategoryDialog(
             category?.let { it1 ->
                 parentCategoryName.text = getParentCategoriesName(category.parentCategoryId)
                 categoryName.text = it1.categoryName
-                iconImg.setImageResource(it1.icon ?: R.drawable.no_image)
+                iconImg.setCategoryIcon(it1.iconKey)
             }
             parentCategoryName.setOnClickListener {
                 changeCategory()

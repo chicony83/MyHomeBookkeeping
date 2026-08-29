@@ -13,6 +13,7 @@ import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
 import com.chico.myhomebookkeeping.helpers.UiHelper
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListenerLong
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.obj.DayNightMode
 import com.chico.myhomebookkeeping.obj.PaymentTypeIds
 import com.chico.myhomebookkeeping.utils.parseTimeFromMillisShortDate
@@ -248,12 +249,12 @@ class MoneyMovingAdapter(
 
                 if (parentName.isNullOrBlank() || category.isNullOrBlank()) return
 
-                val parentIcon = moneyMovement.parentCategoryIconValue
+                val parentIcon = moneyMovement.parentCategoryIconKeyValue
                 val shouldShowParentIcon =
                     parentCategoryDisplayMode != Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL &&
                         parentIcon != null
                 if (shouldShowParentIcon) {
-                    parentCategoryIcon.setImageResource(parentIcon)
+                    parentCategoryIcon.setCategoryIcon(parentIcon)
                     parentCategoryIcon.visibility = View.VISIBLE
                 }
 

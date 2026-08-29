@@ -75,7 +75,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Add currency icons.
 - Completed: add favorite category toggles on the Categories screen, with a toolbar filter that shows only favorite categories and collapses groups when the filter is turned off.
 - Completed: add the recent used categories panel on the Categories screen, with a remembered collapse state, localized tiny title, optional tiny category labels, and a 5-20 item setting.
-- Completed: expand the category icon dictionary for default categories and keep new bundled icons backfilled on existing installs.
+- Completed: migrate category icons to an app-owned catalog of stable Material Symbols Rounded keys, use the keys throughout category and report UI, and backfill built-in categories once through `Update72To73` without overwriting selected icons.
 - Completed: add sick leave payments to the default income subcategories and backfill existing installs through the app update flow.
 - Completed: add the Subscriptions & Online Services category group and backfill existing installs through the app update flow.
 - Completed: refine expanded category groups so the parent header and subcategories read as one container with a clean divider transition.

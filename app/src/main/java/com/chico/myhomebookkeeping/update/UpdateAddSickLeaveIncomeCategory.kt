@@ -9,6 +9,7 @@ import com.chico.myhomebookkeeping.domain.DefaultPolishNames
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.icons.IconsMaps
+import com.chico.myhomebookkeeping.icons.CategoryIconCatalog
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
 
@@ -43,6 +44,7 @@ class UpdateAddSickLeaveIncomeCategory {
                 categoryName = CATEGORY_NAME,
                 isIncome = true,
                 icon = categoryIcon,
+                iconKey = "medical_services",
                 parentCategoryId = parentCategoryId,
                 categoryOrder = Int.MAX_VALUE,
                 categoryNameRu = CATEGORY_NAME_RU,

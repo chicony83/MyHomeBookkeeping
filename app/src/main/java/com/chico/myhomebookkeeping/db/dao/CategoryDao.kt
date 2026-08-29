@@ -38,20 +38,20 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table WHERE category_name IN (:names) OR category_name_ru IN (:names) OR category_name_pl IN (:names) ORDER BY categoriesId ASC LIMIT 1")
     suspend fun getOneCategoryByAnyDefaultName(names: List<String>): Categories?
 
-    @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome, icon_category = :iconResource, parent_category_id = NULL WHERE categoriesId = :id")
+    @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome, icon_key = :iconKey, parent_category_id = NULL WHERE categoriesId = :id")
     suspend fun changeLineWithoutCategory(
         id: Int,
         name: String,
         isIncome: Boolean,
-        iconResource: Int
+        iconKey: String
     ): Int
 
-    @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome, icon_category = :iconResource, parent_category_id = :parentCategoryId WHERE categoriesId = :id")
+    @Query("UPDATE category_table SET category_name = :name, is_income = :isIncome, icon_key = :iconKey, parent_category_id = :parentCategoryId WHERE categoriesId = :id")
     suspend fun changeLineFull(
         id: Int,
         name: String,
         isIncome: Boolean,
-        iconResource: Int,
+        iconKey: String,
         parentCategoryId: Int
     ):Int
 

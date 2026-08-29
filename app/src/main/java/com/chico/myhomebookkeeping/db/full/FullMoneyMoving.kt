@@ -34,11 +34,17 @@ class FullMoneyMoving (
     @ColumnInfo(name = "category_icon_value")
     val categoryIconValue:Int?,
 
+    @ColumnInfo(name = "category_icon_key_value")
+    val categoryIconKeyValue: String?,
+
     @ColumnInfo(name = "parent_category_name_value")
     val parentCategoryNameValue:String?,
 
     @ColumnInfo(name = "parent_category_icon_value")
     val parentCategoryIconValue:Int?,
+
+    @ColumnInfo(name = "parent_category_icon_key_value")
+    val parentCategoryIconKeyValue: String?,
 
     @ColumnInfo(name = "is_income")
     val isIncome:Boolean,

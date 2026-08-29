@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.IconsResource
 import com.chico.myhomebookkeeping.helpers.Message
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import java.lang.IllegalStateException
 
@@ -91,7 +92,7 @@ class SelectIconDialog(
         for (i in iconsList.indices) {
             Message.log("---drawing icon $i")
             val imageView = ImageView(requireContext())
-            imageView.setImageResource(iconsList[i].iconResources)
+            imageView.setCategoryIcon(iconsList[i].iconName)
 
             val presetBorder = resources.getDrawable(R.drawable.border, null)
             val nullBorder = resources.getDrawable(R.drawable.border_null, null)
