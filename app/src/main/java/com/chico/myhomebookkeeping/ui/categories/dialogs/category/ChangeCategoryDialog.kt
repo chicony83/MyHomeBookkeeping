@@ -15,6 +15,8 @@ import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
+import com.chico.myhomebookkeeping.icons.CategoryIconCatalog
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnChangeCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
@@ -31,7 +33,7 @@ class ChangeCategoryDialog(
     private val onChangeCategoryCallBack: OnChangeCategoryCallBack = NoOpChangeCategoryCallBack
 ) : DialogFragment() {
 
-    private var iconResource: Int = 0
+    private var iconKey: String = CategoryIconCatalog.DEFAULT_KEY
     private lateinit var iconImg: ImageView
 
     private lateinit var selectedParentCategoryName: String
@@ -61,8 +63,9 @@ class ChangeCategoryDialog(
             val cancelButton = layout.findViewById<Button>(R.id.cancelButton)
 
             categoryNameEditText.setText(category?.categoryName.toString())
-            iconResource = category?.icon ?: R.drawable.no_image
-            iconImg.setImageResource(iconResource)
+            iconKey = CategoryIconCatalog.canonicalKey(category?.iconKey)
+                ?: CategoryIconCatalog.DEFAULT_KEY
+            iconImg.setCategoryIcon(iconKey)
 
             parentCategoryTextView.text = noParentCategory
             if (category?.parentCategoryId != null && category.parentCategoryId > 0) {
@@ -122,7 +125,7 @@ class ChangeCategoryDialog(
                                     id = categoryId,
                                     name = name,
                                     isIncome = isIncome,
-                                    iconResource = iconResource,
+                                    iconKey = iconKey,
                                     parentCategoryId = selectedParentCategory
                                 )
                             } else {
@@ -130,7 +133,7 @@ class ChangeCategoryDialog(
                                     id = categoryId,
                                     name = name,
                                     isIncome = isIncome,
-                                    iconResource = iconResource
+                                    iconKey = iconKey
                                 )
                             }
 
@@ -182,12 +185,13 @@ class ChangeCategoryDialog(
         launchIo {
             val db: IconResourcesDao = dataBase.getDataBase(requireContext()).iconResourcesDao()
             val iconsList = IconResourcesUseCase.getIconsList(db)
+                .filter { it.iconName in CategoryIconCatalog.keys }
             Message.log("---size icons list = ${iconsList.size}")
             launchUi {
                 val dialog = SelectIconDialog(iconsList, object : OnSelectIconCallBack {
                     override fun selectIcon(icon: IconsResource) {
-                        iconResource = icon.iconResources
-                        iconImg.setImageResource(icon.iconResources)
+                        iconKey = icon.iconName
+                        iconImg.setCategoryIcon(iconKey)
                     }
                 })
                 dialog.show(childFragmentManager, getString(R.string.tag_show_dialog))
@@ -222,14 +226,14 @@ class ChangeCategoryDialog(
             id: Int,
             name: String,
             isIncome: Boolean,
-            iconResource: Int
+            iconKey: String
         ) = Unit
 
         override fun changeCategoryFull(
             id: Int,
             name: String,
             isIncome: Boolean,
-            iconResource: Int,
+            iconKey: String,
             parentCategoryId: Int
         ) = Unit
     }

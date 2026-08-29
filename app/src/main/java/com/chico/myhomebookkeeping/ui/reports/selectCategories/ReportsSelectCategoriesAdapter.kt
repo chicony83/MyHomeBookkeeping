@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesForReportsBinding
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.interfaces.OnItemCheckedCallBack
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.google.android.material.checkbox.MaterialCheckBox
 
 class ReportsSelectCategoriesAdapter(
@@ -44,7 +44,7 @@ class ReportsSelectCategoriesAdapter(
             with(binding) {
                 itemId.text = item.id.toString()
                 categoryNameTextView.text = item.name
-                iconImg.setImageResource(item.icon ?: R.drawable.no_image)
+                iconImg.setCategoryIcon(item.iconKey)
                 isCheckedCheckBox.setOnCheckedChangeListener(null)
                 isCheckedCheckBox.buttonIconDrawable = null
                 isCheckedCheckBox.checkedState = when {

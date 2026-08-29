@@ -27,7 +27,9 @@ data class Categories(
     @ColumnInfo(name = "is_hidden")
     val isHidden: Boolean = false,
     @ColumnInfo(name = "hidden_at")
-    val hiddenAt: Long? = null
+    val hiddenAt: Long? = null,
+    @ColumnInfo(name = "icon_key")
+    val iconKey: String? = null
 ) {
     @PrimaryKey(autoGenerate = true)
     var categoriesId: Int? = null

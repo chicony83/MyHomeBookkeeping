@@ -41,7 +41,10 @@ class IconsMaps(private val resources: Resources, private val opPackageName: Str
     }
 
     @SuppressLint("NewApi")
-    fun iconsCategoriesMap() = mapOf(
+    fun iconsCategoriesMap() = legacyCategoryIconsMap() +
+        CategoryIconCatalog.keys.associateWith { R.drawable.no_image }
+
+    private fun legacyCategoryIconsMap() = mapOf(
         CategoryIconNames.Apartment.name to getDrawable(R.drawable.category_apartment),
         CategoryIconNames.Airplane.name to getDrawable(R.drawable.category_airplane),
         CategoryIconNames.ArrowsHorizontal.name to getDrawable(R.drawable.category_arrows_horizontal),

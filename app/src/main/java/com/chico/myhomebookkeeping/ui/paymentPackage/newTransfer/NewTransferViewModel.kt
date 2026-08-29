@@ -491,6 +491,7 @@ class NewTransferViewModel(
                 categoryName = TRANSFER_FEE_CATEGORY_NAME,
                 isIncome = false,
                 icon = null,
+                iconKey = "payments",
                 parentCategoryId = null,
                 categoryNameRu = TRANSFER_FEE_CATEGORY_NAME_RU,
                 categoryNamePl = DefaultPolishNames.categoryName(TRANSFER_FEE_CATEGORY_NAME)

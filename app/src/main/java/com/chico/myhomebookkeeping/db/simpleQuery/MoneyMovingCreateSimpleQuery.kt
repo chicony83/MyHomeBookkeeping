@@ -245,8 +245,11 @@ object MoneyMovingCreateSimpleQuery {
                 "currency_name_short AS currency_short_name_value," +
                 "iso_4217 AS currency_iso_value," +
                 "$categoryName AS category_name_value, " +
+                "icon_category AS category_icon_value, " +
+                "category_table.icon_key AS category_icon_key_value, " +
                 "$parentCategoryName AS parent_category_name_value, " +
                 "name_icon_parent_category AS parent_category_icon_value, " +
+                "parent_categories_table.icon_key AS parent_category_icon_key_value, " +
                 "amount, money_moving_table.payment_type_id = 0 AS is_income, " +
                 "money_moving_table.payment_type_id, payment_type_name, " +
                 "transfer_group_id, transfer_direction, description " +

@@ -17,6 +17,7 @@ import com.chico.myhomebookkeeping.enums.icon.names.CategoriesOfIconsNames
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.icons.IconsMaps
+import com.chico.myhomebookkeeping.icons.CategoryIconCatalog
 
 class Update69To70AddSubscriptionsOnlineServicesCategory {
     suspend fun update(app: Application) {
@@ -96,6 +97,7 @@ class Update69To70AddSubscriptionsOnlineServicesCategory {
                     categoryName = categoryName,
                     isIncome = group.isIncome,
                     icon = categoryIconsMap[group.subcategoryIcons[index].name],
+                    iconKey = CategoryIconCatalog.canonicalKey(group.subcategoryIcons[index].name),
                     parentCategoryId = parentCategoryId,
                     categoryOrder = index,
                     categoryNameRu = group.subcategoriesRu[index],
@@ -119,6 +121,7 @@ class Update69To70AddSubscriptionsOnlineServicesCategory {
         val parentCategory = ParentCategories(
             name = group.parentName,
             icon = categoryIconsMap[group.parentIcon.name],
+            iconKey = CategoryIconCatalog.canonicalKey(group.parentIcon.name),
             parentCategoryOrder = parentCategories.maxOfOrNull { it.parentCategoryOrder }?.plus(1) ?: 0,
             nameRu = group.parentNameRu,
             namePl = group.parentNamePl

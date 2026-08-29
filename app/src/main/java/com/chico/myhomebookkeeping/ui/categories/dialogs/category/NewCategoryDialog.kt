@@ -16,6 +16,8 @@ import com.chico.myhomebookkeeping.domain.IconResourcesUseCase
 import com.chico.myhomebookkeeping.enums.icon.names.NoCategoryNames
 import com.chico.myhomebookkeeping.helpers.CheckString
 import com.chico.myhomebookkeeping.helpers.ParentCategoryHelper
+import com.chico.myhomebookkeeping.icons.CategoryIconCatalog
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.OnSelectIconCallBack
 import com.chico.myhomebookkeeping.interfaces.categories.OnAddNewCategoryCallBack
 import com.chico.myhomebookkeeping.interfaces.currencies.dialog.OnSelectParentCategoryCallBack
@@ -38,7 +40,7 @@ class NewCategoryDialog(
     private lateinit var selectedParentCategoryName: String
 
     private var selectedParentCategoryId = 0
-    private var selectedIconResource: Int = R.drawable.no_image
+    private var selectedIconKey: String = CategoryIconCatalog.DEFAULT_KEY
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -61,16 +63,17 @@ class NewCategoryDialog(
             }
 
             iconImg = layout.findViewById<ImageView>(R.id.iconImg)
-            iconImg.setImageResource(selectedIconResource)
+            iconImg.setCategoryIcon(selectedIconKey)
 
             launchIo {
                 val defaultIcon = runCatching {
                     IconResourcesUseCase.getIconByName(db, NoCategoryNames.NoImage.name)
                 }.getOrNull()
                 if (defaultIcon != null) {
-                    selectedIconResource = defaultIcon.iconResources
+                    selectedIconKey = CategoryIconCatalog.canonicalKey(defaultIcon.iconName)
+                        ?: CategoryIconCatalog.DEFAULT_KEY
                     launchUi {
-                        iconImg.setImageResource(selectedIconResource)
+                        iconImg.setCategoryIcon(selectedIconKey)
                     }
                 }
             }
@@ -176,12 +179,13 @@ class NewCategoryDialog(
     private fun showSelectIconDialog() {
         launchIo {
             val iconsList = IconResourcesUseCase.getIconsList(db)
+                .filter { it.iconName in CategoryIconCatalog.keys }
             launchUi {
                 val dialog = SelectIconDialog(iconsList, object : OnSelectIconCallBack {
                     override fun selectIcon(icon: IconsResource) {
 //                        Message.log("selected icon Id = ${icon.id}")
-                        selectedIconResource = icon.iconResources
-                        iconImg.setImageResource(selectedIconResource)
+                        selectedIconKey = icon.iconName
+                        iconImg.setCategoryIcon(selectedIconKey)
 
                     }
                 })
@@ -213,21 +217,21 @@ class NewCategoryDialog(
 
                     val isIncomeCategory: Boolean =
                         getTypeCategoryIsIncomeDefault(incomeRadioButton, spendingRadioButton)
-                    val icon = selectedIconResource
+                    val iconKey = selectedIconKey
 
                     if (selectedParentCategoryId != null) {
                         onAddNewCategoryCallBack.addAndSelectFull(
                             name = nameCategory,
                             parentCategoryId = selectedParentCategoryId,
                             isIncome = isIncomeCategory,
-                            icon = icon,
+                            iconKey = iconKey,
                             isSelect = isSelectAfterAdd
                         )
                     } else {
                         onAddNewCategoryCallBack.addAndSelectWithoutParentCategory(
                             name = nameCategory,
                             isIncome = isIncomeCategory,
-                            icon = icon,
+                            iconKey = iconKey,
                             isSelect = isSelectAfterAdd
                         )
                     }
@@ -283,7 +287,7 @@ class NewCategoryDialog(
             name: String,
             isIncome: Boolean,
             isSelect: Boolean,
-            icon: Int
+            iconKey: String
         ) = Unit
 
         override fun addAndSelectFull(
@@ -291,7 +295,7 @@ class NewCategoryDialog(
             parentCategoryId: Int,
             isIncome: Boolean,
             isSelect: Boolean,
-            icon: Int
+            iconKey: String
         ) = Unit
     }
 }

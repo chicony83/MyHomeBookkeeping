@@ -10,7 +10,7 @@ import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.DefaultPolishNames
 
-const val DATABASE_SCHEMA_VERSION = 12
+const val DATABASE_SCHEMA_VERSION = 13
 
 @Database(
     entities = [
@@ -59,6 +59,7 @@ object dataBase {
             .addMigrations(migration_9_to_10)
             .addMigrations(migration_10_to_11)
             .addMigrations(migration_11_to_12)
+            .addMigrations(migration_12_to_13)
             .addCallback(seedPaymentTypesOnCreate)
             .build()
 }
@@ -197,6 +198,13 @@ private object migration_11_to_12 : Migration(11, 12) {
         database.execSQL("ALTER TABLE `category_table` ADD COLUMN `usage_count` INTEGER NOT NULL DEFAULT 0")
         database.execSQL("ALTER TABLE `category_table` ADD COLUMN `is_hidden` INTEGER NOT NULL DEFAULT 0")
         database.execSQL("ALTER TABLE `category_table` ADD COLUMN `hidden_at` INTEGER")
+    }
+}
+
+private object migration_12_to_13 : Migration(12, 13) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `icon_key` TEXT")
+        database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `icon_key` TEXT")
     }
 }
 

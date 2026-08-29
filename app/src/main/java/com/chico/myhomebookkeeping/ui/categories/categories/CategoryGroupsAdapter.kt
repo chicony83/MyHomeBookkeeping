@@ -15,6 +15,7 @@ import com.chico.myhomebookkeeping.databinding.RecyclerViewItemParentCategoriesB
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.ParentCategories
 import com.chico.myhomebookkeeping.helpers.displayName
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.obj.AppLanguage
@@ -246,7 +247,7 @@ class CategoryGroupsAdapter(
             with(binding) {
                 groupCategoriesRecyclerView.visibility = View.GONE
                 groupNameTextView.text = title
-                groupIconImageView.setImageResource(parentCategory?.icon ?: R.drawable.no_image)
+                groupIconImageView.setCategoryIcon(parentCategory?.iconKey)
                 groupExpandImageView.setImageResource(
                     if (isExpanded) R.drawable.ic_expand_remove
                     else R.drawable.ic_expand_add
@@ -312,7 +313,7 @@ class CategoryGroupsAdapter(
                 )
                 categoryItemDivider.visibility = if (isLastInGroup) View.GONE else View.VISIBLE
                 categoryDragHandleImageView.visibility = if (editMode) View.VISIBLE else View.GONE
-                iconImg.setImageResource(category.icon ?: R.drawable.no_image)
+                iconImg.setCategoryIcon(category.iconKey)
                 idCategories.text = category.categoriesId.toString()
                 categoryNameTextView.text = category.displayName(languageTag)
                 categoryFavoriteImageView.visibility = if (editMode) View.GONE else View.VISIBLE

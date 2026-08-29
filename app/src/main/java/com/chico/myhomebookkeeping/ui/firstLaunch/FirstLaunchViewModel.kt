@@ -14,6 +14,8 @@ import com.chico.myhomebookkeeping.db.entity.*
 import com.chico.myhomebookkeeping.domain.*
 import com.chico.myhomebookkeeping.enums.icon.names.CashAccountIconNames
 import com.chico.myhomebookkeeping.enums.icon.names.CategoryIconNames
+import com.chico.myhomebookkeeping.icons.CategoryIconCatalog
+import com.chico.myhomebookkeeping.icons.DefaultCategoryIconAssignments
 import com.chico.myhomebookkeeping.helpers.Message
 import com.chico.myhomebookkeeping.sp.SetSP
 import com.chico.myhomebookkeeping.helpers.UiHelper
@@ -256,7 +258,10 @@ class FirstLaunchViewModel(
                     icon = categoryIconsMap.getIcon(categoryGroups[i].parentIcon),
                     parentCategoryOrder = i,
                     nameRu = categoryGroups[i].parentNameRu,
-                    namePl = categoryGroups[i].parentNamePl
+                    namePl = categoryGroups[i].parentNamePl,
+                    iconKey = DefaultCategoryIconAssignments.parentKey(categoryGroups[i].parentName)
+                        ?: CategoryIconCatalog.canonicalKey(categoryGroups[i].parentIcon.name)
+                        ?: CategoryIconCatalog.DEFAULT_KEY
                 )
             )
             result += parentCategoryId
@@ -266,6 +271,11 @@ class FirstLaunchViewModel(
                     nameRu = categoryGroups[i].subcategoriesRu.getOrNull(j),
                     namePl = categoryGroups[i].subcategoriesPl.getOrNull(j),
                     icon = categoryIconsMap.getIcon(categoryGroups[i].subcategoryIcons.getOrNull(j)),
+                    iconKey = DefaultCategoryIconAssignments.childKey(categoryGroups[i].parentName, j)
+                        ?: categoryGroups[i].subcategoryIcons.getOrNull(j)?.let {
+                            CategoryIconCatalog.canonicalKey(it.name)
+                        }
+                        ?: CategoryIconCatalog.DEFAULT_KEY,
                     isIncome = categoryGroups[i].isIncome,
                     parentCategoryId = parentCategoryId.toInt(),
                     order = j
@@ -284,6 +294,7 @@ class FirstLaunchViewModel(
         nameRu: String?,
         namePl: String?,
         icon: Int?,
+        iconKey: String?,
         isIncome: Boolean,
         parentCategoryId: Int,
         order: Int
@@ -293,6 +304,7 @@ class FirstLaunchViewModel(
                 categoryName = name,
                 isIncome = isIncome,
                 icon = icon,
+                iconKey = iconKey,
                 parentCategoryId = parentCategoryId,
                 categoryOrder = order,
                 categoryNameRu = nameRu,

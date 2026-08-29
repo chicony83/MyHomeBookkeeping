@@ -1,7 +1,6 @@
 package com.chico.myhomebookkeeping.ui.reports
 
 import com.chico.myhomebookkeeping.db.full.FullMoneyMoving
-import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.db.entity.CashAccount
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.db.entity.Currencies
@@ -60,8 +59,8 @@ object ConvToList {
             ReportCategoryItem(
                 categoryId = categoryId,
                 displayName = categoryItems.first().categoryDisplayName.orEmpty(),
-                iconRes = categoryItems.first().categoryIconValue
-                    ?: categoryItems.first().parentCategoryIconValue,
+                iconKey = categoryItems.first().categoryIconKeyValue
+                    ?: categoryItems.first().parentCategoryIconKeyValue,
                 amount = amount,
                 percentage = amount / totalAmount * 100,
                 color = stableCategoryColor(categoryId)
@@ -100,7 +99,7 @@ object ConvToList {
             ReportsCategoriesItem(
                 id = categoryId,
                 name = it.displayName(languageTag),
-                icon = it.icon,
+                iconKey = it.iconKey,
                 categoryIds = setOf(categoryId),
                 incomeCategoryIds = if (it.isIncome) setOf(categoryId) else emptySet(),
                 spendingCategoryIds = if (it.isIncome) emptySet() else setOf(categoryId),
@@ -123,7 +122,7 @@ object ConvToList {
             ReportsCategoriesItem(
                 id = parentCategory.id ?: 0,
                 name = parentCategory.displayName(languageTag),
-                icon = parentCategory.icon,
+                iconKey = parentCategory.iconKey,
                 categoryIds = childCategories.categoryIds(),
                 incomeCategoryIds = childCategories.incomeCategoryIds(),
                 spendingCategoryIds = childCategories.spendingCategoryIds(),
@@ -138,7 +137,7 @@ object ConvToList {
                 ReportsCategoriesItem(
                     id = WITHOUT_PARENT_REPORT_CATEGORY_ID,
                     name = noParentCategoryName,
-                    icon = R.drawable.no_image,
+                    iconKey = null,
                     categoryIds = childCategories.categoryIds(),
                     incomeCategoryIds = childCategories.incomeCategoryIds(),
                     spendingCategoryIds = childCategories.spendingCategoryIds(),

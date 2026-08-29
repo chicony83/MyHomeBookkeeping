@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.chico.myhomebookkeeping.R
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemReportBreakdownBinding
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
@@ -51,7 +52,7 @@ class ReportsBreakdownAdapter(
                 )
                 progressBar.progress = item.percentage.toInt().coerceIn(0, 100)
                 progressBar.progressTintList = ColorStateList.valueOf(item.color)
-                categoryIconImageView.setImageResource(item.iconRes ?: R.drawable.no_image)
+                categoryIconImageView.setCategoryIcon(item.iconKey)
                 categoryIconImageView.imageTintList = ColorStateList.valueOf(Color.WHITE)
                 categoryIconImageView.background = GradientDrawable().apply {
                     shape = GradientDrawable.OVAL

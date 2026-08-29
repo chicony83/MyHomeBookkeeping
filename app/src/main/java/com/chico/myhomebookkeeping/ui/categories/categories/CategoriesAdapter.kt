@@ -12,6 +12,7 @@ import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
 import com.chico.myhomebookkeeping.helpers.displayName
+import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.categories.OnPressCreateNewCategory
 import com.chico.myhomebookkeeping.obj.AppLanguage
 
@@ -94,7 +95,7 @@ class CategoriesAdapter(
                 root.contentDescription = name
                 idCategories.text = category.categoriesId.toString()
 
-                iconImg.setImageResource(category.icon ?: R.drawable.no_image)
+                iconImg.setCategoryIcon(category.iconKey)
 
                 categoryNameTextView.text = name
                 categoriesItem.setOnLongClickListener {
