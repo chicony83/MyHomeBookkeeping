@@ -1,0 +1,26 @@
+What's new in 0.14.2
+
+- Added recently and frequently used categories.
+- Categories are now easier to select and customize.
+- Improved transfers between your own accounts.
+- Added quick periods for the journal and reports: week, month, last 30 days, and more.
+- Date filtering is now more accurate.
+- Fixed bugs and improved stability.
+
+Что нового в 0.14.2
+
+- Добавлены недавние и часто используемые категории.
+- Категории стало удобнее выбирать и настраивать.
+- Улучшена работа с переводами между своими счетами.
+- Добавлены быстрые периоды для журнала и отчетов: неделя, месяц, последние 30 дней и другие.
+- Фильтр по датам стал точнее.
+- Исправлены ошибки и улучшена стабильность.
+
+Co nowego w 0.14.2
+
+- Dodano ostatnio i często używane kategorie.
+- Wybieranie i konfigurowanie kategorii jest teraz wygodniejsze.
+- Ulepszono obsługę przelewów między własnymi kontami.
+- Dodano szybkie okresy dla dziennika i raportów: tydzień, miesiąc, ostatnie 30 dni i inne.
+- Filtrowanie według dat jest teraz dokładniejsze.
+- Naprawiono błędy i poprawiono stabilność.

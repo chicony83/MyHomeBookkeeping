@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="string_last_version_0_14_2">0.14.2\n- Dodano ostatnio i często używane kategorie.\n- Wybieranie i konfigurowanie kategorii jest teraz wygodniejsze.\n- Ulepszono obsługę przelewów między własnymi kontami.\n- Dodano szybkie okresy dla dziennika i raportów: tydzień, miesiąc, ostatnie 30 dni i inne.\n- Filtrowanie według dat jest teraz dokładniejsze.\n- Naprawiono błędy i poprawiono stabilność.</string>
     <string name="string_last_version_0_14_1">0.14.1\n- Dodano ulubione kategorie.\n- Ulepszono interfejs.\n- Poprawiono stabilność.</string>
     <string name="string_last_version_0_14_0">0.14.0\n- Odświeżono Raporty: nowy wygląd, wykres i podział według kategorii.\n- Ulepszono wybór kategorii w Raportach.\n- Dodano nową grupę kategorii: subskrypcje i usługi online.\n- Naprawiono błędy i poprawiono stabilność.</string>
     <string name="string_last_version_0_13_3">0.13.3\n- Naprawiono wybór języka podczas pierwszej konfiguracji aplikacji.\n- Naprawiono tworzenie domyślnych kont z lokalizowanymi nazwami.\n- Dodano nową domyślną kategorię przychodów: zasiłek chorobowy.\n- Poprawiono stabilność pierwszego uruchomienia i aktualizacji danych.</string>

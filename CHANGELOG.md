@@ -2,6 +2,26 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.14.2
+
+### User-facing
+- Added recently and frequently used categories.
+- Categories are now easier to select and customize.
+- Improved transfers between your own accounts.
+- Added quick periods for the journal and reports: week, month, last 30 days, and more.
+- Date filtering is now more accurate.
+- Fixed bugs and improved stability.
+
+### Development
+- Bumped Play Market release version to 0.14.2 (72).
+- Added short 0.14.2 version history strings for English, Russian, and Polish.
+- Added 0.14.2 Play Market notes in English, Russian, and Polish.
+- Added category usage tracking and update flow from version code 71 to 72.
+- Added recent and frequent category panels.
+- Moved category controls into Settings.
+- Added a dedicated transfer editing flow.
+- Added quick time-period presets and inclusive date filtering for Journal and Reports.
+
 ## 0.14.1
 
 ### User-facing
