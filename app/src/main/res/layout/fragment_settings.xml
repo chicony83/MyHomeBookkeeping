@@ -69,7 +69,7 @@
                 <LinearLayout
                     android:id="@+id/currencySelectionModeRow"
                     style="@style/SettingsValueRow"
-                    android:layout_marginTop="@dimen/margin_normal">
+                    android:layout_marginTop="@dimen/margin_half_normal">
 
                     <TextView
                         style="@style/SettingsValueLabel"
@@ -111,7 +111,7 @@
                 <LinearLayout
                     android:id="@+id/amountInputModeRow"
                     style="@style/SettingsValueRow"
-                    android:layout_marginTop="@dimen/margin_normal">
+                    android:layout_marginTop="@dimen/margin_half_normal">
 
                     <TextView
                         style="@style/SettingsValueLabel"
