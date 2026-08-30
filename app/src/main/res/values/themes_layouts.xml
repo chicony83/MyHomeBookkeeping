@@ -38,6 +38,8 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="SettingsToggleRow" parent="SettingsValueRow" />
+
     <style name="SettingsValueLabel" parent="WrapContent_WrapContent">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -55,5 +57,11 @@
         <item name="android:maxLines">2</item>
         <item name="android:textColor">@color/categoryTextSecondary</item>
         <item name="android:textSize">@dimen/H4</item>
+    </style>
+
+    <style name="SettingsNumericValueText" parent="SettingsValueText">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>

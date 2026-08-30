@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.NumberPicker
@@ -314,6 +315,15 @@ class SettingsFragment : Fragment() {
                     settingsViewModel.saveFrequentCategoriesLabelsEnabled(isChecked)
                 }
             }
+            bindToggleRow(calculatorRow, calculatorCheckBox)
+            bindToggleRow(categoryUsageCountRow, categoryUsageCountCheckBox)
+            bindToggleRow(recentCategoriesPanelRow, recentCategoriesPanelCheckBox)
+            bindToggleRow(recentCategoriesPanelTitleRow, recentCategoriesPanelTitleCheckBox)
+            bindToggleRow(recentCategoriesLabelsRow, recentCategoriesLabelsCheckBox)
+            bindToggleRow(frequentCategoriesPanelRow, frequentCategoriesPanelCheckBox)
+            bindToggleRow(frequentCategoriesPanelTitleRow, frequentCategoriesPanelTitleCheckBox)
+            bindToggleRow(frequentCategoriesLabelsRow, frequentCategoriesLabelsCheckBox)
+            bindToggleRow(journalDateSeparatorsRow, journalDateSeparatorsCheckBox)
             checkNewVersionButton.setOnClickListener {
                 checkNewVersion()
             }
@@ -424,6 +434,12 @@ class SettingsFragment : Fragment() {
         loadDefaultSelectionTitles()
 
         return binding.root
+    }
+
+    private fun bindToggleRow(row: View, checkBox: CheckBox) {
+        row.setOnClickListener {
+            checkBox.isChecked = !checkBox.isChecked
+        }
     }
 
     private fun checkNewVersion() {

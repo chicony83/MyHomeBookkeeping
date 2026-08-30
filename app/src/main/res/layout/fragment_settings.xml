@@ -93,14 +93,20 @@
                         style="@style/SettingsValueText" />
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/calculatorCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/quick_payment_show_calculator"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                <LinearLayout
+                    android:id="@+id/calculatorRow"
+                    style="@style/SettingsToggleRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/quick_payment_show_calculator" />
+
+                    <CheckBox
+                        android:id="@+id/calculatorCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/quick_payment_show_calculator" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/amountInputModeRow"
@@ -132,9 +138,9 @@
                             style="@style/SettingsValueLabel"
                             android:text="@string/quick_payment_amount_whole_digits" />
 
-                        <TextView
-                            android:id="@+id/amountWholeDigitsValue"
-                            style="@style/SettingsValueText" />
+                    <TextView
+                        android:id="@+id/amountWholeDigitsValue"
+                        style="@style/SettingsNumericValueText" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -145,9 +151,9 @@
                             style="@style/SettingsValueLabel"
                             android:text="@string/quick_payment_amount_fraction_digits" />
 
-                        <TextView
-                            android:id="@+id/amountFractionDigitsValue"
-                            style="@style/SettingsValueText" />
+                    <TextView
+                        android:id="@+id/amountFractionDigitsValue"
+                        style="@style/SettingsNumericValueText" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -224,23 +230,35 @@
                     android:minHeight="48dp"
                     android:text="@string/settings_categories_change_order" />
 
-                <CheckBox
-                    android:id="@+id/categoryUsageCountCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_categories_show_usage_count"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                <LinearLayout
+                    android:id="@+id/categoryUsageCountRow"
+                    style="@style/SettingsToggleRow">
 
-                <CheckBox
-                    android:id="@+id/recentCategoriesPanelCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_recent_categories_panel_enabled"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_categories_show_usage_count" />
+
+                    <CheckBox
+                        android:id="@+id/categoryUsageCountCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_categories_show_usage_count" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/recentCategoriesPanelRow"
+                    style="@style/SettingsToggleRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_recent_categories_panel_enabled" />
+
+                    <CheckBox
+                        android:id="@+id/recentCategoriesPanelCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_recent_categories_panel_enabled" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/recentCategoriesLimitRow"
@@ -252,26 +270,38 @@
 
                     <TextView
                         android:id="@+id/recentCategoriesLimitValue"
-                        style="@style/SettingsValueText" />
+                        style="@style/SettingsNumericValueText" />
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/recentCategoriesPanelTitleCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_recent_categories_panel_show_title"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                <LinearLayout
+                    android:id="@+id/recentCategoriesPanelTitleRow"
+                    style="@style/SettingsToggleRow">
 
-                <CheckBox
-                    android:id="@+id/recentCategoriesLabelsCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_recent_categories_show_labels"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_recent_categories_panel_show_title" />
+
+                    <CheckBox
+                        android:id="@+id/recentCategoriesPanelTitleCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_recent_categories_panel_show_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/recentCategoriesLabelsRow"
+                    style="@style/SettingsToggleRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_recent_categories_show_labels" />
+
+                    <CheckBox
+                        android:id="@+id/recentCategoriesLabelsCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_recent_categories_show_labels" />
+                </LinearLayout>
 
                 <View
                     android:id="@+id/categoryPanelsDivider"
@@ -280,14 +310,20 @@
                     android:layout_marginVertical="@dimen/margin_half_normal"
                     android:background="@color/categoryDivider" />
 
-                <CheckBox
-                    android:id="@+id/frequentCategoriesPanelCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_frequent_categories_panel_enabled"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                <LinearLayout
+                    android:id="@+id/frequentCategoriesPanelRow"
+                    style="@style/SettingsToggleRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_frequent_categories_panel_enabled" />
+
+                    <CheckBox
+                        android:id="@+id/frequentCategoriesPanelCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_frequent_categories_panel_enabled" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/frequentCategoriesLimitRow"
@@ -299,26 +335,38 @@
 
                     <TextView
                         android:id="@+id/frequentCategoriesLimitValue"
-                        style="@style/SettingsValueText" />
+                        style="@style/SettingsNumericValueText" />
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/frequentCategoriesPanelTitleCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_frequent_categories_panel_show_title"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                <LinearLayout
+                    android:id="@+id/frequentCategoriesPanelTitleRow"
+                    style="@style/SettingsToggleRow">
 
-                <CheckBox
-                    android:id="@+id/frequentCategoriesLabelsCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_frequent_categories_show_labels"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_frequent_categories_panel_show_title" />
+
+                    <CheckBox
+                        android:id="@+id/frequentCategoriesPanelTitleCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_frequent_categories_panel_show_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/frequentCategoriesLabelsRow"
+                    style="@style/SettingsToggleRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_frequent_categories_show_labels" />
+
+                    <CheckBox
+                        android:id="@+id/frequentCategoriesLabelsCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_frequent_categories_show_labels" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -360,14 +408,20 @@
                         style="@style/SettingsValueText" />
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/journalDateSeparatorsCheckBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/settings_journal_show_date_separators"
-                    android:textColor="@color/inputText"
-                    android:textSize="@dimen/H4" />
+                <LinearLayout
+                    android:id="@+id/journalDateSeparatorsRow"
+                    style="@style/SettingsToggleRow">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:text="@string/settings_journal_show_date_separators" />
+
+                    <CheckBox
+                        android:id="@+id/journalDateSeparatorsCheckBox"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/settings_journal_show_date_separators" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
