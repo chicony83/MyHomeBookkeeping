@@ -21,6 +21,7 @@
     <string name="settings_categories_change_order">Изменить порядок категорий</string>
     <string name="settings_categories_show_usage_count">Показывать частоту использования категорий</string>
     <string name="settings_recent_categories_panel_enabled">Последние использованные категории</string>
+    <string name="settings_categories_panel_visible">Показывать панель</string>
     <string name="settings_recent_categories_limit">Количество показываемых категорий</string>
     <string name="settings_recent_categories_limit_range">min 5 - max 20</string>
     <string name="settings_recent_categories_panel_show_title">Показывать подпись панели последних использованных категорий</string>

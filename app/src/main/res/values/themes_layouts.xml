@@ -40,6 +40,20 @@
 
     <style name="SettingsToggleRow" parent="SettingsValueRow" />
 
+    <style name="SettingsNestedBlockContent" parent="MatchParent_WrapContent">
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_half_normal</item>
+    </style>
+
+    <style name="SettingsDivider" parent="MatchParent_WrapContent">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
+        <item name="android:background">@color/categoryDivider</item>
+    </style>
+
     <style name="SettingsValueLabel" parent="WrapContent_WrapContent">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>

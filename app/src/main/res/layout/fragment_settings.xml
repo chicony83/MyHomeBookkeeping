@@ -230,6 +230,8 @@
                     android:minHeight="48dp"
                     android:text="@string/settings_categories_change_order" />
 
+                <View style="@style/SettingsDivider" />
+
                 <LinearLayout
                     android:id="@+id/categoryUsageCountRow"
                     style="@style/SettingsToggleRow">
@@ -245,128 +247,213 @@
                         android:contentDescription="@string/settings_categories_show_usage_count" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/recentCategoriesPanelRow"
-                    style="@style/SettingsToggleRow">
+                <View style="@style/SettingsDivider" />
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_recent_categories_panel_enabled" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/recentCategoriesSettingsCard"
+                    style="@style/RecyclerViewCard.Categories">
 
-                    <CheckBox
-                        android:id="@+id/recentCategoriesPanelCheckBox"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/settings_recent_categories_panel_enabled" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/recentCategoriesLimitRow"
-                    style="@style/SettingsValueRow">
+                    <LinearLayout
+                        android:id="@+id/recentCategoriesSettingsHeader"
+                        style="@style/RecyclerViewItem.ParentCategories"
+                        android:background="@drawable/category_group_background"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_recent_categories_limit" />
+                        <TextView
+                            style="@style/TextView.RecyclerViewHorizontalItem"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_recent_categories_panel_enabled"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/H4"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/recentCategoriesLimitValue"
-                        style="@style/SettingsNumericValueText" />
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/recentCategoriesSettingsExpandIcon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_expand_add"
+                            app:tint="@color/categoryTextSecondary" />
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/recentCategoriesPanelTitleRow"
-                    style="@style/SettingsToggleRow">
+                    <LinearLayout
+                        android:id="@+id/recentCategoriesSettingsContent"
+                        style="@style/SettingsNestedBlockContent"
+                        android:visibility="gone">
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_recent_categories_panel_show_title" />
+                        <LinearLayout
+                            android:id="@+id/recentCategoriesPanelRow"
+                            style="@style/SettingsToggleRow">
 
-                    <CheckBox
-                        android:id="@+id/recentCategoriesPanelTitleCheckBox"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/settings_recent_categories_panel_show_title" />
-                </LinearLayout>
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_categories_panel_visible" />
 
-                <LinearLayout
-                    android:id="@+id/recentCategoriesLabelsRow"
-                    style="@style/SettingsToggleRow">
+                            <CheckBox
+                                android:id="@+id/recentCategoriesPanelCheckBox"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/settings_categories_panel_visible" />
+                        </LinearLayout>
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_recent_categories_show_labels" />
+                        <LinearLayout
+                            android:id="@+id/recentCategoriesLimitRow"
+                            style="@style/SettingsValueRow">
 
-                    <CheckBox
-                        android:id="@+id/recentCategoriesLabelsCheckBox"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/settings_recent_categories_show_labels" />
-                </LinearLayout>
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_recent_categories_limit" />
 
-                <View
-                    android:id="@+id/categoryPanelsDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="@dimen/margin_half_normal"
-                    android:background="@color/categoryDivider" />
+                            <TextView
+                                android:id="@+id/recentCategoriesLimitValue"
+                                style="@style/SettingsNumericValueText" />
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/frequentCategoriesPanelRow"
-                    style="@style/SettingsToggleRow">
+                        <LinearLayout
+                            android:id="@+id/recentCategoriesPanelTitleRow"
+                            style="@style/SettingsToggleRow">
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_frequent_categories_panel_enabled" />
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_recent_categories_panel_show_title" />
 
-                    <CheckBox
-                        android:id="@+id/frequentCategoriesPanelCheckBox"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/settings_frequent_categories_panel_enabled" />
-                </LinearLayout>
+                            <CheckBox
+                                android:id="@+id/recentCategoriesPanelTitleCheckBox"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/settings_recent_categories_panel_show_title" />
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/frequentCategoriesLimitRow"
-                    style="@style/SettingsValueRow">
+                        <LinearLayout
+                            android:id="@+id/recentCategoriesLabelsRow"
+                            style="@style/SettingsToggleRow">
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_frequent_categories_limit" />
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_recent_categories_show_labels" />
 
-                    <TextView
-                        android:id="@+id/frequentCategoriesLimitValue"
-                        style="@style/SettingsNumericValueText" />
-                </LinearLayout>
+                            <CheckBox
+                                android:id="@+id/recentCategoriesLabelsCheckBox"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/settings_recent_categories_show_labels" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:id="@+id/frequentCategoriesPanelTitleRow"
-                    style="@style/SettingsToggleRow">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/frequentCategoriesSettingsCard"
+                    style="@style/RecyclerViewCard.Categories">
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_frequent_categories_panel_show_title" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/frequentCategoriesPanelTitleCheckBox"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/settings_frequent_categories_panel_show_title" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/frequentCategoriesSettingsHeader"
+                        style="@style/RecyclerViewItem.ParentCategories"
+                        android:background="@drawable/category_group_background"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/frequentCategoriesLabelsRow"
-                    style="@style/SettingsToggleRow">
+                        <TextView
+                            style="@style/TextView.RecyclerViewHorizontalItem"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_frequent_categories_panel_enabled"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/H4"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        style="@style/SettingsValueLabel"
-                        android:text="@string/settings_frequent_categories_show_labels" />
+                        <ImageView
+                            android:id="@+id/frequentCategoriesSettingsExpandIcon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_expand_add"
+                            app:tint="@color/categoryTextSecondary" />
+                    </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/frequentCategoriesLabelsCheckBox"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/settings_frequent_categories_show_labels" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/frequentCategoriesSettingsContent"
+                        style="@style/SettingsNestedBlockContent"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/frequentCategoriesPanelRow"
+                            style="@style/SettingsToggleRow">
+
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_categories_panel_visible" />
+
+                            <CheckBox
+                                android:id="@+id/frequentCategoriesPanelCheckBox"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/settings_categories_panel_visible" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/frequentCategoriesLimitRow"
+                            style="@style/SettingsValueRow">
+
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_frequent_categories_limit" />
+
+                            <TextView
+                                android:id="@+id/frequentCategoriesLimitValue"
+                                style="@style/SettingsNumericValueText" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/frequentCategoriesPanelTitleRow"
+                            style="@style/SettingsToggleRow">
+
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_frequent_categories_panel_show_title" />
+
+                            <CheckBox
+                                android:id="@+id/frequentCategoriesPanelTitleCheckBox"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/settings_frequent_categories_panel_show_title" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/frequentCategoriesLabelsRow"
+                            style="@style/SettingsToggleRow">
+
+                            <TextView
+                                style="@style/SettingsValueLabel"
+                                android:text="@string/settings_frequent_categories_show_labels" />
+
+                            <CheckBox
+                                android:id="@+id/frequentCategoriesLabelsCheckBox"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/settings_frequent_categories_show_labels" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <LinearLayout

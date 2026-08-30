@@ -86,6 +86,8 @@ class SettingsFragment : Fragment() {
     private var frequentCategoriesLimit = Constants.FREQUENT_CATEGORIES_DEFAULT_LIMIT
     private var isFrequentCategoriesPanelTitleEnabled = true
     private var isFrequentCategoriesLabelsEnabled = false
+    private var recentCategoriesSettingsExpanded = false
+    private var frequentCategoriesSettingsExpanded = false
     private var quickAccessItemKeys = emptyList<String>()
     private var isBindingSettings = false
     private var pendingBackupPassword: CharArray? = null
@@ -273,6 +275,9 @@ class SettingsFragment : Fragment() {
                     settingsViewModel.saveCategoryUsageCountEnabled(isChecked)
                 }
             }
+            recentCategoriesSettingsHeader.setOnClickListener {
+                setRecentCategoriesSettingsExpanded(!recentCategoriesSettingsExpanded)
+            }
             recentCategoriesPanelCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 isRecentCategoriesPanelEnabled = isChecked
                 if (!isBindingSettings) {
@@ -293,6 +298,9 @@ class SettingsFragment : Fragment() {
                 if (!isBindingSettings) {
                     settingsViewModel.saveRecentCategoriesLabelsEnabled(isChecked)
                 }
+            }
+            frequentCategoriesSettingsHeader.setOnClickListener {
+                setFrequentCategoriesSettingsExpanded(!frequentCategoriesSettingsExpanded)
             }
             frequentCategoriesPanelCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 isFrequentCategoriesPanelEnabled = isChecked
@@ -440,6 +448,44 @@ class SettingsFragment : Fragment() {
         row.setOnClickListener {
             checkBox.isChecked = !checkBox.isChecked
         }
+    }
+
+    private fun setRecentCategoriesSettingsExpanded(expanded: Boolean) {
+        recentCategoriesSettingsExpanded = expanded
+        binding.recentCategoriesSettingsContent.visibility = if (expanded) View.VISIBLE else View.GONE
+        binding.recentCategoriesSettingsCard.radius = if (expanded) 0f else 12f * resources.displayMetrics.density
+        binding.recentCategoriesSettingsCard.cardElevation =
+            if (expanded) 0f else resources.displayMetrics.density
+        binding.recentCategoriesSettingsCard.translationZ = 0f
+        binding.recentCategoriesSettingsHeader.setBackgroundResource(
+            if (expanded) {
+                R.drawable.category_group_header_expanded_background
+            } else {
+                R.drawable.category_group_background
+            }
+        )
+        binding.recentCategoriesSettingsExpandIcon.setImageResource(
+            if (expanded) R.drawable.ic_expand_remove else R.drawable.ic_expand_add
+        )
+    }
+
+    private fun setFrequentCategoriesSettingsExpanded(expanded: Boolean) {
+        frequentCategoriesSettingsExpanded = expanded
+        binding.frequentCategoriesSettingsContent.visibility = if (expanded) View.VISIBLE else View.GONE
+        binding.frequentCategoriesSettingsCard.radius = if (expanded) 0f else 12f * resources.displayMetrics.density
+        binding.frequentCategoriesSettingsCard.cardElevation =
+            if (expanded) 0f else resources.displayMetrics.density
+        binding.frequentCategoriesSettingsCard.translationZ = 0f
+        binding.frequentCategoriesSettingsHeader.setBackgroundResource(
+            if (expanded) {
+                R.drawable.category_group_header_expanded_background
+            } else {
+                R.drawable.category_group_background
+            }
+        )
+        binding.frequentCategoriesSettingsExpandIcon.setImageResource(
+            if (expanded) R.drawable.ic_expand_remove else R.drawable.ic_expand_add
+        )
     }
 
     private fun checkNewVersion() {
