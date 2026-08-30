@@ -351,12 +351,14 @@ class MainActivity : AppCompatActivity() {
         categorySettingsMenuItem = menu.findItem(R.id.category_settings_button)
         quickPaymentSettingsMenuItem = menu.findItem(R.id.quick_payment_settings_button)
         val isCategoriesDestination = navController.currentDestination?.id == R.id.nav_categories
+        val isSectionSettingsDestination =
+            isSectionSettingsDestination(navController.currentDestination?.id)
         val isNewMoneyMovingDestination =
             navController.currentDestination?.id == R.id.nav_new_money_moving ||
                     navController.currentDestination?.id == R.id.nav_new_transfer
         searchMenuItem?.isVisible = isCategoriesDestination
         favoriteCategoriesMenuItem?.isVisible = isCategoriesDestination
-        categorySettingsMenuItem?.isVisible = isCategoriesDestination
+        categorySettingsMenuItem?.isVisible = isSectionSettingsDestination
         updateFavoriteCategoriesMenuIcon(false)
         quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
         return true
@@ -387,7 +389,10 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.category_settings_button -> {
-                openSettingsSection(SettingsFragment.SECTION_CATEGORIES)
+                openSettingsSection(
+                    settingsSectionForDestination(navController.currentDestination?.id)
+                        ?: SettingsFragment.SECTION_CATEGORIES
+                )
                 true
             }
 //            Help will be created later; keep the action disabled with the hidden menu item.
@@ -418,11 +423,12 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearchMenuVisibility() {
         navController.addOnDestinationChangedListener { _, destination, arguments ->
             val isCategoriesDestination = destination.id == R.id.nav_categories
+            val isSectionSettingsDestination = isSectionSettingsDestination(destination.id)
             val isNewMoneyMovingDestination =
                 destination.id == R.id.nav_new_money_moving || destination.id == R.id.nav_new_transfer
             searchMenuItem?.isVisible = isCategoriesDestination
             favoriteCategoriesMenuItem?.isVisible = isCategoriesDestination
-            categorySettingsMenuItem?.isVisible = isCategoriesDestination
+            categorySettingsMenuItem?.isVisible = isSectionSettingsDestination
             updateFavoriteCategoriesMenuIcon(false)
             quickPaymentSettingsMenuItem?.isVisible = isNewMoneyMovingDestination
             updateCategoriesTitle(destination.id, arguments)
@@ -483,9 +489,7 @@ class MainActivity : AppCompatActivity() {
     private fun openSettingsSection(section: String) {
         navController.navigate(
             R.id.nav_setting,
-            Bundle().apply {
-                putString(SettingsFragment.ARG_SECTION, section)
-            }
+            settingsSectionArgs(section)
         )
     }
 
@@ -500,9 +504,37 @@ class MainActivity : AppCompatActivity() {
                 CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_STANDALONE),
                 navOptions
             )
+        } else if (destinationId == R.id.nav_setting) {
+            navController.navigate(
+                R.id.nav_setting,
+                settingsSectionArgs(settingsSectionForDestination(navController.currentDestination?.id)),
+                navOptions
+            )
         } else {
             navController.navigate(destinationId, null, navOptions)
         }
+    }
+
+    private fun settingsSectionArgs(section: String?): Bundle? {
+        return section?.let {
+            Bundle().apply {
+                putString(SettingsFragment.ARG_SECTION, it)
+            }
+        }
+    }
+
+    private fun settingsSectionForDestination(destinationId: Int?): String? {
+        return when (destinationId) {
+            R.id.nav_new_money_moving,
+            R.id.nav_new_transfer -> SettingsFragment.SECTION_QUICK_PAYMENT
+            R.id.nav_categories -> SettingsFragment.SECTION_CATEGORIES
+            R.id.nav_money_moving -> SettingsFragment.SECTION_JOURNAL
+            else -> null
+        }
+    }
+
+    private fun isSectionSettingsDestination(destinationId: Int?): Boolean {
+        return settingsSectionForDestination(destinationId) != null
     }
 
     private inline fun <reified T> getCurrentFragment(): T? {

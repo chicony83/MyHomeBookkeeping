@@ -48,7 +48,13 @@ class SettingsFragment : Fragment() {
     companion object {
         const val ARG_SECTION = "settingsSection"
         const val SECTION_QUICK_PAYMENT = "quickPayment"
+        const val SECTION_QUICK_ACCESS = "quickAccess"
+        const val SECTION_APPLICATION = "application"
         const val SECTION_CATEGORIES = "categories"
+        const val SECTION_JOURNAL = "journal"
+        const val SECTION_STARTUP = "startup"
+        const val SECTION_BACKUP = "backup"
+        const val SECTION_ABOUT = "about"
     }
 
     private lateinit var settingsViewModel: SettingsViewModel
@@ -998,8 +1004,14 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         when (arguments?.getString(ARG_SECTION)) {
-            SECTION_QUICK_PAYMENT -> binding.quickPaymentSection
+            SECTION_QUICK_PAYMENT -> binding.quickPaymentBlock
+            SECTION_QUICK_ACCESS -> binding.quickAccessBlock
+            SECTION_APPLICATION -> binding.applicationBlock
             SECTION_CATEGORIES -> binding.categoriesBlock
+            SECTION_JOURNAL -> binding.journalBlock
+            SECTION_STARTUP -> binding.startupBlock
+            SECTION_BACKUP -> binding.backupBlock
+            SECTION_ABOUT -> binding.aboutBlock
             else -> null
         }?.let { section ->
             binding.settingsScroll.post {
