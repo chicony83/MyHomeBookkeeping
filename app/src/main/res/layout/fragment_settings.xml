@@ -12,7 +12,8 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:fillViewport="true"
-        android:padding="@dimen/margin_normal"
+        android:paddingTop="@dimen/margin_half_normal"
+        android:paddingBottom="@dimen/margin_half_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,15 +27,11 @@
 
             <LinearLayout
                 android:id="@+id/quickPaymentBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/quickPaymentSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/quick_payment_settings_title"
                     android:textColor="@color/inputText"
@@ -157,16 +154,11 @@
 
             <LinearLayout
                 android:id="@+id/quickAccessBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/quickAccessSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/quick_access_settings_title"
                     android:textColor="@color/inputText"
@@ -182,16 +174,11 @@
 
             <LinearLayout
                 android:id="@+id/applicationBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/applicationSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/settings_application_section_title"
                     android:textColor="@color/inputText"
@@ -214,16 +201,11 @@
 
             <LinearLayout
                 android:id="@+id/categoriesBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/categoriesSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/settings_categories_section_title"
                     android:textColor="@color/inputText"
@@ -341,16 +323,11 @@
 
             <LinearLayout
                 android:id="@+id/journalBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/journalSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/settings_journal_section_title"
                     android:textColor="@color/inputText"
@@ -395,16 +372,11 @@
 
             <LinearLayout
                 android:id="@+id/startupBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/startupSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/settings_start_fragment_title"
                     android:textColor="@color/inputText"
@@ -427,16 +399,11 @@
 
             <LinearLayout
                 android:id="@+id/backupBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/backupSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/backup_section_title"
                     android:textColor="@color/inputText"
@@ -466,17 +433,11 @@
 
             <LinearLayout
                 android:id="@+id/aboutBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginBottom="@dimen/margin_double"
-                android:background="@drawable/category_group_background"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_normal">
+                style="@style/SettingsSectionCard">
 
                 <TextView
                     android:id="@+id/aboutSection"
-                    style="@style/TextDescriptions"
+                    style="@style/SettingsSectionTitle"
                     android:layout_marginLeft="@dimen/margin_zero"
                     android:text="@string/settings_about_section_title"
                     android:textColor="@color/inputText"
