@@ -27,7 +27,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.chico.myhomebookkeeping.checks.CheckNightMode
@@ -410,7 +409,6 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_first_launch_setup_fragment,
             R.id.nav_first_launch_select_currencies_fragment,
             R.id.nav_first_launch_fragment -> return
-            R.id.nav_money_moving -> finish()
             else -> super.onBackPressed()
         }
     }
@@ -496,7 +494,6 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToTopLevelDestination(destinationId: Int) {
         val navOptions = NavOptions.Builder()
             .setLaunchSingleTop(true)
-            .setPopUpTo(navController.graph.findStartDestination().id, false)
             .build()
         if (destinationId == R.id.nav_categories) {
             navController.navigate(
