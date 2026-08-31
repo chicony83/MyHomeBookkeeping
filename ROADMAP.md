@@ -61,6 +61,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: update the app launcher icon assets from the wallet artwork, using a 70% foreground scale for better launcher spacing.
 - Completed: rename the Russian app title to Учёт финансов and add a 0.14.1 version-history note for the trademark-conflict wording.
 - Completed: make the system Back button follow the actual navigation back stack instead of returning through the old quick-payment-oriented flow.
+- Completed: show the drawer burger on top-level screens from the main menu while keeping the toolbar Back arrow on inner screens.
 - Recheck Android 15 edge-to-edge insets after any future toolbar, bottom navigation, dialog, or bottom sheet layout changes.
 - Keep string resources split by feature and mirrored between `values` and localized `values-*` folders.
 

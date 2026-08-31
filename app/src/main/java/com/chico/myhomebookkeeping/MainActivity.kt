@@ -123,7 +123,6 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_money_moving_query,
                 R.id.nav_money_moving,
                 R.id.nav_reports,
                 R.id.nav_fast_payments_fragment,
@@ -132,10 +131,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_categories,
                 R.id.nav_currencies,
                 R.id.nav_cash_account,
-                R.id.nav_change_money_moving,
-                R.id.nav_change_transfer,
-                R.id.nav_setting,
-                R.id.nav_time_period
+                R.id.nav_setting
             ),
             drawerLayout
         )
