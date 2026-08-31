@@ -84,6 +84,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: show an entry-oriented Categories title except when opened from Journal category filtering.
 - Completed: move category order editing into Settings, add a Categories settings shortcut, add an optional usage-frequency display, and remove parent-row subcategory counts.
 - Completed: add a frequently used categories panel on the Categories screen, sorted left-to-right by usage count, with matching settings and switchable panel order.
+- Completed: align Recent and Frequently Used category settings panels with the Categories group UI, using flat expandable headers and a divider between the panels.
 - Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.

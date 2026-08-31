@@ -453,10 +453,6 @@ class SettingsFragment : Fragment() {
     private fun setRecentCategoriesSettingsExpanded(expanded: Boolean) {
         recentCategoriesSettingsExpanded = expanded
         binding.recentCategoriesSettingsContent.visibility = if (expanded) View.VISIBLE else View.GONE
-        binding.recentCategoriesSettingsCard.radius = if (expanded) 0f else 12f * resources.displayMetrics.density
-        binding.recentCategoriesSettingsCard.cardElevation =
-            if (expanded) 0f else resources.displayMetrics.density
-        binding.recentCategoriesSettingsCard.translationZ = 0f
         binding.recentCategoriesSettingsHeader.setBackgroundResource(
             if (expanded) {
                 R.drawable.category_group_header_expanded_background
@@ -472,10 +468,6 @@ class SettingsFragment : Fragment() {
     private fun setFrequentCategoriesSettingsExpanded(expanded: Boolean) {
         frequentCategoriesSettingsExpanded = expanded
         binding.frequentCategoriesSettingsContent.visibility = if (expanded) View.VISIBLE else View.GONE
-        binding.frequentCategoriesSettingsCard.radius = if (expanded) 0f else 12f * resources.displayMetrics.density
-        binding.frequentCategoriesSettingsCard.cardElevation =
-            if (expanded) 0f else resources.displayMetrics.density
-        binding.frequentCategoriesSettingsCard.translationZ = 0f
         binding.frequentCategoriesSettingsHeader.setBackgroundResource(
             if (expanded) {
                 R.drawable.category_group_header_expanded_background

@@ -249,9 +249,9 @@
 
                 <View style="@style/SettingsDivider" />
 
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:id="@+id/recentCategoriesSettingsCard"
-                    style="@style/RecyclerViewCard.Categories">
+                    style="@style/SettingsCategoryPanelContainer">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -260,22 +260,12 @@
 
                     <LinearLayout
                         android:id="@+id/recentCategoriesSettingsHeader"
-                        style="@style/RecyclerViewItem.ParentCategories"
-                        android:background="@drawable/category_group_background"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        style="@style/SettingsCategoryPanelHeader">
 
                         <TextView
-                            style="@style/TextView.RecyclerViewHorizontalItem"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            style="@style/SettingsCategoryPanelTitle"
                             android:text="@string/settings_recent_categories_panel_enabled"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/H4"
-                            android:textStyle="bold" />
+                            android:textAlignment="viewStart" />
 
                         <ImageView
                             android:id="@+id/recentCategoriesSettingsExpandIcon"
@@ -288,8 +278,10 @@
 
                     <LinearLayout
                         android:id="@+id/recentCategoriesSettingsContent"
-                        style="@style/SettingsNestedBlockContent"
+                        style="@style/SettingsCategoryPanelContent"
                         android:visibility="gone">
+
+                        <View style="@style/SettingsCategoryPanelDivider" />
 
                         <LinearLayout
                             android:id="@+id/recentCategoriesPanelRow"
@@ -350,11 +342,13 @@
                         </LinearLayout>
                     </LinearLayout>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-                <androidx.cardview.widget.CardView
+                <View style="@style/SettingsCategoryPanelsDivider" />
+
+                <LinearLayout
                     android:id="@+id/frequentCategoriesSettingsCard"
-                    style="@style/RecyclerViewCard.Categories">
+                    style="@style/SettingsCategoryPanelContainer">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -363,22 +357,12 @@
 
                     <LinearLayout
                         android:id="@+id/frequentCategoriesSettingsHeader"
-                        style="@style/RecyclerViewItem.ParentCategories"
-                        android:background="@drawable/category_group_background"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        style="@style/SettingsCategoryPanelHeader">
 
                         <TextView
-                            style="@style/TextView.RecyclerViewHorizontalItem"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            style="@style/SettingsCategoryPanelTitle"
                             android:text="@string/settings_frequent_categories_panel_enabled"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/H4"
-                            android:textStyle="bold" />
+                            android:textAlignment="viewStart" />
 
                         <ImageView
                             android:id="@+id/frequentCategoriesSettingsExpandIcon"
@@ -391,8 +375,10 @@
 
                     <LinearLayout
                         android:id="@+id/frequentCategoriesSettingsContent"
-                        style="@style/SettingsNestedBlockContent"
+                        style="@style/SettingsCategoryPanelContent"
                         android:visibility="gone">
+
+                        <View style="@style/SettingsCategoryPanelDivider" />
 
                         <LinearLayout
                             android:id="@+id/frequentCategoriesPanelRow"
@@ -453,7 +439,7 @@
                         </LinearLayout>
                     </LinearLayout>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

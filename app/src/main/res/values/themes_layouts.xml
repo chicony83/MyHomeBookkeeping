@@ -47,6 +47,59 @@
         <item name="android:paddingBottom">@dimen/margin_half_normal</item>
     </style>
 
+    <style name="SettingsCategoryPanelContainer" parent="MatchParent_WrapContent">
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="SettingsCategoryPanelHeader" parent="MatchParent_WrapContent">
+        <item name="android:layout_height">64dp</item>
+        <item name="android:background">@drawable/category_group_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="SettingsCategoryPanelTitle" parent="TextView.RecyclerViewHorizontalItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/H4</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SettingsCategoryPanelContent" parent="MatchParent_WrapContent">
+        <item name="android:background">@drawable/category_child_row_bottom_background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_half_normal</item>
+    </style>
+
+    <style name="SettingsCategoryPanelDivider" parent="MatchParent_WrapContent">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:alpha">0.28</item>
+        <item name="android:background">@color/categoryDivider</item>
+    </style>
+
+    <style name="SettingsCategoryPanelsDivider" parent="SettingsCategoryPanelDivider">
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_half_normal</item>
+    </style>
+
     <style name="SettingsDivider" parent="MatchParent_WrapContent">
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginTop">@dimen/margin_half_normal</item>
