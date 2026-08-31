@@ -70,9 +70,9 @@ object QuickAccessPanel {
     )
 
     private val defaultKeys = listOf(
-        "fast_payments",
         "categories",
         "journal",
+        "reports",
         "settings"
     )
 
