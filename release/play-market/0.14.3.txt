@@ -1,0 +1,20 @@
+What's new in 0.14.3
+
+- Updated category icons.
+- Improved app functionality.
+- Redesigned the Settings screen.
+- Improved app stability and appearance.
+
+Что нового в 0.14.3
+
+- Обновлены иконки категорий.
+- Улучшена функциональность приложения.
+- Переработан экран настроек.
+- Повышена стабильность и улучшен внешний вид приложения.
+
+Co nowego w 0.14.3
+
+- Zaktualizowano ikony kategorii.
+- Ulepszono funkcjonalność aplikacji.
+- Przeprojektowano ekran Ustawień.
+- Poprawiono stabilność i wygląd aplikacji.

@@ -68,6 +68,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 
 ## Repository Hygiene
 
+- Completed: prepare the 0.14.3 release version, localized version-history strings, changelog entry, and Play Market notes.
 - Completed: prepare the 0.14.2 release version, localized version-history strings, changelog entry, and Play Market notes.
 - Completed: prepare the 0.14.1 release version, localized version-history strings, changelog entry, and Play Market notes.
 - Keep release bundles, APKs, temporary screenshots, UI dumps, and device database copies out of git.

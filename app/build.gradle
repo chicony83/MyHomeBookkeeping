@@ -17,7 +17,7 @@ android {
         applicationId "com.chico.myhomebookkeeping"
         minSdk 21
         targetSdk 36
-        versionCode 73
+        versionCode 74
         versionName "0.14.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -2,6 +2,23 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.14.3
+
+### User-facing
+- Updated category icons.
+- Improved app functionality.
+- Redesigned the Settings screen.
+- Improved app stability and appearance.
+
+### Development
+- Bumped Play Market release version to 0.14.3 (74).
+- Added short 0.14.3 version history strings for English, Russian, and Polish.
+- Added 0.14.3 Play Market notes in English, Russian, and Polish.
+- Migrated category icons to stable Material Symbols Rounded keys and backfilled built-in categories without overwriting selected icons.
+- Refined Settings sections, category panel controls, layout, and navigation.
+- Improved system Back behavior and top-level drawer navigation.
+- Added Reports to the default quick access panel instead of Fast Payments for new installs.
+
 ## 0.14.2
 
 ### User-facing
