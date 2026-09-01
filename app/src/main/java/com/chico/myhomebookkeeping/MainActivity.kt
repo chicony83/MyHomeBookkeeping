@@ -44,6 +44,7 @@ import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.UpdateViewModel
 import com.chico.myhomebookkeeping.ui.settings.SettingsFragment
+import com.chico.myhomebookkeeping.update.CriticalStartupUpdates
 import com.chico.myhomebookkeeping.utils.launchUi
 import kotlinx.coroutines.runBlocking
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
         DatabaseRestoreManager.applyPendingRestore(applicationContext)
         IconResourceSynchronizer.synchronize(applicationContext)
+        CriticalStartupUpdates.run(application)
         setContentView(R.layout.activity_main)
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
