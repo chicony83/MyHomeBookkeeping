@@ -67,6 +67,10 @@ class SettingsViewModel(
     val categoryUsageCountEnabled: LiveData<Boolean>
         get() = _categoryUsageCountEnabled
 
+    private val _categoriesDisplayMode = MutableLiveData<String>()
+    val categoriesDisplayMode: LiveData<String>
+        get() = _categoriesDisplayMode
+
     private val _recentCategoriesPanelEnabled = MutableLiveData<Boolean>()
     val recentCategoriesPanelEnabled: LiveData<Boolean>
         get() = _recentCategoriesPanelEnabled
@@ -113,6 +117,7 @@ class SettingsViewModel(
         _journalDateSeparatorsEnabled.value = getJournalDateSeparatorsEnabled()
         _journalParentCategoryDisplayMode.value = getJournalParentCategoryDisplayMode()
         _categoryUsageCountEnabled.value = getCategoryUsageCountEnabled()
+        _categoriesDisplayMode.value = getCategoriesDisplayMode()
         _recentCategoriesPanelEnabled.value = RecentCategoriesPanel.isEnabled(sharedPreferences)
         _recentCategoriesLimit.value = RecentCategoriesPanel.limit(sharedPreferences)
         _recentCategoriesPanelTitleEnabled.value =
@@ -191,6 +196,13 @@ class SettingsViewModel(
             .putBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, isEnabled)
             .apply()
         _categoryUsageCountEnabled.value = getCategoryUsageCountEnabled()
+    }
+
+    fun saveCategoriesDisplayMode(displayMode: String) {
+        sharedPreferences.edit()
+            .putString(Constants.CATEGORIES_DISPLAY_MODE, displayMode)
+            .apply()
+        _categoriesDisplayMode.value = getCategoriesDisplayMode()
     }
 
     fun saveRecentCategoriesPanelEnabled(isEnabled: Boolean) {
@@ -357,6 +369,16 @@ class SettingsViewModel(
 
     private fun getCategoryUsageCountEnabled(): Boolean {
         return sharedPreferences.getBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, false)
+    }
+
+    private fun getCategoriesDisplayMode(): String {
+        return sharedPreferences.getString(
+            Constants.CATEGORIES_DISPLAY_MODE,
+            Constants.CATEGORIES_DISPLAY_MODE_LIST
+        )?.takeIf {
+            it == Constants.CATEGORIES_DISPLAY_MODE_LIST ||
+                it == Constants.CATEGORIES_DISPLAY_MODE_GRID
+        } ?: Constants.CATEGORIES_DISPLAY_MODE_LIST
     }
 
     private fun isSupportedJournalCurrencyDisplayMode(displayMode: String): Boolean {

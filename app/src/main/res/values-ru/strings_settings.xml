@@ -19,6 +19,9 @@
     <string name="settings_app_language_russian">Русский</string>
     <string name="settings_categories_section_title">Категории</string>
     <string name="settings_categories_change_order">Изменить порядок категорий</string>
+    <string name="settings_categories_display_mode">Представление категорий</string>
+    <string name="settings_categories_display_list">Строки</string>
+    <string name="settings_categories_display_grid">Плитка</string>
     <string name="settings_categories_show_usage_count">Показывать частоту использования категорий</string>
     <string name="settings_recent_categories_panel_enabled">Последние использованные категории</string>
     <string name="settings_categories_panel_visible">Показывать панель</string>

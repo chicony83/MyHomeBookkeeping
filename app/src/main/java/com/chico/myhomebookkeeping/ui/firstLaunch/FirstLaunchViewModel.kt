@@ -97,6 +97,10 @@ class FirstLaunchViewModel(
 //    private val cashAccountIconsMap: Map<String, Int> = getCashAccountIconsList()
 
     fun setIsFirstLaunchFalse() {
+        setSP.saveToSP(
+            Constants.CATEGORIES_DISPLAY_MODE,
+            Constants.CATEGORIES_DISPLAY_MODE_GRID
+        )
         setSP.setIsFirstLaunchFalse()
     }
 

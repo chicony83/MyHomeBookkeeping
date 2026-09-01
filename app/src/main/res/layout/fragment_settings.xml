@@ -233,6 +233,51 @@
                 <View style="@style/SettingsDivider" />
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/margin_half_normal">
+
+                    <TextView
+                        style="@style/SettingsValueLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_categories_display_mode" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/categoriesDisplayModeToggle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_half_normal"
+                        app:checkedButton="@id/categoriesGridModeButton"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/categoriesListModeButton"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="@string/settings_categories_display_list"
+                            app:icon="@drawable/ic_view_list"
+                            app:iconGravity="textStart" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/categoriesGridModeButton"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="@string/settings_categories_display_grid"
+                            app:icon="@drawable/ic_grid_view"
+                            app:iconGravity="textStart" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+
+                <View style="@style/SettingsDivider" />
+
+                <LinearLayout
                     android:id="@+id/categoryUsageCountRow"
                     style="@style/SettingsToggleRow">
 

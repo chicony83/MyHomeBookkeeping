@@ -1,15 +1,18 @@
 package com.chico.myhomebookkeeping.ui.categories.categories
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoriesBinding
+import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoryTileBinding
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemCategoryGroupBinding
 import com.chico.myhomebookkeeping.databinding.RecyclerViewItemParentCategoriesBinding
 import com.chico.myhomebookkeeping.db.entity.Categories
@@ -19,6 +22,7 @@ import com.chico.myhomebookkeeping.icons.setCategoryIcon
 import com.chico.myhomebookkeeping.interfaces.OnClickCreateNewElementCallBack
 import com.chico.myhomebookkeeping.interfaces.OnItemViewClickListener
 import com.chico.myhomebookkeeping.obj.AppLanguage
+import com.chico.myhomebookkeeping.obj.Constants
 
 data class CategoryGroup(
     val parentCategory: ParentCategories?,
@@ -43,6 +47,7 @@ class CategoryGroupsAdapter(
     private val createNewParentCategoryListener: OnClickCreateNewElementCallBack,
     private val onTopOrderChanged: (List<String>, List<ParentCategories>) -> Unit,
     private val onCategoriesOrderChanged: (List<Categories>) -> Unit,
+    private val displayMode: String,
     private var showAddRows: Boolean = true,
     private var showUsageCount: Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -196,6 +201,13 @@ class CategoryGroupsAdapter(
             VIEW_TYPE_CATEGORY, VIEW_TYPE_ADD_CATEGORY -> CategoryViewHolder(
                 RecyclerViewItemCategoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
+            VIEW_TYPE_CATEGORY_TILE, VIEW_TYPE_ADD_CATEGORY_TILE -> CategoryTileViewHolder(
+                RecyclerViewItemCategoryTileBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             VIEW_TYPE_ADD_PARENT -> AddParentCategoryViewHolder(
                 RecyclerViewItemParentCategoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
@@ -209,10 +221,29 @@ class CategoryGroupsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (rows[position]) {
-            is CategoryTreeRow.CategoryItem -> VIEW_TYPE_CATEGORY
-            is CategoryTreeRow.AddCategory -> VIEW_TYPE_ADD_CATEGORY
+            is CategoryTreeRow.CategoryItem -> if (isGridMode()) {
+                VIEW_TYPE_CATEGORY_TILE
+            } else {
+                VIEW_TYPE_CATEGORY
+            }
+            is CategoryTreeRow.AddCategory -> if (isGridMode()) {
+                VIEW_TYPE_ADD_CATEGORY_TILE
+            } else {
+                VIEW_TYPE_ADD_CATEGORY
+            }
             is CategoryTreeRow.AddParent -> VIEW_TYPE_ADD_PARENT
             else -> VIEW_TYPE_HEADER
+        }
+    }
+
+    fun getSpanSize(position: Int): Int {
+        return if (
+            isGridMode() &&
+            (rows[position] is CategoryTreeRow.CategoryItem || rows[position] is CategoryTreeRow.AddCategory)
+        ) {
+            1
+        } else {
+            GRID_SPAN_COUNT
         }
     }
 
@@ -220,11 +251,16 @@ class CategoryGroupsAdapter(
         when (val row = rows[position]) {
             is CategoryTreeRow.ParentHeader -> (holder as HeaderViewHolder).bind(row.group)
             is CategoryTreeRow.NoParentHeader -> (holder as HeaderViewHolder).bind(row.group)
-            is CategoryTreeRow.CategoryItem -> (holder as CategoryViewHolder).bind(
-                row.category,
-                isLastCategoryInGroup(position)
-            )
-            is CategoryTreeRow.AddCategory -> (holder as CategoryViewHolder).bindAddCategory(row.parentCategory)
+            is CategoryTreeRow.CategoryItem -> if (holder is CategoryTileViewHolder) {
+                holder.bind(row.category)
+            } else {
+                (holder as CategoryViewHolder).bind(row.category, isLastCategoryInGroup(position))
+            }
+            is CategoryTreeRow.AddCategory -> if (holder is CategoryTileViewHolder) {
+                holder.bindAddCategory(row.parentCategory)
+            } else {
+                (holder as CategoryViewHolder).bindAddCategory(row.parentCategory)
+            }
             CategoryTreeRow.AddParent -> (holder as AddParentCategoryViewHolder).bind()
         }
     }
@@ -260,7 +296,8 @@ class CategoryGroupsAdapter(
                     if (isExpanded) R.drawable.category_group_header_expanded_background
                     else R.drawable.category_group_background
                 )
-                groupHeaderDivider.visibility = if (isExpanded) View.VISIBLE else View.GONE
+                groupHeaderDivider.visibility =
+                    if (isExpanded && !isGridMode()) View.VISIBLE else View.GONE
                 root.setBottomMargin(
                     if (isExpanded) 0
                     else itemView.resources.getDimensionPixelSize(R.dimen.margin_half_normal)
@@ -372,6 +409,77 @@ class CategoryGroupsAdapter(
         }
     }
 
+    inner class CategoryTileViewHolder(
+        private val binding: RecyclerViewItemCategoryTileBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(category: Categories) {
+            val languageTag = AppLanguage.getSelectedTag(itemView.context)
+            with(binding) {
+                categoryIconImageView.setCategoryIcon(category.iconKey)
+                categoryIconImageView.contentDescription = itemView.context.getString(
+                    R.string.content_description_icon_item_of_category
+                )
+                categoryNameTextView.text = category.displayName(languageTag)
+                categoryFavoriteImageView.visibility = View.VISIBLE
+                categoryFavoriteImageView.setImageResource(
+                    if (category.isFavorite) R.drawable.ic_star_favorite_full
+                    else R.drawable.ic_star_favorite_outline
+                )
+                categoryFavoriteImageView.setOnClickListener {
+                    onFavoriteClick(category)
+                }
+                categoryUsageCountTextView.visibility =
+                    if (showUsageCount) View.VISIBLE else View.GONE
+                categoryUsageCountTextView.text = category.usageCount.toString()
+                val operationColor = ContextCompat.getColor(
+                    itemView.context,
+                    if (category.isIncome) {
+                        R.color.categoryIncomeIndicator
+                    } else {
+                        R.color.categorySpendingIndicator
+                    }
+                )
+                categoryTypeIndicator.visibility = View.VISIBLE
+                categoryTypeIndicator.backgroundTintList = ColorStateList.valueOf(operationColor)
+                categoryTileCardView.strokeColor = ColorUtils.setAlphaComponent(
+                    ContextCompat.getColor(itemView.context, R.color.categoryDivider),
+                    TILE_OUTLINE_ALPHA
+                )
+                categoryTileCardView.setOnClickListener {
+                    category.categoriesId?.let { categoryListener.onShortClick(it) }
+                }
+                categoryTileCardView.setOnLongClickListener {
+                    category.categoriesId?.let { categoryListener.onLongClick(it) }
+                    true
+                }
+            }
+        }
+
+        fun bindAddCategory(parentCategory: ParentCategories?) {
+            with(binding) {
+                categoryFavoriteImageView.visibility = View.GONE
+                categoryFavoriteImageView.setOnClickListener(null)
+                categoryUsageCountTextView.visibility = View.GONE
+                categoryTypeIndicator.visibility = View.GONE
+                categoryIconImageView.setImageResource(R.drawable.ic_add_circle)
+                categoryIconImageView.contentDescription = itemView.context.getString(
+                    R.string.content_description_icon_add_new_element
+                )
+                categoryNameTextView.text = itemView.context.getString(
+                    R.string.text_on_button_add_new_subcategory
+                )
+                categoryTileCardView.strokeColor = ColorUtils.setAlphaComponent(
+                    ContextCompat.getColor(itemView.context, R.color.categoryDivider),
+                    TILE_OUTLINE_ALPHA
+                )
+                categoryTileCardView.setOnLongClickListener(null)
+                categoryTileCardView.setOnClickListener {
+                    onPressCreateNewCategory(parentCategory)
+                }
+            }
+        }
+    }
+
     inner class AddParentCategoryViewHolder(
         private val binding: RecyclerViewItemParentCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -464,11 +572,17 @@ class CategoryGroupsAdapter(
         CategoryTreeRow.AddParent -> TOP_ADD_PARENT
     }
 
+    private fun isGridMode(): Boolean = displayMode == Constants.CATEGORIES_DISPLAY_MODE_GRID
+
     private companion object {
         const val VIEW_TYPE_HEADER = 0
         const val VIEW_TYPE_CATEGORY = 1
         const val VIEW_TYPE_ADD_CATEGORY = 2
         const val VIEW_TYPE_ADD_PARENT = 3
+        const val VIEW_TYPE_CATEGORY_TILE = 4
+        const val VIEW_TYPE_ADD_CATEGORY_TILE = 5
+        const val GRID_SPAN_COUNT = 3
+        const val TILE_OUTLINE_ALPHA = 104
     }
 }
 

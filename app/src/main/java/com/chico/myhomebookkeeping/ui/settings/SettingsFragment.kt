@@ -78,6 +78,7 @@ class SettingsFragment : Fragment() {
         Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
     private var isJournalDateSeparatorsEnabled = true
     private var isCategoryUsageCountEnabled = false
+    private var selectedCategoriesDisplayMode = Constants.CATEGORIES_DISPLAY_MODE_GRID
     private var isRecentCategoriesPanelEnabled = true
     private var recentCategoriesLimit = Constants.RECENT_CATEGORIES_DEFAULT_LIMIT
     private var isRecentCategoriesPanelTitleEnabled = true
@@ -262,12 +263,26 @@ class SettingsFragment : Fragment() {
                 }
             }
             changeCategoryOrderRow.setOnClickListener {
+                if (selectedCategoriesDisplayMode == Constants.CATEGORIES_DISPLAY_MODE_GRID) {
+                    return@setOnClickListener
+                }
                 navControlHelper.toSelectedFragment(
                     R.id.nav_categories,
                     CategoriesFragment.openModeArgs(CategoriesFragment.OPEN_MODE_STANDALONE).apply {
                         putBoolean(CategoriesFragment.ARG_ENABLE_ORDER_EDIT_MODE, true)
                     }
                 )
+            }
+            categoriesDisplayModeToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                if (!isChecked || isBindingSettings) return@addOnButtonCheckedListener
+                val displayMode = if (checkedId == R.id.categoriesListModeButton) {
+                    Constants.CATEGORIES_DISPLAY_MODE_LIST
+                } else {
+                    Constants.CATEGORIES_DISPLAY_MODE_GRID
+                }
+                selectedCategoriesDisplayMode = displayMode
+                updateCategoryOrderAvailability()
+                settingsViewModel.saveCategoriesDisplayMode(displayMode)
             }
             categoryUsageCountCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 isCategoryUsageCountEnabled = isChecked
@@ -389,6 +404,19 @@ class SettingsFragment : Fragment() {
                 isBindingSettings = true
                 binding.categoryUsageCountCheckBox.isChecked = it
                 isBindingSettings = false
+            }
+            categoriesDisplayMode.observe(viewLifecycleOwner) {
+                selectedCategoriesDisplayMode = it
+                isBindingSettings = true
+                binding.categoriesDisplayModeToggle.check(
+                    if (it == Constants.CATEGORIES_DISPLAY_MODE_LIST) {
+                        R.id.categoriesListModeButton
+                    } else {
+                        R.id.categoriesGridModeButton
+                    }
+                )
+                isBindingSettings = false
+                updateCategoryOrderAvailability()
             }
             recentCategoriesPanelEnabled.observe(viewLifecycleOwner) {
                 isRecentCategoriesPanelEnabled = it
@@ -520,6 +548,7 @@ class SettingsFragment : Fragment() {
             journalParentCategoryDisplayModeTitle(selectedJournalParentCategoryDisplayMode)
         binding.journalDateSeparatorsCheckBox.isChecked = isJournalDateSeparatorsEnabled
         binding.categoryUsageCountCheckBox.isChecked = isCategoryUsageCountEnabled
+        updateCategoryOrderAvailability()
         updateRecentCategoriesSettingsValues()
         updateFrequentCategoriesSettingsValues()
         binding.amountScrollDigitsContainer.visibility =
@@ -528,6 +557,12 @@ class SettingsFragment : Fragment() {
             } else {
                 View.GONE
             }
+    }
+
+    private fun updateCategoryOrderAvailability() {
+        val isAvailable = selectedCategoriesDisplayMode == Constants.CATEGORIES_DISPLAY_MODE_LIST
+        binding.changeCategoryOrderRow.isEnabled = isAvailable
+        binding.changeCategoryOrderRow.alpha = if (isAvailable) 1f else 0.45f
     }
 
     private fun updateRecentCategoriesSettingsValues() {

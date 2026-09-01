@@ -90,6 +90,8 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: move category order editing into Settings, add a Categories settings shortcut, add an optional usage-frequency display, and remove parent-row subcategory counts.
 - Completed: add a frequently used categories panel on the Categories screen, sorted left-to-right by usage count, with matching settings and switchable panel order.
 - Completed: align Recent and Frequently Used category settings panels with the Categories group UI, using flat expandable headers and a divider between the panels.
+- Completed: add a Rows/Tiles setting for the main Categories list, default new installs to a three-column tile grid, keep the existing row layout intact, and use compact icon-first tiles with favorite controls, neutral outlines, operation indicators, and an add-subcategory tile.
+- Later: add category reordering support to the tile layout; ordering remains available only in row mode for now.
 - Keep first-launch currency selection and the currency catalog add dialog aligned in search, grouping, and selection states.
 - Add inactive/obsolete markers for cash accounts and categories, with inactive items moved to the end.
 - Continue refining starter income and spending category groups.

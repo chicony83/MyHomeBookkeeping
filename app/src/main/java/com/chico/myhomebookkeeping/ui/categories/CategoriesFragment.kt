@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chico.myhomebookkeeping.R
@@ -53,6 +54,7 @@ import java.util.*
 
 class CategoriesFragment : Fragment() {
     companion object {
+        private const val CATEGORY_GRID_SPAN_COUNT = 3
         const val ARG_ENABLE_ORDER_EDIT_MODE = "enableCategoryOrderEditMode"
         const val ARG_OPEN_MODE = "categoryOpenMode"
 
@@ -105,6 +107,7 @@ class CategoriesFragment : Fragment() {
     private var currentCategoriesList: List<Categories> = emptyList()
     private var currentParentCategoriesList: List<ParentCategories> = emptyList()
     private var showUsageCount = false
+    private var categoriesDisplayMode = Constants.CATEGORIES_DISPLAY_MODE_GRID
     private var recentCategoriesExpanded = true
     private var recentCategoriesShowLabels = false
     private var recentCategoriesShowTitle = true
@@ -119,8 +122,10 @@ class CategoriesFragment : Fragment() {
     ): View {
         db = dataBase.getDataBase(requireContext()).categoryDao()
         showUsageCount = getShowUsageCountSetting()
+        categoriesDisplayMode = getCategoriesDisplayModeSetting()
         loadRecentCategoriesSettings()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        setupCategoryLayoutManager()
         binding.lifecycleOwner = viewLifecycleOwner
         control = activity?.findNavController(R.id.nav_host_fragment)!!
         binding.onClear = {
@@ -217,17 +222,23 @@ class CategoriesFragment : Fragment() {
     fun isShowingFavoriteCategories(): Boolean = favoriteCategoriesMode
 
     fun toggleCategoryOrderEditMode() {
+        if (categoriesDisplayMode == Constants.CATEGORIES_DISPLAY_MODE_GRID) {
+            setCategoryOrderEditMode(false)
+            return
+        }
         if (searchMode) hideSearch()
         if (!categoryOrderEditMode && favoriteCategoriesMode) setFavoriteCategoriesMode(false)
         setCategoryOrderEditMode(!categoryOrderEditMode)
     }
 
     private fun setCategoryOrderEditMode(isEnabled: Boolean) {
+        val effectiveEnabled = isEnabled &&
+            categoriesDisplayMode == Constants.CATEGORIES_DISPLAY_MODE_LIST
         if (isEnabled && searchMode) hideSearch()
-        if (!isEnabled) {
+        if (!effectiveEnabled) {
             arguments?.putBoolean(ARG_ENABLE_ORDER_EDIT_MODE, false)
         }
-        categoryOrderEditMode = isEnabled
+        categoryOrderEditMode = effectiveEnabled
         categoryGroupsAdapter?.setEditMode(categoryOrderEditMode)
         updateCategoryOrderDoneButtonVisibility()
     }
@@ -372,6 +383,7 @@ class CategoriesFragment : Fragment() {
                 { categories ->
                     categoriesViewModel.saveCategoriesOrder(categories)
                 },
+                displayMode = categoriesDisplayMode,
                 showAddRows = !favoriteCategoriesMode,
                 showUsageCount = showUsageCount
             )
@@ -434,6 +446,20 @@ class CategoriesFragment : Fragment() {
         categoryTouchHelper = itemTouchHelper
     }
 
+    private fun setupCategoryLayoutManager() {
+        binding.categoryTreeHolder.layoutManager = GridLayoutManager(
+            requireContext(),
+            CATEGORY_GRID_SPAN_COUNT
+        ).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return categoryGroupsAdapter?.getSpanSize(position)
+                        ?: CATEGORY_GRID_SPAN_COUNT
+                }
+            }
+        }
+    }
+
     private fun getTopOrder(groups: List<CategoryGroup>): List<String> {
         val savedOrder = requireContext()
             .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
@@ -456,6 +482,18 @@ class CategoriesFragment : Fragment() {
         return requireContext()
             .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
             .getBoolean(Constants.CATEGORIES_SHOW_USAGE_COUNT, false)
+    }
+
+    private fun getCategoriesDisplayModeSetting(): String {
+        return requireContext()
+            .getSharedPreferences(Constants.SP_NAME, android.content.Context.MODE_PRIVATE)
+            .getString(
+                Constants.CATEGORIES_DISPLAY_MODE,
+                Constants.CATEGORIES_DISPLAY_MODE_LIST
+            )?.takeIf {
+                it == Constants.CATEGORIES_DISPLAY_MODE_LIST ||
+                    it == Constants.CATEGORIES_DISPLAY_MODE_GRID
+            } ?: Constants.CATEGORIES_DISPLAY_MODE_LIST
     }
 
     private fun loadRecentCategoriesSettings() {
@@ -848,6 +886,17 @@ class CategoriesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         showUsageCount = getShowUsageCountSetting()
+        val nextDisplayMode = getCategoriesDisplayModeSetting()
+        if (nextDisplayMode != categoriesDisplayMode) {
+            categoriesDisplayMode = nextDisplayMode
+            setCategoryOrderEditMode(false)
+            categoryTouchHelper?.attachToRecyclerView(null)
+            categoryTouchHelper = null
+            binding.categoryTreeHolder.adapter = null
+            categoryGroupsAdapter = null
+            setupCategoryLayoutManager()
+            filterLists(binding.searchTil.editText?.text?.toString().orEmpty())
+        }
         loadRecentCategoriesSettings()
         categoriesViewModel.reloadCategories()
     }

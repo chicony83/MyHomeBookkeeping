@@ -102,6 +102,9 @@ object Constants {
 
     const val CATEGORIES_TOP_ORDER = "categories_top_order"
     const val CATEGORIES_SHOW_USAGE_COUNT = "categories_show_usage_count"
+    const val CATEGORIES_DISPLAY_MODE = "categories_display_mode"
+    const val CATEGORIES_DISPLAY_MODE_LIST = "list"
+    const val CATEGORIES_DISPLAY_MODE_GRID = "grid"
     const val CATEGORIES_PANELS_ORDER = "categories_panels_order"
     const val CATEGORIES_PANEL_RECENT = "recent"
     const val CATEGORIES_PANEL_FREQUENT = "frequent"

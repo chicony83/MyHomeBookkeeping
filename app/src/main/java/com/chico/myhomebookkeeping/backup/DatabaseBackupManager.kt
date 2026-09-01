@@ -162,6 +162,13 @@ object DatabaseBackupManager {
                     Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
                 )
             )
+            .put(
+                "categoriesDisplayMode",
+                appPreferences.getString(
+                    Constants.CATEGORIES_DISPLAY_MODE,
+                    Constants.CATEGORIES_DISPLAY_MODE_LIST
+                )
+            )
     }
 
     private fun addFile(zip: ZipOutputStream, file: File, entryName: String) {

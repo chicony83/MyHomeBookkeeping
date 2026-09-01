@@ -19,6 +19,9 @@
     <string name="settings_app_language_russian">Rosyjski</string>
     <string name="settings_categories_section_title">Kategorie</string>
     <string name="settings_categories_change_order">Zmień kolejność kategorii</string>
+    <string name="settings_categories_display_mode">Układ kategorii</string>
+    <string name="settings_categories_display_list">Wiersze</string>
+    <string name="settings_categories_display_grid">Kafelki</string>
     <string name="settings_categories_show_usage_count">Pokazuj częstotliwość użycia kategorii</string>
     <string name="settings_recent_categories_panel_enabled">Ostatnio używane kategorie</string>
     <string name="settings_categories_panel_visible">Pokazuj panel</string>

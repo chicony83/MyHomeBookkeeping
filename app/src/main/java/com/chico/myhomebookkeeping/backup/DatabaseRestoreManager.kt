@@ -225,6 +225,9 @@ object DatabaseRestoreManager {
                 Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL
             ).takeIf(::isSupportedJournalParentCategoryDisplayMode)
                 ?.let { putString(Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_MODE, it) }
+            settings.optString("categoriesDisplayMode")
+                .takeIf(::isSupportedCategoriesDisplayMode)
+                ?.let { putString(Constants.CATEGORIES_DISPLAY_MODE, it) }
             apply()
         }
     }
@@ -239,6 +242,11 @@ object DatabaseRestoreManager {
         return displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON ||
             displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_ICON_WITH_LABEL ||
             displayMode == Constants.JOURNAL_PARENT_CATEGORY_DISPLAY_LABEL
+    }
+
+    private fun isSupportedCategoriesDisplayMode(displayMode: String): Boolean {
+        return displayMode == Constants.CATEGORIES_DISPLAY_MODE_LIST ||
+            displayMode == Constants.CATEGORIES_DISPLAY_MODE_GRID
     }
 
     private fun deriveKey(
