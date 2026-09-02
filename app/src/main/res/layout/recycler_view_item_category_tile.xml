@@ -62,7 +62,7 @@
             android:id="@+id/categoryIconImageView"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:contentDescription="@string/content_description_icon_item_of_category"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
