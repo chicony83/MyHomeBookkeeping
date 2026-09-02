@@ -19,7 +19,6 @@
             android:id="@+id/iconsHolderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:alignmentMode="alignMargins"
             android:columnCount="4"
             android:paddingTop="@dimen/margin_double" />
