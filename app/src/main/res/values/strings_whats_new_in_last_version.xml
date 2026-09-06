@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="string_last_version_0_14_4">0.14.4\n- Added a new tile view for categories.\n- Added German and Belarusian language support.\n- Improved the initial app setup.\n- Fixed bugs and improved stability.</string>
   <string name="string_last_version_0_14_3">0.14.3\n- Updated category icons.\n- Improved app functionality.\n- Redesigned the Settings screen.\n- Improved app stability and appearance.</string>
   <string name="string_last_version_0_14_2">0.14.2\n- Added recently and frequently used categories.\n- Categories are now easier to select and customize.\n- Improved transfers between your own accounts.\n- Added quick periods for the journal and reports: week, month, last 30 days, and more.\n- Date filtering is now more accurate.\n- Fixed bugs and improved stability.</string>
   <string name="string_last_version_0_14_1">0.14.1\n- The Russian version of the app was renamed to “Учёт финансов” due to a potential copyright issue.\n- Favorite categories have been added.\n- The interface has been improved.\n- Stability has been improved.</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="string_last_version_0_14_4">0.14.4\n- Neue Kachelansicht für Kategorien hinzugefügt.\n- Deutsch und Belarussisch als Sprachen hinzugefügt.\n- Ersteinrichtung der App verbessert.\n- Fehler behoben und Stabilität verbessert.</string>
   <string name="string_last_version_0_14_3">0.14.3\n- Kategoriesymbole aktualisiert.\n- App-Funktionen verbessert.\n- Einstellungsbildschirm überarbeitet.\n- Stabilität und Darstellung der App verbessert.</string>
   <string name="string_last_version_0_14_2">0.14.2\n- Zuletzt und häufig verwendete Kategorien hinzugefügt.\n- Kategorien lassen sich jetzt einfacher auswählen und anpassen.\n- Umbuchungen zwischen eigenen Konten verbessert.\n- Schnellauswahl für Zeiträume in Buchungen und Berichten hinzugefügt: Woche, Monat, letzte 30 Tage und weitere.\n- Datumsfilter präzisiert.\n- Fehler behoben und Stabilität verbessert.</string>
   <string name="string_last_version_0_14_1">0.14.1\n- Die russische Version der App wurde wegen einer möglichen Urheberrechtsverletzung in „Учёт финансов“ umbenannt.\n- Favorisierte Kategorien hinzugefügt.\n- Benutzeroberfläche verbessert.\n- Stabilität verbessert.</string>

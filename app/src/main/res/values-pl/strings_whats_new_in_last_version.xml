@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="string_last_version_0_14_4">0.14.4\n- Dodano nowy widok kategorii — kafelki.\n- Dodano języki niemiecki i białoruski.\n- Ulepszono początkową konfigurację aplikacji.\n- Naprawiono błędy i poprawiono stabilność.</string>
   <string name="string_last_version_0_14_3">0.14.3\n- Zaktualizowano ikony kategorii.\n- Ulepszono funkcjonalność aplikacji.\n- Przeprojektowano ekran Ustawień.\n- Poprawiono stabilność i wygląd aplikacji.</string>
   <string name="string_last_version_0_14_2">0.14.2\n- Dodano ostatnio i często używane kategorie.\n- Wybieranie i konfigurowanie kategorii jest teraz wygodniejsze.\n- Ulepszono obsługę przelewów między własnymi kontami.\n- Dodano szybkie okresy dla dziennika i raportów: tydzień, miesiąc, ostatnie 30 dni i inne.\n- Filtrowanie według dat jest teraz dokładniejsze.\n- Naprawiono błędy i poprawiono stabilność.</string>
   <string name="string_last_version_0_14_1">0.14.1\n- Rosyjska wersja aplikacji otrzymała nazwę „Учёт финансов” z powodu możliwego naruszenia praw autorskich.\n- Dodano ulubione kategorie.\n- Ulepszono interfejs.\n- Poprawiono stabilność.</string>

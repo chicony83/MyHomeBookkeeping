@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="string_last_version_0_14_4">0.14.4\n- Dadadzieny novy vyhlad katehoryj — plitki.\n- Dadadzieny niamieckaja i biełaruskaja movy.\n- Palepšana pieršapačatkovaja naładka prahramy.\n- Vypraŭleny pamyłki i palepšana stabilnaść.</string>
   <string name="string_last_version_0_14_3">0.14.3\n- Abnoŭleny znački katehoryj.\n- Palepšana praca prahramy.\n- Pierapracavany ekran naład.\n- Palepšany stabilnasć i zniešni vyhlad prahramy.</string>
   <string name="string_last_version_0_14_2">0.14.2\n- Dadadzieny niadaŭna i časta vykarystoŭvanyja katehoryi.\n- Katehoryi stała prasciej vybirać i naładžvać.\n- Palepšany pieravody pamiž ułasnymi rachunkami.\n- Dadadzieny chutkija pieryjady dlia žurnała i spravazdač: tydzień, miesiac, apošnija 30 dzion i inšyja.\n- Filtr pa datach staŭ dakładniejšym.\n- Vypraŭleny pamyłki i palepšana stabilnasć.</string>
   <string name="string_last_version_0_14_1">0.14.1\n- Ruskaja viersija prahramy pierajmienavana va «Учёт финансов» praz mahčymuje parušenie aŭtarskich pravoŭ.\n- Dadadzieny abranyja katehoryi.\n- Palepšany interfiejs.\n- Palepšana stabilnasć.</string>
