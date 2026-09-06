@@ -99,7 +99,9 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
             name = account.displayName(languageTag),
             canonicalName = account.canonicalName,
             nameRu = account.nameRu,
-            namePl = account.namePl
+            namePl = account.namePl,
+            nameDe = account.nameDe,
+            nameBe = account.nameBe
         )
     }
 

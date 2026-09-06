@@ -46,9 +46,9 @@ object FastPaymentCreateSimpleQuery {
         return SimpleSQLiteQuery(query, args)
     }
     private fun mainQueryFastPayment(languageTag: String): String {
-        val fastPaymentName = localizedColumn("name_fast_payment", "name_fast_payment_ru", "name_fast_payment_pl", languageTag)
-        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", "cash_account_name_pl", languageTag)
-        val categoryName = localizedColumn("category_name", "category_name_ru", "category_name_pl", languageTag)
+        val fastPaymentName = localizedColumn("name_fast_payment", "name_fast_payment_ru", "name_fast_payment_pl", "name_fast_payment_de", "name_fast_payment_be", languageTag)
+        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", "cash_account_name_pl", "cash_account_name_de", "cash_account_name_be", languageTag)
+        val categoryName = localizedColumn("category_name", "category_name_ru", "category_name_pl", "category_name_de", "category_name_be", languageTag)
         return "SELECT id, icon, $fastPaymentName AS name_fast_payment_value, rating , " +
                 "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value, " +
@@ -79,10 +79,19 @@ object FastPaymentCreateSimpleQuery {
         return " AND "
     }
 
-    private fun localizedColumn(baseColumn: String, ruColumn: String, plColumn: String, languageTag: String): String {
+    private fun localizedColumn(
+        baseColumn: String,
+        ruColumn: String,
+        plColumn: String,
+        deColumn: String,
+        beColumn: String,
+        languageTag: String
+    ): String {
         return when (languageTag) {
             Constants.APP_LANGUAGE_RUSSIAN -> "COALESCE($ruColumn, $baseColumn)"
             Constants.APP_LANGUAGE_POLISH -> "COALESCE($plColumn, $baseColumn)"
+            Constants.APP_LANGUAGE_GERMAN -> "COALESCE($deColumn, $baseColumn)"
+            Constants.APP_LANGUAGE_BELARUSIAN -> "COALESCE($beColumn, $baseColumn)"
             else -> baseColumn
         }
     }

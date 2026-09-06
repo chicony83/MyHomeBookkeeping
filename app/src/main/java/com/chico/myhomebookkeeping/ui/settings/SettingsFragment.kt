@@ -767,17 +767,22 @@ class SettingsFragment : Fragment() {
 
     private fun showAppLanguageDialog() {
         val values = AppLanguage.supportedTags.toTypedArray()
-        showChoiceDialog(
-            title = getString(R.string.settings_app_language_title),
-            labels = values.map(::appLanguageTitle).toTypedArray(),
-            selectedIndex = values.indexOf(selectedAppLanguageTag).coerceAtLeast(0)
-        ) { index ->
-            val languageTag = values[index]
-            if (languageTag == selectedAppLanguageTag) return@showChoiceDialog
-            selectedAppLanguageTag = languageTag
-            settingsViewModel.saveAppLanguage(languageTag)
-            AppLanguage.applyLanguageTag(languageTag)
-        }
+        val labels = values.map { AppLanguage.selectionTitle(requireContext(), it) }.toTypedArray()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.settings_app_language_title)
+            .setSingleChoiceItems(
+                labels,
+                values.indexOf(selectedAppLanguageTag).coerceAtLeast(0)
+            ) { dialog, index ->
+                val languageTag = values[index]
+                if (languageTag != selectedAppLanguageTag) {
+                    selectedAppLanguageTag = languageTag
+                    settingsViewModel.saveAppLanguage(languageTag)
+                    AppLanguage.applyLanguageTag(languageTag)
+                }
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun showJournalCurrencyDisplayModeDialog() {

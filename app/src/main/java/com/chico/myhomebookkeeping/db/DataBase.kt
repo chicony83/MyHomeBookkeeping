@@ -8,9 +8,11 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.chico.myhomebookkeeping.db.dao.*
 import com.chico.myhomebookkeeping.db.entity.*
+import com.chico.myhomebookkeeping.domain.DefaultBelarusianNames
+import com.chico.myhomebookkeeping.domain.DefaultGermanNames
 import com.chico.myhomebookkeeping.domain.DefaultPolishNames
 
-const val DATABASE_SCHEMA_VERSION = 13
+const val DATABASE_SCHEMA_VERSION = 14
 
 @Database(
     entities = [
@@ -60,6 +62,7 @@ object dataBase {
             .addMigrations(migration_10_to_11)
             .addMigrations(migration_11_to_12)
             .addMigrations(migration_12_to_13)
+            .addMigrations(migration_13_to_14)
             .addCallback(seedPaymentTypesOnCreate)
             .build()
 }
@@ -208,6 +211,20 @@ private object migration_12_to_13 : Migration(12, 13) {
     }
 }
 
+private object migration_13_to_14 : Migration(13, 14) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE `cash_account_table` ADD COLUMN `cash_account_name_de` TEXT")
+        database.execSQL("ALTER TABLE `cash_account_table` ADD COLUMN `cash_account_name_be` TEXT")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `category_name_de` TEXT")
+        database.execSQL("ALTER TABLE `category_table` ADD COLUMN `category_name_be` TEXT")
+        database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_de` TEXT")
+        database.execSQL("ALTER TABLE `parent_categories_table` ADD COLUMN `parent_category_name_be` TEXT")
+        database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_de` TEXT")
+        database.execSQL("ALTER TABLE `fast_payments_table` ADD COLUMN `name_fast_payment_be` TEXT")
+        fillMissingGermanAndBelarusianNames(database)
+    }
+}
+
 private object seedPaymentTypesOnCreate : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
@@ -292,6 +309,23 @@ private fun fillMissingPolishNames(database: SupportSQLiteDatabase) {
         localizedColumn = "name_fast_payment_pl",
         names = DefaultPolishNames.categories
     )
+}
+
+private fun fillMissingGermanAndBelarusianNames(database: SupportSQLiteDatabase) {
+    val targets = listOf(
+        Triple("cash_account_table", "cash_account_name", "cash_account_name") to
+                (DefaultGermanNames.cashAccounts to DefaultBelarusianNames.cashAccounts),
+        Triple("parent_categories_table", "parent_category_name", "parent_category_name") to
+                (DefaultGermanNames.parentCategories to DefaultBelarusianNames.parentCategories),
+        Triple("category_table", "category_name", "category_name") to
+                (DefaultGermanNames.categories to DefaultBelarusianNames.categories),
+        Triple("fast_payments_table", "name_fast_payment", "name_fast_payment") to
+                (DefaultGermanNames.categories to DefaultBelarusianNames.categories)
+    )
+    targets.forEach { (columns, names) ->
+        fillMissingLocalizedValues(database, columns.first, columns.second, "${columns.third}_de", names.first)
+        fillMissingLocalizedValues(database, columns.first, columns.second, "${columns.third}_be", names.second)
+    }
 }
 
 private fun fillMissingLocalizedValues(

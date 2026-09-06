@@ -76,11 +76,15 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
                         parentName = it.group.parentName,
                         parentNameRu = it.group.parentNameRu,
                         parentNamePl = it.group.parentNamePl,
+                        parentNameDe = it.group.parentNameDe,
+                        parentNameBe = it.group.parentNameBe,
                         parentIcon = it.group.parentIcon,
                         isIncome = it.group.isIncome,
                         subcategories = it.group.subcategories,
                         subcategoriesRu = it.group.subcategoriesRu,
                         subcategoriesPl = it.group.subcategoriesPl,
+                        subcategoriesDe = it.group.subcategoriesDe,
+                        subcategoriesBe = it.group.subcategoriesBe,
                         subcategoryIcons = it.group.subcategoryIcons
                     )
                 }
@@ -94,6 +98,8 @@ class FirstLaunchCategoriesFragment : Fragment(R.layout.fragment_first_launch_ca
                     defaultCategoryName.text = when (languageTag) {
                         Constants.APP_LANGUAGE_RUSSIAN -> item.group.parentNameRu
                         Constants.APP_LANGUAGE_POLISH -> item.group.parentNamePl
+                        Constants.APP_LANGUAGE_GERMAN -> item.group.parentNameDe
+                        Constants.APP_LANGUAGE_BELARUSIAN -> item.group.parentNameBe
                         else -> item.group.parentName
                     }
                     defaultCategorySubcategoryCount.text = itemView.context.getString(

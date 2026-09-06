@@ -27,7 +27,7 @@ class FirstLaunchLanguageFragment : Fragment(R.layout.fragment_first_launch_lang
             ).apply {
                 id = View.generateViewId()
                 tag = language.tag
-                text = getString(language.titleRes)
+                text = AppLanguage.selectionTitle(requireContext(), language.tag)
                 layoutParams = RadioGroup.LayoutParams(
                     RadioGroup.LayoutParams.MATCH_PARENT,
                     RadioGroup.LayoutParams.WRAP_CONTENT

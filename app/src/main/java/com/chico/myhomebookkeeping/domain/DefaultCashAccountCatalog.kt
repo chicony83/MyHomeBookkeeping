@@ -10,10 +10,15 @@ object DefaultCashAccountCatalog {
         val namePl: String,
         val iconName: CashAccountIconNames
     ) {
+        val nameDe: String get() = DefaultGermanNames.cashAccounts[canonicalName] ?: canonicalName
+        val nameBe: String get() = DefaultBelarusianNames.cashAccounts[canonicalName] ?: canonicalName
+
         fun displayName(languageTag: String): String {
             return when (languageTag) {
                 Constants.APP_LANGUAGE_RUSSIAN -> nameRu
                 Constants.APP_LANGUAGE_POLISH -> namePl
+                Constants.APP_LANGUAGE_GERMAN -> nameDe
+                Constants.APP_LANGUAGE_BELARUSIAN -> nameBe
                 else -> canonicalName
             }
         }

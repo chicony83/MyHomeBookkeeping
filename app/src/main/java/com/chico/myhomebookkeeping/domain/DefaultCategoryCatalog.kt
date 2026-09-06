@@ -19,6 +19,18 @@ data class DefaultCategoryGroup(
 
     val subcategoriesPl: List<String>
         get() = subcategories.map(DefaultPolishNames::categoryName)
+
+    val parentNameDe: String
+        get() = DefaultGermanNames.parentCategoryName(parentName)
+
+    val subcategoriesDe: List<String>
+        get() = subcategories.map(DefaultGermanNames::categoryName)
+
+    val parentNameBe: String
+        get() = DefaultBelarusianNames.parentCategoryName(parentName)
+
+    val subcategoriesBe: List<String>
+        get() = subcategories.map(DefaultBelarusianNames::categoryName)
 }
 
 object DefaultCategoryCatalog {
@@ -184,6 +196,18 @@ object DefaultCategoryCatalog {
                 it.copy(
                     parentName = it.parentNamePl,
                     subcategories = it.subcategoriesPl
+                )
+            }
+            Constants.APP_LANGUAGE_GERMAN -> groups.map {
+                it.copy(
+                    parentName = it.parentNameDe,
+                    subcategories = it.subcategoriesDe
+                )
+            }
+            Constants.APP_LANGUAGE_BELARUSIAN -> groups.map {
+                it.copy(
+                    parentName = it.parentNameBe,
+                    subcategories = it.subcategoriesBe
                 )
             }
             else -> groups

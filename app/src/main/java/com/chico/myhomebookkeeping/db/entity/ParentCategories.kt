@@ -16,7 +16,10 @@ class ParentCategories(
     val nameRu: String? = null,
     @ColumnInfo(name = "parent_category_name_pl")
     val namePl: String? = null,
-    @ColumnInfo(name = "icon_key")
+    @ColumnInfo(name = "parent_category_name_de")
+    val nameDe: String? = null,
+    @ColumnInfo(name = "parent_category_name_be")
+    val nameBe: String? = null,    @ColumnInfo(name = "icon_key")
     val iconKey: String? = null
 ){
     @PrimaryKey(autoGenerate = true)

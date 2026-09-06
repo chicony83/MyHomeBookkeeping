@@ -149,11 +149,15 @@ class FirstLaunchViewModel(
                 parentName = it.parentName,
                 parentNameRu = it.parentNameRu,
                 parentNamePl = it.parentNamePl,
+                parentNameDe = it.parentNameDe,
+                parentNameBe = it.parentNameBe,
                 parentIcon = it.parentIcon,
                 isIncome = it.isIncome,
                 subcategories = it.subcategories,
                 subcategoriesRu = it.subcategoriesRu,
                 subcategoriesPl = it.subcategoriesPl,
+                subcategoriesDe = it.subcategoriesDe,
+                subcategoriesBe = it.subcategoriesBe,
                 subcategoryIcons = it.subcategoryIcons
             )
         }
@@ -263,6 +267,8 @@ class FirstLaunchViewModel(
                     parentCategoryOrder = i,
                     nameRu = categoryGroups[i].parentNameRu,
                     namePl = categoryGroups[i].parentNamePl,
+                    nameDe = categoryGroups[i].parentNameDe,
+                    nameBe = categoryGroups[i].parentNameBe,
                     iconKey = DefaultCategoryIconAssignments.parentKey(categoryGroups[i].parentName)
                         ?: CategoryIconCatalog.canonicalKey(categoryGroups[i].parentIcon.name)
                         ?: CategoryIconCatalog.DEFAULT_KEY
@@ -274,6 +280,8 @@ class FirstLaunchViewModel(
                     name = categoryGroups[i].subcategories[j],
                     nameRu = categoryGroups[i].subcategoriesRu.getOrNull(j),
                     namePl = categoryGroups[i].subcategoriesPl.getOrNull(j),
+                    nameDe = categoryGroups[i].subcategoriesDe.getOrNull(j),
+                    nameBe = categoryGroups[i].subcategoriesBe.getOrNull(j),
                     icon = categoryIconsMap.getIcon(categoryGroups[i].subcategoryIcons.getOrNull(j)),
                     iconKey = DefaultCategoryIconAssignments.childKey(categoryGroups[i].parentName, j)
                         ?: categoryGroups[i].subcategoryIcons.getOrNull(j)?.let {
@@ -297,6 +305,8 @@ class FirstLaunchViewModel(
         name: String,
         nameRu: String?,
         namePl: String?,
+        nameDe: String?,
+        nameBe: String?,
         icon: Int?,
         iconKey: String?,
         isIncome: Boolean,
@@ -312,7 +322,9 @@ class FirstLaunchViewModel(
                 parentCategoryId = parentCategoryId,
                 categoryOrder = order,
                 categoryNameRu = nameRu,
-                categoryNamePl = namePl
+                categoryNamePl = namePl,
+                categoryNameDe = nameDe,
+                categoryNameBe = nameBe
             )
         )
     }
@@ -362,7 +374,9 @@ class FirstLaunchViewModel(
             isCashAccountDefault = item.canonicalName == defaultCashAccountName,
             icon = item.img,
             accountNameRu = item.nameRu,
-            accountNamePl = item.namePl
+            accountNamePl = item.namePl,
+            accountNameDe = item.nameDe,
+            accountNameBe = item.nameBe
         )
         dbCashAccount.addCashAccount(cashAccount)
     }
