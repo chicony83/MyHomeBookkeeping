@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="content_description_rating_stars">Zorki rejtynhu płaciažu</string>
+  <string name="content_description_icon_item_of_cash_account">Značok rachunku</string>
+  <string name="content_description_icon_item_of_category">Značok katehoryi</string>
+  <string name="content_description_icon_item_of_parent_category">Značok baćkoŭskaj katehoryi</string>
+  <string name="content_description_icon_add_new_element">Dadać novy element</string>
+  <string name="content_description_icon_drag_handle">Pieraciahnuć, kab zmianić paradak</string>
+  <string name="content_description_icon_category_favorite">Abranaja katehoryja</string>
+  <string name="content_description_recent_categories_expand">Razharnuć apošnija vykarystanyja katehoryi</string>
+  <string name="content_description_frequent_categories_expand">Razharnuć časta vykarystoŭvanyja katehoryi</string>
+  <string name="content_description_icon_fast_payment">Značok chutkaha płaciažu</string>
+  <string name="content_description_icon_sorting">Sartavannie</string>
+  <string name="content_description_erase_button">Ačyscić</string>
+</resources>

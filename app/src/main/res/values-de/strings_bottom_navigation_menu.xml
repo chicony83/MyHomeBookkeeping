@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="bottom_navigation_journal">Buchungen</string>
+  <string name="bottom_navigation_free_fast_payment">Individuell</string>
+  <string name="bottom_navigation_transfer">Umbuchung</string>
+  <string name="bottom_navigation_fast_payments">Schnellbuchungen</string>
+  <string name="bottom_navigation_reports">Berichte</string>
+  <string name="bottom_navigation_categories">Kategorien</string>
+  <string name="bottom_navigation_currencies">Währungen</string>
+  <string name="bottom_navigation_cash_accounts">Konten</string>
+  <string name="bottom_navigation_settings">Einstellungen</string>
+</resources>

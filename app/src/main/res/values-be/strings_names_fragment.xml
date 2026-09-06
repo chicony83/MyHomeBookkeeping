@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="fragment_label_change_fast_payment">Змяніць хуткі плацёж</string>
+  <string name="fragment_label_new_fast_payment">Новы хуткі плацёж</string>
+  <string name="fragment_label_select_fast_payment">Хуткі плацёж</string>
+  <string name="fragment_label_select_categories">Выберыце катэгорыі</string>
+  <string name="fragment_label_time_period">Выберыце перыяд часу</string>
+  <string name="fragment_label_new_money_moving">Даданне</string>
+  <string name="fragment_label_new_transfer">Перавод</string>
+  <string name="fragment_label_select_password">Пароль</string>
+  <string name="fragment_label_money_moving_query">Параметры запыту</string>
+  <string name="fragment_label_money_moving">Журнал</string>
+  <string name="fragment_label_change_money_moving">Змена запісу</string>
+  <string name="fragment_label_change_transfer">Змена пераводу</string>
+  <string name="fragment_label_reports">Справаздачы</string>
+  <string name="fragment_label_categories">Катэгорыі</string>
+  <string name="fragment_label_category_entry">Што дадаць?</string>
+  <string name="fragment_label_currencies">Валюты</string>
+  <string name="fragment_label_cash_account">Рахункі</string>
+  <string name="fragment_label_settings">Налады</string>
+  <string name="fragment_label_help">Даведка</string>
+  <string name="fragment_label_first_launch_select_currencies">Выберыце валюты</string>
+  <string name="fragment_label_first_launch">Першы запуск</string>
+  <string name="fragment_label_first_launch_setup">Налада</string>
+</resources>

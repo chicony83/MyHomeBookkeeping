@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="text_view_first_launch_select_you_currencies">Vybierycie svaje valuty</string>
+  <string name="text_view_select_parent_category">Vybierycie baćkoŭskuju katehoryju</string>
+  <string name="text_view_All_categories">Usie</string>
+  <string name="text_view_parent_category">Baćkoŭskaja katehoryja</string>
+  <string name="text_view_no_parent_category">Biez baćkoŭskaj katehoryi</string>
+  <string name="text_view_password_code_prompt">Stvarycie 4-značny kod</string>
+  <string name="text_view_password_hint_label">Padkazka</string>
+  <string name="text_view_period_start">Pačatak pieryjadu</string>
+  <string name="text_view_period_end">Kaniec pieryjadu</string>
+  <string name="text_view_time_period_selected_mode">Abrany pieryjad:</string>
+  <string name="text_view_start_date">Data pačatku</string>
+  <string name="text_view_end_date">Data zakančennia</string>
+  <string name="chart_label_report">Spravazdača</string>
+  <string name="report_menu_title">Spravazdačy</string>
+  <string name="report_menu_spending_title">Vydatki pa katehoryjach</string>
+  <string name="report_menu_spending_subtitle">Kudy iduć hrošy</string>
+  <string name="report_menu_income_title">Dachody pa katehoryjach</string>
+  <string name="report_menu_income_subtitle">Adkul prychodziać hrošy</string>
+  <string name="report_title_spending">Vydatki</string>
+  <string name="report_title_income">Dachody</string>
+  <string name="report_donut_center_spending">Ahulnyja vydatki</string>
+  <string name="report_donut_center_income">Ahulnyja dachody</string>
+  <string name="report_total">Usiaho</string>
+  <string name="report_summary_details">Zapisaŭ: %1$d — katehoryj: %2$d</string>
+  <string name="report_filter_all_categories">Usie katehoryi</string>
+  <string name="report_filter_selected_categories">Katehoryj: %1$d</string>
+  <string name="report_breakdown_title">Pa katehoryjach</string>
+  <string name="report_empty_title">Niama zapisaŭ za vybrany pieryjad</string>
+  <string name="report_empty_change_period">Zmianić pieryjad</string>
+  <string name="report_empty_select_categories">Vybrać katehoryi</string>
+  <string name="report_scroll_to_chart">Viarnucca da dyjahramy</string>
+  <string name="report_categories_filter_all">Usie</string>
+  <string name="report_categories_select_all">Vybrać usie</string>
+  <string name="report_categories_clear_all">Zniać usie adznaki</string>
+  <string name="recent_categories_panel_title">Niadaŭna vykarystanyja</string>
+  <string name="frequent_categories_panel_title">Časta vykarystoŭvanyja</string>
+</resources>

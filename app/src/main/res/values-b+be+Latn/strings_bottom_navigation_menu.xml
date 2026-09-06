@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="bottom_navigation_journal">Žurnał</string>
+  <string name="bottom_navigation_free_fast_payment">Svabodny</string>
+  <string name="bottom_navigation_transfer">Pieravod</string>
+  <string name="bottom_navigation_fast_payments">Chutkija</string>
+  <string name="bottom_navigation_reports">Spravazdačy</string>
+  <string name="bottom_navigation_categories">Katehoryi</string>
+  <string name="bottom_navigation_currencies">Valuty</string>
+  <string name="bottom_navigation_cash_accounts">Rachunki</string>
+  <string name="bottom_navigation_settings">Nałady</string>
+</resources>

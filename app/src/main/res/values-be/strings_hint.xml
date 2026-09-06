@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="hint_new_currency_only_last_4_digits">Толькі 4 апошнія лічбы</string>
+  <string name="hint_enter_name">Увядзіце назву</string>
+  <string name="hint_new_currency_enter_name_short">Увядзіце кароткую назву</string>
+  <string name="hint_new_currency_enter_name_ISO">Увядзіце ISO</string>
+  <string name="hint_enter_amount">Увядзіце суму</string>
+  <string name="hint_add_you_description">Дадайце апісанне</string>
+  <string name="hint_enter_amount_be_inserted">Сума (будзе ўстаўлена ў плацёж)</string>
+  <string name="hint_add_you_description_be_inserted">Дадайце апісанне\n(будзе ўстаўлена ў плацёж)</string>
+  <string name="hint_category">Шукаць катэгорыю</string>
+  <string name="hint_enter_password">Увядзіце пароль</string>
+  <string name="hint_repeat_password">Паўтарыце пароль</string>
+</resources>

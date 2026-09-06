@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="content_description_rating_stars">Bewertungssterne der Buchung</string>
+  <string name="content_description_icon_item_of_cash_account">Kontosymbol</string>
+  <string name="content_description_icon_item_of_category">Kategoriesymbol</string>
+  <string name="content_description_icon_item_of_parent_category">Symbol der übergeordneten Kategorie</string>
+  <string name="content_description_icon_add_new_element">Neues Element hinzufügen</string>
+  <string name="content_description_icon_drag_handle">Ziehen, um die Reihenfolge zu ändern</string>
+  <string name="content_description_icon_category_favorite">Favorisierte Kategorie</string>
+  <string name="content_description_recent_categories_expand">Zuletzt verwendete Kategorien aufklappen</string>
+  <string name="content_description_frequent_categories_expand">Häufig verwendete Kategorien aufklappen</string>
+  <string name="content_description_icon_fast_payment">Symbol der Schnellbuchung</string>
+  <string name="content_description_icon_sorting">Sortieren</string>
+  <string name="content_description_erase_button">Löschen</string>
+</resources>

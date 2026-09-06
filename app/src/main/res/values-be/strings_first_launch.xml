@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="first_launch_language_title">Выберыце мову праграмы</string>
+  <string name="first_launch_install_mode_title">Выберыце тып усталявання</string>
+  <string name="first_launch_install_mode_default">Звычайнае ўсталяванне</string>
+  <string name="first_launch_install_mode_custom">Усталяванне з наладамі</string>
+  <string name="first_launch_install_mode_clean_transfer">Чыстае ўсталяванне для пераносу базы</string>
+  <string name="first_launch_clean_install_message">Чыстае ўсталяванне завершана. Каб перанесці даныя з іншага тэлефона, адкрыйце налады і аднавіце базу даных з рэзервовай копіі.</string>
+  <string name="first_launch_currencies_title">Выберыце свае валюты</string>
+  <string name="first_launch_currencies_hint">Адзначце валюты, якія хочаце выкарыстоўваць.\nНа наступным кроку вам трэба будзе выбраць валюту па змаўчанні.</string>
+  <string name="first_launch_currencies_available_count">Валюты: %1$d</string>
+  <string name="first_launch_currencies_selected_count">Выбраныя: %1$d</string>
+  <string name="first_launch_currencies_continue">Працягнуць — выбраць асноўную</string>
+  <string name="first_launch_currencies_empty_message">Каб працягнуць, дадайце хаця б адну валюту</string>
+  <string name="first_launch_currencies_major">Асноўныя валюты</string>
+  <string name="first_launch_currencies_fiat">Валюты</string>
+  <string name="first_launch_currencies_search_hint">Пошук валюты</string>
+  <string name="first_launch_currencies_more">Больш валют</string>
+  <string name="first_launch_currencies_other">Іншыя валюты</string>
+  <string name="first_launch_currencies_crypto">Крыптавалюты</string>
+  <string name="first_launch_setup_step_title">Налада: крок %1$d з %2$d</string>
+  <string name="first_launch_setup_next">Далей</string>
+  <string name="first_launch_setup_done">Гатова</string>
+  <string name="first_launch_default_currency_crypto_notice">У спісе ёсць крыптавалюты. Любую выбраную валюту можна зрабіць асноўнай.</string>
+  <string name="first_launch_start_destination_title">Выберыце, які раздзел адкрываецца пры запуску праграмы. Вы можаце змяніць гэта пазней у наладах праграмы.</string>
+  <string name="first_launch_start_destination_fast_payments">Хуткія плацяжы</string>
+  <string name="first_launch_start_destination_categories">Катэгорыі</string>
+  <string name="first_launch_start_destination_journal">Журнал</string>
+  <string name="first_launch_categories_title">Выберыце катэгорыі</string>
+  <string name="first_launch_categories_hint">Тут паказаны толькі бацькоўскія катэгорыі. Падкатэгорыі будуць дададзены аўтаматычна.</string>
+  <string name="first_launch_categories_subcategory_count">%1$d падкатэгорый</string>
+  <string name="first_launch_required_category_confirmation">Гэта жыццёва важная катэгорыя. Вы сапраўды хочаце яе выключыць?</string>
+  <string name="first_launch_required_category_confirm">Так</string>
+  <string name="first_launch_required_category_cancel">Не</string>
+  <string name="quick_setup_add_Cash_account">Рахункі</string>
+  <string name="quick_setup_name_Card">Картка</string>
+  <string name="quick_setup_name_Cash">Наяўныя грошы</string>
+  <string name="quick_setup_name_Currency">Долар ЗША</string>
+  <string name="quick_setup_add_Category">Катэгорыі</string>
+  <string name="quick_setup_name_The_Income">Заробак</string>
+  <string name="quick_setup_name_Products">Прадукты</string>
+  <string name="quick_setup_name_Fuel_for_the_car">Паліва для аўтамабіля</string>
+  <string name="quick_setup_name_Cellular_communication">Сотавая сувязь</string>
+  <string name="quick_setup_name_Credit">Крэдыт</string>
+  <string name="quick_setup_name_Medicines">Лекі</string>
+  <string name="quick_setup_name_Public_transport">Грамадскі транспарт</string>
+</resources>

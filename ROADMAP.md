@@ -57,8 +57,11 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 ## Android Compatibility
 
 - Completed: add Polish app language, including first-launch/settings selection and localized default category data.
-- Completed: declare bundled app locales with Android locale config for English, Polish, and Russian.
+- Completed: declare bundled app locales with Android locale config for English, Polish, Russian, German, Belarusian, and Belarusian Latin.
 - Completed: recreate the Activity after first-launch language selection so the next setup step uses the selected resources.
+- Completed: align all bundled translations with the current interface, including localized accessibility descriptions and a complete set of 399 translatable resources per locale.
+- Completed: mirror localization resources across thematic `strings_*.xml` files and add an automated completeness, structure, type, plural, and format-argument check.
+- Completed: order first-launch languages alphabetically with Belarusian Latin before Belarusian Cyrillic and display Russian as `Русский` in the English language list.
 - Completed: update the app launcher icon assets from the wallet artwork, using a 70% foreground scale for better launcher spacing.
 - Completed: rename the Russian app title to Учёт финансов and add a 0.14.1 version-history note for the trademark-conflict wording.
 - Completed: make the system Back button follow the actual navigation back stack instead of returning through the old quick-payment-oriented flow.

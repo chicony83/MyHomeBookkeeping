@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="backup_section_title">Reziervovaje kapiravannie i pieradača</string>
+  <string name="backup_section_description">Vašy danyja zastajucca na hetaj pryładzie. Reziervovaja kopija zašyfravana vašym parolem. Prahrama nikudy jaje nie adpraŭlaje.</string>
+  <string name="backup_create_button">Stvaryć zašyfravanuju reziervovuju kopiju</string>
+  <string name="backup_restore_button">Adnavić z reziervovaj kopii</string>
+  <string name="backup_password_title">Abaranić reziervovuju kopiju</string>
+  <string name="backup_password_hint">Parol (nie mienš za 8 simvałaŭ)</string>
+  <string name="backup_password_repeat_hint">Paŭtarycie parol</string>
+  <string name="backup_password_mismatch">Paroli nie supadajuć</string>
+  <string name="backup_password_too_short">Vykarystoŭvajcie nie mienš za 8 simvałaŭ</string>
+  <string name="backup_created">Reziervovaja kopija stvorana</string>
+  <string name="backup_failed">Nie atrymałasia stvaryć reziervovuju kopiju</string>
+  <string name="restore_password_title">Razbłakiravać reziervovuju kopiju</string>
+  <string name="restore_password_hint">Parol ad reziervovaj kopii</string>
+  <string name="restore_ready_title">Reziervovaja kopija pravierana</string>
+  <string name="restore_ready_message">Prahrama zakryjecca, kab biaspiečna zamianić bazu danych. Adkryjcie jaje znoŭ, kab zaviaršyć adnaŭlennie.</string>
+  <string name="restore_failed">Nie ŭdałosia pravieryć abo rasšyfravać hetu reziervovuju kopiju</string>
+</resources>

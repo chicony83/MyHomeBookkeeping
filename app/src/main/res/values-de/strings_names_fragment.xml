@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="fragment_label_change_fast_payment">Schnellbuchung bearbeiten</string>
+  <string name="fragment_label_new_fast_payment">Neue Schnellbuchung</string>
+  <string name="fragment_label_select_fast_payment">Schnellbuchung</string>
+  <string name="fragment_label_select_categories">Kategorien auswählen</string>
+  <string name="fragment_label_time_period">Zeitraum auswählen</string>
+  <string name="fragment_label_new_money_moving">Neue Buchung</string>
+  <string name="fragment_label_new_transfer">Umbuchung</string>
+  <string name="fragment_label_select_password">Passwort</string>
+  <string name="fragment_label_money_moving_query">Filter</string>
+  <string name="fragment_label_money_moving">Buchungen</string>
+  <string name="fragment_label_change_money_moving">Buchung bearbeiten</string>
+  <string name="fragment_label_change_transfer">Umbuchung bearbeiten</string>
+  <string name="fragment_label_reports">Berichte</string>
+  <string name="fragment_label_categories">Kategorien</string>
+  <string name="fragment_label_category_entry">Was möchten Sie erfassen?</string>
+  <string name="fragment_label_currencies">Währungen</string>
+  <string name="fragment_label_cash_account">Konten</string>
+  <string name="fragment_label_settings">Einstellungen</string>
+  <string name="fragment_label_help">Hilfe</string>
+  <string name="fragment_label_first_launch_select_currencies">Währungen auswählen</string>
+  <string name="fragment_label_first_launch">Erster Start</string>
+  <string name="fragment_label_first_launch_setup">Einrichtung</string>
+</resources>

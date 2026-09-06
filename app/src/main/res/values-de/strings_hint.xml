@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="hint_new_currency_only_last_4_digits">Nur die letzten 4 Ziffern</string>
+  <string name="hint_enter_name">Namen eingeben</string>
+  <string name="hint_new_currency_enter_name_short">Kurznamen eingeben</string>
+  <string name="hint_new_currency_enter_name_ISO">ISO-Code eingeben</string>
+  <string name="hint_enter_amount">Betrag eingeben</string>
+  <string name="hint_add_you_description">Beschreibung hinzufügen</string>
+  <string name="hint_enter_amount_be_inserted">Betrag (wird in die Buchung übernommen)</string>
+  <string name="hint_add_you_description_be_inserted">Beschreibung hinzufügen\n(wird in die Buchung übernommen)</string>
+  <string name="hint_category">Kategorie suchen</string>
+  <string name="hint_enter_password">Passwort eingeben</string>
+  <string name="hint_repeat_password">Passwort wiederholen</string>
+</resources>

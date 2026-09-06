@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="quick_access_settings_title">Schnellzugriffsleiste</string>
+  <string name="quick_access_button_title">Schaltfläche %1$d</string>
+  <string name="quick_access_add_button">Schaltfläche „Hinzufügen“</string>
+  <string name="quick_access_select_title">Schaltfläche auswählen</string>
+  <string name="quick_access_none">Nichts</string>
+  <string name="quick_access_already_added">Dieses Element ist bereits ausgewählt</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="description_income">Dachody</string>
+  <string name="description_spending">Vydatki</string>
+  <string name="description_balance">Bałans</string>
+  <string name="description_selected_entry">Vybrany zapis №</string>
+  <string name="description_date_time_text">Data/čas</string>
+  <string name="description_cash_account">Rachunak</string>
+  <string name="description_cash_account_from">Z rachunku</string>
+  <string name="description_cash_account_to">Na rachunak</string>
+  <string name="description_currency">Valuta</string>
+  <string name="description_currency_from">Z valuty</string>
+  <string name="description_currency_to">U valutu</string>
+  <string name="description_category">Katehoryja</string>
+  <string name="description_amount">Suma</string>
+  <string name="description_amount_to">Atrymanaja suma</string>
+  <string name="description_exchange_rate">Abmienny kurs</string>
+  <string name="description_transfer_fee">Kamisija za pieravod</string>
+  <string name="description_description">Apisannie</string>
+  <string name="descriptions_last_4_digits_of_card">Apošnija 4 ličby karty</string>
+  <string name="description_cash_account_name">Nazva rachunku</string>
+  <string name="description_select_date">Vybierycie datu</string>
+  <string name="description_select_time">Vybierycie čas</string>
+  <string name="description_selected_cash_account">Vybrany rachunak</string>
+  <string name="description_selected_category">Katehoryja</string>
+  <string name="description_selected_currency">Vybranaja valuta</string>
+  <string name="description_this_name_is_taken">Hetaja nazva ŭžo zaniata</string>
+  <string name="description_you_want_to_delete_the_entry">Vy chočacie vydalić zapis?</string>
+  <string name="description_A_quick_setup_of_the_program_will_be_done_here">Chutkaja nałada prahramy.\nBuduć dadadzieny nastupnyja elementy:</string>
+  <string name="current_version">Biahučaja viersija</string>
+  <string name="name_fast_payment">Nazva chutkaha płaciažu</string>
+  <string name="description_rating_payment">Rejtynh płaciažu</string>
+</resources>

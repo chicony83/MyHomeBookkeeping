@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="syntax_error">Błąd składni</string>
+  <string name="syntax_error">Błąd składni</string>
 </resources>

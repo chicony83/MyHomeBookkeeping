@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="message_too_short_name">Too short name</string>
-    <string name="message_select_type_of_category">Select type of category</string>
-
-    <string name="message_enter_amount">Enter amount</string>
-    <string name="zero_amount_confirm_title">Zero amount</string>
-    <string name="zero_amount_confirm_message">A zero amount was entered. Continue adding?</string>
-    <string name="message_name_not_entered">Enter name</string>
-    <string name="message_category_not_selected">Select category</string>
-    <string name="message_currency_not_selected">Select currency</string>
-    <string name="message_transfer_currency_not_selected">Select destination currency</string>
-    <string name="message_cash_account_not_selected">Select cash account</string>
-    <string name="message_transfer_cash_account_not_selected">Select destination cash account</string>
-    <string name="message_transfer_cash_accounts_must_be_different">Select two different cash accounts</string>
-    <string name="message_enter_transfer_amount_or_rate">Enter received amount or exchange rate</string>
-
-    <string name="message_entry_changed">Entry changed</string>
-    <string name="message_entry_added">Entry added</string>
-    <string name="message_entry_add_failed">Entry was not added</string>
-    <string name="message_category_added_to_favorites">Category added to favorites</string>
-    <string name="message_category_removed_from_favorites">Category removed from favorites</string>
-    <string name="message_favorite_categories">Favorite categories</string>
-    <string name="message_all_categories">All categories</string>
-    <string name="message_empty_journal_title">Welcome! 👋</string>
-    <string name="message_empty_journal_first_payment_hint">This is the first app launch. Let’s create your first entry.\n\nTap Categories at the bottom of the screen and simply choose a category from the list.</string>
-
-    <string name="message_start_date_can_not_be_more_than_the_current">Start Date can not be more than the current</string>
-    <string name="message_the_end_date_is_greater_than_the_current_one">Looking to the future?\nThe end date is greater than the current one !!!</string>
-    <string name="message_end_date_cannot_be_less_than_start_date">End date cannot be less than start date</string>
-
-    <string name="message_deletion_canceled">Deletion canceled</string>
-    <string name="message_entry_deleted">Entry deleted</string>
-
-    <string name="message_you_have_latest_version">You have latest version</string>
-    <string name="message_you_can_update_the_program">You can update the program</string>
-    <string name="message_update_check_failed">Could not check updates in Google Play</string>
-    <string name="message_update_not_completed">Update was not completed</string>
-
-    <string name="message_icon_is_not_selected">Icon is not selected</string>
-
-    <string name="message_select_default_currency">Select default currency</string>
-    <string name="message_no_catalog_currency_selected">Select at least one new currency</string>
-    <string name="message_all_catalog_currencies_added_title">All currencies are added</string>
-    <string name="message_all_catalog_currencies_added">All currencies from the catalog have already been added. You can add a custom currency manually.</string>
-    <string name="message_select_default_cash_account">Select default cash account</string>
-    <string name="message_complete_first_launch_setup">Complete app setup</string>
-    <string name="message_confirm_crypto_default_currency">Do you really want to make a cryptocurrency the default currency?</string>
-    <string name="message_passwords_do_not_match">Passwords do not match</string>
-    <string name="message_passwords_match">Passwords match</string>
-    <string name="message_password_too_short">Password is too short</string>
+  <string name="message_too_short_name">Name is too short</string>
+  <string name="message_select_type_of_category">Select type of category</string>
+  <string name="message_enter_amount">Enter amount</string>
+  <string name="zero_amount_confirm_title">Zero amount</string>
+  <string name="zero_amount_confirm_message">A zero amount was entered. Continue adding the entry?</string>
+  <string name="message_name_not_entered">Enter name</string>
+  <string name="message_category_not_selected">Select category</string>
+  <string name="message_currency_not_selected">Select currency</string>
+  <string name="message_transfer_currency_not_selected">Select destination currency</string>
+  <string name="message_cash_account_not_selected">Select cash account</string>
+  <string name="message_transfer_cash_account_not_selected">Select destination account</string>
+  <string name="message_transfer_cash_accounts_must_be_different">Select two different accounts</string>
+  <string name="message_enter_transfer_amount_or_rate">Enter received amount or exchange rate</string>
+  <string name="message_entry_changed">Entry changed</string>
+  <string name="message_entry_added">Entry added</string>
+  <string name="message_entry_add_failed">Entry was not added</string>
+  <string name="message_category_added_to_favorites">Category added to favorites</string>
+  <string name="message_category_removed_from_favorites">Category removed from favorites</string>
+  <string name="message_favorite_categories">Favorite categories</string>
+  <string name="message_all_categories">All categories</string>
+  <string name="message_empty_journal_title">Welcome! 👋</string>
+  <string name="message_empty_journal_first_payment_hint">This is the first app launch. Let’s create your first entry.\n\nTap “Categories” at the bottom of the screen and choose a category from the list.</string>
+  <string name="message_start_date_can_not_be_more_than_the_current">The start date cannot be later than today</string>
+  <string name="message_the_end_date_is_greater_than_the_current_one">Looking into the future?\nThe end date is later than today!</string>
+  <string name="message_end_date_cannot_be_less_than_start_date">The end date cannot be earlier than the start date</string>
+  <string name="message_deletion_canceled">Deletion canceled</string>
+  <string name="message_entry_deleted">Entry deleted</string>
+  <string name="message_you_have_latest_version">You have the latest version</string>
+  <string name="message_you_can_update_the_program">You can update the app</string>
+  <string name="message_update_check_failed">Could not check updates in Google Play</string>
+  <string name="message_update_not_completed">Update was not completed</string>
+  <string name="message_icon_is_not_selected">Icon is not selected</string>
+  <string name="message_select_default_currency">Select default currency</string>
+  <string name="message_no_catalog_currency_selected">Select at least one new currency</string>
+  <string name="message_all_catalog_currencies_added_title">All currencies are added</string>
+  <string name="message_all_catalog_currencies_added">All currencies from the catalog have already been added. You can add a custom currency manually.</string>
+  <string name="message_select_default_cash_account">Select default cash account</string>
+  <string name="message_complete_first_launch_setup">Complete the app setup</string>
+  <string name="message_confirm_crypto_default_currency">Do you really want to make a cryptocurrency the default currency?</string>
+  <string name="message_passwords_do_not_match">Passwords do not match</string>
+  <string name="message_passwords_match">Passwords match</string>
+  <string name="message_password_too_short">Password is too short</string>
 </resources>

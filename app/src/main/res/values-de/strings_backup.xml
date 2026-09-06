@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="backup_section_title">Datensicherung und Übertragung</string>
+  <string name="backup_section_description">Ihre Daten bleiben auf diesem Gerät. Backups werden mit Ihrem Passwort verschlüsselt und von der App nicht versendet.</string>
+  <string name="backup_create_button">Verschlüsseltes Backup erstellen</string>
+  <string name="backup_restore_button">Aus Backup wiederherstellen</string>
+  <string name="backup_password_title">Backup schützen</string>
+  <string name="backup_password_hint">Passwort (mindestens 8 Zeichen)</string>
+  <string name="backup_password_repeat_hint">Passwort wiederholen</string>
+  <string name="backup_password_mismatch">Passwörter stimmen nicht überein</string>
+  <string name="backup_password_too_short">Verwenden Sie mindestens 8 Zeichen</string>
+  <string name="backup_created">Backup erstellt</string>
+  <string name="backup_failed">Backup konnte nicht erstellt werden</string>
+  <string name="restore_password_title">Backup entsperren</string>
+  <string name="restore_password_hint">Backup-Passwort</string>
+  <string name="restore_ready_title">Backup überprüft</string>
+  <string name="restore_ready_message">Die App wird geschlossen, um die Datenbank sicher zu ersetzen. Öffnen Sie die App erneut, um die Wiederherstellung abzuschließen.</string>
+  <string name="restore_failed">Dieses Backup konnte nicht überprüft oder entschlüsselt werden</string>
+</resources>

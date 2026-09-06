@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="quick_access_settings_title">Panel chutkaha dostupu</string>
+  <string name="quick_access_button_title">Knopka %1$d</string>
+  <string name="quick_access_add_button">Knopka «Dadać»</string>
+  <string name="quick_access_select_title">Vybar knopki</string>
+  <string name="quick_access_none">Ničoha</string>
+  <string name="quick_access_already_added">Hety element užo vybrany</string>
+</resources>

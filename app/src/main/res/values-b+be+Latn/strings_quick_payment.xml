@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="quick_payment_settings_title">Nałady chutkaha płaciažu</string>
+  <string name="quick_payment_default_currency">Valuta pa zmaŭčanni</string>
+  <string name="quick_payment_default_cash_account">Rachunak pa zmaŭčanni</string>
+  <string name="quick_payment_currency_scroll">Vybar valuty prakrutkaj</string>
+  <string name="quick_payment_cash_account_scroll">Vybar rachunku prakrutkaj</string>
+  <string name="quick_payment_show_calculator">Pakazvać knopku kalkulatara</string>
+  <string name="quick_payment_currency_selection_mode">Vybar valuty</string>
+  <string name="quick_payment_cash_account_selection_mode">Vybar rachunku</string>
+  <string name="quick_payment_calculator">Kalkulatar</string>
+  <string name="quick_payment_amount_input">Uvod sumy</string>
+  <string name="quick_payment_amount_input_digits">Ličbami</string>
+  <string name="quick_payment_amount_input_scroll">Prakrutkaj</string>
+  <string name="quick_payment_amount_whole_digits">Ličby pierad kropkaj</string>
+  <string name="quick_payment_amount_fraction_digits">Ličby paslia kropki</string>
+  <string name="quick_payment_amount_whole_group">Cełaja častka</string>
+  <string name="quick_payment_amount_fraction_group">Drobavaja častka</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="content_description_rating_stars">Зоркі рэйтынгу плацяжу</string>
+  <string name="content_description_icon_item_of_cash_account">Значок рахунку</string>
+  <string name="content_description_icon_item_of_category">Значок катэгорыі</string>
+  <string name="content_description_icon_item_of_parent_category">Значок бацькоўскай катэгорыі</string>
+  <string name="content_description_icon_add_new_element">Дадаць новы элемент</string>
+  <string name="content_description_icon_drag_handle">Перацягнуць, каб змяніць парадак</string>
+  <string name="content_description_icon_category_favorite">Абраная катэгорыя</string>
+  <string name="content_description_recent_categories_expand">Разгарнуць апошнія выкарыстаныя катэгорыі</string>
+  <string name="content_description_frequent_categories_expand">Разгарнуць часта выкарыстоўваныя катэгорыі</string>
+  <string name="content_description_icon_fast_payment">Значок хуткага плацяжу</string>
+  <string name="content_description_icon_sorting">Сартаванне</string>
+  <string name="content_description_erase_button">Ачысціць</string>
+</resources>

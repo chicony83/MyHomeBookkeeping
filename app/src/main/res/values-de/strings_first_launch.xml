@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="first_launch_language_title">App-Sprache auswählen</string>
+  <string name="first_launch_install_mode_title">Art der Einrichtung auswählen</string>
+  <string name="first_launch_install_mode_default">Standardeinrichtung</string>
+  <string name="first_launch_install_mode_custom">Benutzerdefinierte Einrichtung</string>
+  <string name="first_launch_install_mode_clean_transfer">Leere Einrichtung zur Datenübernahme</string>
+  <string name="first_launch_clean_install_message">Die App wurde ohne vorab angelegte Daten eingerichtet. Um Daten von einem anderen Smartphone zu übernehmen, öffnen Sie die Einstellungen und stellen Sie die Datenbank aus einem Backup wieder her.</string>
+  <string name="first_launch_currencies_title">Währungen auswählen</string>
+  <string name="first_launch_currencies_hint">Wählen Sie die Währungen aus, die Sie verwenden möchten.\nIm nächsten Schritt legen Sie die Standardwährung fest.</string>
+  <string name="first_launch_currencies_available_count">Währungen: %1$d</string>
+  <string name="first_launch_currencies_selected_count">Ausgewählt: %1$d</string>
+  <string name="first_launch_currencies_continue">Weiter – Standardwährung auswählen</string>
+  <string name="first_launch_currencies_empty_message">Fügen Sie mindestens eine Währung hinzu, um fortzufahren</string>
+  <string name="first_launch_currencies_major">Hauptwährungen</string>
+  <string name="first_launch_currencies_fiat">Fiatwährungen</string>
+  <string name="first_launch_currencies_search_hint">Währung suchen</string>
+  <string name="first_launch_currencies_more">Mehr Währungen</string>
+  <string name="first_launch_currencies_other">Andere Währungen</string>
+  <string name="first_launch_currencies_crypto">Kryptowährungen</string>
+  <string name="first_launch_setup_step_title">Einrichtung: Schritt %1$d von %2$d</string>
+  <string name="first_launch_setup_next">Weiter</string>
+  <string name="first_launch_setup_done">Fertig</string>
+  <string name="first_launch_default_currency_crypto_notice">Ihre Liste enthält Kryptowährungen. Sie können jede Währung aus der Liste als Standardwährung festlegen.</string>
+  <string name="first_launch_start_destination_title">Wählen Sie aus, welcher Abschnitt beim Start der App geöffnet wird. Sie können dies später in den App-Einstellungen ändern.</string>
+  <string name="first_launch_start_destination_fast_payments">Schnellbuchungen</string>
+  <string name="first_launch_start_destination_categories">Kategorien</string>
+  <string name="first_launch_start_destination_journal">Buchungen</string>
+  <string name="first_launch_categories_title">Kategorien auswählen</string>
+  <string name="first_launch_categories_hint">Hier werden nur übergeordnete Kategorien angezeigt. Unterkategorien werden automatisch hinzugefügt.</string>
+  <string name="first_launch_categories_subcategory_count">Unterkategorien: %1$d</string>
+  <string name="first_launch_required_category_confirmation">Dies ist eine wichtige Kategorie. Möchten Sie sie wirklich deaktivieren?</string>
+  <string name="first_launch_required_category_confirm">Ja</string>
+  <string name="first_launch_required_category_cancel">Nein</string>
+  <string name="quick_setup_add_Cash_account">Konten</string>
+  <string name="quick_setup_name_Card">Karte</string>
+  <string name="quick_setup_name_Cash">Bargeld</string>
+  <string name="quick_setup_name_Currency">USD</string>
+  <string name="quick_setup_add_Category">Kategorien</string>
+  <string name="quick_setup_name_The_Income">Einnahmen</string>
+  <string name="quick_setup_name_Products">Lebensmittel</string>
+  <string name="quick_setup_name_Fuel_for_the_car">Kraftstoff</string>
+  <string name="quick_setup_name_Cellular_communication">Mobilfunk</string>
+  <string name="quick_setup_name_Credit">Kredit</string>
+  <string name="quick_setup_name_Medicines">Medikamente</string>
+  <string name="quick_setup_name_Public_transport">Öffentliche Verkehrsmittel</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="description_income">Даходы</string>
+  <string name="description_spending">Выдаткі</string>
+  <string name="description_balance">Баланс</string>
+  <string name="description_selected_entry">Выбраны запіс №</string>
+  <string name="description_date_time_text">Дата/час</string>
+  <string name="description_cash_account">Рахунак</string>
+  <string name="description_cash_account_from">З рахунку</string>
+  <string name="description_cash_account_to">На рахунак</string>
+  <string name="description_currency">Валюта</string>
+  <string name="description_currency_from">Валюта адпраўлення</string>
+  <string name="description_currency_to">Валюта залічэння</string>
+  <string name="description_category">Катэгорыя</string>
+  <string name="description_amount">Сума</string>
+  <string name="description_amount_to">Атрыманая сума</string>
+  <string name="description_exchange_rate">Абменны курс</string>
+  <string name="description_transfer_fee">Камісія за перавод</string>
+  <string name="description_description">Апісанне</string>
+  <string name="descriptions_last_4_digits_of_card">Апошнія 4 лічбы карты</string>
+  <string name="description_cash_account_name">Назва рахунку</string>
+  <string name="description_select_date">Выберыце дату</string>
+  <string name="description_select_time">Выберыце час</string>
+  <string name="description_selected_cash_account">Выбраны рахунак</string>
+  <string name="description_selected_category">Катэгорыя</string>
+  <string name="description_selected_currency">Выбраная валюта</string>
+  <string name="description_this_name_is_taken">Гэта назва занятая</string>
+  <string name="description_you_want_to_delete_the_entry">Вы хочаце выдаліць запіс?</string>
+  <string name="description_A_quick_setup_of_the_program_will_be_done_here">Хуткая налада праграмы.\nБудуць дададзены наступныя элементы:</string>
+  <string name="current_version">Бягучая версія</string>
+  <string name="name_fast_payment">Назва плацяжу</string>
+  <string name="description_rating_payment">Рэйтынг аплаты</string>
+</resources>

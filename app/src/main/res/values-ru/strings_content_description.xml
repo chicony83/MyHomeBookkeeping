@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="content_description_rating_stars">Звёзды рейтинга платежа</string>
+  <string name="content_description_icon_item_of_cash_account">Иконка счёта</string>
+  <string name="content_description_icon_item_of_category">Иконка категории</string>
+  <string name="content_description_icon_item_of_parent_category">Иконка родительской категории</string>
+  <string name="content_description_icon_add_new_element">Добавить новый элемент</string>
+  <string name="content_description_icon_drag_handle">Перетащить для изменения порядка</string>
+  <string name="content_description_icon_category_favorite">Избранная категория</string>
+  <string name="content_description_recent_categories_expand">Развернуть последние использованные категории</string>
+  <string name="content_description_frequent_categories_expand">Развернуть часто используемые категории</string>
+  <string name="content_description_icon_fast_payment">Иконка быстрого платежа</string>
+  <string name="content_description_icon_sorting">Сортировка</string>
+  <string name="content_description_erase_button">Очистить</string>
+</resources>

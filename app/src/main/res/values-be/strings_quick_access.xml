@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="quick_access_settings_title">Панэль хуткага доступу</string>
+  <string name="quick_access_button_title">Кнопка %1$d</string>
+  <string name="quick_access_add_button">Дадаць кнопку</string>
+  <string name="quick_access_select_title">Выберыце кнопку</string>
+  <string name="quick_access_none">Нічога</string>
+  <string name="quick_access_already_added">Гэты элемент ужо выбраны</string>
+</resources>

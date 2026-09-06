@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="backup_section_title">Рэзервовае капіраванне і перадача</string>
+  <string name="backup_section_description">Вашы даныя застаюцца на гэтай прыладзе. Рэзервовая копія шыфруецца вашым паролем і нікуды не адпраўляецца праграмай.</string>
+  <string name="backup_create_button">Стварыць зашыфраваную рэзервовую копію</string>
+  <string name="backup_restore_button">Аднавіць з рэзервовай копіі</string>
+  <string name="backup_password_title">Абараніць рэзервовую копію</string>
+  <string name="backup_password_hint">Пароль (мінімум 8 сімвалаў)</string>
+  <string name="backup_password_repeat_hint">Паўтарыце пароль</string>
+  <string name="backup_password_mismatch">Паролі не супадаюць</string>
+  <string name="backup_password_too_short">Выкарыстоўвайце не менш за 8 сімвалаў</string>
+  <string name="backup_created">Створана рэзервовая копія</string>
+  <string name="backup_failed">Не атрымалася стварыць рэзервовую копію</string>
+  <string name="restore_password_title">Адкрыць рэзервовую копію</string>
+  <string name="restore_password_hint">Пароль рэзервовай копіі</string>
+  <string name="restore_ready_title">Рэзервовая копія праверана</string>
+  <string name="restore_ready_message">Праграма закрыецца для бяспечнай замены базы даных. Адкрыйце яе зноў, каб завяршыць аднаўленне.</string>
+  <string name="restore_failed">Не ўдалося праверыць або расшыфраваць гэту рэзервовую копію</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="text_view_first_launch_select_you_currencies">Выберыце патрэбную валюту</string>
+  <string name="text_view_select_parent_category">Выберыце бацькоўскую катэгорыю</string>
+  <string name="text_view_All_categories">Усе</string>
+  <string name="text_view_parent_category">Бацькоўская катэгорыя</string>
+  <string name="text_view_no_parent_category">Няма бацькоўскай катэгорыі</string>
+  <string name="text_view_password_code_prompt">Стварыце 4-значны код</string>
+  <string name="text_view_password_hint_label">Падказка</string>
+  <string name="text_view_period_start">Пачатак перыяду</string>
+  <string name="text_view_period_end">Канец перыяду</string>
+  <string name="text_view_time_period_selected_mode">Абраны перыяд:</string>
+  <string name="text_view_start_date">Дата пачатку</string>
+  <string name="text_view_end_date">Дата заканчэння</string>
+  <string name="chart_label_report">Справаздача</string>
+  <string name="report_menu_title">Справаздачы</string>
+  <string name="report_menu_spending_title">Выдаткі па катэгорыях</string>
+  <string name="report_menu_spending_subtitle">Куды ідуць грошы</string>
+  <string name="report_menu_income_title">Даходы па катэгорыях</string>
+  <string name="report_menu_income_subtitle">Адкуль прыходзяць грошы</string>
+  <string name="report_title_spending">Выдаткі</string>
+  <string name="report_title_income">Даходы</string>
+  <string name="report_donut_center_spending">Агульныя выдаткі</string>
+  <string name="report_donut_center_income">Агульныя даходы</string>
+  <string name="report_total">Усяго</string>
+  <string name="report_summary_details">%1$d аперацый — %2$d катэгорый</string>
+  <string name="report_filter_all_categories">Усе катэгорыі</string>
+  <string name="report_filter_selected_categories">%1$d катэгорый</string>
+  <string name="report_breakdown_title">Па катэгорыях</string>
+  <string name="report_empty_title">Няма аперацый за выбраны перыяд</string>
+  <string name="report_empty_change_period">Змяніць перыяд</string>
+  <string name="report_empty_select_categories">Выберыце катэгорыі</string>
+  <string name="report_scroll_to_chart">Вярнуцца да дыяграмы</string>
+  <string name="report_categories_filter_all">Усе</string>
+  <string name="report_categories_select_all">Выбраць усе</string>
+  <string name="report_categories_clear_all">Зняць усе</string>
+  <string name="recent_categories_panel_title">апошнія выкарыстаныя</string>
+  <string name="frequent_categories_panel_title">часта выкарыстоўваныя</string>
+</resources>

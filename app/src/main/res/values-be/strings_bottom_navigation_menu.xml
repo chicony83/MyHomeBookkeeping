@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="bottom_navigation_journal">Журнал</string>
+  <string name="bottom_navigation_free_fast_payment">Свабодны</string>
+  <string name="bottom_navigation_transfer">Перавод</string>
+  <string name="bottom_navigation_fast_payments">Хуткія</string>
+  <string name="bottom_navigation_reports">Справаздачы</string>
+  <string name="bottom_navigation_categories">Катэгорыі</string>
+  <string name="bottom_navigation_currencies">Валюты</string>
+  <string name="bottom_navigation_cash_accounts">Рахункі</string>
+  <string name="bottom_navigation_settings">Налады</string>
+</resources>

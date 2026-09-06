@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="quick_payment_settings_title">Einstellungen für Schnellbuchungen</string>
+  <string name="quick_payment_default_currency">Standardwährung</string>
+  <string name="quick_payment_default_cash_account">Standardkonto</string>
+  <string name="quick_payment_currency_scroll">Währung durch Scrollen auswählen</string>
+  <string name="quick_payment_cash_account_scroll">Konto durch Scrollen auswählen</string>
+  <string name="quick_payment_show_calculator">Taschenrechner-Schaltfläche anzeigen</string>
+  <string name="quick_payment_currency_selection_mode">Währungsauswahl</string>
+  <string name="quick_payment_cash_account_selection_mode">Kontoauswahl</string>
+  <string name="quick_payment_calculator">Taschenrechner</string>
+  <string name="quick_payment_amount_input">Betragseingabe</string>
+  <string name="quick_payment_amount_input_digits">Ziffern</string>
+  <string name="quick_payment_amount_input_scroll">Scrollen</string>
+  <string name="quick_payment_amount_whole_digits">Stellen vor dem Dezimaltrennzeichen</string>
+  <string name="quick_payment_amount_fraction_digits">Stellen nach dem Dezimaltrennzeichen</string>
+  <string name="quick_payment_amount_whole_group">Ganzzahliger Anteil</string>
+  <string name="quick_payment_amount_fraction_group">Nachkommastellen</string>
+</resources>

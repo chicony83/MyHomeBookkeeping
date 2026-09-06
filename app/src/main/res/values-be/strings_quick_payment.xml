@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="quick_payment_settings_title">Налады хуткага плацяжу</string>
+  <string name="quick_payment_default_currency">Валюта па змаўчанні</string>
+  <string name="quick_payment_default_cash_account">Рахунак па змаўчанні</string>
+  <string name="quick_payment_currency_scroll">Выбар валюты пракруткай</string>
+  <string name="quick_payment_cash_account_scroll">Выбар рахунку пракруткай</string>
+  <string name="quick_payment_show_calculator">Паказаць кнопку калькулятара</string>
+  <string name="quick_payment_currency_selection_mode">Выбар валюты</string>
+  <string name="quick_payment_cash_account_selection_mode">Выбар грашовага рахунку</string>
+  <string name="quick_payment_calculator">Калькулятар</string>
+  <string name="quick_payment_amount_input">Увод сумы</string>
+  <string name="quick_payment_amount_input_digits">Лічбамі</string>
+  <string name="quick_payment_amount_input_scroll">Пракруткай</string>
+  <string name="quick_payment_amount_whole_digits">Лічбы перад кропкай</string>
+  <string name="quick_payment_amount_fraction_digits">Лічбы пасля кропкі</string>
+  <string name="quick_payment_amount_whole_group">Цэлыя</string>
+  <string name="quick_payment_amount_fraction_group">Дробавая частка</string>
+</resources>

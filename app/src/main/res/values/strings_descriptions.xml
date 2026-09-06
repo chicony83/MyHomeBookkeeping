@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="description_income">Income</string>
-    <string name="description_spending">Spending</string>
-
-    <string name="description_balance">Balance</string>
-
-    <string name="description_selected_entry">Selected entry #</string>
-    <string name="description_date_time_text">Date/time</string>
-    <string name="description_cash_account">Cash account</string>
-    <string name="description_cash_account_from">From account</string>
-    <string name="description_cash_account_to">To account</string>
-    <string name="description_currency">Currency</string>
-    <string name="description_currency_from">From currency</string>
-    <string name="description_currency_to">To currency</string>
-    <string name="description_category">Category</string>
-    <string name="description_amount">Amount</string>
-    <string name="description_amount_to">Received amount</string>
-    <string name="description_exchange_rate">Exchange rate</string>
-    <string name="description_transfer_fee">Transfer fee</string>
-    <string name="description_description">Description</string>
-
-    <string name="descriptions_last_4_digits_of_card">Last 4 digits of the card</string>
-
-    <string name="description_cash_account_name">Cash account name</string>
-
-    <string name="description_select_date">Select date</string>
-    <string name="description_select_time">Select time</string>
-
-    <string name="description_selected_cash_account">Selected cash account</string>
-    <string name="description_selected_category">Category</string>
-    <string name="description_selected_currency">Selected currency</string>
-
-    <string name="description_this_name_is_taken">This name is taken</string>
-    <string name="description_you_want_to_delete_the_entry">You want to delete the entry</string>
-    
-    <string name="description_A_quick_setup_of_the_program_will_be_done_here">A quick setup of the program.\n The following items will be added</string>
-
-    <string name="current_version">Current version</string>
-
-    <string name="name_fast_payment">Name fast payment</string>
-    <string name="description_rating_payment">Rating of payment</string>
+  <string name="description_income">Income</string>
+  <string name="description_spending">Spending</string>
+  <string name="description_balance">Balance</string>
+  <string name="description_selected_entry">Selected entry No.</string>
+  <string name="description_date_time_text">Date/time</string>
+  <string name="description_cash_account">Account</string>
+  <string name="description_cash_account_from">From account</string>
+  <string name="description_cash_account_to">To account</string>
+  <string name="description_currency">Currency</string>
+  <string name="description_currency_from">Source currency</string>
+  <string name="description_currency_to">Destination currency</string>
+  <string name="description_category">Category</string>
+  <string name="description_amount">Amount</string>
+  <string name="description_amount_to">Received amount</string>
+  <string name="description_exchange_rate">Exchange rate</string>
+  <string name="description_transfer_fee">Transfer fee</string>
+  <string name="description_description">Description</string>
+  <string name="descriptions_last_4_digits_of_card">Last 4 digits of the card</string>
+  <string name="description_cash_account_name">Account name</string>
+  <string name="description_select_date">Select date</string>
+  <string name="description_select_time">Select time</string>
+  <string name="description_selected_cash_account">Selected account</string>
+  <string name="description_selected_category">Category</string>
+  <string name="description_selected_currency">Selected currency</string>
+  <string name="description_this_name_is_taken">This name is already taken</string>
+  <string name="description_you_want_to_delete_the_entry">Do you want to delete this entry?</string>
+  <string name="description_A_quick_setup_of_the_program_will_be_done_here">Quick app setup.\nThe following items will be added:</string>
+  <string name="current_version">Current version</string>
+  <string name="name_fast_payment">Payment name</string>
+  <string name="description_rating_payment">Payment rating</string>
 </resources>

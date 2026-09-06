@@ -31,6 +31,15 @@ object AppLanguage {
             showNeutralLanguageIcon = true
         ),
         Language(
+            tag = Constants.APP_LANGUAGE_BELARUSIAN,
+            titleRes = R.string.settings_app_language_belarusian,
+            showNeutralLanguageIcon = true
+        ),
+        Language(
+            tag = Constants.APP_LANGUAGE_GERMAN,
+            titleRes = R.string.settings_app_language_german
+        ),
+        Language(
             tag = Constants.APP_LANGUAGE_ENGLISH,
             titleRes = R.string.settings_app_language_english
         ),
@@ -41,15 +50,6 @@ object AppLanguage {
         Language(
             tag = Constants.APP_LANGUAGE_RUSSIAN,
             titleRes = R.string.settings_app_language_russian,
-            showNeutralLanguageIcon = true
-        ),
-        Language(
-            tag = Constants.APP_LANGUAGE_GERMAN,
-            titleRes = R.string.settings_app_language_german
-        ),
-        Language(
-            tag = Constants.APP_LANGUAGE_BELARUSIAN,
-            titleRes = R.string.settings_app_language_belarusian,
             showNeutralLanguageIcon = true
         )
     )

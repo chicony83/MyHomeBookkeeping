@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="message_too_short_name">Занадта кароткая назва</string>
+  <string name="message_select_type_of_category">Выберыце тып катэгорыі</string>
+  <string name="message_enter_amount">Увядзіце суму</string>
+  <string name="zero_amount_confirm_title">Нулявая сума</string>
+  <string name="zero_amount_confirm_message">Уведзена нулявая сума. Працягнуць даданне?</string>
+  <string name="message_name_not_entered">Увядзіце назву</string>
+  <string name="message_category_not_selected">Выберыце катэгорыю</string>
+  <string name="message_currency_not_selected">Выберыце валюту</string>
+  <string name="message_transfer_currency_not_selected">Выберыце валюту прызначэння</string>
+  <string name="message_cash_account_not_selected">Выберыце рахунак</string>
+  <string name="message_transfer_cash_account_not_selected">Выберыце рахунак залічэння</string>
+  <string name="message_transfer_cash_accounts_must_be_different">Выберыце два розныя рахункі</string>
+  <string name="message_enter_transfer_amount_or_rate">Увядзіце атрыманую суму або абменны курс</string>
+  <string name="message_entry_changed">Запіс зменены</string>
+  <string name="message_entry_added">Запіс дададзены</string>
+  <string name="message_entry_add_failed">Запіс не дададзены</string>
+  <string name="message_category_added_to_favorites">Катэгорыя дададзена ў абранае</string>
+  <string name="message_category_removed_from_favorites">Катэгорыя выдалена з абранага</string>
+  <string name="message_favorite_categories">Абраныя катэгорыі</string>
+  <string name="message_all_categories">Усе катэгорыі</string>
+  <string name="message_empty_journal_title">Сардэчна запрашаем! 👋</string>
+  <string name="message_empty_journal_first_payment_hint">Гэта першы запуск праграмы. Давайце створым ваш першы запіс.\n\nНацісніце «Катэгорыі» ўнізе экрана і выберыце катэгорыю са спіса.</string>
+  <string name="message_start_date_can_not_be_more_than_the_current">Дата пачатку не можа быць большай за бягучую</string>
+  <string name="message_the_end_date_is_greater_than_the_current_one">Глядзіце ў будучыню?\nДата заканчэння большая за бягучую !!!</string>
+  <string name="message_end_date_cannot_be_less_than_start_date">Дата заканчэння не можа быць меншай за дату пачатку</string>
+  <string name="message_deletion_canceled">Выдаленне адменена</string>
+  <string name="message_entry_deleted">Запіс выдалены</string>
+  <string name="message_you_have_latest_version">У вас апошняя версія</string>
+  <string name="message_you_can_update_the_program">Вы можаце абнавіць праграму</string>
+  <string name="message_update_check_failed">Не атрымалася праверыць абнаўленні ў Google Play</string>
+  <string name="message_update_not_completed">Абнаўленне не завершана</string>
+  <string name="message_icon_is_not_selected">Значок не выбраны</string>
+  <string name="message_select_default_currency">Выберыце валюту па змаўчанні</string>
+  <string name="message_no_catalog_currency_selected">Выберыце хаця б адну новую валюту</string>
+  <string name="message_all_catalog_currencies_added_title">Усе валюты дададзены</string>
+  <string name="message_all_catalog_currencies_added">Усе валюты з каталога ўжо дададзены. Вы можаце дадаць карыстацкую валюту ўручную.</string>
+  <string name="message_select_default_cash_account">Выберыце рахунак па змаўчанні</string>
+  <string name="message_complete_first_launch_setup">Завершыце наладку праграмы</string>
+  <string name="message_confirm_crypto_default_currency">Вы сапраўды хочаце зрабіць крыптавалюту валютай па змаўчанні?</string>
+  <string name="message_passwords_do_not_match">Паролі не супадаюць</string>
+  <string name="message_passwords_match">Паролі супадаюць</string>
+  <string name="message_password_too_short">Пароль занадта кароткі</string>
+</resources>

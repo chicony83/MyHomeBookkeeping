@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="content_description_rating_stars" translatable="false">Rating stars</string>
-    <string name="content_description_icon_item_of_cash_account" translatable="false">icon item of cash account</string>
-    <string name="content_description_icon_item_of_category" translatable="false">icon item of category</string>
-    <string name="content_description_icon_item_of_parent_category" translatable="false">icon item of parent category</string>
-
-    <string name="content_description_icon_add_new_element" translatable="false">add new element</string>
-    <string name="content_description_icon_drag_handle" translatable="false">drag to reorder</string>
-    <string name="content_description_icon_category_favorite" translatable="false">favorite category</string>
-    <string name="content_description_recent_categories_expand" translatable="false">expand recent categories</string>
-    <string name="content_description_frequent_categories_expand" translatable="false">expand frequent categories</string>
-    <string name="content_description_icon_fast_payment" translatable="false">icon fast payment</string>
-    <string name="content_description_icon_sorting" translatable="false">sorting icon</string>
-    <string name="content_description_erase_button" translatable="false">erase button</string>
+  <string name="content_description_rating_stars">Payment rating stars</string>
+  <string name="content_description_icon_item_of_cash_account">Account icon</string>
+  <string name="content_description_icon_item_of_category">Category icon</string>
+  <string name="content_description_icon_item_of_parent_category">Parent category icon</string>
+  <string name="content_description_icon_add_new_element">Add new item</string>
+  <string name="content_description_icon_drag_handle">Drag to reorder</string>
+  <string name="content_description_icon_category_favorite">Favorite category</string>
+  <string name="content_description_recent_categories_expand">Expand recently used categories</string>
+  <string name="content_description_frequent_categories_expand">Expand frequently used categories</string>
+  <string name="content_description_icon_fast_payment">Quick payment icon</string>
+  <string name="content_description_icon_sorting">Sort</string>
+  <string name="content_description_erase_button">Clear</string>
 </resources>

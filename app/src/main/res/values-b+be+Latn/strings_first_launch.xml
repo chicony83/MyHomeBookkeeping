@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="first_launch_language_title">Vybierycie movu prahramy</string>
+  <string name="first_launch_install_mode_title">Vybierycie sposab nałady</string>
+  <string name="first_launch_install_mode_default">Standartnaja nałada</string>
+  <string name="first_launch_install_mode_custom">Ułasnaja nałada</string>
+  <string name="first_launch_install_mode_clean_transfer">Čystaja ŭstanoŭka dlia pieranosu bazy danych</string>
+  <string name="first_launch_clean_install_message">Čystaja ŭstanoŭka zavieršana. Kab pieraniesci danyja z inšaha telefona, adkryjcie nałady i adnavicie bazu danych z reziervovaj kopii.</string>
+  <string name="first_launch_currencies_title">Vybierycie svaje valuty</string>
+  <string name="first_launch_currencies_hint">Adznačcie valuty, jakija chočacie vykarystoŭvać.\nNa nastupnym kroku vam treba budzie vybrać valutu pa zmaŭčanni.</string>
+  <string name="first_launch_currencies_available_count">Valut: %1$d</string>
+  <string name="first_launch_currencies_selected_count">Vybrana: %1$d</string>
+  <string name="first_launch_currencies_continue">Praciahnuć — vybrać valutu pa zmaŭčanni</string>
+  <string name="first_launch_currencies_empty_message">Kab praciahnuć, dadajcie chacia b adnu valutu</string>
+  <string name="first_launch_currencies_major">Asnoŭnyja valuty</string>
+  <string name="first_launch_currencies_fiat">Fiatnyja valuty</string>
+  <string name="first_launch_currencies_search_hint">Pošuk valuty</string>
+  <string name="first_launch_currencies_more">Bolš valut</string>
+  <string name="first_launch_currencies_other">Inšyja valuty</string>
+  <string name="first_launch_currencies_crypto">Kryptavaluty</string>
+  <string name="first_launch_setup_step_title">Nałada: krok %1$d z %2$d</string>
+  <string name="first_launch_setup_next">Dalej</string>
+  <string name="first_launch_setup_done">Hatova</string>
+  <string name="first_launch_default_currency_crypto_notice">U vašym spisie jość kryptavaluty. Lubuju valutu sa spisu možna zrabić valutaj pa zmaŭčanni.</string>
+  <string name="first_launch_start_destination_title">Vybierycie razdzieł, jaki budzie adkryvacca pry zapusku prahramy. Heta možna zmianić pazniej u naładach.</string>
+  <string name="first_launch_start_destination_fast_payments">Chutkija płaciažy</string>
+  <string name="first_launch_start_destination_categories">Katehoryi</string>
+  <string name="first_launch_start_destination_journal">Žurnał</string>
+  <string name="first_launch_categories_title">Vybierycie katehoryi</string>
+  <string name="first_launch_categories_hint">Tut pakazany tolki baćkoŭskija katehoryi. Padkatehoryi buduć dadadzieny aŭtamatyčna.</string>
+  <string name="first_launch_categories_subcategory_count">Padkatehoryj: %1$d</string>
+  <string name="first_launch_required_category_confirmation">Heta nieabchodnaja katehoryja. Vy sapraŭdy chočacie jaje adkliučyć?</string>
+  <string name="first_launch_required_category_confirm">Tak</string>
+  <string name="first_launch_required_category_cancel">Nie</string>
+  <string name="quick_setup_add_Cash_account">Rachunki</string>
+  <string name="quick_setup_name_Card">Kartka</string>
+  <string name="quick_setup_name_Cash">Najaŭnyja hrošy</string>
+  <string name="quick_setup_name_Currency">Dołar ZŠA</string>
+  <string name="quick_setup_add_Category">Katehoryi</string>
+  <string name="quick_setup_name_The_Income">Dachody</string>
+  <string name="quick_setup_name_Products">Pradukty</string>
+  <string name="quick_setup_name_Fuel_for_the_car">Paliva dlia aŭtamabila</string>
+  <string name="quick_setup_name_Cellular_communication">Sotavaja suviaź</string>
+  <string name="quick_setup_name_Credit">Kredyt</string>
+  <string name="quick_setup_name_Medicines">Leki</string>
+  <string name="quick_setup_name_Public_transport">Hramadski transpart</string>
+</resources>

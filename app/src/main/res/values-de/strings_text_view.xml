@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="text_view_first_launch_select_you_currencies">Währungen auswählen</string>
+  <string name="text_view_select_parent_category">Übergeordnete Kategorie auswählen</string>
+  <string name="text_view_All_categories">Alle</string>
+  <string name="text_view_parent_category">Übergeordnete Kategorie</string>
+  <string name="text_view_no_parent_category">Keine übergeordnete Kategorie</string>
+  <string name="text_view_password_code_prompt">Erstellen Sie einen 4-stelligen Code</string>
+  <string name="text_view_password_hint_label">Hinweis</string>
+  <string name="text_view_period_start">Beginn des Zeitraums</string>
+  <string name="text_view_period_end">Ende des Zeitraums</string>
+  <string name="text_view_time_period_selected_mode">Ausgewählter Zeitraum:</string>
+  <string name="text_view_start_date">Startdatum</string>
+  <string name="text_view_end_date">Enddatum</string>
+  <string name="chart_label_report">Bericht</string>
+  <string name="report_menu_title">Berichte</string>
+  <string name="report_menu_spending_title">Ausgaben nach Kategorien</string>
+  <string name="report_menu_spending_subtitle">Wohin das Geld fließt</string>
+  <string name="report_menu_income_title">Einnahmen nach Kategorien</string>
+  <string name="report_menu_income_subtitle">Woher das Geld kommt</string>
+  <string name="report_title_spending">Ausgaben</string>
+  <string name="report_title_income">Einnahmen</string>
+  <string name="report_donut_center_spending">Gesamtausgaben</string>
+  <string name="report_donut_center_income">Gesamteinnahmen</string>
+  <string name="report_total">Insgesamt</string>
+  <string name="report_summary_details">Buchungen: %1$d – Kategorien: %2$d</string>
+  <string name="report_filter_all_categories">Alle Kategorien</string>
+  <string name="report_filter_selected_categories">Kategorien: %1$d</string>
+  <string name="report_breakdown_title">Nach Kategorie</string>
+  <string name="report_empty_title">Keine Buchungen im ausgewählten Zeitraum</string>
+  <string name="report_empty_change_period">Zeitraum ändern</string>
+  <string name="report_empty_select_categories">Kategorien auswählen</string>
+  <string name="report_scroll_to_chart">Zurück zum Diagramm</string>
+  <string name="report_categories_filter_all">Alle</string>
+  <string name="report_categories_select_all">Alle auswählen</string>
+  <string name="report_categories_clear_all">Auswahl aufheben</string>
+  <string name="recent_categories_panel_title">Zuletzt verwendet</string>
+  <string name="frequent_categories_panel_title">Häufig verwendet</string>
+</resources>

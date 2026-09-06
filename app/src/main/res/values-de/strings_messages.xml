@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="message_too_short_name">Der Name ist zu kurz</string>
+  <string name="message_select_type_of_category">Kategorietyp auswählen</string>
+  <string name="message_enter_amount">Betrag eingeben</string>
+  <string name="zero_amount_confirm_title">Nullbetrag</string>
+  <string name="zero_amount_confirm_message">Der eingegebene Betrag ist null. Buchung trotzdem hinzufügen?</string>
+  <string name="message_name_not_entered">Namen eingeben</string>
+  <string name="message_category_not_selected">Kategorie auswählen</string>
+  <string name="message_currency_not_selected">Währung auswählen</string>
+  <string name="message_transfer_currency_not_selected">Zielwährung auswählen</string>
+  <string name="message_cash_account_not_selected">Konto auswählen</string>
+  <string name="message_transfer_cash_account_not_selected">Zielkonto auswählen</string>
+  <string name="message_transfer_cash_accounts_must_be_different">Wählen Sie zwei unterschiedliche Konten aus</string>
+  <string name="message_enter_transfer_amount_or_rate">Geben Sie den erhaltenen Betrag oder den Wechselkurs ein</string>
+  <string name="message_entry_changed">Buchung geändert</string>
+  <string name="message_entry_added">Buchung hinzugefügt</string>
+  <string name="message_entry_add_failed">Buchung konnte nicht hinzugefügt werden</string>
+  <string name="message_category_added_to_favorites">Kategorie zu Favoriten hinzugefügt</string>
+  <string name="message_category_removed_from_favorites">Kategorie aus Favoriten entfernt</string>
+  <string name="message_favorite_categories">Favoriten</string>
+  <string name="message_all_categories">Alle Kategorien</string>
+  <string name="message_empty_journal_title">Willkommen! 👋</string>
+  <string name="message_empty_journal_first_payment_hint">Willkommen beim ersten Start der App. Erfassen Sie Ihre erste Buchung.\n\nTippen Sie unten auf „Kategorien“ und wählen Sie eine Kategorie aus der Liste aus.</string>
+  <string name="message_start_date_can_not_be_more_than_the_current">Das Startdatum darf nicht in der Zukunft liegen</string>
+  <string name="message_the_end_date_is_greater_than_the_current_one">Ein Blick in die Zukunft?\nDas Enddatum liegt nach dem heutigen Datum!</string>
+  <string name="message_end_date_cannot_be_less_than_start_date">Das Enddatum darf nicht vor dem Startdatum liegen</string>
+  <string name="message_deletion_canceled">Löschung abgebrochen</string>
+  <string name="message_entry_deleted">Buchung gelöscht</string>
+  <string name="message_you_have_latest_version">Sie haben die neueste Version</string>
+  <string name="message_you_can_update_the_program">Sie können die App aktualisieren</string>
+  <string name="message_update_check_failed">Die Suche nach Updates bei Google Play ist fehlgeschlagen</string>
+  <string name="message_update_not_completed">Das Update wurde nicht abgeschlossen</string>
+  <string name="message_icon_is_not_selected">Kein Symbol ausgewählt</string>
+  <string name="message_select_default_currency">Wählen Sie die Standardwährung aus</string>
+  <string name="message_no_catalog_currency_selected">Wählen Sie mindestens eine neue Währung aus</string>
+  <string name="message_all_catalog_currencies_added_title">Alle Währungen bereits hinzugefügt</string>
+  <string name="message_all_catalog_currencies_added">Alle Währungen aus dem Katalog wurden bereits hinzugefügt. Sie können eine benutzerdefinierte Währung manuell hinzufügen.</string>
+  <string name="message_select_default_cash_account">Standardkonto auswählen</string>
+  <string name="message_complete_first_launch_setup">Bitte schließen Sie die Einrichtung der App ab</string>
+  <string name="message_confirm_crypto_default_currency">Möchten Sie wirklich eine Kryptowährung zur Standardwährung machen?</string>
+  <string name="message_passwords_do_not_match">Passwörter stimmen nicht überein</string>
+  <string name="message_passwords_match">Passwörter stimmen überein</string>
+  <string name="message_password_too_short">Das Passwort ist zu kurz</string>
+</resources>

@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="text_view_first_launch_select_you_currencies">Select you currencies</string>
-    <string name="text_view_arrow_to_the_left" translatable="false">&lt;&lt;</string>
-    <string name="text_view_arrow_to_the_right" translatable="false">&gt;&gt;</string>
-    <string name="text_view_select_parent_category">Select parent category</string>
-    <string name="text_view_All_categories">All</string>
-    <string name="text_view_parent_category">Parent category</string>">
-    <string name="text_view_no_parent_category">no parent category</string>
-    <string name="text_view_password_code_prompt">Create a 4-digit code</string>
-    <string name="text_view_password_hint_label">Hint</string>
-    <string name="text_view_period_start">Start period</string>
-    <string name="text_view_period_end">End period</string>
-    <string name="text_view_time_period_selected_mode">Selected period:</string>
-    <string name="text_view_start_date">Start date</string>
-    <string name="text_view_end_date">End date</string>
-    <string name="chart_label_report">Report</string>
-    <string name="report_menu_title">Reports</string>
-    <string name="report_menu_spending_title">Spending by categories</string>
-    <string name="report_menu_spending_subtitle">Where the money goes</string>
-    <string name="report_menu_income_title">Income by categories</string>
-    <string name="report_menu_income_subtitle">Where the money comes from</string>
-    <string name="report_title_spending">Spending</string>
-    <string name="report_title_income">Income</string>
-    <string name="report_donut_center_spending">Total spending</string>
-    <string name="report_donut_center_income">Total income</string>
-    <string name="report_total">Total</string>
-    <string name="report_summary_details">%1$d entries - %2$d categories</string>
-    <string name="report_filter_all_categories">All categories</string>
-    <string name="report_filter_selected_categories">%1$d categories</string>
-    <string name="report_breakdown_title">By category</string>
-    <string name="report_empty_title">No entries for the selected period</string>
-    <string name="report_empty_change_period">Change period</string>
-    <string name="report_empty_select_categories">Select categories</string>
-    <string name="report_scroll_to_chart">Back to chart</string>
-    <string name="report_categories_filter_all">All</string>
-    <string name="report_categories_select_all">Select all</string>
-    <string name="report_categories_clear_all">Clear all</string>
-    <string name="recent_categories_panel_title">recent used</string>
-    <string name="frequent_categories_panel_title">frequently used</string>
+  <string name="text_view_first_launch_select_you_currencies">Select currencies</string>
+  <string name="text_view_arrow_to_the_left" translatable="false">&lt;&lt;</string>
+  <string name="text_view_arrow_to_the_right" translatable="false">&gt;&gt;</string>
+  <string name="text_view_select_parent_category">Select parent category</string>
+  <string name="text_view_All_categories">All</string>
+  <string name="text_view_parent_category">Parent category</string>
+  <string name="text_view_no_parent_category">no parent category</string>
+  <string name="text_view_password_code_prompt">Create a 4-digit code</string>
+  <string name="text_view_password_hint_label">Hint</string>
+  <string name="text_view_period_start">Start period</string>
+  <string name="text_view_period_end">End period</string>
+  <string name="text_view_time_period_selected_mode">Selected period:</string>
+  <string name="text_view_start_date">Start date</string>
+  <string name="text_view_end_date">End date</string>
+  <string name="chart_label_report">Report</string>
+  <string name="report_menu_title">Reports</string>
+  <string name="report_menu_spending_title">Expenses by category</string>
+  <string name="report_menu_spending_subtitle">Where the money goes</string>
+  <string name="report_menu_income_title">Income by category</string>
+  <string name="report_menu_income_subtitle">Where the money comes from</string>
+  <string name="report_title_spending">Spending</string>
+  <string name="report_title_income">Income</string>
+  <string name="report_donut_center_spending">Total spending</string>
+  <string name="report_donut_center_income">Total income</string>
+  <string name="report_total">Total</string>
+  <string name="report_summary_details">%1$d transactions – %2$d categories</string>
+  <string name="report_filter_all_categories">All categories</string>
+  <string name="report_filter_selected_categories">%1$d categories</string>
+  <string name="report_breakdown_title">By category</string>
+  <string name="report_empty_title">No transactions in the selected period</string>
+  <string name="report_empty_change_period">Change period</string>
+  <string name="report_empty_select_categories">Select categories</string>
+  <string name="report_scroll_to_chart">Back to chart</string>
+  <string name="report_categories_filter_all">All</string>
+  <string name="report_categories_select_all">Select all</string>
+  <string name="report_categories_clear_all">Clear all</string>
+  <string name="recent_categories_panel_title">recently used</string>
+  <string name="frequent_categories_panel_title">frequently used</string>
 </resources>

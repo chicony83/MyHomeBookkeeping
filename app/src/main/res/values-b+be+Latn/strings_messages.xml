@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="message_too_short_name">Nazva zanadta karotkaja</string>
+  <string name="message_select_type_of_category">Vybierycie typ katehoryi</string>
+  <string name="message_enter_amount">Uviadzicie sumu</string>
+  <string name="zero_amount_confirm_title">Nulavaja suma</string>
+  <string name="zero_amount_confirm_message">Uviedziena nulavaja suma. Praciahnuć dadannie zapisu?</string>
+  <string name="message_name_not_entered">Uviadzicie nazvu</string>
+  <string name="message_category_not_selected">Vybierycie katehoryju</string>
+  <string name="message_currency_not_selected">Vybierycie valutu</string>
+  <string name="message_transfer_currency_not_selected">Vybierycie valutu atrymannia</string>
+  <string name="message_cash_account_not_selected">Vybierycie rachunak</string>
+  <string name="message_transfer_cash_account_not_selected">Vybierycie rachunak atrymalnika</string>
+  <string name="message_transfer_cash_accounts_must_be_different">Vybierycie dva roznyja rachunki</string>
+  <string name="message_enter_transfer_amount_or_rate">Uviadzicie atrymanuju sumu abo abmienny kurs</string>
+  <string name="message_entry_changed">Zapis zmienieny</string>
+  <string name="message_entry_added">Zapis dadadzieny</string>
+  <string name="message_entry_add_failed">Zapis nie dadadzieny</string>
+  <string name="message_category_added_to_favorites">Katehoryja dadadziena ŭ abranaje</string>
+  <string name="message_category_removed_from_favorites">Katehoryja vydalena z abranaha</string>
+  <string name="message_favorite_categories">Abranyja katehoryi</string>
+  <string name="message_all_categories">Usie katehoryi</string>
+  <string name="message_empty_journal_title">Sardečna zaprašajem! 👋</string>
+  <string name="message_empty_journal_first_payment_hint">Heta pieršy zapusk prahramy. Davajcie stvorym vaš pieršy zapis.\n\nNacisnicie «Katehoryi» ŭnizie ekrana i vybierycie katehoryju sa spisu.</string>
+  <string name="message_start_date_can_not_be_more_than_the_current">Data pačatku nie moža być pazniejšaj za sionniašniuju</string>
+  <string name="message_the_end_date_is_greater_than_the_current_one">Zazirajecie ŭ budučyniu?\nData zakančennia pazniejšaja za sionniašniuju!</string>
+  <string name="message_end_date_cannot_be_less_than_start_date">Data zakančennia nie moža być raniejšaj za datu pačatku</string>
+  <string name="message_deletion_canceled">Vydalennie admieniena</string>
+  <string name="message_entry_deleted">Zapis vydaleny</string>
+  <string name="message_you_have_latest_version">U vas apošniaja viersija</string>
+  <string name="message_you_can_update_the_program">Vy možacie abnavić prahramu</string>
+  <string name="message_update_check_failed">Nie atrymałasia pravieryć abnaŭlenni ŭ Google Play</string>
+  <string name="message_update_not_completed">Abnaŭlennie nie zavieršana</string>
+  <string name="message_icon_is_not_selected">Značok nie vybrany</string>
+  <string name="message_select_default_currency">Vybierycie valutu pa zmaŭčanni</string>
+  <string name="message_no_catalog_currency_selected">Vybierycie chacia b adnu novuju valutu</string>
+  <string name="message_all_catalog_currencies_added_title">Usie valuty ŭžo dadadzieny</string>
+  <string name="message_all_catalog_currencies_added">Usie valuty z katałoha ŭžo dadadzieny. Vy možacie dadać ułasnuju valutu ŭručnuju.</string>
+  <string name="message_select_default_cash_account">Vybierycie rachunak pa zmaŭčanni</string>
+  <string name="message_complete_first_launch_setup">Zaviaršycie naładu prahramy</string>
+  <string name="message_confirm_crypto_default_currency">Vy sapraŭdy chočacie zrabić kryptavalutu valutaj pa zmaŭčanni?</string>
+  <string name="message_passwords_do_not_match">Paroli nie supadajuć</string>
+  <string name="message_passwords_match">Paroli supadajuć</string>
+  <string name="message_password_too_short">Parol zanadta karotki</string>
+</resources>

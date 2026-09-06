@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="hint_new_currency_only_last_4_digits">Tolki 4 apošnija ličby</string>
+  <string name="hint_enter_name">Uviadzicie nazvu</string>
+  <string name="hint_new_currency_enter_name_short">Uviadzicie karotkuju nazvu</string>
+  <string name="hint_new_currency_enter_name_ISO">Uviadzicie kod ISO</string>
+  <string name="hint_enter_amount">Uviadzicie sumu</string>
+  <string name="hint_add_you_description">Dadajcie apisannie</string>
+  <string name="hint_enter_amount_be_inserted">Suma (budzie dadadziena ŭ płaciož)</string>
+  <string name="hint_add_you_description_be_inserted">Dadajcie apisannie\n(budzie dadadziena ŭ płaciož)</string>
+  <string name="hint_category">Pošuk katehoryi</string>
+  <string name="hint_enter_password">Uviadzicie parol</string>
+  <string name="hint_repeat_password">Paŭtarycie parol</string>
+</resources>

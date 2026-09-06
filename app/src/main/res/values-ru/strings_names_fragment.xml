@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fragment_label_change_fast_payment">Изменение быстрого платежа</string>
-    <string name="fragment_label_new_fast_payment">Новый быстрый платёж</string>
-    <string name="fragment_label_select_fast_payment">Быстрый платёж</string>
-    <string name="fragment_label_select_categories">Выберите категории</string>
-    <string name="fragment_label_time_period">Выберите период времени</string>
-    <string name="fragment_label_new_money_moving">Добавление</string>
-    <string name="fragment_label_new_transfer">Перевод</string>
-    <string name="fragment_label_select_password">Пароль</string>
-    <string name="fragment_label_money_moving_query">Параметры запроса</string>
-    <string name="fragment_label_money_moving">Журнал</string>
-    <string name="fragment_label_change_money_moving">Изменения в записи</string>
-    <string name="fragment_label_change_transfer">Изменение перевода</string>
-    <string name="fragment_label_reports">Отчеты</string>
-    <string name="fragment_label_categories">Категории</string>
-    <string name="fragment_label_category_entry">Что вносим?</string>
-    <string name="fragment_label_currencies">Валюты</string>
-    <string name="fragment_label_cash_account">Счета</string>
-    <string name="fragment_label_settings">Настройки</string>
-    <string name="fragment_label_help">Помощь</string>
-    <string name="fragment_label_first_launch_select_currencies">Выберите валюты</string>
-    <string name="fragment_label_first_launch">Первый запуск</string>
-    <string name="fragment_label_first_launch_setup">Настройка</string>
+  <string name="fragment_label_change_fast_payment">Изменение быстрого платежа</string>
+  <string name="fragment_label_new_fast_payment">Новый быстрый платёж</string>
+  <string name="fragment_label_select_fast_payment">Быстрый платёж</string>
+  <string name="fragment_label_select_categories">Выберите категории</string>
+  <string name="fragment_label_time_period">Выберите период времени</string>
+  <string name="fragment_label_new_money_moving">Добавление</string>
+  <string name="fragment_label_new_transfer">Перевод</string>
+  <string name="fragment_label_select_password">Пароль</string>
+  <string name="fragment_label_money_moving_query">Параметры запроса</string>
+  <string name="fragment_label_money_moving">Журнал</string>
+  <string name="fragment_label_change_money_moving">Изменения в записи</string>
+  <string name="fragment_label_change_transfer">Изменение перевода</string>
+  <string name="fragment_label_reports">Отчеты</string>
+  <string name="fragment_label_categories">Категории</string>
+  <string name="fragment_label_category_entry">Что вносим?</string>
+  <string name="fragment_label_currencies">Валюты</string>
+  <string name="fragment_label_cash_account">Счета</string>
+  <string name="fragment_label_settings">Настройки</string>
+  <string name="fragment_label_help">Помощь</string>
+  <string name="fragment_label_first_launch_select_currencies">Выберите валюты</string>
+  <string name="fragment_label_first_launch">Первый запуск</string>
+  <string name="fragment_label_first_launch_setup">Настройка</string>
 </resources>

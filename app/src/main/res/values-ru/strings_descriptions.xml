@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="description_income">Доходы</string>
-    <string name="description_spending">Расходы</string>
-    <string name="description_balance">Баланс</string>
-
-    <string name="description_selected_entry">Выбрана запись #</string>
-    <string name="description_date_time_text">Дата/время</string>
-    <string name="description_cash_account">Счет</string>
-    <string name="description_cash_account_from">Со счёта</string>
-    <string name="description_cash_account_to">На счёт</string>
-    <string name="description_currency">Валюта</string>
-    <string name="description_currency_from">Валюта отправления</string>
-    <string name="description_currency_to">Валюта прихода</string>
-    <string name="description_category">Категория</string>
-    <string name="description_amount">Сумма</string>
-    <string name="description_amount_to">Сумма прихода</string>
-    <string name="description_exchange_rate">Курс</string>
-    <string name="description_transfer_fee">Комиссия за перевод</string>
-    <string name="description_description">Описание</string>
-
-    <string name="descriptions_last_4_digits_of_card">Последних 4 цифры карты</string>
-
-    <string name="description_cash_account_name">Название счёта</string>
-
-    <string name="description_select_date">Выберите дату</string>
-    <string name="description_select_time">Выберите время</string>
-
-    <string name="description_selected_cash_account">Выбранный счёт</string>
-    <string name="description_selected_category">Категория</string>
-    <string name="description_selected_currency">Выбранная валюта</string>
-    
-    <string name="description_this_name_is_taken">Это имя занято</string>
-
-    <string name="description_you_want_to_delete_the_entry">Вы хотите удалить запись</string>
-
-    <string name="description_A_quick_setup_of_the_program_will_be_done_here">Быстрая настройка программы.\nСледующие элементы будут добавлены</string>
-
-    <string name="current_version">Текущая версия</string>
-
-    <string name="name_fast_payment">Название платежа</string>
-    <string name="description_rating_payment">Рейтинг платежа</string>
+  <string name="description_income">Доходы</string>
+  <string name="description_spending">Расходы</string>
+  <string name="description_balance">Баланс</string>
+  <string name="description_selected_entry">Выбрана запись #</string>
+  <string name="description_date_time_text">Дата/время</string>
+  <string name="description_cash_account">Счет</string>
+  <string name="description_cash_account_from">Со счёта</string>
+  <string name="description_cash_account_to">На счёт</string>
+  <string name="description_currency">Валюта</string>
+  <string name="description_currency_from">Валюта отправления</string>
+  <string name="description_currency_to">Валюта прихода</string>
+  <string name="description_category">Категория</string>
+  <string name="description_amount">Сумма</string>
+  <string name="description_amount_to">Сумма прихода</string>
+  <string name="description_exchange_rate">Курс</string>
+  <string name="description_transfer_fee">Комиссия за перевод</string>
+  <string name="description_description">Описание</string>
+  <string name="descriptions_last_4_digits_of_card">Последние 4 цифры карты</string>
+  <string name="description_cash_account_name">Название счёта</string>
+  <string name="description_select_date">Выберите дату</string>
+  <string name="description_select_time">Выберите время</string>
+  <string name="description_selected_cash_account">Выбранный счёт</string>
+  <string name="description_selected_category">Категория</string>
+  <string name="description_selected_currency">Выбранная валюта</string>
+  <string name="description_this_name_is_taken">Это название занято</string>
+  <string name="description_you_want_to_delete_the_entry">Вы хотите удалить запись?</string>
+  <string name="description_A_quick_setup_of_the_program_will_be_done_here">Быстрая настройка программы.\nСледующие элементы будут добавлены</string>
+  <string name="current_version">Текущая версия</string>
+  <string name="name_fast_payment">Название платежа</string>
+  <string name="description_rating_payment">Рейтинг платежа</string>
 </resources>

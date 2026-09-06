@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="message_select_type_of_category">Выберите тип категории</string>
-    <string name="message_too_short_name">Слишком короткое название</string>
-
-    <string name="message_enter_amount">"Введите сумму"</string>
-    <string name="message_name_not_entered">Введите название</string>
-    <string name="message_category_not_selected">Выберите категорию</string>
-    <string name="message_currency_not_selected">Выберите валюту</string>
-    <string name="message_transfer_currency_not_selected">Выберите валюту зачисления</string>
-    <string name="message_cash_account_not_selected">Выберите счет</string>
-    <string name="message_transfer_cash_account_not_selected">Выберите счёт зачисления</string>
-    <string name="message_transfer_cash_accounts_must_be_different">Выберите два разных счёта</string>
-    <string name="message_enter_transfer_amount_or_rate">Введите сумму прихода или курс</string>
-
-    <string name="message_entry_changed">Запись изменена</string>
-    <string name="message_entry_added">Запись добавлена</string>
-    <string name="message_category_added_to_favorites">Категория добавлена в избранное</string>
-    <string name="message_category_removed_from_favorites">Категория удалена из избранного</string>
-    <string name="message_favorite_categories">Избранные категории</string>
-    <string name="message_all_categories">Все категории</string>
-
-    <string name="message_start_date_can_not_be_more_than_the_current">Начальная дата не может быть больше текущей</string>
-    <string name="message_the_end_date_is_greater_than_the_current_one">Хотите заглянуть в будущее?\nКонечная дата больше текущей!!!</string>
-    <string name="message_end_date_cannot_be_less_than_start_date">Конечная дата не может быть меньше начальной</string>
-
-    <string name="message_deletion_canceled">Удаление отменено</string>
-    <string name="message_entry_deleted">Запись удалена</string>
-
-    <string name="message_you_have_latest_version">У вас последняя версия программы</string>
-    <string name="message_you_can_update_the_program">Можно обновить программу</string>
-    <string name="message_update_check_failed">Не удалось проверить обновление в Google Play</string>
-    <string name="message_update_not_completed">Обновление не было завершено</string>
-
-    <string name="message_icon_is_not_selected">Иконка не выбрана</string>
-
-    <string name="message_select_default_currency">Выберите валюту по умолчанию</string>
-    <string name="message_no_catalog_currency_selected">Выберите хотя бы одну новую валюту</string>
-    <string name="message_all_catalog_currencies_added_title">Все валюты добавлены</string>
-    <string name="message_all_catalog_currencies_added">Все возможные валюты уже добавлены. Можно добавить свободную валюту вручную.</string>
-    <string name="message_select_default_cash_account">Выберите счёт по умолчанию</string>
-    <string name="message_confirm_crypto_default_currency">Вы действительно хотите сделать криптовалюту основной валютой?</string>
-    <string name="message_complete_first_launch_setup">Завершите настройку приложения</string>
-    <string name="message_empty_journal_title">Добро пожаловать! </string>
-    <string name="message_empty_journal_first_payment_hint">Это первый запуск приложения. Давайте создадим вашу первую запись.\n\nНажмите «Категории» внизу экрана и просто выберите категорию из списка.</string>
-    <string name="zero_amount_confirm_title">Нулевая сумма</string>
-    <string name="zero_amount_confirm_message">Введена нулевая сумма. Продолжить добавление?</string>
-    <string name="message_entry_add_failed">Запись не добавлена</string>
-    <string name="message_passwords_do_not_match">Пароли не совпадают</string>
-    <string name="message_passwords_match">Пароль совпадает</string>
-    <string name="message_password_too_short">Слишком короткий пароль</string>
+  <string name="message_too_short_name">Слишком короткое название</string>
+  <string name="message_select_type_of_category">Выберите тип категории</string>
+  <string name="message_enter_amount">Введите сумму</string>
+  <string name="zero_amount_confirm_title">Нулевая сумма</string>
+  <string name="zero_amount_confirm_message">Введена нулевая сумма. Продолжить добавление?</string>
+  <string name="message_name_not_entered">Введите название</string>
+  <string name="message_category_not_selected">Выберите категорию</string>
+  <string name="message_currency_not_selected">Выберите валюту</string>
+  <string name="message_transfer_currency_not_selected">Выберите валюту зачисления</string>
+  <string name="message_cash_account_not_selected">Выберите счет</string>
+  <string name="message_transfer_cash_account_not_selected">Выберите счёт зачисления</string>
+  <string name="message_transfer_cash_accounts_must_be_different">Выберите два разных счёта</string>
+  <string name="message_enter_transfer_amount_or_rate">Введите сумму прихода или курс</string>
+  <string name="message_entry_changed">Запись изменена</string>
+  <string name="message_entry_added">Запись добавлена</string>
+  <string name="message_entry_add_failed">Запись не добавлена</string>
+  <string name="message_category_added_to_favorites">Категория добавлена в избранное</string>
+  <string name="message_category_removed_from_favorites">Категория удалена из избранного</string>
+  <string name="message_favorite_categories">Избранные категории</string>
+  <string name="message_all_categories">Все категории</string>
+  <string name="message_empty_journal_title">Добро пожаловать!</string>
+  <string name="message_empty_journal_first_payment_hint">Это первый запуск приложения. Давайте создадим вашу первую запись.\n\nНажмите «Категории» внизу экрана и просто выберите категорию из списка.</string>
+  <string name="message_start_date_can_not_be_more_than_the_current">Начальная дата не может быть больше текущей</string>
+  <string name="message_the_end_date_is_greater_than_the_current_one">Хотите заглянуть в будущее?\nКонечная дата больше текущей!!!</string>
+  <string name="message_end_date_cannot_be_less_than_start_date">Конечная дата не может быть меньше начальной</string>
+  <string name="message_deletion_canceled">Удаление отменено</string>
+  <string name="message_entry_deleted">Запись удалена</string>
+  <string name="message_you_have_latest_version">У вас последняя версия программы</string>
+  <string name="message_you_can_update_the_program">Можно обновить программу</string>
+  <string name="message_update_check_failed">Не удалось проверить обновление в Google Play</string>
+  <string name="message_update_not_completed">Обновление не было завершено</string>
+  <string name="message_icon_is_not_selected">Иконка не выбрана</string>
+  <string name="message_select_default_currency">Выберите валюту по умолчанию</string>
+  <string name="message_no_catalog_currency_selected">Выберите хотя бы одну новую валюту</string>
+  <string name="message_all_catalog_currencies_added_title">Все валюты добавлены</string>
+  <string name="message_all_catalog_currencies_added">Все возможные валюты уже добавлены. Можно добавить свободную валюту вручную.</string>
+  <string name="message_select_default_cash_account">Выберите счёт по умолчанию</string>
+  <string name="message_complete_first_launch_setup">Завершите настройку приложения</string>
+  <string name="message_confirm_crypto_default_currency">Вы действительно хотите сделать криптовалюту основной валютой?</string>
+  <string name="message_passwords_do_not_match">Пароли не совпадают</string>
+  <string name="message_passwords_match">Пароль совпадает</string>
+  <string name="message_password_too_short">Слишком короткий пароль</string>
 </resources>
