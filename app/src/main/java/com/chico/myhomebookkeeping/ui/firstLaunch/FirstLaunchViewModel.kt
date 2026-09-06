@@ -101,7 +101,7 @@ class FirstLaunchViewModel(
             Constants.CATEGORIES_DISPLAY_MODE,
             Constants.CATEGORIES_DISPLAY_MODE_GRID
         )
-        setSP.setIsFirstLaunchFalse()
+        FirstLaunchStateManager.completeSetup(app.applicationContext)
     }
 
     fun addFirstLaunchElements(

@@ -12,6 +12,7 @@ import com.chico.myhomebookkeeping.domain.DefaultCategoryCatalog
 import com.chico.myhomebookkeeping.obj.Constants
 import com.chico.myhomebookkeeping.obj.ConstantsOfUpdate
 import com.chico.myhomebookkeeping.sp.GetSP
+import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchStateManager
 import kotlinx.coroutines.runBlocking
 
 class MainActivityViewModel(
@@ -24,27 +25,22 @@ class MainActivityViewModel(
     private var getSP = GetSP(sharedPreferences)
     private val cashAccountDao = dataBase.getDataBase(app.applicationContext).cashAccountDao()
     private val categoryDao = dataBase.getDataBase(app.applicationContext).categoryDao()
-    private val currenciesDao = dataBase.getDataBase(app.applicationContext).currenciesDao()
     private val parentCategoryDao = dataBase.getDataBase(app.applicationContext).parentCategoriesDao()
 
     init {
-        fixFirstLaunchFlagForExistingDatabase()
         backfillMissingLocalizedNames()
     }
 
     fun checkIsFirstLaunch(): Boolean {
-        val isFirstLaunch = getSP.getBooleanElseReturnTrue(Constants.IS_FIRST_LAUNCH)
-        if (isFirstLaunch && hasUserCreatedData()) {
-            setFirstLaunchFlag(false)
-            Message.log("---is first launch = false, existing database data found---")
-            return false
-        }
+        val isFirstLaunch = FirstLaunchStateManager.shouldOpenSetup(app.applicationContext)
         Message.log("---is first launch = $isFirstLaunch")
         return isFirstLaunch
     }
 
     fun setFirstLaunchFlag(flag: Boolean) {
-        getSP.setBoolean(Constants.IS_FIRST_LAUNCH, flag)
+        if (!flag) {
+            FirstLaunchStateManager.completeSetup(app.applicationContext)
+        }
     }
 
     fun getStartDestinationId(): Int {
@@ -64,18 +60,6 @@ class MainActivityViewModel(
         sharedPreferences.edit()
             .putInt(ConstantsOfUpdate.LAST_CHECKED_VERSION, AppVersion.code(app))
             .apply()
-    }
-
-    private fun fixFirstLaunchFlagForExistingDatabase() {
-        if (!sharedPreferences.contains(Constants.IS_FIRST_LAUNCH) && hasUserCreatedData()) {
-            setFirstLaunchFlag(false)
-        }
-    }
-
-    private fun hasUserCreatedData(): Boolean = runBlocking {
-        cashAccountDao.getCashAccountsCount() > 0 ||
-                categoryDao.getCategoriesCount() > 0 ||
-                currenciesDao.getCurrenciesCount() > 0
     }
 
     private fun backfillMissingLocalizedNames() = runBlocking {

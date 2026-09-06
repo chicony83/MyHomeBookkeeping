@@ -49,6 +49,7 @@ This file is for future ideas. Move finished work to `CHANGELOG.md` during relea
 - Completed: keep first-launch language selection generated from the shared supported-language catalog.
 - Completed: restore the current first-launch setup step after language-change recreation.
 - Completed: verify the full first-launch flow on device after changing the app language; setup controls use the selected locale on every step.
+- Completed: track first launch as `FIRST_START`, `CONFIGURING`, or `COMPLETED`; reset interrupted setup data on the next cold start and migrate the legacy Boolean flag safely.
 - Keep built-in currency names as canonical international names; they are intentionally not localized with the surrounding interface.
 - Completed: make Categories, Journal, Reports, and Settings the default quick access panel, replacing Fast Payments with Reports for new installs.
 - Keep first-launch currency search simple and visible; refine spacing only if the setup screen gets crowded.

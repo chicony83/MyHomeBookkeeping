@@ -6,6 +6,7 @@ import android.net.Uri
 import com.chico.myhomebookkeeping.db.DATABASE_SCHEMA_VERSION
 import com.chico.myhomebookkeeping.obj.AppLanguage
 import com.chico.myhomebookkeeping.obj.Constants
+import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchState
 import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.DataInputStream
@@ -169,6 +170,7 @@ object DatabaseRestoreManager {
         } else JSONObject()
         context.getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE).edit().apply {
             putBoolean(Constants.IS_FIRST_LAUNCH, false)
+            putString(Constants.FIRST_LAUNCH_STATE, FirstLaunchState.COMPLETED.name)
             settings.optString("sortingFastPayments").takeIf(String::isNotEmpty)
                 ?.let { putString(Constants.SORTING_FAST_PAYMENTS, it) }
             putBoolean(

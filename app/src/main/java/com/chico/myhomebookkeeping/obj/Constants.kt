@@ -80,7 +80,10 @@ object Constants {
     const val ARGS_NEW_ENTRY_OF_MONEY_MOVING_IN_DB_IS_ADDED = "newEntryOfMoneyMovingInDbIsAdded"
 
     const val FOR_QUERY_NONE = ""
+    // Legacy compatibility key. It can be removed in a future release after migration to
+    // FIRST_LAUNCH_STATE has reached all supported installations.
     const val IS_FIRST_LAUNCH = "isFirstLaunch"
+    const val FIRST_LAUNCH_STATE = "firstLaunchState"
     const val IS_FIRST_LAUNCH_FAST_PAYMENTS_ADD_FREE_FAST_PAYMENTS = "isFirstLaunchFastPaymentAddFreeFastPayment"
     const val FIRST_LAUNCH_INSTALL_MODE = "firstLaunchInstallMode"
     const val CLEAN_INSTALL_MESSAGE_PENDING = "cleanInstallMessagePending"

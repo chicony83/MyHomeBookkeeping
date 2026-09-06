@@ -43,6 +43,7 @@ import com.chico.myhomebookkeeping.obj.QuickAccessPanel
 import com.chico.myhomebookkeeping.ui.categories.CategoriesFragment
 import com.chico.myhomebookkeeping.ui.dialogs.WhatNewInLastVersionDialog
 import com.chico.myhomebookkeeping.ui.fastPaymentsPackage.fastPayments.UpdateViewModel
+import com.chico.myhomebookkeeping.ui.firstLaunch.FirstLaunchStateManager
 import com.chico.myhomebookkeeping.ui.settings.SettingsFragment
 import com.chico.myhomebookkeeping.update.CriticalStartupUpdates
 import com.chico.myhomebookkeeping.utils.launchUi
@@ -94,6 +95,10 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             AppLanguage.applySelectedLanguage(this)
         }
+        FirstLaunchStateManager.prepareForLaunch(
+            applicationContext,
+            isColdStart = savedInstanceState == null
+        )
         DatabaseRestoreManager.applyPendingRestore(applicationContext)
         IconResourceSynchronizer.synchronize(applicationContext)
         CriticalStartupUpdates.run(application)
