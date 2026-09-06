@@ -6,9 +6,9 @@ import com.chico.myhomebookkeeping.obj.Constants
 
 object ReportsCreateSimpleQuery {
     private fun mainQueryFullMoneyMoving(languageTag: String): String {
-        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", "cash_account_name_pl", "cash_account_name_de", "cash_account_name_be", languageTag)
-        val categoryName = localizedColumn("category_name", "category_name_ru", "category_name_pl", "category_name_de", "category_name_be", languageTag)
-        val parentCategoryName = localizedColumn("parent_category_name", "parent_category_name_ru", "parent_category_name_pl", "parent_category_name_de", "parent_category_name_be", languageTag)
+        val cashAccountName = localizedColumn("cash_account_name", "cash_account_name_ru", "cash_account_name_pl", "cash_account_name_de", "cash_account_name_be", "cash_account_name_be_latn", languageTag)
+        val categoryName = localizedColumn("category_name", "category_name_ru", "category_name_pl", "category_name_de", "category_name_be", "category_name_be_latn", languageTag)
+        val parentCategoryName = localizedColumn("parent_category_name", "parent_category_name_ru", "parent_category_name_pl", "parent_category_name_de", "parent_category_name_be", "parent_category_name_be_latn", languageTag)
         return "SELECT money_moving_table.id,time_stamp, " +
                 "$cashAccountName AS cash_account_name_value, " +
                 "currency_name AS currency_name_value," +
@@ -131,6 +131,7 @@ object ReportsCreateSimpleQuery {
         plColumn: String,
         deColumn: String,
         beColumn: String,
+        beLatnColumn: String,
         languageTag: String
     ): String {
         return when (languageTag) {
@@ -138,6 +139,7 @@ object ReportsCreateSimpleQuery {
             Constants.APP_LANGUAGE_POLISH -> "COALESCE($plColumn, $baseColumn)"
             Constants.APP_LANGUAGE_GERMAN -> "COALESCE($deColumn, $baseColumn)"
             Constants.APP_LANGUAGE_BELARUSIAN -> "COALESCE($beColumn, $baseColumn)"
+            Constants.APP_LANGUAGE_BELARUSIAN_LATIN -> "COALESCE($beLatnColumn, $baseColumn)"
             else -> baseColumn
         }
     }

@@ -17,7 +17,7 @@ interface ParentCategoriesDao {
     @Query("SELECT * FROM parent_categories_table WHERE id = :id")
     suspend fun getSelectedParentCategory(id: Int): ParentCategories
 
-    @Query("SELECT * FROM parent_categories_table WHERE parent_category_name = :name OR parent_category_name_ru = :name OR parent_category_name_pl = :name OR parent_category_name_de = :name OR parent_category_name_be = :name ORDER BY id ASC LIMIT 1")
+    @Query("SELECT * FROM parent_categories_table WHERE parent_category_name = :name OR parent_category_name_ru = :name OR parent_category_name_pl = :name OR parent_category_name_de = :name OR parent_category_name_be = :name OR parent_category_name_be_latn = :name ORDER BY id ASC LIMIT 1")
     suspend fun getParentCategoryByAnyDisplayName(name: String): ParentCategories?
 
     @Query("UPDATE parent_categories_table SET parent_category_order = :order WHERE id = :id")

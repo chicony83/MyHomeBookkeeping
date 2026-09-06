@@ -151,6 +151,7 @@ class FirstLaunchViewModel(
                 parentNamePl = it.parentNamePl,
                 parentNameDe = it.parentNameDe,
                 parentNameBe = it.parentNameBe,
+                parentNameBeLatn = it.parentNameBeLatn,
                 parentIcon = it.parentIcon,
                 isIncome = it.isIncome,
                 subcategories = it.subcategories,
@@ -158,6 +159,7 @@ class FirstLaunchViewModel(
                 subcategoriesPl = it.subcategoriesPl,
                 subcategoriesDe = it.subcategoriesDe,
                 subcategoriesBe = it.subcategoriesBe,
+                subcategoriesBeLatn = it.subcategoriesBeLatn,
                 subcategoryIcons = it.subcategoryIcons
             )
         }
@@ -269,6 +271,7 @@ class FirstLaunchViewModel(
                     namePl = categoryGroups[i].parentNamePl,
                     nameDe = categoryGroups[i].parentNameDe,
                     nameBe = categoryGroups[i].parentNameBe,
+                    nameBeLatn = categoryGroups[i].parentNameBeLatn,
                     iconKey = DefaultCategoryIconAssignments.parentKey(categoryGroups[i].parentName)
                         ?: CategoryIconCatalog.canonicalKey(categoryGroups[i].parentIcon.name)
                         ?: CategoryIconCatalog.DEFAULT_KEY
@@ -282,6 +285,7 @@ class FirstLaunchViewModel(
                     namePl = categoryGroups[i].subcategoriesPl.getOrNull(j),
                     nameDe = categoryGroups[i].subcategoriesDe.getOrNull(j),
                     nameBe = categoryGroups[i].subcategoriesBe.getOrNull(j),
+                    nameBeLatn = categoryGroups[i].subcategoriesBeLatn.getOrNull(j),
                     icon = categoryIconsMap.getIcon(categoryGroups[i].subcategoryIcons.getOrNull(j)),
                     iconKey = DefaultCategoryIconAssignments.childKey(categoryGroups[i].parentName, j)
                         ?: categoryGroups[i].subcategoryIcons.getOrNull(j)?.let {
@@ -307,6 +311,7 @@ class FirstLaunchViewModel(
         namePl: String?,
         nameDe: String?,
         nameBe: String?,
+        nameBeLatn: String?,
         icon: Int?,
         iconKey: String?,
         isIncome: Boolean,
@@ -324,7 +329,8 @@ class FirstLaunchViewModel(
                 categoryNameRu = nameRu,
                 categoryNamePl = namePl,
                 categoryNameDe = nameDe,
-                categoryNameBe = nameBe
+                categoryNameBe = nameBe,
+                categoryNameBeLatn = nameBeLatn
             )
         )
     }
@@ -376,7 +382,8 @@ class FirstLaunchViewModel(
             accountNameRu = item.nameRu,
             accountNamePl = item.namePl,
             accountNameDe = item.nameDe,
-            accountNameBe = item.nameBe
+            accountNameBe = item.nameBe,
+            accountNameBeLatn = item.nameBeLatn
         )
         dbCashAccount.addCashAccount(cashAccount)
     }

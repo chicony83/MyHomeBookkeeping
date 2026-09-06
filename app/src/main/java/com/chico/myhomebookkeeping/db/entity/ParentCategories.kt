@@ -19,7 +19,10 @@ class ParentCategories(
     @ColumnInfo(name = "parent_category_name_de")
     val nameDe: String? = null,
     @ColumnInfo(name = "parent_category_name_be")
-    val nameBe: String? = null,    @ColumnInfo(name = "icon_key")
+    val nameBe: String? = null,
+    @ColumnInfo(name = "parent_category_name_be_latn")
+    val nameBeLatn: String? = null,
+    @ColumnInfo(name = "icon_key")
     val iconKey: String? = null
 ){
     @PrimaryKey(autoGenerate = true)

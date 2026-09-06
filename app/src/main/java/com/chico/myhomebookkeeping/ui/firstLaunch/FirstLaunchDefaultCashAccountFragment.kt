@@ -101,7 +101,8 @@ class FirstLaunchDefaultCashAccountFragment : Fragment() {
             nameRu = account.nameRu,
             namePl = account.namePl,
             nameDe = account.nameDe,
-            nameBe = account.nameBe
+            nameBe = account.nameBe,
+            nameBeLatn = account.nameBeLatn
         )
     }
 

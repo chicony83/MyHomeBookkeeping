@@ -23,7 +23,10 @@ data class Categories(
     @ColumnInfo(name = "category_name_de")
     val categoryNameDe: String? = null,
     @ColumnInfo(name = "category_name_be")
-    val categoryNameBe: String? = null,    @ColumnInfo(name = "is_favorite")
+    val categoryNameBe: String? = null,
+    @ColumnInfo(name = "category_name_be_latn")
+    val categoryNameBeLatn: String? = null,
+    @ColumnInfo(name = "is_favorite")
     val isFavorite: Boolean = false,
     @ColumnInfo(name = "usage_count")
     val usageCount: Int = 0,

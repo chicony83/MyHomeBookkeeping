@@ -21,7 +21,10 @@ data class CashAccount(
     @ColumnInfo(name = "cash_account_name_de")
     val accountNameDe: String? = null,
     @ColumnInfo(name = "cash_account_name_be")
-    val accountNameBe: String? = null    ) {
+    val accountNameBe: String? = null,
+    @ColumnInfo(name = "cash_account_name_be_latn")
+    val accountNameBeLatn: String? = null
+) {
     @PrimaryKey(autoGenerate = true)
     var cashAccountId: Int? = null
 }

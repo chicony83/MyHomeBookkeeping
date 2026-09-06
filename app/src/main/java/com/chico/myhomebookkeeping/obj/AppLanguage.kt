@@ -26,6 +26,11 @@ object AppLanguage {
             showOnFirstLaunch = false
         ),
         Language(
+            tag = Constants.APP_LANGUAGE_BELARUSIAN_LATIN,
+            titleRes = R.string.settings_app_language_belarusian_latin,
+            showNeutralLanguageIcon = true
+        ),
+        Language(
             tag = Constants.APP_LANGUAGE_ENGLISH,
             titleRes = R.string.settings_app_language_english
         ),
