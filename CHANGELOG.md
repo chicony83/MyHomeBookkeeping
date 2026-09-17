@@ -2,6 +2,24 @@
 
 This file is the full internal release log. Keep all useful development notes here, then copy only the user-facing highlights to the app strings and Play Market notes.
 
+## 0.14.4
+
+### User-facing
+- Added a new tile view for categories.
+- Added German and Belarusian language support.
+- Improved the initial app setup.
+- Fixed bugs and improved stability.
+
+### Development
+- Bumped the Play Market release version to 0.14.4 (76).
+- Added localized 0.14.4 version-history strings for English, German, Belarusian, Belarusian Latin, Polish, and Russian.
+- Added a Rows/Tiles setting for the main Categories list and made a three-column tile grid the default for new installations.
+- Refined category tile spacing and fixed the category-icon picker scroll range.
+- Added German, Belarusian, and Belarusian Latin localizations, including localized built-in account and category names.
+- Aligned all bundled localization resources and added automated completeness, structure, plural, and format-argument validation.
+- Made interrupted first-launch setup restart safely while preserving compatibility with the legacy first-launch state.
+- Built, signed, and verified the 0.14.4 Play Market bundle with the existing release certificate.
+
 ## 0.14.3
 
 ### User-facing
